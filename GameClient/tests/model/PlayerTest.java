@@ -17,6 +17,9 @@ import data.Position;
 public class PlayerTest
 {
 
+	/**
+	 * Always start with a new singleton
+	 */
 	@Before
 	public void reset()
 	{
