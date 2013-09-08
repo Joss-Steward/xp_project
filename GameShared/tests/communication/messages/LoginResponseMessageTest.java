@@ -4,9 +4,17 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * Sent from the server to the client upon successful login to the system
+ * @author Merlin
+ *
+ */
 public class LoginResponseMessageTest
 {
 
+	/**
+	 * Just make sure it holds the right stuff
+	 */
 	@Test
 	public void basic()
 	{

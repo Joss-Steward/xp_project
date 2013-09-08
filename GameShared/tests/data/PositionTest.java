@@ -25,6 +25,9 @@ public class PositionTest {
 		assertEquals(47, p.getColumn());
 	}
 
+	/**
+	 * Make sure that the equals method checks the right stuff
+	 */
 	@Test
 	public void equalsContract() {
 		EqualsVerifier.forClass(Position.class).verify();

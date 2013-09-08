@@ -84,6 +84,9 @@ public class Player extends Observable
 		notifyObservers(name);
 	}
 
+	/**
+	 * Used only in testing to re-initialize the singleton
+	 */
 	public static void resetSingleton() {
 		singleton = null;
 	}
