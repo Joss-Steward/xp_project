@@ -16,37 +16,38 @@ import java.util.HashMap;
 public abstract class QualifiedObservable
 {
 
-	private HashMap<ObserverQualifier, ArrayList<QualifiedObserver>> observers = new HashMap<ObserverQualifier, ArrayList<QualifiedObserver>>();
+	private HashMap<Class<?>, ArrayList<QualifiedObserver>> observers = new HashMap<Class<?>, ArrayList<QualifiedObserver>>();
 
 	/**
 	 * Used to determine whether this object reports information related to a
 	 * given qualifier
 	 * 
-	 * @param qualifier
-	 *            the qualifier we are interested in
+	 * @param reportType
+	 *            the report type we are interested in
 	 * @return true if we report information relevant to that qualifier
 	 */
-	public abstract boolean notifiesOn(ObserverQualifier qualifier);
+	public abstract boolean notifiesOn(Class<?> reportType);
 
 	/**
 	 * @param observer
 	 *            the observer we are adding
-	 * @param qualifier
+	 * @param reportType
 	 *            the condition under which they want to be notified
 	 */
-	public void addObserver(QualifiedObserver observer, ObserverQualifier qualifier)
+	public void addObserver(QualifiedObserver observer, Class<?> reportType)
 	{
-		if (!this.notifiesOn(qualifier))
+		if (!this.notifiesOn(reportType))
 		{
-			throw new IllegalArgumentException("Attempt to register a listener with qualifier "
-					+ qualifier + " for class " + this.getClass()
+			throw new IllegalArgumentException("Attempt to register a listener with reportType "
+					+ reportType.getCanonicalName() + " for class " + this.getClass()
+
 					+ " which does not notify for tyat type of information");
 		}
-		ArrayList<QualifiedObserver> relevantObservers = observers.get(qualifier);
+		ArrayList<QualifiedObserver> relevantObservers = observers.get(reportType);
 		if (relevantObservers == null)
 		{
 			relevantObservers = new ArrayList<QualifiedObserver>();
-			observers.put(qualifier, relevantObservers);
+			observers.put(reportType, relevantObservers);
 		}
 		relevantObservers.add(observer);
 	}
@@ -54,18 +55,17 @@ public abstract class QualifiedObservable
 	/**
 	 * @param arg
 	 *            the argument we want to send to the observers
-	 * @param qualifier
-	 *            the qualifier specifying the type of information we are
-	 *            sending
 	 */
-	public void notifyObservers(Object arg, ObserverQualifier qualifier)
+	public void notifyObservers(QualifiedObservableReport arg)
 	{
-		ArrayList<QualifiedObserver> relevantObservers = observers.get(qualifier);
-		for (QualifiedObserver observer : relevantObservers)
+		ArrayList<QualifiedObserver> relevantObservers = observers.get(arg.getClass());
+		if (relevantObservers != null)
 		{
-			observer.update(this, arg);
+			for (QualifiedObserver observer : relevantObservers)
+			{
+				observer.update(this, arg);
+			}
 		}
-
 	}
 
 	/**
@@ -73,12 +73,12 @@ public abstract class QualifiedObservable
 	 * 
 	 * @param observer
 	 *            the observer who is no longer interested in something
-	 * @param qualifier
+	 * @param reportType
 	 *            the type of information they no longer want to receive
 	 */
-	public void removeObserver(QualifiedObserver observer, ObserverQualifier qualifier)
+	public void removeObserver(QualifiedObserver observer, Class<?> reportType)
 	{
-		ArrayList<QualifiedObserver> relevantObservers = observers.get(qualifier);
+		ArrayList<QualifiedObserver> relevantObservers = observers.get(reportType);
 		relevantObservers.remove(observer);
 	}
 

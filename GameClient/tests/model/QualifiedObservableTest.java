@@ -18,11 +18,11 @@ public class QualifiedObservableTest
 	{
 		QualifiedObservable obs = new MockQualifiedObservable();
 		QualifiedObserver observer = EasyMock.createMock(QualifiedObserver.class);
-		observer.update(obs, "silly");
+		observer.update(EasyMock.eq(obs), EasyMock.anyObject(TestReport1.class));
 		EasyMock.replay(observer);
 
-		obs.addObserver(observer, ObserverQualifier.TEST_QUALIFIER_1);
-		obs.notifyObservers("silly", ObserverQualifier.TEST_QUALIFIER_1);
+		obs.addObserver(observer, TestReport1.class);
+		obs.notifyObservers(new TestReport1());
 		EasyMock.verify(observer);
 	}
 
@@ -37,13 +37,13 @@ public class QualifiedObservableTest
 		QualifiedObservable obs = new MockQualifiedObservable();
 		QualifiedObserver movementObserver = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObserver otherObserver = EasyMock.createMock(QualifiedObserver.class);
-		movementObserver.update(obs, "silly");
+		movementObserver.update(EasyMock.eq(obs),EasyMock.anyObject(TestReport2.class));
 		EasyMock.replay(movementObserver);
 		EasyMock.replay(otherObserver);
 
-		obs.addObserver(movementObserver, ObserverQualifier.TEST_QUALIFIER_2);
-		obs.addObserver(otherObserver, ObserverQualifier.TEST_QUALIFIER_1);
-		obs.notifyObservers("silly", ObserverQualifier.TEST_QUALIFIER_2);
+		obs.addObserver(movementObserver, TestReport2.class);
+		obs.addObserver(otherObserver, TestReport1.class);
+		obs.notifyObservers(new TestReport2());
 		EasyMock.verify(movementObserver);
 		EasyMock.verify(otherObserver);
 	}
@@ -59,14 +59,14 @@ public class QualifiedObservableTest
 		QualifiedObservable obs = new MockQualifiedObservable();
 		QualifiedObserver movementObserver1 = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObserver movementObserver2 = EasyMock.createMock(QualifiedObserver.class);
-		movementObserver1.update(obs, "silly");
-		movementObserver2.update(obs, "silly");
+		movementObserver1.update(EasyMock.eq(obs), EasyMock.anyObject(TestReport1.class));
+		movementObserver2.update(EasyMock.eq(obs), EasyMock.anyObject(TestReport1.class));
 		EasyMock.replay(movementObserver1);
 		EasyMock.replay(movementObserver2);
 
-		obs.addObserver(movementObserver1, ObserverQualifier.TEST_QUALIFIER_1);
-		obs.addObserver(movementObserver2, ObserverQualifier.TEST_QUALIFIER_1);
-		obs.notifyObservers("silly", ObserverQualifier.TEST_QUALIFIER_1);
+		obs.addObserver(movementObserver1, TestReport1.class);
+		obs.addObserver(movementObserver2, TestReport1.class);
+		obs.notifyObservers(new TestReport1());
 		EasyMock.verify(movementObserver1);
 		EasyMock.verify(movementObserver2);
 	}
@@ -81,14 +81,14 @@ public class QualifiedObservableTest
 		QualifiedObservable obs = new MockQualifiedObservable();
 		QualifiedObserver movementObserver1 = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObserver movementObserver2 = EasyMock.createMock(QualifiedObserver.class);
-		movementObserver2.update(obs, "silly");
+		movementObserver2.update(EasyMock.eq(obs), EasyMock.anyObject(TestReport1.class));
 		EasyMock.replay(movementObserver1);
 		EasyMock.replay(movementObserver2);
 
-		obs.addObserver(movementObserver1, ObserverQualifier.TEST_QUALIFIER_1);
-		obs.addObserver(movementObserver2, ObserverQualifier.TEST_QUALIFIER_1);
-		obs.removeObserver(movementObserver1, ObserverQualifier.TEST_QUALIFIER_1);
-		obs.notifyObservers("silly", ObserverQualifier.TEST_QUALIFIER_1);
+		obs.addObserver(movementObserver1, TestReport1.class);
+		obs.addObserver(movementObserver2, TestReport1.class);
+		obs.removeObserver(movementObserver1, TestReport1.class);
+		obs.notifyObservers(new TestReport1());
 		EasyMock.verify(movementObserver1);
 		EasyMock.verify(movementObserver2);
 	}
@@ -102,14 +102,14 @@ public class QualifiedObservableTest
 	{
 		QualifiedObservable obs = new MockQualifiedObservable();
 		QualifiedObserver observer = EasyMock.createMock(QualifiedObserver.class);
-		observer.update(obs, "not silly");
+		observer.update(EasyMock.eq(obs), EasyMock.anyObject(TestReport2.class));
 		EasyMock.replay(observer);
 
-		obs.addObserver(observer, ObserverQualifier.TEST_QUALIFIER_1);
-		obs.addObserver(observer, ObserverQualifier.TEST_QUALIFIER_2);
-		obs.removeObserver(observer, ObserverQualifier.TEST_QUALIFIER_1);
-		obs.notifyObservers("silly", ObserverQualifier.TEST_QUALIFIER_1);
-		obs.notifyObservers("not silly", ObserverQualifier.TEST_QUALIFIER_2);
+		obs.addObserver(observer, TestReport1.class);
+		obs.addObserver(observer, TestReport2.class);
+		obs.removeObserver(observer, TestReport1.class);
+		obs.notifyObservers(new TestReport1());
+		obs.notifyObservers(new TestReport2());
 		EasyMock.verify(observer);
 	}
 
@@ -126,11 +126,11 @@ public class QualifiedObservableTest
 		EasyMock.replay(movementObserver1);
 		EasyMock.replay(movementObserver2);
 
-		obs.addObserver(movementObserver1, ObserverQualifier.TEST_QUALIFIER_1);
-		obs.addObserver(movementObserver2, ObserverQualifier.TEST_QUALIFIER_1);
-		obs.removeObserver(movementObserver1, ObserverQualifier.TEST_QUALIFIER_1);
-		obs.removeObserver(movementObserver2, ObserverQualifier.TEST_QUALIFIER_1);
-		obs.notifyObservers("silly", ObserverQualifier.TEST_QUALIFIER_1);
+		obs.addObserver(movementObserver1, TestReport1.class);
+		obs.addObserver(movementObserver2, TestReport1.class);
+		obs.removeObserver(movementObserver1, TestReport1.class);
+		obs.removeObserver(movementObserver2, TestReport1.class);
+		obs.notifyObservers(new TestReport1());
 		EasyMock.verify(movementObserver1);
 		EasyMock.verify(movementObserver2);
 	}
@@ -146,20 +146,36 @@ public class QualifiedObservableTest
 		QualifiedObserver observer1 = EasyMock.createMock(QualifiedObserver.class);
 		EasyMock.replay(observer1);
 
-		obs.addObserver(observer1, ObserverQualifier.THIS_PLAYER_MOVEMENT_QUALIFIER);
+		obs.addObserver(observer1, TestReportNotReported.class);
+	}
+	
+	private class TestReport1 implements QualifiedObservableReport
+	{
+		
+	}
+	
+	private class TestReport2 implements QualifiedObservableReport
+	{
+		
+	}
+	
+	private class TestReportNotReported implements QualifiedObservableReport
+	{
+		
 	}
 
 	private class MockQualifiedObservable extends QualifiedObservable
 	{
 
 		/**
-		 * @see model.QualifiedObservable#notifiesOn(model.ObserverQualifier)
+		 * 
+		 * @see model.QualifiedObservable#notifiesOn(java.lang.Class)
 		 */
 		@Override
-		public boolean notifiesOn(ObserverQualifier qualifier)
+		public boolean notifiesOn(Class<?> reportType)
 		{
-			if ((qualifier.equals(ObserverQualifier.TEST_QUALIFIER_1))
-					|| (qualifier.equals(ObserverQualifier.TEST_QUALIFIER_2)))
+			if ((reportType.equals(TestReport1.class))
+					|| (reportType.equals(TestReport2.class)))
 			{
 				return true;
 			}
