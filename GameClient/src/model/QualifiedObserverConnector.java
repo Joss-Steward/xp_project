@@ -20,8 +20,9 @@ public class QualifiedObserverConnector
 		observables = new HashMap<Class<?>, ArrayList<QualifiedObservable>>();
 		observers = new HashMap<Class<?>, ArrayList<QualifiedObserver>>();
 	}
+	
 	/**
-	 * @return
+	 * @return the only one of these in the syste
 	 */
 	public synchronized static QualifiedObserverConnector getSingleton()
 	{
@@ -41,8 +42,9 @@ public class QualifiedObserverConnector
 	}
 
 	/**
-	 * @param observable
-	 * @param reportType
+	 * This is used by an observable to tell the world that he will report a given report type
+	 * @param observable the object who wants to be observed
+	 * @param reportType the type of message it will report
 	 */
 	public void registerQualifiedObservable(QualifiedObservable observable,
 			Class<?> reportType)
@@ -59,8 +61,8 @@ public class QualifiedObserverConnector
 		}
 	}
 	/**
-	 * @param observable
-	 * @param reportType
+	 * @param observable the observable we should remember
+	 * @param reportType the report type it is interested in
 	 */
 	private void rememberObservable(QualifiedObservable observable, Class<?> reportType)
 	{
@@ -74,8 +76,9 @@ public class QualifiedObserverConnector
 	}
 
 	/**
-	 * @param observer
-	 * @param reportType
+	 * Used when an observer wants to receive reports of a given type
+	 * @param observer the observer who is interested
+	 * @param reportType the report type the observer wants to receive
 	 */
 	public void registerQualifiedObserver(QualifiedObserver observer, Class<?> reportType)
 	{
@@ -90,9 +93,10 @@ public class QualifiedObserverConnector
 			}
 		}
 	}
+	
 	/**
-	 * @param observer
-	 * @param reportType
+	 * @param observer the observer we should remember
+	 * @param reportType the report type this observer is interested in
 	 */
 	private void rememberObserver(QualifiedObserver observer, Class<?> reportType)
 	{

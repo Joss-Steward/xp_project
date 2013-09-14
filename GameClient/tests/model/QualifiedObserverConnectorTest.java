@@ -62,6 +62,10 @@ public class QualifiedObserverConnectorTest
 		EasyMock.verify(mockObserver);
 	}
 
+	/**
+	 * You should be able to register the observer and the observable in either order, so this test
+	 * is the same as registerQualifedObservable, but the observer is registered first.
+	 */
 	@Test
 	public void canRegisterObserverBeforeObservable()
 	{
