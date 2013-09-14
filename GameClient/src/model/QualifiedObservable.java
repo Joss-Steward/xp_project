@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
+import java.util.Observer;
 
 /**
  * This is an implementation of the observer pattern that allows observers to
@@ -17,7 +18,7 @@ import java.util.Observable;
 public abstract class QualifiedObservable extends Observable
 {
 
-	private HashMap<Class<?>, ArrayList<QualifiedObserver>> observers = new HashMap<Class<?>, ArrayList<QualifiedObserver>>();
+	private HashMap<Class<?>, ArrayList<Observer>> observers = new HashMap<Class<?>, ArrayList<Observer>>();
 
 	/**
 	 * Used to determine whether this object reports information related to a
@@ -35,7 +36,7 @@ public abstract class QualifiedObservable extends Observable
 	 * @param reportType
 	 *            the condition under which they want to be notified
 	 */
-	public void addObserver(QualifiedObserver observer, Class<?> reportType)
+	public void addObserver(Observer observer, Class<?> reportType)
 	{
 		if (!this.notifiesOn(reportType))
 		{
@@ -44,10 +45,10 @@ public abstract class QualifiedObservable extends Observable
 
 					+ " which does not notify for tyat type of information");
 		}
-		ArrayList<QualifiedObserver> relevantObservers = observers.get(reportType);
+		ArrayList<Observer> relevantObservers = observers.get(reportType);
 		if (relevantObservers == null)
 		{
-			relevantObservers = new ArrayList<QualifiedObserver>();
+			relevantObservers = new ArrayList<Observer>();
 			observers.put(reportType, relevantObservers);
 		}
 		relevantObservers.add(observer);
@@ -59,10 +60,10 @@ public abstract class QualifiedObservable extends Observable
 	 */
 	public void notifyObservers(QualifiedObservableReport arg)
 	{
-		ArrayList<QualifiedObserver> relevantObservers = observers.get(arg.getClass());
+		ArrayList<Observer> relevantObservers = observers.get(arg.getClass());
 		if (relevantObservers != null)
 		{
-			for (QualifiedObserver observer : relevantObservers)
+			for (Observer observer : relevantObservers)
 			{
 				observer.update(this, arg);
 			}
@@ -77,9 +78,9 @@ public abstract class QualifiedObservable extends Observable
 	 * @param reportType
 	 *            the type of information they no longer want to receive
 	 */
-	public void removeObserver(QualifiedObserver observer, Class<?> reportType)
+	public void removeObserver(Observer observer, Class<?> reportType)
 	{
-		ArrayList<QualifiedObserver> relevantObservers = observers.get(reportType);
+		ArrayList<Observer> relevantObservers = observers.get(reportType);
 		relevantObservers.remove(observer);
 	}
 

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Observer;
+
 import org.easymock.EasyMock;
 import org.junit.Test;
 
@@ -17,7 +19,7 @@ public class QualifiedObservableTest
 	public void addOneGetsNotified()
 	{
 		QualifiedObservable obs = new MockQualifiedObservable();
-		QualifiedObserver observer = EasyMock.createMock(QualifiedObserver.class);
+		Observer observer = EasyMock.createMock(Observer.class);
 		observer.update(EasyMock.eq(obs), EasyMock.anyObject(TestReport1.class));
 		EasyMock.replay(observer);
 
@@ -35,8 +37,8 @@ public class QualifiedObservableTest
 	public void addTwoDifferentOneGetsNotified()
 	{
 		QualifiedObservable obs = new MockQualifiedObservable();
-		QualifiedObserver movementObserver = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObserver otherObserver = EasyMock.createMock(QualifiedObserver.class);
+		Observer movementObserver = EasyMock.createMock(Observer.class);
+		Observer otherObserver = EasyMock.createMock(Observer.class);
 		movementObserver.update(EasyMock.eq(obs),EasyMock.anyObject(TestReport2.class));
 		EasyMock.replay(movementObserver);
 		EasyMock.replay(otherObserver);
@@ -57,8 +59,8 @@ public class QualifiedObservableTest
 	public void addTwoSameBothGetNotified()
 	{
 		QualifiedObservable obs = new MockQualifiedObservable();
-		QualifiedObserver movementObserver1 = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObserver movementObserver2 = EasyMock.createMock(QualifiedObserver.class);
+		Observer movementObserver1 = EasyMock.createMock(Observer.class);
+		Observer movementObserver2 = EasyMock.createMock(Observer.class);
 		movementObserver1.update(EasyMock.eq(obs), EasyMock.anyObject(TestReport1.class));
 		movementObserver2.update(EasyMock.eq(obs), EasyMock.anyObject(TestReport1.class));
 		EasyMock.replay(movementObserver1);
@@ -79,8 +81,8 @@ public class QualifiedObservableTest
 	public void afterDeleteNoNotification()
 	{
 		QualifiedObservable obs = new MockQualifiedObservable();
-		QualifiedObserver movementObserver1 = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObserver movementObserver2 = EasyMock.createMock(QualifiedObserver.class);
+		Observer movementObserver1 = EasyMock.createMock(Observer.class);
+		Observer movementObserver2 = EasyMock.createMock(Observer.class);
 		movementObserver2.update(EasyMock.eq(obs), EasyMock.anyObject(TestReport1.class));
 		EasyMock.replay(movementObserver1);
 		EasyMock.replay(movementObserver2);
@@ -101,7 +103,7 @@ public class QualifiedObservableTest
 	public void afterDeleteStillNotifiedOfOtherTypes()
 	{
 		QualifiedObservable obs = new MockQualifiedObservable();
-		QualifiedObserver observer = EasyMock.createMock(QualifiedObserver.class);
+		Observer observer = EasyMock.createMock(Observer.class);
 		observer.update(EasyMock.eq(obs), EasyMock.anyObject(TestReport2.class));
 		EasyMock.replay(observer);
 
@@ -121,8 +123,8 @@ public class QualifiedObservableTest
 	public void canDeleteAllOfOneType()
 	{
 		QualifiedObservable obs = new MockQualifiedObservable();
-		QualifiedObserver movementObserver1 = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObserver movementObserver2 = EasyMock.createMock(QualifiedObserver.class);
+		Observer movementObserver1 = EasyMock.createMock(Observer.class);
+		Observer movementObserver2 = EasyMock.createMock(Observer.class);
 		EasyMock.replay(movementObserver1);
 		EasyMock.replay(movementObserver2);
 
@@ -143,7 +145,7 @@ public class QualifiedObservableTest
 	public void cannotObserveAnUnsupportedQualifier()
 	{
 		QualifiedObservable obs = new MockQualifiedObservable();
-		QualifiedObserver observer1 = EasyMock.createMock(QualifiedObserver.class);
+		Observer observer1 = EasyMock.createMock(Observer.class);
 		EasyMock.replay(observer1);
 
 		obs.addObserver(observer1, TestReportNotReported.class);

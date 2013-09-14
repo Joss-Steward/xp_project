@@ -1,4 +1,6 @@
 import model.PlayerTest;
+import model.QualifiedObservableTest;
+import model.QualifiedObserverConnectorTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -17,7 +19,9 @@ import communication.StateAccumulatorConnectorClientTest;
 	LoginMessagePackerTest.class,
 	StateAccumulatorConnectorClientTest.class,
 	
-	PlayerTest.class
+	PlayerTest.class,
+	QualifiedObservableTest.class,
+	QualifiedObserverConnectorTest.class
 })
 
 public class AllClientTests

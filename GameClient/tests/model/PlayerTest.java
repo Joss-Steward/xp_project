@@ -1,6 +1,8 @@
 package model;
 import static org.junit.Assert.*;
 
+import java.util.Observer;
+
 import model.reports.ThisPlayerMovedReport;
 
 import org.easymock.EasyMock;
@@ -40,7 +42,7 @@ public class PlayerTest
 	@Test
 	public void notifiesOnMove()
 	{
-		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		Observer obs = EasyMock.createMock(Observer.class);
 		ThisPlayerMovedReport report = new ThisPlayerMovedReport(new Position(3,4));
 		obs.update(EasyMock.eq(Player.getSingleton()), EasyMock.eq(report));
 		EasyMock.replay(obs);

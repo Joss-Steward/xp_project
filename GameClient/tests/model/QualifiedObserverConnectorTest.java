@@ -2,6 +2,8 @@ package model;
 
 import static org.junit.Assert.*;
 
+import java.util.Observer;
+
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,8 +52,8 @@ public class QualifiedObserverConnectorTest
 		QualifiedObserverConnector connector = QualifiedObserverConnector.getSingleton();
 		QualifiedObservable mockObservable = new MockQualifiedObservable();
 		connector.registerQualifiedObservable(mockObservable, TestReport.class);
-		QualifiedObserver mockObserver = EasyMock.createMock(QualifiedObserver.class);
-		connector.registerQualifiedObserver(mockObserver, TestReport.class);
+		Observer mockObserver = EasyMock.createMock(Observer.class);
+		connector.registerObserver(mockObserver, TestReport.class);
 
 		// we should expect an update on notification
 		mockObserver.update(EasyMock.eq(mockObservable), EasyMock.anyObject(TestReport.class));
@@ -72,8 +74,8 @@ public class QualifiedObserverConnectorTest
 		// set up the connection
 		QualifiedObserverConnector connector = QualifiedObserverConnector.getSingleton();
 		QualifiedObservable mockObservable = new MockQualifiedObservable();
-		QualifiedObserver mockObserver = EasyMock.createMock(QualifiedObserver.class);
-		connector.registerQualifiedObserver(mockObserver, TestReport.class);
+		Observer mockObserver = EasyMock.createMock(Observer.class);
+		connector.registerObserver(mockObserver, TestReport.class);
 		connector.registerQualifiedObservable(mockObservable, TestReport.class);
 
 		// we should expect an update on notification

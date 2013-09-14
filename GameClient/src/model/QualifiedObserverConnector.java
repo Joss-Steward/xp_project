@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Observer;
 
 /**
  * @author Merlin
@@ -13,12 +14,12 @@ public class QualifiedObserverConnector
 	private static QualifiedObserverConnector singleton;
 	
 	private HashMap<Class<?>, ArrayList<QualifiedObservable>> observables;
-	private HashMap<Class<?>, ArrayList<QualifiedObserver>> observers;
+	private HashMap<Class<?>, ArrayList<Observer>> observers;
 	
 	private QualifiedObserverConnector()
 	{
 		observables = new HashMap<Class<?>, ArrayList<QualifiedObservable>>();
-		observers = new HashMap<Class<?>, ArrayList<QualifiedObserver>>();
+		observers = new HashMap<Class<?>, ArrayList<Observer>>();
 	}
 	
 	/**
@@ -51,10 +52,10 @@ public class QualifiedObserverConnector
 	{
 		rememberObservable(observable, reportType);
 		
-		ArrayList<QualifiedObserver> relevantObservers = observers.get(reportType);
+		ArrayList<Observer> relevantObservers = observers.get(reportType);
 		if (relevantObservers != null)
 		{
-			for(QualifiedObserver observer:relevantObservers)
+			for(Observer observer:relevantObservers)
 			{
 				observable.addObserver(observer, reportType);
 			}
@@ -80,7 +81,7 @@ public class QualifiedObserverConnector
 	 * @param observer the observer who is interested
 	 * @param reportType the report type the observer wants to receive
 	 */
-	public void registerQualifiedObserver(QualifiedObserver observer, Class<?> reportType)
+	public void registerObserver(Observer observer, Class<?> reportType)
 	{
 		rememberObserver(observer, reportType);
 		
@@ -98,12 +99,12 @@ public class QualifiedObserverConnector
 	 * @param observer the observer we should remember
 	 * @param reportType the report type this observer is interested in
 	 */
-	private void rememberObserver(QualifiedObserver observer, Class<?> reportType)
+	private void rememberObserver(Observer observer, Class<?> reportType)
 	{
-		ArrayList<QualifiedObserver> relevantObservers = observers.get(reportType);
+		ArrayList<Observer> relevantObservers = observers.get(reportType);
 		if (relevantObservers == null)
 		{
-			relevantObservers = new ArrayList<QualifiedObserver>();
+			relevantObservers = new ArrayList<Observer>();
 			observers.put(reportType, relevantObservers);
 		}
 		relevantObservers.add(observer);
