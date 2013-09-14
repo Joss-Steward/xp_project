@@ -89,7 +89,7 @@ public class QualifiedObservableTest
 
 		obs.addObserver(movementObserver1, TestReport1.class);
 		obs.addObserver(movementObserver2, TestReport1.class);
-		obs.removeObserver(movementObserver1, TestReport1.class);
+		obs.deleteObserver(movementObserver1, TestReport1.class);
 		obs.notifyObservers(new TestReport1());
 		EasyMock.verify(movementObserver1);
 		EasyMock.verify(movementObserver2);
@@ -109,7 +109,7 @@ public class QualifiedObservableTest
 
 		obs.addObserver(observer, TestReport1.class);
 		obs.addObserver(observer, TestReport2.class);
-		obs.removeObserver(observer, TestReport1.class);
+		obs.deleteObserver(observer, TestReport1.class);
 		obs.notifyObservers(new TestReport1());
 		obs.notifyObservers(new TestReport2());
 		EasyMock.verify(observer);
@@ -130,8 +130,8 @@ public class QualifiedObservableTest
 
 		obs.addObserver(movementObserver1, TestReport1.class);
 		obs.addObserver(movementObserver2, TestReport1.class);
-		obs.removeObserver(movementObserver1, TestReport1.class);
-		obs.removeObserver(movementObserver2, TestReport1.class);
+		obs.deleteObserver(movementObserver1, TestReport1.class);
+		obs.deleteObserver(movementObserver2, TestReport1.class);
 		obs.notifyObservers(new TestReport1());
 		EasyMock.verify(movementObserver1);
 		EasyMock.verify(movementObserver2);

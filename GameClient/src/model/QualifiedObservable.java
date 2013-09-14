@@ -78,7 +78,7 @@ public abstract class QualifiedObservable extends Observable
 	 * @param reportType
 	 *            the type of information they no longer want to receive
 	 */
-	public void removeObserver(Observer observer, Class<?> reportType)
+	public void deleteObserver(Observer observer, Class<?> reportType)
 	{
 		ArrayList<Observer> relevantObservers = observers.get(reportType);
 		relevantObservers.remove(observer);
