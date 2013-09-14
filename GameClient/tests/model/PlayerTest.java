@@ -37,7 +37,7 @@ public class PlayerTest
 	}
 
 	/**
-	 * 
+	 * Make sure that observers get an appropriate notification when the current player moves
 	 */
 	@Test
 	public void notifiesOnMove()
