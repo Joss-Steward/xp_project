@@ -1,7 +1,7 @@
 package model;
 import static org.junit.Assert.*;
 
-import java.util.Observer;
+import model.reports.ThisPlayerMovedReport;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -40,27 +40,14 @@ public class PlayerTest
 	@Test
 	public void notifiesOnMove()
 	{
-		Observer obs = EasyMock.createMock(Observer.class);
-		obs.update(Player.getSingleton(), new Position(3,4));
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		ThisPlayerMovedReport report = new ThisPlayerMovedReport(new Position(3,4));
+		obs.update(EasyMock.eq(Player.getSingleton()), EasyMock.eq(report));
 		EasyMock.replay(obs);
 		
-		Player.getSingleton().addObserver(obs);
+		Player.getSingleton().addObserver(obs, ThisPlayerMovedReport.class);
 		Player.getSingleton().move(new Position(3,4));
 		EasyMock.verify(obs);
 	}
 	
-	/**
-	 * 
-	 */
-	@Test
-	public void notifiesOnLogin()
-	{
-		Observer obs = EasyMock.createMock(Observer.class);
-		obs.update(Player.getSingleton(), new String("fred"));
-		EasyMock.replay(obs);
-		
-		Player.getSingleton().addObserver(obs);
-		Player.getSingleton().setName("fred");
-		EasyMock.verify(obs);
-	}
 }

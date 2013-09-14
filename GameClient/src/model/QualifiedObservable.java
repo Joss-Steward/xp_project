@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Observable;
 
 /**
  * This is an implementation of the observer pattern that allows observers to
@@ -13,7 +14,7 @@ import java.util.HashMap;
  * @author Merlin
  * 
  */
-public abstract class QualifiedObservable
+public abstract class QualifiedObservable extends Observable
 {
 
 	private HashMap<Class<?>, ArrayList<QualifiedObserver>> observers = new HashMap<Class<?>, ArrayList<QualifiedObserver>>();
