@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import model.QualifiedObservableReport;
 
 import org.easymock.EasyMock;
 import org.junit.Test;
@@ -69,12 +70,12 @@ public class StateAccumulatorTest
 	public void queuesOnUpdate()
 	{
 		MockObservable obs = new MockObservable();
-		Object object = new Object();
+		QualifiedObservableReport object = EasyMock.createMock(QualifiedObservableReport.class);
 		Message msg = EasyMock.createMock(Message.class);
 		MessagePackerSet packerSet = new MessagePackerSet();
 		MessagePacker packer = EasyMock.createMock(MessagePacker.class);
-		EasyMock.expect(packer.pack(obs, object)).andReturn(msg);
-		packerSet.registerPacker(obs.getClass(), object.getClass(), packer);
+		EasyMock.expect(packer.pack(object)).andReturn(msg);
+		packerSet.registerPacker( object.getClass(), packer);
 		StateAccumulatorConnector conn = EasyMock.createMock(StateAccumulatorConnector.class);
 		conn.setUpObserverLinks(EasyMock.anyObject(StateAccumulator.class));
 		EasyMock.expect(conn.getMessagePackerSet()).andReturn(packerSet);

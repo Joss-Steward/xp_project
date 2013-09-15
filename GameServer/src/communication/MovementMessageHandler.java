@@ -1,7 +1,6 @@
 package communication;
 
 import communication.messages.Message;
-import communication.messages.MovementMessage;
 
 
 /**
@@ -13,13 +12,13 @@ public class MovementMessageHandler implements MessageHandler
 {
 
 	/**
-	 * When one player moves, we should report it to the other players through the MovementNotifier
+	 * When one player moves, we should update the state of the engine
 	 * @see MessageHandler#process(Message)
 	 */
 	@Override
 	public void process(Message msg)
 	{
-		MovementNotifier.getSingleton().playerMoved((MovementMessage)msg);
+		// TODO  Tell someone in the engine . . .
 	}
 
 }

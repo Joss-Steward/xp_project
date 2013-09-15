@@ -1,7 +1,5 @@
 package communication;
 
-import communication.messages.MovementMessage;
-
 /**
  * Configures StateAccumulators in the game server
  * 
@@ -20,8 +18,8 @@ public class StateAccumulatorConnectorServer implements
 	public StateAccumulatorConnectorServer()
 	{
 		packerSet = new MessagePackerSet();
-		packerSet.registerPacker(MovementNotifier.class, MovementMessage.class,
-				new MovementMessagePacker());
+//		packerSet.registerPacker( MovementMessage.class,
+//				new MovementMessagePacker());
 	}
 
 	/**
@@ -30,7 +28,7 @@ public class StateAccumulatorConnectorServer implements
 	@Override
 	public void setUpObserverLinks(StateAccumulator accumulator)
 	{
-		MovementNotifier.getSingleton().addObserver(accumulator);
+		//TODO we need to connect it to some place!
 	}
 
 	/**
@@ -48,6 +46,6 @@ public class StateAccumulatorConnectorServer implements
 	@Override
 	public void destroyObserverLinks(StateAccumulator accumulator)
 	{
-		MovementNotifier.getSingleton().deleteObserver(accumulator);
+//		MovementNotifier.getSingleton().deleteObserver(accumulator);
 	}
 }

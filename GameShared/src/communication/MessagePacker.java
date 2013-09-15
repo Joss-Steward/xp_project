@@ -1,5 +1,5 @@
 package communication;
-import java.util.Observable;
+import model.QualifiedObservableReport;
 
 import communication.messages.Message;
 
@@ -14,11 +14,10 @@ public interface MessagePacker
 
 	/**
 	 * Build a message describing an event
-	 * @param obs the observable that reported the event
 	 * @param object the object pushed by the observable in its notification
 	 * @return the appropriate message
 	 */
-	Message pack(Observable obs, Object object);
+	Message pack( QualifiedObservableReport object);
 
 	
 }

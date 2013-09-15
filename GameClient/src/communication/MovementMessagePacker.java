@@ -1,12 +1,7 @@
 package communication;
-import java.util.Observable;
-
-import model.Player;
-
+import model.QualifiedObservableReport;
 import communication.MessagePacker;
 import communication.messages.Message;
-import communication.messages.MovementMessage;
-import data.Position;
 
 
 /**
@@ -22,11 +17,11 @@ public class MovementMessagePacker implements MessagePacker
 	 * 
 	 */
 	@Override
-	public Message pack(Observable obs, Object object)
+	public Message pack(QualifiedObservableReport object)
 	{
-		Player player = (Player)obs;
-		Message msg = new MovementMessage(player.getID(), (Position)object);
-		return msg;
+//		Player player = (Player)obs;
+//		Message msg = new MovementMessage(player.getID(), (Position)object);
+		return null;
 	}
 
 }

@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import model.QualifiedObservableReport;
 import communication.messages.Message;
 //TODO modify this to have independent interpretation of updates into messages
 
@@ -52,7 +53,7 @@ public class StateAccumulator implements Observer
 		Message msg;
 		try
 		{
-			msg = packerSet.pack(arg0, arg1);
+			msg = packerSet.pack( (QualifiedObservableReport) arg1);
 			if (msg!= null)
 			{
 				pendingMsgs.add(msg);

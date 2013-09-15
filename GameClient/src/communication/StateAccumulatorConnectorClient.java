@@ -24,10 +24,10 @@ public class StateAccumulatorConnectorClient implements
 	public StateAccumulatorConnectorClient()
 	{
 		packerSet = new MessagePackerSet();
-		packerSet.registerPacker(Player.class, Position.class,
-				new MovementMessagePacker());
-		packerSet.registerPacker(Player.class, String.class,
-				new LoginMessagePacker());
+//		packerSet.registerPacker(Player.class, Position.class,
+//				new MovementMessagePacker());
+//		packerSet.registerPacker(Player.class, String.class,
+//				new LoginMessagePacker());
 	}
 
 	/**

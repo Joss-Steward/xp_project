@@ -2,12 +2,7 @@ package communication;
 
 import static org.junit.Assert.*;
 
-import model.Player;
-
 import org.junit.Test;
-
-import communication.LoginMessagePacker;
-import communication.messages.LoginMessage;
 
 /**
  * 
@@ -23,9 +18,10 @@ public class LoginMessagePackerTest
 	@Test
 	public void test()
 	{
-		LoginMessagePacker packer = new LoginMessagePacker();
-		LoginMessage msg = (LoginMessage) packer.pack(Player.getSingleton(), "harry");
-		assertEquals("harry", msg.getUserName());
+		fail("login sequence");
+//		LoginMessagePacker packer = new LoginMessagePacker();
+//		LoginMessage msg = (LoginMessage) packer.pack( "harry");
+//		assertEquals("harry", msg.getUserName());
 	};
 
 }

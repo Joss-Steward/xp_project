@@ -2,7 +2,7 @@ package communication;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Observable;
+import model.QualifiedObservableReport;
 
 import org.easymock.EasyMock;
 import org.junit.Test;
@@ -33,15 +33,14 @@ public class MessagePackerSetTest
 	{
 		MessagePacker packer = EasyMock.createMock(MessagePacker.class);
 		Message msg = EasyMock.createMock(Message.class);
-		Observable obs = new MockObservable();
-		Object object = new Object();
-		EasyMock.expect(packer.pack(obs, object)).andReturn(msg);
+		QualifiedObservableReport object = EasyMock.createMock(QualifiedObservableReport.class);
+		EasyMock.expect(packer.pack( object)).andReturn(msg);
 		EasyMock.replay(packer);
 		EasyMock.replay(msg);
 
 		MessagePackerSet set = new MessagePackerSet();
-		set.registerPacker(obs.getClass(), object.getClass(), packer);
-		Message result = set.pack(obs, object);
+		set.registerPacker(object.getClass(), packer);
+		Message result = set.pack( object);
 		assertEquals(result, msg);
 		EasyMock.verify(msg);
 		EasyMock.verify(packer);
@@ -60,17 +59,11 @@ public class MessagePackerSetTest
 	{
 		MessagePackerSet set = new MessagePackerSet();
 		Message msg = EasyMock.createMock(Message.class);
-		Observable obs = new MockObservable();
-		Object object = new Object();
+		QualifiedObservableReport object = EasyMock.createMock(QualifiedObservableReport.class);
 		EasyMock.replay(msg);
 
-		set.pack(obs, object);
+		set.pack(object);
 		EasyMock.verify(msg);
-
-	}
-
-	private class MockObservable extends Observable
-	{
 
 	}
 

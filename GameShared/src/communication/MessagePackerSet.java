@@ -1,7 +1,7 @@
 package communication;
 import java.util.HashMap;
-import java.util.Observable;
 
+import model.QualifiedObservableReport;
 import communication.messages.Message;
 
 
@@ -12,111 +12,50 @@ import communication.messages.Message;
  */
 public final class MessagePackerSet
 {
-	private class Key
-	{
-
-		private final Class<? extends Observable> observableClass;
-
-		private final Class<? extends Object> objectClass;
-
-		
-		public Key(Class<? extends Observable> class1,
-			Class<? extends Object> class2)
-		{
-			observableClass = class1;
-			objectClass = class2;
-		}
-		@Override
-		public boolean equals(Object obj)
-		{
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (!(obj instanceof Key)) 
-				return false;
-			Key other = (Key) obj;
-			if (!getOuterType().equals(other.getOuterType()))
-				return false;
-			if (objectClass == null)
-			{
-				if (other.objectClass != null)
-					return false;
-			} else if (!objectClass.equals(other.objectClass))
-				return false;
-			if (observableClass == null)
-			{
-				if (other.observableClass != null)
-					return false;
-			} else if (!observableClass.equals(other.observableClass))
-				return false;
-			return true;
-		}
-		
-		private MessagePackerSet getOuterType()
-		{
-			return MessagePackerSet.this;
-		}
-
-		@Override
-		public int hashCode()
-		{
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + getOuterType().hashCode();
-			result = prime * result
-					+ ((objectClass == null) ? 0 : objectClass.hashCode());
-			result = prime * result
-					+ ((observableClass == null) ? 0 : observableClass.hashCode());
-			return result;
-		}
-	}
 	
-	private HashMap<Key, MessagePacker> packers;
+	
+	private HashMap<Class <? extends QualifiedObservableReport>, MessagePacker> packers;
 	
 	/**
 	 * 
 	 */
 	public MessagePackerSet()
 	{
-		packers = new HashMap<Key, MessagePacker>();
+		packers = new HashMap<Class <? extends QualifiedObservableReport>, MessagePacker>();
 	}
 
-	MessagePacker getPackerFor(Observable obs, Object object)
+	MessagePacker getPackerFor(Class < ? extends QualifiedObservableReport> reportType)
 			throws CommunicationException
 	{
-		Key key = new Key(obs.getClass(), object.getClass());
-		if (!packers.containsKey(key))
+		if (!packers.containsKey(reportType))
 		{
-			throw new CommunicationException("No MessagePacker for " + obs.getClass() + " sending a " + object.getClass());
+			throw new CommunicationException("No MessagePacker for " + reportType);
 		}
-		MessagePacker packer = packers.get(key);
+		MessagePacker packer = packers.get(reportType);
 		return packer;
 	}
 
 	 /**
-	 * Get the appropriate packer to pack this notification into a message
-	 * @param obs the type of the observer that made the notification
-	 * @param object the type of object pushed by the observer
+	 * translate the report into the message that should travel over the connection
+	 * @param report the report that we are packing for transport
 	 * @return the message describing the event
 	 * @throws CommunicationException if there is no packer registered for this type of event
 	 */
-	public Message pack(Observable obs, Object object) throws CommunicationException
+	public Message pack(QualifiedObservableReport report) throws CommunicationException
 	{
-		MessagePacker packer = getPackerFor(obs, object);
-		return packer.pack(obs, object);
+		MessagePacker packer = getPackerFor(report.getClass());
+		return packer.pack(report);
 		
 	}
 
 	/**
 	 * Add a MessagePacker to this set
-	 * @param class1 the class of observable that made the notification
-	 * @param class2 the class of the object pushed by the observer
+	 * @param reportType the class of the report we are supposed to react to
 	 * @param packer the packer that should interpret this type of notification
 	 */
-	public void registerPacker(Class<? extends Observable> class1,
-			Class<? extends Object> class2, MessagePacker packer)
+	public void registerPacker(Class<? extends QualifiedObservableReport> reportType,
+			MessagePacker packer)
 	{
-		packers.put(new Key(class1, class2),packer);
+		packers.put(reportType,packer);
 	}
 }

@@ -1,8 +1,6 @@
 package communication;
-import java.util.Observable;
-
+import model.QualifiedObservableReport;
 import communication.MessagePacker;
-import communication.messages.LoginMessage;
 import communication.messages.Message;
 
 
@@ -19,10 +17,11 @@ public class LoginMessagePacker implements MessagePacker
 	 * 
 	 */
 	@Override
-	public Message pack(Observable obs, Object object)
+	public Message pack(QualifiedObservableReport object)
 	{
-		Message msg = new LoginMessage((String)object);
-		return msg;
+//		Message msg = new LoginMessage((String)object);
+//		return msg;
+		return null;
 	}
 
 }

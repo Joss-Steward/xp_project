@@ -1,5 +1,5 @@
 package communication;
-import java.util.Observable;
+import model.QualifiedObservableReport;
 
 import communication.messages.Message;
 import communication.messages.MovementMessage;
@@ -17,7 +17,7 @@ public class MovementMessagePacker implements MessagePacker
 	 * 
 	 */
 	@Override
-	public Message pack(Observable obs, Object object)
+	public Message pack(QualifiedObservableReport object)
 	{
 		return (MovementMessage)object;
 	}
