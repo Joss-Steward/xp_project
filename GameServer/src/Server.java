@@ -3,10 +3,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import communication.ConnectionManager;
+import communication.LoginMessageHandler;
 import communication.MessageHandlerSet;
-import communication.MovementMessageHandler;
 import communication.StateAccumulatorConnectorServer;
-import communication.messages.MovementMessage;
+import communication.messages.LoginMessage;
 
 /**
  * A daemon that resides on the server listening to the gigabuds and to client
@@ -30,7 +30,7 @@ public class Server implements Runnable
 	private void initializeMessageHandlers()
 	{
 		handlers = new MessageHandlerSet();
-		handlers.registerHandler(MovementMessage.class, new MovementMessageHandler());
+		handlers.registerHandler(LoginMessage.class, new LoginMessageHandler());
 	}
 
 	/**

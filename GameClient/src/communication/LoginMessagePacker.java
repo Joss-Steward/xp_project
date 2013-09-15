@@ -1,6 +1,8 @@
 package communication;
 import model.QualifiedObservableReport;
+import model.reports.LoginInitiatedReport;
 import communication.MessagePacker;
+import communication.messages.LoginMessage;
 import communication.messages.Message;
 
 
@@ -19,9 +21,13 @@ public class LoginMessagePacker implements MessagePacker
 	@Override
 	public Message pack(QualifiedObservableReport object)
 	{
-//		Message msg = new LoginMessage((String)object);
-//		return msg;
-		return null;
+		if (object.getClass() != LoginInitiatedReport.class)
+		{
+			throw new IllegalArgumentException("LoginMessagePacker cannot pack messages of type " + object.getClass());
+		}
+		LoginInitiatedReport report = (LoginInitiatedReport)object;
+		Message msg = new LoginMessage(report.getName(), report.getPassword());
+		return msg;
 	}
 
 }

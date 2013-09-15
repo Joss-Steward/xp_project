@@ -21,7 +21,7 @@ public class QualifiedObserverConnectorTest
 	@Before
 	public void setUp()
 	{
-		QualifiedObserverConnector.resetSingleton();
+		QualifiedObservableConnector.resetSingleton();
 	}
 
 	/**
@@ -31,13 +31,13 @@ public class QualifiedObserverConnectorTest
 	@Test
 	public void isSingleton()
 	{
-		QualifiedObserverConnector connector = QualifiedObserverConnector.getSingleton();
+		QualifiedObservableConnector connector = QualifiedObservableConnector.getSingleton();
 		assertNotNull(connector);
-		QualifiedObserverConnector connector2 = QualifiedObserverConnector.getSingleton();
+		QualifiedObservableConnector connector2 = QualifiedObservableConnector.getSingleton();
 		assertNotNull(connector2);
 		assertSame(connector, connector2);
-		QualifiedObserverConnector.resetSingleton();
-		connector2 = QualifiedObserverConnector.getSingleton();
+		QualifiedObservableConnector.resetSingleton();
+		connector2 = QualifiedObservableConnector.getSingleton();
 		assertNotSame(connector, connector2);
 	}
 
@@ -49,7 +49,7 @@ public class QualifiedObserverConnectorTest
 	public void registerQualifiedObservable()
 	{
 		// set up the connection
-		QualifiedObserverConnector connector = QualifiedObserverConnector.getSingleton();
+		QualifiedObservableConnector connector = QualifiedObservableConnector.getSingleton();
 		QualifiedObservable mockObservable = new MockQualifiedObservable();
 		connector.registerQualifiedObservable(mockObservable, TestReport.class);
 		Observer mockObserver = EasyMock.createMock(Observer.class);
@@ -73,7 +73,7 @@ public class QualifiedObserverConnectorTest
 	public void canRegisterObserverBeforeObservable()
 	{
 		// set up the connection
-		QualifiedObserverConnector connector = QualifiedObserverConnector.getSingleton();
+		QualifiedObservableConnector connector = QualifiedObservableConnector.getSingleton();
 		QualifiedObservable mockObservable = new MockQualifiedObservable();
 		Observer mockObserver = EasyMock.createMock(Observer.class);
 		connector.registerObserver(mockObserver, TestReport.class);
@@ -96,7 +96,7 @@ public class QualifiedObserverConnectorTest
 	public void canUnRegisterAnObservable()
 	{
 		// set up the connection
-		QualifiedObserverConnector connector = QualifiedObserverConnector.getSingleton();
+		QualifiedObservableConnector connector = QualifiedObservableConnector.getSingleton();
 		QualifiedObservable mockObservable = new MockQualifiedObservable();
 		Observer mockObserver = EasyMock.createMock(Observer.class);
 		connector.registerObserver(mockObserver, TestReport.class);
@@ -117,7 +117,7 @@ public class QualifiedObserverConnectorTest
 	public void canUnRegisterAnObserver()
 	{
 		// set up the connection
-		QualifiedObserverConnector connector = QualifiedObserverConnector.getSingleton();
+		QualifiedObservableConnector connector = QualifiedObservableConnector.getSingleton();
 		QualifiedObservable mockObservable = new MockQualifiedObservable();
 		Observer mockObserver = EasyMock.createMock(Observer.class);
 		connector.registerObserver(mockObserver, TestReport.class);
@@ -139,7 +139,7 @@ public class QualifiedObserverConnectorTest
 	public void unregistrationForgetsObserver()
 	{
 		// set up the connection
-		QualifiedObserverConnector connector = QualifiedObserverConnector.getSingleton();
+		QualifiedObservableConnector connector = QualifiedObservableConnector.getSingleton();
 		QualifiedObservable mockObservable = new MockQualifiedObservable();
 		Observer mockObserver = EasyMock.createMock(Observer.class);
 		connector.registerObserver(mockObserver, TestReport.class);
@@ -160,7 +160,7 @@ public class QualifiedObserverConnectorTest
 	@Test
 	public void observerUnregistrationWhenNotRegistered()
 	{
-		QualifiedObserverConnector connector = QualifiedObserverConnector.getSingleton();
+		QualifiedObservableConnector connector = QualifiedObservableConnector.getSingleton();
 		Observer mockObserver = EasyMock.createMock(Observer.class);
 		connector.unregisterObserver(mockObserver, TestReport.class);
 	}
@@ -173,7 +173,7 @@ public class QualifiedObserverConnectorTest
 	public void unregistrationOfObservableForgetsObserver()
 	{
 		// set up the connection
-		QualifiedObserverConnector connector = QualifiedObserverConnector.getSingleton();
+		QualifiedObservableConnector connector = QualifiedObservableConnector.getSingleton();
 		QualifiedObservable mockObservable = new MockQualifiedObservable();
 		Observer mockObserver = EasyMock.createMock(Observer.class);
 		connector.registerQualifiedObservable(mockObservable, TestReport.class);
@@ -194,7 +194,7 @@ public class QualifiedObserverConnectorTest
 	@Test
 	public void observableUnregistrationWhenNotRegistered()
 	{
-		QualifiedObserverConnector connector = QualifiedObserverConnector.getSingleton();
+		QualifiedObservableConnector connector = QualifiedObservableConnector.getSingleton();
 		QualifiedObservable mockObservable = new MockQualifiedObservable();
 		connector.unregisterQualifiedObservable(mockObservable, TestReport.class);
 	}

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import model.Player;
+import model.reports.LoginInitiatedReport;
 
 import org.junit.Test;
 
@@ -31,17 +32,16 @@ public class StateAccumulatorConnectorClientTest
 	@Test
 	public void testLoginIsHookedUp() throws CommunicationException
 	{
-		fail();
-//		StateAccumulatorConnectorClient connector = new StateAccumulatorConnectorClient();
-//		MessagePackerSet packerSet = connector.getMessagePackerSet();
-//		MessagePacker packer = packerSet.getPackerFor(Player.getSingleton(), "fred");
-//		assertEquals(LoginMessagePacker.class, packer.getClass());
-//		
-//		StateAccumulator accum = new StateAccumulator(connector);
-//		accum.update(Player.getSingleton(), "fred");
-//		ArrayList<Message> queue = accum.getPendingMsgs();
-//		assertEquals(1, queue.size());
-//		assertEquals(LoginMessage.class, queue.get(0).getClass());
+		StateAccumulatorConnectorClient connector = new StateAccumulatorConnectorClient();
+		MessagePackerSet packerSet = connector.getMessagePackerSet();
+		MessagePacker packer = packerSet.getPackerFor(LoginInitiatedReport.class);
+		assertEquals(LoginMessagePacker.class, packer.getClass());
+		
+		StateAccumulator accum = new StateAccumulator(connector);
+		accum.update(Player.getSingleton(), new LoginInitiatedReport("ralph","dog"));
+		ArrayList<Message> queue = accum.getPendingMsgs();
+		assertEquals(1, queue.size());
+		assertEquals(LoginMessage.class, queue.get(0).getClass());
 	}
 	
 	/**

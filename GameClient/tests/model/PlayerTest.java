@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 
 import java.util.Observer;
 
+import model.reports.LoginInitiatedReport;
 import model.reports.ThisPlayerMovedReport;
 
 import org.easymock.EasyMock;
@@ -26,6 +27,7 @@ public class PlayerTest
 	public void reset()
 	{
 		Player.resetSingleton();
+		QualifiedObservableConnector.resetSingleton();
 	}
 	/**
 	 * There should be only one player
@@ -33,7 +35,10 @@ public class PlayerTest
 	@Test
 	public void testSingleton()
 	{
-		assertSame(Player.getSingleton(),Player.getSingleton());
+		Player player1 = Player.getSingleton();
+		assertSame(player1,Player.getSingleton());
+		Player.resetSingleton();
+		assertNotSame(player1,Player.getSingleton());
 	}
 
 	/**
@@ -52,4 +57,33 @@ public class PlayerTest
 		EasyMock.verify(obs);
 	}
 	
+	/**
+	 * Just make sure he remembers when a login is started
+	 */
+	@Test
+	public void canStartToLogin()
+	{
+		Player p = Player.getSingleton();
+		assertFalse(p.isLoginInProgress());
+		p.initiateLogin("Fred", "mommy");
+		assertTrue(p.isLoginInProgress());
+		assertEquals("Fred",p.getName());
+	}
+	
+	/**
+	 * Make sure that observers who want to be told when a login is initiated are told
+	 */
+	@Test
+	public void notifiesOnLoginInitiation()
+	{
+		Observer obs = EasyMock.createMock(Observer.class);
+		LoginInitiatedReport report = new LoginInitiatedReport("Fred","daddy");
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, LoginInitiatedReport.class);
+		obs.update(EasyMock.eq(Player.getSingleton()), EasyMock.eq(report));
+		EasyMock.replay(obs);
+		
+		Player.getSingleton().initiateLogin("Fred","daddy");
+		EasyMock.verify(obs);
+		
+	}
 }

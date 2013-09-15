@@ -3,13 +3,12 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+import model.CommandLogin;
 import model.Player;
-
 import communication.ConnectionManager;
 import communication.MessageHandlerSet;
 import communication.StateAccumulatorConnectorClient;
 import communication.messages.MovementMessage;
-
 import data.Position;
 
 /**
@@ -55,7 +54,8 @@ public class ClientRunner
 				System.out.println("user moved " + Player.getSingleton().getID() + " to " + positionParts[0] + ", " + positionParts[1]);
 			} else if (tokens[0].equalsIgnoreCase("login"))
 			{
-				Player.getSingleton().setName(tokens[1]);
+				CommandLogin command = new CommandLogin(tokens[1],tokens[2]);
+				command.execute();
 				System.out.println("user specified id " + tokens[1]);
 			} else 
 			{

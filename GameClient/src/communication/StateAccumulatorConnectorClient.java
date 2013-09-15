@@ -1,5 +1,7 @@
 package communication;
 import model.Player;
+import model.QualifiedObservableConnector;
+import model.reports.LoginInitiatedReport;
 import communication.MessagePackerSet;
 import communication.StateAccumulator;
 import communication.StateAccumulatorConnector;
@@ -26,8 +28,8 @@ public class StateAccumulatorConnectorClient implements
 		packerSet = new MessagePackerSet();
 //		packerSet.registerPacker(Player.class, Position.class,
 //				new MovementMessagePacker());
-//		packerSet.registerPacker(Player.class, String.class,
-//				new LoginMessagePacker());
+		packerSet.registerPacker(LoginInitiatedReport.class,
+				new LoginMessagePacker());
 	}
 
 	/**
@@ -36,7 +38,7 @@ public class StateAccumulatorConnectorClient implements
 	@Override
 	public void setUpObserverLinks(StateAccumulator accumulator)
 	{
-		Player.getSingleton().addObserver(accumulator);
+		QualifiedObservableConnector.getSingleton().registerObserver(accumulator, LoginInitiatedReport.class);
 	}
 
 	/**
@@ -54,6 +56,6 @@ public class StateAccumulatorConnectorClient implements
 	@Override
 	public void destroyObserverLinks(StateAccumulator accumulator)
 	{
-		Player.getSingleton().deleteObserver(accumulator);
+		QualifiedObservableConnector.getSingleton().unregisterObserver(accumulator, LoginInitiatedReport.class);
 	}
 }

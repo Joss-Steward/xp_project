@@ -1,8 +1,11 @@
 package communication;
 
 import static org.junit.Assert.*;
+import model.reports.LoginInitiatedReport;
 
 import org.junit.Test;
+
+import communication.messages.LoginMessage;
 
 /**
  * 
@@ -18,10 +21,10 @@ public class LoginMessagePackerTest
 	@Test
 	public void test()
 	{
-		fail("login sequence");
-//		LoginMessagePacker packer = new LoginMessagePacker();
-//		LoginMessage msg = (LoginMessage) packer.pack( "harry");
-//		assertEquals("harry", msg.getUserName());
+		LoginMessagePacker packer = new LoginMessagePacker();
+		LoginMessage msg = (LoginMessage) packer.pack(new LoginInitiatedReport("harry","elizabeth"));
+		assertEquals("harry", msg.getUserName());
+		assertEquals("elizabeth", msg.getPassword());
 	};
 
 }

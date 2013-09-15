@@ -1,6 +1,7 @@
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import communication.LoginMessageHandlerTest;
 import communication.MovementMessageHandlerTest;
 
 /**
@@ -10,6 +11,7 @@ import communication.MovementMessageHandlerTest;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 { 
+	LoginMessageHandlerTest.class,
 	MovementMessageHandlerTest.class,
 })
 

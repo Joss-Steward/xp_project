@@ -17,9 +17,10 @@ public class LoginMessageTest
 	@Test
 	public void testToString()
 	{
-		LoginMessage msg = new LoginMessage("fred");
-		assertEquals("Login Message: userName = fred", msg.toString());
+		LoginMessage msg = new LoginMessage("fred","xxx");
+		assertEquals("Login Message: userName = fred and password = xxx", msg.toString());
 		assertEquals("fred", msg.getUserName());
+		assertEquals("xxx", msg.getPassword());
 	}
 
 }

@@ -1,5 +1,6 @@
 package model;
 
+import model.reports.LoginInitiatedReport;
 import model.reports.ThisPlayerMovedReport;
 import data.Position;
 
@@ -40,9 +41,12 @@ public class Player extends QualifiedObservable
 	private int id;
 	private String name;
 
+	private boolean loginInProgress;
+
 	private Player()
 	{
 		this.position = new Position(0, 0);
+		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this, LoginInitiatedReport.class);
 	}
 
 	/**
@@ -89,7 +93,8 @@ public class Player extends QualifiedObservable
 	@Override
 	public boolean notifiesOn(Class<?> reportType)
 	{
-		if (reportType.equals(ThisPlayerMovedReport.class))
+		if (reportType.equals(ThisPlayerMovedReport.class) || 
+				reportType.equals(LoginInitiatedReport.class))
 		{
 			return true;
 		}
@@ -116,5 +121,26 @@ public class Player extends QualifiedObservable
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+	/**
+	 * @return true if we are in the process of trying to log into the server
+	 */
+	public boolean isLoginInProgress()
+	{
+		return loginInProgress;
+	}
+
+	/**
+	 * Attempt to login with a given name and password
+	 * @param password the password
+	 * @param name the user name
+	 * 
+	 */
+	public void initiateLogin(String name, String password)
+	{
+		loginInProgress = true;
+		this.name = name;
+		notifyObservers(new LoginInitiatedReport(name, password));
 	}
 }

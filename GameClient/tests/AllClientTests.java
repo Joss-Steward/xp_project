@@ -1,4 +1,6 @@
+import model.CommandLoginTest;
 import model.PlayerTest;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -16,6 +18,7 @@ import communication.StateAccumulatorConnectorClientTest;
 	LoginMessagePackerTest.class,
 	StateAccumulatorConnectorClientTest.class,
 	
+	CommandLoginTest.class,
 	PlayerTest.class,
 	
 })

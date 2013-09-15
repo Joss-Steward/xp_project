@@ -8,15 +8,15 @@ import java.util.Observer;
  * @author Merlin
  * 
  */
-public class QualifiedObserverConnector
+public class QualifiedObservableConnector
 {
 
-	private static QualifiedObserverConnector singleton;
+	private static QualifiedObservableConnector singleton;
 
 	private HashMap<Class<?>, ArrayList<QualifiedObservable>> observables;
 	private HashMap<Class<?>, ArrayList<Observer>> observers;
 
-	private QualifiedObserverConnector()
+	private QualifiedObservableConnector()
 	{
 		observables = new HashMap<Class<?>, ArrayList<QualifiedObservable>>();
 		observers = new HashMap<Class<?>, ArrayList<Observer>>();
@@ -25,11 +25,11 @@ public class QualifiedObserverConnector
 	/**
 	 * @return the only one of these in the syste
 	 */
-	public synchronized static QualifiedObserverConnector getSingleton()
+	public synchronized static QualifiedObservableConnector getSingleton()
 	{
 		if (singleton == null)
 		{
-			singleton = new QualifiedObserverConnector();
+			singleton = new QualifiedObservableConnector();
 		}
 		return singleton;
 	}
