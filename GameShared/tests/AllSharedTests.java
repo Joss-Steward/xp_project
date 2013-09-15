@@ -1,3 +1,6 @@
+import model.QualifiedObservableTest;
+import model.QualifiedObserverConnectorTest;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -29,6 +32,10 @@ import data.PositionTest;
 	
 	// data
 	PositionTest.class,
+	
+	//model
+	QualifiedObservableTest.class,
+	QualifiedObserverConnectorTest.class
 })
 
 public class AllSharedTests
