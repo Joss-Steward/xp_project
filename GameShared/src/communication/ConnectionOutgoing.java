@@ -19,6 +19,7 @@ public class ConnectionOutgoing implements Runnable
 
 	private ObjectOutputStream ostream;
 	StateAccumulator stateAccumulator;
+	private StateAccumulatorConnector stateAccumulatorConnector;
 
 	/**
 	 * @param socket
@@ -34,6 +35,7 @@ public class ConnectionOutgoing implements Runnable
 			this.ostream = new ObjectOutputStream(socket.getOutputStream());
 		}
 		this.stateAccumulator = new StateAccumulator(accumulatorConnector);
+		this.stateAccumulatorConnector = accumulatorConnector;
 	}
 
 	/**
@@ -66,7 +68,7 @@ public class ConnectionOutgoing implements Runnable
 			}
 		} catch (InterruptedException E)
 		{
-			//ok - we just need to quit
+			stateAccumulatorConnector.destroyObserverLinks(stateAccumulator);
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block

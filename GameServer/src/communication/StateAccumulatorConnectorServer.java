@@ -41,4 +41,13 @@ public class StateAccumulatorConnectorServer implements
 	{
 		return packerSet;
 	}
+
+	/**
+	 * @see communication.StateAccumulatorConnector#destroyObserverLinks(communication.StateAccumulator)
+	 */
+	@Override
+	public void destroyObserverLinks(StateAccumulator accumulator)
+	{
+		MovementNotifier.getSingleton().deleteObserver(accumulator);
+	}
 }

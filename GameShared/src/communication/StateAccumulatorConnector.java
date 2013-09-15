@@ -12,9 +12,15 @@ public interface StateAccumulatorConnector
 	/**
 	 * This method should attach the given accumulator to all of the points in the system that need to be observed for
 	 * state changes that have to be reported to the other side
-	 * @param accumulator the accumulater we are initializing
+	 * @param accumulator the accumulator we are initializing
 	 */
 	void setUpObserverLinks(StateAccumulator accumulator);
+	
+	/** 
+	 * This method should detach the accumulator from everything it is observing
+	 * @param accumulator the accumulator we are disconnecting
+	 */
+	void destroyObserverLinks(StateAccumulator accumulator);
 	
 	/**
 	 * Get the set of MessagePackers for handling the events from the observables we are connected to

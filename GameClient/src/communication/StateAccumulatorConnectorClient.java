@@ -47,4 +47,13 @@ public class StateAccumulatorConnectorClient implements
 	{
 		return packerSet;
 	}
+
+	/**
+	 * @see communication.StateAccumulatorConnector#destroyObserverLinks(communication.StateAccumulator)
+	 */
+	@Override
+	public void destroyObserverLinks(StateAccumulator accumulator)
+	{
+		Player.getSingleton().deleteObserver(accumulator);
+	}
 }
