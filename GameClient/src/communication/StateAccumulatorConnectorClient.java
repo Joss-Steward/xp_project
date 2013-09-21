@@ -1,25 +1,15 @@
 package communication;
-import model.Player;
-import model.QualifiedObservableConnector;
-import model.reports.LoginInitiatedReport;
-import communication.MessagePackerSet;
-import communication.StateAccumulator;
-import communication.StateAccumulatorConnector;
-import data.Position;
 
 
 /**
- * Configures StateAccumulators in the game server
+ * Configures StateAccumulators in the game client
  * 
  * @author merlin
  * 
  */
-public class StateAccumulatorConnectorClient implements
+public class StateAccumulatorConnectorClient extends
 		StateAccumulatorConnector
 {
-
-	private MessagePackerSet packerSet;
-
 	/**
 	 * 
 	 */
@@ -28,34 +18,18 @@ public class StateAccumulatorConnectorClient implements
 		packerSet = new MessagePackerSet();
 //		packerSet.registerPacker(Player.class, Position.class,
 //				new MovementMessagePacker());
-		packerSet.registerPacker(LoginInitiatedReport.class,
-				new LoginMessagePacker());
+		
 	}
 
 	/**
-	 * @see StateAccumulatorConnector#setUpObserverLinks(StateAccumulator)
+	 * @see communication.StateAccumulatorConnector#getMessagePackersFor(communication.StateAccumulator)
 	 */
 	@Override
-	public void setUpObserverLinks(StateAccumulator accumulator)
+	protected void getMessagePackersFor(StateAccumulator accumulator)
 	{
-		QualifiedObservableConnector.getSingleton().registerObserver(accumulator, LoginInitiatedReport.class);
+		// TODO Auto-generated method stub
+		
 	}
 
-	/**
-	 * @see StateAccumulatorConnector#getMessagePackerSet()
-	 */
-	@Override
-	public MessagePackerSet getMessagePackerSet()
-	{
-		return packerSet;
-	}
 
-	/**
-	 * @see communication.StateAccumulatorConnector#destroyObserverLinks(communication.StateAccumulator)
-	 */
-	@Override
-	public void destroyObserverLinks(StateAccumulator accumulator)
-	{
-		QualifiedObservableConnector.getSingleton().unregisterObserver(accumulator, LoginInitiatedReport.class);
-	}
 }

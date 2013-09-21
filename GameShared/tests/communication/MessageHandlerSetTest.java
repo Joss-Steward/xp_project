@@ -26,13 +26,14 @@ public class MessageHandlerSetTest
 		MessageHandlerSet proc = new MessageHandlerSet();
 		MessageHandler handler = EasyMock.createMock(MessageHandler.class);
 		Message msg = EasyMock.createMock(Message.class);
+		StateAccumulator accumulator = new StateAccumulator(EasyMock.createMock(StateAccumulatorConnector.class));
 		
-		handler.process(msg);
+		handler.process(msg,accumulator);
 		EasyMock.replay(handler);
 		EasyMock.replay(msg);
 		
 		proc.registerHandler(msg.getClass(), handler);
-		proc.process(msg);
+		proc.process(msg, accumulator);
 		EasyMock.verify(handler);
 		EasyMock.verify(msg);
 	}
@@ -46,9 +47,10 @@ public class MessageHandlerSetTest
 	{
 		MessageHandlerSet proc = new MessageHandlerSet();
 		Message msg = EasyMock.createMock(Message.class);
+		StateAccumulator accumulator = new StateAccumulator(EasyMock.createMock(StateAccumulatorConnector.class));
 		EasyMock.replay(msg);
 		
-		proc.process(msg);
+		proc.process(msg,accumulator);
 		
 	}
 

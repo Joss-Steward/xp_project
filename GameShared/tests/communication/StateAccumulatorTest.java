@@ -32,8 +32,7 @@ public class StateAccumulatorTest
 	public void initializes()
 	{
 		StateAccumulatorConnector conn = EasyMock.createMock(StateAccumulatorConnector.class);
-		conn.setUpObserverLinks(EasyMock.anyObject(StateAccumulator.class));
-		EasyMock.expect(conn.getMessagePackerSet()).andReturn(new MessagePackerSet());
+		EasyMock.expect(conn.getMessagePackerSet(EasyMock.anyObject(StateAccumulator.class))).andReturn(new MessagePackerSet());
 		EasyMock.replay(conn);
 		
 		new StateAccumulator(conn);
@@ -47,8 +46,7 @@ public class StateAccumulatorTest
 	public void emptiesOnQuery()
 	{
 		StateAccumulatorConnector conn = EasyMock.createMock(StateAccumulatorConnector.class);
-		conn.setUpObserverLinks(EasyMock.anyObject(StateAccumulator.class));
-		EasyMock.expect(conn.getMessagePackerSet()).andReturn(new MessagePackerSet());
+		EasyMock.expect(conn.getMessagePackerSet(EasyMock.anyObject(StateAccumulator.class))).andReturn(new MessagePackerSet());
 		Message msg = EasyMock.createMock(Message.class);
 		EasyMock.replay(msg);
 		EasyMock.replay(conn);
@@ -77,8 +75,7 @@ public class StateAccumulatorTest
 		EasyMock.expect(packer.pack(object)).andReturn(msg);
 		packerSet.registerPacker( object.getClass(), packer);
 		StateAccumulatorConnector conn = EasyMock.createMock(StateAccumulatorConnector.class);
-		conn.setUpObserverLinks(EasyMock.anyObject(StateAccumulator.class));
-		EasyMock.expect(conn.getMessagePackerSet()).andReturn(packerSet);
+		EasyMock.expect(conn.getMessagePackerSet(EasyMock.anyObject(StateAccumulator.class))).andReturn(packerSet);
 		
 		EasyMock.replay(conn);
 		EasyMock.replay(msg);

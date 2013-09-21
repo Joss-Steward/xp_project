@@ -29,8 +29,8 @@ public class StateAccumulator implements Observer
 	public StateAccumulator(StateAccumulatorConnector conn)
 	{
 		pendingMsgs = new ArrayList<Message> ();
-		this.packerSet = conn.getMessagePackerSet();
-		conn.setUpObserverLinks(this);
+		this.packerSet = conn.getMessagePackerSet(this);
+		
 	}
 	
 	/**

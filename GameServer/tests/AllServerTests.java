@@ -1,3 +1,5 @@
+import model.PlayerManagerTest;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -13,6 +15,9 @@ import communication.MovementMessageHandlerTest;
 { 
 	LoginMessageHandlerTest.class,
 	MovementMessageHandlerTest.class,
+	
+	// model
+	PlayerManagerTest.class
 })
 
 public class AllServerTests

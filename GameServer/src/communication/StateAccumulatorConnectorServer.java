@@ -6,46 +6,29 @@ package communication;
  * @author merlin
  * 
  */
-public class StateAccumulatorConnectorServer implements
+public class StateAccumulatorConnectorServer extends
 		StateAccumulatorConnector
 {
-
-	private MessagePackerSet packerSet;
-
 	/**
 	 * 
 	 */
 	public StateAccumulatorConnectorServer()
 	{
 		packerSet = new MessagePackerSet();
+//		packerSet.registerPacker(LoginReport.class, new LoginMessagePacker());
 //		packerSet.registerPacker( MovementMessage.class,
 //				new MovementMessagePacker());
 	}
 
 	/**
-	 * @see StateAccumulatorConnector#setUpObserverLinks(StateAccumulator)
+	 * @see communication.StateAccumulatorConnector#getMessagePackersFor(communication.StateAccumulator)
 	 */
 	@Override
-	public void setUpObserverLinks(StateAccumulator accumulator)
+	protected void getMessagePackersFor(StateAccumulator accumulator)
 	{
-		//TODO we need to connect it to some place!
+		// TODO Auto-generated method stub
+		
 	}
 
-	/**
-	 * @see StateAccumulatorConnector#getMessagePackerSet()
-	 */
-	@Override
-	public MessagePackerSet getMessagePackerSet()
-	{
-		return packerSet;
-	}
-
-	/**
-	 * @see communication.StateAccumulatorConnector#destroyObserverLinks(communication.StateAccumulator)
-	 */
-	@Override
-	public void destroyObserverLinks(StateAccumulator accumulator)
-	{
-//		MovementNotifier.getSingleton().deleteObserver(accumulator);
-	}
+	
 }

@@ -7,6 +7,7 @@ import model.CommandLogin;
 import model.Player;
 import communication.ConnectionManager;
 import communication.MessageHandlerSet;
+import communication.MovementMessageHandler;
 import communication.StateAccumulatorConnectorClient;
 import communication.messages.MovementMessage;
 import data.Position;

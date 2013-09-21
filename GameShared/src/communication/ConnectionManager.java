@@ -30,17 +30,19 @@ public class ConnectionManager
 	public ConnectionManager(Socket sock, MessageHandlerSet handlerSet, StateAccumulatorConnector accumulatorConnector) throws IOException
 	{
 		this.socket = sock;
-		incoming = new ConnectionIncoming(sock, handlerSet);
-		incomingThread = new Thread(incoming);
-		// for simplictly
-		// T.setDaemon(true);
-		incomingThread.start();
 		
 		outgoing = new ConnectionOutgoing(sock, accumulatorConnector);
 		outgoingThread = new Thread(outgoing);
 		// for simplictly
 		// T.setDaemon(true);
 		outgoingThread.start();
+		
+		incoming = new ConnectionIncoming(sock, handlerSet, outgoing.getStateAccumulator());
+		incomingThread = new Thread(incoming);
+		// for simplictly
+		// T.setDaemon(true);
+		incomingThread.start();
+		
 	}
 
 	/**

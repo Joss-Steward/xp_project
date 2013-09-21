@@ -14,6 +14,7 @@ public interface MessageHandler
 	/**
 	 * Processes an incoming message
 	 * @param msg the message to handle
+	 * @param stateAccumulator the accumulator associated with the outgoing direction for the connection which received this message
 	 */
-	public void process (Message msg);
+	public void process (Message msg, StateAccumulator stateAccumulator);
 }

@@ -1,6 +1,5 @@
 package communication;
 import model.QualifiedObservableReport;
-
 import communication.messages.Message;
 
 

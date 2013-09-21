@@ -19,19 +19,22 @@ public class ConnectionIncoming implements Runnable
 	private ObjectInputStream istream;
 	private Socket socket;
 	private MessageHandlerSet messageHandlers;
+	private StateAccumulator stateAccumulator;
 	
 	/**
 	 * @param socket
 	 *            Socket being used.  Will be null for JUnit testing
 	 * @param processor the message processor which should handle messages that come in via this connection
+	 * @param stateAccumulator the accumulator associated with the outgoing portion of this connection
 	 * @throws IOException
 	 *             Exception thrown for invalid input or output
 	 */
-	public ConnectionIncoming(Socket socket, MessageHandlerSet processor) throws IOException
+	public ConnectionIncoming(Socket socket, MessageHandlerSet processor, StateAccumulator stateAccumulator) throws IOException
 	{
 		
 		this.socket = socket;
 		this.messageHandlers = processor;
+		this.stateAccumulator = stateAccumulator;
 	}
 
 	/**
@@ -92,7 +95,7 @@ public class ConnectionIncoming implements Runnable
 	{
 		try
 		{
-			messageHandlers.process(request);
+			messageHandlers.process(request, stateAccumulator);
 		} catch (CommunicationException e)
 		{
 			// TODO Auto-generated catch block

@@ -10,7 +10,7 @@ import communication.messages.Message;
  * @author merlin
  *
  */
-public final class MessagePackerSet
+public final class MessagePackerSet 
 {
 	
 	
@@ -24,7 +24,13 @@ public final class MessagePackerSet
 		packers = new HashMap<Class <? extends QualifiedObservableReport>, MessagePacker>();
 	}
 
-	MessagePacker getPackerFor(Class < ? extends QualifiedObservableReport> reportType)
+	/**
+	 * Get the packer associated with a given type of report
+	 * @param reportType the report type we are interested
+	 * @return the packer that will handle reports of that type
+	 * @throws CommunicationException if we have no handler for that report type
+	 */
+	public MessagePacker getPackerFor(Class < ? extends QualifiedObservableReport> reportType)
 			throws CommunicationException
 	{
 		if (!packers.containsKey(reportType))
@@ -58,4 +64,6 @@ public final class MessagePackerSet
 	{
 		packers.put(reportType,packer);
 	}
+
+	
 }
