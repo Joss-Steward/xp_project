@@ -18,9 +18,18 @@ import communication.messages.Message;
 public class StateAccumulator implements Observer
 {
 
-	ArrayList<Message> pendingMsgs;
+	// need this to be visible to the tests
+	protected ArrayList<Message> pendingMsgs;
 	private MessagePackerSet packerSet;
 	
+	/**
+	 * @return the packerSet
+	 */
+	public MessagePackerSet getPackerSet()
+	{
+		return packerSet;
+	}
+
 	/**
 	 * 
 	 * @param conn An object that will register this object as an observer of all of the appropriate places.  This is using the
@@ -29,7 +38,7 @@ public class StateAccumulator implements Observer
 	public StateAccumulator(StateAccumulatorConnector conn)
 	{
 		pendingMsgs = new ArrayList<Message> ();
-		this.packerSet = conn.getMessagePackerSet(this);
+		this.packerSet = conn.setUpPackersAndObservation(this);
 		
 	}
 	

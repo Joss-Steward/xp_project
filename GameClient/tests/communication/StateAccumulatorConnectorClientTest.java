@@ -30,7 +30,7 @@ public class StateAccumulatorConnectorClientTest
 	{
 		StateAccumulatorConnectorClient connector = new StateAccumulatorConnectorClient();
 		StateAccumulator accum = new StateAccumulator(connector);
-		MessagePackerSet packerSet = connector.getMessagePackerSet(accum);
+		MessagePackerSet packerSet = connector.setUpPackersAndObservation(accum);
 		MessagePacker packer = packerSet.getPackerFor(LoginInitiatedReport.class);
 		assertEquals(LoginMessagePacker.class, packer.getClass());
 		

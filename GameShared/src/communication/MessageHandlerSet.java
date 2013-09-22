@@ -43,19 +43,16 @@ public class MessageHandlerSet
 	 * 
 	 * @param msg
 	 *            the message we are supposed to process
-	 * @param stateAccumulator
-	 *            the state accumulator associated with the outgoing direction
-	 *            for this connection which received this message
 	 * @throws CommunicationException
 	 *             if there is not handler for the given type of message
 	 */
-	public void process(Message msg, StateAccumulator stateAccumulator)
+	public void process(Message msg)
 			throws CommunicationException
 	{
 		if (handlers.containsKey(msg.getClass()))
 		{
 			MessageHandler h = handlers.get(msg.getClass());
-			h.process(msg, stateAccumulator);
+			h.process(msg);
 		} else
 		{
 			throw new CommunicationException("No message handler for " + msg.getClass());

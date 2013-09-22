@@ -13,7 +13,7 @@ public abstract class StateAccumulatorConnector
 
 	protected MessagePackerSet packerSet;
 
-	protected abstract void getMessagePackersFor(StateAccumulator accumulator);
+	protected abstract MessagePackerSet setUpPackersAndObservation(StateAccumulator accumulator);
 	
 	/** 
 	 * This method should detach the accumulator from everything it is observing
@@ -24,13 +24,5 @@ public abstract class StateAccumulatorConnector
 		//TODO need to figure out how to disconnect everything
 	}
 	
-	/**
-	 * Get the set of MessagePackers for handling the events from the observables we are connected to
-	 * @return the set
-	 */
-	protected MessagePackerSet getMessagePackerSet(StateAccumulator accumulator)
-	{
-		return packerSet;
-	}
 
 }

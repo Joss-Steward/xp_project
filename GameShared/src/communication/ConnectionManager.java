@@ -37,7 +37,7 @@ public class ConnectionManager
 		// T.setDaemon(true);
 		outgoingThread.start();
 		
-		incoming = new ConnectionIncoming(sock, handlerSet, outgoing.getStateAccumulator());
+		incoming = new ConnectionIncoming(sock, handlerSet);
 		incomingThread = new Thread(incoming);
 		// for simplictly
 		// T.setDaemon(true);

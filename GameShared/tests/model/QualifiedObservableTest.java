@@ -1,5 +1,7 @@
 package model;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Observer;
 
 import org.easymock.EasyMock;
@@ -24,6 +26,7 @@ public class QualifiedObservableTest
 		EasyMock.replay(observer);
 
 		obs.addObserver(observer, TestReport1.class);
+		assertEquals(1, obs.countObservers(TestReport1.class));
 		obs.notifyObservers(new TestReport1());
 		EasyMock.verify(observer);
 	}

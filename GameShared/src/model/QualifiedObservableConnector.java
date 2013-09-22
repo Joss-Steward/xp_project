@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observer;
 
+
 /**
  * 
  * Portions of the system that are outside of the model need to be notified when
@@ -236,6 +237,20 @@ public class QualifiedObservableConnector
 				observable.deleteObserver(observer, reportType);
 			}
 		}
+	}
+
+	/**
+	 * @param reportType the report type that we are interested in
+	 * @return the number of observers interested in the specified report type
+	 */
+	public int numberOfObserversFor(Class<?> reportType)
+	{
+		ArrayList<Observer> relevantObservers = observers.get(reportType);
+		if (relevantObservers != null)
+		{
+			return relevantObservers.size();
+		}
+		return 0;
 	}
 
 }

@@ -22,14 +22,16 @@ public class StateAccumulatorConnectorClient extends
 	}
 
 	/**
-	 * @see communication.StateAccumulatorConnector#getMessagePackersFor(communication.StateAccumulator)
+	 * @see communication.StateAccumulatorConnector#setUpPackersAndObservation(communication.StateAccumulator)
 	 */
 	@Override
-	protected void getMessagePackersFor(StateAccumulator accumulator)
+	protected MessagePackerSet setUpPackersAndObservation(StateAccumulator accumulator)
 	{
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
+
+	
 
 
 }

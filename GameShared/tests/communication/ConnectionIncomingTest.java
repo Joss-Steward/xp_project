@@ -19,14 +19,6 @@ import communication.messages.Message;
 public class ConnectionIncomingTest
 {
 	
-	private StateAccumulator createStateAccumulator()
-	{
-		StateAccumulatorConnector connector = EasyMock.createMock(StateAccumulatorConnector.class);
-		EasyMock.expect(connector.getMessagePackerSet(EasyMock.anyObject(StateAccumulator.class))).andReturn(new MessagePackerSet());
-		EasyMock.replay(connector);
-		return new StateAccumulator(connector);
-	}
-
 	/**
 	 * An incoming message should be routed by the MessageProcessor to the MessageHandler register 
 	 * for that type of message
@@ -37,14 +29,13 @@ public class ConnectionIncomingTest
 	{
 		Message msg = EasyMock.createMock(Message.class);
 		MessageHandler handler = EasyMock.createMock(MessageHandler.class);
-		StateAccumulator accumulator = createStateAccumulator();
-		handler.process(msg,accumulator);
+		handler.process(msg);
 		EasyMock.replay(msg);
 		EasyMock.replay(handler);
 		
 		MessageHandlerSet messageProcessor = new MessageHandlerSet();
 		messageProcessor.registerHandler(msg.getClass(), handler);
-		ConnectionIncoming connection = new ConnectionIncoming(null, messageProcessor, accumulator);
+		ConnectionIncoming connection = new ConnectionIncoming(null, messageProcessor);
 		connection.processRequest(msg);
 		
 		EasyMock.verify(msg);

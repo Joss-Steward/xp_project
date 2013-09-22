@@ -84,4 +84,18 @@ public abstract class QualifiedObservable extends Observable
 		relevantObservers.remove(observer);
 	}
 
+	/**
+	 * @param reportType the type of report we are interested in
+	 * @return
+	 */
+	public int countObservers(Class<?> reportType)
+	{
+		ArrayList<Observer> relevantObservers = observers.get(reportType);
+		if (relevantObservers == null)
+		{
+			return 0;
+		}
+		return relevantObservers.size();
+	}
+
 }

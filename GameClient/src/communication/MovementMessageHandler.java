@@ -1,6 +1,5 @@
 package communication;
 import communication.MessageHandler;
-import communication.StateAccumulator;
 import communication.messages.Message;
 
 
@@ -15,10 +14,10 @@ public class MovementMessageHandler implements MessageHandler
 
 	/**
 	 * 
-	 * @see MessageHandler#process(Message,StateAccumulator)
+	 * @see MessageHandler#process(Message)
 	 */
 	@Override
-	public void process(Message msg, StateAccumulator accumulator)
+	public void process(Message msg)
 	{
 		System.out.println("received " + msg);
 	}

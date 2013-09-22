@@ -19,13 +19,6 @@ public class ConnectionOutgoing implements Runnable
 
 	private ObjectOutputStream ostream;
 	StateAccumulator stateAccumulator;
-	/**
-	 * @return the stateAccumulator
-	 */
-	public StateAccumulator getStateAccumulator()
-	{
-		return stateAccumulator;
-	}
 
 	private StateAccumulatorConnector stateAccumulatorConnector;
 

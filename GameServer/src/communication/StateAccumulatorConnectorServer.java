@@ -1,5 +1,7 @@
 package communication;
 
+import model.reports.LoginSuccessfulReport;
+
 /**
  * Configures StateAccumulators in the game server
  * 
@@ -21,13 +23,14 @@ public class StateAccumulatorConnectorServer extends
 	}
 
 	/**
-	 * @see communication.StateAccumulatorConnector#getMessagePackersFor(communication.StateAccumulator)
+	 * @see communication.StateAccumulatorConnector#setUpPackersAndObservation(communication.StateAccumulator)
 	 */
 	@Override
-	protected void getMessagePackersFor(StateAccumulator accumulator)
+	protected MessagePackerSet setUpPackersAndObservation(StateAccumulator accumulator)
 	{
-		// TODO Auto-generated method stub
-		
+		packerSet = new MessagePackerSet();
+		packerSet.registerPacker(LoginSuccessfulReport.class, new LoginResponseMessagePacker(accumulator));	
+		return packerSet;
 	}
 
 	
