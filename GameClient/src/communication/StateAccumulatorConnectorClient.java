@@ -1,5 +1,7 @@
 package communication;
 
+import model.reports.LoginInitiatedReport;
+
 
 /**
  * Configures StateAccumulators in the game client
@@ -15,9 +17,6 @@ public class StateAccumulatorConnectorClient extends
 	 */
 	public StateAccumulatorConnectorClient()
 	{
-		packerSet = new MessagePackerSet();
-//		packerSet.registerPacker(Player.class, Position.class,
-//				new MovementMessagePacker());
 		
 	}
 
@@ -27,8 +26,9 @@ public class StateAccumulatorConnectorClient extends
 	@Override
 	protected MessagePackerSet setUpPackersAndObservation(StateAccumulator accumulator)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		packerSet = new MessagePackerSet();
+		packerSet.registerPacker(LoginInitiatedReport.class, new LoginMessagePacker(accumulator));	
+		return packerSet;
 	}
 
 	

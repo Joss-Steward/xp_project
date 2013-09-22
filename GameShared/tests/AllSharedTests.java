@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import communication.ConnectionIncomingTest;
+import communication.ConnectionManagerTest;
 import communication.MessageHandlerSetTest;
 import communication.MessagePackerSetTest;
 import communication.StateAccumulatorTest;
@@ -21,6 +22,7 @@ import data.PositionTest;
 { 
 	// communication
 	ConnectionIncomingTest.class,
+	ConnectionManagerTest.class,
 	MessageHandlerSetTest.class,
 	MessagePackerSetTest.class,
 	StateAccumulatorTest.class,

@@ -2,11 +2,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import communication.ConnectMessageHandler;
 import communication.ConnectionManager;
+import communication.LoginMessageHandler;
 import communication.MessageHandlerSet;
-import communication.StateAccumulatorConnectorServer;
-import communication.messages.ConnectMessage;
+import communication.StateAccumulatorConnectorLoginServer;
+import communication.messages.LoginMessage;
+
 /**
  * A daemon that resides on the server listening to the gigabuds and to client
  * requests
@@ -14,14 +15,14 @@ import communication.messages.ConnectMessage;
  * @author Merlin
  * 
  */
-public class Server implements Runnable
+public class LoginServer implements Runnable
 {
 	private ServerSocket servSock;
 	private MessageHandlerSet handlers;
 	/**
 	 * 
 	 */
-	public Server()
+	public LoginServer()
 	{
 		initializeMessageHandlers();
 	}
@@ -29,7 +30,7 @@ public class Server implements Runnable
 	private void initializeMessageHandlers()
 	{
 		handlers = new MessageHandlerSet();
-		handlers.registerHandler(ConnectMessage.class, new ConnectMessageHandler());
+		handlers.registerHandler(LoginMessage.class, new LoginMessageHandler());
 	}
 
 	/**
@@ -40,14 +41,14 @@ public class Server implements Runnable
 		int i = 0;
 		try
 		{
-			servSock = new ServerSocket(1872, 10);
+			servSock = new ServerSocket(1871, 10);
 			while (true)
 			{
-				System.out.println("Listening");
+				System.out.println("Login Server Listening");
 				Socket sock = servSock.accept();
 				System.out.println(i + ":  got something from " + sock);
 				i++;
-				ConnectionManager.getSingleton().createInitiatConnection(sock, handlers, new StateAccumulatorConnectorServer());
+				ConnectionManager.getSingleton().createInitiatConnection(sock, handlers, new StateAccumulatorConnectorLoginServer());
 			}
 
 		} catch (Throwable e)
@@ -74,7 +75,7 @@ public class Server implements Runnable
 	 */
 	public static void main(String args[])
 	{
-		Server S = new Server();
+		LoginServer S = new LoginServer();
 		S.run();
 	}
 }

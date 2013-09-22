@@ -1,5 +1,6 @@
 package communication;
 
+import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.reports.LoginInitiatedReport;
 import communication.MessagePacker;
@@ -22,7 +23,7 @@ public class LoginMessagePacker implements MessagePacker
 	 */
 	public LoginMessagePacker(StateAccumulator accumulator)
 	{
-		// TODO Auto-generated constructor stub
+		QualifiedObservableConnector.getSingleton().registerObserver(accumulator, LoginInitiatedReport.class);
 	}
 
 	/**

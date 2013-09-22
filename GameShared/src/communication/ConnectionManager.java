@@ -2,6 +2,8 @@ package communication;
 import java.io.IOException;
 import java.net.Socket;
 
+import communication.messages.ConnectMessage;
+
 
 /**
  * All of the pieces necessary to manage the connection between the client and the game server.  Each side has one of these.
@@ -19,7 +21,11 @@ public class ConnectionManager
 	private Thread outgoingThread;
 	private Thread incomingThread;
 	private Socket socket;
+	private StateAccumulatorConnector accumulatorConnector;
+	private MessageHandlerSet handlerSet;
 
+	private static ConnectionManager singleton;
+	
 	/**
 	 * Create everything necessary for building messages to send to the other side and handling messages that come from the other side.
 	 * @param sock the socket connection we are managing
@@ -27,9 +33,11 @@ public class ConnectionManager
 	 * @param accumulatorConnector TODO
 	 * @throws IOException caused by socket issues
 	 */
-	public ConnectionManager(Socket sock, MessageHandlerSet handlerSet, StateAccumulatorConnector accumulatorConnector) throws IOException
+	public void createInitiatConnection(Socket sock, MessageHandlerSet handlerSet, StateAccumulatorConnector accumulatorConnector) throws IOException
 	{
 		this.socket = sock;
+		this.accumulatorConnector = accumulatorConnector;
+		this.handlerSet = handlerSet;
 		
 		outgoing = new ConnectionOutgoing(sock, accumulatorConnector);
 		outgoingThread = new Thread(outgoing);
@@ -45,6 +53,26 @@ public class ConnectionManager
 		
 	}
 
+	public void moveToNewSocket(Socket sock, int userID, int pin) throws IOException
+	{
+		
+		disconnect();
+		this.socket = sock;
+		
+		outgoing = new ConnectionOutgoing(sock, accumulatorConnector);
+		outgoingThread = new Thread(outgoing);
+		// for simplictly
+		// T.setDaemon(true);
+		outgoingThread.start();
+		getStateAccumulator().queueMessage(new ConnectMessage(userID, pin));
+		
+		incoming = new ConnectionIncoming(sock, handlerSet);
+		incomingThread = new Thread(incoming);
+		// for simplictly
+		// T.setDaemon(true);
+		incomingThread.start();
+		
+	}
 	/**
 	 * 
 	 * @return the state accumulator that is queuing messages for the outgoing part of this connection
@@ -69,5 +97,25 @@ public class ConnectionManager
 		incomingThread.interrupt();
 		outgoingThread.interrupt();
 		
+	}
+
+	/**
+	 * @return
+	 */
+	public synchronized static ConnectionManager getSingleton()
+	{
+		if (singleton == null)
+		{
+			singleton = new ConnectionManager();
+		}
+		return singleton;
+	}
+
+	/**
+	 * reset the singleton for testing purposes
+	 */
+	public static void resetSingleton()
+	{
+		singleton = null;
 	}
 }

@@ -6,10 +6,14 @@ import java.util.Scanner;
 import model.CommandLogin;
 import model.Player;
 import communication.ConnectionManager;
+import communication.LoginResponseMessageHandler;
 import communication.MessageHandlerSet;
 import communication.MovementMessageHandler;
+import communication.PlayerJoinedMessageHandler;
 import communication.StateAccumulatorConnectorClient;
+import communication.messages.LoginResponseMessage;
 import communication.messages.MovementMessage;
+import communication.messages.PlayerJoinedMessage;
 import data.Position;
 
 /**
@@ -37,8 +41,10 @@ public class ClientRunner
 		MessageHandlerSet handlers = new MessageHandlerSet();
 		MovementMessageHandler movementHandler = new MovementMessageHandler();
 		handlers.registerHandler(MovementMessage.class, movementHandler);
+		handlers.registerHandler(LoginResponseMessage.class, new LoginResponseMessageHandler());
+		handlers.registerHandler(PlayerJoinedMessage.class, new PlayerJoinedMessageHandler());
 		StateAccumulatorConnectorClient clientStateConnector = new StateAccumulatorConnectorClient();
-		ConnectionManager cm = new ConnectionManager(socket, handlers, clientStateConnector);
+		ConnectionManager.getSingleton().createInitiatConnection(socket, handlers, clientStateConnector);
 
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("input?");
@@ -67,7 +73,7 @@ public class ClientRunner
 		};
 		System.out.println("leaving");
 		scanner.close();
-		cm.disconnect();
+		ConnectionManager.getSingleton().disconnect();
 	}
 
 }

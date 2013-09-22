@@ -20,6 +20,7 @@ public class LoginResponseMessage implements Message, Serializable
 	private int userID;
 	private String hostName;
 	private int portNumber;
+	private int pin;
 
 	/**
 	 * 
@@ -31,12 +32,23 @@ public class LoginResponseMessage implements Message, Serializable
 	 * @param portNumber
 	 *            the port number of the first area server the client should
 	 *            connect to
+	 * @param pin
+	 *            the magic number required to connect to area servers
 	 */
-	public LoginResponseMessage(int userID, String hostName, int portNumber)
+	public LoginResponseMessage(int userID, String hostName, int portNumber, int pin)
 	{
 		this.userID = userID;
 		this.hostName = hostName;
 		this.portNumber = portNumber;
+		this.pin = pin;
+	}
+
+	/**
+	 * @return the pin
+	 */
+	public int getPin()
+	{
+		return pin;
 	}
 
 	/**

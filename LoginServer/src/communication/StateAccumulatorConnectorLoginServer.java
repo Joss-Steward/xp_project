@@ -1,6 +1,10 @@
 package communication;
 
-import model.reports.PlayerConnectionReport;
+
+import communication.MessagePackerSet;
+import communication.StateAccumulator;
+import communication.StateAccumulatorConnector;
+import model.reports.LoginSuccessfulReport;
 
 /**
  * Configures StateAccumulators in the game server
@@ -8,13 +12,13 @@ import model.reports.PlayerConnectionReport;
  * @author merlin
  * 
  */
-public class StateAccumulatorConnectorServer extends
+public class StateAccumulatorConnectorLoginServer extends
 		StateAccumulatorConnector
 {
 	/**
 	 * 
 	 */
-	public StateAccumulatorConnectorServer()
+	public StateAccumulatorConnectorLoginServer()
 	{
 		packerSet = new MessagePackerSet();
 //		packerSet.registerPacker(LoginReport.class, new LoginMessagePacker());
@@ -29,7 +33,7 @@ public class StateAccumulatorConnectorServer extends
 	protected MessagePackerSet setUpPackersAndObservation(StateAccumulator accumulator)
 	{
 		packerSet = new MessagePackerSet();
-		packerSet.registerPacker(PlayerConnectionReport.class, new PlayerJoinedMessagePacker(accumulator));
+		packerSet.registerPacker(LoginSuccessfulReport.class, new LoginResponseMessagePacker(accumulator));	
 		return packerSet;
 	}
 

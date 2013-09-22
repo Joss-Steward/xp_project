@@ -18,10 +18,11 @@ public class LoginResponseMessageTest
 	@Test
 	public void basic()
 	{
-		LoginResponseMessage msg = new LoginResponseMessage(42,"hostname", 1871);
+		LoginResponseMessage msg = new LoginResponseMessage(42,"localhost", 1872, 12345);
 		assertEquals(42, msg.getUserID());
-		assertEquals("hostname", msg.getHostName());
-		assertEquals(1871, msg.getPortNumber());
+		assertEquals("localhost", msg.getHostName());
+		assertEquals(1872, msg.getPortNumber());
+		assertEquals(12345, msg.getPin());
 		assertEquals("Successful login of user " + msg.getUserID(), msg.toString());
 	}
 
