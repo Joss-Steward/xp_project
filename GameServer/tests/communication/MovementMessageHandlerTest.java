@@ -21,7 +21,7 @@ public class MovementMessageHandlerTest
 		fail("it should tell somethign in the engine");
 //		Observer obs = EasyMock.createMock(Observer.class);
 //		MovementNotifier.getSingleton().addObserver(obs);
-//		obs.update(EasyMock.anyObject(MovementNotifier.class), EasyMock.anyObject(MovementMessage.class));
+//		obs.update(EasyMock.isA(MovementNotifier.class), EasyMock.isA(MovementMessage.class));
 //		EasyMock.replay(obs);
 //		
 //		MovementMessageHandler handler = new MovementMessageHandler();

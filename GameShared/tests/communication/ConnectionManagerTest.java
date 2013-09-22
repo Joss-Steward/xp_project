@@ -11,6 +11,9 @@ import org.junit.Test;
 public class ConnectionManagerTest
 {
 
+	/**
+	 * Make sure it is a resetable singleton
+	 */
 	@Test
 	public void isSingleton()
 	{

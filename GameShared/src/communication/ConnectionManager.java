@@ -53,6 +53,13 @@ public class ConnectionManager
 		
 	}
 
+	/**
+	 * Used by the client change which server we are connected to
+	 * @param sock the new socket
+	 * @param userID the userid we were given to connect
+	 * @param pin the pin we were given to connect
+	 * @throws IOException shouldn't
+	 */
 	public void moveToNewSocket(Socket sock, int userID, int pin) throws IOException
 	{
 		
@@ -100,7 +107,7 @@ public class ConnectionManager
 	}
 
 	/**
-	 * @return
+	 * @return the only one of these that exists
 	 */
 	public synchronized static ConnectionManager getSingleton()
 	{

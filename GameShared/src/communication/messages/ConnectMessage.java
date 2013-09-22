@@ -9,12 +9,16 @@ import java.io.Serializable;
 public class ConnectMessage implements Message, Serializable
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int userID;
 	private int pin;
 
 	/**
-	 * @param userID
-	 * @param pin
+	 * @param userID the user ID we should use to connect
+	 * @param pin the pin we were given to validate this connection request
 	 */
 	public ConnectMessage(int userID, int pin)
 	{

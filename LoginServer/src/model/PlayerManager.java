@@ -37,9 +37,9 @@ public class PlayerManager extends QualifiedObservable
 	}
 
 	/**
-	 * @param userName
-	 * @param passWord
-	 * @return
+	 * Attempt to login to the system.  Credentials will be checked and appropriate reports will be made
+	 * @param userName the user name
+	 * @param passWord the password
 	 */
 	public void login(String userName, String passWord)
 	{

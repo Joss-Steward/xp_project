@@ -1,3 +1,4 @@
+import model.CommandExecutorTest;
 import model.QualifiedObservableTest;
 import model.QualifiedObserverConnectorTest;
 
@@ -36,6 +37,7 @@ import data.PositionTest;
 	PositionTest.class,
 	
 	//model
+	CommandExecutorTest.class,
 	QualifiedObservableTest.class,
 	QualifiedObserverConnectorTest.class
 })

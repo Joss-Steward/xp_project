@@ -14,6 +14,9 @@ import communication.messages.LoginResponseMessage;
 public class LoginResponseMessagePackerTest
 {
 
+	/**
+	 * make sure it builds the right message from a given report
+	 */
 	@Test
 	public void test()
 	{

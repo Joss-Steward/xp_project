@@ -17,6 +17,9 @@ import org.junit.Test;
 public class PlayerManagerTest
 {
 	
+	/**
+	 * reset the necessary singletons
+	 */
 	@Before
 	public void setUp()
 	{
@@ -24,6 +27,9 @@ public class PlayerManagerTest
 		QualifiedObservableConnector.resetSingleton();
 	}
 
+	/**
+	 * Make sure PlayerManager is a resetable singleton
+	 */
 	@Test
 	public void isSingleton()
 	{ 
@@ -33,9 +39,10 @@ public class PlayerManagerTest
 		PlayerManager.resetSingleton();
 		assertNotSame(pm1, PlayerManager.getSingleton());
 	}
-
 	
-	
+	/**
+	 * When a login is successful, the PlayerManager should send a LoginSuccessfulReport
+	 */
 	@Test
 	public void notifiesOnSuccessfulLogin()
 	{

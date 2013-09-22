@@ -22,7 +22,7 @@ public class QualifiedObservableTest
 	{
 		QualifiedObservable obs = new MockQualifiedObservable();
 		Observer observer = EasyMock.createMock(Observer.class);
-		observer.update(EasyMock.eq(obs), EasyMock.anyObject(TestReport1.class));
+		observer.update(EasyMock.eq(obs), EasyMock.isA(TestReport1.class));
 		EasyMock.replay(observer);
 
 		obs.addObserver(observer, TestReport1.class);
@@ -42,7 +42,7 @@ public class QualifiedObservableTest
 		QualifiedObservable obs = new MockQualifiedObservable();
 		Observer movementObserver = EasyMock.createMock(Observer.class);
 		Observer otherObserver = EasyMock.createMock(Observer.class);
-		movementObserver.update(EasyMock.eq(obs),EasyMock.anyObject(TestReport2.class));
+		movementObserver.update(EasyMock.eq(obs),EasyMock.isA(TestReport2.class));
 		EasyMock.replay(movementObserver);
 		EasyMock.replay(otherObserver);
 
@@ -64,8 +64,8 @@ public class QualifiedObservableTest
 		QualifiedObservable obs = new MockQualifiedObservable();
 		Observer movementObserver1 = EasyMock.createMock(Observer.class);
 		Observer movementObserver2 = EasyMock.createMock(Observer.class);
-		movementObserver1.update(EasyMock.eq(obs), EasyMock.anyObject(TestReport1.class));
-		movementObserver2.update(EasyMock.eq(obs), EasyMock.anyObject(TestReport1.class));
+		movementObserver1.update(EasyMock.eq(obs), EasyMock.isA(TestReport1.class));
+		movementObserver2.update(EasyMock.eq(obs), EasyMock.isA(TestReport1.class));
 		EasyMock.replay(movementObserver1);
 		EasyMock.replay(movementObserver2);
 
@@ -86,7 +86,7 @@ public class QualifiedObservableTest
 		QualifiedObservable obs = new MockQualifiedObservable();
 		Observer movementObserver1 = EasyMock.createMock(Observer.class);
 		Observer movementObserver2 = EasyMock.createMock(Observer.class);
-		movementObserver2.update(EasyMock.eq(obs), EasyMock.anyObject(TestReport1.class));
+		movementObserver2.update(EasyMock.eq(obs), EasyMock.isA(TestReport1.class));
 		EasyMock.replay(movementObserver1);
 		EasyMock.replay(movementObserver2);
 
@@ -107,7 +107,7 @@ public class QualifiedObservableTest
 	{
 		QualifiedObservable obs = new MockQualifiedObservable();
 		Observer observer = EasyMock.createMock(Observer.class);
-		observer.update(EasyMock.eq(obs), EasyMock.anyObject(TestReport2.class));
+		observer.update(EasyMock.eq(obs), EasyMock.isA(TestReport2.class));
 		EasyMock.replay(observer);
 
 		obs.addObserver(observer, TestReport1.class);

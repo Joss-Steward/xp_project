@@ -5,7 +5,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import model.QualifiedObservableReport;
-import communication.messages.ConnectMessage;
 import communication.messages.Message;
 
 //TODO modify this to have independent interpretation of updates into messages
@@ -86,7 +85,8 @@ public class StateAccumulator implements Observer
 	}
 
 	/**
-	 * @param connectMessage
+	 * Force a specific message to be put into the queue
+	 * @param msg the msg we want to send
 	 */
 	public void queueMessage(Message msg)
 	{
