@@ -1,36 +1,42 @@
 package communication;
-import java.util.HashMap;
 
+import java.util.HashMap;
+import java.util.Observer;
+
+import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import communication.messages.Message;
 
-
 /**
- * Holds the set of MessagePackers that should translate notifications from observables into messages to be sent to the other side
+ * Holds the set of MessagePackers that should translate notifications from
+ * observables into messages to be sent to the other side
+ * 
  * @author merlin
- *
+ * 
  */
-public final class MessagePackerSet 
+public class MessagePackerSet
 {
-	
-	
-	private HashMap<Class <? extends QualifiedObservableReport>, MessagePacker> packers;
-	
+
+	protected HashMap<Class<?>, MessagePacker> packers;
+
 	/**
 	 * 
 	 */
 	public MessagePackerSet()
 	{
-		packers = new HashMap<Class <? extends QualifiedObservableReport>, MessagePacker>();
+		packers = new HashMap<Class<?>, MessagePacker>();
 	}
 
 	/**
 	 * Get the packer associated with a given type of report
-	 * @param reportType the report type we are interested
+	 * 
+	 * @param reportType
+	 *            the report type we are interested
 	 * @return the packer that will handle reports of that type
-	 * @throws CommunicationException if we have no handler for that report type
+	 * @throws CommunicationException
+	 *             if we have no handler for that report type
 	 */
-	public MessagePacker getPackerFor(Class < ? extends QualifiedObservableReport> reportType)
+	public MessagePacker getPackerFor(Class<? extends QualifiedObservableReport> reportType)
 			throws CommunicationException
 	{
 		if (!packers.containsKey(reportType))
@@ -41,29 +47,50 @@ public final class MessagePackerSet
 		return packer;
 	}
 
-	 /**
-	 * translate the report into the message that should travel over the connection
-	 * @param report the report that we are packing for transport
+	/**
+	 * translate the report into the message that should travel over the
+	 * connection
+	 * 
+	 * @param report
+	 *            the report that we are packing for transport
 	 * @return the message describing the event
-	 * @throws CommunicationException if there is no packer registered for this type of event
+	 * @throws CommunicationException
+	 *             if there is no packer registered for this type of event
 	 */
 	public Message pack(QualifiedObservableReport report) throws CommunicationException
 	{
-		MessagePacker packer = getPackerFor(report.getClass());
+		Class<? extends QualifiedObservableReport> classWeArePacking = report.getClass();
+		MessagePacker packer = getPackerFor(classWeArePacking);
 		return packer.pack(report);
-		
+
 	}
 
 	/**
 	 * Add a MessagePacker to this set
-	 * @param reportType the class of the report we are supposed to react to
-	 * @param packer the packer that should interpret this type of notification
+	 * 
+	 * @param packer
+	 *            the packer that should interpret this type of notification
 	 */
-	public void registerPacker(Class<? extends QualifiedObservableReport> reportType,
-			MessagePacker packer)
+	public void registerPacker(MessagePacker packer)
 	{
-		packers.put(reportType,packer);
+		Class<?> reportWePack = packer.getReportWePack();
+		packers.put(reportWePack, packer);
 	}
 
-	
+	/**
+	 * Register the given observer with the report types that this message
+	 * packer set can pack
+	 * 
+	 * @param obs
+	 *            the observer to be registered
+	 */
+	public void hookUpObservationFor(Observer obs)
+	{
+		for (MessagePacker packer : packers.values())
+		{
+			QualifiedObservableConnector.getSingleton().registerObserver(obs,
+					packer.getReportWePack());
+		}
+	}
+
 }

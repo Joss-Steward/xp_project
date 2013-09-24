@@ -9,19 +9,26 @@ import model.QualifiedObservableReport;
 public class LoginSuccessfulReport implements QualifiedObservableReport
 {
 
+	private String hostname;
+
+	private int port;
+
+	private int pin;
+	private int userID;
+
 	/**
-	 * @see java.lang.Object#hashCode()
+	 * @param userID the userID who was successful
+	 * @param hostname the hostname of the area server the client should connect to
+	 * @param port the port number of the area server the client should connect to
+	 * @param pin the pin the client should use in its connection
+	 * 
 	 */
-	@Override
-	public int hashCode()
+	public LoginSuccessfulReport(int userID, String hostname, int port, int pin)
 	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((hostname == null) ? 0 : hostname.hashCode());
-		result = prime * result + pin;
-		result = prime * result + port;
-		result = prime * result + userID;
-		return result;
+		this.hostname = hostname;
+		this.port = port;
+		this.pin = pin;
+		this.userID = userID;
 	}
 
 	/**
@@ -52,7 +59,6 @@ public class LoginSuccessfulReport implements QualifiedObservableReport
 		return true;
 	}
 
-	private String hostname;
 	/**
 	 * @return the hostname
 	 */
@@ -60,7 +66,13 @@ public class LoginSuccessfulReport implements QualifiedObservableReport
 	{
 		return hostname;
 	}
-
+	/**
+	 * @return the pin
+	 */
+	public int getPin()
+	{
+		return pin;
+	}
 	/**
 	 * @return the port
 	 */
@@ -70,33 +82,25 @@ public class LoginSuccessfulReport implements QualifiedObservableReport
 	}
 
 	/**
-	 * @return the pin
-	 */
-	public int getPin()
-	{
-		return pin;
-	}
-
-	private int port;
-	private int pin;
-	private int userID;
-
-	/**
-	 * @param string
-	 */
-	public LoginSuccessfulReport(int userID, String hostname, int port, int pin)
-	{
-		this.hostname = hostname;
-		this.port = port;
-		this.pin = pin;
-		this.userID = userID;
-	}
-
-	/**
-	 * @return
+	 * @return the userID in this report
 	 */
 	public int getUserID()
 	{
 		return userID;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((hostname == null) ? 0 : hostname.hashCode());
+		result = prime * result + pin;
+		result = prime * result + port;
+		result = prime * result + userID;
+		return result;
 	}
 }

@@ -31,6 +31,8 @@ public class PlayerManager extends QualifiedObservable
 		singleton = null;
 	}
 
+	private int numberOfPlayers;
+
 	private PlayerManager()
 	{
 		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this, LoginSuccessfulReport.class);
@@ -44,6 +46,7 @@ public class PlayerManager extends QualifiedObservable
 	public void login(String userName, String passWord)
 	{
 		//TODO when we have a db . . . verify their login and tell them where to connect to and remember the pin we gave them
+		numberOfPlayers++;
 		LoginSuccessfulReport report = new LoginSuccessfulReport(42, "localhost",1872, 12345); 
 		this.notifyObservers(report);
 	}
@@ -59,5 +62,13 @@ public class PlayerManager extends QualifiedObservable
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * @return the number of players that have logged in
+	 */
+	public int getNumberOfPlayers()
+	{
+		return numberOfPlayers;
 	}
 }

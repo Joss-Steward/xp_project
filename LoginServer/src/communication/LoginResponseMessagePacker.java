@@ -1,8 +1,8 @@
 package communication;
 
-import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.reports.LoginSuccessfulReport;
+
 import communication.messages.LoginResponseMessage;
 import communication.messages.Message;
 
@@ -12,15 +12,6 @@ import communication.messages.Message;
  */
 public class LoginResponseMessagePacker implements MessagePacker
 {
-
-	/**
-	 * @param accumulator the accumulator that will listen for the messages we will pack
-	 */
-	public LoginResponseMessagePacker(StateAccumulator accumulator)
-	{
-		QualifiedObservableConnector.getSingleton().registerObserver(accumulator, LoginSuccessfulReport.class);
-	}
-
 	/**
 	 * @see communication.MessagePacker#pack(model.QualifiedObservableReport)
 	 */
@@ -34,6 +25,15 @@ public class LoginResponseMessagePacker implements MessagePacker
 			return msg;
 		}
 		return null;
+	}
+
+	/**
+	 * @see communication.MessagePacker#getReportWePack()
+	 */
+	@Override
+	public Class<?> getReportWePack()
+	{
+		return LoginSuccessfulReport.class;
 	}
 
 }

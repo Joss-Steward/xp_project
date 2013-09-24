@@ -5,7 +5,7 @@ import java.net.Socket;
 import communication.ConnectMessageHandler;
 import communication.ConnectionManager;
 import communication.MessageHandlerSet;
-import communication.StateAccumulatorConnectorServer;
+import communication.MessagePackerSetServer;
 import communication.messages.ConnectMessage;
 /**
  * A daemon that resides on the server listening to the gigabuds and to client
@@ -47,7 +47,7 @@ public class Server implements Runnable
 				Socket sock = servSock.accept();
 				System.out.println(i + ":  got something from " + sock);
 				i++;
-				ConnectionManager.getSingleton().createInitiatConnection(sock, handlers, new StateAccumulatorConnectorServer());
+				ConnectionManager.getSingleton().createInitialConnection(sock, handlers, new MessagePackerSetServer());
 			}
 
 		} catch (Throwable e)

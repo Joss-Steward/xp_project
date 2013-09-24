@@ -1,6 +1,5 @@
 package communication;
 import model.QualifiedObservableReport;
-
 import communication.messages.Message;
 import communication.messages.MovementMessage;
 
@@ -20,6 +19,17 @@ public class MovementMessagePacker implements MessagePacker
 	public Message pack(QualifiedObservableReport object)
 	{
 		return (MovementMessage)object;
+	}
+
+	/**
+	 * 
+	 * @see communication.MessagePacker#getReportWePack()
+	 */
+	@Override
+	public Class<? extends QualifiedObservableReport> getReportWePack()
+	{
+		// TODO when we re-implement movement . . .
+		return null;
 	}
 
 }

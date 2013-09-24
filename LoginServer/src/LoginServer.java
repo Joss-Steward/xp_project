@@ -5,7 +5,7 @@ import java.net.Socket;
 import communication.ConnectionManager;
 import communication.LoginMessageHandler;
 import communication.MessageHandlerSet;
-import communication.StateAccumulatorConnectorLoginServer;
+import communication.MessagePackerSetLoginServer;
 import communication.messages.LoginMessage;
 
 /**
@@ -48,7 +48,7 @@ public class LoginServer implements Runnable
 				Socket sock = servSock.accept();
 				System.out.println(i + ":  got something from " + sock);
 				i++;
-				ConnectionManager.getSingleton().createInitiatConnection(sock, handlers, new StateAccumulatorConnectorLoginServer());
+				ConnectionManager.getSingleton().createInitialConnection(sock, handlers, new MessagePackerSetLoginServer());
 			}
 
 		} catch (Throwable e)

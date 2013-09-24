@@ -12,7 +12,6 @@ import org.junit.Test;
 import communication.MessagePacker;
 import communication.MessagePackerSet;
 import communication.StateAccumulator;
-import communication.StateAccumulatorConnector;
 import communication.messages.Message;
 
 
@@ -31,12 +30,12 @@ public class StateAccumulatorTest
 	@Test
 	public void initializes()
 	{
-		StateAccumulatorConnector conn = EasyMock.createMock(StateAccumulatorConnector.class);
-		EasyMock.expect(conn.setUpPackersAndObservation(EasyMock.isA(StateAccumulator.class))).andReturn(new MessagePackerSet());
-		EasyMock.replay(conn);
+		MessagePackerSet packerSet = EasyMock.createMock(MessagePackerSet.class);
+		packerSet.hookUpObservationFor(EasyMock.isA(StateAccumulator.class));
+		EasyMock.replay(packerSet);
 		
-		new StateAccumulator(conn);
-		EasyMock.verify(conn);
+		new StateAccumulator(packerSet);
+		EasyMock.verify(packerSet);
 	}
 	
 	/**
@@ -45,20 +44,21 @@ public class StateAccumulatorTest
 	@Test
 	public void emptiesOnQuery()
 	{
-		StateAccumulatorConnector conn = EasyMock.createMock(StateAccumulatorConnector.class);
-		EasyMock.expect(conn.setUpPackersAndObservation(EasyMock.isA(StateAccumulator.class))).andReturn(new MessagePackerSet());
+		MessagePackerSet packerSet = EasyMock.createMock(MessagePackerSet.class);
+		packerSet.hookUpObservationFor(EasyMock.isA(StateAccumulator.class));
 		Message msg = EasyMock.createMock(Message.class);
 		EasyMock.replay(msg);
-		EasyMock.replay(conn);
+		EasyMock.replay(packerSet);
 		
-		StateAccumulator accum = new StateAccumulator(conn);
+		StateAccumulator accum = new StateAccumulator(packerSet);
 		ArrayList<Message> mockMessages = new ArrayList<Message>();
 		mockMessages.add(msg);
 		accum.pendingMsgs = mockMessages;
 		ArrayList<Message> returnedMessages = accum.getPendingMsgs();
 		assertEquals(1, returnedMessages.size());
 		assertEquals(0, accum.pendingMsgs.size());
-		EasyMock.verify(conn);
+		EasyMock.verify(packerSet);
+		EasyMock.verify(msg);
 	}
 
 	/**
@@ -68,33 +68,44 @@ public class StateAccumulatorTest
 	public void queuesOnUpdate()
 	{
 		MockObservable obs = new MockObservable();
-		QualifiedObservableReport object = EasyMock.createMock(QualifiedObservableReport.class);
-		Message msg = EasyMock.createMock(Message.class);
 		MessagePackerSet packerSet = new MessagePackerSet();
-		MessagePacker packer = EasyMock.createMock(MessagePacker.class);
-		EasyMock.expect(packer.pack(object)).andReturn(msg);
-		packerSet.registerPacker( object.getClass(), packer);
-		StateAccumulatorConnector conn = EasyMock.createMock(StateAccumulatorConnector.class);
-		EasyMock.expect(conn.setUpPackersAndObservation(EasyMock.isA(StateAccumulator.class))).andReturn(packerSet);
+		MessagePacker packer = new MockMessagePacker();
+		packerSet.registerPacker( packer);
 		
-		EasyMock.replay(conn);
-		EasyMock.replay(msg);
-		EasyMock.replay(packer);
-		
-		StateAccumulator accum = new StateAccumulator(conn);
-		accum.update(obs, object);
+		StateAccumulator accum = new StateAccumulator(packerSet);
+		accum.update(obs, new MockReport());
 		ArrayList<Message> pending = accum.pendingMsgs;
 		assertEquals(1, pending.size());
-		assertEquals(msg, pending.get(0));
-		
-		EasyMock.verify(conn);
-		EasyMock.verify(msg);
-		EasyMock.verify(packer);
 	}
 
 	private class MockObservable extends Observable
 	{
 
+		
+	}
+	private class MockReport implements QualifiedObservableReport
+	{
+	}
+	private class MockMessagePacker implements MessagePacker
+	{
+
+		/**
+		 * @see communication.MessagePacker#pack(model.QualifiedObservableReport)
+		 */
+		@Override
+		public Message pack(QualifiedObservableReport object)
+		{
+			return EasyMock.createMock(Message.class);
+		}
+
+		/**
+		 * @see communication.MessagePacker#getReportWePack()
+		 */
+		@Override
+		public Class<?> getReportWePack()
+		{
+			return MockReport.class;
+		}
 		
 	}
 }

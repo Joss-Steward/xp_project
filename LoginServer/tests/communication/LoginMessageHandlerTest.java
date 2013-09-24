@@ -6,6 +6,8 @@ import model.PlayerManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import communication.messages.LoginMessage;
+
 
 /**
  * @author Merlin
@@ -29,6 +31,8 @@ public class LoginMessageHandlerTest
 	@Test
 	public void tellsTheModel()
 	{
-		fail("what does it do?");
+		LoginMessageHandler handler = new LoginMessageHandler();
+		handler.process(new LoginMessage("fred","pw"));
+		assertEquals(1, PlayerManager.getSingleton().getNumberOfPlayers());
 	}
 }

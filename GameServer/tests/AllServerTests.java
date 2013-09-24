@@ -4,7 +4,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import communication.MovementMessageHandlerTest;
-import communication.StateAccumulatorConnectorServerTest;
 
 /**
  * @author Merlin
@@ -14,7 +13,6 @@ import communication.StateAccumulatorConnectorServerTest;
 @Suite.SuiteClasses(
 { 
 	MovementMessageHandlerTest.class,
-	StateAccumulatorConnectorServerTest.class,
 	
 	// model
 	PlayerManagerTest.class

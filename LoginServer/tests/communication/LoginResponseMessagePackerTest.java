@@ -21,7 +21,7 @@ public class LoginResponseMessagePackerTest
 	public void test()
 	{
 		LoginSuccessfulReport report = new LoginSuccessfulReport(42, "localhost", 1872, 123456);
-		LoginResponseMessagePacker packer = new LoginResponseMessagePacker(null);
+		LoginResponseMessagePacker packer = new LoginResponseMessagePacker();
 		LoginResponseMessage msg = (LoginResponseMessage) packer.pack(report);
 		assertEquals(42, msg.getUserID());
 		assertEquals("localhost", msg.getHostName());

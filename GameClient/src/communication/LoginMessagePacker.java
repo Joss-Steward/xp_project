@@ -1,6 +1,5 @@
 package communication;
 
-import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.reports.LoginInitiatedReport;
 import communication.MessagePacker;
@@ -17,15 +16,6 @@ import communication.messages.Message;
  */
 public class LoginMessagePacker implements MessagePacker
 {
-
-	/**
-	 * @param accumulator the accumulator which will send the messages we are building
-	 */
-	public LoginMessagePacker(StateAccumulator accumulator)
-	{
-		QualifiedObservableConnector.getSingleton().registerObserver(accumulator, LoginInitiatedReport.class);
-	}
-
 	/**
 	 * 
 	 */
@@ -40,6 +30,15 @@ public class LoginMessagePacker implements MessagePacker
 		LoginInitiatedReport report = (LoginInitiatedReport) object;
 		Message msg = new LoginMessage(report.getName(), report.getPassword());
 		return msg;
+	}
+
+	/**
+	 * @see communication.MessagePacker#getReportWePack()
+	 */
+	@Override
+	public Class<?> getReportWePack()
+	{
+		return LoginInitiatedReport.class;
 	}
 
 }

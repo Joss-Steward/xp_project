@@ -21,7 +21,7 @@ public class LoginMessagePackerTest
 	@Test
 	public void test()
 	{
-		LoginMessagePacker packer = new LoginMessagePacker(new StateAccumulator(new StateAccumulatorConnectorClient()));
+		LoginMessagePacker packer = new LoginMessagePacker();
 		LoginMessage msg = (LoginMessage) packer.pack(new LoginInitiatedReport("harry","elizabeth"));
 		assertEquals("harry", msg.getUserName());
 		assertEquals("elizabeth", msg.getPassword());

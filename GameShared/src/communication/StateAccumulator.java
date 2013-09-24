@@ -7,8 +7,6 @@ import java.util.Observer;
 import model.QualifiedObservableReport;
 import communication.messages.Message;
 
-//TODO modify this to have independent interpretation of updates into messages
-
 /**
  * Manages a queue of the events that have occurred that have not been sent to
  * the other side of our connection (if it is on the client, it holds messages
@@ -26,6 +24,7 @@ public class StateAccumulator implements Observer
 
 	/**
 	 * Only used for tests
+	 * 
 	 * @return the packerSet
 	 */
 	public MessagePackerSet getPackerSet()
@@ -34,17 +33,16 @@ public class StateAccumulator implements Observer
 	}
 
 	/**
+	 * @param messagePackerSet
+	 *            the set of MessagePackers we should use to build the outgoing
+	 *            messages we are queueing
 	 * 
-	 * @param conn
-	 *            An object that will register this object as an observer of all
-	 *            of the appropriate places. This is using the strategy pattern
-	 *            because the places we need to observe will be different on the
-	 *            client than on the server
 	 */
-	public StateAccumulator(StateAccumulatorConnector conn)
+	public StateAccumulator(MessagePackerSet messagePackerSet)
 	{
 		pendingMsgs = new ArrayList<Message>();
-		this.packerSet = conn.setUpPackersAndObservation(this);
+		this.packerSet = messagePackerSet;
+		packerSet.hookUpObservationFor(this);
 
 	}
 
@@ -87,7 +85,9 @@ public class StateAccumulator implements Observer
 
 	/**
 	 * Force a specific message to be put into the queue
-	 * @param msg the msg we want to send
+	 * 
+	 * @param msg
+	 *            the msg we want to send
 	 */
 	public void queueMessage(Message msg)
 	{

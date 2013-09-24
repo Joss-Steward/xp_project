@@ -36,9 +36,8 @@ import data.PositionTest;
 	LoginMessageTest.class,
 	LoginResponseMessageTest.class,
 	MessageStructureVerifier.class,
-	PlayerJoinedMessageTest.class,
 	MovementMessageTest.class,
-	
+	PlayerJoinedMessageTest.class,
 	
 	// data
 	PositionTest.class,

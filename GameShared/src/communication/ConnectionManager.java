@@ -24,7 +24,7 @@ public class ConnectionManager
 	private Thread outgoingThread;
 	private Thread incomingThread;
 	private Socket socket;
-	private StateAccumulatorConnector accumulatorConnector;
+	private MessagePackerSet messagePackerSet;
 	private MessageHandlerSet handlerSet;
 
 	private static ConnectionManager singleton;
@@ -38,21 +38,20 @@ public class ConnectionManager
 	 * @param handlerSet
 	 *            the set of MessageHandlers hat will process the incoming
 	 *            messages on this connection
-	 * @param accumulatorConnector
-	 *            The object that knows how to connect the outgoing connection
-	 *            with the objects that translate reports from the model into
-	 *            messages to be sent
+	 * @param messagePackerSet
+	 *            the set of MessagePackers that will pack notifications from
+	 *            the model into outgoing messages
 	 * @throws IOException
 	 *             caused by socket issues
 	 */
-	public void createInitiatConnection(Socket sock, MessageHandlerSet handlerSet,
-			StateAccumulatorConnector accumulatorConnector) throws IOException
+	public void createInitialConnection(Socket sock, MessageHandlerSet handlerSet,
+			MessagePackerSet messagePackerSet) throws IOException
 	{
 		this.socket = sock;
-		this.accumulatorConnector = accumulatorConnector;
+		this.messagePackerSet = messagePackerSet;
 		this.handlerSet = handlerSet;
 
-		outgoing = new ConnectionOutgoing(sock, accumulatorConnector);
+		outgoing = new ConnectionOutgoing(sock, messagePackerSet);
 		outgoingThread = new Thread(outgoing);
 		// for simplictly
 		// T.setDaemon(true);
@@ -84,7 +83,7 @@ public class ConnectionManager
 		disconnect();
 		this.socket = sock;
 
-		outgoing = new ConnectionOutgoing(sock, accumulatorConnector);
+		outgoing = new ConnectionOutgoing(sock, messagePackerSet);
 		outgoingThread = new Thread(outgoing);
 		// for simplictly
 		// T.setDaemon(true);

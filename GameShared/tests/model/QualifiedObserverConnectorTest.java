@@ -63,7 +63,7 @@ public class QualifiedObserverConnectorTest
 		mockObservable.notifyObservers(new TestReport());
 		EasyMock.verify(mockObserver);
 	}
-	
+
 	/**
 	 * Can register two observers
 	 */
@@ -92,6 +92,26 @@ public class QualifiedObserverConnectorTest
 	}
 
 	/**
+	 * If we register the same observer for the same report type, we should
+	 * ignore it
+	 */
+	@Test
+	public void addingSameObserverTwiceIgnoresSecondCall()
+	{
+		fail();
+	}
+
+	/**
+	 * if we register the same observable for the same report type, we should
+	 * ignore it
+	 */
+	@Test
+	public void addingSameObservableTwiceIgnoresSecondCall()
+	{
+		fail();
+	}
+
+	/**
 	 * You should be able to register the observer and the observable in either
 	 * order, so this test is the same as registerQualifedObservable, but the
 	 * observer is registered first.
@@ -116,8 +136,8 @@ public class QualifiedObserverConnectorTest
 	}
 
 	/**
-	 * Make sure that if we unregister an observable for a given report type, the observers of that
-	 * report type no longer get updated on notification
+	 * Make sure that if we unregister an observable for a given report type,
+	 * the observers of that report type no longer get updated on notification
 	 */
 	@Test
 	public void canUnRegisterAnObservable()
@@ -138,7 +158,8 @@ public class QualifiedObserverConnectorTest
 	}
 
 	/**
-	 * Make sure that if we unregister an observer, it no longer gets updated on notification
+	 * Make sure that if we unregister an observer, it no longer gets updated on
+	 * notification
 	 */
 	@Test
 	public void canUnRegisterAnObserver()
@@ -181,8 +202,8 @@ public class QualifiedObserverConnectorTest
 	}
 
 	/**
-	 * We just want to be sure that, if you ask to unregister for something you aren't
-	 * connected to, we just ignore you.
+	 * We just want to be sure that, if you ask to unregister for something you
+	 * aren't connected to, we just ignore you.
 	 */
 	@Test
 	public void observerUnregistrationWhenNotRegistered()
@@ -206,17 +227,17 @@ public class QualifiedObserverConnectorTest
 		connector.registerQualifiedObservable(mockObservable, TestReport.class);
 		connector.unregisterQualifiedObservable(mockObservable, TestReport.class);
 		connector.registerObserver(mockObserver, TestReport.class);
-		
+
 		// no notification should be expected
 		EasyMock.replay(mockObserver);
 
 		mockObservable.notifyObservers(new TestReport());
 		EasyMock.verify(mockObserver);
 	}
-	
+
 	/**
-	 * We just want to be sure that, if you ask to unregister for something you aren't
-	 * connected to, we just ignore you.
+	 * We just want to be sure that, if you ask to unregister for something you
+	 * aren't connected to, we just ignore you.
 	 */
 	@Test
 	public void observableUnregistrationWhenNotRegistered()
@@ -225,7 +246,7 @@ public class QualifiedObserverConnectorTest
 		QualifiedObservable mockObservable = new MockQualifiedObservable();
 		connector.unregisterQualifiedObservable(mockObservable, TestReport.class);
 	}
-	
+
 	private class TestReport implements QualifiedObservableReport
 	{
 

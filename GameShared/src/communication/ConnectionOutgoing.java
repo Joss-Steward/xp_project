@@ -1,11 +1,11 @@
 package communication;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
 import communication.messages.Message;
-
 
 /**
  * Responsible for communication between the server and a single connected
@@ -20,23 +20,22 @@ public class ConnectionOutgoing implements Runnable
 	private ObjectOutputStream ostream;
 	StateAccumulator stateAccumulator;
 
-	private StateAccumulatorConnector stateAccumulatorConnector;
-
 	/**
 	 * @param socket
 	 *            Socket being used - will be null for JUnit tests
-	 * @param accumulatorConnector Knows how to connect our state accumulator with the model
+	 * @param messagePackerSet
+	 *            the set of messagepackers the outgoing connection should use
 	 * @throws IOException
 	 *             Exception thrown for invalid input or output
 	 */
-	public ConnectionOutgoing(Socket socket, StateAccumulatorConnector accumulatorConnector) throws IOException
+	public ConnectionOutgoing(Socket socket, MessagePackerSet messagePackerSet) throws IOException
 	{
 		if (socket != null)
 		{
 			this.ostream = new ObjectOutputStream(socket.getOutputStream());
 		}
-		this.stateAccumulator = new StateAccumulator(accumulatorConnector);
-		this.stateAccumulatorConnector = accumulatorConnector;
+		this.stateAccumulator = new StateAccumulator(messagePackerSet);
+
 	}
 
 	/**
@@ -47,7 +46,7 @@ public class ConnectionOutgoing implements Runnable
 		try
 		{
 			System.out.println("Connection to client created");
-			
+
 			while (!Thread.currentThread().isInterrupted())
 			{
 				ArrayList<Message> msgs = stateAccumulator.getPendingMsgs();
@@ -69,7 +68,9 @@ public class ConnectionOutgoing implements Runnable
 			}
 		} catch (InterruptedException E)
 		{
-			stateAccumulatorConnector.destroyObserverLinks(stateAccumulator);
+			// TODO need to get rid of observation links when we are getting
+			// torn down
+			// messagePackerSet.destroyObserverLinks(stateAccumulator);
 		} catch (IOException e)
 		{
 			e.printStackTrace();

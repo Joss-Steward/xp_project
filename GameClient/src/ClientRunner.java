@@ -8,9 +8,9 @@ import model.Player;
 import communication.ConnectionManager;
 import communication.LoginResponseMessageHandler;
 import communication.MessageHandlerSet;
+import communication.MessagePackerSetClient;
 import communication.MovementMessageHandler;
 import communication.PlayerJoinedMessageHandler;
-import communication.StateAccumulatorConnectorClient;
 import communication.messages.LoginResponseMessage;
 import communication.messages.MovementMessage;
 import communication.messages.PlayerJoinedMessage;
@@ -43,8 +43,7 @@ public class ClientRunner
 		handlers.registerHandler(MovementMessage.class, movementHandler);
 		handlers.registerHandler(LoginResponseMessage.class, new LoginResponseMessageHandler());
 		handlers.registerHandler(PlayerJoinedMessage.class, new PlayerJoinedMessageHandler());
-		StateAccumulatorConnectorClient clientStateConnector = new StateAccumulatorConnectorClient();
-		ConnectionManager.getSingleton().createInitiatConnection(socket, handlers, clientStateConnector);
+		ConnectionManager.getSingleton().createInitialConnection(socket, handlers, new MessagePackerSetClient());
 
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("input?");
