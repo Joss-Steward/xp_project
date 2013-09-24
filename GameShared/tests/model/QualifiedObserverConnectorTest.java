@@ -63,6 +63,33 @@ public class QualifiedObserverConnectorTest
 		mockObservable.notifyObservers(new TestReport());
 		EasyMock.verify(mockObserver);
 	}
+	
+	/**
+	 * Can register two observers
+	 */
+	@Test
+	public void registerTwoQualifiedObservables()
+	{
+		// set up the connection
+		QualifiedObservableConnector connector = QualifiedObservableConnector.getSingleton();
+		QualifiedObservable mockObservable = new MockQualifiedObservable();
+		connector.registerQualifiedObservable(mockObservable, TestReport.class);
+		Observer mockObserver = EasyMock.createMock(Observer.class);
+		connector.registerObserver(mockObserver, TestReport.class);
+		Observer mockObserver2 = EasyMock.createMock(Observer.class);
+		connector.registerObserver(mockObserver2, TestReport.class);
+
+		// we should expect an update on notification
+		mockObserver.update(EasyMock.eq(mockObservable), EasyMock.anyObject(TestReport.class));
+		EasyMock.replay(mockObserver);
+		mockObserver2.update(EasyMock.eq(mockObservable), EasyMock.anyObject(TestReport.class));
+		EasyMock.replay(mockObserver2);
+
+		// now cause the notification
+		mockObservable.notifyObservers(new TestReport());
+		EasyMock.verify(mockObserver);
+		EasyMock.verify(mockObserver2);
+	}
 
 	/**
 	 * You should be able to register the observer and the observable in either

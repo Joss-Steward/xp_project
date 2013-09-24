@@ -42,4 +42,12 @@ public class ConnectMessage implements Message, Serializable
 		return pin;
 	}
 
+	/**
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString()
+	{
+		return "Connect Message: userID = " + userID + " and pin = " + pin;
+	}
 }

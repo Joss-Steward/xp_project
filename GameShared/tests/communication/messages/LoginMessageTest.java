@@ -22,5 +22,5 @@ public class LoginMessageTest
 		assertEquals("fred", msg.getUserName());
 		assertEquals("xxx", msg.getPassword());
 	}
-
+	
 }

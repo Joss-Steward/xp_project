@@ -32,4 +32,12 @@ public class PlayerJoinedMessage implements Message, Serializable
 		return userName;
 	}
 
+	/**
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString()
+	{
+		return "PlayerJoined Message: userName = " + userName;
+	}
 }

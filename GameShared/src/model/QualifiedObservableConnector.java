@@ -238,19 +238,4 @@ public class QualifiedObservableConnector
 			}
 		}
 	}
-
-	/**
-	 * @param reportType the report type that we are interested in
-	 * @return the number of observers interested in the specified report type
-	 */
-	public int numberOfObserversFor(Class<?> reportType)
-	{
-		ArrayList<Observer> relevantObservers = observers.get(reportType);
-		if (relevantObservers != null)
-		{
-			return relevantObservers.size();
-		}
-		return 0;
-	}
-
 }

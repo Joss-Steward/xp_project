@@ -32,6 +32,18 @@ public class QualifiedObservableTest
 	}
 
 	/**
+	 * If we haven't added any observers, the count should be zero, but
+	 * notification should run successfully (notifying no one)
+	 */
+	@Test
+	public void canCountZeroObservers()
+	{
+		QualifiedObservable obs = new MockQualifiedObservable();
+		assertEquals(0, obs.countObservers(TestReport1.class));
+		obs.notifyObservers(new TestReport1());
+	}
+
+	/**
 	 * Set up two observables that listen for different types of notification.
 	 * Then make sure that only the appropriate one gets updated when a
 	 * particular type of notification happens
@@ -42,7 +54,7 @@ public class QualifiedObservableTest
 		QualifiedObservable obs = new MockQualifiedObservable();
 		Observer movementObserver = EasyMock.createMock(Observer.class);
 		Observer otherObserver = EasyMock.createMock(Observer.class);
-		movementObserver.update(EasyMock.eq(obs),EasyMock.isA(TestReport2.class));
+		movementObserver.update(EasyMock.eq(obs), EasyMock.isA(TestReport2.class));
 		EasyMock.replay(movementObserver);
 		EasyMock.replay(otherObserver);
 
@@ -153,20 +165,20 @@ public class QualifiedObservableTest
 
 		obs.addObserver(observer1, TestReportNotReported.class);
 	}
-	
+
 	private class TestReport1 implements QualifiedObservableReport
 	{
-		
+
 	}
-	
+
 	private class TestReport2 implements QualifiedObservableReport
 	{
-		
+
 	}
-	
+
 	private class TestReportNotReported implements QualifiedObservableReport
 	{
-		
+
 	}
 
 	private class MockQualifiedObservable extends QualifiedObservable
@@ -179,8 +191,7 @@ public class QualifiedObservableTest
 		@Override
 		public boolean notifiesOn(Class<?> reportType)
 		{
-			if ((reportType.equals(TestReport1.class))
-					|| (reportType.equals(TestReport2.class)))
+			if ((reportType.equals(TestReport1.class)) || (reportType.equals(TestReport2.class)))
 			{
 				return true;
 			}

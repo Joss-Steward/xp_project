@@ -25,6 +25,7 @@ public class StateAccumulator implements Observer
 	private MessagePackerSet packerSet;
 
 	/**
+	 * Only used for tests
 	 * @return the packerSet
 	 */
 	public MessagePackerSet getPackerSet()
@@ -61,7 +62,8 @@ public class StateAccumulator implements Observer
 	}
 
 	/**
-	 * @see #Observer.update(Observable arg0, Object arg1)
+	 * 
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1)
@@ -79,7 +81,6 @@ public class StateAccumulator implements Observer
 			}
 		} catch (CommunicationException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

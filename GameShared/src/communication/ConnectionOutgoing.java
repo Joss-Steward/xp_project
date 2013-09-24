@@ -25,7 +25,7 @@ public class ConnectionOutgoing implements Runnable
 	/**
 	 * @param socket
 	 *            Socket being used - will be null for JUnit tests
-	 * @param accumulatorConnector TODO
+	 * @param accumulatorConnector Knows how to connect our state accumulator with the model
 	 * @throws IOException
 	 *             Exception thrown for invalid input or output
 	 */
@@ -72,7 +72,6 @@ public class ConnectionOutgoing implements Runnable
 			stateAccumulatorConnector.destroyObserverLinks(stateAccumulator);
 		} catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println("Outgoing thread finished");

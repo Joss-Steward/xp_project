@@ -85,8 +85,9 @@ public abstract class QualifiedObservable extends Observable
 	}
 
 	/**
+	 * Used for testing purposes
 	 * @param reportType the type of report we are interested in
-	 * @return
+	 * @return the number of observers we have
 	 */
 	public int countObservers(Class<?> reportType)
 	{

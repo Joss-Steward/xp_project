@@ -78,11 +78,9 @@ public class ConnectionIncoming implements Runnable
 			// ok - we just need to quit
 		} catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println("Incoming thread finished");
@@ -95,7 +93,6 @@ public class ConnectionIncoming implements Runnable
 			messageHandlers.process(request);
 		} catch (CommunicationException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
