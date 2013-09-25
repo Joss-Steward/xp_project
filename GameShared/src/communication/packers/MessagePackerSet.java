@@ -40,36 +40,34 @@ public class MessagePackerSet
 	private void detectAndRegisterAllPackersInPackage()
 	{
 		Reflections reflections = new Reflections(this.getClass().getPackage().getName());
-		for (String mmapName : reflections.getStore().getStoreMap().keySet())
-		{
-			Multimap<String, String> mmap = reflections.getStore().getStoreMap().get(mmapName);
-			for (Map.Entry<String, String> entry : mmap.entries())
-			{
-				// skip over private classes that are inside another class
-				if (!entry.getValue().contains("$"))
-				{
-					try
-					{
-						Class<?> classToRegister = Class.forName(entry.getValue());
-						if (implementsMessagePacker(classToRegister))
-						{
-							MessagePacker packer = (MessagePacker) classToRegister.newInstance();
-							System.out.println("Registering " + classToRegister);
-							registerPacker(packer);
-						}
-					} catch (ClassNotFoundException e)
-					{
-						e.printStackTrace();
-					} catch (InstantiationException e)
-					{
-						e.printStackTrace();
-					} catch (IllegalAccessException e)
-					{
-						e.printStackTrace();
-					}
-				}
 
+		Multimap<String, String> mmap = reflections.getStore().getStoreMap().get("SubTypesScanner");
+		for (Map.Entry<String, String> entry : mmap.entries())
+		{
+			// skip over private classes that are inside another class
+			if (!entry.getValue().contains("$"))
+			{
+				try
+				{
+					Class<?> classToRegister = Class.forName(entry.getValue());
+					if (implementsMessagePacker(classToRegister))
+					{
+						MessagePacker packer = (MessagePacker) classToRegister.newInstance();
+						System.out.println("Registering " + classToRegister);
+						registerPacker(packer);
+					}
+				} catch (ClassNotFoundException e)
+				{
+					e.printStackTrace();
+				} catch (InstantiationException e)
+				{
+					e.printStackTrace();
+				} catch (IllegalAccessException e)
+				{
+					e.printStackTrace();
+				}
 			}
+
 		}
 	}
 
