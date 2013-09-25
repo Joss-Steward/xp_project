@@ -98,7 +98,21 @@ public class QualifiedObserverConnectorTest
 	@Test
 	public void addingSameObserverTwiceIgnoresSecondCall()
 	{
-		fail();
+		// set up the connection
+		QualifiedObservableConnector connector = QualifiedObservableConnector.getSingleton();
+		QualifiedObservable mockObservable = new MockQualifiedObservable();
+		Observer mockObserver = EasyMock.createMock(Observer.class);
+		connector.registerObserver(mockObserver, TestReport.class);
+		connector.registerObserver(mockObserver, TestReport.class);
+		connector.registerQualifiedObservable(mockObservable, TestReport.class);
+
+		// we should expect an single update on notification
+		mockObserver.update(EasyMock.eq(mockObservable), EasyMock.anyObject(TestReport.class));
+		EasyMock.replay(mockObserver);
+
+		// now cause the notification
+		mockObservable.notifyObservers(new TestReport());
+		EasyMock.verify(mockObserver);
 	}
 
 	/**
@@ -108,7 +122,20 @@ public class QualifiedObserverConnectorTest
 	@Test
 	public void addingSameObservableTwiceIgnoresSecondCall()
 	{
-		fail();
+		QualifiedObservableConnector connector = QualifiedObservableConnector.getSingleton();
+		QualifiedObservable mockObservable = new MockQualifiedObservable();
+		Observer mockObserver = EasyMock.createMock(Observer.class);
+		connector.registerObserver(mockObserver, TestReport.class);
+		connector.registerQualifiedObservable(mockObservable, TestReport.class);
+		connector.registerQualifiedObservable(mockObservable, TestReport.class);
+
+		// we should expect only one update on notification
+		mockObserver.update(EasyMock.eq(mockObservable), EasyMock.anyObject(TestReport.class));
+		EasyMock.replay(mockObserver);
+
+		// now cause the notification
+		mockObservable.notifyObservers(new TestReport());
+		EasyMock.verify(mockObserver);
 	}
 
 	/**

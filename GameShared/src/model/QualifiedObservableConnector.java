@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observer;
 
-
 /**
  * 
  * Portions of the system that are outside of the model need to be notified when
@@ -22,24 +21,30 @@ import java.util.Observer;
  * exactly which type of report they want to receive. For example, registering
  * to receive a report that the current player moved is done like this:
  * 
- * <p><pre>QualifiedObservableConnector.getSingleton().registerObserver(this,
- * ThisPlayerMovedReport.class);</pre>
- *<p>
+ * <p>
+ * 
+ * <pre>
+ * QualifiedObservableConnector.getSingleton().registerObserver(this, ThisPlayerMovedReport.class);
+ * </pre>
+ * <p>
  * Each place in the Model that reports a given state change, registers itself
  * as a QualifiedObservable for that message type. For example, registering that
  * you will report that the current player has moved is done like this:
  * <p>
- * <pre>QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this,
- * ThisPlayerMovedReport.class); </pre>
+ * 
+ * <pre>
+ * QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this,
+ * 		ThisPlayerMovedReport.class);
+ * </pre>
  * <p>
  * The QualifiedObservableConnector creates the required observable/observer
  * relationships to satisfy both types of registration requests regardless of
  * whether the observer or the observable registers first.
  * <p>
- *  <em>** NOTE **</em> it is important that any QualifiedObservables or Observables that
- * register themselves with the QualifiedObservableConnector MUST unregister
- * themselves when they are no longer interested. If this is not done, those
- * objects will never be garbage collected!!!!
+ * <em>** NOTE **</em> it is important that any QualifiedObservables or
+ * Observables that register themselves with the QualifiedObservableConnector
+ * MUST unregister themselves when they are no longer interested. If this is not
+ * done, those objects will never be garbage collected!!!!
  * 
  * @author Merlin
  * 
@@ -89,14 +94,15 @@ public class QualifiedObservableConnector
 	 */
 	public void registerQualifiedObservable(QualifiedObservable observable, Class<?> reportType)
 	{
-		rememberObservable(observable, reportType);
-
-		ArrayList<Observer> relevantObservers = observers.get(reportType);
-		if (relevantObservers != null)
+		if (rememberObservable(observable, reportType))
 		{
-			for (Observer observer : relevantObservers)
+			ArrayList<Observer> relevantObservers = observers.get(reportType);
+			if (relevantObservers != null)
 			{
-				observable.addObserver(observer, reportType);
+				for (Observer observer : relevantObservers)
+				{
+					observable.addObserver(observer, reportType);
+				}
 			}
 		}
 	}
@@ -106,8 +112,10 @@ public class QualifiedObservableConnector
 	 *            the observable we should remember
 	 * @param reportType
 	 *            the report type it is interested in
+	 * @return true if this was a new observable for this type and false if it
+	 *         was a duplicate
 	 */
-	private void rememberObservable(QualifiedObservable observable, Class<?> reportType)
+	private boolean rememberObservable(QualifiedObservable observable, Class<?> reportType)
 	{
 		ArrayList<QualifiedObservable> relevantObservables = observables.get(reportType);
 		if (relevantObservables == null)
@@ -115,7 +123,12 @@ public class QualifiedObservableConnector
 			relevantObservables = new ArrayList<QualifiedObservable>();
 			observables.put(reportType, relevantObservables);
 		}
-		relevantObservables.add(observable);
+		if (!relevantObservables.contains(observable))
+		{
+			relevantObservables.add(observable);
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -128,14 +141,15 @@ public class QualifiedObservableConnector
 	 */
 	public void registerObserver(Observer observer, Class<?> reportType)
 	{
-		rememberObserver(observer, reportType);
-
-		ArrayList<QualifiedObservable> relevantObservables = observables.get(reportType);
-		if (relevantObservables != null)
+		if (rememberObserver(observer, reportType))
 		{
-			for (QualifiedObservable observable : relevantObservables)
+			ArrayList<QualifiedObservable> relevantObservables = observables.get(reportType);
+			if (relevantObservables != null)
 			{
-				observable.addObserver(observer, reportType);
+				for (QualifiedObservable observable : relevantObservables)
+				{
+					observable.addObserver(observer, reportType);
+				}
 			}
 		}
 	}
@@ -145,8 +159,10 @@ public class QualifiedObservableConnector
 	 *            the observer we should remember
 	 * @param reportType
 	 *            the report type this observer is interested in
+	 * @return true if this is a new observer for this report type and false if
+	 *         it was a duplicate request
 	 */
-	private void rememberObserver(Observer observer, Class<?> reportType)
+	private boolean rememberObserver(Observer observer, Class<?> reportType)
 	{
 		ArrayList<Observer> relevantObservers = observers.get(reportType);
 		if (relevantObservers == null)
@@ -154,7 +170,12 @@ public class QualifiedObservableConnector
 			relevantObservers = new ArrayList<Observer>();
 			observers.put(reportType, relevantObservers);
 		}
-		relevantObservers.add(observer);
+		if (!relevantObservers.contains(observer))
+		{
+			relevantObservers.add(observer);
+			return true;
+		}
+		return false;
 	}
 
 	/**
