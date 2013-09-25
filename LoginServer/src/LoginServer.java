@@ -5,8 +5,8 @@ import java.net.Socket;
 import communication.ConnectionManager;
 import communication.LoginMessageHandler;
 import communication.MessageHandlerSet;
-import communication.MessagePackerSetLoginServer;
 import communication.messages.LoginMessage;
+import communication.packers.MessagePackerSet;
 
 /**
  * A daemon that resides on the server listening to the gigabuds and to client
@@ -48,7 +48,7 @@ public class LoginServer implements Runnable
 				Socket sock = servSock.accept();
 				System.out.println(i + ":  got something from " + sock);
 				i++;
-				ConnectionManager.getSingleton().createInitialConnection(sock, handlers, new MessagePackerSetLoginServer());
+				ConnectionManager.getSingleton().createInitialConnection(sock, handlers, new MessagePackerSet());
 			}
 
 		} catch (Throwable e)

@@ -6,6 +6,7 @@ import model.reports.LoginInitiatedReport;
 import org.junit.Test;
 
 import communication.messages.LoginMessage;
+import communication.packers.LoginMessagePacker;
 
 /**
  * 

@@ -1,10 +1,10 @@
-package communication;
+package communication.packers;
 
 import model.QualifiedObservableReport;
 import model.reports.LoginInitiatedReport;
-import communication.MessagePacker;
 import communication.messages.LoginMessage;
 import communication.messages.Message;
+import communication.packers.MessagePacker;
 
 /**
  * Takes the information given to us when MovementNotifier updates and
@@ -33,7 +33,7 @@ public class LoginMessagePacker implements MessagePacker
 	}
 
 	/**
-	 * @see communication.MessagePacker#getReportWePack()
+	 * @see communication.packers.MessagePacker#getReportWePack()
 	 */
 	@Override
 	public Class<?> getReportWePack()

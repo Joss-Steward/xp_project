@@ -6,6 +6,7 @@ import model.reports.LoginSuccessfulReport;
 import org.junit.Test;
 
 import communication.messages.LoginResponseMessage;
+import communication.packers.LoginResponseMessagePacker;
 
 /**
  * @author Merlin

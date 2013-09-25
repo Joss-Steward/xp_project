@@ -1,8 +1,8 @@
-package communication;
+package communication.packers;
 
 import model.QualifiedObservableReport;
-import communication.MessagePacker;
 import communication.messages.Message;
+import communication.packers.MessagePacker;
 
 /**
  * Takes the information given to us when MovementNotifier updates and
@@ -28,7 +28,7 @@ public class MovementMessagePacker implements MessagePacker
 	}
 
 	/**
-	 * @see communication.MessagePacker#getReportWePack()
+	 * @see communication.packers.MessagePacker#getReportWePack()
 	 */
 	@Override
 	public Class<?> getReportWePack()

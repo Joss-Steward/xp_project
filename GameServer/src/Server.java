@@ -5,8 +5,8 @@ import java.net.Socket;
 import communication.ConnectMessageHandler;
 import communication.ConnectionManager;
 import communication.MessageHandlerSet;
-import communication.MessagePackerSetServer;
 import communication.messages.ConnectMessage;
+import communication.packers.MessagePackerSet;
 /**
  * A daemon that resides on the server listening to the gigabuds and to client
  * requests
@@ -47,7 +47,7 @@ public class Server implements Runnable
 				Socket sock = servSock.accept();
 				System.out.println(i + ":  got something from " + sock);
 				i++;
-				ConnectionManager.getSingleton().createInitialConnection(sock, handlers, new MessagePackerSetServer());
+				ConnectionManager.getSingleton().createInitialConnection(sock, handlers, new MessagePackerSet());
 			}
 
 		} catch (Throwable e)

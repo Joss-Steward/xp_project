@@ -6,6 +6,7 @@ import java.util.Observer;
 
 import model.QualifiedObservableReport;
 import communication.messages.Message;
+import communication.packers.MessagePackerSet;
 
 /**
  * Manages a queue of the events that have occurred that have not been sent to

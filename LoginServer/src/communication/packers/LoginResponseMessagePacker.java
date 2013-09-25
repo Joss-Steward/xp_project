@@ -1,10 +1,10 @@
-package communication;
+package communication.packers;
 
 import model.QualifiedObservableReport;
 import model.reports.LoginSuccessfulReport;
-
 import communication.messages.LoginResponseMessage;
 import communication.messages.Message;
+import communication.packers.MessagePacker;
 
 /**
  * @author Merlin
@@ -13,7 +13,7 @@ import communication.messages.Message;
 public class LoginResponseMessagePacker implements MessagePacker
 {
 	/**
-	 * @see communication.MessagePacker#pack(model.QualifiedObservableReport)
+	 * @see communication.packers.MessagePacker#pack(model.QualifiedObservableReport)
 	 */
 	@Override
 	public Message pack(QualifiedObservableReport object)
@@ -28,7 +28,7 @@ public class LoginResponseMessagePacker implements MessagePacker
 	}
 
 	/**
-	 * @see communication.MessagePacker#getReportWePack()
+	 * @see communication.packers.MessagePacker#getReportWePack()
 	 */
 	@Override
 	public Class<?> getReportWePack()

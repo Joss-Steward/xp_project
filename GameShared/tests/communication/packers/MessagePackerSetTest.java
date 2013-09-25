@@ -1,4 +1,4 @@
-package communication;
+package communication.packers;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -7,12 +7,17 @@ import java.util.Observer;
 import model.QualifiedObservable;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
+import model.reports.StubQualifiedObservableReport1;
+import model.reports.StubQualifiedObservableReport2;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
+import communication.CommunicationException;
 import communication.messages.Message;
+import communication.packers.MessagePacker;
+import communication.packers.MessagePackerSet;
 
 /**
  * Tests for the generic MessageProcessor
@@ -31,22 +36,23 @@ public class MessagePackerSetTest
 	{
 		QualifiedObservableConnector.resetSingleton();
 	}
+
 	/**
-	 * Make sure we can register a MessageHandler and use it to process messages
-	 * of the registered type
+	 * Detects and registers all message packers in the same package the
+	 * MessagePackerSet is in.  In this case, it should detect the packers that
+	 * pack the two stub report types.  If can pack them, the packers must have
+	 * been detected
 	 * 
 	 * @throws CommunicationException
 	 *             shouldn't
 	 */
 	@Test
-	public void justOne() throws CommunicationException
+	public void detectsAll() throws CommunicationException
 	{
-		MessagePacker packer = new MockMessagePacker();
-		QualifiedObservableReport report = new TestReport1();
-		
 		MessagePackerSet set = new MessagePackerSet();
-		set.registerPacker(packer);
-		Message result = set.pack(report);
+		Message result = set.pack(new StubQualifiedObservableReport1());
+		assertNotNull(result);
+		result = set.pack(new StubQualifiedObservableReport2());
 		assertNotNull(result);
 	}
 
@@ -79,15 +85,18 @@ public class MessagePackerSetTest
 	{
 		MessagePackerSet set = new MessagePackerSet();
 		MessagePacker packer = new MockMessagePacker();
-		
-		//Set up observable and observer that are interested in the report our mock packer is packing
+
+		// Set up observable and observer that are interested in the report our
+		// mock packer is packing
 		QualifiedObservable obs = new MockQualifiedObservable();
-		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(obs, TestReport1.class);
+		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(obs,
+				TestReport1.class);
 		Observer observer = EasyMock.createMock(Observer.class);
 		observer.update(EasyMock.eq(obs), EasyMock.isA(TestReport1.class));
 		EasyMock.replay(observer);
-		
-		// register the packer, hook up the observers, then our notify should give the update our observer is expecting
+
+		// register the packer, hook up the observers, then our notify should
+		// give the update our observer is expecting
 		set.registerPacker(packer);
 		set.hookUpObservationFor(observer);
 		obs.notifyObservers(new TestReport1());
@@ -117,12 +126,12 @@ public class MessagePackerSetTest
 		}
 
 	}
-	
+
 	private class MockMessagePacker implements MessagePacker
 	{
 
 		/**
-		 * @see communication.MessagePacker#pack(model.QualifiedObservableReport)
+		 * @see communication.packers.MessagePacker#pack(model.QualifiedObservableReport)
 		 */
 		@Override
 		public Message pack(QualifiedObservableReport object)
@@ -131,13 +140,13 @@ public class MessagePackerSetTest
 		}
 
 		/**
-		 * @see communication.MessagePacker#getReportWePack()
+		 * @see communication.packers.MessagePacker#getReportWePack()
 		 */
 		@Override
 		public Class<?> getReportWePack()
 		{
 			return TestReport1.class;
 		}
-		
+
 	}
 }

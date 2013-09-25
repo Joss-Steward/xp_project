@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 import communication.messages.ConnectMessage;
+import communication.packers.MessagePackerSet;
 
 /**
  * All of the pieces necessary to manage the connection between the client and

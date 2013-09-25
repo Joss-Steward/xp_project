@@ -1,4 +1,4 @@
-package communication;
+package communication.packers;
 
 import model.QualifiedObservableReport;
 import communication.messages.Message;

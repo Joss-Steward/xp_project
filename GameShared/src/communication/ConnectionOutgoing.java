@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import communication.messages.Message;
+import communication.packers.MessagePackerSet;
 
 /**
  * Responsible for communication between the server and a single connected

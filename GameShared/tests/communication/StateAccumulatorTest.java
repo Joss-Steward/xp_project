@@ -1,18 +1,16 @@
 package communication;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Observable;
 
-import model.QualifiedObservableReport;
+import model.reports.StubQualifiedObservableReport1;
 
 import org.easymock.EasyMock;
 import org.junit.Test;
 
-import communication.MessagePacker;
-import communication.MessagePackerSet;
-import communication.StateAccumulator;
 import communication.messages.Message;
+import communication.packers.MessagePackerSet;
 
 
 /** 
@@ -69,43 +67,14 @@ public class StateAccumulatorTest
 	{
 		MockObservable obs = new MockObservable();
 		MessagePackerSet packerSet = new MessagePackerSet();
-		MessagePacker packer = new MockMessagePacker();
-		packerSet.registerPacker( packer);
 		
 		StateAccumulator accum = new StateAccumulator(packerSet);
-		accum.update(obs, new MockReport());
+		accum.update(obs, new StubQualifiedObservableReport1());
 		ArrayList<Message> pending = accum.pendingMsgs;
 		assertEquals(1, pending.size());
 	}
 
 	private class MockObservable extends Observable
-	{
-
-		
-	}
-	private class MockReport implements QualifiedObservableReport
-	{
-	}
-	private class MockMessagePacker implements MessagePacker
-	{
-
-		/**
-		 * @see communication.MessagePacker#pack(model.QualifiedObservableReport)
-		 */
-		@Override
-		public Message pack(QualifiedObservableReport object)
-		{
-			return EasyMock.createMock(Message.class);
-		}
-
-		/**
-		 * @see communication.MessagePacker#getReportWePack()
-		 */
-		@Override
-		public Class<?> getReportWePack()
-		{
-			return MockReport.class;
-		}
-		
+	{	
 	}
 }

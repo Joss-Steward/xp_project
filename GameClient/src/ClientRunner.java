@@ -5,15 +5,17 @@ import java.util.Scanner;
 
 import model.CommandLogin;
 import model.Player;
+
 import communication.ConnectionManager;
 import communication.LoginResponseMessageHandler;
 import communication.MessageHandlerSet;
-import communication.MessagePackerSetClient;
 import communication.MovementMessageHandler;
 import communication.PlayerJoinedMessageHandler;
 import communication.messages.LoginResponseMessage;
 import communication.messages.MovementMessage;
 import communication.messages.PlayerJoinedMessage;
+import communication.packers.MessagePackerSet;
+
 import data.Position;
 
 /**
@@ -43,7 +45,7 @@ public class ClientRunner
 		handlers.registerHandler(MovementMessage.class, movementHandler);
 		handlers.registerHandler(LoginResponseMessage.class, new LoginResponseMessageHandler());
 		handlers.registerHandler(PlayerJoinedMessage.class, new PlayerJoinedMessageHandler());
-		ConnectionManager.getSingleton().createInitialConnection(socket, handlers, new MessagePackerSetClient());
+		ConnectionManager.getSingleton().createInitialConnection(socket, handlers, new MessagePackerSet());
 
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("input?");
