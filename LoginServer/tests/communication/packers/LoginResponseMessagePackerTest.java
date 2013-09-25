@@ -1,4 +1,4 @@
-package communication;
+package communication.packers;
 
 import static org.junit.Assert.*;
 import model.reports.LoginSuccessfulReport;

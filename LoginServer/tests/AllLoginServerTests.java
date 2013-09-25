@@ -3,8 +3,8 @@ import model.PlayerManagerTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import communication.LoginMessageHandlerTest;
-import communication.LoginResponseMessagePackerTest;
+import communication.handlers.LoginMessageHandlerTest;
+import communication.packers.LoginResponseMessagePackerTest;
 /**
  * @author Merlin
  *
@@ -12,8 +12,10 @@ import communication.LoginResponseMessagePackerTest;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 { 
-	//communication
+	//communication.handlers
 	LoginMessageHandlerTest.class,
+	
+	//communication.packers
 	LoginResponseMessagePackerTest.class,
 	
 	//model

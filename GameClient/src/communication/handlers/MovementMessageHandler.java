@@ -1,6 +1,7 @@
-package communication;
-import communication.MessageHandler;
+package communication.handlers;
+import communication.handlers.MessageHandler;
 import communication.messages.Message;
+import communication.messages.MovementMessage;
 
 
 
@@ -20,6 +21,15 @@ public class MovementMessageHandler implements MessageHandler
 	public void process(Message msg)
 	{
 		System.out.println("received " + msg);
+	}
+
+	/**
+	 * @see communication.handlers.MessageHandler#getMessageTypeWeHandle()
+	 */
+	@Override
+	public Class<?> getMessageTypeWeHandle()
+	{
+		return MovementMessage.class;
 	}
 
 }

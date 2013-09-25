@@ -1,12 +1,13 @@
-package communication;
+package communication.handlers;
 
 import org.easymock.EasyMock;
 import org.junit.Test;
 
 import communication.CommunicationException;
-import communication.MessageHandler;
-import communication.MessageHandlerSet;
+import communication.handlers.MessageHandlerSet;
 import communication.messages.Message;
+import communication.messages.StubMessage1;
+import communication.messages.StubMessage2;
 
 /**
  * Tests for the generic MessageProcessor
@@ -17,24 +18,18 @@ public class MessageHandlerSetTest
 {
 
 	/**
-	 * Make sure we can register a MessageHandler and use it to process messages of the registered type
+	 * Make sure it registers all of the handlers in its package.
+	 * If we can process messages of the type each stub handler expects, then they got registered
 	 * @throws CommunicationException shouldn't
 	 */
 	@Test
-	public void justOne() throws CommunicationException
+	public void detectsAndRegisters() throws CommunicationException
 	{
 		MessageHandlerSet proc = new MessageHandlerSet();
-		MessageHandler handler = EasyMock.createMock(MessageHandler.class);
-		Message msg = EasyMock.createMock(Message.class);
+
+		proc.process(new StubMessage1());
+		proc.process(new StubMessage2());
 		
-		handler.process(msg);
-		EasyMock.replay(handler);
-		EasyMock.replay(msg);
-		
-		proc.registerHandler(msg.getClass(), handler);
-		proc.process(msg);
-		EasyMock.verify(handler);
-		EasyMock.verify(msg);
 	}
 	
 	/**

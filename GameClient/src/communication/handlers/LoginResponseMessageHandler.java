@@ -1,8 +1,9 @@
-package communication;
+package communication.handlers;
 import java.io.IOException;
 import java.net.Socket;
 
-import communication.MessageHandler;
+import communication.ConnectionManager;
+import communication.handlers.MessageHandler;
 import communication.messages.LoginResponseMessage;
 import communication.messages.Message;
 
@@ -35,6 +36,15 @@ public class LoginResponseMessageHandler implements MessageHandler
 				e.printStackTrace();
 			}
 		}
+	}
+
+	/**
+	 * @see communication.handlers.MessageHandler#getMessageTypeWeHandle()
+	 */
+	@Override
+	public Class<?> getMessageTypeWeHandle()
+	{
+		return LoginResponseMessage.class;
 	}
 
 }

@@ -24,10 +24,10 @@ public class MovementMessagePacker implements MessagePacker
 
 	/**
 	 * 
-	 * @see communication.packers.MessagePacker#getReportWePack()
+	 * @see communication.packers.MessagePacker#getReportTypeWePack()
 	 */
 	@Override
-	public Class<? extends QualifiedObservableReport> getReportWePack()
+	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
 	{
 		// TODO when we re-implement movement . . .
 		return null;

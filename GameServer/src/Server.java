@@ -2,10 +2,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import communication.ConnectMessageHandler;
 import communication.ConnectionManager;
-import communication.MessageHandlerSet;
-import communication.messages.ConnectMessage;
+import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
 /**
  * A daemon that resides on the server listening to the gigabuds and to client
@@ -18,6 +16,7 @@ public class Server implements Runnable
 {
 	private ServerSocket servSock;
 	private MessageHandlerSet handlers;
+	private MessagePackerSet packers;
 	/**
 	 * 
 	 */
@@ -29,7 +28,7 @@ public class Server implements Runnable
 	private void initializeMessageHandlers()
 	{
 		handlers = new MessageHandlerSet();
-		handlers.registerHandler(ConnectMessage.class, new ConnectMessageHandler());
+		packers = new MessagePackerSet();
 	}
 
 	/**
@@ -47,7 +46,7 @@ public class Server implements Runnable
 				Socket sock = servSock.accept();
 				System.out.println(i + ":  got something from " + sock);
 				i++;
-				ConnectionManager.getSingleton().createInitialConnection(sock, handlers, new MessagePackerSet());
+				ConnectionManager.getSingleton().createInitialConnection(sock, handlers, packers);
 			}
 
 		} catch (Throwable e)

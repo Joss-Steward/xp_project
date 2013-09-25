@@ -140,10 +140,10 @@ public class MessagePackerSetTest
 		}
 
 		/**
-		 * @see communication.packers.MessagePacker#getReportWePack()
+		 * @see communication.packers.MessagePacker#getReportTypeWePack()
 		 */
 		@Override
-		public Class<?> getReportWePack()
+		public Class<?> getReportTypeWePack()
 		{
 			return TestReport1.class;
 		}

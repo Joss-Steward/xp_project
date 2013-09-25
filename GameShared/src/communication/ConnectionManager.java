@@ -3,6 +3,7 @@ package communication;
 import java.io.IOException;
 import java.net.Socket;
 
+import communication.handlers.MessageHandlerSet;
 import communication.messages.ConnectMessage;
 import communication.packers.MessagePackerSet;
 

@@ -28,7 +28,7 @@ public class StateAccumulator implements Observer
 	 * 
 	 * @return the packerSet
 	 */
-	public MessagePackerSet getPackerSet()
+	public TypeDetector getPackerSet()
 	{
 		return packerSet;
 	}

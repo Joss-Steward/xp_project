@@ -1,16 +1,13 @@
 package communication.packers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Observer;
-
-import org.reflections.Reflections;
-
-import com.google.common.collect.Multimap;
 
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import communication.CommunicationException;
+import communication.TypeDetector;
 import communication.messages.Message;
 
 /**
@@ -20,7 +17,7 @@ import communication.messages.Message;
  * @author merlin
  * 
  */
-public class MessagePackerSet
+public class MessagePackerSet extends TypeDetector
 {
 
 	protected HashMap<Class<?>, MessagePacker> packers;
@@ -31,92 +28,21 @@ public class MessagePackerSet
 	public MessagePackerSet()
 	{
 		packers = new HashMap<Class<?>, MessagePacker>();
-		detectAndRegisterAllPackersInPackage();
-	}
-
-	/**
-	 * 
-	 */
-	private void detectAndRegisterAllPackersInPackage()
-	{
-		Reflections reflections = new Reflections(this.getClass().getPackage().getName());
-
-		Multimap<String, String> mmap = reflections.getStore().getStoreMap().get("SubTypesScanner");
-		for (Map.Entry<String, String> entry : mmap.entries())
+		ArrayList<Class<?>> packerTypes = this.detectAllImplementorsInPackage(MessagePacker.class) ;
+		for(Class<?> packerType:packerTypes)
 		{
-			// skip over private classes that are inside another class
-			if (!entry.getValue().contains("$"))
+			try
 			{
-				try
-				{
-					Class<?> classToRegister = Class.forName(entry.getValue());
-					if (implementsMessagePacker(classToRegister))
-					{
-						MessagePacker packer = (MessagePacker) classToRegister.newInstance();
-						System.out.println("Registering " + classToRegister);
-						registerPacker(packer);
-					}
-				} catch (ClassNotFoundException e)
-				{
-					e.printStackTrace();
-				} catch (InstantiationException e)
-				{
-					e.printStackTrace();
-				} catch (IllegalAccessException e)
-				{
-					e.printStackTrace();
-				}
-			}
-
-		}
-	}
-
-	/**
-	 * @param classToRegister
-	 * @return
-	 */
-	private boolean implementsMessagePacker(Class<?> classToRegister)
-	{
-		if (classToRegister == MessagePacker.class)
-		{
-			System.out.println("Regected MessagePacker");
-			return false;
-		}
-		Class<?>[] list = classToRegister.getInterfaces();
-		boolean found = false;
-		for (Class<?> item : list)
-		{
-			if (recursivelyImplementsMessagePacker(item))
+				MessagePacker packer = (MessagePacker) packerType.newInstance();
+				System.out.println("Registering Packer" + packerType);
+				registerPacker(packer);
+			} catch (InstantiationException | IllegalAccessException e)
 			{
-				found = true;
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			
 		}
-
-		return found;
-
-	}
-
-	/**
-	 * @param item
-	 * @return
-	 */
-	private boolean recursivelyImplementsMessagePacker(Class<?> item)
-	{
-		if (item == MessagePacker.class)
-		{
-			return true;
-		}
-		Class<?>[] list = item.getInterfaces();
-		boolean found = false;
-		for (Class<?> nextItem : list)
-		{
-			if (recursivelyImplementsMessagePacker(nextItem))
-			{
-				found = true;
-			}
-		}
-
-		return found;
 	}
 
 	/**
@@ -163,9 +89,9 @@ public class MessagePackerSet
 	 * @param packer
 	 *            the packer that should interpret this type of notification
 	 */
-	protected void registerPacker(MessagePacker packer)
+	public void registerPacker(MessagePacker packer)
 	{
-		Class<?> reportWePack = packer.getReportWePack();
+		Class<?> reportWePack = packer.getReportTypeWePack();
 		packers.put(reportWePack, packer);
 	}
 
@@ -181,7 +107,7 @@ public class MessagePackerSet
 		for (MessagePacker packer : packers.values())
 		{
 			QualifiedObservableConnector.getSingleton().registerObserver(obs,
-					packer.getReportWePack());
+					packer.getReportTypeWePack());
 		}
 	}
 

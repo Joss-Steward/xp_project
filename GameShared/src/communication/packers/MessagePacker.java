@@ -27,5 +27,5 @@ public interface MessagePacker
 	 * 
 	 * @return the type of report we pack
 	 */
-	public Class<?> getReportWePack();
+	public Class<?> getReportTypeWePack();
 }

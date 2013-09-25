@@ -7,8 +7,8 @@ import org.junit.runners.Suite;
 
 import communication.ConnectionIncomingTest;
 import communication.ConnectionManagerTest;
-import communication.MessageHandlerSetTest;
 import communication.StateAccumulatorTest;
+import communication.handlers.MessageHandlerSetTest;
 import communication.messages.ConnectionMessageTest;
 import communication.messages.LoginMessageTest;
 import communication.messages.LoginResponseMessageTest;
@@ -31,15 +31,24 @@ import data.PositionTest;
 @Suite.SuiteClasses(
 {
 		// communication
-		ConnectionIncomingTest.class, ConnectionManagerTest.class, MessageHandlerSetTest.class,
-		MessagePackerSetTest.class,
+		ConnectionIncomingTest.class, 
+		ConnectionManagerTest.class, 
 		StateAccumulatorTest.class,
 
+		//communication.handlers
+		MessageHandlerSetTest.class,
+		//StubMessageHandler1.class,
+		//StubMessageHandler2.class,
+		
 		// communication.messages
-		ConnectionMessageTest.class, LoginMessageTest.class, LoginResponseMessageTest.class,
+		ConnectionMessageTest.class, 
+		LoginMessageTest.class, 
+		LoginResponseMessageTest.class,
 		MessageStructureVerifier.class,
 		MovementMessageTest.class,
 		PlayerJoinedMessageTest.class,
+		//StubMessage1.class,
+		//StubMessage2.class,
 
 		// communicatiaon.packers
 		MessagePackerSetTest.class,
@@ -50,7 +59,8 @@ import data.PositionTest;
 		PositionTest.class,
 
 		// model
-		CommandExecutorTest.class, QualifiedObservableTest.class,
+		CommandExecutorTest.class, 
+		QualifiedObservableTest.class,
 		QualifiedObserverConnectorTest.class,
 
 		// model.reports

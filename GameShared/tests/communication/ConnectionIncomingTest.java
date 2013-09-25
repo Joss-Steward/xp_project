@@ -1,14 +1,11 @@
 package communication;
 import java.io.IOException;
 
-
-import org.easymock.EasyMock;
 import org.junit.Test;
 
-import communication.ConnectionIncoming;
-import communication.MessageHandler;
-import communication.MessageHandlerSet;
+import communication.handlers.MessageHandlerSet;
 import communication.messages.Message;
+import communication.messages.StubMessage1;
 
 
 /**
@@ -27,18 +24,11 @@ public class ConnectionIncomingTest
 	@Test
 	public void incomingMsgGetsProcessed() throws IOException
 	{
-		Message msg = EasyMock.createMock(Message.class);
-		MessageHandler handler = EasyMock.createMock(MessageHandler.class);
-		handler.process(msg);
-		EasyMock.replay(msg);
-		EasyMock.replay(handler);
+		Message msg = new StubMessage1();
 		
-		MessageHandlerSet messageProcessor = new MessageHandlerSet();
-		messageProcessor.registerHandler(msg.getClass(), handler);
-		ConnectionIncoming connection = new ConnectionIncoming(null, messageProcessor);
+		MessageHandlerSet messageHandlerSet = new MessageHandlerSet();
+		ConnectionIncoming connection = new ConnectionIncoming(null, messageHandlerSet);
 		connection.processRequest(msg);
-		
-		EasyMock.verify(msg);
-		EasyMock.verify(handler);
+
 	}
 }

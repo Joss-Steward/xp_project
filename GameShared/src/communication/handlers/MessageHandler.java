@@ -1,4 +1,4 @@
-package communication;
+package communication.handlers;
 import communication.messages.Message;
 
 
@@ -16,4 +16,10 @@ public interface MessageHandler
 	 * @param msg the message to handle
 	 */
 	public void process (Message msg);
+	
+	/**
+	 * get the type of message this handler can process
+	 * @return the type of message
+	 */
+	public Class<?>  getMessageTypeWeHandle();
 }

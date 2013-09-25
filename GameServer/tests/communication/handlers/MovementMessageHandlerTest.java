@@ -1,4 +1,4 @@
-package communication;
+package communication.handlers;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;

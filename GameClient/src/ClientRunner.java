@@ -7,13 +7,7 @@ import model.CommandLogin;
 import model.Player;
 
 import communication.ConnectionManager;
-import communication.LoginResponseMessageHandler;
-import communication.MessageHandlerSet;
-import communication.MovementMessageHandler;
-import communication.PlayerJoinedMessageHandler;
-import communication.messages.LoginResponseMessage;
-import communication.messages.MovementMessage;
-import communication.messages.PlayerJoinedMessage;
+import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
 
 import data.Position;
@@ -40,12 +34,7 @@ public class ClientRunner
 			IOException
 	{
 		Socket socket = new Socket("localhost", 1871);
-		MessageHandlerSet handlers = new MessageHandlerSet();
-		MovementMessageHandler movementHandler = new MovementMessageHandler();
-		handlers.registerHandler(MovementMessage.class, movementHandler);
-		handlers.registerHandler(LoginResponseMessage.class, new LoginResponseMessageHandler());
-		handlers.registerHandler(PlayerJoinedMessage.class, new PlayerJoinedMessageHandler());
-		ConnectionManager.getSingleton().createInitialConnection(socket, handlers, new MessagePackerSet());
+		ConnectionManager.getSingleton().createInitialConnection(socket, new MessageHandlerSet(), new MessagePackerSet());
 
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("input?");
