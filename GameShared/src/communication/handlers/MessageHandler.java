@@ -1,4 +1,5 @@
 package communication.handlers;
+import communication.ConnectionManager;
 import communication.messages.Message;
 
 
@@ -9,17 +10,32 @@ import communication.messages.Message;
  * @author merlin
  *
  */
-public interface MessageHandler
+public abstract class MessageHandler
 {
+	protected ConnectionManager connectionManager;
+
 	/**
 	 * Processes an incoming message
 	 * @param msg the message to handle
 	 */
-	public void process (Message msg);
+	public abstract void process (Message msg);
 	
 	/**
 	 * get the type of message this handler can process
 	 * @return the type of message
 	 */
-	public Class<?>  getMessageTypeWeHandle();
+	public abstract Class<?>  getMessageTypeWeHandle();
+
+	/**
+	 * @param connectionManager the state accumulator associated with this hander's connection
+	 */
+	public void setConnectionManager(ConnectionManager connectionManager)
+	{
+		this.connectionManager = connectionManager;
+	}
+	
+	protected ConnectionManager getConnectionManager()
+	{
+		return connectionManager;
+	}
 }

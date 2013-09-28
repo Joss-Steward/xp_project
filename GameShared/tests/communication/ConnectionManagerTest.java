@@ -12,17 +12,17 @@ public class ConnectionManagerTest
 {
 
 	/**
-	 * Make sure it is a resetable singleton
+	 * We should really figure out something we can test
 	 */
 	@Test
-	public void isSingleton()
+	public void settingPlayerIDTellsStateAccumulator()
 	{
-		ConnectionManager cm1 =  ConnectionManager.getSingleton();
-		ConnectionManager cm2 =  ConnectionManager.getSingleton();
-		assertSame(cm1, cm2);
-		ConnectionManager.resetSingleton();
-		cm2 = ConnectionManager.getSingleton();
-		assertNotSame(cm1, cm2);
+		ConnectionManager cm = new ConnectionManager ();
+		cm.stateAccumulator = new StateAccumulator(null);
+		cm.setPlayerUserId(33);
+		assertEquals(33, cm.getPlayerID());
+		assertEquals(33, cm.stateAccumulator.getPlayerUserID());
 	}
+	
 
 }

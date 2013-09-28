@@ -18,7 +18,7 @@ public abstract class TypeDetector
 	/**
 	 * 
 	 */
-	protected ArrayList<Class<?>> detectAllImplementorsInPackage(Class<?> interfaceType)
+	protected ArrayList<Class<?>> detectAllImplementorsOrExtendersInPackage(Class<?> type)
 	{
 		ArrayList<Class<?>> results = new ArrayList<Class<?>>();
 		Reflections reflections = new Reflections(this.getClass().getPackage().getName());
@@ -32,7 +32,7 @@ public abstract class TypeDetector
 				try
 				{
 					Class<?> classToRegister = Class.forName(entry.getValue());
-					if (implementsInterface(classToRegister, interfaceType))
+					if ((implementsInterface(classToRegister, type) || extendsClass(classToRegister, type)))
 					{
 						results.add(classToRegister);
 					}
@@ -43,6 +43,24 @@ public abstract class TypeDetector
 			}
 		}
 		return results;
+	}
+
+	/**
+	 * @param classToRegister
+	 * @param classType
+	 * @return
+	 */
+	private boolean extendsClass(Class<?> classToRegister, Class<?> classType)
+	{
+		if (classToRegister.equals(classType) || classToRegister.getSuperclass().equals(classType))
+		{
+			return true;
+		}
+		if (!classToRegister.getSuperclass().equals(Object.class))
+		{
+			return extendsClass(classToRegister.getSuperclass(), classType);
+		}
+		return false;
 	}
 
 	/**

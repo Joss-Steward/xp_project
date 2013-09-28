@@ -1,10 +1,11 @@
 package communication.handlers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import communication.CommunicationException;
-import communication.TypeDetector;
+import communication.ConnectionManager;import communication.TypeDetector;
 import communication.messages.Message;
 /**
  * Manages a set of MessageHandlers and the type of message each one can process
@@ -26,13 +27,12 @@ public class MessageHandlerSet extends TypeDetector
 	{
 		handlers = new HashMap<Class<?>, MessageHandler>();
 		
-		ArrayList<Class<?>> handlerTypes = this.detectAllImplementorsInPackage(MessageHandler.class) ;
+		ArrayList<Class<?>> handlerTypes = this.detectAllImplementorsOrExtendersInPackage(MessageHandler.class) ;
 		for(Class<?> handlerType:handlerTypes)
 		{
 			try
 			{
 				MessageHandler handler = (MessageHandler) handlerType.newInstance();
-				System.out.println("Registering Handler" + handlerType);
 				registerHandler(handler);
 			} catch (InstantiationException | IllegalAccessException e)
 			{
@@ -73,6 +73,28 @@ public class MessageHandlerSet extends TypeDetector
 		{
 			throw new CommunicationException("No message handler for " + msg.getClass());
 		}
+	}
+
+	/**
+	 * set the connection manager associated with the connection using these handlers
+	 * @param connectionManager the manager
+	 */
+	public void setConnectionManager(ConnectionManager connectionManager)
+	{
+		for(MessageHandler h:handlers.values())
+		{
+			h.setConnectionManager(connectionManager);
+		}
+		
+	}
+
+	/**
+	 * For testing purposes only
+	 * @return all of the handlers in this set
+	 */
+	public Collection<MessageHandler> getHandlers()
+	{
+		return handlers.values();
 	}
 
 }

@@ -28,8 +28,9 @@ public class ConnectionManager
 	private Socket socket;
 	private MessagePackerSet messagePackerSet;
 	private MessageHandlerSet handlerSet;
+	StateAccumulator stateAccumulator;
+	private int playerID;
 
-	private static ConnectionManager singleton;
 
 	/**
 	 * Create everything necessary for building messages to send to the other
@@ -37,7 +38,7 @@ public class ConnectionManager
 	 * 
 	 * @param sock
 	 *            the socket connection we are managing
-	 * @param handlerSet
+	 * @param messageHandlerSet
 	 *            the set of MessageHandlers hat will process the incoming
 	 *            messages on this connection
 	 * @param messagePackerSet
@@ -46,25 +47,37 @@ public class ConnectionManager
 	 * @throws IOException
 	 *             caused by socket issues
 	 */
-	public void createInitialConnection(Socket sock, MessageHandlerSet handlerSet,
+	public ConnectionManager(Socket sock, MessageHandlerSet messageHandlerSet,
 			MessagePackerSet messagePackerSet) throws IOException
 	{
+		System.out.println("Starting new ConnectionManager");
 		this.socket = sock;
 		this.messagePackerSet = messagePackerSet;
-		this.handlerSet = handlerSet;
+		this.handlerSet = messageHandlerSet;
 
 		outgoing = new ConnectionOutgoing(sock, messagePackerSet);
 		outgoingThread = new Thread(outgoing);
 		// for simplictly
 		// T.setDaemon(true);
 		outgoingThread.start();
+		stateAccumulator = outgoing.getStateAccumulator();
+		messageHandlerSet.setConnectionManager(this);
 
-		incoming = new ConnectionIncoming(sock, handlerSet);
+		
+		incoming = new ConnectionIncoming(sock, messageHandlerSet);
 		incomingThread = new Thread(incoming);
 		// for simplictly
 		// T.setDaemon(true);
 		incomingThread.start();
 
+	}
+
+	/**
+	 * For testing purposes only 
+	 */
+	public ConnectionManager()
+	{
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -90,6 +103,7 @@ public class ConnectionManager
 		// for simplictly
 		// T.setDaemon(true);
 		outgoingThread.start();
+		stateAccumulator = outgoing.getStateAccumulator();
 		getStateAccumulator().queueMessage(new ConnectMessage(userID, pin));
 
 		incoming = new ConnectionIncoming(sock, handlerSet);
@@ -117,6 +131,7 @@ public class ConnectionManager
 	{
 		try
 		{
+			System.out.println("Trying to disconnect from our current socket");
 			socket.close();
 		} catch (IOException e)
 		{
@@ -128,22 +143,26 @@ public class ConnectionManager
 	}
 
 	/**
-	 * @return the only one of these that exists
+	 * @return the player ID for the user connected through this connection
 	 */
-	public synchronized static ConnectionManager getSingleton()
+	public int getPlayerID()
 	{
-		if (singleton == null)
-		{
-			singleton = new ConnectionManager();
-		}
-		return singleton;
+		return playerID;
 	}
 
 	/**
-	 * reset the singleton for testing purposes
+	 * set the playerID for the user connected through this connection
+	 * 
+	 * @param playerID
+	 *            the playerID
+	 * 
 	 */
-	public static void resetSingleton()
+	public void setPlayerUserId(int playerID)
 	{
-		singleton = null;
+		this.playerID = playerID;
+		if (stateAccumulator != null)
+		{
+			stateAccumulator.setPlayerUserId(playerID);
+		}
 	}
 }

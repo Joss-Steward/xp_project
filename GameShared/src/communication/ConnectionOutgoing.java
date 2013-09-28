@@ -3,6 +3,7 @@ package communication;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 import communication.messages.Message;
@@ -61,22 +62,44 @@ public class ConnectionOutgoing implements Runnable
 				{
 					for (Message msg : msgs)
 					{
-						System.out.println("Writing " + msg);
-						this.ostream.writeObject(msg);
+						System.out.println(this + " Writing " + msg);
+						try
+						{
+							this.ostream.writeObject(msg);
+						} catch (SocketException e)
+						{
+							System.out.println("Write failed");
+							cleanUpAndExit();
+						}
 					}
 				}
 
 			}
 		} catch (InterruptedException E)
 		{
-			// TODO need to get rid of observation links when we are getting
-			// torn down
-			// messagePackerSet.destroyObserverLinks(stateAccumulator);
+			cleanUpAndExit();
 		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
 		System.out.println("Outgoing thread finished");
+	}
+
+	/**
+	 * 
+	 */
+	private void cleanUpAndExit()
+	{
+		// TODO need to unobserve all of the things from the message packers
+
+	}
+
+	/**
+	 * @return the state accumulator associated with this outgoing connecting
+	 */
+	public StateAccumulator getStateAccumulator()
+	{
+		return stateAccumulator;
 	}
 
 }

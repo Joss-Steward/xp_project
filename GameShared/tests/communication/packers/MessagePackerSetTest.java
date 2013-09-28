@@ -1,8 +1,9 @@
 package communication.packers;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.Observer;
+import java.util.ArrayList;
 
 import model.QualifiedObservable;
 import model.QualifiedObservableConnector;
@@ -15,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.CommunicationException;
+import communication.StateAccumulator;
 import communication.messages.Message;
 import communication.packers.MessagePacker;
 import communication.packers.MessagePackerSet;
@@ -50,12 +52,23 @@ public class MessagePackerSetTest
 	public void detectsAll() throws CommunicationException
 	{
 		MessagePackerSet set = new MessagePackerSet();
-		Message result = set.pack(new StubQualifiedObservableReport1());
+		ArrayList<Message> result = set.pack(new StubQualifiedObservableReport1());
 		assertNotNull(result);
 		result = set.pack(new StubQualifiedObservableReport2());
 		assertNotNull(result);
 	}
 
+	/**
+	 * Two of the stub packers listen to the same report
+	 * @throws CommunicationException shouldn't
+	 */
+	@Test
+	public void canHaveTwo() throws CommunicationException
+	{
+		MessagePackerSet set = new MessagePackerSet();
+		ArrayList<Message> result = set.pack(new StubQualifiedObservableReport2());
+		assertEquals(2, result.size());
+	}
 	/**
 	 * If there isn't any handler for the type of message, an exception should
 	 * be thrown
@@ -91,7 +104,7 @@ public class MessagePackerSetTest
 		QualifiedObservable obs = new MockQualifiedObservable();
 		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(obs,
 				TestReport1.class);
-		Observer observer = EasyMock.createMock(Observer.class);
+		StateAccumulator observer = EasyMock.createMock(StateAccumulator.class);
 		observer.update(EasyMock.eq(obs), EasyMock.isA(TestReport1.class));
 		EasyMock.replay(observer);
 
@@ -99,6 +112,7 @@ public class MessagePackerSetTest
 		// give the update our observer is expecting
 		set.registerPacker(packer);
 		set.hookUpObservationFor(observer);
+		assertEquals(observer, packer.getAccumulator());
 		obs.notifyObservers(new TestReport1());
 
 		EasyMock.verify(observer);
@@ -127,7 +141,7 @@ public class MessagePackerSetTest
 
 	}
 
-	private class MockMessagePacker implements MessagePacker
+	private class MockMessagePacker extends MessagePacker
 	{
 
 		/**

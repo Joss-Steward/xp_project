@@ -22,7 +22,8 @@ public class StateAccumulator implements Observer
 	// need this to be visible to the tests
 	protected ArrayList<Message> pendingMsgs;
 	private MessagePackerSet packerSet;
-
+	private int userID;
+	
 	/**
 	 * Only used for tests
 	 * 
@@ -36,14 +37,17 @@ public class StateAccumulator implements Observer
 	/**
 	 * @param messagePackerSet
 	 *            the set of MessagePackers we should use to build the outgoing
-	 *            messages we are queueing
+	 *            messages we are queueing (may be null during testing)
 	 * 
 	 */
 	public StateAccumulator(MessagePackerSet messagePackerSet)
 	{
 		pendingMsgs = new ArrayList<Message>();
 		this.packerSet = messagePackerSet;
-		packerSet.hookUpObservationFor(this);
+		if (packerSet != null)
+		{
+			packerSet.hookUpObservationFor(this);
+		}
 
 	}
 
@@ -67,15 +71,18 @@ public class StateAccumulator implements Observer
 	@Override
 	public void update(Observable arg0, Object arg1)
 	{
-		Message msg;
+		ArrayList<Message> msgs;
 		try
 		{
 			synchronized (pendingMsgs)
 			{
-				msg = packerSet.pack((QualifiedObservableReport) arg1);
-				if (msg != null)
+				msgs = packerSet.pack((QualifiedObservableReport) arg1);
+				if (msgs != null)
 				{
-					pendingMsgs.add(msg);
+					for(Message msg:msgs)
+					{
+						pendingMsgs.add(msg);
+					}
 				}
 			}
 		} catch (CommunicationException e)
@@ -97,4 +104,21 @@ public class StateAccumulator implements Observer
 			pendingMsgs.add(msg);
 		}
 	}
+
+	/**
+	 * @param i the userID of the player associated with this accumulator
+	 */
+	public void setPlayerUserId(int i)
+	{
+		this.userID = i;
+	}
+
+	/**
+	 * @return the userid of the player using this accumulator
+	 */
+	public int getPlayerUserID()
+	{
+		return userID;
+	}
+	
 }

@@ -13,7 +13,7 @@ import communication.packers.MessagePacker;
  * @author Merlin
  *
  */
-public class StubMessagePacker1 implements MessagePacker
+public class StubMessagePacker1 extends MessagePacker
 {
 
 	/**

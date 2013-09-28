@@ -1,6 +1,8 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
+
+import communication.StateAccumulator;
 import communication.messages.Message;
 
 /**
@@ -10,8 +12,10 @@ import communication.messages.Message;
  * @author merlin
  * 
  */
-public interface MessagePacker
+public abstract class MessagePacker
 {
+
+	private StateAccumulator accumulator;
 
 	/**
 	 * Build a message describing an event
@@ -20,12 +24,28 @@ public interface MessagePacker
 	 *            the object pushed by the observable in its notification
 	 * @return the appropriate message
 	 */
-	public Message pack(QualifiedObservableReport object);
+	public abstract Message pack(QualifiedObservableReport object);
 
 	/**
 	 * Tell which type of report we pack
 	 * 
 	 * @return the type of report we pack
 	 */
-	public Class<?> getReportTypeWePack();
+	public abstract Class<?> getReportTypeWePack();
+
+	/**
+	 * @return the StateAccumulator attached to this packer
+	 */
+	public StateAccumulator getAccumulator()
+	{
+		return accumulator;
+	}
+
+	/**
+	 * @param obs the StateAccumulator we should be associated with
+	 */
+	public void setAccumulator(StateAccumulator obs)
+	{
+		this.accumulator = obs;
+	}
 }

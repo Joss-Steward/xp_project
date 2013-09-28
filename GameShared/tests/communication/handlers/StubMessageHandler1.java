@@ -10,7 +10,7 @@ import communication.messages.StubMessage1;
  * @author merlin
  *
  */
-public class StubMessageHandler1 implements MessageHandler
+public class StubMessageHandler1 extends MessageHandler
 {
 
 	/**
