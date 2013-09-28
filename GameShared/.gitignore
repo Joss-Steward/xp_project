@@ -3,3 +3,5 @@
 
 .gitIgnore
 .classPath
+/.classpath
+/.gitignore
