@@ -2,6 +2,7 @@ package model;
 
 import java.util.HashMap;
 
+
 import model.reports.PlayerConnectionReport;
 
 /**
@@ -79,6 +80,26 @@ public class PlayerManager extends QualifiedObservable
 	 */
 	public Player getPlayerFromID(int userID)
 	{
+		// TODO should throw player not found exception if it isn't here
 		return players.get(userID);
+	}
+
+	/**
+	 * @param userName the user name of the player we are searching for
+	 * @return the userID of the player we are searching for
+	 * @throws PlayerNotFoundException if no player with that username is found
+	 */
+	public int getUserIDFromUserName(String userName) throws PlayerNotFoundException
+	{
+		java.util.Iterator<Player> i = players.values().iterator();
+		while(i.hasNext())
+		{
+			Player p = i.next();
+			if (p.getUserName().equals(userName))
+			{
+				return p.getUserID();
+			}
+		}
+		throw new PlayerNotFoundException();
 	}
 }

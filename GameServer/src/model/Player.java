@@ -42,4 +42,13 @@ public class Player extends QualifiedObservable
 		return false;
 	}
 
+	/**
+	 * TODO need to fix so players know their names
+	 * @return fred
+	 */
+	public String getUserName()
+	{
+		return "fred";
+	}
+
 }

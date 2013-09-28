@@ -1,20 +1,19 @@
 package communication.packers;
 
+import java.io.IOException;
+
 import model.PlayerManager;
 import model.PlayerNotFoundException;
 import model.QualifiedObservableReport;
 import model.reports.PlayerConnectionReport;
+import communication.messages.MapFileMessage;
 import communication.messages.Message;
-import communication.messages.PlayerJoinedMessage;
-import communication.packers.MessagePacker;
 
 /**
- * Packs a message telling clients that a new player has joined this area server
- * 
  * @author Merlin
- * 
+ *
  */
-public class PlayerJoinedMessagePacker extends MessagePacker
+public class MapFileMessagePacker extends MessagePacker
 {
 
 	/**
@@ -30,13 +29,17 @@ public class PlayerJoinedMessagePacker extends MessagePacker
 			{
 				int userID = PlayerManager.getSingleton().getUserIDFromUserName(
 						report.getUserName());
-				if (this.getAccumulator().getPlayerID() != userID)
+				if (this.getAccumulator().getPlayerID() == userID)
 				{
-					PlayerJoinedMessage msg = new PlayerJoinedMessage(report.getUserName());
+					MapFileMessage msg = new MapFileMessage("maps/simple.tmx");
 					return msg;
 				}
 			} catch (PlayerNotFoundException e)
 			{
+				return null;
+			} catch (IOException e)
+			{
+				e.printStackTrace();
 				return null;
 			}
 
@@ -50,7 +53,8 @@ public class PlayerJoinedMessagePacker extends MessagePacker
 	@Override
 	public Class<?> getReportTypeWePack()
 	{
-		return PlayerConnectionReport.class;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

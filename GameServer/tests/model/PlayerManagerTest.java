@@ -67,4 +67,15 @@ public class PlayerManagerTest
 		PlayerManager.getSingleton().addPlayer(42, 1234);
 		EasyMock.verify(obs);
 	}
+	
+	/**
+	 * this is kind of stupid while everyone is named fred
+	 * TODO need to fix when we actually store players' names
+	 */
+	@Test
+	public void canGetUserIDFromUserName()
+	{
+		PlayerManager.getSingleton().addPlayer(42, 1234);
+		
+	}
 }

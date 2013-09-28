@@ -3,7 +3,10 @@ import model.PlayerManagerTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import communication.handlers.ConnectMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
+import communication.packers.MapFileMessagePackerTest;
+import communication.packers.PlayerJoinedMessagePackerTest;
 
 /**
  * All of the tests for the area servers code. Notice that the packages, and classes
@@ -18,7 +21,12 @@ import communication.handlers.MovementMessageHandlerTest;
 @Suite.SuiteClasses(
 { 
 	//communication.handlers
+	ConnectMessageHandlerTest.class,
 	MovementMessageHandlerTest.class,
+	
+	//communication.packers
+	MapFileMessagePackerTest.class,
+	PlayerJoinedMessagePackerTest.class,
 	
 	// model
 	PlayerManagerTest.class
