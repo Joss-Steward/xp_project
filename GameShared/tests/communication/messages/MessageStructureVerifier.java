@@ -1,0 +1,148 @@
+package communication.messages;
+
+import static org.junit.Assert.fail;
+
+import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Map;
+
+import org.junit.Test;
+import org.reflections.Reflections;
+
+import com.google.common.collect.Multimap;
+
+/**
+ * This class verifies all of the classes in its package have the structure
+ * required for messages. This means that they must be serializable and have
+ * getters for every non-transient/final field. For a class to be serializable,
+ * it must implement the Serializable interface and all of its
+ * non-transient/final fields must also be serializable.
+ * 
+ * @author Merlin
+ * 
+ */
+public class MessageStructureVerifier
+{
+
+	/**
+	 * Find all of the classes in the package containing this test and test them
+	 * to see if they meet the requirements
+	 * 
+	 * @throws ClassNotFoundException shouldn't
+	 */
+	@Test
+	public void testAllClassesInThisPackage() throws ClassNotFoundException
+	{
+		Reflections reflections = new Reflections(this.getClass().getPackage().getName());
+		for (String mmapName : reflections.getStore().getStoreMap().keySet())
+		{
+			Multimap<String, String> mmap = reflections.getStore().getStoreMap().get(mmapName);
+			for (Map.Entry<String, String> entry : mmap.entries())
+			{
+				verifyStructureForSerializability(Class.forName(entry.getValue()));
+			}
+		}
+
+	}
+
+	/**
+	 * Runs the entire series of checks for the structure required for
+	 * serializability
+	 * 
+	 * @param classToCheck
+	 *            the class whose structure we should check
+	 */
+	public static void verifyStructureForSerializability(Class<?> classToCheck)
+	{
+		System.out.println("Checking " + classToCheck.getCanonicalName() + " for serializability");
+		if (!checkImplementsInterface(classToCheck, Serializable.class))
+		{
+			fail(classToCheck.getName() + " must implement Serializable");
+		}
+		if (!checkImplementsInterface(classToCheck, Message.class))
+		{
+			fail(classToCheck.getName() + " must implement Message");
+		}
+		ArrayList<Field> storedFields = getStoredFields(classToCheck);
+		for (Field fieldToCheck : storedFields)
+		{
+			checkIsSerializable(fieldToCheck);
+			verifyGetter(fieldToCheck, classToCheck);
+		}
+
+	}
+
+	private static void verifyGetter(Field fieldToCheck, Class<?> classToCheck)
+	{
+		StringBuffer capitalizedFieldName = new StringBuffer(fieldToCheck.getName());
+		Class<?> type = fieldToCheck.getType();
+
+		char firstChar = capitalizedFieldName.charAt(0);
+		if ((firstChar >= 'a') && (firstChar <= 'z'))
+		{
+			capitalizedFieldName.setCharAt(0, (char) (firstChar - ('a' - 'A')));
+		}
+		try
+		{
+			if (type.toString().equals("boolean"))
+				classToCheck.getDeclaredMethod("is" + capitalizedFieldName, new Class[0]);
+			else
+				classToCheck.getDeclaredMethod("get" + capitalizedFieldName, new Class[0]);
+		} catch (NoSuchMethodException e)
+		{
+			fail(classToCheck.getName() + " is missing a getter for " + fieldToCheck);
+		} catch (Exception e)
+		{
+			fail();
+		}
+	}
+
+	/**
+	 * @param fieldToCheck
+	 */
+	private static void checkIsSerializable(Field fieldToCheck)
+	{
+		Class<?> type = fieldToCheck.getType();
+		if (!type.isPrimitive())
+		{
+			checkImplementsInterface(type, null);
+		}
+	}
+
+	private static boolean checkImplementsInterface(Class<?> classToTest, Class<?> interfaceToCheckFor)
+	{
+		if (classToTest == interfaceToCheckFor)
+		{
+			return true;
+		}
+		Class<?>[] list = classToTest.getInterfaces();
+		boolean found = false;
+		for (Class<?> item : list)
+		{
+			if (checkImplementsInterface(item, interfaceToCheckFor))
+			{
+				found = true;
+			}
+		}
+
+		return found;
+	}
+
+	private static ArrayList<Field> getStoredFields(Class<?> classToCheck)
+	{
+		ArrayList<Field> storedFields = new ArrayList<Field>();
+
+		Field[] allFields = classToCheck.getDeclaredFields();
+		for (int i = 0; i < allFields.length; i++)
+		{
+			int modifiers = allFields[i].getModifiers();
+			if (!Modifier.isTransient(modifiers) && !Modifier.isFinal(allFields[i].getModifiers()))
+			{
+				storedFields.add(allFields[i]);
+			}
+		}
+		return storedFields;
+	}
+}
