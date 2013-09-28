@@ -11,7 +11,7 @@ import communication.packers.MessagePacker;
  * @author Merlin
  *
  */
-public class PlayerJoinedMessagePacker implements MessagePacker
+public class PlayerJoinedMessagePacker extends MessagePacker
 {
 
 	/**

@@ -12,7 +12,7 @@ import communication.packers.MessagePacker;
  * @author merlin
  * 
  */
-public class MovementMessagePacker implements MessagePacker
+public class MovementMessagePacker extends MessagePacker
 {
 
 	/**

@@ -14,7 +14,7 @@ import communication.packers.MessagePacker;
  * @author merlin
  * 
  */
-public class LoginMessagePacker implements MessagePacker
+public class LoginMessagePacker extends MessagePacker
 {
 	/**
 	 * 

@@ -10,7 +10,7 @@ import communication.packers.MessagePacker;
  * @author Merlin
  *
  */
-public class LoginResponseMessagePacker implements MessagePacker
+public class LoginResponseMessagePacker extends MessagePacker
 {
 	/**
 	 * @see communication.packers.MessagePacker#pack(model.QualifiedObservableReport)

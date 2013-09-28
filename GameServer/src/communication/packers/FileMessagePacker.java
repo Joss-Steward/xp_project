@@ -10,7 +10,7 @@ import communication.packers.MessagePacker;
  * @author merlin
  *
  */
-public class MovementMessagePacker extends MessagePacker
+public class FileMessagePacker extends MessagePacker
 {
 
 	/**
