@@ -49,6 +49,8 @@ public class PlayerManagerTest
 	{
 		PlayerManager.getSingleton().addPlayer(42, 1234);
 		assertEquals(1,PlayerManager.getSingleton().numberOfPlayers());
+		Player p = PlayerManager.getSingleton().getPlayerFromID(42);
+		assertEquals(42, p.getUserID());
 	}
 	
 	/**

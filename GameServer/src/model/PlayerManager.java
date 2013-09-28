@@ -1,6 +1,6 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.reports.PlayerConnectionReport;
 
@@ -33,11 +33,11 @@ public class PlayerManager extends QualifiedObservable
 		singleton = null;
 	}
 
-	private ArrayList<Player> players;
+	private HashMap<Integer,Player> players;
 
 	private PlayerManager()
 	{
-		players = new ArrayList<Player>();
+		players = new HashMap<Integer,Player>();
 		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this, PlayerConnectionReport.class);
 	}
 
@@ -69,7 +69,16 @@ public class PlayerManager extends QualifiedObservable
 	public void addPlayer(int userID, int pin)
 	{
 		Player player = new Player(userID, 1234);
-		players.add(player);
+		players.put(userID, player);
 		this.notifyObservers(new PlayerConnectionReport(player));
+	}
+
+	/**
+	 * @param userID the userID of the player we are looking for
+	 * @return the player we were looking for
+	 */
+	public Player getPlayerFromID(int userID)
+	{
+		return players.get(userID);
 	}
 }

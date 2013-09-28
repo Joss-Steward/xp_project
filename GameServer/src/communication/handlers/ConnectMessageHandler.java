@@ -5,18 +5,18 @@ import communication.handlers.MessageHandler;
 import communication.messages.ConnectMessage;
 import communication.messages.Message;
 
-
 /**
  * Handles a message that the user is connecting to this area server
+ * 
  * @author merlin
- *
+ * 
  */
 public class ConnectMessageHandler extends MessageHandler
 {
 
-	
 	/**
 	 * Add this user to the player list
+	 * 
 	 * @see communication.handlers.MessageHandler#process(communication.messages.Message)
 	 */
 	@Override
@@ -24,8 +24,12 @@ public class ConnectMessageHandler extends MessageHandler
 	{
 		if (msg.getClass().equals(ConnectMessage.class))
 		{
-			ConnectMessage cMsg = (ConnectMessage)msg;
-			PlayerManager.getSingleton().addPlayer(cMsg.getUserID(),cMsg.getPin());
+			ConnectMessage cMsg = (ConnectMessage) msg;
+			PlayerManager.getSingleton().addPlayer(cMsg.getUserID(), cMsg.getPin());
+			if (stateAccumulator != null)
+			{
+				this.stateAccumulator.setPlayerUserId(cMsg.getUserID());
+			}
 		}
 	}
 
