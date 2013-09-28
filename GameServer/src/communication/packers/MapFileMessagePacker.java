@@ -29,7 +29,7 @@ public class MapFileMessagePacker extends MessagePacker
 			{
 				int userID = PlayerManager.getSingleton().getUserIDFromUserName(
 						report.getUserName());
-				if (this.getAccumulator().getPlayerID() == userID)
+				if (this.getAccumulator().getPlayerUserID() == userID)
 				{
 					MapFileMessage msg = new MapFileMessage("maps/simple.tmx");
 					return msg;
@@ -53,8 +53,7 @@ public class MapFileMessagePacker extends MessagePacker
 	@Override
 	public Class<?> getReportTypeWePack()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return PlayerConnectionReport.class;
 	}
 
 }

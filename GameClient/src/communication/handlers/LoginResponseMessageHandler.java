@@ -2,7 +2,6 @@ package communication.handlers;
 import java.io.IOException;
 import java.net.Socket;
 
-import communication.ConnectionManager;
 import communication.handlers.MessageHandler;
 import communication.messages.LoginResponseMessage;
 import communication.messages.Message;
@@ -30,7 +29,7 @@ public class LoginResponseMessageHandler extends MessageHandler
 			LoginResponseMessage rMsg = (LoginResponseMessage)msg;
 			try
 			{
-				ConnectionManager.getSingleton().moveToNewSocket(new Socket(rMsg.getHostName(),rMsg.getPortNumber()), rMsg.getUserID(), rMsg.getPin());
+				connectionManager.moveToNewSocket(new Socket(rMsg.getHostName(),rMsg.getPortNumber()), rMsg.getUserID(), rMsg.getPin());
 			} catch (IOException e)
 			{
 				e.printStackTrace();

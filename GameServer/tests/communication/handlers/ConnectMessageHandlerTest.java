@@ -5,7 +5,7 @@ import model.PlayerManager;
 
 import org.junit.Test;
 
-import communication.StateAccumulator;
+import communication.ConnectionManager;
 import communication.messages.ConnectMessage;
 
 /**
@@ -24,11 +24,11 @@ public class ConnectMessageHandlerTest
 	public void tellsStateAccumulatorIfUserIDPinIsRecognized()
 	{
 		ConnectMessageHandler handler = new ConnectMessageHandler();
-		StateAccumulator stateAccumulator = new StateAccumulator(null);
-		handler.setStateAccumulator(stateAccumulator);
+		ConnectionManager connectionManager = new ConnectionManager();
+		handler.setConnectionManager(connectionManager);
 		ConnectMessage msg = new ConnectMessage(34, 42);
 		handler.process(msg);
-		assertEquals(34, stateAccumulator.getPlayerID());
+		assertEquals(34, connectionManager.getPlayerID());
 	}
 
 	/**

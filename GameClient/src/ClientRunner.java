@@ -34,7 +34,7 @@ public class ClientRunner
 			IOException
 	{
 		Socket socket = new Socket("localhost", 1871);
-		ConnectionManager.getSingleton().createInitialConnection(socket, new MessageHandlerSet(), new MessagePackerSet());
+		ConnectionManager cm = new ConnectionManager(socket, new MessageHandlerSet(), new MessagePackerSet());
 
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("input?");
@@ -63,7 +63,7 @@ public class ClientRunner
 		};
 		System.out.println("leaving");
 		scanner.close();
-		ConnectionManager.getSingleton().disconnect();
+		cm.disconnect();
 	}
 
 }

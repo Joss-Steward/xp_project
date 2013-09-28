@@ -28,8 +28,7 @@ public class LoginServer implements Runnable
 
 	private void initializeMessageHandlers()
 	{
-		handlers = new MessageHandlerSet();
-		packers = new MessagePackerSet();
+		
 	}
 
 	/**
@@ -47,7 +46,9 @@ public class LoginServer implements Runnable
 				Socket sock = servSock.accept();
 				System.out.println(i + ":  got something from " + sock);
 				i++;
-				ConnectionManager.getSingleton().createInitialConnection(sock, handlers, packers);
+				handlers = new MessageHandlerSet();
+				packers = new MessagePackerSet();
+				new ConnectionManager(sock, handlers, packers);
 			}
 
 		} catch (Throwable e)

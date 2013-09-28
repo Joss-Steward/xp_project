@@ -25,11 +25,14 @@ public class ConnectMessageHandler extends MessageHandler
 		if (msg.getClass().equals(ConnectMessage.class))
 		{
 			ConnectMessage cMsg = (ConnectMessage) msg;
-			PlayerManager.getSingleton().addPlayer(cMsg.getUserID(), cMsg.getPin());
-			if (stateAccumulator != null)
+			// assume this connection is going to work
+			if (connectionManager != null)
 			{
-				this.stateAccumulator.setPlayerUserId(cMsg.getUserID());
+				connectionManager.setPlayerUserId(cMsg.getUserID());
 			}
+			PlayerManager.getSingleton().addPlayer(cMsg.getUserID(), cMsg.getPin());
+			// TODO what should we do if the information in the message isn't correct
+			
 		}
 	}
 

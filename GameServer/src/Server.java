@@ -46,7 +46,7 @@ public class Server implements Runnable
 				Socket sock = servSock.accept();
 				System.out.println(i + ":  got something from " + sock);
 				i++;
-				ConnectionManager.getSingleton().createInitialConnection(sock, handlers, packers);
+				new ConnectionManager(sock, handlers, packers);
 			}
 
 		} catch (Throwable e)

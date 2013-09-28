@@ -30,7 +30,7 @@ public class PlayerJoinedMessagePacker extends MessagePacker
 			{
 				int userID = PlayerManager.getSingleton().getUserIDFromUserName(
 						report.getUserName());
-				if (this.getAccumulator().getPlayerID() != userID)
+				if (this.getAccumulator().getPlayerUserID() != userID)
 				{
 					PlayerJoinedMessage msg = new PlayerJoinedMessage(report.getUserName());
 					return msg;
