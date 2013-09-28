@@ -32,5 +32,6 @@ public class CommandLoginTest
 		Player p = Player.getSingleton();
 		assertTrue(p.isLoginInProgress());
 		assertEquals("Fred", p.getName());
+		
 	}
 }
