@@ -10,7 +10,7 @@ import communication.messages.PlayerJoinedMessage;
  * @author merlin
  *
  */
-public class PlayerJoinedMessageHandler implements MessageHandler
+public class PlayerJoinedMessageHandler extends MessageHandler
 {
 
 	/**

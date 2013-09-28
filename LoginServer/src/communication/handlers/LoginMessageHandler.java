@@ -11,7 +11,7 @@ import communication.messages.Message;
  * @author merlin
  *
  */
-public class LoginMessageHandler implements MessageHandler
+public class LoginMessageHandler extends MessageHandler
 {
 
 

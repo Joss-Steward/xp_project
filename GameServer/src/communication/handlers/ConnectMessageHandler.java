@@ -11,7 +11,7 @@ import communication.messages.Message;
  * @author merlin
  *
  */
-public class ConnectMessageHandler implements MessageHandler
+public class ConnectMessageHandler extends MessageHandler
 {
 
 	

@@ -10,7 +10,7 @@ import communication.messages.MovementMessage;
  * @author merlin
  *
  */
-public class MovementMessageHandler implements MessageHandler
+public class MovementMessageHandler extends MessageHandler
 {
 
 	/**
