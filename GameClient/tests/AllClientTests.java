@@ -1,9 +1,12 @@
 import model.CommandLoginTest;
+import model.ModelFacadeTest;
 import model.PlayerTest;
+import model.TiledMapTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import communication.handlers.MapFileMessageHandlerTest;
 import communication.packers.LoginMessagePackerTest;
 
 
@@ -19,11 +22,17 @@ import communication.packers.LoginMessagePackerTest;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 { 
+	//communication.handlers
+	MapFileMessageHandlerTest.class,
+	
 	//communication.packers
 	LoginMessagePackerTest.class,
 	
+	//model
 	CommandLoginTest.class,
+	ModelFacadeTest.class,
 	PlayerTest.class,
+	TiledMapTest.class,
 	
 })
 
