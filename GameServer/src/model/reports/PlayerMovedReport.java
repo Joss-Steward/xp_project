@@ -8,19 +8,19 @@ import model.QualifiedObservableReport;
  * @author Merlin
  *
  */
-public class PlayerMovedReport implements QualifiedObservableReport
+public final class PlayerMovedReport implements QualifiedObservableReport
 {
 
+	private final Position newPosition;
+	private final int userID;
 	/**
-	 * @see java.lang.Object#hashCode()
+	 * @param userID the ID of the player that moved
+	 * @param position the position he moved to
 	 */
-	@Override
-	public int hashCode()
+	public PlayerMovedReport(int userID, Position position)
 	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((newPosition == null) ? 0 : newPosition.hashCode());
-		return result;
+		newPosition = position;
+		this.userID = userID;
 	}
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -44,29 +44,29 @@ public class PlayerMovedReport implements QualifiedObservableReport
 		return true;
 	}
 	/**
-	 * @return the playerID
-	 */
-	public int getPlayerID()
-	{
-		return playerID;
-	}
-	private Position newPosition;
-	private int playerID;
-	/**
-	 * @param playerID the ID of the player that moved
-	 * @param position the position he moved to
-	 */
-	public PlayerMovedReport(int playerID, Position position)
-	{
-		newPosition = position;
-		this.playerID = playerID;
-	}
-	/**
 	 * @return the newPosition
 	 */
 	public Position getNewPosition()
 	{
 		return newPosition;
+	}
+	/**
+	 * @return the playerID
+	 */
+	public int getUserID()
+	{
+		return userID;
+	}
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((newPosition == null) ? 0 : newPosition.hashCode());
+		return result;
 	}
 
 }

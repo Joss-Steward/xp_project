@@ -1,4 +1,5 @@
 import model.PlayerManagerTest;
+import model.reports.LoginSuccessfulReportTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -19,7 +20,10 @@ import communication.packers.LoginResponseMessagePackerTest;
 	LoginResponseMessagePackerTest.class,
 	
 	//model
-	PlayerManagerTest.class
+	PlayerManagerTest.class,
+	
+	//model.reports
+	LoginSuccessfulReportTest.class,
 })
 
 public class AllLoginServerTests

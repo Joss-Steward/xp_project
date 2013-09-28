@@ -7,22 +7,21 @@ import model.QualifiedObservableReport;
  * @author Merlin
  * 
  */
-public class LoginInitiatedReport implements QualifiedObservableReport
+public final class LoginInitiatedReport implements QualifiedObservableReport
 {
 
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		return result;
-	}
+	private final String name;
+	private final String password;
 
+	/**
+	 * @param name the users username
+	 * @param password the users password
+	 */
+	public LoginInitiatedReport(String name, String password)
+	{
+		this.name = name;
+		this.password = password;
+	}
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -51,33 +50,33 @@ public class LoginInitiatedReport implements QualifiedObservableReport
 		return true;
 	}
 
-	private String name;
-	private String password;
-
-	/**
-	 * @param name the users username
-	 * @param password the users password
-	 */
-	public LoginInitiatedReport(String name, String password)
-	{
-		this.name = name;
-		this.password = password;
-	}
-
-	/**
-	 * @return the name
-	 */
-	public String getName()
-	{
-		return name;
-	}
-
 	/**
 	 * @return the password
 	 */
 	public String getPassword()
 	{
 		return password;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getUserName()
+	{
+		return name;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		return result;
 	}
 
 }

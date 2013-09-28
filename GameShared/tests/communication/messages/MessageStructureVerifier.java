@@ -13,6 +13,8 @@ import org.reflections.Reflections;
 
 import com.google.common.collect.Multimap;
 
+import communication.TypeDetector;
+
 /**
  * This class verifies all of the classes in its package have the structure
  * required for messages. This means that they must be serializable and have
@@ -23,25 +25,43 @@ import com.google.common.collect.Multimap;
  * @author Merlin
  * 
  */
-public class MessageStructureVerifier
+public class MessageStructureVerifier extends TypeDetector
 {
 
 	/**
 	 * Find all of the classes in the package containing this test and test them
 	 * to see if they meet the requirements
 	 * 
-	 * @throws ClassNotFoundException shouldn't
+	 * @throws ClassNotFoundException
+	 *             shouldn't
 	 */
 	@Test
 	public void testAllClassesInThisPackage() throws ClassNotFoundException
 	{
+		ArrayList<Class<?>> messageClasses = detectAllImplementorsInPackage(Message.class);
+		ArrayList<Class<?>> serializableClasses = detectAllImplementorsInPackage(Serializable.class);
+		
+		
 		Reflections reflections = new Reflections(this.getClass().getPackage().getName());
 		for (String mmapName : reflections.getStore().getStoreMap().keySet())
 		{
 			Multimap<String, String> mmap = reflections.getStore().getStoreMap().get(mmapName);
 			for (Map.Entry<String, String> entry : mmap.entries())
 			{
-				verifyStructureForSerializability(Class.forName(entry.getValue()));
+				Class<?> classToCheck = Class.forName(entry.getValue());
+				if (classToCheck != this.getClass())
+				{
+					if (!messageClasses.contains(classToCheck))
+					{
+						fail(classToCheck.getName() + " must implement Message");
+					}
+					if (!serializableClasses.contains(classToCheck))
+					{
+						fail(classToCheck.getName() + " must implement Message");
+					}
+
+					verifyStructureForSerializability(classToCheck);
+				}
 			}
 		}
 
@@ -54,17 +74,9 @@ public class MessageStructureVerifier
 	 * @param classToCheck
 	 *            the class whose structure we should check
 	 */
-	public static void verifyStructureForSerializability(Class<?> classToCheck)
+	public void verifyStructureForSerializability(Class<?> classToCheck)
 	{
-		System.out.println("Checking " + classToCheck.getCanonicalName() + " for serializability");
-		if (!checkImplementsInterface(classToCheck, Serializable.class))
-		{
-			fail(classToCheck.getName() + " must implement Serializable");
-		}
-		if (!checkImplementsInterface(classToCheck, Message.class))
-		{
-			fail(classToCheck.getName() + " must implement Message");
-		}
+		
 		ArrayList<Field> storedFields = getStoredFields(classToCheck);
 		for (Field fieldToCheck : storedFields)
 		{
@@ -111,7 +123,8 @@ public class MessageStructureVerifier
 		}
 	}
 
-	private static boolean checkImplementsInterface(Class<?> classToTest, Class<?> interfaceToCheckFor)
+	private static boolean checkImplementsInterface(Class<?> classToTest,
+			Class<?> interfaceToCheckFor)
 	{
 		if (classToTest == interfaceToCheckFor)
 		{
@@ -124,6 +137,17 @@ public class MessageStructureVerifier
 			if (checkImplementsInterface(item, interfaceToCheckFor))
 			{
 				found = true;
+			}
+		}
+		if (!found)
+		{
+			Class<?> superclass = classToTest.getSuperclass();
+			if (superclass != null)
+			{
+				return checkImplementsInterface(superclass, interfaceToCheckFor);
+			} else
+			{
+				return false;
 			}
 		}
 

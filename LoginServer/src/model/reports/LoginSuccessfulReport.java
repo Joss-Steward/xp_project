@@ -6,15 +6,13 @@ import model.QualifiedObservableReport;
  * @author Merlin
  *
  */
-public class LoginSuccessfulReport implements QualifiedObservableReport
+public final class LoginSuccessfulReport implements QualifiedObservableReport
 {
 
-	private String hostname;
-
-	private int port;
-
-	private int pin;
-	private int userID;
+	private final String hostname;
+	private final int port;
+	private final int pin;
+	private final int userID;
 
 	/**
 	 * @param userID the userID who was successful

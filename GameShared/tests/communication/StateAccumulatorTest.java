@@ -74,6 +74,18 @@ public class StateAccumulatorTest
 		assertEquals(1, pending.size());
 	}
 
+	/**
+	 * 
+	 */
+	@Test
+	public void canDirectlyQueueMsgs()
+	{
+		StateAccumulator accum = new StateAccumulator(null);
+		Message m = EasyMock.createMock(Message.class);
+		accum.queueMessage(m);
+		assertEquals(1, accum.pendingMsgs.size());
+		assertEquals(m, accum.pendingMsgs.get(0));
+	}
 	private class MockObservable extends Observable
 	{	
 	}

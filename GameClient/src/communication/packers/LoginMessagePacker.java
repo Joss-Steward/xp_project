@@ -28,7 +28,7 @@ public class LoginMessagePacker extends MessagePacker
 					+ object.getClass());
 		}
 		LoginInitiatedReport report = (LoginInitiatedReport) object;
-		Message msg = new LoginMessage(report.getName(), report.getPassword());
+		Message msg = new LoginMessage(report.getUserName(), report.getPassword());
 		return msg;
 	}
 
