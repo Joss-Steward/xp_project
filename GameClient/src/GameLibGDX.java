@@ -1,71 +1,81 @@
-import com.badlogic.gdx.ApplicationListener;
 
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 /**
+ * The most basic gui!
  * @author Merlin
  *
  */
 public class GameLibGDX implements ApplicationListener
 {
+	private TiledMap tiledMap;
+	OrthogonalTiledMapRenderer mapRenderer;
+	private OrthographicCamera camera;
 
 	/**
+	 * 
 	 * @see com.badlogic.gdx.ApplicationListener#create()
 	 */
-	@Override
 	public void create()
 	{
-		// TODO Auto-generated method stub
 
-	}
-
-	/**
-	 * @see com.badlogic.gdx.ApplicationListener#dispose()
-	 */
-	@Override
-	public void dispose()
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * @see com.badlogic.gdx.ApplicationListener#pause()
-	 */
-	@Override
-	public void pause()
-	{
-		// TODO Auto-generated method stub
-
+		float unitScale = 1 / 32f;
+		tiledMap = new TmxMapLoader().load("maps/current.tmx");
+		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, unitScale);
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, 30, 20);
+		camera.update();
 	}
 
 	/**
 	 * @see com.badlogic.gdx.ApplicationListener#render()
 	 */
-	@Override
 	public void render()
 	{
-		// TODO Auto-generated method stub
+
+		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		// int[] backgroundLayers = { 0, 1 }; // don't allocate every frame!
+		// int[] foregroundLayers = { 2 }; // don't allocate every frame!
+		mapRenderer.setView(camera);
+		mapRenderer.render();
+		// mapRenderer.render(backgroundLayers);
+		// renderMyCustomSprites();
+		// mapRenderer.render(foregroundLayers);
 
 	}
 
 	/**
 	 * @see com.badlogic.gdx.ApplicationListener#resize(int, int)
 	 */
-	@Override
-	public void resize(int arg0, int arg1)
+	public void resize(int width, int height)
 	{
-		// TODO Auto-generated method stub
+	}
 
+	/**
+	 * @see com.badlogic.gdx.ApplicationListener#pause()
+	 */
+	public void pause()
+	{
 	}
 
 	/**
 	 * @see com.badlogic.gdx.ApplicationListener#resume()
 	 */
-	@Override
 	public void resume()
 	{
-		// TODO Auto-generated method stub
-
 	}
 
+	/**
+	 * @see com.badlogic.gdx.ApplicationListener#dispose()
+	 */
+	public void dispose()
+	{
+	}
 }
