@@ -2,6 +2,8 @@ import model.CommandLoginTest;
 import model.ModelFacadeTest;
 import model.PlayerTest;
 import model.TiledMapTest;
+import model.reports.LoginInitiatedReportTest;
+import model.reports.ThisPlayerMovedReportTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -33,6 +35,10 @@ import communication.packers.LoginMessagePackerTest;
 	ModelFacadeTest.class,
 	PlayerTest.class,
 	TiledMapTest.class,
+	
+	//model.reports
+	LoginInitiatedReportTest.class,
+	ThisPlayerMovedReportTest.class,
 	
 })
 

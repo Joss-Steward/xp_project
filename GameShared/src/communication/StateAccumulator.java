@@ -24,15 +24,7 @@ public class StateAccumulator implements Observer
 	private MessagePackerSet packerSet;
 	private int userID;
 	
-	/**
-	 * Only used for tests
-	 * 
-	 * @return the packerSet
-	 */
-	public TypeDetector getPackerSet()
-	{
-		return packerSet;
-	}
+	
 
 	/**
 	 * @param messagePackerSet

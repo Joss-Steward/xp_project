@@ -1,4 +1,6 @@
 import model.PlayerManagerTest;
+import model.reports.PlayerConnectionReportTest;
+import model.reports.PlayerMovedReportTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -29,7 +31,11 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 	PlayerJoinedMessagePackerTest.class,
 	
 	// model
-	PlayerManagerTest.class
+	PlayerManagerTest.class,
+	
+	// model.reports
+	PlayerConnectionReportTest.class,
+	PlayerMovedReportTest.class,
 })
 
 public class AllServerTests

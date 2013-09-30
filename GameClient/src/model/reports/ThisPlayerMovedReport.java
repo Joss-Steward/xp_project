@@ -8,19 +8,16 @@ import model.QualifiedObservableReport;
  * @author Merlin
  *
  */
-public class ThisPlayerMovedReport implements QualifiedObservableReport
+public final class ThisPlayerMovedReport implements QualifiedObservableReport
 {
 
+	private final Position newPosition;
 	/**
-	 * @see java.lang.Object#hashCode()
+	 * @param position the position he moved to
 	 */
-	@Override
-	public int hashCode()
+	public ThisPlayerMovedReport(Position position)
 	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((newPosition == null) ? 0 : newPosition.hashCode());
-		return result;
+		newPosition = position;
 	}
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -43,20 +40,23 @@ public class ThisPlayerMovedReport implements QualifiedObservableReport
 			return false;
 		return true;
 	}
-	private Position newPosition;
-	/**
-	 * @param position the position he moved to
-	 */
-	public ThisPlayerMovedReport(Position position)
-	{
-		newPosition = position;
-	}
 	/**
 	 * @return the newPosition
 	 */
 	public Position getNewPosition()
 	{
 		return newPosition;
+	}
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((newPosition == null) ? 0 : newPosition.hashCode());
+		return result;
 	}
 
 }

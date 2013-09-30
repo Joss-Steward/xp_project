@@ -5,20 +5,24 @@ import model.QualifiedObservableReport;
 
 /**
  * This report is sent when a player successfully connects to this area server
+ * 
  * @author Merlin
- *
+ * 
  */
-public class PlayerConnectionReport implements QualifiedObservableReport
+public final class PlayerConnectionReport implements QualifiedObservableReport
 {
 
-	private Player player;
+	private final int userID;
+	private final String userName;
 
 	/**
-	 * @param p the player who connected to this server
+	 * @param p
+	 *            the player who connected to this server
 	 */
 	public PlayerConnectionReport(Player p)
 	{
-		this.player = p;
+		this.userID = p.getUserID();
+		this.userName = p.getUserName();
 	}
 
 	/**
@@ -26,16 +30,15 @@ public class PlayerConnectionReport implements QualifiedObservableReport
 	 */
 	public int getUserID()
 	{
-		return player.getUserID();
+		return userID;
 	}
 
 	/**
 	 * @return the users name
-	 * TODO should get the name from the db . . .
 	 */
 	public String getUserName()
 	{
-		return "fred";
+		return userName;
 	}
 
 }

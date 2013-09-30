@@ -41,7 +41,7 @@ public class MapFileMessagePacker extends MessagePacker
 			{
 				e.printStackTrace();
 				return null;
-			}
+			} 
 
 		}
 		return null;

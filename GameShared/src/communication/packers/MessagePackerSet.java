@@ -29,7 +29,7 @@ public class MessagePackerSet extends TypeDetector
 	{
 		packers = new HashMap<Class<?>, ArrayList<MessagePacker>>();
 		ArrayList<Class<?>> packerTypes = this
-				.detectAllImplementorsOrExtendersInPackage(MessagePacker.class);
+				.detectAllExtendersInPackage(MessagePacker.class);
 		for (Class<?> packerType : packerTypes)
 		{
 			try

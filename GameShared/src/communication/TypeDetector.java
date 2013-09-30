@@ -15,10 +15,11 @@ import com.google.common.collect.Multimap;
 public abstract class TypeDetector
 {
 
+	
 	/**
 	 * 
 	 */
-	protected ArrayList<Class<?>> detectAllImplementorsOrExtendersInPackage(Class<?> type)
+	protected ArrayList<Class<?>> detectAllExtendersInPackage(Class<?> type)
 	{
 		ArrayList<Class<?>> results = new ArrayList<Class<?>>();
 		Reflections reflections = new Reflections(this.getClass().getPackage().getName());
@@ -32,7 +33,36 @@ public abstract class TypeDetector
 				try
 				{
 					Class<?> classToRegister = Class.forName(entry.getValue());
-					if ((implementsInterface(classToRegister, type) || extendsClass(classToRegister, type)))
+					if (extendsClass(classToRegister, type))
+					{
+						results.add(classToRegister);
+					}
+				} catch (ClassNotFoundException e)
+				{
+					e.printStackTrace();
+				} 
+			}
+		}
+		return results;
+	}
+	/**
+	 * 
+	 */
+	protected ArrayList<Class<?>> detectAllImplementorsInPackage(Class<?> type)
+	{
+		ArrayList<Class<?>> results = new ArrayList<Class<?>>();
+		Reflections reflections = new Reflections(this.getClass().getPackage().getName());
+	
+		Multimap<String, String> mmap = reflections.getStore().getStoreMap().get("SubTypesScanner");
+		for (Map.Entry<String, String> entry : mmap.entries())
+		{
+			// skip over private classes that are inside another class
+			if (!entry.getValue().contains("$"))
+			{
+				try
+				{
+					Class<?> classToRegister = Class.forName(entry.getValue());
+					if (implementsInterface(classToRegister, type))
 					{
 						results.add(classToRegister);
 					}
@@ -50,13 +80,14 @@ public abstract class TypeDetector
 	 * @param classType
 	 * @return
 	 */
-	private boolean extendsClass(Class<?> classToRegister, Class<?> classType)
+	protected boolean extendsClass(Class<?> classToRegister, Class<?> classType)
 	{
 		if (classToRegister.equals(classType) || classToRegister.getSuperclass().equals(classType))
 		{
 			return true;
 		}
-		if (!classToRegister.getSuperclass().equals(Object.class))
+		Class<?> superclass = classToRegister.getSuperclass();
+		if (!superclass.equals(Object.class))
 		{
 			return extendsClass(classToRegister.getSuperclass(), classType);
 		}

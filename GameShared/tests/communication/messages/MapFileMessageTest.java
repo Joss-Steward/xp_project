@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import junitx.framework.FileAssert;
 
@@ -20,19 +21,24 @@ public class MapFileMessageTest
 {
 	/**
 	 * Make sure its toString is correct
-	 * @throws IOException shouldn't
+	 * @throws Exception shouldn't
 	 */
 	@Test
-	public void testToString() throws IOException
+	public void testToStringAndFileStorage() throws Exception
 	{
 		MapFileMessage msg = new MapFileMessage("maps/simple.tmx");
-		assertEquals("FileMessage: number of bytes = 1413", msg.toString());
+		assertEquals("FileMessage: number of bytes = 1413 number of tilesets = 2", msg.toString());
 		assertEquals("simple.tmx", msg.getFileTitle());
 		writeToFile("maps/test.tmx", msg.getContents());
 		File expected = new File("maps/simple.tmx");
 		File actual = new File("maps/test.tmx");
 		FileAssert.assertEquals(expected, actual);
-		
+		ArrayList<String> imageFileTitles = msg.getImageFileTitles();
+		ArrayList<byte[]> imageFiles = msg.getImageFiles();
+		assertEquals(2, imageFileTitles.size());
+		assertEquals("tileset/grass-tiles-2-small.png",imageFileTitles.get(0));
+		assertEquals("tileset/tree2-final.png",imageFileTitles.get(1));
+		assertEquals(2, imageFiles.size());
 	}
 
 	/**
@@ -61,10 +67,10 @@ public class MapFileMessageTest
 	
 	/**
 	 * make sure it throws an exception on the constructor call if the file isn't there
-	 * @throws IOException should get FileNotFoundException, not the more general IOException 
+	 * @throws Exception should throw the expected one
 	 */
 	@Test(expected=FileNotFoundException.class)
-	public void throwsExceptionIfNoFile() throws IOException
+	public void throwsExceptionIfNoFile() throws Exception
 	{
 		new MapFileMessage("no file here");
 	}

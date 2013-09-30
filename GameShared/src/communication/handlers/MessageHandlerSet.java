@@ -27,7 +27,7 @@ public class MessageHandlerSet extends TypeDetector
 	{
 		handlers = new HashMap<Class<?>, MessageHandler>();
 		
-		ArrayList<Class<?>> handlerTypes = this.detectAllImplementorsOrExtendersInPackage(MessageHandler.class) ;
+		ArrayList<Class<?>> handlerTypes = this.detectAllExtendersInPackage(MessageHandler.class) ;
 		for(Class<?> handlerType:handlerTypes)
 		{
 			try
