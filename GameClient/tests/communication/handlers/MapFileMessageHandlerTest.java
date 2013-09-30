@@ -26,15 +26,27 @@ public class MapFileMessageHandlerTest
 	@Test
 	public void writesTheFile() throws IOException
 	{
-		MapFileMessage msg = new MapFileMessage("maps/simple.tmx");
+		new File("../GameClient-desktop/maps/current.tmx").delete();
+		new File("../GameClient-desktop/maps/tileset/grass-tiles-2-small.png").delete();
+		new File("../GameClient-desktop/maps/tileset/tree2-final.png").delete();
+		
+		
+		MapFileMessage msg = new MapFileMessage("testMaps/simple.tmx");
 		MapFileMessageHandler handler = new MapFileMessageHandler();
 		handler.process(msg);
 		
-		File expected = new File("maps/simple.tmx");
+		File expected = new File("testMaps/simple.tmx");
 		File actual = new File("maps/current.tmx");
 		FileAssert.assertEquals(expected, actual);
+		
+		expected = new File("testMaps/tileset/grass-tiles-2-small.png");
+		actual = new File("maps/tileset/grass-tiles-2-small.png");
+		FileAssert.assertEquals(expected, actual);
+		
+		expected = new File("testMaps/tileset/tree2-final.png");
+		actual = new File("maps/tileset/tree2-final.png");
+		FileAssert.assertEquals(expected, actual);
 	}
-
 	/**
 	 * The handler should tell the model that the new file is there
 	 * @throws IOException shouldn't
@@ -42,7 +54,7 @@ public class MapFileMessageHandlerTest
 	@Test
 	public void tellsEngine() throws IOException
 	{
-		MapFileMessage msg = new MapFileMessage("maps/simple.tmx");
+		MapFileMessage msg = new MapFileMessage("testMaps/simple.tmx");
 		MapFileMessageHandler handler = new MapFileMessageHandler();
 		handler.process(msg);
 		

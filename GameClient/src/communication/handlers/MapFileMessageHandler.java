@@ -5,9 +5,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 
 import model.ModelFacade;
-
 import communication.messages.MapFileMessage;
 import communication.messages.Message;
 
@@ -33,10 +35,35 @@ public class MapFileMessageHandler extends MessageHandler
 	@Override
 	public void process(Message msg)
 	{
-		System.out.println("received " + msg);
-		MapFileMessage mapFileMessage = (MapFileMessage)msg;
-		writeToFile(MAP_FILE_TITLE, mapFileMessage.getContents() );
-		ModelFacade.getSingleton().setMapFile(MAP_FILE_TITLE);
+		String path = MapFileMessageHandler.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		try
+		{
+			System.out.println("received " + msg);
+			
+			String decodedPath = URLDecoder.decode(path, "UTF-8");
+			MapFileMessage mapFileMessage = (MapFileMessage)msg;
+			writeToFile(decodedPath + "../" + MAP_FILE_TITLE, mapFileMessage.getContents() );
+			writeTileSets(mapFileMessage, decodedPath);
+			
+			ModelFacade.getSingleton().setMapFile(MAP_FILE_TITLE);
+		} catch (UnsupportedEncodingException e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+
+	/**
+	 * 
+	 */
+	private void writeTileSets(MapFileMessage msg,String path)
+	{
+		ArrayList<String> imgFileTitles = msg.getImageFileTitles();
+		ArrayList<byte[]> imgFiles = msg.getImageFiles();
+		for (int i=0;i<imgFileTitles.size();i++)
+		{
+			writeToFile(path + "../maps/" + imgFileTitles.get(i), imgFiles.get(i));
+		}
 	}
 
 	/**

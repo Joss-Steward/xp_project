@@ -5,6 +5,7 @@ import model.QualifiedObserverConnectorTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import tmxfiles.TMXMapReaderTest;
 import communication.ConnectionIncomingTest;
 import communication.ConnectionManagerTest;
 import communication.StateAccumulatorTest;
@@ -69,6 +70,8 @@ import data.PositionTest;
 		// StubQualifiedObservableReport1.class,
 		// StubQualifiedObservableReport2.class
 
+		// tmxfiles
+		TMXMapReaderTest.class,
 })
 public class AllSharedTests
 {
