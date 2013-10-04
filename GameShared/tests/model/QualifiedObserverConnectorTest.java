@@ -62,7 +62,10 @@ public class QualifiedObserverConnectorTest
 		// now cause the notification
 		mockObservable.notifyObservers(new TestReport());
 		EasyMock.verify(mockObserver);
+		
+		assertTrue(connector.doIObserve(mockObserver, TestReport.class));
 	}
+
 
 	/**
 	 * Can register two observers
@@ -89,6 +92,9 @@ public class QualifiedObserverConnectorTest
 		mockObservable.notifyObservers(new TestReport());
 		EasyMock.verify(mockObserver);
 		EasyMock.verify(mockObserver2);
+		
+		assertTrue(connector.doIObserve(mockObserver, TestReport.class));
+		assertTrue(connector.doIObserve(mockObserver2, TestReport.class));
 	}
 
 	/**

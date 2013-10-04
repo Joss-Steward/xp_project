@@ -5,6 +5,11 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
+/**
+ * 
+ * @author Merlin
+ *
+ */
 public class LoginSuccessfulReportTest
 {
 	/**

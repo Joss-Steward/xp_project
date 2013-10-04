@@ -2,8 +2,8 @@
 import java.io.IOException;
 import java.net.Socket;
 
-import view.BasicScreen;
-import view.LoginScreen;
+import view.ScreenBasic;
+import view.ScreenLogin;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
@@ -40,7 +40,7 @@ public class GameLibGDX extends Game implements ApplicationListener
 			System.exit(-1);
 		}
 		
-		BasicScreen screen = new LoginScreen();
+		ScreenBasic screen = new ScreenLogin();
 		this.setScreen(screen);
 		Gdx.input.setInputProcessor(screen.getStage());	
 	}

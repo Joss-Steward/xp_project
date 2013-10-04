@@ -22,7 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
  * @author BrysonHair
  * 
  */
-public class LoginScreen implements BasicScreen
+public class ScreenLogin implements ScreenBasic
 {
 	private Stage stage;
 	
@@ -38,7 +38,7 @@ public class LoginScreen implements BasicScreen
 	/**
 	 * Create a login screen
 	 */
-	public LoginScreen()
+	public ScreenLogin()
 	{
 		if(Gdx.graphics != null)
 		{
@@ -225,6 +225,9 @@ public class LoginScreen implements BasicScreen
 
 	}
 
+	/**
+	 * @see view.ScreenBasic#getStage()
+	 */
 	@Override
 	public Stage getStage()
 	{

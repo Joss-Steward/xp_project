@@ -8,14 +8,22 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-public class MapScreen implements BasicScreen
+/**
+ * A basic screen that, for now, just displays the map
+ * @author Merlin
+ *
+ */
+public class ScreenMap implements ScreenBasic
 {
 	private TiledMap tiledMap;
 	OrthogonalTiledMapRenderer mapRenderer;
 	private OrthographicCamera camera;
 	private Stage stage;
 
-	public MapScreen()
+	/**
+	 * 
+	 */
+	public ScreenMap()
 	{
 		
 		stage = new Stage();
@@ -27,6 +35,10 @@ public class MapScreen implements BasicScreen
 		camera.update();
 		stage.setCamera(camera);
 	}
+	
+	/**
+	 * @see com.badlogic.gdx.Screen#render(float)
+	 */
 	@Override
 	public void render(float delta)
 	{
@@ -45,37 +57,58 @@ public class MapScreen implements BasicScreen
 		// mapRenderer.render(foregroundLayers);
 	}
 
+	/**
+	 * @see com.badlogic.gdx.Screen#resize(int, int)
+	 */
 	@Override
 	public void resize(int width, int height)
 	{
 	}
 
+	/**
+	 * @see com.badlogic.gdx.Screen#show()
+	 */
 	@Override
 	public void show()
 	{
 		
 	}
 
+	/**
+	 * @see com.badlogic.gdx.Screen#hide()
+	 */
 	@Override
 	public void hide()
 	{	
 	}
 
+	/**
+	 * @see com.badlogic.gdx.Screen#pause()
+	 */
 	@Override
 	public void pause()
 	{	
 	}
 
+	/**
+	 * @see com.badlogic.gdx.Screen#resume()
+	 */
 	@Override
 	public void resume()
 	{
 	}
 
+	/**
+	 * @see com.badlogic.gdx.Screen#dispose()
+	 */
 	@Override
 	public void dispose()
 	{
 	}
 
+	/**
+	 * @see view.ScreenBasic#getStage()
+	 */
 	@Override
 	public Stage getStage()
 	{

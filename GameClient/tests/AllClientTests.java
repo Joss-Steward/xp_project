@@ -8,6 +8,7 @@ import model.reports.ThisPlayerMovedReportTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import view.ScreenListenerTest;
 import communication.handlers.MapFileMessageHandlerTest;
 import communication.packers.LoginMessagePackerTest;
 
@@ -40,6 +41,8 @@ import communication.packers.LoginMessagePackerTest;
 	LoginInitiatedReportTest.class,
 	ThisPlayerMovedReportTest.class,
 	
+	//view
+	ScreenListenerTest.class,
 })
 
 public class AllClientTests
