@@ -4,7 +4,7 @@ package model;
  * @author Merlin
  *
  */
-public class CommandLogin implements Command
+public class CommandLogin extends Command
 {
 
 	private String name;
@@ -24,7 +24,8 @@ public class CommandLogin implements Command
 	 * @see model.Command#execute()
 	 */
 	@Override
-	public boolean execute()
+	protected
+	boolean execute()
 	{
 		Player p = Player.getSingleton();
 		p.initiateLogin(name, password);
