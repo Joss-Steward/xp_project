@@ -20,7 +20,8 @@ public class ModelFacadeTest
 	public void setup()
 	{
 		ModelFacade.resetSingleton();
-		TiledMap.resetSingleton();
+		MapManager.resetSingleton();
+		ModelFacade.getSingleton().setHeadless(true);
 	}
 	
 	/**
@@ -43,7 +44,7 @@ public class ModelFacadeTest
 	public void canSetMapTitle()
 	{
 		ModelFacade.getSingleton().setMapFile("maps/current.tmx");
-		TiledMap map = TiledMap.getSingleton();
+		MapManager map = MapManager.getSingleton();
 		assertEquals("maps/current.tmx", map.getMapFileTitle());
 		
 	}

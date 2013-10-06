@@ -1,15 +1,15 @@
 import model.CommandLoginTest;
+import model.MapManagerTest;
 import model.ModelFacadeTest;
 import model.PlayerTest;
-import model.TiledMapTest;
 import model.reports.LoginInitiatedReportTest;
+import model.reports.NewMapReportTest;
 import model.reports.ThisPlayerMovedReportTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import view.ScreenListenerTest;
-import communication.handlers.MapFileMessageHandlerTest;
+import view.ScreenListenerTest;import communication.handlers.MapFileMessageHandlerTest;
 import communication.packers.LoginMessagePackerTest;
 
 
@@ -33,16 +33,18 @@ import communication.packers.LoginMessagePackerTest;
 	
 	//model
 	CommandLoginTest.class,
+	MapManagerTest.class,
 	ModelFacadeTest.class,
 	PlayerTest.class,
-	TiledMapTest.class,
 	
 	//model.reports
 	LoginInitiatedReportTest.class,
+	NewMapReportTest.class,
 	ThisPlayerMovedReportTest.class,
 	
 	//view
-	ScreenListenerTest.class,
+	ScreenListenerTest.class, 
+
 })
 
 public class AllClientTests

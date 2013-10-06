@@ -1,25 +1,28 @@
+package runners;
 
 import java.io.IOException;
 import java.net.Socket;
 
 import view.ScreenBasic;
-import view.ScreenLogin;
+import view.Screens;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+
 import communication.ConnectionManager;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
 
 /**
  * The most basic gui!
+ * 
  * @author Merlin
- *
+ * 
  */
 public class GameLibGDX extends Game implements ApplicationListener
 {
-		private ConnectionManager cm;
+	private ConnectionManager cm;
 
 	/**
 	 * 
@@ -27,22 +30,23 @@ public class GameLibGDX extends Game implements ApplicationListener
 	 */
 	public void create()
 	{
-		
+
 		Socket socket;
 		try
 		{
 			socket = new Socket("localhost", 1871);
-			cm = new ConnectionManager(socket, new MessageHandlerSet(), new MessagePackerSet());
+			cm = new ConnectionManager(socket, new MessageHandlerSet(),
+					new MessagePackerSet());
 
-		} catch ( IOException e)
+		} catch (IOException e)
 		{
 			e.printStackTrace();
 			System.exit(-1);
 		}
-		
-		ScreenBasic screen = new ScreenLogin();
+
+		ScreenBasic screen = Screens.LOGIN_SCREEN.getScreen();
 		this.setScreen(screen);
-		Gdx.input.setInputProcessor(screen.getStage());	
+		Gdx.input.setInputProcessor(screen.getStage());
 	}
 
 	/**
@@ -71,7 +75,7 @@ public class GameLibGDX extends Game implements ApplicationListener
 	 */
 	public void dispose()
 	{
-		
+
 		cm.disconnect();
 	}
 }

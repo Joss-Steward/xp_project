@@ -8,6 +8,7 @@ import java.io.IOException;
 import junitx.framework.FileAssert;
 import model.ModelFacade;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.MapFileMessage;
@@ -19,6 +20,15 @@ import communication.messages.MapFileMessage;
 public class MapFileMessageHandlerTest
 {
 	
+	/**
+	 * reset the singletons and tell the model we are running headless
+	 */
+	@Before
+	public void setUp()
+	{
+		ModelFacade.resetSingleton();
+		ModelFacade.getSingleton().setHeadless(true);;
+	}
 	/**
 	 * The handler should write the file to current.tmx
 	 * @throws IOException shouldn't

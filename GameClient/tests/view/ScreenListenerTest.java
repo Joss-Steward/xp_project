@@ -20,19 +20,23 @@ import org.junit.Test;
  */
 public class ScreenListenerTest
 {
-
 	/**
-	 * When a ScreenListener is created, it should automatically hook itself up
-	 * to listen for the types of reports it needs
+	 * Make sure that the subclass correctly hooks itself into the Qualified
+	 * Observerable apparatus
 	 */
 	@Test
-	public void testAddsItselfCorrectly()
+	public void addsItselfCorrectly()
 	{
 		ScreenListener underTest = new MockScreenListener();
 		QualifiedObservableConnector connector = QualifiedObservableConnector
 				.getSingleton();
-		assertTrue(connector.doIObserve(underTest, StubQualifiedObservableReport1.class));
-		assertTrue(connector.doIObserve(underTest, StubQualifiedObservableReport2.class));
+		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = underTest
+				.getReportTypes();
+		for (Class<? extends QualifiedObservableReport> reportType : reportTypes)
+		{
+			assertTrue(connector.doIObserve(underTest, reportType));
+		}
+
 	}
 
 	private class MockScreenListener extends ScreenListener
@@ -45,8 +49,7 @@ public class ScreenListenerTest
 		@Override
 		public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypes()
 		{
-			ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = 
-					new ArrayList<Class<? extends QualifiedObservableReport>>();
+			ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
 			reportTypes.add(StubQualifiedObservableReport1.class);
 			reportTypes.add(StubQualifiedObservableReport2.class);
 

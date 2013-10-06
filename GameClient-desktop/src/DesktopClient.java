@@ -1,3 +1,5 @@
+import runners.GameLibGDX;
+
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 
 /**

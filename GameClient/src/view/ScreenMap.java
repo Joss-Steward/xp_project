@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -17,9 +16,9 @@ public class ScreenMap implements ScreenBasic
 {
 	private TiledMap tiledMap;
 	OrthogonalTiledMapRenderer mapRenderer;
+
 	private OrthographicCamera camera;
 	private Stage stage;
-
 	/**
 	 * 
 	 */
@@ -28,14 +27,46 @@ public class ScreenMap implements ScreenBasic
 		
 		stage = new Stage();
 		float unitScale = 1 / 32f;
-		tiledMap = new TmxMapLoader().load("maps/current.tmx");
 		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, unitScale);
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 30, 20);
 		camera.update();
 		stage.setCamera(camera);
 	}
+
+	/**
+	 * @see com.badlogic.gdx.Screen#dispose()
+	 */
+	@Override
+	public void dispose()
+	{
+	}
 	
+	/**
+	 * @see view.ScreenBasic#getStage()
+	 */
+	@Override
+	public Stage getStage()
+	{
+		return stage;
+	}
+
+	/**
+	 * @see com.badlogic.gdx.Screen#hide()
+	 */
+	@Override
+	public void hide()
+	{	
+	}
+
+	/**
+	 * @see com.badlogic.gdx.Screen#pause()
+	 */
+	@Override
+	public void pause()
+	{	
+	}
+
 	/**
 	 * @see com.badlogic.gdx.Screen#render(float)
 	 */
@@ -66,31 +97,6 @@ public class ScreenMap implements ScreenBasic
 	}
 
 	/**
-	 * @see com.badlogic.gdx.Screen#show()
-	 */
-	@Override
-	public void show()
-	{
-		
-	}
-
-	/**
-	 * @see com.badlogic.gdx.Screen#hide()
-	 */
-	@Override
-	public void hide()
-	{	
-	}
-
-	/**
-	 * @see com.badlogic.gdx.Screen#pause()
-	 */
-	@Override
-	public void pause()
-	{	
-	}
-
-	/**
 	 * @see com.badlogic.gdx.Screen#resume()
 	 */
 	@Override
@@ -99,20 +105,21 @@ public class ScreenMap implements ScreenBasic
 	}
 
 	/**
-	 * @see com.badlogic.gdx.Screen#dispose()
+	 * Set the TiledMap we should be drawing
+	 * @param tiledMap the map
 	 */
-	@Override
-	public void dispose()
+	public void setTiledMap(TiledMap tiledMap)
 	{
+		this.tiledMap = tiledMap;
 	}
 
 	/**
-	 * @see view.ScreenBasic#getStage()
+	 * @see com.badlogic.gdx.Screen#show()
 	 */
 	@Override
-	public Stage getStage()
+	public void show()
 	{
-		return stage;
+		
 	}
 
 }

@@ -16,6 +16,8 @@ import model.QualifiedObservableReport;
 public abstract class ScreenListener implements Observer
 {
 
+	protected ScreenBasic screen;
+	
 	/**
 	 * @return the report types this listener should pay attention to
 	 */
@@ -32,6 +34,15 @@ public abstract class ScreenListener implements Observer
 		{
 			cm.registerObserver(this, reportType);
 		}
+	}
+
+	/**
+	 * Tell this listener which screen it is managing
+	 * @param screen the screen
+	 */
+	public void setScreen(ScreenBasic screen)
+	{
+		this.screen = screen;
 	}
 
 }
