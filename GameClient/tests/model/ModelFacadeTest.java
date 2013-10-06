@@ -19,9 +19,8 @@ public class ModelFacadeTest
 	@Before
 	public void setup()
 	{
-		ModelFacade.resetSingleton(false);
+		ModelFacade.resetSingleton(true);
 		MapManager.resetSingleton();
-		ModelFacade.getSingleton(false).setHeadless(true);
 	}
 	
 	/**
@@ -30,11 +29,11 @@ public class ModelFacadeTest
 	@Test
 	public void isResetableSingleton()
 	{
-		ModelFacade facade1 = ModelFacade.getSingleton(false);
-		ModelFacade facade2 = ModelFacade.getSingleton(false);
+		ModelFacade facade1 = ModelFacade.getSingleton(true);
+		ModelFacade facade2 = ModelFacade.getSingleton(true);
 		assertSame(facade1, facade2);
-		ModelFacade.resetSingleton(false);
-		assertNotSame(facade1, ModelFacade.getSingleton(false));
+		ModelFacade.resetSingleton(true);
+		assertNotSame(facade1, ModelFacade.getSingleton(true));
 	}
 
 }

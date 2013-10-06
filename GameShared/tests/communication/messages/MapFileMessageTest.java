@@ -26,18 +26,18 @@ public class MapFileMessageTest
 	@Test
 	public void testToStringAndFileStorage() throws Exception
 	{
-		MapFileMessage msg = new MapFileMessage("maps/simple.tmx");
-		assertEquals("FileMessage: number of bytes = 1413 number of tilesets = 2", msg.toString());
-		assertEquals("simple.tmx", msg.getFileTitle());
+		MapFileMessage msg = new MapFileMessage("maps/current.tmx");
+		assertEquals("FileMessage: number of bytes = 753 number of tilesets = 2", msg.toString());
+		assertEquals("current.tmx", msg.getFileTitle());
 		writeToFile("maps/test.tmx", msg.getContents());
-		File expected = new File("maps/simple.tmx");
+		File expected = new File("maps/current.tmx");
 		File actual = new File("maps/test.tmx");
 		FileAssert.assertEquals(expected, actual);
 		ArrayList<String> imageFileTitles = msg.getImageFileTitles();
 		ArrayList<byte[]> imageFiles = msg.getImageFiles();
 		assertEquals(2, imageFileTitles.size());
-		assertEquals("tileset/grass-tiles-2-small.png",imageFileTitles.get(0));
-		assertEquals("tileset/tree2-final.png",imageFileTitles.get(1));
+		assertEquals("tileset/qubodup-bush_0.png",imageFileTitles.get(0));
+		assertEquals("tileset/qubodup-bush_berries_0.png",imageFileTitles.get(1));
 		assertEquals(2, imageFiles.size());
 	}
 

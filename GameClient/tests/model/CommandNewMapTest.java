@@ -22,7 +22,7 @@ public class CommandNewMapTest
 	@Before
 	public void setup()
 	{
-		ModelFacade.getSingleton(false).setHeadless(true);
+		ModelFacade.getSingleton(true);
 	}
 	
 	/**

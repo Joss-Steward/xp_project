@@ -29,8 +29,7 @@ public class MapManagerTest
 	public void setup()
 	{
 		QualifiedObservableConnector.resetSingleton();
-		MapManager.resetSingleton();
-		ModelFacade.getSingleton(false).setHeadless(true);
+		ModelFacade.resetSingleton(true);
 	}
 
 	/**

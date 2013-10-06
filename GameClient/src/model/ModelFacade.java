@@ -37,6 +37,7 @@ public class ModelFacade
 	{
 		singleton = new ModelFacade(headless);
 		MapManager.resetSingleton();
+		MapManager.getSingleton().setHeadless(headless);
 	}
 
 	private InformationQueue commandQueue;
@@ -98,7 +99,7 @@ public class ModelFacade
 	 * @param headless
 	 *            true if we can't use graphics related things
 	 */
-	public void setHeadless(boolean headless)
+	private void setHeadless(boolean headless)
 	{
 		MapManager.getSingleton().setHeadless(headless);
 	}

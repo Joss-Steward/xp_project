@@ -61,7 +61,7 @@ public class MapFileMessagePackerTest
 		MapFileMessagePacker packer = new MapFileMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		MapFileMessage msg = (MapFileMessage) packer.pack(report);
-		assertEquals("simple.tmx",msg.getFileTitle());
+		assertEquals("current.tmx",msg.getFileTitle());
 		assertNotNull(msg.getContents());
 	}
 
