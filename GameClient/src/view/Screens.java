@@ -25,13 +25,11 @@ public enum Screens
 	private ScreenListener screenListener;
 
 
-	private static Game game;
-
 	Screens(ScreenBasic screen, ScreenListener listener)
 	{
 		this.screen = screen;
 		this.screenListener = listener;
-		listener.setScreen(screen);
+		listener.setAssociatedScreen(screen);
 	}
 
 	/**
@@ -58,15 +56,9 @@ public enum Screens
 	 */
 	public void setGame(Game gameToUse)
 	{
-		game = gameToUse;
-	}
-
-	/**
-	 * Tell this enum to display a specified screen
-	 * @param screen the screen (from this enum) that we should display
-	 */
-	public static void display(Screens screen)
-	{
-		game.setScreen(screen.getScreen());
+		for(Screens screen:Screens.values())
+		{
+			screen.getScreenListener().setGame(gameToUse);
+		}
 	}
 }

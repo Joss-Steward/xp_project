@@ -9,25 +9,25 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * A basic screen that, for now, just displays the map
+ * 
  * @author Merlin
- *
+ * 
  */
-public class ScreenMap implements ScreenBasic
+public class ScreenMap extends ScreenBasic
 {
-	private TiledMap tiledMap;
 	OrthogonalTiledMapRenderer mapRenderer;
 
 	private OrthographicCamera camera;
-	private Stage stage;
+	private float unitScale;
+
 	/**
 	 * 
 	 */
 	public ScreenMap()
 	{
-		
+
 		stage = new Stage();
-		float unitScale = 1 / 32f;
-		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, unitScale);
+		unitScale = 1 / 32f;
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 30, 20);
 		camera.update();
@@ -41,22 +41,13 @@ public class ScreenMap implements ScreenBasic
 	public void dispose()
 	{
 	}
-	
-	/**
-	 * @see view.ScreenBasic#getStage()
-	 */
-	@Override
-	public Stage getStage()
-	{
-		return stage;
-	}
 
 	/**
 	 * @see com.badlogic.gdx.Screen#hide()
 	 */
 	@Override
 	public void hide()
-	{	
+	{
 	}
 
 	/**
@@ -64,7 +55,7 @@ public class ScreenMap implements ScreenBasic
 	 */
 	@Override
 	public void pause()
-	{	
+	{
 	}
 
 	/**
@@ -73,16 +64,19 @@ public class ScreenMap implements ScreenBasic
 	@Override
 	public void render(float delta)
 	{
-		
+
 		stage.act();
 		stage.draw();
-		
+
 		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		// int[] backgroundLayers = { 0, 1 }; // don't allocate every frame!
 		// int[] foregroundLayers = { 2 }; // don't allocate every frame!
-		mapRenderer.setView(camera);
-		mapRenderer.render();
+		if (mapRenderer != null)
+		{
+			mapRenderer.setView(camera);
+			mapRenderer.render();
+		}
 		// mapRenderer.render(backgroundLayers);
 		// renderMyCustomSprites();
 		// mapRenderer.render(foregroundLayers);
@@ -106,11 +100,15 @@ public class ScreenMap implements ScreenBasic
 
 	/**
 	 * Set the TiledMap we should be drawing
-	 * @param tiledMap the map
+	 * 
+	 * @param tiledMap
+	 *            the map
 	 */
 	public void setTiledMap(TiledMap tiledMap)
 	{
-		this.tiledMap = tiledMap;
+		System.out.println("updated tile map in the screen " + tiledMap);
+		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, unitScale);
+
 	}
 
 	/**
@@ -119,7 +117,7 @@ public class ScreenMap implements ScreenBasic
 	@Override
 	public void show()
 	{
-		
+
 	}
 
 }

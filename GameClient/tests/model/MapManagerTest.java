@@ -30,7 +30,7 @@ public class MapManagerTest
 	{
 		QualifiedObservableConnector.resetSingleton();
 		MapManager.resetSingleton();
-		ModelFacade.getSingleton().setHeadless(true);
+		ModelFacade.getSingleton(false).setHeadless(true);
 	}
 
 	/**
@@ -47,23 +47,11 @@ public class MapManagerTest
 	}
 
 	/**
-	 * make sure we can tell it to use a given file
-	 */
-	@Test
-	public void canSetMapTitle()
-	{
-		MapManager.getSingleton().changeToNewFile("testmaps/simple.tmx");
-		assertEquals("testmaps/simple.tmx", MapManager.getSingleton().getMapFileTitle());
-	}
-
-	/**
 	 * Should update observers of NewMapReport when it gets a new map
 	 */
 	@Test
 	public void updatesOnNewMap()
 	{
-		TiledMap tiledMap = EasyMock.createMock(TiledMap.class);
-		
 		Observer obs = EasyMock.createMock(Observer.class);
 		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
 		cm.registerObserver(obs, NewMapReport.class);
@@ -71,7 +59,6 @@ public class MapManagerTest
 		EasyMock.replay(obs);
 
 		MapManager map = MapManager.getSingleton();
-		MapManager.getSingleton().setTiledMap(tiledMap);
 		
 		map.changeToNewFile("testmaps/simple.tmx");
 		EasyMock.verify(obs);
@@ -93,7 +80,7 @@ public class MapManagerTest
 		EasyMock.replay(mapLayers);
 		EasyMock.replay(mapLayer);
 
-		MapManager.getSingleton().setTiledMap(tiledMap);
+		MapManager.getSingleton().setMapForTesting(tiledMap);
 		MapLayer layer1 = MapManager.getSingleton().getMapLayer("Foreground");
 		assertEquals(mapLayer, layer1);
 

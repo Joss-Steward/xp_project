@@ -3,13 +3,13 @@ package runners;
 import java.io.IOException;
 import java.net.Socket;
 
+import model.ModelFacade;
 import view.ScreenBasic;
 import view.Screens;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-
 import communication.ConnectionManager;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
@@ -44,6 +44,11 @@ public class GameLibGDX extends Game implements ApplicationListener
 			System.exit(-1);
 		}
 
+		// tell the model to initialize itself
+		ModelFacade.getSingleton(false);
+		Screens.LOGIN_SCREEN.setGame(this);
+
+		// start at the login screen
 		ScreenBasic screen = Screens.LOGIN_SCREEN.getScreen();
 		this.setScreen(screen);
 		Gdx.input.setInputProcessor(screen.getStage());

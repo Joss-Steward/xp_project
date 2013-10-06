@@ -1,4 +1,5 @@
 import model.CommandLoginTest;
+import model.CommandNewMapTest;
 import model.MapManagerTest;
 import model.ModelFacadeTest;
 import model.PlayerTest;
@@ -33,6 +34,7 @@ import communication.packers.LoginMessagePackerTest;
 	
 	//model
 	CommandLoginTest.class,
+	CommandNewMapTest.class,
 	MapManagerTest.class,
 	ModelFacadeTest.class,
 	PlayerTest.class,

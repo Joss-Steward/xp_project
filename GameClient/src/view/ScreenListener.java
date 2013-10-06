@@ -3,6 +3,8 @@ package view;
 import java.util.ArrayList;
 import java.util.Observer;
 
+import com.badlogic.gdx.Game;
+
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 
@@ -17,12 +19,31 @@ public abstract class ScreenListener implements Observer
 {
 
 	protected ScreenBasic screen;
+	private Game gameToUse;
 	
 	/**
 	 * @return the report types this listener should pay attention to
 	 */
 	public abstract ArrayList<Class<? extends QualifiedObservableReport>> getReportTypes();
 	
+	/**
+	 * Tell this listener which screen it is managing
+	 * @param screen the screen
+	 */
+	public void setAssociatedScreen(ScreenBasic screen)
+	{
+		this.screen = screen;
+	}
+
+	/**
+	 * Tell this listener what game it is attached to so that it can change screens if necessary
+	 * @param gameToUse the game we are using
+	 */
+	public void setGame(Game gameToUse)
+	{
+		this.gameToUse = gameToUse;
+	}
+
 	/**
 	 * EVERY subclass should call this method in its constructor!!!!!!
 	 */
@@ -35,14 +56,13 @@ public abstract class ScreenListener implements Observer
 			cm.registerObserver(this, reportType);
 		}
 	}
-
+	
 	/**
-	 * Tell this listener which screen it is managing
-	 * @param screen the screen
+	 * Switch to another screen
+	 * @param screen the screen we should switch to
 	 */
-	public void setScreen(ScreenBasic screen)
+	public void switchToScreen(Screens screen)
 	{
-		this.screen = screen;
+		gameToUse.setScreen(screen.getScreen());
 	}
-
 }

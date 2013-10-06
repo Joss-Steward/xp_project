@@ -5,14 +5,22 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * Everything a basic screen needs
+ * 
  * @author Merlin
- *
+ * 
  */
-public interface ScreenBasic extends Screen
+public abstract class ScreenBasic implements Screen
 {
+	protected Stage stage;
+
 	/**
 	 * Get the stage that this screen displays
+	 * 
 	 * @return the stage
 	 */
-	public Stage getStage();
+	public Stage getStage()
+	{
+		return stage;
+	}
+
 }

@@ -1,7 +1,7 @@
 package view;
 
-import model.CommandExecutor;
 import model.CommandLogin;
+import model.ModelFacade;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -22,10 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
  * @author BrysonHair
  * 
  */
-public class ScreenLogin implements ScreenBasic
+public class ScreenLogin extends ScreenBasic
 {
-	private Stage stage;
-	
 	private Texture logo;
 	private TextField loginField;
 	private TextButton connectButton;
@@ -113,7 +111,7 @@ public class ScreenLogin implements ScreenBasic
 					
 //					Create the login command to allow the player to login
 					CommandLogin lc = new CommandLogin(loginField.getText(), pwField.getText());
-					CommandExecutor.getSingleton().executeCommand(lc);
+					ModelFacade.getSingleton(false).queueCommand(lc);
 					return true;
 				}
 			}
@@ -223,14 +221,5 @@ public class ScreenLogin implements ScreenBasic
 	public void show()
 	{
 
-	}
-
-	/**
-	 * @see view.ScreenBasic#getStage()
-	 */
-	@Override
-	public Stage getStage()
-	{
-		return stage;
 	}
 }

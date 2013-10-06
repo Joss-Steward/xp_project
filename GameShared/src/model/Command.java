@@ -4,7 +4,7 @@ package model;
  * @author merlin
  *
  */
-public abstract class Command
+public abstract class Command implements InfoPacket
 {
 
 	/**

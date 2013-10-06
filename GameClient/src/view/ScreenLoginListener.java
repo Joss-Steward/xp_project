@@ -36,7 +36,7 @@ public class ScreenLoginListener extends ScreenListener
 			NewMapReport report = (NewMapReport) arg;
 			ScreenMap nextScreen = (ScreenMap) Screens.MAP_SCREEN.getScreen();
 			nextScreen.setTiledMap(report.getTiledMap());
-			Screens.display(Screens.MAP_SCREEN);
+			this.switchToScreen(Screens.MAP_SCREEN);
 		}
 
 	}

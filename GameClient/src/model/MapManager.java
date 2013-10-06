@@ -3,6 +3,7 @@ package model;
 import model.reports.NewMapReport;
 
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
@@ -14,7 +15,6 @@ class MapManager extends QualifiedObservable
 {
 
 	private static MapManager singleton;
-	private String fileTitle;
 	private TiledMap tiledMap;
 	private boolean headless;
 
@@ -53,7 +53,6 @@ class MapManager extends QualifiedObservable
 	 */
 	public void changeToNewFile(String fileTitle)
 	{
-		this.fileTitle = fileTitle;
 		if (!headless)
 		{
 			tiledMap = new TmxMapLoader().load(fileTitle);
@@ -61,14 +60,7 @@ class MapManager extends QualifiedObservable
 		this.notifyObservers(new NewMapReport(tiledMap));
 	}
 
-	/**
-	 * @return the title of the file we are using
-	 */
-	public String getMapFileTitle()
-	{
-		return fileTitle;
-	}
-
+	// TODO why are we not getting javadoc warnings here???
 	@Override
 	public boolean notifiesOn(Class<?> reportType)
 	{
@@ -79,19 +71,20 @@ class MapManager extends QualifiedObservable
 		return false;
 	}
 
-	protected void setTiledMap(TiledMap tiledMap)
-	{
-		this.tiledMap = tiledMap;
-	}
-
 	public MapLayer getMapLayer(String layerName)
 	{
-		return tiledMap.getLayers().get(layerName);
+		MapLayers layers = tiledMap.getLayers();
+		return layers.get(layerName);
 	}
 
 	public void setHeadless(boolean headless)
 	{
 		this.headless = headless;
+	}
+
+	public void setMapForTesting(TiledMap tiledMap)
+	{
+		this.tiledMap = tiledMap;
 	}
 
 }
