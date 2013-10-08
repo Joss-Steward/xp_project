@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 
+import model.CommandNewMap;
 import model.ModelFacade;
 import communication.messages.MapFileMessage;
 import communication.messages.Message;
@@ -40,12 +41,13 @@ public class MapFileMessageHandler extends MessageHandler
 		{
 			System.out.println("received " + msg);
 			
-			String decodedPath = URLDecoder.decode(path, "UTF-8");
+			String decodedPath = URLDecoder.decode(path, "UTF-8").substring(1);
 			MapFileMessage mapFileMessage = (MapFileMessage)msg;
+			System.out.println("handler decoded path:"+decodedPath);
 			writeToFile(decodedPath + "../" + MAP_FILE_TITLE, mapFileMessage.getContents() );
 			writeTileSets(mapFileMessage, decodedPath);
 			
-			ModelFacade.getSingleton().setMapFile(MAP_FILE_TITLE);
+			ModelFacade.getSingleton(false).queueCommand(new CommandNewMap(decodedPath + "../" + MAP_FILE_TITLE));
 		} catch (UnsupportedEncodingException e)
 		{
 			e.printStackTrace();

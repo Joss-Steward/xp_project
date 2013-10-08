@@ -31,7 +31,7 @@ public class MapFileMessagePacker extends MessagePacker
 						report.getUserName());
 				if (this.getAccumulator().getPlayerUserID() == userID)
 				{
-					MapFileMessage msg = new MapFileMessage("maps/simple.tmx");
+					MapFileMessage msg = new MapFileMessage("maps/current.tmx");
 					return msg;
 				}
 			} catch (PlayerNotFoundException e)

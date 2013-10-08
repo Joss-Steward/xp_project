@@ -1,15 +1,15 @@
+package runners;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
 import model.CommandLogin;
+import model.ModelFacade;
 import model.Player;
-
 import communication.ConnectionManager;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
-
 import data.Position;
 
 /**
@@ -35,6 +35,7 @@ public class ClientRunner
 	{
 		Socket socket = new Socket("localhost", 1871);
 		ConnectionManager cm = new ConnectionManager(socket, new MessageHandlerSet(), new MessagePackerSet());
+		ModelFacade modelFacade = ModelFacade.getSingleton(false);
 
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("input?");
@@ -52,7 +53,7 @@ public class ClientRunner
 			} else if (tokens[0].equalsIgnoreCase("login"))
 			{
 				CommandLogin command = new CommandLogin(tokens[1],tokens[2]);
-				command.execute();
+				modelFacade.queueCommand(command);
 				System.out.println("user specified id " + tokens[1]);
 			} else 
 			{

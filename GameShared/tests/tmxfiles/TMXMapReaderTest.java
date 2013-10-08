@@ -19,12 +19,12 @@ public class TMXMapReaderTest
 	@Test
 	public void test()
 	{
-		TMXMapReader reader = new TMXMapReader("maps/simple.tmx");
+		TMXMapReader reader = new TMXMapReader("maps/current.tmx");
 		
 		ArrayList<String> imageFileTitles = reader.getImageFileTitles();
 		assertEquals(2, imageFileTitles.size());
-		assertEquals("tileset/grass-tiles-2-small.png",imageFileTitles.get(0));
-		assertEquals("tileset/tree2-final.png",imageFileTitles.get(1));
+		assertEquals("tileset/qubodup-bush_0.png",imageFileTitles.get(0));
+		assertEquals("tileset/qubodup-bush_berries_0.png",imageFileTitles.get(1));
 
 	}
 

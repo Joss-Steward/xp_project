@@ -24,7 +24,8 @@ import java.util.Observer;
  * <p>
  * 
  * <pre>
- * QualifiedObservableConnector.getSingleton().registerObserver(this, ThisPlayerMovedReport.class);
+ * QualifiedObservableConnector.getSingleton().registerObserver(this,
+ * 		ThisPlayerMovedReport.class);
  * </pre>
  * <p>
  * Each place in the Model that reports a given state change, registers itself
@@ -92,7 +93,8 @@ public class QualifiedObservableConnector
 	 * @param reportType
 	 *            the type of message it will report
 	 */
-	public void registerQualifiedObservable(QualifiedObservable observable, Class<?> reportType)
+	public void registerQualifiedObservable(QualifiedObservable observable,
+			Class<?> reportType)
 	{
 		if (rememberObservable(observable, reportType))
 		{
@@ -115,9 +117,11 @@ public class QualifiedObservableConnector
 	 * @return true if this was a new observable for this type and false if it
 	 *         was a duplicate
 	 */
-	private boolean rememberObservable(QualifiedObservable observable, Class<?> reportType)
+	private boolean rememberObservable(QualifiedObservable observable,
+			Class<?> reportType)
 	{
-		ArrayList<QualifiedObservable> relevantObservables = observables.get(reportType);
+		ArrayList<QualifiedObservable> relevantObservables = observables
+				.get(reportType);
 		if (relevantObservables == null)
 		{
 			relevantObservables = new ArrayList<QualifiedObservable>();
@@ -143,7 +147,8 @@ public class QualifiedObservableConnector
 	{
 		if (rememberObserver(observer, reportType))
 		{
-			ArrayList<QualifiedObservable> relevantObservables = observables.get(reportType);
+			ArrayList<QualifiedObservable> relevantObservables = observables
+					.get(reportType);
 			if (relevantObservables != null)
 			{
 				for (QualifiedObservable observable : relevantObservables)
@@ -187,11 +192,13 @@ public class QualifiedObservableConnector
 	 * @param reportType
 	 *            the report type that will no longer be reported
 	 */
-	public void unregisterQualifiedObservable(QualifiedObservable observable, Class<?> reportType)
+	public void unregisterQualifiedObservable(QualifiedObservable observable,
+			Class<?> reportType)
 	{
 		disconnectObserversFrom(observable, reportType);
 
-		ArrayList<QualifiedObservable> relevantObservables = observables.get(reportType);
+		ArrayList<QualifiedObservable> relevantObservables = observables
+				.get(reportType);
 		if (relevantObservables != null)
 		{
 			relevantObservables.remove(observable);
@@ -207,7 +214,8 @@ public class QualifiedObservableConnector
 	 * @param reportType
 	 *            the report type that should not longer be reported
 	 */
-	private void disconnectObserversFrom(QualifiedObservable observable, Class<?> reportType)
+	private void disconnectObserversFrom(QualifiedObservable observable,
+			Class<?> reportType)
 	{
 		ArrayList<Observer> relevantObservers = observers.get(reportType);
 		if (relevantObservers != null)
@@ -248,9 +256,11 @@ public class QualifiedObservableConnector
 	 * @param reportType
 	 *            the report type that should no longer be reported
 	 */
-	private void disconnectFromObservables(Observer observer, Class<?> reportType)
+	private void disconnectFromObservables(Observer observer,
+			Class<?> reportType)
 	{
-		ArrayList<QualifiedObservable> relevantObservables = observables.get(reportType);
+		ArrayList<QualifiedObservable> relevantObservables = observables
+				.get(reportType);
 		if (relevantObservables != null)
 		{
 			for (QualifiedObservable observable : relevantObservables)
@@ -258,5 +268,26 @@ public class QualifiedObservableConnector
 				observable.deleteObserver(observer, reportType);
 			}
 		}
+	}
+
+	/**
+	 * Allows an observer to see if it is currently listening to a given report
+	 * type
+	 * 
+	 * @param obs
+	 *            the observer
+	 * @param reportType
+	 *            the report type
+	 * @return true if the observer is hooked up for that report type
+	 */
+	public boolean doIObserve(Observer obs, Class<?> reportType)
+	{
+		
+		ArrayList<Observer> relavantObservers = observers.get(reportType);
+		if (relavantObservers == null)
+		{
+			return false;
+		}
+		return relavantObservers.contains(obs);
 	}
 }

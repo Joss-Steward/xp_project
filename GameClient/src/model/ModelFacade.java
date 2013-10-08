@@ -1,56 +1,117 @@
 package model;
 
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
+
 /**
- * A facade that allows things outside the model to change or retrieve things from inside the model
+ * A facade that allows things outside the model to change or retrieve things
+ * from inside the model
+ * 
  * @author Merlin
- *
+ * 
  */
 public class ModelFacade
 {
-	
+
 	private static ModelFacade singleton;
 
 	/**
-	 * Make the default constructor private
-	 */
-	private ModelFacade()
-	{
-		
-	}
-	/**
-	 * 
-	 */
-	public static void resetSingleton()
-	{
-		singleton = null;
-	}
-
-	/**
+	 * @param headless
+	 *            TODO
 	 * @return the only one of these there is
 	 */
-	public synchronized static ModelFacade getSingleton()
+	public synchronized static ModelFacade getSingleton(boolean headless)
 	{
 		if (singleton == null)
 		{
-			singleton = new ModelFacade();
+			singleton = new ModelFacade(headless);
 		}
 		return singleton;
 	}
+
 	/**
-	 * Tell the model to use a new map file
-	 * @param fileTitle the title of the new file
+	 * @param headless TODO
+	 * 
 	 */
-	public void setMapFile(String fileTitle)
+	public synchronized static void resetSingleton(boolean headless)
 	{
-		TiledMap.getSingleton().changeToNewFile(fileTitle);
-		
+		singleton = new ModelFacade(headless);
+		MapManager.resetSingleton();
+		MapManager.getSingleton().setHeadless(headless);
 	}
+
+	private InformationQueue commandQueue;
+
+
 	/**
-	 * @return the name of the map file we are using
+	 * Make the default constructor private
+	 * 
+	 * @param headless
+	 *            TODO
 	 */
-	public String getMapFileTitle()
+	private ModelFacade(boolean headless)
 	{
-		return TiledMap.getSingleton().getMapFileTitle();
+		setHeadless(headless);
+		commandQueue = new InformationQueue();
+		if (!headless)
+		{
+			Timer.schedule(new Task()
+			{
+
+				@Override
+				public void run()
+				{
+					while (commandQueue.getQueueSize() > 0)
+					{
+						Command cmd;
+						try
+						{
+							cmd = (Command) commandQueue.getInfoPacket();
+							cmd.execute();
+						} catch (InterruptedException e)
+						{
+							e.printStackTrace();
+						}
+
+					}
+				}
+
+			}, (float) 0.25, (float) 0.25);
+		}
+	}
+
+	/**
+	 * Queue a command for the model to process
+	 * 
+	 * @param cmd
+	 *            the command to be processed
+	 */
+	public void queueCommand(Command cmd)
+	{
+		commandQueue.queueInfoPacket(cmd);
+	}
+
+	/**
+	 * Tell the model whether or not it can use the functions of libGDX that
+	 * require graphics. Note that the default is that we do use graphics - we
+	 * just need to turn it off for testing
+	 * 
+	 * @param headless
+	 *            true if we can't use graphics related things
+	 */
+	private void setHeadless(boolean headless)
+	{
+		MapManager.getSingleton().setHeadless(headless);
+	}
+
+	/**
+	 * Get how many commands are waiting to be queued
+	 * 
+	 * @return the number of commands in the queue
+	 */
+	public int getCommandQueueLength()
+	{
+		return commandQueue.getQueueSize();
 	}
 
 }
