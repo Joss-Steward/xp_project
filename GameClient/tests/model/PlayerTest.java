@@ -26,7 +26,7 @@ public class PlayerTest
 	@Before
 	public void reset()
 	{
-		Player.resetSingleton();
+		ThisClientsPlayer.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 	}
 	/**
@@ -35,10 +35,10 @@ public class PlayerTest
 	@Test
 	public void testSingleton()
 	{
-		Player player1 = Player.getSingleton();
-		assertSame(player1,Player.getSingleton());
-		Player.resetSingleton();
-		assertNotSame(player1,Player.getSingleton());
+		ThisClientsPlayer player1 = ThisClientsPlayer.getSingleton();
+		assertSame(player1,ThisClientsPlayer.getSingleton());
+		ThisClientsPlayer.resetSingleton();
+		assertNotSame(player1,ThisClientsPlayer.getSingleton());
 	}
 
 	/**
@@ -49,11 +49,11 @@ public class PlayerTest
 	{
 		Observer obs = EasyMock.createMock(Observer.class);
 		ThisPlayerMovedReport report = new ThisPlayerMovedReport(new Position(3,4));
-		obs.update(EasyMock.eq(Player.getSingleton()), EasyMock.eq(report));
+		obs.update(EasyMock.eq(ThisClientsPlayer.getSingleton()), EasyMock.eq(report));
 		EasyMock.replay(obs);
 		
-		Player.getSingleton().addObserver(obs, ThisPlayerMovedReport.class);
-		Player.getSingleton().move(new Position(3,4));
+		ThisClientsPlayer.getSingleton().addObserver(obs, ThisPlayerMovedReport.class);
+		ThisClientsPlayer.getSingleton().move(new Position(3,4));
 		EasyMock.verify(obs);
 	}
 	
@@ -63,7 +63,7 @@ public class PlayerTest
 	@Test
 	public void canStartToLogin()
 	{
-		Player p = Player.getSingleton();
+		ThisClientsPlayer p = ThisClientsPlayer.getSingleton();
 		assertFalse(p.isLoginInProgress());
 		p.initiateLogin("Fred", "mommy");
 		assertTrue(p.isLoginInProgress());
@@ -79,10 +79,10 @@ public class PlayerTest
 		Observer obs = EasyMock.createMock(Observer.class);
 		LoginInitiatedReport report = new LoginInitiatedReport("Fred","daddy");
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, LoginInitiatedReport.class);
-		obs.update(EasyMock.eq(Player.getSingleton()), EasyMock.eq(report));
+		obs.update(EasyMock.eq(ThisClientsPlayer.getSingleton()), EasyMock.eq(report));
 		EasyMock.replay(obs);
 		
-		Player.getSingleton().initiateLogin("Fred","daddy");
+		ThisClientsPlayer.getSingleton().initiateLogin("Fred","daddy");
 		EasyMock.verify(obs);
 		
 	}

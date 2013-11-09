@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import model.CommandLogin;
 import model.ModelFacade;
-import model.Player;
+import model.ThisClientsPlayer;
 import communication.ConnectionManager;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
@@ -46,10 +46,10 @@ public class ClientRunner
 			if (tokens[0].equalsIgnoreCase("move"))
 			{
 				String[] positionParts = tokens[1].split(",");
-				Player.getSingleton().move(
+				ThisClientsPlayer.getSingleton().move(
 						new Position(Integer.parseInt(positionParts[0]),
 								Integer.parseInt(positionParts[1])));
-				System.out.println("user moved " + Player.getSingleton().getID() + " to " + positionParts[0] + ", " + positionParts[1]);
+				System.out.println("user moved " + ThisClientsPlayer.getSingleton().getID() + " to " + positionParts[0] + ", " + positionParts[1]);
 			} else if (tokens[0].equalsIgnoreCase("login"))
 			{
 				CommandLogin command = new CommandLogin(tokens[1],tokens[2]);
