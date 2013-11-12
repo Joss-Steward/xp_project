@@ -10,21 +10,21 @@ import data.Position;
  * @author merlin
  * 
  */
-public class Player extends QualifiedObservable
+public class ThisClientsPlayer extends QualifiedObservable
 {
 
-	private static Player singleton;
+	private static ThisClientsPlayer singleton;
 
 	/**
 	 * There should be only one
 	 * 
 	 * @return the only player
 	 */
-	public static synchronized Player getSingleton()
+	public static synchronized ThisClientsPlayer getSingleton()
 	{
 		if (singleton == null)
 		{
-			singleton = new Player();
+			singleton = new ThisClientsPlayer();
 		}
 		return singleton;
 	}
@@ -43,7 +43,7 @@ public class Player extends QualifiedObservable
 
 	private boolean loginInProgress;
 
-	private Player()
+	private ThisClientsPlayer()
 	{
 		this.position = new Position(0, 0);
 		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this, LoginInitiatedReport.class);
