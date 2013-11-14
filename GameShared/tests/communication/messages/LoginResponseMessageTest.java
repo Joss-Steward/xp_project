@@ -22,7 +22,7 @@ public class LoginResponseMessageTest
 		assertEquals(42, msg.getUserID());
 		assertEquals("localhost", msg.getHostName());
 		assertEquals(1872, msg.getPortNumber());
-		assertEquals(12345, msg.getPin());
+		assertEquals(12345, msg.getPin(),0.0001);
 		assertEquals("Successful login of user " + msg.getUserID(), msg.toString());
 	}
 

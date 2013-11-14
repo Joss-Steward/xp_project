@@ -18,11 +18,11 @@ public class LoginSuccessfulReportTest
 	@Test
 	public void creation()
 	{
-		LoginSuccessfulReport report = new LoginSuccessfulReport(42, "LLL",56, 76);
+		LoginSuccessfulReport report = new LoginSuccessfulReport(42, "LLL",56, 0.76);
 		assertEquals(42, report.getUserID());
 		assertEquals("LLL", report.getHostname());
 		assertEquals(56, report.getPort());
-		assertEquals(76, report.getPin());
+		assertEquals(0.76, report.getPin(),0.00001);
 	}
 
 	/**

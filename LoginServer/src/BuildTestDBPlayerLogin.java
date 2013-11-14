@@ -7,7 +7,11 @@ import model.DatabaseManager;
 import model.PlayerLoginTest;
 
 
-
+/**
+ * Builds the login portion of the database
+ * @author Merlin
+ *
+ */
 public class BuildTestDBPlayerLogin
 {
 
@@ -27,6 +31,23 @@ public class BuildTestDBPlayerLogin
 		{
 			connection = DatabaseManager.getSingleton().getConnection();
 			createPlayerTable();
+			createPinTable();
+		}
+
+		private static void createPinTable() throws SQLException
+		{
+			Statement stmt = connection.createStatement();
+
+			stmt.executeUpdate("DROP TABLE PlayerPins");
+			StringBuffer sql = new StringBuffer("CREATE TABLE PlayerPins(");
+			sql.append("PlayerID int NOT NULL, ");
+			sql.append("Pin double NOT NULL,");
+			
+			sql.append("PRIMARY KEY (PlayerID));");
+			System.out.println(sql);
+			stmt.executeUpdate(new String(sql));
+			stmt.executeUpdate("ALTER TABLE PlayerPins ENGINE = INNODB");
+			stmt.executeUpdate("ALTER TABLE PlayerPins ADD UNIQUE (PlayerID)");
 		}
 
 		private static void createPlayerTable() throws SQLException
@@ -35,7 +56,7 @@ public class BuildTestDBPlayerLogin
 
 			stmt.executeUpdate("DROP TABLE PlayerLogins");
 			StringBuffer sql = new StringBuffer("CREATE TABLE PlayerLogins(");
-			sql.append("PlayerID       int NOT NULL AUTO_INCREMENT, ");
+			sql.append("PlayerID int NOT NULL AUTO_INCREMENT, ");
 			sql.append("PlayerName VARCHAR(30) NOT NULL,");
 			sql.append("Password VARCHAR(30) NOT NULL,");
 

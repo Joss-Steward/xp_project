@@ -14,13 +14,13 @@ public class ConnectMessage implements Message, Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 	private int userID;
-	private int pin;
+	private double pin;
 
 	/**
 	 * @param userID the user ID we should use to connect
 	 * @param pin the pin we were given to validate this connection request
 	 */
-	public ConnectMessage(int userID, int pin)
+	public ConnectMessage(int userID, double pin)
 	{
 		this.userID = userID;
 		this.pin = pin;
@@ -37,7 +37,7 @@ public class ConnectMessage implements Message, Serializable
 	/**
 	 * @return the pin
 	 */
-	public int getPin()
+	public double getPin()
 	{
 		return pin;
 	}

@@ -85,14 +85,14 @@ public class ConnectionManager
 	 * 
 	 * @param sock
 	 *            the new socket
-	 * @param userID
-	 *            the userid we were given to connect
+	 * @param playerID
+	 *            the playerID we were given to connect
 	 * @param pin
 	 *            the pin we were given to connect
 	 * @throws IOException
 	 *             shouldn't
 	 */
-	public void moveToNewSocket(Socket sock, int userID, int pin) throws IOException
+	public void moveToNewSocket(Socket sock, int playerID, double pin) throws IOException
 	{
 
 		disconnect();
@@ -104,7 +104,7 @@ public class ConnectionManager
 		// T.setDaemon(true);
 		outgoingThread.start();
 		stateAccumulator = outgoing.getStateAccumulator();
-		getStateAccumulator().queueMessage(new ConnectMessage(userID, pin));
+		getStateAccumulator().queueMessage(new ConnectMessage(playerID, pin));
 
 		incoming = new ConnectionIncoming(sock, handlerSet);
 		incomingThread = new Thread(incoming);

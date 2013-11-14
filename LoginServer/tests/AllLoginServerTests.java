@@ -1,3 +1,4 @@
+import model.PlayerLoginTest;
 import model.PlayerManagerTest;
 import model.reports.LoginSuccessfulReportTest;
 
@@ -20,6 +21,7 @@ import communication.packers.LoginResponseMessagePackerTest;
 	LoginResponseMessagePackerTest.class,
 	
 	//model
+	PlayerLoginTest.class,
 	PlayerManagerTest.class,
 	
 	//model.reports

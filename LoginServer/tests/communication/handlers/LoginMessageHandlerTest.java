@@ -1,6 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
+import model.PlayerLoginTest;
 import model.PlayerManager;
 
 import org.junit.Before;
@@ -32,7 +33,7 @@ public class LoginMessageHandlerTest
 	public void tellsTheModel()
 	{
 		LoginMessageHandler handler = new LoginMessageHandler();
-		handler.process(new LoginMessage("fred","pw"));
+		handler.process(new LoginMessage(PlayerLoginTest.Players.MERLIN.getName(),PlayerLoginTest.Players.MERLIN.getPassword()));
 		assertEquals(1, PlayerManager.getSingleton().getNumberOfPlayers());
 	}
 }

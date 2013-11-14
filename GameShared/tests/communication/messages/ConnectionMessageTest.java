@@ -20,7 +20,7 @@ public class ConnectionMessageTest
 		ConnectMessage msg = new ConnectMessage(50, 32432);
 		assertEquals("Connect Message: userID = 50 and pin = 32432", msg.toString());
 		assertEquals(50, msg.getUserID());
-		assertEquals(32432, msg.getPin());
+		assertEquals(32432, msg.getPin(),0.0001);
 	}
 	
 }

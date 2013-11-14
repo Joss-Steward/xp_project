@@ -104,7 +104,6 @@ public class DatabaseManager
 	 */
 	public void setTesting() throws DatabaseException
 	{
-		openConnectionTo("jdbc:mysql://zband.cs.ship.edu:3306/ZBandTest");
 		startTransaction();
 		testing = true;
 	}
