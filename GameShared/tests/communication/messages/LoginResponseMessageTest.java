@@ -18,7 +18,7 @@ public class LoginResponseMessageTest
 	@Test
 	public void basic()
 	{
-		LoginResponseMessage msg = new LoginResponseMessage(42,"localhost", 1872, 12345);
+		LoginSuccessfulMessage msg = new LoginSuccessfulMessage(42,"localhost", 1872, 12345);
 		assertEquals(42, msg.getUserID());
 		assertEquals("localhost", msg.getHostName());
 		assertEquals(1872, msg.getPortNumber());

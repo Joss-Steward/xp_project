@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author Merlin
  * 
  */
-public class LoginResponseMessage implements Message, Serializable
+public class LoginSuccessfulMessage implements Message, Serializable
 {
 
 	/**
@@ -35,7 +35,7 @@ public class LoginResponseMessage implements Message, Serializable
 	 * @param d
 	 *            the magic number required to connect to area servers
 	 */
-	public LoginResponseMessage(int userID, String hostName, int portNumber, double d)
+	public LoginSuccessfulMessage(int userID, String hostName, int portNumber, double d)
 	{
 		this.userID = userID;
 		this.hostName = hostName;

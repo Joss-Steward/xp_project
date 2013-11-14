@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 import communication.handlers.MessageHandler;
-import communication.messages.LoginResponseMessage;
+import communication.messages.LoginSuccessfulMessage;
 import communication.messages.Message;
 
 
@@ -24,9 +24,9 @@ public class LoginResponseMessageHandler extends MessageHandler
 	public void process(Message msg)
 	{
 		System.out.println("received " + msg);
-		if (msg.getClass().equals(LoginResponseMessage.class))
+		if (msg.getClass().equals(LoginSuccessfulMessage.class))
 		{
-			LoginResponseMessage rMsg = (LoginResponseMessage)msg;
+			LoginSuccessfulMessage rMsg = (LoginSuccessfulMessage)msg;
 			try
 			{
 				connectionManager.moveToNewSocket(new Socket(rMsg.getHostName(),rMsg.getPortNumber()), rMsg.getUserID(), rMsg.getPin());
@@ -43,7 +43,7 @@ public class LoginResponseMessageHandler extends MessageHandler
 	@Override
 	public Class<?> getMessageTypeWeHandle()
 	{
-		return LoginResponseMessage.class;
+		return LoginSuccessfulMessage.class;
 	}
 
 }

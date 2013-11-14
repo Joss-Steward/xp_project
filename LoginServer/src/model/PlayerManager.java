@@ -1,5 +1,6 @@
 package model;
 
+import model.reports.LoginFailedReport;
 import model.reports.LoginSuccessfulReport;
 
 /**
@@ -36,6 +37,7 @@ public class PlayerManager extends QualifiedObservable
 	private PlayerManager()
 	{
 		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this, LoginSuccessfulReport.class);
+		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this, LoginFailedReport.class);
 	}
 
 	/**
@@ -53,8 +55,7 @@ public class PlayerManager extends QualifiedObservable
 			this.notifyObservers(report);
 		} catch (DatabaseException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			this.notifyObservers(new LoginFailedReport());
 		}
 
 	}
@@ -65,7 +66,8 @@ public class PlayerManager extends QualifiedObservable
 	@Override
 	public boolean notifiesOn(Class<?> reportType)
 	{
-		if (reportType.equals(LoginSuccessfulReport.class))
+		if (reportType.equals(LoginSuccessfulReport.class) ||
+				reportType.equals(LoginFailedReport.class))
 		{
 			return true;
 		}

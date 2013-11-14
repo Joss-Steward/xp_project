@@ -5,14 +5,14 @@ import model.reports.LoginSuccessfulReport;
 
 import org.junit.Test;
 
-import communication.messages.LoginResponseMessage;
-import communication.packers.LoginResponseMessagePacker;
+import communication.messages.LoginSuccessfulMessage;
+import communication.packers.LoginSuccessfulMessagePacker;
 
 /**
  * @author Merlin
  *
  */
-public class LoginResponseMessagePackerTest
+public class LoginSuccessfulMessagePackerTest
 {
 
 	/**
@@ -22,8 +22,8 @@ public class LoginResponseMessagePackerTest
 	public void test()
 	{
 		LoginSuccessfulReport report = new LoginSuccessfulReport(42, "localhost", 1872, 0.123456);
-		LoginResponseMessagePacker packer = new LoginResponseMessagePacker();
-		LoginResponseMessage msg = (LoginResponseMessage) packer.pack(report);
+		LoginSuccessfulMessagePacker packer = new LoginSuccessfulMessagePacker();
+		LoginSuccessfulMessage msg = (LoginSuccessfulMessage) packer.pack(report);
 		assertEquals(42, msg.getUserID());
 		assertEquals("localhost", msg.getHostName());
 		assertEquals(1872, msg.getPortNumber());
