@@ -23,8 +23,9 @@ class MapManager extends QualifiedObservable
 	 */
 	private MapManager()
 	{
-		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this,
-				NewMapReport.class);
+		QualifiedObservableConnector.getSingleton()
+				.registerQualifiedObservable(this, NewMapReport.class);
+
 	}
 
 	/**
@@ -59,6 +60,8 @@ class MapManager extends QualifiedObservable
 		}
 		this.notifyObservers(new NewMapReport(tiledMap));
 	}
+	
+
 
 	// TODO why are we not getting javadoc warnings here???
 	@Override

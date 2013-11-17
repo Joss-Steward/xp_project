@@ -1,6 +1,7 @@
 package model;
 
 import model.reports.LoginInitiatedReport;
+import model.reports.QuestScreenReport;
 import model.reports.ThisPlayerMovedReport;
 import data.Position;
 
@@ -36,6 +37,7 @@ public class ThisClientsPlayer extends QualifiedObservable
 	{
 		singleton = null;
 	}
+
 	private Position position;
 
 	private int id;
@@ -46,7 +48,11 @@ public class ThisClientsPlayer extends QualifiedObservable
 	private ThisClientsPlayer()
 	{
 		this.position = new Position(0, 0);
-		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this, LoginInitiatedReport.class);
+		QualifiedObservableConnector.getSingleton()
+				.registerQualifiedObservable(this, LoginInitiatedReport.class);
+
+		QualifiedObservableConnector.getSingleton()
+				.registerQualifiedObservable(this, QuestScreenReport.class);
 	}
 
 	/**
@@ -93,8 +99,9 @@ public class ThisClientsPlayer extends QualifiedObservable
 	@Override
 	public boolean notifiesOn(Class<?> reportType)
 	{
-		if (reportType.equals(ThisPlayerMovedReport.class) || 
-				reportType.equals(LoginInitiatedReport.class))
+		if (reportType.equals(ThisPlayerMovedReport.class)
+				|| reportType.equals(LoginInitiatedReport.class)
+				|| reportType.equals(QuestScreenReport.class))
 		{
 			return true;
 		}
@@ -133,8 +140,11 @@ public class ThisClientsPlayer extends QualifiedObservable
 
 	/**
 	 * Attempt to login with a given name and password
-	 * @param password the password
-	 * @param name the user name
+	 * 
+	 * @param password
+	 *            the password
+	 * @param name
+	 *            the user name
 	 * 
 	 */
 	public void initiateLogin(String name, String password)
@@ -142,5 +152,17 @@ public class ThisClientsPlayer extends QualifiedObservable
 		loginInProgress = true;
 		this.name = name;
 		notifyObservers(new LoginInitiatedReport(name, password));
+	}
+
+	/**
+	 * notifies that the player has updated quest information
+	 * 
+	 * @param b
+	 *            closeing quest screen or opening
+	 */
+	public void showQuests(boolean b)
+	{
+		System.out.println("hello from the player. Showing quests is " + b);
+		notifyObservers(new QuestScreenReport(b));
 	}
 }
