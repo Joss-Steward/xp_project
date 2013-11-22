@@ -147,22 +147,22 @@ public class ScreenQuest extends ScreenBasic
 
 		// for testing purposes only!!!
 		// TODO DELETE!
-		if (Gdx.input.isButtonPressed(Keys.E))
-		{
-			if (selectedQuest != null)
-			{
-				qm.setQuestActive(selectedQuest);
-			}
-			if (selectedTask != null)
-			{
-				if (selectedTask.isActive() == true)
-				{
-					qm.setTaskCompleted(selectedTask, true);
-				}
-				selectedTask.activateTask(true);
+		// if (Gdx.input.isButtonPressed(Keys.E))
+		// {
+		// if (selectedQuest != null)
+		// {
+		// qm.setQuestActive(selectedQuest);
+		// }
+		// if (selectedTask != null)
+		// {
+		//
+		// selectedQuest.completeCurrentTask();
+		// // if (selectedTask.isActive() == true)
+		// // {
+		// // qm.setTaskCompleted(selectedTask, true);
+		// // }
+		// // selectedTask.activateTask(true);
 
-			}
-		}
 	}
 
 	/**
@@ -183,9 +183,9 @@ public class ScreenQuest extends ScreenBasic
 	/**
 	 * Builds the table to hold the quest and task data
 	 * 
-	 * @param selectedTask2
+	 * @param selectedTask
 	 */
-	private void builldQuestDisplayTable(Quest selectedQuest, Task selectedTask2)
+	private void builldQuestDisplayTable(Quest selectedQuest, Task selectedTask)
 	{
 		Table questTable = new Table();
 		questTable.debug();
@@ -359,6 +359,8 @@ public class ScreenQuest extends ScreenBasic
 						+ event.getListenerActor().getName());
 				Label questLbl = (Label) event.getListenerActor();
 				String name = questLbl.getName();
+				// TODO testing purposes
+				qm.setQuestActive(selectedQuest);
 				updateQuestTableFromClick(name);
 				return true;
 			}
@@ -385,6 +387,15 @@ public class ScreenQuest extends ScreenBasic
 						+ event.getListenerActor().getName());
 				Label taskLbl = (Label) event.getListenerActor();
 				String name = taskLbl.getName();
+
+				selectedTask = selectedQuest.getTaskByName(name);
+				selectedQuest.setSelectedTask(selectedTask);
+				//TODO delete after show
+				if (selectedTask.isActive() == true)
+				{
+					selectedQuest.completeCurrentTask();
+				}
+				selectedTask.activateTask(true);
 				updateQuestTableFromTaskClick(name);
 				return true;
 			}
@@ -420,7 +431,6 @@ public class ScreenQuest extends ScreenBasic
 	 */
 	void updateQuestTableFromTaskClick(String name)
 	{
-		selectedTask = getTaskFromList(name);
 		Gdx.app.log("Selected tasks is " + name, "down");
 		builldQuestDisplayTable(selectedQuest, selectedTask);
 		stage.clear();
@@ -431,23 +441,6 @@ public class ScreenQuest extends ScreenBasic
 		stage.addActor(questTable);
 	}
 
-	/**
-	 * gets the specified quest the list
-	 * 
-	 * @param questName
-	 *            String the name of the quest
-	 * @return Quest the quest from the list
-	 */
-	private Task getTaskFromList(String taskName)
-	{
-		Task selectedTask = null;
-		// finds the quest
-		if (selectedQuest != null)
-		{
-			selectedTask = selectedQuest.getTaskByName(taskName);
-		}
-		return selectedTask;
-	}
 
 	/**
 	 * @see com.badlogic.gdx.Screen#resize(int, int)

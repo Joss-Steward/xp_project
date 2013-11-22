@@ -28,14 +28,18 @@ public class Task {
 
 	/**
 	 * trigger hits the task
+	 * @param type TriggerTypes of the Trigger
 	 */
-	public void triggerTask() 
+	public void triggerTask(TriggerTypes type) 
 	{
-		
+		if(trigger.getTriggerType()==type)
+		{
+			this.completed=true;
+		}
 	}
 
 	/**
-	 * 
+	 * Gets the name of the task
 	 * @return String the name of the task
 	 */
 	public String getName() {
@@ -63,7 +67,7 @@ public class Task {
 	}
 
 	/**
-	 * 
+	 * getter for the trigger
 	 * @return Trigger the trigger associated with this task
 	 */
 	public Trigger getTrigger() {
@@ -100,6 +104,7 @@ public class Task {
 	}
 
 	/**
+	 * getter for completed boolean
 	 * @return boolean whether the task was completed
 	 */
 	public boolean isCompleted() {
@@ -126,6 +131,7 @@ public class Task {
 	}
 
 	/**
+	 * getter for Position
 	 * @return the position
 	 */
 	public Position getPosition() {
@@ -133,6 +139,7 @@ public class Task {
 	}
 
 	/**
+	 * setter for position
 	 * @param position
 	 *            the position to set
 	 */
@@ -141,6 +148,7 @@ public class Task {
 	}
 
 	/**
+	 * getter for parent's name
 	 * @return the parentName
 	 */
 	public String getParentName() {
@@ -148,6 +156,7 @@ public class Task {
 	}
 
 	/**
+	 * setter for parent's name
 	 * @param parentName
 	 *            the parentName to set
 	 */

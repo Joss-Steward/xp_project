@@ -1,4 +1,5 @@
 package Quest;
+
 import java.util.ArrayList;
 import data.Position;
 
@@ -15,6 +16,7 @@ public class Quest
 	private boolean completed;
 
 	private ArrayList<Task> taskList;
+	private Task currentTask;
 
 	/**
 	 * Constructor
@@ -30,6 +32,8 @@ public class Quest
 	}
 
 	/**
+	 * getter for name
+	 * 
 	 * @return String: name of the Quest
 	 */
 	public String getName()
@@ -60,10 +64,17 @@ public class Quest
 		{
 			this.taskList.add(task);
 		}
+
+		if (currentTask == null)
+		{
+			currentTask = task;
+		}
 	}
 
 	/**
-	 * @return the count of the
+	 * getter for number of tasks
+	 * 
+	 * @return int the count of the tasks
 	 */
 	public int getTaskCount()
 	{
@@ -152,7 +163,8 @@ public class Quest
 	}
 
 	/**
-	 * changes the status of an active quest/tasks
+	 * changes the status of an active quest/tasks deactivates all tasks when
+	 * quest is deactivated -- activates first task when quest is activated
 	 * 
 	 * @param active
 	 *            boolean to activate/deactivate quest
@@ -161,7 +173,7 @@ public class Quest
 	{
 		this.active = active;
 
-		if (!this.active)
+		if (!active)
 		{
 			// walks through tasks deactivating them
 			for (int i = 0; i < this.taskList.size(); i++)
@@ -180,7 +192,8 @@ public class Quest
 				Task temp = this.taskList.get(0);
 				if (temp != null)
 				{
-					// cannot activate quest is the task has already been completed
+					// cannot activate quest is the task has already been
+					// completed
 					// should never happen, but it is possible
 					if (this.taskList.get(0).isCompleted() == false)
 					{
@@ -198,6 +211,7 @@ public class Quest
 	 */
 	public boolean checkCompleted()
 	{
+
 		for (int i = 0; i < this.taskList.size(); i++)
 		{
 			if (this.taskList.get(i).isCompleted() == false)
@@ -281,5 +295,37 @@ public class Quest
 	public void setDescription(String description)
 	{
 		this.description = description;
+	}
+
+	/**
+	 * competed the current task and enabled the next
+	 */
+	public void completeCurrentTask()
+	{
+		if (currentTask != null && currentTask.isActive())
+		{
+			currentTask.setCompleted(true);
+			int pos = taskList.lastIndexOf(currentTask);
+
+			if (pos != -1 && pos < taskList.size() - 1)
+			{
+				currentTask = taskList.get(pos + 1);
+				if (currentTask.isActive() == false)
+				{
+					currentTask.activateTask(true);
+				}
+			}
+
+		}
+	}
+
+	/**
+	 * testing purposes
+	 * 
+	 * @param selectedTask
+	 */
+	public void setSelectedTask(Task selectedTask)
+	{
+		this.currentTask = selectedTask;
 	}
 }

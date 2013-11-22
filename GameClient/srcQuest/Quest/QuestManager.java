@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import model.QualifiedObservable;
 import model.QualifiedObservableConnector;
-import model.ThisClientsPlayer;
 import model.reports.QuestScreenReport;
 import model.reports.ThisPlayerMovedReport;
 import data.Position;
@@ -15,14 +14,16 @@ import data.Position;
  * @author joshua
  * 
  */
-public class QuestManager extends QualifiedObservable {
+public class QuestManager extends QualifiedObservable
+{
 	private ArrayList<Quest> questList;
 	private Position playerPosition;
 
 	/**
 	 * Constructor
 	 */
-	public QuestManager() {
+	public QuestManager()
+	{
 		questList = new ArrayList<Quest>();
 		QualifiedObservableConnector.getSingleton()
 				.registerQualifiedObservable(this, ThisPlayerMovedReport.class);
@@ -37,11 +38,14 @@ public class QuestManager extends QualifiedObservable {
 	 * @param position
 	 *            the xy coordinate of the quest
 	 */
-	public void checkQuests(Position position) {
+	public void checkQuests(Position position)
+	{
 		// checks quests for updates
-		for (int i = 0; i < questList.size(); i++) {
+		for (int i = 0; i < questList.size(); i++)
+		{
 			Quest q = questList.get(i);
-			if (q != null && q.isActive()) {
+			if (q != null && q.isActive())
+			{
 				q.setPosition(position);
 				q.checkTasks();
 
@@ -51,36 +55,17 @@ public class QuestManager extends QualifiedObservable {
 	}
 
 	/**
+	 * activates the quest
 	 * 
 	 * @param q
+	 *            Quest that needs activating
 	 */
-	public void setQuestActive(Quest q) {
-		for (int i = 0; i < questList.size(); i++) {
+	public void setQuestActive(Quest q)
+	{
+		for (int i = 0; i < questList.size(); i++)
+		{
 			q.activateQuest(true);
 		}
-	}
-
-	/**
-	 * sets the task to the completed value and checks whether the quest it
-	 * belongs to is completed
-	 * 
-	 * @param t
-	 *            Task the task to be completed
-	 * @param completed
-	 *            boolean
-	 */
-	public void setTaskCompleted(Task t, boolean completed) {
-		for (int i = 0; i < questList.size(); i++) {
-			for (int j = 0; j < questList.get(i).getTaskCount(); j++) {
-				if (t == questList.get(i).getTask(j)) {
-					t.setCompleted(completed);
-					questList.get(i).checkCompleted();
-
-					return;
-				}
-			}
-		}
-
 	}
 
 	/**
@@ -88,7 +73,8 @@ public class QuestManager extends QualifiedObservable {
 	 * 
 	 * @return ArrayList<Quest> the list of quests
 	 */
-	public ArrayList<Quest> getQuestList() {
+	public ArrayList<Quest> getQuestList()
+	{
 		return questList;
 	}
 
@@ -98,7 +84,8 @@ public class QuestManager extends QualifiedObservable {
 	 * @param questList
 	 *            ArrayList<Quest> the list of quests
 	 */
-	public void setQuestList(ArrayList<Quest> questList) {
+	public void setQuestList(ArrayList<Quest> questList)
+	{
 		this.questList = questList;
 	}
 
@@ -109,9 +96,11 @@ public class QuestManager extends QualifiedObservable {
 	 * @param quest
 	 *            the Quest to be added
 	 */
-	public void addQuest(Quest quest) {
+	public void addQuest(Quest quest)
+	{
 
-		if (!this.questList.contains(quest)) {
+		if (!this.questList.contains(quest))
+		{
 			this.questList.add(quest);
 		}
 
@@ -122,7 +111,8 @@ public class QuestManager extends QualifiedObservable {
 	 * 
 	 * @return Position the coordinates of the player
 	 */
-	public Position getPlayerPosition() {
+	public Position getPlayerPosition()
+	{
 		return playerPosition;
 	}
 
@@ -132,7 +122,8 @@ public class QuestManager extends QualifiedObservable {
 	 * @param playerPosition
 	 *            the xy coordinate
 	 */
-	public void setPlayerPosition(Position playerPosition) {
+	public void setPlayerPosition(Position playerPosition)
+	{
 		this.playerPosition = playerPosition;
 	}
 
@@ -140,19 +131,22 @@ public class QuestManager extends QualifiedObservable {
 	 * notifies on quest and movement information
 	 */
 	@Override
-	public boolean notifiesOn(Class<?> reportType) {
+	public boolean notifiesOn(Class<?> reportType)
+	{
 		if (reportType.equals(ThisPlayerMovedReport.class)
 				|| reportType.equals(ThisPlayerMovedReport.class)
-				|| reportType.equals(QuestScreenReport.class)) {
+				|| reportType.equals(QuestScreenReport.class))
+		{
 			return true;
 		}
 		return false;
 	}
 
 	/**
-	 * 
+	 * gets the triggers from the map layer
 	 */
-	public void getTriggersFromMap() {
+	public void getTriggersFromMap()
+	{
 		QuestLayerReader qr = new QuestLayerReader();
 		qr.getQuestLayer();
 		qr.getTriggers();
