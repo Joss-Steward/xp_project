@@ -1,4 +1,5 @@
 package Quest;
+
 import java.util.ArrayList;
 
 import data.Position;
@@ -40,6 +41,40 @@ public class QuestManager
 				q.setPosition(position);
 				q.checkTasks();
 
+			}
+		}
+
+	}
+
+	/**
+	 * 
+	 * @param q
+	 */
+	public void setQuestActive(Quest q)
+	{
+		for (int i = 0; i < questList.size(); i++)
+		{
+			q.activateQuest(true);
+		}
+	}
+
+	/**
+	 * 
+	 * @param t
+	 */
+	public void setTaskCompleted(Task t, boolean completed)
+	{
+		for (int i = 0; i < questList.size(); i++)
+		{
+			for (int j = 0; j < questList.get(i).getTaskCount(); j++)
+			{
+				if (t == questList.get(i).getTask(j))
+				{
+					t.setCompleted(completed);
+					questList.get(i).checkCompleted();
+					
+					return;
+				}
 			}
 		}
 
@@ -96,7 +131,8 @@ public class QuestManager
 	/**
 	 * setter for position
 	 * 
-	 * @param playerPosition the xy coordinate
+	 * @param playerPosition
+	 *            the xy coordinate
 	 */
 	public void setPlayerPosition(Position playerPosition)
 	{
