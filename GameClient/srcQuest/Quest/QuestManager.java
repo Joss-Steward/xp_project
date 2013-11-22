@@ -24,8 +24,6 @@ public class QuestManager extends QualifiedObservable {
 	 */
 	public QuestManager() {
 		questList = new ArrayList<Quest>();
-		playerPosition = ThisClientsPlayer.getSingleton().getPosition();
-
 		QualifiedObservableConnector.getSingleton()
 				.registerQualifiedObservable(this, ThisPlayerMovedReport.class);
 
