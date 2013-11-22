@@ -1,11 +1,11 @@
 package Quest;
+
 import data.Position;
 
 /**
  * @author joshua Used for a single purpose accomplished by activating a trigger
  */
-public class Task
-{
+public class Task {
 
 	private Trigger trigger;
 	private String name;
@@ -18,20 +18,27 @@ public class Task
 	/**
 	 * Constructor that passes in name
 	 * 
-	 * @param name String the name 
+	 * @param name
+	 *            String the name
 	 */
-	public Task(String name)
-	{
+	public Task(String name) {
 		this.name = name;
 		this.active = false;
+	}
+
+	/**
+	 * trigger hits the task
+	 */
+	public void triggerTask() 
+	{
+		
 	}
 
 	/**
 	 * 
 	 * @return String the name of the task
 	 */
-	public String getName()
-	{
+	public String getName() {
 		return this.name;
 	}
 
@@ -41,18 +48,17 @@ public class Task
 	 * @param name
 	 *            String the name
 	 */
-	public void changeName(String name)
-	{
+	public void changeName(String name) {
 		this.name = name;
 	}
 
 	/**
 	 * sets the trigger
 	 * 
-	 * @param trigger Trigger to give the task
+	 * @param trigger
+	 *            Trigger to give the task
 	 */
-	public void setTrigger(Trigger trigger)
-	{
+	public void setTrigger(Trigger trigger) {
 		this.trigger = trigger;
 	}
 
@@ -60,8 +66,7 @@ public class Task
 	 * 
 	 * @return Trigger the trigger associated with this task
 	 */
-	public Trigger getTrigger()
-	{
+	public Trigger getTrigger() {
 		return this.trigger;
 	}
 
@@ -71,17 +76,8 @@ public class Task
 	 * @param b
 	 *            boolean
 	 */
-	public void activateTask(boolean b)
-	{
+	public void activateTask(boolean b) {
 		this.active = b;
-		if (b == false)
-		{
-			if (this.trigger != null)
-			{
-				this.trigger.activateTrigger(false);
-			}
-		}
-
 	}
 
 	/**
@@ -89,54 +85,50 @@ public class Task
 	 * 
 	 * @return boolean active
 	 */
-	public boolean isActive()
-	{
+	public boolean isActive() {
 		return this.active;
 	}
 
 	/**
 	 * sets the task as completed or not
 	 * 
-	 * @param completed boolean 
+	 * @param completed
+	 *            boolean
 	 */
-	public void setCompleted(boolean completed)
-	{
+	public void setCompleted(boolean completed) {
 		this.completed = completed;
 	}
 
 	/**
 	 * @return boolean whether the task was completed
 	 */
-	public boolean isCompleted()
-	{
+	public boolean isCompleted() {
 		return this.completed;
 	}
 
 	/**
 	 * getter for description
 	 * 
-	 * @return String 
+	 * @return String
 	 */
-	public String getDescription()
-	{
+	public String getDescription() {
 		return description;
 	}
 
 	/**
 	 * setter for description
 	 * 
-	 * @param description String the description of the task
+	 * @param description
+	 *            String the description of the task
 	 */
-	public void setDescription(String description)
-	{
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
 	/**
 	 * @return the position
 	 */
-	public Position getPosition()
-	{
+	public Position getPosition() {
 		return position;
 	}
 
@@ -144,16 +136,14 @@ public class Task
 	 * @param position
 	 *            the position to set
 	 */
-	public void setPosition(Position position)
-	{
+	public void setPosition(Position position) {
 		this.position = position;
 	}
 
 	/**
 	 * @return the parentName
 	 */
-	public String getParentName()
-	{
+	public String getParentName() {
 		return parentName;
 	}
 
@@ -161,8 +151,7 @@ public class Task
 	 * @param parentName
 	 *            the parentName to set
 	 */
-	public void setParentName(String parentName)
-	{
+	public void setParentName(String parentName) {
 		this.parentName = parentName;
 	}
 
