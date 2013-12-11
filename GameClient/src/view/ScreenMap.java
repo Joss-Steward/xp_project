@@ -1,6 +1,10 @@
 package view;
 
+import model.CommandQuestScreenOpen;
+import model.ModelFacade;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -80,6 +84,13 @@ public class ScreenMap extends ScreenBasic
 		// mapRenderer.render(backgroundLayers);
 		// renderMyCustomSprites();
 		// mapRenderer.render(foregroundLayers);
+		if (Gdx.input.isKeyPressed(Keys.Q))
+		{
+			System.out.println("quest button is pressed");
+
+			CommandQuestScreenOpen lc = new CommandQuestScreenOpen();
+			ModelFacade.getSingleton(false).queueCommand(lc);
+		}
 	}
 
 	/**

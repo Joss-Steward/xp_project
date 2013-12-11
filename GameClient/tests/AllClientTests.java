@@ -10,9 +10,9 @@ import model.reports.ThisPlayerMovedReportTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import view.ScreenListenerTest;import communication.handlers.MapFileMessageHandlerTest;
+import view.ScreenListenerTest;
+import communication.handlers.MapFileMessageHandlerTest;
 import communication.packers.LoginMessagePackerTest;
-
 
 /**
  * All of the tests for the client code. Notice that the packages, and classes
@@ -24,33 +24,30 @@ import communication.packers.LoginMessagePackerTest;
  * 
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses(
-{ 
-	//communication.handlers
-	MapFileMessageHandlerTest.class,
-	
-	//communication.packers
-	LoginMessagePackerTest.class,
-	
-	//model
-	CommandLoginTest.class,
-	CommandNewMapTest.class,
-	MapManagerTest.class,
-	ModelFacadeTest.class,
-	PlayerTest.class,
-	
-	//model.reports
-	LoginInitiatedReportTest.class,
-	NewMapReportTest.class,
-	ThisPlayerMovedReportTest.class,
-	
-	//view
-	ScreenListenerTest.class, 
+@Suite.SuiteClasses({
+		// communication.handlers
+		MapFileMessageHandlerTest.class,
+
+		// communication.packers
+		LoginMessagePackerTest.class,
+
+		// model
+		CommandLoginTest.class, CommandNewMapTest.class, MapManagerTest.class,
+		ModelFacadeTest.class, PlayerTest.class,
+
+		// model.reports
+		LoginInitiatedReportTest.class, NewMapReportTest.class,
+		ThisPlayerMovedReportTest.class,
+
+		// view
+		ScreenListenerTest.class,
 
 })
-
-public class AllClientTests
-{
-
+/**
+ * Runs all client tests
+ * @author Merlin
+ *
+ */
+public class AllClientTests {
+	// empty block
 }
-

@@ -1,20 +1,18 @@
 package model;
 
-
 /**
  * @author Merlin
- *
+ * 
  */
-public class CommandNewMap extends Command
-{
+public class CommandNewMap extends Command {
 
 	private String fileTitle;
-	
+
 	/**
-	 * @param title the title of the tmx file containing the new map
+	 * @param title
+	 *            the title of the tmx file containing the new map
 	 */
-	public CommandNewMap(String title)
-	{
+	public CommandNewMap(String title) {
 		this.fileTitle = title;
 	}
 
@@ -27,7 +25,7 @@ public class CommandNewMap extends Command
 	{
 		System.out.println("changing to new map with title:" + fileTitle);
 		MapManager.getSingleton().changeToNewFile(fileTitle);
+		ThisClientsPlayer.getSingleton().getQuestManager().getTriggersFromMap();
 		return true;
 	}
-
 }
