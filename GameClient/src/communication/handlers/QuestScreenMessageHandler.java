@@ -28,7 +28,7 @@ public class QuestScreenMessageHandler extends MessageHandler
 
 			QuestScreenMessage rMsg = (QuestScreenMessage) msg;
 
-			if (rMsg.getLoadState() == false)
+			if (rMsg.isLoadState() == false)
 			{
 				ModelFacade.getSingleton(false).queueCommand(
 						new CommandQuestScreenClose());
