@@ -15,7 +15,7 @@ public class QuestScreenMessage implements Message, Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 
-	boolean loadState;
+	private boolean loadState;
 
 	private int playerID;
 
@@ -40,7 +40,7 @@ public class QuestScreenMessage implements Message, Serializable
 	 * 
 	 * @return boolean opening or closeing screen
 	 */
-	public boolean getLoadState()
+	public boolean isLoadState()
 	{
 		return loadState;
 	}

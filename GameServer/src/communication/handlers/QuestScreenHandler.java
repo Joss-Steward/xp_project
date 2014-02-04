@@ -24,7 +24,7 @@ public class QuestScreenHandler extends MessageHandler
 		if (msg.getClass().equals(QuestScreenMessage.class))
 		{
 			QuestScreenMessage cMsg = (QuestScreenMessage) msg;
-			cMsg.getLoadState();
+			cMsg.isLoadState();
 			System.out
 					.println("hello from server quest screen message handler");
 
