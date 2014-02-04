@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-<<<<<<< Upstream, based on branch 'master' of https://github.com/ShipsCS1Adventures/OriginalGame.git
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/GameClient"/>
 	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl-natives.jar"/>
 	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl.jar"/>
 	<classpathentry kind="lib" path="libs/gdx-natives.jar"/>
-=======
-	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl-natives.jar"/>
-	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl.jar"/>
-	<classpathentry kind="lib" path="libs/gdx-natives.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GameClient"/>
->>>>>>> 3778ed8 Put player stuff in the right places and fix desktop classpath
 	<classpathentry kind="output" path="bin"/>
 </classpath>
