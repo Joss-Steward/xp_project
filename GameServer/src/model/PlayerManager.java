@@ -67,7 +67,7 @@ public class PlayerManager extends QualifiedObservable
 	 * @param userID the users id number
 	 * @param pin the pin we gave the client to connect to this server
 	 */
-	public void addPlayer(int userID, int pin)
+	public void addPlayer(int userID, double pin)
 	{
 		Player player = new Player(userID, 1234);
 		players.put(userID, player);

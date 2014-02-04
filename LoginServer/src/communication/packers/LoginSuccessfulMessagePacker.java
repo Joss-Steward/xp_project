@@ -2,7 +2,7 @@ package communication.packers;
 
 import model.QualifiedObservableReport;
 import model.reports.LoginSuccessfulReport;
-import communication.messages.LoginResponseMessage;
+import communication.messages.LoginSuccessfulMessage;
 import communication.messages.Message;
 import communication.packers.MessagePacker;
 
@@ -10,7 +10,7 @@ import communication.packers.MessagePacker;
  * @author Merlin
  *
  */
-public class LoginResponseMessagePacker extends MessagePacker
+public class LoginSuccessfulMessagePacker extends MessagePacker
 {
 	/**
 	 * @see communication.packers.MessagePacker#pack(model.QualifiedObservableReport)
@@ -21,7 +21,7 @@ public class LoginResponseMessagePacker extends MessagePacker
 		if (object.getClass().equals(LoginSuccessfulReport.class))
 		{
 			LoginSuccessfulReport report = (LoginSuccessfulReport)object;
-			LoginResponseMessage msg = new LoginResponseMessage(report.getUserID(), report.getHostname(), report.getPort(), report.getPin());
+			LoginSuccessfulMessage msg = new LoginSuccessfulMessage(report.getUserID(), report.getHostname(), report.getPort(), report.getPin());
 			return msg;
 		}
 		return null;

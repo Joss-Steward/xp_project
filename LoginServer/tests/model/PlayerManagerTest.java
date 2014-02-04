@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Observer;
 
+import model.reports.LoginFailedReport;
 import model.reports.LoginSuccessfulReport;
 
 import org.easymock.EasyMock;
@@ -48,12 +49,30 @@ public class PlayerManagerTest
 	{
 		PlayerManager pm = PlayerManager.getSingleton();
 		Observer obs = EasyMock.createMock(Observer.class);
-		LoginSuccessfulReport expected = new LoginSuccessfulReport(42, "localhost",1872, 12345);
+		LoginSuccessfulReport expected = new LoginSuccessfulReport(42, "localhost",1872, 0);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, LoginSuccessfulReport.class);
 		obs.update(EasyMock.eq(pm), EasyMock.eq(expected));
 		EasyMock.replay(obs);
 		
-		pm.login("fred", "pw");
+		pm.login(PlayerLoginTest.Players.MERLIN.getName(), PlayerLoginTest.Players.MERLIN.getPassword());
 		EasyMock.verify(obs);
 	}
+	
+	/**
+	 * When a login fails, the PlayerManager should send a LoginFailedReport
+	 */
+	@Test
+	public void notifiesOnFailedLogin()
+	{
+		PlayerManager pm = PlayerManager.getSingleton();
+		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, LoginFailedReport.class);
+		obs.update(EasyMock.eq(pm), EasyMock.isA(LoginFailedReport.class));
+		EasyMock.replay(obs);
+		
+		pm.login(PlayerLoginTest.Players.MERLIN.getName(), PlayerLoginTest.Players.MERLIN.getPassword()+"Z");
+		EasyMock.verify(obs);
+	}
+	
+	
 }

@@ -22,7 +22,7 @@ public class LoginMessageHandler extends MessageHandler
 	@Override
 	public void process(Message msg)
 	{
-		System.out.println("I think this is a login message: " + msg);
+		System.out.println("Received a login message: " + msg);
 		LoginMessage loginMsg = (LoginMessage)msg;
 		PlayerManager.getSingleton().login(loginMsg.getUserName(),loginMsg.getPassword());
 	}

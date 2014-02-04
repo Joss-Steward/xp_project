@@ -1,5 +1,6 @@
 package model;
 
+import model.reports.LoginFailedReport;
 import model.reports.LoginSuccessfulReport;
 
 /**
@@ -36,19 +37,27 @@ public class PlayerManager extends QualifiedObservable
 	private PlayerManager()
 	{
 		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this, LoginSuccessfulReport.class);
+		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this, LoginFailedReport.class);
 	}
 
 	/**
 	 * Attempt to login to the system.  Credentials will be checked and appropriate reports will be made
-	 * @param userName the user name
-	 * @param passWord the password
+	 * @param playerName the user name
+	 * @param password the password
 	 */
-	public void login(String userName, String passWord)
+	public void login(String playerName, String password)
 	{
-		//TODO when we have a db . . . verify their login and tell them where to connect to and remember the pin we gave them
-		numberOfPlayers++;
-		LoginSuccessfulReport report = new LoginSuccessfulReport(42, "localhost",1872, 12345); 
-		this.notifyObservers(report);
+		try
+		{
+			PlayerLogin pl = new PlayerLogin(playerName, password);
+			numberOfPlayers++;
+			LoginSuccessfulReport report = new LoginSuccessfulReport(42, "localhost",1872, pl.generatePin()); 
+			this.notifyObservers(report);
+		} catch (DatabaseException e)
+		{
+			this.notifyObservers(new LoginFailedReport());
+		}
+
 	}
 
 	/**
@@ -57,7 +66,8 @@ public class PlayerManager extends QualifiedObservable
 	@Override
 	public boolean notifiesOn(Class<?> reportType)
 	{
-		if (reportType.equals(LoginSuccessfulReport.class))
+		if (reportType.equals(LoginSuccessfulReport.class) ||
+				reportType.equals(LoginFailedReport.class))
 		{
 			return true;
 		}

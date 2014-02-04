@@ -11,25 +11,26 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 
 	private final String hostname;
 	private final int port;
-	private final int pin;
+	private final double pin;
 	private final int userID;
 
 	/**
 	 * @param userID the userID who was successful
 	 * @param hostname the hostname of the area server the client should connect to
 	 * @param port the port number of the area server the client should connect to
-	 * @param pin the pin the client should use in its connection
+	 * @param d the pin the client should use in its connection
 	 * 
 	 */
-	public LoginSuccessfulReport(int userID, String hostname, int port, int pin)
+	public LoginSuccessfulReport(int userID, String hostname, int port, double d)
 	{
 		this.hostname = hostname;
 		this.port = port;
-		this.pin = pin;
+		this.pin = d;
 		this.userID = userID;
 	}
-
+	
 	/**
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -48,8 +49,6 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 				return false;
 		} else if (!hostname.equals(other.hostname))
 			return false;
-		if (pin != other.pin)
-			return false;
 		if (port != other.port)
 			return false;
 		if (userID != other.userID)
@@ -64,10 +63,12 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 	{
 		return hostname;
 	}
+
+
 	/**
 	 * @return the pin
 	 */
-	public int getPin()
+	public double getPin()
 	{
 		return pin;
 	}
@@ -78,7 +79,6 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 	{
 		return port;
 	}
-
 	/**
 	 * @return the userID in this report
 	 */
@@ -88,6 +88,7 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 	}
 
 	/**
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -96,9 +97,10 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((hostname == null) ? 0 : hostname.hashCode());
-		result = prime * result + pin;
 		result = prime * result + port;
 		result = prime * result + userID;
 		return result;
 	}
+
+	
 }
