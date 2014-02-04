@@ -54,7 +54,10 @@ public class MapManager extends QualifiedObservable {
 		this.notifyObservers(new NewMapReport(tiledMap));
 	}
 
-	// TODO why are we not getting javadoc warnings here???
+	/**
+	 * 
+	 * @see model.QualifiedObservable#notifiesOn(java.lang.Class)
+	 */
 	@Override
 	public boolean notifiesOn(Class<?> reportType) {
 		if (reportType == NewMapReport.class) {
