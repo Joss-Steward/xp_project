@@ -7,24 +7,24 @@ import org.reflections.Reflections;
 
 import com.google.common.collect.Multimap;
 
-
 /**
  * @author Merlin
- *
+ * 
  */
 public abstract class TypeDetector
 {
 
-	
 	/**
 	 * 
 	 */
 	protected ArrayList<Class<?>> detectAllExtendersInPackage(Class<?> type)
 	{
 		ArrayList<Class<?>> results = new ArrayList<Class<?>>();
-		Reflections reflections = new Reflections(this.getClass().getPackage().getName());
-	
-		Multimap<String, String> mmap = reflections.getStore().getStoreMap().get("SubTypesScanner");
+		Reflections reflections = new Reflections(this.getClass().getPackage()
+				.getName());
+
+		Multimap<String, String> mmap = reflections.getStore().getStoreMap()
+				.get("SubTypesScanner");
 		for (Map.Entry<String, String> entry : mmap.entries())
 		{
 			// skip over private classes that are inside another class
@@ -40,20 +40,23 @@ public abstract class TypeDetector
 				} catch (ClassNotFoundException e)
 				{
 					e.printStackTrace();
-				} 
+				}
 			}
 		}
 		return results;
 	}
+
 	/**
 	 * 
 	 */
 	protected ArrayList<Class<?>> detectAllImplementorsInPackage(Class<?> type)
 	{
 		ArrayList<Class<?>> results = new ArrayList<Class<?>>();
-		Reflections reflections = new Reflections(this.getClass().getPackage().getName());
-	
-		Multimap<String, String> mmap = reflections.getStore().getStoreMap().get("SubTypesScanner");
+		Reflections reflections = new Reflections(this.getClass().getPackage()
+				.getName());
+
+		Multimap<String, String> mmap = reflections.getStore().getStoreMap()
+				.get("SubTypesScanner");
 		for (Map.Entry<String, String> entry : mmap.entries())
 		{
 			// skip over private classes that are inside another class
@@ -69,20 +72,27 @@ public abstract class TypeDetector
 				} catch (ClassNotFoundException e)
 				{
 					e.printStackTrace();
-				} 
+				}
 			}
 		}
 		return results;
 	}
 
 	/**
+	 * Checks to see if a class that we are trying to register extends another
+	 * class - either directly or as a descendent further down the inheritance
+	 * hierarchy
+	 * 
 	 * @param classToRegister
+	 *            the class we are trying to register
 	 * @param classType
-	 * @return
+	 *            the type we want to check
+	 * @return true if the class being registered extends the given classType
 	 */
 	protected boolean extendsClass(Class<?> classToRegister, Class<?> classType)
 	{
-		if (classToRegister.equals(classType) || classToRegister.getSuperclass().equals(classType))
+		if (classToRegister.equals(classType)
+				|| classToRegister.getSuperclass().equals(classType))
 		{
 			return true;
 		}
@@ -95,10 +105,16 @@ public abstract class TypeDetector
 	}
 
 	/**
+	 * Checks to see if a class being registered implements a given interface
+	 * 
 	 * @param classToRegister
-	 * @return
+	 *            the class we are registeringa
+	 * @param interfaceType
+	 *            the interface we want to check
+	 * @return true if the class implements that interface
 	 */
-	private boolean implementsInterface(Class<?> classToRegister, Class<?> interfaceType)
+	private boolean implementsInterface(Class<?> classToRegister,
+			Class<?> interfaceType)
 	{
 		if (classToRegister.equals(interfaceType))
 		{
@@ -114,12 +130,14 @@ public abstract class TypeDetector
 			}
 		}
 		return found;
-	
+
 	}
 
 	/**
-	 * @param item
-	 * @return
+	 * looks recursively to see if a class implements a given interface
+	 * @param item the class we are checking
+	 * @param interfaceType the interface we want to look for
+	 * @return true if the class implements the interface
 	 */
 	private boolean recursivelyImplements(Class<?> item, Class<?> interfaceType)
 	{
@@ -136,7 +154,7 @@ public abstract class TypeDetector
 				found = true;
 			}
 		}
-	
+
 		return found;
 	}
 
