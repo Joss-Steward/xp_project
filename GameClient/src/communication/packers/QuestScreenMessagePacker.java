@@ -1,5 +1,6 @@
 package communication.packers;
 
+import model.PlayerManager;
 import model.QualifiedObservableReport;
 import model.ThisClientsPlayer;
 import model.reports.QuestScreenReport;
@@ -27,8 +28,7 @@ public class QuestScreenMessagePacker extends MessagePacker
 							+ object.getClass());
 		}
 		QuestScreenReport report = (QuestScreenReport) object;
-		Message msg = new QuestScreenMessage(report.getLoadState(), ThisClientsPlayer
-				.getSingleton().getID());
+		Message msg = new QuestScreenMessage(report.getLoadState(), PlayerManager.getSingleton().getThisClientsPlayer().getID());
 		return msg;
 	}
 

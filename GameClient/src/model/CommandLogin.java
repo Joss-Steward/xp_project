@@ -27,7 +27,7 @@ public class CommandLogin extends Command
 	protected
 	boolean execute()
 	{
-		ThisClientsPlayer p = ThisClientsPlayer.getSingleton();
+		ThisClientsPlayer p = PlayerManager.getSingleton().getThisClientsPlayer();
 		p.initiateLogin(name, password);
 		return true;
 	}

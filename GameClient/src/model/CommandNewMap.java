@@ -25,7 +25,7 @@ public class CommandNewMap extends Command {
 	{
 		System.out.println("changing to new map with title:" + fileTitle);
 		MapManager.getSingleton().changeToNewFile(fileTitle);
-		ThisClientsPlayer.getSingleton().getQuestManager().getTriggersFromMap();
+		PlayerManager.getSingleton().getThisClientsPlayer().getQuestManager().getTriggersFromMap();
 		return true;
 	}
 }

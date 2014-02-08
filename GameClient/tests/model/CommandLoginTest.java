@@ -18,7 +18,7 @@ public class CommandLoginTest
 	@Before
 	public void setup()
 	{
-		ThisClientsPlayer.resetSingleton();
+		PlayerManager.resetSingleton();
 	}
 	
 	/**
@@ -29,7 +29,7 @@ public class CommandLoginTest
 	{
 		CommandLogin cmd = new CommandLogin("Fred","pw");
 		cmd.execute();
-		ThisClientsPlayer p = ThisClientsPlayer.getSingleton();
+		ThisClientsPlayer p = PlayerManager.getSingleton().getThisClientsPlayer();
 		assertTrue(p.isLoginInProgress());
 		assertEquals("Fred", p.getName());
 		

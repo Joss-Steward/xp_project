@@ -12,28 +12,8 @@ import data.Position;
  * @author merlin
  * 
  */
-public class ThisClientsPlayer extends QualifiedObservable {
-
-	private static ThisClientsPlayer singleton;
-
-	/**
-	 * There should be only one
-	 * 
-	 * @return the only player
-	 */
-	public static synchronized ThisClientsPlayer getSingleton() {
-		if (singleton == null) {
-			singleton = new ThisClientsPlayer();
-		}
-		return singleton;
-	}
-
-	/**
-	 * Used only in testing to re-initialize the singleton
-	 */
-	public static void resetSingleton() {
-		singleton = null;
-	}
+public class ThisClientsPlayer extends QualifiedObservable
+{
 
 	private Position position;
 	private QuestManager questManager;
@@ -42,10 +22,10 @@ public class ThisClientsPlayer extends QualifiedObservable {
 
 	private boolean loginInProgress;
 
-	private ThisClientsPlayer() {
+	protected ThisClientsPlayer()
+	{
 		this.position = new Position(0, 0);
 		this.questManager = new QuestManager();
-		// TODO read in quests from Database
 		QualifiedObservableConnector.getSingleton()
 				.registerQualifiedObservable(this, LoginInitiatedReport.class);
 
@@ -57,7 +37,8 @@ public class ThisClientsPlayer extends QualifiedObservable {
 	 * 
 	 * @return the ID of this player
 	 */
-	public int getID() {
+	public int getID()
+	{
 		return id;
 	}
 
@@ -65,14 +46,16 @@ public class ThisClientsPlayer extends QualifiedObservable {
 	 * 
 	 * @return this Player's name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
 	/**
 	 * @return the position
 	 */
-	public Position getPosition() {
+	public Position getPosition()
+	{
 		return position;
 	}
 
@@ -82,7 +65,8 @@ public class ThisClientsPlayer extends QualifiedObservable {
 	 * @param p
 	 *            where the player should move to
 	 */
-	public void move(Position p) {
+	public void move(Position p)
+	{
 		position = p;
 		this.notifyObservers(new ThisPlayerMovedReport(p));
 	}
@@ -91,10 +75,12 @@ public class ThisClientsPlayer extends QualifiedObservable {
 	 * @see model.QualifiedObservable#notifiesOn(java.lang.Class)
 	 */
 	@Override
-	public boolean notifiesOn(Class<?> reportType) {
+	public boolean notifiesOn(Class<?> reportType)
+	{
 		if (reportType.equals(ThisPlayerMovedReport.class)
 				|| reportType.equals(LoginInitiatedReport.class)
-				|| reportType.equals(QuestScreenReport.class)) {
+				|| reportType.equals(QuestScreenReport.class))
+		{
 			return true;
 		}
 		return false;
@@ -106,7 +92,8 @@ public class ThisClientsPlayer extends QualifiedObservable {
 	 * @param id
 	 *            what our ID should be
 	 */
-	public void setId(int id) {
+	public void setId(int id)
+	{
 		this.id = id;
 	}
 
@@ -116,14 +103,16 @@ public class ThisClientsPlayer extends QualifiedObservable {
 	 * @param name
 	 *            what this player should be called
 	 */
-	public void setName(String name) {
+	public void setName(String name)
+	{
 		this.name = name;
 	}
 
 	/**
 	 * @return true if we are in the process of trying to log into the server
 	 */
-	public boolean isLoginInProgress() {
+	public boolean isLoginInProgress()
+	{
 		return loginInProgress;
 	}
 
@@ -136,7 +125,8 @@ public class ThisClientsPlayer extends QualifiedObservable {
 	 *            the user name
 	 * 
 	 */
-	public void initiateLogin(String name, String password) {
+	public void initiateLogin(String name, String password)
+	{
 		loginInProgress = true;
 		this.name = name;
 		notifyObservers(new LoginInitiatedReport(name, password));
@@ -148,7 +138,8 @@ public class ThisClientsPlayer extends QualifiedObservable {
 	 * @param b
 	 *            Closing quest screen or opening
 	 */
-	public void showQuests(boolean b) {
+	public void showQuests(boolean b)
+	{
 		System.out.println("hello from the player. Showing quests is " + b);
 		notifyObservers(new QuestScreenReport(b));
 	}
@@ -158,7 +149,8 @@ public class ThisClientsPlayer extends QualifiedObservable {
 	 * 
 	 * @return QuestManager this client's manager
 	 */
-	public QuestManager getQuestManager() {
+	public QuestManager getQuestManager()
+	{
 		return questManager;
 	}
 }

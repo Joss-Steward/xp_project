@@ -2,7 +2,8 @@ import model.CommandLoginTest;
 import model.CommandNewMapTest;
 import model.MapManagerTest;
 import model.ModelFacadeTest;
-import model.PlayerTest;
+import model.PlayerManagerTest;
+import model.ThisClientsPlayerTest;
 import model.reports.LoginInitiatedReportTest;
 import model.reports.NewMapReportTest;
 import model.reports.ThisPlayerMovedReportTest;
@@ -33,7 +34,7 @@ import communication.packers.LoginMessagePackerTest;
 
 		// model
 		CommandLoginTest.class, CommandNewMapTest.class, MapManagerTest.class,
-		ModelFacadeTest.class, PlayerTest.class,
+		ModelFacadeTest.class, PlayerManagerTest.class, ThisClientsPlayerTest.class,
 
 		// model.reports
 		LoginInitiatedReportTest.class, NewMapReportTest.class,

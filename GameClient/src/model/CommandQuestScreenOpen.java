@@ -14,7 +14,7 @@ public class CommandQuestScreenOpen extends Command
 	@Override
 	protected boolean execute()
 	{
-		ThisClientsPlayer p = ThisClientsPlayer.getSingleton();
+		ThisClientsPlayer p = PlayerManager.getSingleton().getThisClientsPlayer();
 		p.showQuests(true);
 		return true;
 	}

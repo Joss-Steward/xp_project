@@ -22,7 +22,7 @@ public class CommandMove extends Command
 	@Override
 	protected boolean execute()
 	{
-		ThisClientsPlayer p = ThisClientsPlayer.getSingleton();
+		ThisClientsPlayer p = PlayerManager.getSingleton().getThisClientsPlayer();
 		p.move(new Position(4, 4));
 		return true;
 	}

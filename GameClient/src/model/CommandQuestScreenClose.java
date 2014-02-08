@@ -15,7 +15,7 @@ public class CommandQuestScreenClose extends Command
 	@Override
 	protected boolean execute()
 	{
-		ThisClientsPlayer p = ThisClientsPlayer.getSingleton();
+		ThisClientsPlayer p = PlayerManager.getSingleton().getThisClientsPlayer();
 		p.showQuests(false);
 		return true;
 	}
