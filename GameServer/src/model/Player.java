@@ -20,7 +20,7 @@ public class Player extends QualifiedObservable
 	 * @param pin
 	 *            the pin we gave the player to connect to this area server
 	 */
-	public Player(int userID, int pin)
+	public Player(int userID, double pin)
 	{
 		this.userID = userID;
 		QualifiedObservableConnector.getSingleton()

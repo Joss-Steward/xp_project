@@ -69,7 +69,7 @@ public class PlayerManager extends QualifiedObservable
 	 */
 	public void addPlayer(int userID, double pin)
 	{
-		Player player = new Player(userID, 1234);
+		Player player = new Player(userID, pin);
 		players.put(userID, player);
 		this.notifyObservers(new PlayerConnectionReport(player));
 	}
