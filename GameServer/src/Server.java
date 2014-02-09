@@ -15,21 +15,6 @@ import communication.packers.MessagePackerSet;
 public class Server implements Runnable
 {
 	private ServerSocket servSock;
-	private MessageHandlerSet handlers;
-	private MessagePackerSet packers;
-	/**
-	 * 
-	 */
-	public Server()
-	{
-		initializeMessageHandlers();
-	}
-
-	private void initializeMessageHandlers()
-	{
-		handlers = new MessageHandlerSet();
-		packers = new MessagePackerSet();
-	}
 
 	/**
 	 * @see java.lang.Runnable#run()
@@ -46,7 +31,7 @@ public class Server implements Runnable
 				Socket sock = servSock.accept();
 				System.out.println(i + ":  got something from " + sock);
 				i++;
-				new ConnectionManager(sock, handlers, packers);
+				new ConnectionManager(sock, new MessageHandlerSet(), new MessagePackerSet());
 			}
 
 		} catch (Throwable e)
