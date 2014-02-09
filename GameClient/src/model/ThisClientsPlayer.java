@@ -28,6 +28,7 @@ public class ThisClientsPlayer extends QualifiedObservable
 		this.questManager = new QuestManager();
 		reportTypes.add(LoginInitiatedReport.class);
 		reportTypes.add(QuestScreenReport.class);
+		reportTypes.add(ThisPlayerMovedReport.class);
 		
 		this.registerReportTypesWeNotify();
 	}
