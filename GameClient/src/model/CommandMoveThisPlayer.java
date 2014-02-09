@@ -6,14 +6,17 @@ import data.Position;
  * @author Merlin
  * 
  */
-public class CommandMove extends Command
+public class CommandMoveThisPlayer extends Command
 {
 
-	/**
-	 */
-	public CommandMove()
-	{
+	private Position newPosition;
 
+	/**
+	 * @param p the position the player should be moved to
+	 */
+	public CommandMoveThisPlayer(Position p)
+	{
+		this.newPosition = p;
 	}
 
 	/**
@@ -23,7 +26,7 @@ public class CommandMove extends Command
 	protected boolean execute()
 	{
 		ThisClientsPlayer p = PlayerManager.getSingleton().getThisClientsPlayer();
-		p.move(new Position(4, 4));
+		p.move(newPosition);
 		return true;
 	}
 

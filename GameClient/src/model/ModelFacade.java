@@ -1,5 +1,7 @@
 package model;
 
+import java.util.TimerTask;
+
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
@@ -55,7 +57,7 @@ public class ModelFacade
 		commandQueue = new InformationQueue();
 		if (!headless)
 		{
-			Timer.schedule(new Task()
+			 com.badlogic.gdx.utils.Timer.schedule(new Task()
 			{
 
 				@Override
@@ -78,6 +80,33 @@ public class ModelFacade
 
 			}, (float) 0.25, (float) 0.25);
 		}
+		else
+		{
+			java.util.Timer timer = new java.util.Timer();
+			timer.schedule(new ProcessCommandQueueTask()
+				,0,250);
+		}
+	}
+	class ProcessCommandQueueTask extends java.util.TimerTask
+	{
+		@Override
+		public void run()
+		{
+			while (commandQueue.getQueueSize() > 0)
+			{
+				Command cmd;
+				try
+				{
+					cmd = (Command) commandQueue.getInfoPacket();
+					cmd.execute();
+				} catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
+
+			}
+		}
+
 	}
 
 	/**

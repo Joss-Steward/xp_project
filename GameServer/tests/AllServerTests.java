@@ -1,4 +1,5 @@
 import model.PlayerManagerTest;
+import model.PlayerTest;
 import model.reports.PlayerConnectionReportTest;
 import model.reports.PlayerMovedReportTest;
 
@@ -32,6 +33,7 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 	
 	// model
 	PlayerManagerTest.class,
+	PlayerTest.class,
 	
 	// model.reports
 	PlayerConnectionReportTest.class,

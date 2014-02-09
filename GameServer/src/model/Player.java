@@ -1,5 +1,10 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import model.reports.PlayerMovedReport;
 import model.reports.QuestScreenReport;
 
@@ -12,17 +17,19 @@ import model.reports.QuestScreenReport;
 public class Player extends QualifiedObservable
 {
 
-	private int userID;
+	private int playerID;
+	private String playerName;
 
 	/**
+	 * Create a player without checking the pin (for testing purposes only)
 	 * @param userID
 	 *            the userid of this player
-	 * @param pin
-	 *            the pin we gave the player to connect to this area server
+	 * @throws DatabaseException 
 	 */
-	public Player(int userID, double pin)
+	protected Player(int userID) throws DatabaseException
 	{
-		this.userID = userID;
+		this.playerID = userID;
+		this.playerName = readUserName();
 		QualifiedObservableConnector.getSingleton()
 				.registerQualifiedObservable(this, PlayerMovedReport.class);
 		// this.setQuestManager(new QuestManager());
@@ -32,11 +39,39 @@ public class Player extends QualifiedObservable
 	}
 
 	/**
+	 * Create a player that is connecting to this area server.  Check the pin to make sure it is correct
+	 * @param playerID
+	 *            the unique player id of this player
+	 * @param pin
+	 *            the pin we gave the player to connect to this area server
+	 * @throws DatabaseException  shouldn't
+	 */
+	public Player(int playerID, double pin) throws DatabaseException
+	{
+		this(playerID);
+		checkThePin();
+	}
+	
+	private void checkThePin()
+	{
+		// TODO need to check their pin when they are connecting
+		
+	}
+	/**
 	 * @return the userID of this player
 	 */
-	public int getUserID()
+	public int getPlayerID()
 	{
-		return userID;
+		return playerID;
+	}
+	
+	/**
+	 * Get the unique player name of this player
+	 * @return the player's name
+	 */
+	public String getPlayerName()
+	{
+		return playerName;
 	}
 
 	/**
@@ -53,13 +88,28 @@ public class Player extends QualifiedObservable
 	}
 
 	/**
-	 * TODO need to fix so players know their names
+	 * Get this player's user name from the database
 	 * 
-	 * @return fred
+	 * @return the players user name
+	 * @throws DatabaseException if the player isn't found
 	 */
-	public String getUserName()
+	private String readUserName() throws DatabaseException
 	{
-		return "fred";
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		String userName;
+		try
+		{
+			PreparedStatement stmt = connection.prepareStatement("SELECT PlayerName from Players.PlayerLogins where PlayerID = ?");
+			stmt.setInt(1, playerID);
+			ResultSet resultSet = stmt.executeQuery();
+			resultSet.first();
+			userName = resultSet.getString(1);
+			resultSet.close();
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Unable to retrieve player with id = " + playerID, e);
+		}
+		return userName;
 	}
 
 }

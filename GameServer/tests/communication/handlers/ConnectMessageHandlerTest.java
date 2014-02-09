@@ -26,9 +26,9 @@ public class ConnectMessageHandlerTest
 		ConnectMessageHandler handler = new ConnectMessageHandler();
 		ConnectionManager connectionManager = new ConnectionManager();
 		handler.setConnectionManager(connectionManager);
-		ConnectMessage msg = new ConnectMessage(34, 42);
+		ConnectMessage msg = new ConnectMessage(1, 42);
 		handler.process(msg);
-		assertEquals(34, connectionManager.getPlayerID());
+		assertEquals(1, connectionManager.getPlayerID());
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class ConnectMessageHandlerTest
 	public void tellsModel()
 	{
 		ConnectMessageHandler handler = new ConnectMessageHandler();
-		ConnectMessage msg = new ConnectMessage(34, 42);
+		ConnectMessage msg = new ConnectMessage(1, 42);
 		handler.process(msg);
 
 		// if this doesn't throw a PlayerNotFoundExcetion, all is well

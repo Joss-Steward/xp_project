@@ -27,7 +27,7 @@ public class MapFileMessagePacker extends MessagePacker
 			PlayerConnectionReport report = (PlayerConnectionReport) object;
 			try
 			{
-				int userID = PlayerManager.getSingleton().getUserIDFromUserName(
+				int userID = PlayerManager.getSingleton().getPlayerIDFromPlayerName(
 						report.getUserName());
 				if (this.getAccumulator().getPlayerUserID() == userID)
 				{

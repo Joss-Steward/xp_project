@@ -47,10 +47,10 @@ public class PlayerManagerTest
 	@Test
 	public void canAddPlayer()
 	{
-		PlayerManager.getSingleton().addPlayer(42, 1234);
+		PlayerManager.getSingleton().addPlayer(1, 1234);
 		assertEquals(1,PlayerManager.getSingleton().numberOfPlayers());
-		Player p = PlayerManager.getSingleton().getPlayerFromID(42);
-		assertEquals(42, p.getUserID());
+		Player p = PlayerManager.getSingleton().getPlayerFromID(1);
+		assertEquals(1, p.getPlayerID());
 	}
 	
 	/**
@@ -64,18 +64,18 @@ public class PlayerManagerTest
 		obs.update(EasyMock.eq(PlayerManager.getSingleton()), EasyMock.isA(PlayerConnectionReport.class));
 		EasyMock.replay(obs);
 		
-		PlayerManager.getSingleton().addPlayer(42, 1234);
+		PlayerManager.getSingleton().addPlayer(2, 1234);
 		EasyMock.verify(obs);
 	}
 	
 	/**
-	 * this is kind of stupid while everyone is named fred
-	 * TODO need to fix when we actually store players' names
+	 * Make sure that we can get a players id from the user name
+	 * @throws PlayerNotFoundException shouldn't
 	 */
 	@Test
-	public void canGetUserIDFromUserName()
+	public void canGetPlayerIDFromPlayerName() throws PlayerNotFoundException
 	{
-		PlayerManager.getSingleton().addPlayer(42, 1234);
-		
+		PlayerManager.getSingleton().addPlayer(1,1234);
+		assertEquals(1, PlayerManager.getSingleton().getPlayerIDFromPlayerName("John"));
 	}
 }

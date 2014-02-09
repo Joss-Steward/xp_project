@@ -2,7 +2,6 @@ package model;
 
 import java.util.HashMap;
 
-
 import model.reports.PlayerConnectionReport;
 
 /**
@@ -34,12 +33,14 @@ public class PlayerManager extends QualifiedObservable
 		singleton = null;
 	}
 
-	private HashMap<Integer,Player> players;
+	private HashMap<Integer, Player> players;
 
 	private PlayerManager()
 	{
-		players = new HashMap<Integer,Player>();
-		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this, PlayerConnectionReport.class);
+		players = new HashMap<Integer, Player>();
+		QualifiedObservableConnector
+				.getSingleton()
+				.registerQualifiedObservable(this, PlayerConnectionReport.class);
 	}
 
 	/**
@@ -64,40 +65,56 @@ public class PlayerManager extends QualifiedObservable
 	}
 
 	/**
-	 * @param userID the users id number
-	 * @param pin the pin we gave the client to connect to this server
+	 * Adds a player to the list of active players on this server
+	 * 
+	 * @param userID
+	 *            the users id number
+	 * @param pin
+	 *            the pin we gave the client to connect to this server
 	 */
 	public void addPlayer(int userID, double pin)
 	{
-		Player player = new Player(userID, pin);
-		players.put(userID, player);
-		this.notifyObservers(new PlayerConnectionReport(player));
+		// TODO need to check the pin . . .
+		try
+		{
+			Player player = new Player(userID, pin);
+			players.put(userID, player);
+
+			this.notifyObservers(new PlayerConnectionReport(player));
+		} catch (DatabaseException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
-	 * @param userID the userID of the player we are looking for
+	 * @param userID
+	 *            the userID of the player we are looking for
 	 * @return the player we were looking for
 	 */
 	public Player getPlayerFromID(int userID)
 	{
-		// TODO should throw player not found exception if it isn't here
 		return players.get(userID);
 	}
 
 	/**
-	 * @param userName the user name of the player we are searching for
+	 * @param userName
+	 *            the user name of the player we are searching for
 	 * @return the userID of the player we are searching for
-	 * @throws PlayerNotFoundException if no player with that username is found
+	 * @throws PlayerNotFoundException
+	 *             if no player with that username is found
 	 */
-	public int getUserIDFromUserName(String userName) throws PlayerNotFoundException
+	public int getPlayerIDFromPlayerName(String userName)
+			throws PlayerNotFoundException
 	{
 		java.util.Iterator<Player> i = players.values().iterator();
-		while(i.hasNext())
+		while (i.hasNext())
 		{
 			Player p = i.next();
-			if (p.getUserName().equals(userName))
+			if (p.getPlayerName().equals(userName))
 			{
-				return p.getUserID();
+				return p.getPlayerID();
 			}
 		}
 		throw new PlayerNotFoundException();

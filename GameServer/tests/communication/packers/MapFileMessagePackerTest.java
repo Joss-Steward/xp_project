@@ -28,17 +28,17 @@ public class MapFileMessagePackerTest
 	
 	/**
 	 * If we are notified about a player other than the one we are associated
-	 * with, pack the right message
+	 * with, we shouldn't pack a message
 	 */
 	@Test
 	public void ifThePlayerIsNotOnThisConnection()
 	{
-		PlayerManager.getSingleton().addPlayer(42, 1234);
+		PlayerManager.getSingleton().addPlayer(2, 1234);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
-		stateAccumulator.setPlayerUserId(43);
+		stateAccumulator.setPlayerUserId(1);
 
 		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager.getSingleton()
-				.getPlayerFromID(42));
+				.getPlayerFromID(2));
 		MapFileMessagePacker packer = new MapFileMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		MapFileMessage msg = (MapFileMessage) packer.pack(report);
@@ -52,12 +52,12 @@ public class MapFileMessagePackerTest
 	@Test
 	public void ifThePlayerIsOnThisConnection()
 	{
-		PlayerManager.getSingleton().addPlayer(42, 1234);
+		PlayerManager.getSingleton().addPlayer(1, 1234);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
-		stateAccumulator.setPlayerUserId(42);
+		stateAccumulator.setPlayerUserId(1);
 
 		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager.getSingleton()
-				.getPlayerFromID(42));
+				.getPlayerFromID(1));
 		MapFileMessagePacker packer = new MapFileMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		MapFileMessage msg = (MapFileMessage) packer.pack(report);

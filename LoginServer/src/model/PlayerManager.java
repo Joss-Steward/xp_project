@@ -51,7 +51,7 @@ public class PlayerManager extends QualifiedObservable
 		{
 			PlayerLogin pl = new PlayerLogin(playerName, password);
 			numberOfPlayers++;
-			LoginSuccessfulReport report = new LoginSuccessfulReport(42, "localhost",1872, pl.generatePin()); 
+			LoginSuccessfulReport report = new LoginSuccessfulReport(pl.getPlayerID(), "localhost",1872, pl.generatePin()); 
 			this.notifyObservers(report);
 		} catch (DatabaseException e)
 		{

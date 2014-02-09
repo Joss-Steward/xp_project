@@ -33,17 +33,17 @@ public class PlayerJoinedMessagePackerTest
 	@Test
 	public void ifThePlayerIsNotOnThisConnection()
 	{
-		PlayerManager.getSingleton().addPlayer(42, 1234);
+		PlayerManager.getSingleton().addPlayer(1, 1234);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
-		stateAccumulator.setPlayerUserId(43);
+		stateAccumulator.setPlayerUserId(1);
+		PlayerManager.getSingleton().addPlayer(2,234);
 
 		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager.getSingleton()
-				.getPlayerFromID(42));
+				.getPlayerFromID(2));
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);
-		// TODO for now all users are named Fred
-		assertEquals("fred", msg.getUserName());
+		assertEquals("Merlin", msg.getUserName());
 	}
 
 	/**
@@ -53,12 +53,12 @@ public class PlayerJoinedMessagePackerTest
 	@Test
 	public void ifThePlayerIsOnThisConnection()
 	{
-		PlayerManager.getSingleton().addPlayer(42, 1234);
+		PlayerManager.getSingleton().addPlayer(1, 1234);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
-		stateAccumulator.setPlayerUserId(42);
+		stateAccumulator.setPlayerUserId(1);
 
 		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager.getSingleton()
-				.getPlayerFromID(42));
+				.getPlayerFromID(1));
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);

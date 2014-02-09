@@ -1,5 +1,6 @@
 package model.reports;
 
+import model.DatabaseException;
 import model.Player;
 import model.QualifiedObservableReport;
 
@@ -12,8 +13,8 @@ import model.QualifiedObservableReport;
 public final class PlayerConnectionReport implements QualifiedObservableReport
 {
 
-	private final int userID;
-	private final String userName;
+	private final int playerID;
+	private final String playerName;
 
 	/**
 	 * @param p
@@ -21,8 +22,8 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 	 */
 	public PlayerConnectionReport(Player p)
 	{
-		this.userID = p.getUserID();
-		this.userName = p.getUserName();
+		this.playerID = p.getPlayerID();
+		this.playerName = p.getPlayerName();
 	}
 
 	/**
@@ -30,7 +31,7 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 	 */
 	public int getUserID()
 	{
-		return userID;
+		return playerID;
 	}
 
 	/**
@@ -38,7 +39,7 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 	 */
 	public String getUserName()
 	{
-		return userName;
+		return playerName;
 	}
 
 }

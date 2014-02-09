@@ -13,7 +13,7 @@ public class PlayerTest
 {
 
 	/**
-	 * Make sure that players get initialized correctly
+	 * Make sure that players get initialized correctly. 
 	 */
 	@Test
 	public void initialization()
@@ -22,4 +22,5 @@ public class PlayerTest
 		assertEquals("Fred",p.getUserName());
 	}
 
+	
 }
