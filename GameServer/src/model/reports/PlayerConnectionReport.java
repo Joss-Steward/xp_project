@@ -1,6 +1,5 @@
 package model.reports;
 
-import model.DatabaseException;
 import model.Player;
 import model.QualifiedObservableReport;
 

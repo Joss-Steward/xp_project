@@ -49,7 +49,7 @@ public class PlayerManagerTest
 	{
 		PlayerManager pm = PlayerManager.getSingleton();
 		Observer obs = EasyMock.createMock(Observer.class);
-		LoginSuccessfulReport expected = new LoginSuccessfulReport(42, "localhost",1872, 0);
+		LoginSuccessfulReport expected = new LoginSuccessfulReport(2, "localhost",1872, 0);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, LoginSuccessfulReport.class);
 		obs.update(EasyMock.eq(pm), EasyMock.eq(expected));
 		EasyMock.replay(obs);

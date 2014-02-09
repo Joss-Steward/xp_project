@@ -1,8 +1,5 @@
 package model;
 
-import java.util.TimerTask;
-
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
 /**
