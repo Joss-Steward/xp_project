@@ -126,17 +126,10 @@ public class MessagePackerSetTest
 	private class MockQualifiedObservable extends QualifiedObservable
 	{
 
-		/**
-		 * @see model.QualifiedObservable#notifiesOn(java.lang.Class)
-		 */
-		@Override
-		public boolean notifiesOn(Class<?> reportType)
+		public MockQualifiedObservable()
 		{
-			if (reportType.equals(TestReport1.class))
-			{
-				return true;
-			}
-			return false;
+			reportTypes = new ArrayList<Class<?>>();
+			reportTypes.add(TestReport1.class);
 		}
 
 	}

@@ -26,11 +26,10 @@ public class ThisClientsPlayer extends QualifiedObservable
 	{
 		this.position = new Position(0, 0);
 		this.questManager = new QuestManager();
-		QualifiedObservableConnector.getSingleton()
-				.registerQualifiedObservable(this, LoginInitiatedReport.class);
-
-		QualifiedObservableConnector.getSingleton()
-				.registerQualifiedObservable(this, QuestScreenReport.class);
+		reportTypes.add(LoginInitiatedReport.class);
+		reportTypes.add(QuestScreenReport.class);
+		
+		this.registerReportTypesWeNotify();
 	}
 
 	/**
@@ -69,21 +68,6 @@ public class ThisClientsPlayer extends QualifiedObservable
 	{
 		position = p;
 		this.notifyObservers(new ThisPlayerMovedReport(p));
-	}
-
-	/**
-	 * @see model.QualifiedObservable#notifiesOn(java.lang.Class)
-	 */
-	@Override
-	public boolean notifiesOn(Class<?> reportType)
-	{
-		if (reportType.equals(ThisPlayerMovedReport.class)
-				|| reportType.equals(LoginInitiatedReport.class)
-				|| reportType.equals(QuestScreenReport.class))
-		{
-			return true;
-		}
-		return false;
 	}
 
 	/**

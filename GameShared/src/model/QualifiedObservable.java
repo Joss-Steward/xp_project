@@ -19,6 +19,7 @@ public abstract class QualifiedObservable extends Observable
 {
 
 	private HashMap<Class<?>, ArrayList<Observer>> observers = new HashMap<Class<?>, ArrayList<Observer>>();
+	protected ArrayList<Class<?>> reportTypes = new ArrayList<Class<?>>();
 
 	/**
 	 * Used to determine whether this object reports information related to a
@@ -28,7 +29,10 @@ public abstract class QualifiedObservable extends Observable
 	 *            the report type we are interested in
 	 * @return true if we report information relevant to that qualifier
 	 */
-	public abstract boolean notifiesOn(Class<?> reportType);
+	public boolean notifiesOn(Class<?> reportType)
+	{
+		return reportTypes.contains(reportType);
+	}
 
 	/**
 	 * @param observer
@@ -97,6 +101,25 @@ public abstract class QualifiedObservable extends Observable
 			return 0;
 		}
 		return relevantObservers.size();
+	}
+
+	/**
+	 * Get a list of the report types that we might be notifying with
+	 * @return that list (should never be null)
+	 */
+	public ArrayList<Class<?>> getReportTypesWeSend()
+	{
+		return reportTypes;
+	}
+
+	protected void registerReportTypesWeNotify()
+	{
+		for(Class<?> reportType:reportTypes)
+		{
+			QualifiedObservableConnector.getSingleton()
+			.registerQualifiedObservable(this, reportType);
+		}
+		
 	}
 
 }

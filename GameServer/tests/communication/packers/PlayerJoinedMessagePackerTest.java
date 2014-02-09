@@ -43,7 +43,7 @@ public class PlayerJoinedMessagePackerTest
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);
-		assertEquals("Merlin", msg.getUserName());
+		assertEquals("Merlin", msg.getPlayerName());
 	}
 
 	/**

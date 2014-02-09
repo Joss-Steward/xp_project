@@ -38,9 +38,8 @@ public class PlayerManager extends QualifiedObservable
 	private PlayerManager()
 	{
 		players = new HashMap<Integer, Player>();
-		QualifiedObservableConnector
-				.getSingleton()
-				.registerQualifiedObservable(this, PlayerConnectionReport.class);
+		reportTypes.add(PlayerConnectionReport.class);
+		this.registerReportTypesWeNotify();
 	}
 
 	/**
@@ -49,19 +48,6 @@ public class PlayerManager extends QualifiedObservable
 	public int numberOfPlayers()
 	{
 		return players.size();
-	}
-
-	/**
-	 * @see model.QualifiedObservable#notifiesOn(java.lang.Class)
-	 */
-	@Override
-	public boolean notifiesOn(Class<?> reportType)
-	{
-		if (reportType.equals(PlayerConnectionReport.class))
-		{
-			return true;
-		}
-		return false;
 	}
 
 	/**

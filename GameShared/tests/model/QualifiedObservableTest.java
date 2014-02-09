@@ -2,6 +2,7 @@ package model;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Observer;
 
 import org.easymock.EasyMock;
@@ -165,7 +166,8 @@ public class QualifiedObservableTest
 
 		obs.addObserver(observer1, TestReportNotReported.class);
 	}
-
+	
+	
 	private class TestReport1 implements QualifiedObservableReport
 	{
 
@@ -196,6 +198,15 @@ public class QualifiedObservableTest
 				return true;
 			}
 			return false;
+		}
+
+		@Override
+		public ArrayList<Class<?>> getReportTypesWeSend()
+		{
+			ArrayList<Class<?>> reportTypes = new ArrayList<Class<?>>();
+			reportTypes.add(TestReport1.class);
+			reportTypes.add(TestReport2.class);
+			return reportTypes;
 		}
 
 	}

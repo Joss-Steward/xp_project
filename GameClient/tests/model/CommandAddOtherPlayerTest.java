@@ -23,7 +23,7 @@ public class CommandAddOtherPlayerTest
 		assertNull (pm.getPlayerNamed("Harry"));
 		assertTrue(cmd.execute());
 		Player p = pm.getPlayerNamed("Harry");
-		assertEquals("Harry", p.getUserName());
+		assertEquals("Harry", p.getPlayerName());
 	}
 
 }

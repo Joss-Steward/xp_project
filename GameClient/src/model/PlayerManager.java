@@ -65,11 +65,12 @@ public class PlayerManager
 
 	/**
 	 * Add a new player to the list of active players
-	 * @param p the player we should add
+	 * @param playerName the unique name of the player we should add
 	 */
-	public void addPlayer(Player p)
+	public void addPlayer(String playerName)
 	{
-		playerList.put(p.getUserName(),p);
+		Player p = new Player(playerName);
+		playerList.put(p.getPlayerName(),p);
 	}
 
 }

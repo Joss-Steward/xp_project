@@ -10,22 +10,21 @@ package model;
 public class CommandAddOtherPlayer extends Command
 {
 
-	private String userName;
+	private String playerName;
 
 	/**
 	 * For now, we just know his name
-	 * @param userName the unique user name of the new player
+	 * @param playerName the unique user name of the new player
 	 */
-	public CommandAddOtherPlayer(String userName)
+	public CommandAddOtherPlayer(String playerName)
 	{
-		this.userName = userName;
+		this.playerName = playerName;
 	}
 
 	@Override
 	protected boolean execute()
 	{
-		Player p = new Player(userName);
-		PlayerManager.getSingleton().addPlayer(p);
+		PlayerManager.getSingleton().addPlayer(playerName);
 		return true;
 	}
 
