@@ -20,7 +20,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
  * @author Merlin
  * 
  */
-public class MapManagerTest
+public class MapManagerTest extends QualifiedObservableTestInherited
 {
 	/**
 	 * reset the singleton
@@ -38,13 +38,13 @@ public class MapManagerTest
 	@Test
 	public void isResetableSingleton()
 	{
-		MapManager facade1 = MapManager.getSingleton();
-		MapManager facade2 = MapManager.getSingleton();
+		QualifiedObservable facade1 = MapManager.getSingleton();
+		QualifiedObservable facade2 = MapManager.getSingleton();
 		assertSame(facade1, facade2);
 		MapManager.resetSingleton();
 		assertNotSame(facade1, MapManager.getSingleton());
 	}
-
+	
 	/**
 	 * Should update observers of NewMapReport when it gets a new map
 	 */
@@ -86,5 +86,11 @@ public class MapManagerTest
 		EasyMock.verify(tiledMap);
 		EasyMock.verify(mapLayers);
 		EasyMock.verify(mapLayer);
+	}
+
+	@Override
+	QualifiedObservable getObservableBeingTested()
+	{
+		return MapManager.getSingleton();
 	}
 }

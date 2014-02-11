@@ -21,12 +21,12 @@ public class MapManager extends QualifiedObservable {
 	 * Make the default constructor private
 	 */
 	private MapManager() {
-		QualifiedObservableConnector.getSingleton()
-				.registerQualifiedObservable(this, NewMapReport.class);
+		reportTypes.add(NewMapReport.class);
 
+		registerReportTypesWeNotify();
 	}
 
-	/**
+	 /**
 	 * Used for testing purposes
 	 */
 	public static void resetSingleton() {
@@ -52,18 +52,6 @@ public class MapManager extends QualifiedObservable {
 			tiledMap = new TmxMapLoader().load(fileTitle);
 		}
 		this.notifyObservers(new NewMapReport(tiledMap));
-	}
-
-	/**
-	 * 
-	 * @see model.QualifiedObservable#notifiesOn(java.lang.Class)
-	 */
-	@Override
-	public boolean notifiesOn(Class<?> reportType) {
-		if (reportType == NewMapReport.class) {
-			return true;
-		}
-		return false;
 	}
 
 	/**
@@ -97,5 +85,4 @@ public class MapManager extends QualifiedObservable {
 	public void setMapForTesting(TiledMap tiledMap) {
 		this.tiledMap = tiledMap;
 	}
-
 }

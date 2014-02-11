@@ -14,22 +14,22 @@ public class PlayerJoinedMessage implements Message, Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final String userName;
+	private final String playerName;
 
 	/**
-	 * @param userName the name of the new player
+	 * @param playerName the name of the new player
 	 */
-	public PlayerJoinedMessage(String userName)
+	public PlayerJoinedMessage(String playerName)
 	{
-		this.userName = userName;
+		this.playerName = playerName;
 	}
 
 	/**
 	 * @return the userName
 	 */
-	public String getUserName()
+	public String getPlayerName()
 	{
-		return userName;
+		return playerName;
 	}
 
 	/**
@@ -38,6 +38,6 @@ public class PlayerJoinedMessage implements Message, Serializable
 	 */
 	public String toString()
 	{
-		return "PlayerJoined Message: userName = " + userName;
+		return "PlayerJoined Message: playerName = " + playerName;
 	}
 }

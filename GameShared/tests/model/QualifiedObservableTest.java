@@ -2,6 +2,7 @@ package model;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Observer;
 
 import org.easymock.EasyMock;
@@ -191,11 +192,21 @@ public class QualifiedObservableTest
 		@Override
 		public boolean notifiesOn(Class<?> reportType)
 		{
-			if ((reportType.equals(TestReport1.class)) || (reportType.equals(TestReport2.class)))
+			if ((reportType.equals(TestReport1.class))
+					|| (reportType.equals(TestReport2.class)))
 			{
 				return true;
 			}
 			return false;
+		}
+
+		@Override
+		public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWeSend()
+		{
+			ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
+			reportTypes.add(TestReport1.class);
+			reportTypes.add(TestReport2.class);
+			return reportTypes;
 		}
 
 	}

@@ -13,8 +13,8 @@ import communication.messages.ConnectionMessageTest;
 import communication.messages.LoginMessageTest;
 import communication.messages.LoginResponseMessageTest;
 import communication.messages.MapFileMessageTest;
-import communication.messages.MovementMessageTest;
 import communication.messages.MessageStructureVerifier;
+import communication.messages.MovementMessageTest;
 import communication.messages.PlayerJoinedMessageTest;
 import communication.packers.MessagePackerSetTest;
 import data.PositionTest;
@@ -62,6 +62,7 @@ import data.PositionTest;
 
 		// model
 		QualifiedObservableTest.class,
+		//QualifiedObservableTestInherited.class,
 		QualifiedObserverConnectorTest.class,
 
 		// model.reports

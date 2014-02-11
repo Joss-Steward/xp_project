@@ -30,12 +30,11 @@ public class Player extends QualifiedObservable
 	{
 		this.playerID = userID;
 		this.playerName = readUserName();
-		QualifiedObservableConnector.getSingleton()
-				.registerQualifiedObservable(this, PlayerMovedReport.class);
+		reportTypes.add(PlayerMovedReport.class);
+		reportTypes.add(QuestScreenReport.class);
+		
+		this.registerReportTypesWeNotify();
 		// this.setQuestManager(new QuestManager());
-
-		QualifiedObservableConnector.getSingleton()
-				.registerQualifiedObservable(this, QuestScreenReport.class);
 	}
 
 	/**
@@ -72,19 +71,6 @@ public class Player extends QualifiedObservable
 	public String getPlayerName()
 	{
 		return playerName;
-	}
-
-	/**
-	 * @see model.QualifiedObservable#notifiesOn(java.lang.Class)
-	 */
-	@Override
-	public boolean notifiesOn(Class<?> reportType)
-	{
-		if (reportType.equals(PlayerMovedReport.class))
-		{
-			return true;
-		}
-		return false;
 	}
 
 	/**

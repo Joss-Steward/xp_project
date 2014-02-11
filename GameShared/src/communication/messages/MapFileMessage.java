@@ -39,8 +39,8 @@ public class MapFileMessage implements Message, Serializable
 		imageFileTitles = mapFileReader.getImageFileTitles();
 		imageFiles = new ArrayList<byte[]> ();
 		ArrayList<String> modifiedTitles = new ArrayList<String>();
-		String absolutePath = file.getAbsolutePath();
-		String path = absolutePath.substring(0, absolutePath.lastIndexOf('\\')+1);
+		String absolutePath = file.toURI().getPath();
+		String path = absolutePath.substring(0, absolutePath.lastIndexOf('/')+1);
 		for (String imgTitle:imageFileTitles)
 		{
 			String absoluteImgFileTitle = path + imgTitle;

@@ -54,12 +54,12 @@ public class PlayerManagerTest
 		Player p1 = new Player("First");
 		Player p2 = new Player("Second");
 		Player p3 = new Player("Third");
-		pm.addPlayer(p1);
+		pm.addPlayer("First");
 		assertEquals(p1, pm.getPlayerNamed("First"));
-		pm.addPlayer(p2);
+		pm.addPlayer("Second");
 		assertEquals(p1, pm.getPlayerNamed("First"));
 		assertEquals(p2, pm.getPlayerNamed("Second"));
-		pm.addPlayer(p3);
+		pm.addPlayer("Third");
 		assertEquals(p1, pm.getPlayerNamed("First"));
 		assertEquals(p2, pm.getPlayerNamed("Second"));
 		assertEquals(p3, pm.getPlayerNamed("Third"));

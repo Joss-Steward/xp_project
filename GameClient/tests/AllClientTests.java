@@ -15,6 +15,7 @@ import org.junit.runners.Suite;
 
 import view.ScreenListenerTest;
 import communication.handlers.MapFileMessageHandlerTest;
+import communication.handlers.PlayerJoinedMessageHandlerTest;
 import communication.packers.LoginMessagePackerTest;
 
 /**
@@ -30,6 +31,7 @@ import communication.packers.LoginMessagePackerTest;
 @Suite.SuiteClasses({
 		// communication.handlers
 		MapFileMessageHandlerTest.class,
+		PlayerJoinedMessageHandlerTest.class,
 
 		// communication.packers
 		LoginMessagePackerTest.class,
