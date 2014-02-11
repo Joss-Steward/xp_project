@@ -30,7 +30,7 @@ public class LoginFailedMessagePacker extends MessagePacker
 	 * @see communication.packers.MessagePacker#getReportTypeWePack()
 	 */
 	@Override
-	public Class<?> getReportTypeWePack()
+	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
 	{
 		return LoginFailedReport.class;
 	}

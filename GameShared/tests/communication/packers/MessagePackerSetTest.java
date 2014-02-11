@@ -130,7 +130,7 @@ public class MessagePackerSetTest
 		 * @see model.QualifiedObservable#notifiesOn(java.lang.Class)
 		 */
 		@Override
-		public boolean notifiesOn(Class<?> reportType)
+		public boolean notifiesOn(Class<? extends QualifiedObservableReport> reportType)
 		{
 			if (reportType.equals(TestReport1.class))
 			{
@@ -157,7 +157,7 @@ public class MessagePackerSetTest
 		 * @see communication.packers.MessagePacker#getReportTypeWePack()
 		 */
 		@Override
-		public Class<?> getReportTypeWePack()
+		public Class<? extends QualifiedObservableReport> getReportTypeWePack()
 		{
 			return TestReport1.class;
 		}

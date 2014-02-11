@@ -59,7 +59,7 @@ public class MapManager extends QualifiedObservable {
 	 * @see model.QualifiedObservable#notifiesOn(java.lang.Class)
 	 */
 	@Override
-	public boolean notifiesOn(Class<?> reportType) {
+	public boolean notifiesOn(Class<? extends QualifiedObservableReport> reportType) {
 		if (reportType == NewMapReport.class) {
 			return true;
 		}

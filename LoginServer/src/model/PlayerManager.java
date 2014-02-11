@@ -64,7 +64,7 @@ public class PlayerManager extends QualifiedObservable
 	 * @see model.QualifiedObservable#notifiesOn(java.lang.Class)
 	 */
 	@Override
-	public boolean notifiesOn(Class<?> reportType)
+	public boolean notifiesOn(Class<? extends QualifiedObservableReport> reportType)
 	{
 		if (reportType.equals(LoginSuccessfulReport.class) ||
 				reportType.equals(LoginFailedReport.class))

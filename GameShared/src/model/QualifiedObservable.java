@@ -18,7 +18,7 @@ import java.util.Observer;
 public abstract class QualifiedObservable extends Observable
 {
 
-	private HashMap<Class<?>, ArrayList<Observer>> observers = new HashMap<Class<?>, ArrayList<Observer>>();
+	private HashMap<Class<? extends QualifiedObservableReport>, ArrayList<Observer>> observers = new HashMap<Class<? extends QualifiedObservableReport>, ArrayList<Observer>>();
 
 	/**
 	 * Used to determine whether this object reports information related to a
@@ -28,7 +28,7 @@ public abstract class QualifiedObservable extends Observable
 	 *            the report type we are interested in
 	 * @return true if we report information relevant to that qualifier
 	 */
-	public abstract boolean notifiesOn(Class<?> reportType);
+	public abstract boolean notifiesOn(Class<? extends QualifiedObservableReport> reportType);
 
 	/**
 	 * @param observer
@@ -36,7 +36,7 @@ public abstract class QualifiedObservable extends Observable
 	 * @param reportType
 	 *            the condition under which they want to be notified
 	 */
-	public void addObserver(Observer observer, Class<?> reportType)
+	public void addObserver(Observer observer, Class<? extends QualifiedObservableReport> reportType)
 	{
 		if (!this.notifiesOn(reportType))
 		{

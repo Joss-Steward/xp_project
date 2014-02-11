@@ -189,7 +189,7 @@ public class QualifiedObservableTest
 		 * @see model.QualifiedObservable#notifiesOn(java.lang.Class)
 		 */
 		@Override
-		public boolean notifiesOn(Class<?> reportType)
+		public boolean notifiesOn(Class<? extends QualifiedObservableReport> reportType)
 		{
 			if ((reportType.equals(TestReport1.class)) || (reportType.equals(TestReport2.class)))
 			{
