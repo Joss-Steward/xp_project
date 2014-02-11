@@ -6,6 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 
@@ -36,19 +40,30 @@ public class MapFileMessageHandler extends MessageHandler
 	@Override
 	public void process(Message msg)
 	{
-		String path = MapFileMessageHandler.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		URI path;
+		try {
+			path = MapFileMessageHandler.class.getProtectionDomain().getCodeSource().getLocation().toURI();
+		} catch (URISyntaxException e1) {
+			e1.printStackTrace();
+			return;
+		}
+		
 		try
 		{
 			System.out.println("received " + msg);
 			
-			String decodedPath = URLDecoder.decode(path, "UTF-8").substring(1);
+			URL decodedPath = path.toURL();
 			MapFileMessage mapFileMessage = (MapFileMessage)msg;
-			System.out.println("handler decoded path:"+decodedPath);
-			writeToFile(decodedPath + "../" + MAP_FILE_TITLE, mapFileMessage.getContents() );
-			writeTileSets(mapFileMessage, decodedPath);
+			System.out.println("handler decoded path: "+decodedPath);
 			
-			ModelFacade.getSingleton(false).queueCommand(new CommandNewMap(decodedPath + "../" + MAP_FILE_TITLE));
-		} catch (UnsupportedEncodingException e)
+			String mapFile = (new URL(decodedPath, "../"+MAP_FILE_TITLE)).toURI().getSchemeSpecificPart();
+			System.out.println("map file path: " + mapFile);
+			
+			writeToFile(mapFile, mapFileMessage.getContents() );
+			writeTileSets(mapFileMessage, path.getSchemeSpecificPart());
+			
+			ModelFacade.getSingleton(false).queueCommand(new CommandNewMap(mapFile));
+		} catch (MalformedURLException | URISyntaxException e)
 		{
 			e.printStackTrace();
 		}
@@ -58,7 +73,7 @@ public class MapFileMessageHandler extends MessageHandler
 	/**
 	 * 
 	 */
-	private void writeTileSets(MapFileMessage msg,String path)
+	private void writeTileSets(MapFileMessage msg, String path)
 	{
 		ArrayList<String> imgFileTitles = msg.getImageFileTitles();
 		ArrayList<byte[]> imgFiles = msg.getImageFiles();
