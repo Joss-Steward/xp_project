@@ -24,7 +24,7 @@ public abstract class QualifiedObservableTestInherited  extends TypeDetector
 	{
 		QualifiedObservable obs = getObservableBeingTested();
 		ArrayList<Class<?>> reportTypes = this.detectAllExtendersInPackage(QualifiedObservableReport.class) ;
-		ArrayList<Class<?>> usedReports = obs.getReportTypesWeSend();
+		ArrayList<Class<? extends QualifiedObservableReport>> usedReports = obs.getReportTypesWeSend();
 		for (Class<?> reportType:reportTypes)
 		{
 			if (usedReports.contains(reportType))

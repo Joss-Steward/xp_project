@@ -18,8 +18,8 @@ import java.util.Observer;
 public abstract class QualifiedObservable extends Observable
 {
 
-	private HashMap<Class<?>, ArrayList<Observer>> observers = new HashMap<Class<?>, ArrayList<Observer>>();
-	protected ArrayList<Class<?>> reportTypes = new ArrayList<Class<?>>();
+	private HashMap<Class<? extends QualifiedObservableReport>, ArrayList<Observer>> observers = new HashMap<Class<? extends QualifiedObservableReport>, ArrayList<Observer>>();
+	protected ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
 
 	/**
 	 * Used to determine whether this object reports information related to a
@@ -40,14 +40,16 @@ public abstract class QualifiedObservable extends Observable
 	 * @param reportType
 	 *            the condition under which they want to be notified
 	 */
-	public void addObserver(Observer observer, Class<?> reportType)
+	public void addObserver(Observer observer, Class<? extends QualifiedObservableReport> reportType)
 	{
 		if (!this.notifiesOn(reportType))
 		{
-			throw new IllegalArgumentException("Attempt to register a listener with reportType "
-					+ reportType.getCanonicalName() + " for class " + this.getClass()
+			throw new IllegalArgumentException(
+					"Attempt to register a listener with reportType "
+							+ reportType.getCanonicalName() + " for class "
+							+ this.getClass()
 
-					+ " which does not notify for tyat type of information");
+							+ " which does not notify for tyat type of information");
 		}
 		ArrayList<Observer> relevantObservers = observers.get(reportType);
 		if (relevantObservers == null)
@@ -90,7 +92,9 @@ public abstract class QualifiedObservable extends Observable
 
 	/**
 	 * Used for testing purposes
-	 * @param reportType the type of report we are interested in
+	 * 
+	 * @param reportType
+	 *            the type of report we are interested in
 	 * @return the number of observers we have
 	 */
 	public int countObservers(Class<?> reportType)
@@ -105,21 +109,22 @@ public abstract class QualifiedObservable extends Observable
 
 	/**
 	 * Get a list of the report types that we might be notifying with
+	 * 
 	 * @return that list (should never be null)
 	 */
-	public ArrayList<Class<?>> getReportTypesWeSend()
+	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWeSend()
 	{
 		return reportTypes;
 	}
 
 	protected void registerReportTypesWeNotify()
 	{
-		for(Class<?> reportType:reportTypes)
+		for (Class<? extends QualifiedObservableReport> reportType : reportTypes)
 		{
-			QualifiedObservableConnector.getSingleton()
-			.registerQualifiedObservable(this, reportType);
+			QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this,
+					reportType);
 		}
-		
+
 	}
 
 }

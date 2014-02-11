@@ -1,7 +1,6 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
-
 import communication.StateAccumulator;
 import communication.messages.Message;
 
@@ -31,7 +30,7 @@ public abstract class MessagePacker
 	 * 
 	 * @return the type of report we pack
 	 */
-	public abstract Class<?> getReportTypeWePack();
+	public abstract Class<? extends QualifiedObservableReport> getReportTypeWePack();
 
 	/**
 	 * @return the StateAccumulator attached to this packer

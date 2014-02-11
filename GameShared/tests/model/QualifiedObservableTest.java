@@ -166,8 +166,7 @@ public class QualifiedObservableTest
 
 		obs.addObserver(observer1, TestReportNotReported.class);
 	}
-	
-	
+
 	private class TestReport1 implements QualifiedObservableReport
 	{
 
@@ -193,7 +192,8 @@ public class QualifiedObservableTest
 		@Override
 		public boolean notifiesOn(Class<?> reportType)
 		{
-			if ((reportType.equals(TestReport1.class)) || (reportType.equals(TestReport2.class)))
+			if ((reportType.equals(TestReport1.class))
+					|| (reportType.equals(TestReport2.class)))
 			{
 				return true;
 			}
@@ -201,9 +201,9 @@ public class QualifiedObservableTest
 		}
 
 		@Override
-		public ArrayList<Class<?>> getReportTypesWeSend()
+		public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWeSend()
 		{
-			ArrayList<Class<?>> reportTypes = new ArrayList<Class<?>>();
+			ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
 			reportTypes.add(TestReport1.class);
 			reportTypes.add(TestReport2.class);
 			return reportTypes;

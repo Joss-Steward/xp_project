@@ -128,7 +128,7 @@ public class MessagePackerSetTest
 
 		public MockQualifiedObservable()
 		{
-			reportTypes = new ArrayList<Class<?>>();
+			reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
 			reportTypes.add(TestReport1.class);
 		}
 
@@ -150,7 +150,7 @@ public class MessagePackerSetTest
 		 * @see communication.packers.MessagePacker#getReportTypeWePack()
 		 */
 		@Override
-		public Class<?> getReportTypeWePack()
+		public Class<? extends QualifiedObservableReport> getReportTypeWePack()
 		{
 			return TestReport1.class;
 		}

@@ -30,7 +30,7 @@ public class StubMessagePacker2a extends MessagePacker
 	 * @see communication.packers.MessagePacker#getReportTypeWePack()
 	 */
 	@Override
-	public Class<?> getReportTypeWePack()
+	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
 	{
 		return StubQualifiedObservableReport2.class;
 	}

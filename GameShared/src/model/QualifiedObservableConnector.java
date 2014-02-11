@@ -55,13 +55,13 @@ public class QualifiedObservableConnector
 
 	private static QualifiedObservableConnector singleton;
 
-	private HashMap<Class<?>, ArrayList<QualifiedObservable>> observables;
-	private HashMap<Class<?>, ArrayList<Observer>> observers;
+	private HashMap<Class<? extends QualifiedObservableReport>, ArrayList<QualifiedObservable>> observables;
+	private HashMap<Class<? extends QualifiedObservableReport>, ArrayList<Observer>> observers;
 
 	private QualifiedObservableConnector()
 	{
-		observables = new HashMap<Class<?>, ArrayList<QualifiedObservable>>();
-		observers = new HashMap<Class<?>, ArrayList<Observer>>();
+		observables = new HashMap<Class<? extends QualifiedObservableReport>, ArrayList<QualifiedObservable>>();
+		observers = new HashMap<Class<? extends QualifiedObservableReport>, ArrayList<Observer>>();
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class QualifiedObservableConnector
 	 *            the type of message it will report
 	 */
 	public void registerQualifiedObservable(QualifiedObservable observable,
-			Class<?> reportType)
+			Class<? extends QualifiedObservableReport> reportType)
 	{
 		if (rememberObservable(observable, reportType))
 		{
@@ -118,10 +118,9 @@ public class QualifiedObservableConnector
 	 *         was a duplicate
 	 */
 	private boolean rememberObservable(QualifiedObservable observable,
-			Class<?> reportType)
+			Class<? extends QualifiedObservableReport> reportType)
 	{
-		ArrayList<QualifiedObservable> relevantObservables = observables
-				.get(reportType);
+		ArrayList<QualifiedObservable> relevantObservables = observables.get(reportType);
 		if (relevantObservables == null)
 		{
 			relevantObservables = new ArrayList<QualifiedObservable>();
@@ -143,7 +142,8 @@ public class QualifiedObservableConnector
 	 * @param reportType
 	 *            the report type the observer wants to receive
 	 */
-	public void registerObserver(Observer observer, Class<?> reportType)
+	public void registerObserver(Observer observer,
+			Class<? extends QualifiedObservableReport> reportType)
 	{
 		if (rememberObserver(observer, reportType))
 		{
@@ -167,7 +167,8 @@ public class QualifiedObservableConnector
 	 * @return true if this is a new observer for this report type and false if
 	 *         it was a duplicate request
 	 */
-	private boolean rememberObserver(Observer observer, Class<?> reportType)
+	private boolean rememberObserver(Observer observer,
+			Class<? extends QualifiedObservableReport> reportType)
 	{
 		ArrayList<Observer> relevantObservers = observers.get(reportType);
 		if (relevantObservers == null)
@@ -197,8 +198,7 @@ public class QualifiedObservableConnector
 	{
 		disconnectObserversFrom(observable, reportType);
 
-		ArrayList<QualifiedObservable> relevantObservables = observables
-				.get(reportType);
+		ArrayList<QualifiedObservable> relevantObservables = observables.get(reportType);
 		if (relevantObservables != null)
 		{
 			relevantObservables.remove(observable);
@@ -256,11 +256,9 @@ public class QualifiedObservableConnector
 	 * @param reportType
 	 *            the report type that should no longer be reported
 	 */
-	private void disconnectFromObservables(Observer observer,
-			Class<?> reportType)
+	private void disconnectFromObservables(Observer observer, Class<?> reportType)
 	{
-		ArrayList<QualifiedObservable> relevantObservables = observables
-				.get(reportType);
+		ArrayList<QualifiedObservable> relevantObservables = observables.get(reportType);
 		if (relevantObservables != null)
 		{
 			for (QualifiedObservable observable : relevantObservables)
@@ -282,7 +280,7 @@ public class QualifiedObservableConnector
 	 */
 	public boolean doIObserve(Observer obs, Class<?> reportType)
 	{
-		
+
 		ArrayList<Observer> relavantObservers = observers.get(reportType);
 		if (relavantObservers == null)
 		{
