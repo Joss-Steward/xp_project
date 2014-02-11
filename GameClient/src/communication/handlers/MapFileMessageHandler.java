@@ -5,12 +5,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 
 import model.CommandNewMap;
@@ -54,11 +52,7 @@ public class MapFileMessageHandler extends MessageHandler
 			
 			URL decodedPath = path.toURL();
 			MapFileMessage mapFileMessage = (MapFileMessage)msg;
-			System.out.println("handler decoded path: "+decodedPath);
-			
 			String mapFile = (new URL(decodedPath, "../"+MAP_FILE_TITLE)).toURI().getSchemeSpecificPart();
-			System.out.println("map file path: " + mapFile);
-			
 			writeToFile(mapFile, mapFileMessage.getContents() );
 			writeTileSets(mapFileMessage, path.getSchemeSpecificPart());
 			
