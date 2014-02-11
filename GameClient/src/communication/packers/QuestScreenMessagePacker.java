@@ -36,7 +36,7 @@ public class QuestScreenMessagePacker extends MessagePacker
 	 * 
 	 */
 	@Override
-	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
+	public Class<?> getReportTypeWePack()
 	{
 		return QuestScreenReport.class;
 	}

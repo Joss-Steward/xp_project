@@ -55,12 +55,12 @@ public class QualifiedObservableConnector
 
 	private static QualifiedObservableConnector singleton;
 
-	private HashMap<Class<? extends QualifiedObservableReport>, ArrayList<QualifiedObservable>> observables;
+	private HashMap<Class<?>, ArrayList<QualifiedObservable>> observables;
 	private HashMap<Class<?>, ArrayList<Observer>> observers;
 
 	private QualifiedObservableConnector()
 	{
-		observables = new HashMap<Class<? extends QualifiedObservableReport>, ArrayList<QualifiedObservable>>();
+		observables = new HashMap<Class<?>, ArrayList<QualifiedObservable>>();
 		observers = new HashMap<Class<?>, ArrayList<Observer>>();
 	}
 
@@ -94,7 +94,7 @@ public class QualifiedObservableConnector
 	 *            the type of message it will report
 	 */
 	public void registerQualifiedObservable(QualifiedObservable observable,
-			Class<? extends QualifiedObservableReport> reportType)
+			Class<?> reportType)
 	{
 		if (rememberObservable(observable, reportType))
 		{
@@ -118,7 +118,7 @@ public class QualifiedObservableConnector
 	 *         was a duplicate
 	 */
 	private boolean rememberObservable(QualifiedObservable observable,
-			Class<? extends QualifiedObservableReport> reportType)
+			Class<?> reportType)
 	{
 		ArrayList<QualifiedObservable> relevantObservables = observables
 				.get(reportType);
@@ -143,7 +143,7 @@ public class QualifiedObservableConnector
 	 * @param reportType
 	 *            the report type the observer wants to receive
 	 */
-	public void registerObserver(Observer observer, Class<? extends QualifiedObservableReport> reportType)
+	public void registerObserver(Observer observer, Class<?> reportType)
 	{
 		if (rememberObserver(observer, reportType))
 		{

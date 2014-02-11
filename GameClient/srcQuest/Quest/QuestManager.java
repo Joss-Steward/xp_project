@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import model.QualifiedObservable;
 import model.QualifiedObservableConnector;
-import model.QualifiedObservableReport;
 import model.reports.QuestScreenReport;
 import model.reports.ThisPlayerMovedReport;
 import data.Position;
@@ -132,7 +131,7 @@ public class QuestManager extends QualifiedObservable
 	 * notifies on quest and movement information
 	 */
 	@Override
-	public boolean notifiesOn(Class<? extends QualifiedObservableReport> reportType)
+	public boolean notifiesOn(Class<?> reportType)
 	{
 		if (reportType.equals(ThisPlayerMovedReport.class)
 				|| reportType.equals(ThisPlayerMovedReport.class)

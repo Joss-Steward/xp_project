@@ -48,7 +48,7 @@ public class PlayerJoinedMessagePacker extends MessagePacker
 	 * @see communication.packers.MessagePacker#getReportTypeWePack()
 	 */
 	@Override
-	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
+	public Class<?> getReportTypeWePack()
 	{
 		return PlayerConnectionReport.class;
 	}

@@ -31,7 +31,7 @@ public abstract class MessagePacker
 	 * 
 	 * @return the type of report we pack
 	 */
-	public abstract Class<? extends QualifiedObservableReport> getReportTypeWePack();
+	public abstract Class<?> getReportTypeWePack();
 
 	/**
 	 * @return the StateAccumulator attached to this packer

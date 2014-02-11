@@ -75,7 +75,7 @@ public class ThisClientsPlayer extends QualifiedObservable
 	 * @see model.QualifiedObservable#notifiesOn(java.lang.Class)
 	 */
 	@Override
-	public boolean notifiesOn(Class<? extends QualifiedObservableReport> reportType)
+	public boolean notifiesOn(Class<?> reportType)
 	{
 		if (reportType.equals(ThisPlayerMovedReport.class)
 				|| reportType.equals(LoginInitiatedReport.class)
