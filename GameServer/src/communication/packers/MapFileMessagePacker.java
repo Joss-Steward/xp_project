@@ -2,8 +2,6 @@ package communication.packers;
 
 import java.io.IOException;
 
-import model.PlayerManager;
-import model.PlayerNotFoundException;
 import model.QualifiedObservableReport;
 import model.reports.PlayerConnectionReport;
 import communication.messages.MapFileMessage;
@@ -27,16 +25,12 @@ public class MapFileMessagePacker extends MessagePacker
 			PlayerConnectionReport report = (PlayerConnectionReport) object;
 			try
 			{
-				int userID = PlayerManager.getSingleton().getPlayerIDFromPlayerName(
-						report.getUserName());
+				int userID = report.getUserID();
 				if (this.getAccumulator().getPlayerUserID() == userID)
 				{
 					MapFileMessage msg = new MapFileMessage("maps/current.tmx");
 					return msg;
 				}
-			} catch (PlayerNotFoundException e)
-			{
-				return null;
 			} catch (IOException e)
 			{
 				e.printStackTrace();

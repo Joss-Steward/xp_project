@@ -1,6 +1,7 @@
 package communication.handlers;
 
-import model.PlayerManager;
+import model.AddPlayerCommand;
+import model.ModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.ConnectMessage;
 import communication.messages.Message;
@@ -25,14 +26,12 @@ public class ConnectMessageHandler extends MessageHandler
 		if (msg.getClass().equals(ConnectMessage.class))
 		{
 			ConnectMessage cMsg = (ConnectMessage) msg;
-			// assume this connection is going to work
 			if (connectionManager != null)
 			{
 				connectionManager.setPlayerUserId(cMsg.getUserID());
 			}
-			PlayerManager.getSingleton().addPlayer(cMsg.getUserID(), cMsg.getPin());
-			// TODO what should we do if the information in the message isn't correct
-			
+			AddPlayerCommand cmd = new AddPlayerCommand(cMsg.getUserID(), cMsg.getPin());
+			ModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

@@ -1,7 +1,5 @@
 package communication.packers;
 
-import model.PlayerManager;
-import model.PlayerNotFoundException;
 import model.QualifiedObservableReport;
 import model.reports.PlayerConnectionReport;
 import communication.messages.Message;
@@ -26,18 +24,11 @@ public class PlayerJoinedMessagePacker extends MessagePacker
 		if (object.getClass().equals(PlayerConnectionReport.class))
 		{
 			PlayerConnectionReport report = (PlayerConnectionReport) object;
-			try
+			int userID = report.getUserID();
+			if (this.getAccumulator().getPlayerUserID() != userID)
 			{
-				int userID = PlayerManager.getSingleton().getPlayerIDFromPlayerName(
-						report.getUserName());
-				if (this.getAccumulator().getPlayerUserID() != userID)
-				{
-					PlayerJoinedMessage msg = new PlayerJoinedMessage(report.getUserName());
-					return msg;
-				}
-			} catch (PlayerNotFoundException e)
-			{
-				return null;
+				PlayerJoinedMessage msg = new PlayerJoinedMessage(report.getUserName());
+				return msg;
 			}
 
 		}
