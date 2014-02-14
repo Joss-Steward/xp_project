@@ -22,14 +22,14 @@ public class Player extends QualifiedObservable
 
 	/**
 	 * Create a player without checking the pin (for testing purposes only)
-	 * @param userID
-	 *            the userid of this player
+	 * @param playerID
+	 *            the unique ID of this player
 	 * @throws DatabaseException 
 	 */
-	protected Player(int userID) throws DatabaseException
+	protected Player(int playerID) throws DatabaseException
 	{
-		this.playerID = userID;
-		this.playerName = readUserName();
+		this.playerID = playerID;
+		this.playerName = readPlayerName();
 		reportTypes.add(PlayerMovedReport.class);
 		reportTypes.add(QuestScreenReport.class);
 		
@@ -57,7 +57,7 @@ public class Player extends QualifiedObservable
 		
 	}
 	/**
-	 * @return the userID of this player
+	 * @return the playerID of this player
 	 */
 	public int getPlayerID()
 	{
@@ -74,28 +74,28 @@ public class Player extends QualifiedObservable
 	}
 
 	/**
-	 * Get this player's user name from the database
+	 * Get this player's player name from the database
 	 * 
-	 * @return the players user name
+	 * @return the players player name
 	 * @throws DatabaseException if the player isn't found
 	 */
-	private String readUserName() throws DatabaseException
+	private String readPlayerName() throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
-		String userName;
+		String playerName;
 		try
 		{
 			PreparedStatement stmt = connection.prepareStatement("SELECT PlayerName from Players.PlayerLogins where PlayerID = ?");
 			stmt.setInt(1, playerID);
 			ResultSet resultSet = stmt.executeQuery();
 			resultSet.first();
-			userName = resultSet.getString(1);
+			playerName = resultSet.getString(1);
 			resultSet.close();
 		} catch (SQLException e)
 		{
 			throw new DatabaseException("Unable to retrieve player with id = " + playerID, e);
 		}
-		return userName;
+		return playerName;
 	}
 
 }

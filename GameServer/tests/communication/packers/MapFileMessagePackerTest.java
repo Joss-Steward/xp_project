@@ -35,7 +35,7 @@ public class MapFileMessagePackerTest
 	{
 		PlayerManager.getSingleton().addPlayer(2, 1234);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
-		stateAccumulator.setPlayerUserId(1);
+		stateAccumulator.setPlayerId(1);
 
 		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager.getSingleton()
 				.getPlayerFromID(2));
@@ -54,7 +54,7 @@ public class MapFileMessagePackerTest
 	{
 		PlayerManager.getSingleton().addPlayer(1, 1234);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
-		stateAccumulator.setPlayerUserId(1);
+		stateAccumulator.setPlayerId(1);
 
 		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager.getSingleton()
 				.getPlayerFromID(1));

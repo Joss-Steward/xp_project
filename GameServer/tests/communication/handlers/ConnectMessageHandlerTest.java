@@ -18,10 +18,10 @@ public class ConnectMessageHandlerTest
 
 	/**
 	 * The incoming message should cause creation of the player in the model and
-	 * notification of the player's userID to the state accumulator
+	 * notification of the player's playerID to the state accumulator
 	 */
 	@Test
-	public void tellsStateAccumulatorIfUserIDPinIsRecognized()
+	public void tellsStateAccumulatorIfPlayerIDPinIsRecognized()
 	{
 		ConnectMessageHandler handler = new ConnectMessageHandler();
 		ConnectionManager connectionManager = new ConnectionManager();
@@ -33,7 +33,7 @@ public class ConnectMessageHandlerTest
 
 	/**
 	 * The incoming message should cause creation of the player in the model and
-	 * notification of the player's userID to the state accumulator
+	 * notification of the player's player ID to the state accumulator
 	 */
 	@Test
 	public void tellsModel()

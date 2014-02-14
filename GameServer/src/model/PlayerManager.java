@@ -53,18 +53,18 @@ public class PlayerManager extends QualifiedObservable
 	/**
 	 * Adds a player to the list of active players on this server
 	 * 
-	 * @param userID
-	 *            the users id number
+	 * @param playerID
+	 *            the players id number
 	 * @param pin
 	 *            the pin we gave the client to connect to this server
 	 */
-	public void addPlayer(int userID, double pin)
+	public void addPlayer(int playerID, double pin)
 	{
 		// TODO need to check the pin . . .
 		try
 		{
-			Player player = new Player(userID, pin);
-			players.put(userID, player);
+			Player player = new Player(playerID, pin);
+			players.put(playerID, player);
 
 			this.notifyObservers(new PlayerConnectionReport(player));
 		} catch (DatabaseException e)
@@ -75,30 +75,30 @@ public class PlayerManager extends QualifiedObservable
 	}
 
 	/**
-	 * @param userID
-	 *            the userID of the player we are looking for
+	 * @param playerID
+	 *            the playerID of the player we are looking for
 	 * @return the player we were looking for
 	 */
-	public Player getPlayerFromID(int userID)
+	public Player getPlayerFromID(int playerID)
 	{
-		return players.get(userID);
+		return players.get(playerID);
 	}
 
 	/**
-	 * @param userName
-	 *            the user name of the player we are searching for
-	 * @return the userID of the player we are searching for
+	 * @param playerName
+	 *            the player name of the player we are searching for
+	 * @return the player ID of the player we are searching for
 	 * @throws PlayerNotFoundException
-	 *             if no player with that username is found
+	 *             if no player with that player name is found
 	 */
-	public int getPlayerIDFromPlayerName(String userName)
+	public int getPlayerIDFromPlayerName(String playerName)
 			throws PlayerNotFoundException
 	{
 		java.util.Iterator<Player> i = players.values().iterator();
 		while (i.hasNext())
 		{
 			Player p = i.next();
-			if (p.getPlayerName().equals(userName))
+			if (p.getPlayerName().equals(playerName))
 			{
 				return p.getPlayerID();
 			}

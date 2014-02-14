@@ -22,9 +22,7 @@ public class StateAccumulator implements Observer
 	// need this to be visible to the tests
 	protected ArrayList<Message> pendingMsgs;
 	private MessagePackerSet packerSet;
-	private int userID;
-	
-	
+	private int playerID;
 
 	/**
 	 * @param messagePackerSet
@@ -98,19 +96,19 @@ public class StateAccumulator implements Observer
 	}
 
 	/**
-	 * @param i the userID of the player associated with this accumulator
+	 * @param i the playerID of the player associated with this accumulator
 	 */
-	public void setPlayerUserId(int i)
+	public void setPlayerId(int i)
 	{
-		this.userID = i;
+		this.playerID = i;
 	}
 
 	/**
-	 * @return the userid of the player using this accumulator
+	 * @return the player ID of the player using this accumulator
 	 */
-	public int getPlayerUserID()
+	public int getPlayerID()
 	{
-		return userID;
+		return playerID;
 	}
 	
 }

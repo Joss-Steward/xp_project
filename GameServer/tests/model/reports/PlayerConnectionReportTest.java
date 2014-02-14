@@ -23,8 +23,8 @@ public class PlayerConnectionReportTest
 	public void creation() throws DatabaseException
 	{
 		PlayerConnectionReport report = new PlayerConnectionReport(new Player(1,33));
-		assertEquals(1, report.getUserID());
-		// TODO we need to check that the user's name gets stored correctly when we have the db
+		assertEquals(1, report.getPlayerID());
+		// TODO we need to check that the player's name gets stored correctly when we have the db
 	}
 
 	/**

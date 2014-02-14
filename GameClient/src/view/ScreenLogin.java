@@ -65,7 +65,7 @@ public class ScreenLogin extends ScreenBasic
 		
 		//create login field
 		loginField = new TextField("", skin);
-		loginField.setMessageText("User Name");
+		loginField.setMessageText("Player Name");
 		
 		//create login field
 		pwField = new TextField("", skin);
@@ -97,7 +97,7 @@ public class ScreenLogin extends ScreenBasic
 					Gdx.app.log("No name given", "NULL Player Name");
 					
 					//Set the text field to default name
-					loginField.setText("User-Name");
+					loginField.setText("Player-Name");
 					loginField.setCursorPosition(loginField.getText().length());
 					connectButton.setDisabled(false);
 					return false;

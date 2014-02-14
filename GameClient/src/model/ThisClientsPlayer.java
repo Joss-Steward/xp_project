@@ -107,7 +107,7 @@ public class ThisClientsPlayer extends QualifiedObservable
 	 * @param password
 	 *            the password
 	 * @param name
-	 *            the user name
+	 *            the player's name
 	 * 
 	 */
 	public void initiateLogin(String name, String password)

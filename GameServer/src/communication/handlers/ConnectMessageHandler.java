@@ -7,7 +7,7 @@ import communication.messages.ConnectMessage;
 import communication.messages.Message;
 
 /**
- * Handles a message that the user is connecting to this area server
+ * Handles a message that the player is connecting to this area server
  * 
  * @author merlin
  * 
@@ -16,7 +16,7 @@ public class ConnectMessageHandler extends MessageHandler
 {
 
 	/**
-	 * Add this user to the player list
+	 * Add this player to the player list
 	 * 
 	 * @see communication.handlers.MessageHandler#process(communication.messages.Message)
 	 */
@@ -28,9 +28,9 @@ public class ConnectMessageHandler extends MessageHandler
 			ConnectMessage cMsg = (ConnectMessage) msg;
 			if (connectionManager != null)
 			{
-				connectionManager.setPlayerUserId(cMsg.getUserID());
+				connectionManager.setPlayerID(cMsg.getPlayerID());
 			}
-			AddPlayerCommand cmd = new AddPlayerCommand(cMsg.getUserID(), cMsg.getPin());
+			AddPlayerCommand cmd = new AddPlayerCommand(cMsg.getPlayerID(), cMsg.getPin());
 			ModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}

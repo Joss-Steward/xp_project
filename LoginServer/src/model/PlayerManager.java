@@ -42,7 +42,7 @@ public class PlayerManager extends QualifiedObservable
 
 	/**
 	 * Attempt to login to the system.  Credentials will be checked and appropriate reports will be made
-	 * @param playerName the user name
+	 * @param playerName the player's name
 	 * @param password the password
 	 */
 	public void login(String playerName, String password)

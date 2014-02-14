@@ -17,7 +17,7 @@ public class PlayerTest
 	 * @throws DatabaseException shouldn'ts
 	 */
 	@Test
-	public void canGetUserName() throws DatabaseException
+	public void canGetPlayerName() throws DatabaseException
 	{
 		Player p = new Player(1);
 		assertEquals("John", p.getPlayerName());

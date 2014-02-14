@@ -48,8 +48,8 @@ package model;
 	}
 
 	/**
-	 * Get the unique user name for this player
-	 * @return the user name
+	 * Get the unique player name for this player
+	 * @return the player name
 	 */
 	public String getPlayerName()
 	{

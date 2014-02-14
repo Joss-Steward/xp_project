@@ -69,13 +69,36 @@ public class PlayerManagerTest
 	}
 	
 	/**
-	 * Make sure that we can get a players id from the user name
+	 * Make sure that we can get a players id from the player name
+	 * @throws PlayerNotFoundException shouldn't
+	 */
+	@Test
+	public void canGetPlayerIDFromPlayerNameOnlyOne() throws PlayerNotFoundException
+	{
+		PlayerManager.getSingleton().addPlayer(1,1234);
+		assertEquals(1, PlayerManager.getSingleton().getPlayerIDFromPlayerName("John"));
+	}
+	
+	/**
+	 * Make sure that we can get a players id from the player name
 	 * @throws PlayerNotFoundException shouldn't
 	 */
 	@Test
 	public void canGetPlayerIDFromPlayerName() throws PlayerNotFoundException
 	{
 		PlayerManager.getSingleton().addPlayer(1,1234);
-		assertEquals(1, PlayerManager.getSingleton().getPlayerIDFromPlayerName("John"));
+		PlayerManager.getSingleton().addPlayer(2,1234);
+		assertEquals(2, PlayerManager.getSingleton().getPlayerIDFromPlayerName("Merlin"));
+	}
+	
+	/**
+	 * Make sure the correct exception is thrown if we search for a player whose
+	 * name we don't know
+	 * @throws PlayerNotFoundException should
+	 */
+	@Test(expected = PlayerNotFoundException.class)
+	public void playerNameNotFound() throws PlayerNotFoundException
+	{
+		PlayerManager.getSingleton().getPlayerIDFromPlayerName("henry");
 	}
 }

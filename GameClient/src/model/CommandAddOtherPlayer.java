@@ -14,7 +14,7 @@ public class CommandAddOtherPlayer extends Command
 
 	/**
 	 * For now, we just know his name
-	 * @param playerName the unique user name of the new player
+	 * @param playerName the unique player name of the new player
 	 */
 	public CommandAddOtherPlayer(String playerName)
 	{

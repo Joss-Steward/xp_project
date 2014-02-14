@@ -25,7 +25,7 @@ public class PlayerJoinedMessage implements Message, Serializable
 	}
 
 	/**
-	 * @return the userName
+	 * @return the player's name
 	 */
 	public String getPlayerName()
 	{

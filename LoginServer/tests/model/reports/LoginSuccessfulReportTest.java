@@ -19,7 +19,7 @@ public class LoginSuccessfulReportTest
 	public void creation()
 	{
 		LoginSuccessfulReport report = new LoginSuccessfulReport(42, "LLL",56, 0.76);
-		assertEquals(42, report.getUserID());
+		assertEquals(42, report.getPlayerID());
 		assertEquals("LLL", report.getHostname());
 		assertEquals(56, report.getPort());
 		assertEquals(0.76, report.getPin(),0.00001);

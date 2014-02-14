@@ -21,7 +21,7 @@ public class LoginSuccessfulMessagePacker extends MessagePacker
 		if (object.getClass().equals(LoginSuccessfulReport.class))
 		{
 			LoginSuccessfulReport report = (LoginSuccessfulReport)object;
-			LoginSuccessfulMessage msg = new LoginSuccessfulMessage(report.getUserID(), report.getHostname(), report.getPort(), report.getPin());
+			LoginSuccessfulMessage msg = new LoginSuccessfulMessage(report.getPlayerID(), report.getHostname(), report.getPort(), report.getPin());
 			return msg;
 		}
 		return null;

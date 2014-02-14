@@ -57,7 +57,7 @@ public class PlayerLogin
 	}
 
 	/**
-	 * Generate the PIN this user should use for logging into his area server and put it in the DB
+	 * Generate the PIN this player should use for logging into his area server and put it in the DB
 	 * @return the PIN
 	 * @throws DatabaseException shouldn't
 	 */

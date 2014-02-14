@@ -25,8 +25,8 @@ public class MapFileMessagePacker extends MessagePacker
 			PlayerConnectionReport report = (PlayerConnectionReport) object;
 			try
 			{
-				int userID = report.getUserID();
-				if (this.getAccumulator().getPlayerUserID() == userID)
+				int playerID = report.getPlayerID();
+				if (this.getAccumulator().getPlayerID() == playerID)
 				{
 					MapFileMessage msg = new MapFileMessage("maps/current.tmx");
 					return msg;

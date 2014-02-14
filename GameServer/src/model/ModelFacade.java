@@ -79,14 +79,4 @@ public class ModelFacade
 		commandQueue.queueInfoPacket(cmd);
 	}
 
-	/**
-	 * Get how many commands are waiting to be queued
-	 * 
-	 * @return the number of commands in the queue
-	 */
-	public int getCommandQueueLength()
-	{
-		return commandQueue.getQueueSize();
-	}
-
 }

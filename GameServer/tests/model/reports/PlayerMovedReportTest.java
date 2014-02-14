@@ -22,7 +22,7 @@ public class PlayerMovedReportTest
 	public void creation()
 	{
 		PlayerMovedReport report = new PlayerMovedReport(33, new Position(3,4));
-		assertEquals(33, report.getUserID());
+		assertEquals(33, report.getPlayerID());
 		assertEquals(new Position(3,4), report.getNewPosition());
 	}
 

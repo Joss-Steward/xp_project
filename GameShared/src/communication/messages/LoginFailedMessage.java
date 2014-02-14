@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * The message that goes from the main server to the client on a successful
- * login. It tells the client what the user's ID number is and where to connect
+ * login. It tells the client what the player's ID number is and where to connect
  * to begin playing.
  * 
  * @author Merlin
