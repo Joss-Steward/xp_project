@@ -42,6 +42,7 @@ public class BuildTestDBPlayerLogin
 			StringBuffer sql = new StringBuffer("CREATE TABLE PlayerPins(");
 			sql.append("PlayerID int NOT NULL, ");
 			sql.append("Pin double NOT NULL,");
+			sql.append("changed_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,");
 			
 			sql.append("PRIMARY KEY (PlayerID));");
 			System.out.println(sql);
