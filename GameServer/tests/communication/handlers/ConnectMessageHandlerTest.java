@@ -1,7 +1,9 @@
 package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
+import model.Player;
 import model.PlayerManager;
+import model.PlayerPin;
 
 import org.junit.Test;
 
@@ -26,7 +28,7 @@ public class ConnectMessageHandlerTest
 		ConnectMessageHandler handler = new ConnectMessageHandler();
 		ConnectionManager connectionManager = new ConnectionManager();
 		handler.setConnectionManager(connectionManager);
-		ConnectMessage msg = new ConnectMessage(1, 42);
+		ConnectMessage msg = new ConnectMessage(1, PlayerPin.DEFAULT_PIN);
 		handler.process(msg);
 		assertEquals(1, connectionManager.getPlayerID());
 	}
@@ -39,7 +41,7 @@ public class ConnectMessageHandlerTest
 	public void tellsModel()
 	{
 		ConnectMessageHandler handler = new ConnectMessageHandler();
-		ConnectMessage msg = new ConnectMessage(1, 42);
+		ConnectMessage msg = new ConnectMessage(1, PlayerPin.DEFAULT_PIN);
 		handler.process(msg);
 
 		// if this doesn't throw a PlayerNotFoundExcetion, all is well
