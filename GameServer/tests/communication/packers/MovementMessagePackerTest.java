@@ -9,6 +9,7 @@ import communication.StateAccumulator;
 import communication.messages.MovementMessage;
 import data.Position;
 import model.PlayerManager;
+import model.PlayerPin;
 import model.reports.PlayerMovedReport;
 
 /**
@@ -29,7 +30,7 @@ public class MovementMessagePackerTest
 	{
 		PlayerManager.resetSingleton();
 
-		PlayerManager.getSingleton().addPlayer(1, 1234);
+		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
 		stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
 	}	

@@ -48,24 +48,34 @@ public class PlayerTest extends DatabaseTest
 		assertEquals(null, c.getPlayerPosition());
 	}
 
+	/**
+	 * Test to make sure we have a legitimate PIN
+	 * @throws DatabaseException shouldn't
+	 */
 	@Test
 	public void legitPin() throws DatabaseException
 	{
-		Player p = new Player(1);
-		assertEquals("John", p.getPlayerName());
+		new Player(1, PlayerPin.DEFAULT_PIN);
 	}
 
+	/**
+	 * Make sure it complains if we give it the wrong PIN
+	 * @throws DatabaseException shouldn't
+	 */
 	@Test(expected = DatabaseException.class)
 	public void wrongPin() throws DatabaseException
 	{
 		new Player(1, 1);
 	}
 
+	/**
+	 * Make sure an expired PIN throws the appropriate exception
+	 * @throws DatabaseException shouldn't (exception checked in the test)
+	 */
 	@Test
 	public void oldPin() throws DatabaseException
 	{
 		PlayerPin playerPin = new PlayerPin(1);
-		double pin = playerPin.generatePin();
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.add(PlayerPin.EXPIRATION_TIME_UNITS, -1
 				* PlayerPin.EXPIRATION_TIME_QUANTITY - 1);
@@ -74,7 +84,7 @@ public class PlayerTest extends DatabaseTest
 		boolean gotTheException = false;
 		try
 		{
-			Player p = new Player(1, pin);
+			new Player(1, PlayerPin.DEFAULT_PIN);
 		} catch (DatabaseException e)
 		{
 			gotTheException = true;
