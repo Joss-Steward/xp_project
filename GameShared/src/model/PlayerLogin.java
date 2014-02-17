@@ -13,6 +13,7 @@ import java.sql.SQLException;
 public class PlayerLogin
 {
 
+	
 	private Connection connection;
 	private int playerID;
 
@@ -56,31 +57,7 @@ public class PlayerLogin
 		return playerID;
 	}
 
-	/**
-	 * Generate the PIN this player should use for logging into his area server and put it in the DB
-	 * @return the PIN
-	 * @throws DatabaseException shouldn't
-	 */
-	public double generatePin() throws DatabaseException
-	{
-		double pin = Math.random();
-		Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
-		try{
-			String sql = "DELETE from PlayerPins WHERE PlayerID = ?";
-			PreparedStatement stmt = connectionStatus.prepareStatement(sql);
-			stmt.setInt(1, playerID);
-			stmt.executeUpdate();
 	
-			sql = "INSERT INTO PlayerPins (PlayerID, Pin) VALUES (?, ?)";
-			stmt = connectionStatus.prepareStatement(sql);
-			stmt.setInt(1, playerID);
-			stmt.setDouble(2, pin);
-			stmt.executeUpdate();
-		} catch (SQLException e)
-		{
-			new DatabaseException("Unable to generate pin for player id # " + playerID, e);
-		}
-		return pin;
-	}
+
 
 }

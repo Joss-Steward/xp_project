@@ -14,6 +14,8 @@ import model.PlayerLoginTest;
  */
 public class BuildTestDBPlayerLogin
 {
+	
+	
 
 		private static Connection connection;
 
@@ -49,6 +51,7 @@ public class BuildTestDBPlayerLogin
 			stmt.executeUpdate(new String(sql));
 			stmt.executeUpdate("ALTER TABLE PlayerPins ENGINE = INNODB");
 			stmt.executeUpdate("ALTER TABLE PlayerPins ADD UNIQUE (PlayerID)");
+			
 		}
 
 		private static void createPlayerTable() throws SQLException

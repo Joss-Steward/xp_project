@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import model.reports.PlayerMovedReport;
 import model.reports.QuestScreenReport;
@@ -48,14 +50,24 @@ public class Player extends QualifiedObservable
 	public Player(int playerID, double pin) throws DatabaseException
 	{
 		this(playerID);
-		checkThePin();
+		checkThePin(pin);
 	}
 	
-	private void checkThePin()
+	private void checkThePin(double pin) throws DatabaseException
 	{
-		// TODO need to check their pin when they are connecting
-		
+		PlayerPin pl = new PlayerPin(playerID);
+		if(pin!= pl.retrievePin())
+		{
+			throw new DatabaseException("Wrong PIN for player #" + playerID);
+		}
+		GregorianCalendar now = new GregorianCalendar();
+		now.setTimeZone(TimeZone.getTimeZone("GMT"));
+		if (pl.getExpirationTime().before(now))
+		{
+			throw new DatabaseException("Expired PIN for player #" + playerID);
+		}
 	}
+	
 	/**
 	 * @return the playerID of this player
 	 */

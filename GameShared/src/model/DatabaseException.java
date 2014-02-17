@@ -12,15 +12,26 @@ public class DatabaseException extends Exception
 	private static final long serialVersionUID = 1L;
 	private String simpleDescription;
 
+	private Exception rootCause;
+
 	/**
-	 * @return simple Description
+	 * 
+	 * @param msg the message associated with this exception
 	 */
-	public String getSimpleDescription()
+	public DatabaseException(String msg)
 	{
-		return simpleDescription;
+		simpleDescription = msg;
 	}
 
-	private Exception rootCause;
+	/**
+	 * @param msg description of complication
+	 * @param e exception being thrown
+	 */
+	public DatabaseException(String msg, Exception e)
+	{
+		simpleDescription = msg;
+		rootCause = e;
+	}
 
 	/**
 	 * 
@@ -32,13 +43,11 @@ public class DatabaseException extends Exception
 	}
 
 	/**
-	 * @param msg description of complication
-	 * @param e exception being thrown
+	 * @return simple Description
 	 */
-	public DatabaseException(String msg, Exception e)
+	public String getSimpleDescription()
 	{
-		simpleDescription = msg;
-		rootCause = e;
+		return simpleDescription;
 	}
 
 }

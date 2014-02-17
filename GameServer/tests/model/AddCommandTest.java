@@ -8,7 +8,7 @@ import org.junit.Test;
 /**
  * 
  * @author Merlin
- *
+ * 
  */
 public class AddCommandTest
 {
@@ -21,14 +21,17 @@ public class AddCommandTest
 	{
 		PlayerManager.resetSingleton();
 	}
+
 	/**
 	 * If we add a player, the playermanager should know about it
-	 * @throws PlayerNotFoundException shouldn't
+	 * 
+	 * @throws PlayerNotFoundException
+	 *             shouldn't
 	 */
 	@Test
 	public void test() throws PlayerNotFoundException
 	{
-		AddPlayerCommand cmd = new AddPlayerCommand(1,0.1);
+		AddPlayerCommand cmd = new AddPlayerCommand(1, PlayerPin.DEFAULT_PIN);
 		cmd.execute();
 		assertNotNull(PlayerManager.getSingleton().getPlayerFromID(1));
 	}

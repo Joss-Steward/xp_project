@@ -60,7 +60,6 @@ public class PlayerManager extends QualifiedObservable
 	 */
 	public void addPlayer(int playerID, double pin)
 	{
-		// TODO need to check the pin . . .
 		try
 		{
 			Player player = new Player(playerID, pin);
