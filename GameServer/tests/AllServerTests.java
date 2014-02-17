@@ -13,6 +13,7 @@ import org.junit.runners.Suite;
 import communication.handlers.ConnectMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
 import communication.packers.MapFileMessagePackerTest;
+import communication.packers.MovementMessagePackerTest;
 import communication.packers.PlayerJoinedMessagePackerTest;
 
 /**
@@ -32,6 +33,7 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 	MovementMessageHandlerTest.class,
 	
 	//communication.packers
+	MovementMessagePackerTest.class,
 	MapFileMessagePackerTest.class,
 	PlayerJoinedMessagePackerTest.class,
 	

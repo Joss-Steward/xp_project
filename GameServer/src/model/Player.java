@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import data.Position;
 import model.reports.PlayerMovedReport;
 import model.reports.QuestScreenReport;
 
@@ -21,6 +22,7 @@ public class Player extends QualifiedObservable
 
 	private int playerID;
 	private String playerName;
+	private Position playerPosition;
 
 	/**
 	 * Create a player without checking the pin (for testing purposes only)
@@ -85,6 +87,28 @@ public class Player extends QualifiedObservable
 		return playerName;
 	}
 
+	/**
+	 * Set the player's position
+	 * @param playerPosition
+	 * 			The new location the player is
+	 * Assuming a valid position.  Error checking else where
+	 */
+	public void setPlayerPosition(Position playerPosition)
+	{
+		this.playerPosition = playerPosition;
+	}
+	
+	/**
+	 * Get the player's position
+	 * @return playerPosition
+	 * 			Returns the player position. If a position is not set should return null.
+	 */
+	public Position getPlayerPosition()
+	{
+		return this.playerPosition;
+	}
+	
+	
 	/**
 	 * Get this player's player name from the database
 	 * 
