@@ -1,8 +1,6 @@
 package communication.packers;
 import model.QualifiedObservableReport;
-import model.reports.PlayerConnectionReport;
 import model.reports.PlayerMovedReport;
-import communication.messages.MapFileMessage;
 import communication.messages.Message;
 import communication.messages.MovementMessage;
 import communication.packers.MessagePacker;

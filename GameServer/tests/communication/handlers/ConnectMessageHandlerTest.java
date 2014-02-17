@@ -1,7 +1,6 @@
 package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
-import model.Player;
 import model.PlayerManager;
 import model.PlayerPin;
 

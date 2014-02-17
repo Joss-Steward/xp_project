@@ -3,7 +3,6 @@ package communication.packers;
 import static org.junit.Assert.*;
 import model.PlayerManager;
 import model.PlayerPin;
-import model.PlayerPinTest;
 import model.reports.PlayerConnectionReport;
 
 import org.junit.Before;
