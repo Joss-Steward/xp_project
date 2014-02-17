@@ -20,6 +20,9 @@ public class PlayerPin
 
 	static final int EXPIRATION_TIME_UNITS = Calendar.HOUR;
 	static final int EXPIRATION_TIME_QUANTITY = 12;
+	/**
+	 * Used as the default pin in testing
+	 */
 	public static final double DEFAULT_PIN = 0.5;
 	private int playerID;
 
@@ -150,6 +153,12 @@ public class PlayerPin
 	{
 		this.setPin(DEFAULT_PIN);
 	}
+	
+	/**
+	 * Retrieve the PIN from the database
+	 * @return the pin we read
+	 * @throws DatabaseException shouldn't
+	 */
 	public double retrievePin() throws DatabaseException
 	{
 		try
