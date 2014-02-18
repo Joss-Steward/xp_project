@@ -1,5 +1,7 @@
 package view;
 
+import java.util.ArrayList;
+
 import model.CommandQuestScreenOpen;
 import model.ModelFacade;
 
@@ -7,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -20,6 +23,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public class ScreenMap extends ScreenBasic
 {
 	OrthogonalTiledMapRenderer mapRenderer;
+	PlayerSpriteFactory playerFactory;
+	ArrayList<PlayerSprite> characters;
+	PlayerSprite mySprite;
 
 	private OrthographicCamera camera;
 	private float unitScale;
@@ -29,7 +35,6 @@ public class ScreenMap extends ScreenBasic
 	 */
 	public ScreenMap()
 	{
-
 		stage = new Stage();
 		unitScale = 1 / 32f;
 		camera = new OrthographicCamera();
@@ -119,7 +124,6 @@ public class ScreenMap extends ScreenBasic
 	{
 		System.out.println("updated tile map in the screen " + tiledMap);
 		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, unitScale);
-
 	}
 
 	/**
@@ -128,7 +132,6 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void show()
 	{
-
+		playerFactory = new PlayerSpriteFactory(Gdx.files.internal("data/characters.pack"));
 	}
-
 }
