@@ -3,13 +3,13 @@ package model.reports;
 import model.QualifiedObservableReport;
 
 /**
- * Is sent when the player on this client has completed the connection to an
+ * Is sent when a player not on this client has completed the connection to an
  * area server (must be sent AFTER the map report has been sent)
  * 
  * @author Merlin
  * 
  */
-public class ThisPlayerConnectedToAreaServerReport implements QualifiedObservableReport
+public class OtherPlayerConnectedToAreaServerReport implements QualifiedObservableReport
 {
 
 	private String playerName;
@@ -23,7 +23,7 @@ public class ThisPlayerConnectedToAreaServerReport implements QualifiedObservabl
 	 *            the type of the player
 	 * @see view.PlayerType
 	 */
-	public ThisPlayerConnectedToAreaServerReport(String playerName, String playerType)
+	public OtherPlayerConnectedToAreaServerReport(String playerName, String playerType)
 	{
 		this.playerName = playerName;
 		this.playerType = playerType;
