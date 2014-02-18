@@ -11,7 +11,7 @@ public class CommandLogin extends Command
 	private String password;
 
 	/**
-	 * @param name the username
+	 * @param name the player's name
 	 * @param password the password
 	 */
 	public CommandLogin(String name, String password)

@@ -15,8 +15,7 @@ public class ModelFacade
 	private static ModelFacade singleton;
 
 	/**
-	 * @param headless
-	 *            TODO
+	 * @param headless true if we are running libgdx headless
 	 * @return the only one of these there is
 	 */
 	public synchronized static ModelFacade getSingleton(boolean headless)
@@ -29,7 +28,8 @@ public class ModelFacade
 	}
 
 	/**
-	 * @param headless TODO
+	 * Used for testing to reset the state of the model
+	 * @param headless true if we are running libgdx headless
 	 * 
 	 */
 	public synchronized static void resetSingleton(boolean headless)
@@ -45,8 +45,7 @@ public class ModelFacade
 	/**
 	 * Make the default constructor private
 	 * 
-	 * @param headless
-	 *            TODO
+	 * @param headless true if we are running libgdx headless
 	 */
 	private ModelFacade(boolean headless)
 	{

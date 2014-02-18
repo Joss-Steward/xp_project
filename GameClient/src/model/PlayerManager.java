@@ -54,13 +54,13 @@ public class PlayerManager
 	}
 
 	/**
-	 * Get a player with the given user name
-	 * @param userName the unique user name of the player in which we are interested
+	 * Get a player with the given player name
+	 * @param playerName the unique player name of the player in which we are interested
 	 * @return the appropriate Player object or null if no such player exists
 	 */
-	public Player getPlayerNamed(String userName)
+	public Player getPlayerNamed(String playerName)
 	{
-		return playerList.get(userName);
+		return playerList.get(playerName);
 	}
 
 	/**

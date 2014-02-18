@@ -18,8 +18,8 @@ public class ConnectionMessageTest
 	public void testToString()
 	{
 		ConnectMessage msg = new ConnectMessage(50, 32432);
-		assertEquals("Connect Message: userID = 50 and pin = 32432.0", msg.toString());
-		assertEquals(50, msg.getUserID());
+		assertEquals("Connect Message: playerID = 50 and pin = 32432.0", msg.toString());
+		assertEquals(50, msg.getPlayerID());
 		assertEquals(32432, msg.getPin(),0.0001);
 	}
 	

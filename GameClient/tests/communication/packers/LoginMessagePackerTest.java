@@ -24,7 +24,7 @@ public class LoginMessagePackerTest
 	{
 		LoginMessagePacker packer = new LoginMessagePacker();
 		LoginMessage msg = (LoginMessage) packer.pack(new LoginInitiatedReport("harry","elizabeth"));
-		assertEquals("harry", msg.getUserName());
+		assertEquals("harry", msg.getPlayerName());
 		assertEquals("elizabeth", msg.getPassword());
 	};
 

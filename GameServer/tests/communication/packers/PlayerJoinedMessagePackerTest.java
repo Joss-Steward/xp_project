@@ -2,6 +2,7 @@ package communication.packers;
 
 import static org.junit.Assert.*;
 import model.PlayerManager;
+import model.PlayerPin;
 import model.reports.PlayerConnectionReport;
 
 import org.junit.Before;
@@ -33,10 +34,10 @@ public class PlayerJoinedMessagePackerTest
 	@Test
 	public void ifThePlayerIsNotOnThisConnection()
 	{
-		PlayerManager.getSingleton().addPlayer(1, 1234);
+		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
-		stateAccumulator.setPlayerUserId(1);
-		PlayerManager.getSingleton().addPlayer(2,234);
+		stateAccumulator.setPlayerId(1);
+		PlayerManager.getSingleton().addPlayer(2, PlayerPin.DEFAULT_PIN);
 
 		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager.getSingleton()
 				.getPlayerFromID(2));
@@ -53,9 +54,9 @@ public class PlayerJoinedMessagePackerTest
 	@Test
 	public void ifThePlayerIsOnThisConnection()
 	{
-		PlayerManager.getSingleton().addPlayer(1, 1234);
+		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
-		stateAccumulator.setPlayerUserId(1);
+		stateAccumulator.setPlayerId(1);
 
 		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager.getSingleton()
 				.getPlayerFromID(1));

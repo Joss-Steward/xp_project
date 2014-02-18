@@ -51,12 +51,12 @@ public class ClientRunner
 						new Position(Integer.parseInt(positionParts[0]),
 								Integer.parseInt(positionParts[1])));
 				modelFacade.queueCommand(command);
-				System.out.println("user moved " + PlayerManager.getSingleton().getThisClientsPlayer().getID() + " to " + positionParts[0] + ", " + positionParts[1]);
+				System.out.println("player moved " + PlayerManager.getSingleton().getThisClientsPlayer().getID() + " to " + positionParts[0] + ", " + positionParts[1]);
 			} else if (tokens[0].equalsIgnoreCase("login"))
 			{
 				CommandLogin command = new CommandLogin(tokens[1],tokens[2]);
 				modelFacade.queueCommand(command);
-				System.out.println("user specified id " + tokens[1]);
+				System.out.println("player specified id " + tokens[1]);
 			} else 
 			{
 				System.out.println("unrecognized command " + tokens[0]);

@@ -16,7 +16,7 @@ public class LoginMessageHandler extends MessageHandler
 
 
 	/**
-	 * When a user tries to login, we should tell the model so that it can check the credentials
+	 * When a player tries to login, we should tell the model so that it can check the credentials
 	 * @see MessageHandler#process(Message)
 	 */
 	@Override
@@ -24,7 +24,7 @@ public class LoginMessageHandler extends MessageHandler
 	{
 		System.out.println("Received a login message: " + msg);
 		LoginMessage loginMsg = (LoginMessage)msg;
-		PlayerManager.getSingleton().login(loginMsg.getUserName(),loginMsg.getPassword());
+		PlayerManager.getSingleton().login(loginMsg.getPlayerName(),loginMsg.getPassword());
 	}
 
 	/**

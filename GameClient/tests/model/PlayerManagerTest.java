@@ -45,7 +45,7 @@ public class PlayerManagerTest
 	}
 	
 	/**
-	 * Make sure we can add players and retrieve them by their user names
+	 * Make sure we can add players and retrieve them by their player names
 	 */
 	@Test
 	public void canAddAndRetrievePlayers()

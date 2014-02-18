@@ -77,7 +77,6 @@ public class ConnectionManager
 	 */
 	public ConnectionManager()
 	{
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -143,7 +142,7 @@ public class ConnectionManager
 	}
 
 	/**
-	 * @return the player ID for the user connected through this connection
+	 * @return the player ID for the player connected through this connection
 	 */
 	public int getPlayerID()
 	{
@@ -151,18 +150,18 @@ public class ConnectionManager
 	}
 
 	/**
-	 * set the playerID for the user connected through this connection
+	 * set the playerID for the player connected through this connection
 	 * 
 	 * @param playerID
 	 *            the playerID
 	 * 
 	 */
-	public void setPlayerUserId(int playerID)
+	public void setPlayerID(int playerID)
 	{
 		this.playerID = playerID;
 		if (stateAccumulator != null)
 		{
-			stateAccumulator.setPlayerUserId(playerID);
+			stateAccumulator.setPlayerId(playerID);
 		}
 	}
 }

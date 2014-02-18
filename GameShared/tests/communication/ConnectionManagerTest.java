@@ -19,9 +19,9 @@ public class ConnectionManagerTest
 	{
 		ConnectionManager cm = new ConnectionManager ();
 		cm.stateAccumulator = new StateAccumulator(null);
-		cm.setPlayerUserId(33);
+		cm.setPlayerID(33);
 		assertEquals(33, cm.getPlayerID());
-		assertEquals(33, cm.stateAccumulator.getPlayerUserID());
+		assertEquals(33, cm.stateAccumulator.getPlayerID());
 	}
 	
 

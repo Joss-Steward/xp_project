@@ -33,7 +33,7 @@ public class LoginSuccessfulMessageHandler extends MessageHandler
 			{
 				connectionManager.moveToNewSocket(
 						new Socket(rMsg.getHostName(), rMsg.getPortNumber()),
-						rMsg.getUserID(), rMsg.getPin());
+						rMsg.getPlayerID(), rMsg.getPin());
 			} catch (IOException e)
 			{
 				e.printStackTrace();

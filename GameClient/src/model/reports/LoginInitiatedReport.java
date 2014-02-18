@@ -3,7 +3,7 @@ package model.reports;
 import model.QualifiedObservableReport;
 
 /**
- * This report is sent when the user initiates his login to the system
+ * This report is sent when the player initiates his login to the system
  * @author Merlin
  * 
  */
@@ -14,8 +14,8 @@ public final class LoginInitiatedReport implements QualifiedObservableReport
 	private final String password;
 
 	/**
-	 * @param name the users username
-	 * @param password the users password
+	 * @param name the player's name
+	 * @param password the player's password
 	 */
 	public LoginInitiatedReport(String name, String password)
 	{
@@ -61,7 +61,7 @@ public final class LoginInitiatedReport implements QualifiedObservableReport
 	/**
 	 * @return the name
 	 */
-	public String getUserName()
+	public String getPlayerName()
 	{
 		return name;
 	}

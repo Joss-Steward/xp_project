@@ -12,15 +12,15 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 {
 
 	private final Position newPosition;
-	private final int userID;
+	private final int playerID;
 	/**
-	 * @param userID the ID of the player that moved
+	 * @param playerID the ID of the player that moved
 	 * @param position the position he moved to
 	 */
-	public PlayerMovedReport(int userID, Position position)
+	public PlayerMovedReport(int playerID, Position position)
 	{
 		newPosition = position;
-		this.userID = userID;
+		this.playerID = playerID;
 	}
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -53,9 +53,9 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 	/**
 	 * @return the playerID
 	 */
-	public int getUserID()
+	public int getPlayerID()
 	{
-		return userID;
+		return playerID;
 	}
 	/**
 	 * @see java.lang.Object#hashCode()

@@ -18,8 +18,8 @@ public class LoginInitiatedReportTest
 	@Test
 	public void creation()
 	{
-		LoginInitiatedReport report = new LoginInitiatedReport("username", "pw");
-		assertEquals("username", report.getUserName());
+		LoginInitiatedReport report = new LoginInitiatedReport("playername", "pw");
+		assertEquals("playername", report.getPlayerName());
 		assertEquals("pw",report.getPassword());
 	}
 

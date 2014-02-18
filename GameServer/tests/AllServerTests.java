@@ -1,14 +1,19 @@
+import model.AddCommandTest;
 import model.PlayerManagerTest;
+import model.PlayerPinTest;
 import model.PlayerTest;
 import model.reports.PlayerConnectionReportTest;
 import model.reports.PlayerMovedReportTest;
 
+import org.junit.ClassRule;
+import org.junit.rules.ExternalResource;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import communication.handlers.ConnectMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
 import communication.packers.MapFileMessagePackerTest;
+import communication.packers.MovementMessagePackerTest;
 import communication.packers.PlayerJoinedMessagePackerTest;
 
 /**
@@ -28,10 +33,12 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 	MovementMessageHandlerTest.class,
 	
 	//communication.packers
+	MovementMessagePackerTest.class,
 	MapFileMessagePackerTest.class,
 	PlayerJoinedMessagePackerTest.class,
 	
 	// model
+	AddCommandTest.class,
 	PlayerManagerTest.class,
 	PlayerTest.class,
 	
@@ -42,6 +49,21 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 
 public class AllServerTests
 {
+	 /**
+		 * Make sure we default all of the PINs at the beginning of running the
+		 * tests so that none will be expired
+		 */
+		@ClassRule
+		    public static ExternalResource testRule = new ExternalResource(){
+		            @Override
+		            protected void before() throws Throwable{
+		               PlayerPinTest.defaultAllPins();
+		            };
 
+		            @Override
+		            protected void after(){
+		               
+		            };
+		        };
 }
 

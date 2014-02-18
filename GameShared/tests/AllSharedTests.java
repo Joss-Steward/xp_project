@@ -1,6 +1,10 @@
+import model.PlayerLoginTest;
+import model.PlayerPinTest;
 import model.QualifiedObservableTest;
 import model.QualifiedObserverConnectorTest;
 
+import org.junit.ClassRule;
+import org.junit.rules.ExternalResource;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -61,6 +65,9 @@ import data.PositionTest;
 		PositionTest.class,
 
 		// model
+		// DatabaseTest.class
+		PlayerLoginTest.class,
+		PlayerPinTest.class,
 		QualifiedObservableTest.class,
 		//QualifiedObservableTestInherited.class,
 		QualifiedObserverConnectorTest.class,
@@ -74,5 +81,22 @@ import data.PositionTest;
 })
 public class AllSharedTests
 {
+
+	 /**
+	 * Make sure we default all of the PINs at the beginning of running the
+	 * tests so that none will be expired
+	 */
+	@ClassRule
+	    public static ExternalResource testRule = new ExternalResource(){
+	            @Override
+	            protected void before() throws Throwable{
+	               PlayerPinTest.defaultAllPins();
+	            };
+
+	            @Override
+	            protected void after(){
+	               
+	            };
+	        };
 
 }

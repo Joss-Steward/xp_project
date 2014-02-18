@@ -13,25 +13,25 @@ public class ConnectMessage implements Message, Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int userID;
+	private int playerID;
 	private double pin;
 
 	/**
-	 * @param userID the user ID we should use to connect
+	 * @param playerID the player ID we should use to connect
 	 * @param pin the pin we were given to validate this connection request
 	 */
-	public ConnectMessage(int userID, double pin)
+	public ConnectMessage(int playerID, double pin)
 	{
-		this.userID = userID;
+		this.playerID = playerID;
 		this.pin = pin;
 	}
 
 	/**
-	 * @return the userID
+	 * @return the playerID
 	 */
-	public int getUserID()
+	public int getPlayerID()
 	{
-		return userID;
+		return playerID;
 	}
 
 	/**
@@ -48,6 +48,6 @@ public class ConnectMessage implements Message, Serializable
 	 */
 	public String toString()
 	{
-		return "Connect Message: userID = " + userID + " and pin = " + pin;
+		return "Connect Message: playerID = " + playerID + " and pin = " + pin;
 	}
 }

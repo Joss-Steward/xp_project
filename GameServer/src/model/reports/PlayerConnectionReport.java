@@ -26,17 +26,17 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 	}
 
 	/**
-	 * @return the users ID
+	 * @return the player's unique ID
 	 */
-	public int getUserID()
+	public int getPlayerID()
 	{
 		return playerID;
 	}
 
 	/**
-	 * @return the users name
+	 * @return the player's name
 	 */
-	public String getUserName()
+	public String getPlayerName()
 	{
 		return playerName;
 	}

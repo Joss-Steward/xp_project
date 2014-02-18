@@ -1,12 +1,13 @@
 package communication.handlers;
 
-import model.PlayerManager;
+import model.AddPlayerCommand;
+import model.ModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.ConnectMessage;
 import communication.messages.Message;
 
 /**
- * Handles a message that the user is connecting to this area server
+ * Handles a message that the player is connecting to this area server
  * 
  * @author merlin
  * 
@@ -15,7 +16,7 @@ public class ConnectMessageHandler extends MessageHandler
 {
 
 	/**
-	 * Add this user to the player list
+	 * Add this player to the player list
 	 * 
 	 * @see communication.handlers.MessageHandler#process(communication.messages.Message)
 	 */
@@ -25,14 +26,12 @@ public class ConnectMessageHandler extends MessageHandler
 		if (msg.getClass().equals(ConnectMessage.class))
 		{
 			ConnectMessage cMsg = (ConnectMessage) msg;
-			// assume this connection is going to work
 			if (connectionManager != null)
 			{
-				connectionManager.setPlayerUserId(cMsg.getUserID());
+				connectionManager.setPlayerID(cMsg.getPlayerID());
 			}
-			PlayerManager.getSingleton().addPlayer(cMsg.getUserID(), cMsg.getPin());
-			// TODO what should we do if the information in the message isn't correct
-			
+			AddPlayerCommand cmd = new AddPlayerCommand(cMsg.getPlayerID(), cMsg.getPin());
+			ModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

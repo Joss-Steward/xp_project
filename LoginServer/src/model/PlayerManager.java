@@ -42,7 +42,7 @@ public class PlayerManager extends QualifiedObservable
 
 	/**
 	 * Attempt to login to the system.  Credentials will be checked and appropriate reports will be made
-	 * @param playerName the user name
+	 * @param playerName the player's name
 	 * @param password the password
 	 */
 	public void login(String playerName, String password)
@@ -51,7 +51,8 @@ public class PlayerManager extends QualifiedObservable
 		{
 			PlayerLogin pl = new PlayerLogin(playerName, password);
 			numberOfPlayers++;
-			LoginSuccessfulReport report = new LoginSuccessfulReport(pl.getPlayerID(), "localhost",1872, pl.generatePin()); 
+			PlayerPin pp = new PlayerPin(pl.getPlayerID());
+			LoginSuccessfulReport report = new LoginSuccessfulReport(pl.getPlayerID(), "localhost",1872, pp.generatePin()); 
 			this.notifyObservers(report);
 		} catch (DatabaseException e)
 		{
