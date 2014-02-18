@@ -1,0 +1,19 @@
+
+characters.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+male_b
+  rotate: false
+  xy: 0, 0
+  size: 130, 194
+  orig: 130, 194
+  offset: 0, 0
+  index: -1
+male_a
+  rotate: false
+  xy: 130, 0
+  size: 130, 194
+  orig: 130, 194
+  offset: 0, 0
+  index: -1
