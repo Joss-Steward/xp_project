@@ -109,7 +109,7 @@ public class ScreenLogin extends ScreenBasic
 					connectButton.setDisabled(true);
 					connectingLabel.setVisible(true);
 					
-//					Create the login command to allow the player to login
+					//Create the login command to allow the player to login
 					CommandLogin lc = new CommandLogin(loginField.getText(), pwField.getText());
 					ModelFacade.getSingleton(false).queueCommand(lc);
 					return true;
@@ -188,8 +188,8 @@ public class ScreenLogin extends ScreenBasic
 	@Override
 	public void render(float arg0)
 	{
-		Gdx.graphics.getGL10().glClearColor( 0, 0, 0, 1 );
-		Gdx.graphics.getGL10().glClear( GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT );
+		Gdx.gl.glClearColor( 0, 0, 0, 1 );
+		Gdx.gl.glClear( GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT );
 		
 		stage.act();
 		stage.draw();
