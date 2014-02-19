@@ -4,6 +4,9 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+/**
+ * A Factory for generating renderable instances of players on a map
+ */
 public class PlayerSpriteFactory {
 
 	private TextureAtlas atlas;
