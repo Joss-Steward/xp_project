@@ -1,17 +1,20 @@
 package view;
 
-import java.util.ArrayList;
-
 import model.CommandQuestScreenOpen;
 import model.ModelFacade;
+import model.PlayerManager;
+import model.QualifiedObservableConnector;
+import model.reports.ThisPlayerConnectedToAreaServerReport;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * A basic screen that, for now, just displays the map
@@ -23,11 +26,12 @@ public class ScreenMap extends ScreenBasic
 {
 	OrthogonalTiledMapRenderer mapRenderer;
 	PlayerSpriteFactory playerFactory;
-	ArrayList<PlayerSprite> characters;
+	Array<PlayerSprite> characters;
 	PlayerSprite mySprite;
 
 	private OrthographicCamera camera;
-	private float unitScale;
+	private SpriteBatch batch;
+	public final float unitScale;
 
 	/**
 	 * 
@@ -35,11 +39,14 @@ public class ScreenMap extends ScreenBasic
 	public ScreenMap()
 	{
 		stage = new Stage();
-		unitScale = 1 / 32f;
+		//unitScale = 1 / 32f;
+		unitScale = .5f;
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 30, 20);
+		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
 		stage.setCamera(camera);
+		batch = new SpriteBatch();
+		characters = new Array<PlayerSprite>();
 	}
 
 	/**
@@ -72,7 +79,10 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void render(float delta)
 	{
-
+		// TODO once movement is working, uncomment these so the camera follows the player
+		//camera.position.x = this.mySprite.getX();
+		//camera.position.y = this.mySprite.getY();
+		camera.update();
 		stage.act();
 		stage.draw();
 
@@ -84,6 +94,12 @@ public class ScreenMap extends ScreenBasic
 		{
 			mapRenderer.setView(camera);
 			mapRenderer.render();
+			batch.setProjectionMatrix(camera.combined);
+			batch.begin();
+			for (PlayerSprite s : this.characters) {
+				s.draw(batch);
+			}
+			batch.end();
 		}
 		// mapRenderer.render(backgroundLayers);
 		// renderMyCustomSprites();
@@ -132,5 +148,26 @@ public class ScreenMap extends ScreenBasic
 	public void show()
 	{
 		playerFactory = new PlayerSpriteFactory(Gdx.files.internal("data/characters.pack"));
+
+		// FIXME forcibly send the thisplayerconnectedreport so we can have visual feedback until it is implemented
+		ThisPlayerConnectedToAreaServerReport report = new ThisPlayerConnectedToAreaServerReport(
+					PlayerManager.getSingleton().getThisClientsPlayer().getName(), 
+					PlayerType.MALEA.toString());
+		Screens.MAP_SCREEN.getScreenListener().update(null, report);
+	}
+
+	/**
+	 * Adds a new renderable instance of a player, identified by their name, to the map
+	 * @param playerName
+	 * 			name of the player being added
+	 * @param type
+	 * 			sprite type visible to others
+	 * @return The sprite created if successfully added
+	 */
+	public PlayerSprite addPlayer(String playerName, PlayerType type) {
+		PlayerSprite sprite = playerFactory.create(type);
+		characters.add(sprite);
+		
+		return sprite;
 	}
 }
