@@ -5,7 +5,10 @@ import model.reports.NewMapReport;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+
+import data.Position;
 
 /**
  * @author Merlin
@@ -15,6 +18,7 @@ public class MapManager extends QualifiedObservable {
 
 	private static MapManager singleton;
 	private TiledMap tiledMap;
+	private boolean[][] passabilityMap;
 	private boolean headless;
 
 	/**
@@ -77,12 +81,37 @@ public class MapManager extends QualifiedObservable {
 	}
 
 	/**
-	 * setting the Tiled map for testing purposes
+	 * setting the Tiled map that is managed by this
 	 * 
 	 * @param tiledMap
-	 *            TiledMap map for testing
+	 *            TiledMap map
 	 */
-	public void setMapForTesting(TiledMap tiledMap) {
+	public void setMap(TiledMap tiledMap) {
 		this.tiledMap = tiledMap;
+		TiledMapTileLayer collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get("collision");
+		
+		this.passabilityMap = new boolean[collisionLayer.getHeight()][collisionLayer.getWidth()];
+		for (int col = 0; col  < collisionLayer.getWidth(); col++){
+			for (int row = 0; row < collisionLayer.getHeight(); row++){
+				this.passabilityMap[row][col] = collisionLayer.getCell(col, row).getTile().getId() != 0;
+			}
+		}
+	}
+	
+	/**
+	 * @param p The position to check
+	 * @return TRUE if the given position is passable terrain, FALSE if not
+	 */
+	public boolean getIsTilePassable(Position p) {		
+		return this.passabilityMap[p.getRow()][p.getColumn()];
+	}
+	
+	/**
+	 * Sets the passabilityMap for testing purposes
+	 * @param pass The new passabilityMap
+	 */
+	public void setPassability(boolean[][] pass)
+	{
+		this.passabilityMap = pass;
 	}
 }
