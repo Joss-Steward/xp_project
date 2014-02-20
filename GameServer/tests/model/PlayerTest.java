@@ -19,6 +19,53 @@ public class PlayerTest extends DatabaseTest
 {
 
 	/**
+	 * The players that are in the test database
+	 * 
+	 * @author Merlin
+	 * 
+	 */
+	public enum Players
+	{
+		/**
+		 * 
+		 */
+		JOHN(1, "male_a"),
+		/**
+		 * 
+		 */
+		MERLIN(2, "male_b");
+
+		private int playerID;
+		
+		/**
+		 * Get the player's unique ID 
+		 * @return the id
+		 */
+		public int getPlayerID()
+		{
+			return playerID;
+		}
+
+		/**
+		 * Get the player's player type
+		 * @return a string that matches the name of one of the members of the enum PlayerTypes
+		 */
+		public String getPlayerType()
+		{
+			return playerType;
+		}
+
+		private String playerType;
+
+		Players(int id, String type)
+		{
+			this.playerID = id;
+			this.playerType = type;
+		}
+
+		
+	}	
+	/**
 	 * Make sure we can retrieve a player's unique name from the db
 	 * 
 	 * @throws DatabaseException

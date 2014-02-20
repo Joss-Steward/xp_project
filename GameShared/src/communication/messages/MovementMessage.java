@@ -17,27 +17,28 @@ public class MovementMessage implements Message, Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final int playerID;
+	private final String playerName;
 	private final Position position;
 	
 	/**
 	 * 
-	 * @param playerID The player who moved
+	 * @param playerName The player who moved
 	 * @param p Where the player moved to
 	 */
-	public MovementMessage(int playerID, Position p)
+	public MovementMessage(String playerName, Position p)
 	{
-		this.playerID = playerID;
+		this.playerName = playerName;
 		this.position = p;
 	}
 
 	/**
 	 * @return the player who moved
 	 */
-	public int getPlayerID()
+	public String getPlayerName()
 	{
-		return playerID;
+		return playerName;
 	}
+
 
 	/**
 	 * 
@@ -48,9 +49,8 @@ public class MovementMessage implements Message, Serializable
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + playerID;
-		result = prime * result
-				+ ((position == null) ? 0 : position.hashCode());
+		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
+		result = prime * result + ((position == null) ? 0 : position.hashCode());
 		return result;
 	}
 
@@ -68,7 +68,11 @@ public class MovementMessage implements Message, Serializable
 		if (!(obj instanceof MovementMessage))
 			return false;
 		MovementMessage other = (MovementMessage) obj;
-		if (playerID != other.playerID)
+		if (playerName == null)
+		{
+			if (other.playerName != null)
+				return false;
+		} else if (!playerName.equals(other.playerName))
 			return false;
 		if (position == null)
 		{
@@ -93,7 +97,7 @@ public class MovementMessage implements Message, Serializable
 	 */
 	public String toString()
 	{
-		return "Movement Message: playerID = " + playerID  + ", position = " + position;
+		return "Movement Message: playerID = " + playerName  + ", position = " + position;
 	}
 
 }

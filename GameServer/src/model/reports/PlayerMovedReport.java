@@ -13,14 +13,17 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 
 	private final Position newPosition;
 	private final int playerID;
+	private String playerName;
 	/**
 	 * @param playerID the ID of the player that moved
+	 * @param playerName the unique name of the player that moved
 	 * @param position the position he moved to
 	 */
-	public PlayerMovedReport(int playerID, Position position)
+	public PlayerMovedReport(int playerID, String playerName, Position position)
 	{
 		newPosition = position;
 		this.playerID = playerID;
+		this.playerName = playerName;
 	}
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -67,6 +70,15 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 		int result = 1;
 		result = prime * result + ((newPosition == null) ? 0 : newPosition.hashCode());
 		return result;
+	}
+	
+	/**
+	 * Get the players unique name
+	 * @return the name
+	 */
+	public String getPlayerName()
+	{
+		return playerName;
 	}
 
 }
