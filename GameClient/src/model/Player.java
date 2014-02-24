@@ -9,6 +9,7 @@ package model;
 {
 
 	private final int playerID;
+	private String playerName;
 
 	/**
 	 * Create a player 
@@ -60,6 +61,26 @@ package model;
 	public int getPlayerID()
 	{
 		return playerID;
+	}
+
+
+	/**
+	 * get this player's unique name
+	 * @return the name
+	 */
+	public String getPlayerName()
+	{
+		return this.playerName;
+	}
+
+
+	/**
+	 * set this player's name
+	 * @param playerName the new name
+	 */
+	public void setPlayerName(String playerName)
+	{
+		this.playerName = playerName;
 	}
 
 }

@@ -66,11 +66,13 @@ public class PlayerManager
 	/**
 	 * Add a new player to the list of active players
 	 * @param playerID the unique name of the player we should add
+	 * @return the player object we created
 	 */
-	public void addPlayer(int playerID)
+	public Player addPlayer(int playerID)
 	{
 		Player p = new Player(playerID);
 		playerList.put(playerID,p);
+		return p;
 	}
 
 }

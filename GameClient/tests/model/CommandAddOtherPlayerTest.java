@@ -18,12 +18,13 @@ public class CommandAddOtherPlayerTest
 	@Test
 	public void addsCorrectly()
 	{
-		CommandAddOtherPlayer cmd = new CommandAddOtherPlayer(4);
+		CommandAddOtherPlayer cmd = new CommandAddOtherPlayer(4, "Henry");
 		PlayerManager pm = PlayerManager.getSingleton();
 		assertNull (pm.getPlayerFromID(4));
 		assertTrue(cmd.execute());
 		Player p = pm.getPlayerFromID(4);
 		assertEquals(4, p.getPlayerID());
+		assertEquals("Henry", p.getPlayerName());
 	}
 
 }
