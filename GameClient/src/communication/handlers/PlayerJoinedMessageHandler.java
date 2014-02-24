@@ -26,7 +26,8 @@ public class PlayerJoinedMessageHandler extends MessageHandler
 	{
 		System.out.println("received " + msg);
 		PlayerJoinedMessage playerJoinedMessage = (PlayerJoinedMessage)msg;
-		PlayerManager.getSingleton().addPlayer(playerJoinedMessage.getPlayerName());
+		// There should be a command for this!!!! and it should set the name, too
+		PlayerManager.getSingleton().addPlayer(playerJoinedMessage.getPlayerID());
 	}
 
 	/**

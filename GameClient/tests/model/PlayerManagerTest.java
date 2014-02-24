@@ -51,18 +51,18 @@ public class PlayerManagerTest
 	public void canAddAndRetrievePlayers()
 	{
 		PlayerManager pm = PlayerManager.getSingleton();
-		Player p1 = new Player("First");
-		Player p2 = new Player("Second");
-		Player p3 = new Player("Third");
-		pm.addPlayer("First");
-		assertEquals(p1, pm.getPlayerNamed("First"));
-		pm.addPlayer("Second");
-		assertEquals(p1, pm.getPlayerNamed("First"));
-		assertEquals(p2, pm.getPlayerNamed("Second"));
-		pm.addPlayer("Third");
-		assertEquals(p1, pm.getPlayerNamed("First"));
-		assertEquals(p2, pm.getPlayerNamed("Second"));
-		assertEquals(p3, pm.getPlayerNamed("Third"));
+		Player p1 = new Player(1);
+		Player p2 = new Player(2);
+		Player p3 = new Player(3);
+		pm.addPlayer(1);
+		assertEquals(p1, pm.getPlayerFromID(1));
+		pm.addPlayer(2);
+		assertEquals(p1, pm.getPlayerFromID(1));
+		assertEquals(p2, pm.getPlayerFromID(2));
+		pm.addPlayer(3);
+		assertEquals(p1, pm.getPlayerFromID(1));
+		assertEquals(p2, pm.getPlayerFromID(2));
+		assertEquals(p3, pm.getPlayerFromID(3));
 	}
 }
 
