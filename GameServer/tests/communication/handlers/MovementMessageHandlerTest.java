@@ -1,6 +1,5 @@
 package communication.handlers;
-import static org.junit.Assert.fail;
-
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
@@ -12,22 +11,28 @@ public class MovementMessageHandlerTest
 {
 
 	/**
-	 * All incoming MovementMessages should be reported to the MovementNotifier.  We check this by
-	 * making sure that the MovementNotifier's observers get notified.
+	 * Start with a player in a position, send that player through a movement message and ensure that
+	 * the player has the new position
 	 */
 	@Test
-	public void tellsMovementNotifier()
+	public void updatesAPlayerPosition()
 	{
-		fail("it should tell somethign in the engine");
-//		Observer obs = EasyMock.createMock(Observer.class);
-//		MovementNotifier.getSingleton().addObserver(obs);
-//		obs.update(EasyMock.isA(MovementNotifier.class), EasyMock.isA(MovementMessage.class));
-//		EasyMock.replay(obs);
+		fail("This test requires a change to the MovementMessage");
+//		String playerName = "John";
+//		Position startPosition = new Position(0,0);
+//		Position newPosition = new Position(10, 10);
 //		
+//		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
+//		Player p = PlayerManager.getSingleton().getPlayerFromID(1);
+//		p.setPlayerPosition(startPosition);
+//		
+//		assertEquals(startPosition, p.getPlayerPosition());
+//		
+//		MovementMessage msg = new MovementMessage(playerName, newPosition);
 //		MovementMessageHandler handler = new MovementMessageHandler();
-//		MovementMessage msg = new MovementMessage(45, new Position(32,42));
 //		handler.process(msg);
-//		EasyMock.verify(obs);
+//		
+//		assertEquals(newPosition, p.getPlayerPosition());
 	}
 
 }
