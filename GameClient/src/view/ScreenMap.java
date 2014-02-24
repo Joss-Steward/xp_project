@@ -3,7 +3,6 @@ package view;
 import model.CommandQuestScreenOpen;
 import model.ModelFacade;
 import model.PlayerManager;
-import model.QualifiedObservableConnector;
 import model.reports.ThisPlayerConnectedToAreaServerReport;
 
 import com.badlogic.gdx.Gdx;
@@ -97,6 +96,7 @@ public class ScreenMap extends ScreenBasic
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
 			for (PlayerSprite s : this.characters) {
+				s.update(delta);
 				s.draw(batch);
 			}
 			batch.end();
@@ -154,6 +154,8 @@ public class ScreenMap extends ScreenBasic
 					PlayerManager.getSingleton().getThisClientsPlayer().getName(), 
 					PlayerType.MALEA.toString());
 		Screens.MAP_SCREEN.getScreenListener().update(null, report);
+		
+		this.mySprite.setPosition(32, 32);
 	}
 
 	/**
