@@ -1,14 +1,18 @@
 package model;
 
+import model.reports.OtherPlayerMovedReport;
+import data.Position;
+
 /**
  * Holds the information about one player in the system
  * @author merlin
  *
  */
- class Player
+ class Player extends QualifiedObservable
 {
 
 	private final String playerName;
+	private Position playerPosition;
 
 	/**
 	 * Create a player 
@@ -54,6 +58,28 @@ package model;
 	public String getPlayerName()
 	{
 		return playerName;
+	}
+	
+	/**
+	 * Move the player's position
+	 * @param playerPosition
+	 * 			The new location the player is
+	 * Assuming a valid position.  Error checking else where
+	 */
+	public void move(Position playerPosition)
+	{
+		this.playerPosition = playerPosition;
+		this.notifyObservers(new OtherPlayerMovedReport(playerPosition));
+	}
+	
+	/**
+	 * Get the player's position
+	 * @return playerPosition
+	 * 			Returns the player position. If a position is not set should return null.
+	 */
+	public Position getPlayerPosition()
+	{
+		return this.playerPosition;
 	}
 
 }
