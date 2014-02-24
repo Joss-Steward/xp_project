@@ -13,12 +13,12 @@ public class PlayerManager
 {
 
 	private static PlayerManager singleton;
-	private HashMap<String, Player> playerList;
+	private HashMap<Integer, Player> playerList;
 
 	private PlayerManager()
 	{
 		thisClientsPlayer = new ThisClientsPlayer();
-		playerList = new HashMap<String,Player>();
+		playerList = new HashMap<Integer,Player>();
 	}
 
 	/**
@@ -54,23 +54,25 @@ public class PlayerManager
 	}
 
 	/**
-	 * Get a player with the given player name
-	 * @param playerName the unique player name of the player in which we are interested
+	 * Get a player with the given player id
+	 * @param playerID the unique player id of the player in which we are interested
 	 * @return the appropriate Player object or null if no such player exists
 	 */
-	public Player getPlayerNamed(String playerName)
+	public Player getPlayerFromID(int playerID)
 	{
-		return playerList.get(playerName);
+		return playerList.get(playerID);
 	}
 
 	/**
 	 * Add a new player to the list of active players
-	 * @param playerName the unique name of the player we should add
+	 * @param playerID the unique name of the player we should add
+	 * @return the player object we created
 	 */
-	public void addPlayer(String playerName)
+	public Player addPlayer(int playerID)
 	{
-		Player p = new Player(playerName);
-		playerList.put(p.getPlayerName(),p);
+		Player p = new Player(playerID);
+		playerList.put(playerID,p);
+		return p;
 	}
 
 }

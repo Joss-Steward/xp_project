@@ -17,8 +17,9 @@ public class PlayerJoinedMessageTest
 	@Test
 	public void testToString()
 	{
-		PlayerJoinedMessage msg = new PlayerJoinedMessage("fred");
+		PlayerJoinedMessage msg = new PlayerJoinedMessage(3, "fred");
 		assertEquals("PlayerJoined Message: playerName = fred", msg.toString());
+		assertEquals(3, msg.getPlayerID());
 		assertEquals("fred", msg.getPlayerName());
 	}
 	

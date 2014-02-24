@@ -15,13 +15,25 @@ public class PlayerJoinedMessage implements Message, Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 	private final String playerName;
+	private int playerID;
 
 	/**
+	 * @param playerID the unique ID of the player
 	 * @param playerName the name of the new player
 	 */
-	public PlayerJoinedMessage(String playerName)
+	public PlayerJoinedMessage(int playerID, String playerName)
 	{
+		this.playerID = playerID;
 		this.playerName = playerName;
+	}
+
+	/**
+	 * get this player's unique ID
+	 * @return the player's ID
+	 */
+	public int getPlayerID()
+	{
+		return playerID;
 	}
 
 	/**

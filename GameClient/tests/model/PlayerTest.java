@@ -20,8 +20,8 @@ public class PlayerTest
 	@Test
 	public void initialization()
 	{
-		Player p = new Player("Fred");
-		assertEquals("Fred", p.getPlayerName());
+		Player p = new Player(1);
+		assertEquals(1, p.getPlayerID());
 	}
 
 	/**

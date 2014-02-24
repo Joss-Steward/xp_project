@@ -5,29 +5,39 @@ package model;
  * @author merlin
  *
  */
- class Player
+ public class Player
 {
 
-	private final String playerName;
+	private final int playerID;
+	private String playerName;
 
 	/**
 	 * Create a player 
-	 * @param playerName the unique name of this player
+	 * @param playerID the unique ID of this player
 	 */
-	public Player(String playerName)
+	public Player(int playerID)
 	{
-		this.playerName = playerName;
+		this.playerID = playerID;
 	}
 
+	
+	/**
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public final int hashCode()
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
+		result = prime * result + playerID;
 		return result;
 	}
 
+	/**
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public final boolean equals(Object obj)
 	{
@@ -38,22 +48,39 @@ package model;
 		if (!(obj instanceof Player))
 			return false;
 		Player other = (Player) obj;
-		if (playerName == null)
-		{
-			if (other.playerName != null)
-				return false;
-		} else if (!playerName.equals(other.playerName))
+		if (playerID != other.playerID)
 			return false;
 		return true;
 	}
 
+
 	/**
-	 * Get the unique player name for this player
-	 * @return the player name
+	 * Get the unique ID name for this player
+	 * @return the player ID
+	 */
+	public int getPlayerID()
+	{
+		return playerID;
+	}
+
+
+	/**
+	 * get this player's unique name
+	 * @return the name
 	 */
 	public String getPlayerName()
 	{
-		return playerName;
+		return this.playerName;
+	}
+
+
+	/**
+	 * set this player's name
+	 * @param playerName the new name
+	 */
+	public void setPlayerName(String playerName)
+	{
+		this.playerName = playerName;
 	}
 
 }
