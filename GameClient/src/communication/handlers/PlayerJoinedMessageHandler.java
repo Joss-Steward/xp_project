@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import model.CommandAddOtherPlayer;
-import model.PlayerManager;
+import model.ModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.PlayerJoinedMessage;
@@ -27,9 +27,8 @@ public class PlayerJoinedMessageHandler extends MessageHandler
 	{
 		System.out.println("received " + msg);
 		PlayerJoinedMessage playerJoinedMessage = (PlayerJoinedMessage)msg;
-		CommandAddOtherPlayer comd = new CommandAddOtherPlayer(playerJoinedMessage.getPlayerID(), playerJoinedMessage.getPlayerName());
-		// TODO There should be a command for this!!!! and it should set the name, too
-		PlayerManager.getSingleton().addPlayer(playerJoinedMessage.getPlayerID());
+		CommandAddOtherPlayer cmd = new CommandAddOtherPlayer(playerJoinedMessage.getPlayerID(), playerJoinedMessage.getPlayerName());
+		ModelFacade.getSingleton(false).queueCommand(cmd);
 	}
 
 	/**
