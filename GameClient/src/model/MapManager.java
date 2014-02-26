@@ -30,7 +30,7 @@ public class MapManager extends QualifiedObservable {
 		registerReportTypesWeNotify();
 	}
 
-	 /**
+	/**
 	 * Used for testing purposes
 	 */
 	public static void resetSingleton() {
@@ -88,30 +88,39 @@ public class MapManager extends QualifiedObservable {
 	 */
 	public void setMap(TiledMap tiledMap) {
 		this.tiledMap = tiledMap;
-		TiledMapTileLayer collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get("collision");
-		
-		this.passabilityMap = new boolean[collisionLayer.getHeight()][collisionLayer.getWidth()];
-		for (int col = 0; col  < collisionLayer.getWidth(); col++){
-			for (int row = 0; row < collisionLayer.getHeight(); row++){
-				this.passabilityMap[row][col] = collisionLayer.getCell(col, row).getTile().getId() != 0;
-			}
-		}
+
 	}
-	
+
 	/**
-	 * @param p The position to check
+	 * @param p
+	 *            The position to check
 	 * @return TRUE if the given position is passable terrain, FALSE if not
 	 */
-	public boolean getIsTilePassable(Position p) {		
+	public boolean getIsTilePassable(Position p) {
+
+		if (this.passabilityMap.equals(null)) {
+			TiledMapTileLayer collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get("collision");
+
+			this.passabilityMap = new boolean[collisionLayer.getHeight()][collisionLayer.getWidth()];
+			
+			for (int col = 0; col < collisionLayer.getWidth(); col++) {
+				for (int row = 0; row < collisionLayer.getHeight(); row++) {
+					this.passabilityMap[row][col] = collisionLayer
+							.getCell(col, row).getTile().getId() != 0;
+				}
+			}
+		}
+
 		return this.passabilityMap[p.getRow()][p.getColumn()];
 	}
-	
+
 	/**
 	 * Sets the passabilityMap for testing purposes
-	 * @param pass The new passabilityMap
+	 * 
+	 * @param pass
+	 *            The new passabilityMap
 	 */
-	public void setPassability(boolean[][] pass)
-	{
+	public void setPassability(boolean[][] pass) {
 		this.passabilityMap = pass;
 	}
 }
