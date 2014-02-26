@@ -2,6 +2,8 @@ package view;
 
 import com.badlogic.gdx.math.Vector2;
 
+import data.Position;
+
 /**
  * Facing direction of the sprite
  */
@@ -56,5 +58,32 @@ public enum Direction {
 		}
 		
 		return out;
+	}
+	
+	/**
+	 * Get the next step from a position in a direction
+	 * @param p
+	 * 	starting position
+	 * @param dir
+	 * 	direction to walk
+	 * @return next position
+	 */
+	public static Position getPositionInDirection(Position p, Direction dir) {
+		Position next = p;
+		switch (dir) {
+			case North:
+				next = new Position(p.getRow() - 1, p.getColumn());
+				break;
+			case South:
+				next = new Position(p.getRow() + 1, p.getColumn());
+				break;
+			case East:
+				next = new Position(p.getRow(), p.getColumn() + 1);
+				break;
+			case West:
+				next = new Position(p.getRow(), p.getColumn() - 1);
+				break;
+		}
+		return next;
 	}
 }

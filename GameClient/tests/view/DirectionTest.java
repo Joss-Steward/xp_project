@@ -8,6 +8,8 @@ import view.Direction;
 
 import com.badlogic.gdx.math.Vector2;
 
+import data.Position;
+
 /**
  * @author nhydock
  */
@@ -52,5 +54,36 @@ public class DirectionTest {
 		assertEquals(Direction.East, Direction.getFacing(from, to));
 		to.set(3, 5);
 		assertEquals(Direction.South, Direction.getFacing(from, to));	
+	}
+	
+	/**
+	 * Test getting a next position in a direction
+	 */
+	@Test
+	public void testNextStepInDirection() {
+		Position p = new Position(0, 0);
+		
+		Position next;
+		
+		//get in north
+		next = Direction.getPositionInDirection(p, Direction.North);
+		assertEquals(0, next.getColumn());
+		assertEquals(-1, next.getRow());
+		
+		//get in south
+		next = Direction.getPositionInDirection(p, Direction.South);
+		assertEquals(0, next.getColumn());
+		assertEquals(1, next.getRow());
+		
+		//get in east
+		next = Direction.getPositionInDirection(p, Direction.East);
+		assertEquals(1, next.getColumn());
+		assertEquals(0, next.getRow());
+		
+		//get in west
+		next = Direction.getPositionInDirection(p, Direction.West);
+		assertEquals(-1, next.getColumn());
+		assertEquals(0, next.getRow());
+		
 	}
 }
