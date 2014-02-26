@@ -73,7 +73,7 @@ public class MovementMessagePackerTest
 		packer.setAccumulator(stateAccumulator);
 		
 		MovementMessage message = (MovementMessage)packer.pack(report);
-		assertEquals("fred", message.getPlayerName());
+		assertEquals(-1, message.getPlayerID());
 		assertEquals(position, message.getPosition());
 	}
 }
