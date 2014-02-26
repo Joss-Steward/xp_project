@@ -5,6 +5,8 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
+import data.Position;
+
 /**
  * Tests the player class
  * 
@@ -31,5 +33,22 @@ public class PlayerTest
 	public void equalsContract()
 	{
 		EqualsVerifier.forClass(Player.class).verify();
+	}
+	
+	/**
+	 * Sets the players position and checks it
+	 * @throws DatabaseException shouldn'ts
+	 */
+	@Test
+	public void testPlayerPosition() throws DatabaseException
+	{
+		Player p = new Player(1);
+		Position pos = new Position(3, 3);
+		p.move(pos);
+		assertEquals(pos, p.getPlayerPosition());
+		
+		//Test for null
+		Player c = new Player(1);
+		assertEquals(null, c.getPlayerPosition());
 	}
 }
