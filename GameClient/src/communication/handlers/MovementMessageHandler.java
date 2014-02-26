@@ -1,8 +1,9 @@
 package communication.handlers;
+import model.CommandMoveOtherPlayer;
+import model.ModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.MovementMessage;
-
 
 
 /**
@@ -12,15 +13,19 @@ import communication.messages.MovementMessage;
  */
 public class MovementMessageHandler extends MessageHandler
 {
-
 	/**
-	 * 
+	 * TODO: Want to pass movement message to command. 
 	 * @see MessageHandler#process(Message)
 	 */
 	@Override
 	public void process(Message msg)
 	{
-		System.out.println("received " + msg);
+		if (msg.getClass().equals(MovementMessage.class))
+		{
+			MovementMessage movementMessage = (MovementMessage) msg;
+			CommandMoveOtherPlayer cmd = new CommandMoveOtherPlayer(movementMessage.getPlayerID(),movementMessage.getPosition());
+			ModelFacade.getSingleton(false).queueCommand(cmd);	
+		}
 	}
 
 	/**
