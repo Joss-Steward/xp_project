@@ -25,17 +25,15 @@ public class MovePlayerCommand extends Command
 	@Override
 	protected boolean execute()
 	{
-		Player p = PlayerManager.getSingleton().getPlayerFromID(playerId);
-		if (p != null)
+		Player player = PlayerManager.getSingleton().getPlayerFromID(playerId);
+		if (player != null)
 		{
-			p.setPlayerPosition(newPosition);
+			player.setPlayerPosition(newPosition);
 			return true;
 		}
 		else 
 		{
 			return false;
 		}
-		
 	}
-	
 }
