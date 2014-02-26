@@ -20,12 +20,12 @@ public class CommandMoveOtherPlayerTest
 	@Test
 	public void testMoveOtherPlayer() 
 	{
-		Player p1 = new Player("TestPlayer");
+		Player p1 = new Player(1);
 		p1.move(new Position(0, 0));
-		PlayerManager.getSingleton().addPlayer("TestPlayer");
-		CommandMoveOtherPlayer cm = new CommandMoveOtherPlayer("TestPlayer",new Position(1, 1));
+		PlayerManager.getSingleton().addPlayer(1);
+		CommandMoveOtherPlayer cm = new CommandMoveOtherPlayer(1,new Position(1, 1));
 		cm.execute();
-		assertEquals(new Position(1, 1), PlayerManager.getSingleton().getPlayerNamed("TestPlayer").getPlayerPosition());
+		assertEquals(new Position(1, 1), PlayerManager.getSingleton().getPlayerFromID(1).getPlayerPosition());
 	}
 
 }

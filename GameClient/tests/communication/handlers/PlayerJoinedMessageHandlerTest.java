@@ -1,6 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
+import model.Player;
 import model.PlayerManager;
 
 import org.junit.Test;
@@ -21,10 +22,12 @@ public class PlayerJoinedMessageHandlerTest
 	@Test
 	public void test()
 	{
-		PlayerJoinedMessage msg = new PlayerJoinedMessage("John");
+		PlayerJoinedMessage msg = new PlayerJoinedMessage(3, "Henry");
 		PlayerJoinedMessageHandler handler = new PlayerJoinedMessageHandler();
 		handler.process(msg);
-		assertNotNull(PlayerManager.getSingleton().getPlayerNamed("John"));
+		Player playerFromID = PlayerManager.getSingleton().getPlayerFromID(3);
+		assertNotNull(playerFromID);
+		
 	}
 
 }

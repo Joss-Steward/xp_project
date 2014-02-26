@@ -35,6 +35,7 @@ import communication.packers.LoginMessagePackerTest;
 
 		// communication.packers
 		LoginMessagePackerTest.class,
+		PlayerJoinedMessageHandlerTest.class,
 
 		// model
 		CommandAddOtherPlayerTest.class, 

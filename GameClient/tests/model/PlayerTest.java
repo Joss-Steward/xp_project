@@ -22,8 +22,8 @@ public class PlayerTest
 	@Test
 	public void initialization()
 	{
-		Player p = new Player("Fred");
-		assertEquals("Fred", p.getPlayerName());
+		Player p = new Player(1);
+		assertEquals(1, p.getPlayerID());
 	}
 
 	/**
@@ -42,13 +42,13 @@ public class PlayerTest
 	@Test
 	public void testPlayerPosition() throws DatabaseException
 	{
-		Player p = new Player("Franky");
+		Player p = new Player(1);
 		Position pos = new Position(3, 3);
 		p.move(pos);
 		assertEquals(pos, p.getPlayerPosition());
 		
 		//Test for null
-		Player c = new Player("Franky");
+		Player c = new Player(1);
 		assertEquals(null, c.getPlayerPosition());
 	}
 }

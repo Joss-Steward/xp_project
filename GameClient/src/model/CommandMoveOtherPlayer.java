@@ -8,23 +8,23 @@ import data.Position;
  */
 public class CommandMoveOtherPlayer extends Command
 {
-	private String thePlayerName;
+	private int thePlayerID;
 	private Position thePosition;
 	
 	/**
-	 * @param playerName is the name of the player
+	 * @param playerID is the name of the player
 	 * @param position is the position of the player
 	 */
-	public CommandMoveOtherPlayer(String playerName, Position position)
+	public CommandMoveOtherPlayer(int playerID, Position position)
 	{
-		thePlayerName = playerName;
+		thePlayerID = playerID;
 		thePosition = position;
 	}
 
 	@Override
 	protected boolean execute() 
 	{
-		PlayerManager.getSingleton().getPlayerNamed(thePlayerName).move(thePosition);
+		PlayerManager.getSingleton().getPlayerFromID(thePlayerID).move(thePosition);
 		return true;
 	}
 	

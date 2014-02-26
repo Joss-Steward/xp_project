@@ -1,4 +1,5 @@
 import model.AddCommandTest;
+import model.MovePlayerCommandTest;
 import model.PlayerManagerTest;
 import model.PlayerPinTest;
 import model.PlayerTest;
@@ -39,6 +40,7 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 	
 	// model
 	AddCommandTest.class,
+	MovePlayerCommandTest.class,
 	PlayerManagerTest.class,
 	PlayerTest.class,
 	
