@@ -22,6 +22,7 @@ import data.Position;
 	public Player(int playerID)
 	{
 		this.playerID = playerID;
+		this.playerPosition = new Position(0, 0);
 	}
 
 	
