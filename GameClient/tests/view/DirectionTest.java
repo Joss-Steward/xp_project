@@ -8,8 +8,14 @@ import view.Direction;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * @author nhydock
+ */
 public class DirectionTest {
 
+	/**
+	 * Test direction determination from vector coordinates
+	 */
 	@Test
 	public void testGetDirectionFromVector() {
 		Vector2 from = new Vector2();

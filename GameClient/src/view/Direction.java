@@ -6,9 +6,21 @@ import com.badlogic.gdx.math.Vector2;
  * Facing direction of the sprite
  */
 public enum Direction {
+	/**
+	 * Looking down the screen
+	 */
 	South,
+	/**
+	 * Looking up the screen
+	 */
 	North,
+	/**
+	 * Looking left on the screen
+	 */
 	West,
+	/**
+	 * Looking right on the screen
+	 */
 	East;
 	
 	/**
