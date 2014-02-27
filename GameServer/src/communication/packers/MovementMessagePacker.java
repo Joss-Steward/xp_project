@@ -29,7 +29,7 @@ public class MovementMessagePacker extends MessagePacker
 			int playerID = report.getPlayerID();
 			if (this.getAccumulator().getPlayerID() != playerID)
 			{
-				MovementMessage msg = new MovementMessage(report.getPlayerName(), report.getNewPosition());
+				MovementMessage msg = new MovementMessage(playerID, report.getNewPosition());
 				return msg;
 			}
 		}

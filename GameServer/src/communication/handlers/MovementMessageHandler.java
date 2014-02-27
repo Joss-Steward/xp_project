@@ -1,5 +1,7 @@
 package communication.handlers;
 
+import model.ModelFacade;
+import model.MovePlayerCommand;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.MovementMessage;
@@ -20,7 +22,12 @@ public class MovementMessageHandler extends MessageHandler
 	@Override
 	public void process(Message msg)
 	{
-		// TODO  Tell someone in the engine . . .
+		if (msg.getClass().equals(MovementMessage.class))
+		{
+			MovementMessage mMsg = (MovementMessage) msg;
+			MovePlayerCommand cmd = new MovePlayerCommand(mMsg.getPlayerID(), mMsg.getPosition());
+			ModelFacade.getSingleton().queueCommand(cmd);
+		}
 	}
 
 	/**
@@ -31,5 +38,4 @@ public class MovementMessageHandler extends MessageHandler
 	{
 		return MovementMessage.class;
 	}
-
 }
