@@ -28,7 +28,7 @@ public class PlayerJoinedMessageHandlerTest
 				PlayersInDB.MERLIN.getAppearanceType(), PlayersInDB.MERLIN.getPosition());
 		PlayerJoinedMessageHandler handler = new PlayerJoinedMessageHandler();
 		handler.process(msg);
-		Player playerFromID = PlayerManager.getSingleton().getPlayerFromID(3);
+		Player playerFromID = PlayerManager.getSingleton().getPlayerFromID(2);
 		assertNotNull(playerFromID);
 
 	}

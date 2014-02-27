@@ -7,8 +7,8 @@ import communication.messages.Message;
 import communication.messages.PlayerJoinedMessage;
 
 /**
- * Should process an incoming MovementMessage that is reporting that someone
- * else moved
+ * Should process an incoming PlayerJoinedMessage that is reporting that someone
+ * joined our area server
  * 
  * @author merlin
  * 
