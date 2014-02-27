@@ -14,11 +14,20 @@ public class SpriteSheet
 	TextureRegion[][] rows;
 	TextureRegion[][] columns;
 	
+	/**
+	 * Number of columns in the sprite sheet
+	 */
 	public final int xFrames;
+	/**
+	 * Number of rows in the sprite sheet
+	 */
 	public final int yFrames;
 	private int[] frameSize;
 	private TextureRegion tex;
 	
+	/**
+	 * Total number of cells in the sprite sheet
+	 */
 	public final int frameCount;
 	
 	/**
@@ -70,6 +79,9 @@ public class SpriteSheet
 		this(new Texture(path), xFrames, yFrames);
 	}
 	
+	/**
+	 * @return the original texture region used in parsing the sprite sheet
+	 */
 	public TextureRegion getTexture()
 	{
 		return tex;
@@ -128,7 +140,7 @@ public class SpriteSheet
 	 * Picks a single frame as if the Spritesheet is along one long row
 	 * By default we read across horizontally across the sheet
 	 * @param frame - the frame index in the spritsheet (0...n-1)
-	 * @returna region of the spritesheet
+	 * @return region of the spritesheet
 	 */
 	public TextureRegion getFrame(int frame)
 	{

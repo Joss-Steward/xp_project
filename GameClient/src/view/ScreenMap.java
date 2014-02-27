@@ -30,7 +30,7 @@ public class ScreenMap extends ScreenBasic
 
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	public final float unitScale;
+	private final float unitScale;
 
 	/**
 	 * 

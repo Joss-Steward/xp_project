@@ -1,6 +1,8 @@
 package model;
 
 import static org.junit.Assert.*;
+
+
 import java.util.Observer;
 
 import model.reports.NewMapReport;

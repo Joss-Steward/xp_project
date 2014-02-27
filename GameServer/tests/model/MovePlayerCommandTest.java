@@ -14,7 +14,7 @@ public class MovePlayerCommandTest
 {
 
 	/**
-	 * 
+	 * Reset PlayerManager
 	 */
 	@Before
 	public void setup()
@@ -25,11 +25,10 @@ public class MovePlayerCommandTest
 	/**
 	 * Update a player's position from id
 	 * 
-	 * @throws PlayerNotFoundException
-	 *             shouldn't
+	 * @throws PlayerNotFoundException shouldn't
 	 */
 	@Test
-	public void test() throws PlayerNotFoundException
+	public void testValidPlayer() throws PlayerNotFoundException
 	{
 		Position startPosition = new Position(0,0);
 		Position newPosition = new Position(10, 10);
