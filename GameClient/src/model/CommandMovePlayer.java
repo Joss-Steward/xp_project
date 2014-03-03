@@ -4,7 +4,6 @@ import data.Position;
 
 /**
  * @author Matt Kujawski
- *
  */
 public class CommandMovePlayer extends Command
 {
@@ -21,12 +20,20 @@ public class CommandMovePlayer extends Command
 		thePosition = position;
 	}
 
+	/**
+	 * Moves a certain Player into the designated position if move is legal.
+	 */
 	@Override
 	protected boolean execute() 
 	{
-		PlayerManager.getSingleton().getPlayerFromID(thePlayerID).move(thePosition);
-		return true;
+		boolean moved = false;
+		
+		if(MapManager.getSingleton().getIsTilePassable(thePosition))
+		{
+			PlayerManager.getSingleton().getPlayerFromID(thePlayerID).move(thePosition);
+			moved = true;
+		}
+		
+		return moved;
 	}
-	
-	
 }
