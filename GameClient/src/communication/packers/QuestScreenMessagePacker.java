@@ -2,7 +2,6 @@ package communication.packers;
 
 import model.PlayerManager;
 import model.QualifiedObservableReport;
-import model.ThisClientsPlayer;
 import model.reports.QuestScreenReport;
 import communication.messages.Message;
 import communication.messages.QuestScreenMessage;

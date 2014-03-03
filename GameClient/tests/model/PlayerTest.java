@@ -46,9 +46,5 @@ public class PlayerTest
 		Position pos = new Position(3, 3);
 		p.move(pos);
 		assertEquals(pos, p.getPlayerPosition());
-		
-		//Test for null
-		Player c = new Player(1);
-		assertEquals(null, c.getPlayerPosition());
 	}
 }

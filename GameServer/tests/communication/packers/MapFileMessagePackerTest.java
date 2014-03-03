@@ -1,6 +1,7 @@
 package communication.packers;
 
 import static org.junit.Assert.*;
+import model.DatabaseException;
 import model.PlayerManager;
 import model.PlayerPin;
 import model.reports.PlayerConnectionReport;
@@ -30,9 +31,10 @@ public class MapFileMessagePackerTest
 	/**
 	 * If we are notified about a player other than the one we are associated
 	 * with, we shouldn't pack a message
+	 * @throws DatabaseException shouldn't 
 	 */
 	@Test
-	public void ifThePlayerIsNotOnThisConnection()
+	public void ifThePlayerIsNotOnThisConnection() throws DatabaseException
 	{
 		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
 		PlayerManager.getSingleton().addPlayer(2, PlayerPin.DEFAULT_PIN);
@@ -50,9 +52,10 @@ public class MapFileMessagePackerTest
 	/**
 	 * If we are notified about a player that is the one we are associated with,
 	 * return null (no need to send this on)
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void ifThePlayerIsOnThisConnection()
+	public void ifThePlayerIsOnThisConnection() throws DatabaseException
 	{
 		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
