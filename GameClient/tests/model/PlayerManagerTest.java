@@ -2,6 +2,11 @@ package model;
 
 import static org.junit.Assert.*;
 
+import java.util.Observer;
+
+import model.reports.LoginInitiatedReport;
+
+import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -63,6 +68,37 @@ public class PlayerManagerTest
 		assertEquals(p1, pm.getPlayerFromID(1));
 		assertEquals(p2, pm.getPlayerFromID(2));
 		assertEquals(p3, pm.getPlayerFromID(3));
+	}
+	
+	/**
+	 * Just make sure he remembers when a login is started
+	 */
+	@Test
+	public void canStartToLogin()
+	{
+		PlayerManager p = PlayerManager.getSingleton();
+		assertFalse(p.isLoginInProgress());
+		p.initiateLogin("Fred", "mommy");
+		assertTrue(p.isLoginInProgress());
+	}
+	
+	/**
+	 * Make sure that observers who want to be told when a login is initiated
+	 * are told
+	 */
+	@Test
+	public void notifiesOnLoginInitiation()
+	{
+		Observer obs = EasyMock.createMock(Observer.class);
+		LoginInitiatedReport report = new LoginInitiatedReport("Fred", "daddy");
+		QualifiedObservableConnector.getSingleton().registerObserver(obs,
+				LoginInitiatedReport.class);
+		obs.update(EasyMock.eq(PlayerManager.getSingleton()
+				.getThisClientsPlayer()), EasyMock.eq(report));
+		EasyMock.replay(obs);
+
+		PlayerManager.getSingleton().initiateLogin("Fred", "daddy");
+		EasyMock.verify(obs);
 	}
 }
 

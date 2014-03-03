@@ -28,7 +28,7 @@ public class CommandAddOtherPlayer extends Command
 	protected boolean execute()
 	{
 		Player p = PlayerManager.getSingleton().addPlayer(playerID);
-		p.setPlayerName(playerName);
+		p.setName(playerName);
 		return true;
 	}
 

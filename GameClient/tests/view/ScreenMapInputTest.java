@@ -1,5 +1,8 @@
 package view;
 
+import java.rmi.AlreadyBoundException;
+import java.rmi.NotBoundException;
+
 import model.ModelFacade;
 import model.PlayerManager;
 import model.ThisClientsPlayer;
@@ -39,9 +42,14 @@ public class ScreenMapInputTest {
 		ModelFacade mf = ModelFacade.getSingleton(true);
 		//setup initial player for testing
 		PlayerManager pm = PlayerManager.getSingleton();
-		pm.addPlayer(1);
-		pm.setThisClientsPlayer(1);
-		ThisClientsPlayer testPlayer = pm.getThisClientsPlayer();
+		pm.initiateLogin("john", "pw");
+		try {
+			pm.setThisClientsPlayer(1);
+		} catch (AlreadyBoundException | NotBoundException e) {
+			e.printStackTrace();
+			fail("crap happened");
+		}
+		ThisClientsPlayer testPlayer = PlayerManager.getSingleton().getThisClientsPlayer();
 		assertEquals(new Position(0, 0), testPlayer.getPosition());
 		
 		//move player north

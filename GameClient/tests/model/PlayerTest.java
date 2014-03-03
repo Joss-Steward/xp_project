@@ -23,7 +23,7 @@ public class PlayerTest
 	public void initialization()
 	{
 		Player p = new Player(1);
-		assertEquals(1, p.getPlayerID());
+		assertEquals(1, p.getID());
 	}
 
 	/**
@@ -45,10 +45,10 @@ public class PlayerTest
 		Player p = new Player(1);
 		Position pos = new Position(3, 3);
 		p.move(pos);
-		assertEquals(pos, p.getPlayerPosition());
+		assertEquals(pos, p.getPosition());
 		
 		//Test for null
 		Player c = new Player(1);
-		assertEquals(null, c.getPlayerPosition());
+		assertEquals(null, c.getPosition());
 	}
 }

@@ -1,7 +1,6 @@
 package model;
 
 import Quest.QuestManager;
-import model.reports.LoginInitiatedReport;
 import model.reports.QuestScreenReport;
 import model.reports.ThisPlayerMovedReport;
 import data.Position;
@@ -12,51 +11,19 @@ import data.Position;
  * @author merlin
  * 
  */
-public class ThisClientsPlayer extends QualifiedObservable
+public class ThisClientsPlayer extends Player
 {
-
-	private Position position;
 	private QuestManager questManager;
-	private int id;
-	private String name;
 
-	private boolean loginInProgress;
-
-	protected ThisClientsPlayer()
+	protected ThisClientsPlayer(int playerID)
 	{
-		this.position = new Position(0, 0);
+		super(playerID);
+		
 		this.questManager = new QuestManager();
-		reportTypes.add(LoginInitiatedReport.class);
 		reportTypes.add(QuestScreenReport.class);
 		reportTypes.add(ThisPlayerMovedReport.class);
 		
 		this.registerReportTypesWeNotify();
-	}
-
-	/**
-	 * 
-	 * @return the ID of this player
-	 */
-	public int getID()
-	{
-		return id;
-	}
-
-	/**
-	 * 
-	 * @return this Player's name
-	 */
-	public String getName()
-	{
-		return name;
-	}
-
-	/**
-	 * @return the position
-	 */
-	public Position getPosition()
-	{
-		return position;
 	}
 
 	/**
@@ -69,52 +36,6 @@ public class ThisClientsPlayer extends QualifiedObservable
 	{
 		position = p;
 		this.notifyObservers(new ThisPlayerMovedReport(p));
-	}
-
-	/**
-	 * Set the ID of this player
-	 * 
-	 * @param id
-	 *            what our ID should be
-	 */
-	public void setId(int id)
-	{
-		this.id = id;
-	}
-
-	/**
-	 * Set the name of this player
-	 * 
-	 * @param name
-	 *            what this player should be called
-	 */
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-
-	/**
-	 * @return true if we are in the process of trying to log into the server
-	 */
-	public boolean isLoginInProgress()
-	{
-		return loginInProgress;
-	}
-
-	/**
-	 * Attempt to login with a given name and password
-	 * 
-	 * @param password
-	 *            the password
-	 * @param name
-	 *            the player's name
-	 * 
-	 */
-	public void initiateLogin(String name, String password)
-	{
-		loginInProgress = true;
-		this.name = name;
-		notifyObservers(new LoginInitiatedReport(name, password));
 	}
 
 	/**

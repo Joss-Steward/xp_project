@@ -11,9 +11,9 @@ import data.Position;
  public class Player extends QualifiedObservable
 {
 
-	private final int playerID;
-	private String playerName;
-	private Position playerPosition;
+	protected final int id;
+	protected String name;
+	protected Position position;
 
 	/**
 	 * Create a player 
@@ -21,8 +21,8 @@ import data.Position;
 	 */
 	public Player(int playerID)
 	{
-		this.playerID = playerID;
-		this.playerPosition = new Position(0, 0);
+		this.id = playerID;
+		this.position = new Position(0, 0);
 	}
 
 	
@@ -35,7 +35,7 @@ import data.Position;
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + playerID;
+		result = prime * result + id;
 		return result;
 	}
 
@@ -53,7 +53,7 @@ import data.Position;
 		if (!(obj instanceof Player))
 			return false;
 		Player other = (Player) obj;
-		if (playerID != other.playerID)
+		if (id != other.id)
 			return false;
 		return true;
 	}
@@ -63,9 +63,9 @@ import data.Position;
 	 * Get the unique ID name for this player
 	 * @return the player ID
 	 */
-	public int getPlayerID()
+	public int getID()
 	{
-		return playerID;
+		return id;
 	}
 
 
@@ -73,9 +73,9 @@ import data.Position;
 	 * get this player's unique name
 	 * @return the name
 	 */
-	public String getPlayerName()
+	public String getName()
 	{
-		return this.playerName;
+		return this.name;
 	}
 
 
@@ -83,9 +83,9 @@ import data.Position;
 	 * set this player's name
 	 * @param playerName the new name
 	 */
-	public void setPlayerName(String playerName)
+	public void setName(String playerName)
 	{
-		this.playerName = playerName;
+		this.name = playerName;
 	}
 	
 	/**
@@ -96,7 +96,7 @@ import data.Position;
 	 */
 	public void move(Position playerPosition)
 	{
-		this.playerPosition = playerPosition;
+		this.position = playerPosition;
 		this.notifyObservers(new OtherPlayerMovedReport(playerPosition));
 	}
 	
@@ -105,9 +105,9 @@ import data.Position;
 	 * @return playerPosition
 	 * 			Returns the player position. If a position is not set should return null.
 	 */
-	public Position getPlayerPosition()
+	public Position getPosition()
 	{
-		return this.playerPosition;
+		return this.position;
 	}
 
 }

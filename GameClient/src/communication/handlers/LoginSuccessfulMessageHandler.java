@@ -2,6 +2,10 @@ package communication.handlers;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.rmi.AlreadyBoundException;
+import java.rmi.NotBoundException;
+
+import model.PlayerManager;
 
 import communication.handlers.MessageHandler;
 import communication.messages.LoginSuccessfulMessage;
@@ -34,6 +38,11 @@ public class LoginSuccessfulMessageHandler extends MessageHandler
 				connectionManager.moveToNewSocket(
 						new Socket(rMsg.getHostName(), rMsg.getPortNumber()),
 						rMsg.getPlayerID(), rMsg.getPin());
+				try {
+					PlayerManager.getSingleton().setThisClientsPlayer(rMsg.getPlayerID());
+				} catch (AlreadyBoundException | NotBoundException e) {
+					e.printStackTrace();
+				}
 			} catch (IOException e)
 			{
 				e.printStackTrace();

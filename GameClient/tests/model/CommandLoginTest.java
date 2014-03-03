@@ -29,9 +29,8 @@ public class CommandLoginTest
 	{
 		CommandLogin cmd = new CommandLogin("Fred","pw");
 		cmd.execute();
-		ThisClientsPlayer p = PlayerManager.getSingleton().getThisClientsPlayer();
+		PlayerManager p = PlayerManager.getSingleton();
 		assertTrue(p.isLoginInProgress());
-		assertEquals("Fred", p.getName());
 		
 	}
 }
