@@ -1,5 +1,5 @@
 package communication.handlers;
-import model.CommandMoveOtherPlayer;
+import model.CommandMovePlayer;
 import model.ModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
@@ -23,7 +23,7 @@ public class MovementMessageHandler extends MessageHandler
 		if (msg.getClass().equals(MovementMessage.class))
 		{
 			MovementMessage movementMessage = (MovementMessage) msg;
-			CommandMoveOtherPlayer cmd = new CommandMoveOtherPlayer(movementMessage.getPlayerID(),movementMessage.getPosition());
+			CommandMovePlayer cmd = new CommandMovePlayer(movementMessage.getPlayerID(),movementMessage.getPosition());
 			ModelFacade.getSingleton(false).queueCommand(cmd);	
 		}
 	}
