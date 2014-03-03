@@ -1,4 +1,4 @@
-import model.CommandAddOtherPlayerTest;
+import model.CommandAddPlayerTest;
 import model.CommandLoginTest;
 import model.CommandNewMapTest;
 import model.MapManagerTest;
@@ -40,7 +40,7 @@ import communication.packers.LoginMessagePackerTest;
 		PlayerJoinedMessageHandlerTest.class,
 
 		// model
-		CommandAddOtherPlayerTest.class, 
+		CommandAddPlayerTest.class, 
 		CommandLoginTest.class, 
 		CommandNewMapTest.class, 
 		MapManagerTest.class,

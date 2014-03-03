@@ -9,16 +9,16 @@ import org.junit.Test;
  * @author merlin
  *
  */
-public class CommandAddOtherPlayerTest
+public class CommandAddPlayerTest
 {
 
 	/**
 	 * Just make sure that new player is added to the player manager correctly
 	 */
 	@Test
-	public void addsCorrectly()
+	public void addsPlayerWhoIsNotThisClientsPlayer()
 	{
-		CommandAddOtherPlayer cmd = new CommandAddOtherPlayer(4, "Henry");
+		CommandAddPlayer cmd = new CommandAddPlayer(4, "Henry");
 		PlayerManager pm = PlayerManager.getSingleton();
 		assertNull (pm.getPlayerFromID(4));
 		assertTrue(cmd.execute());
