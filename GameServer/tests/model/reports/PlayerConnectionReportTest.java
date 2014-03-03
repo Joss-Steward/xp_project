@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import model.DatabaseException;
 import model.Player;
 import model.PlayerPin;
+import model.PlayersInDB;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
@@ -24,9 +25,13 @@ public class PlayerConnectionReportTest
 	@Test
 	public void creation() throws DatabaseException
 	{
-		PlayerConnectionReport report = new PlayerConnectionReport(new Player(1,
-				PlayerPin.DEFAULT_PIN));
+		Player john = new Player(1,
+				PlayerPin.DEFAULT_PIN);
+		PlayerConnectionReport report = new PlayerConnectionReport(john);
 		assertEquals(1, report.getPlayerID());
+		assertEquals(PlayersInDB.JOHN.getPlayerName(), report.getPlayerName());
+		assertEquals(PlayersInDB.JOHN.getAppearanceType(), report.getAppearanceType());
+		assertEquals(PlayersInDB.JOHN.getPosition(), report.getPosition());
 	}
 
 	/**

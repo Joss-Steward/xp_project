@@ -34,6 +34,7 @@ public class Player extends QualifiedObservable
 	{
 		this.playerID = playerID;
 		this.playerName = readPlayerName();
+		this.playerPosition = readPlayerPosition();
 		reportTypes.add(PlayerMovedReport.class);
 		reportTypes.add(QuestScreenReport.class);
 		
@@ -134,4 +135,52 @@ public class Player extends QualifiedObservable
 		return playerName;
 	}
 
+	/**
+	 * Get the appearance type for how this player should be drawn
+	 * @return a string matching one of the enum names in the PlayerType enum
+	 * @throws DatabaseException shouldn't
+	 */
+	public String getAppearanceType() throws DatabaseException
+	{
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		String playerName;
+		try
+		{
+			PreparedStatement stmt = connection.prepareStatement("SELECT AppearanceType from Players.Player where PlayerID = ?");
+			stmt.setInt(1, playerID);
+			ResultSet resultSet = stmt.executeQuery();
+			resultSet.first();
+			playerName = resultSet.getString(1);
+			resultSet.close();
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Unable to retrieve appearance for player with id = " + playerID, e);
+		}
+		return playerName;
+	}
+
+	/**
+	 * Get this player's position from the database
+	 * 
+	 * @return the players position
+	 * @throws DatabaseException if the player isn't found
+	 */
+	private Position readPlayerPosition() throws DatabaseException
+	{
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		Position position = null;
+		try
+		{
+			PreparedStatement stmt = connection.prepareStatement("SELECT Row, Col from Players.Player where PlayerID = ?");
+			stmt.setInt(1, playerID);
+			ResultSet resultSet = stmt.executeQuery();
+			resultSet.first();
+			position = new Position(resultSet.getInt(1), resultSet.getInt(2));
+			resultSet.close();
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Unable to retrieve player with id = " + playerID, e);
+		}
+		return position;
+	}
 }

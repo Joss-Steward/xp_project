@@ -15,6 +15,7 @@ import org.junit.runners.Suite;
 
 import view.ScreenListenerTest;
 import communication.handlers.MapFileMessageHandlerTest;
+import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.PlayerJoinedMessageHandlerTest;
 import communication.packers.LoginMessagePackerTest;
 
@@ -32,6 +33,7 @@ import communication.packers.LoginMessagePackerTest;
 		// communication.handlers
 		MapFileMessageHandlerTest.class,
 		PlayerJoinedMessageHandlerTest.class,
+		MovementMessageHandlerTest.class,
 
 		// communication.packers
 		LoginMessagePackerTest.class,
