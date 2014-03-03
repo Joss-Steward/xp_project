@@ -26,20 +26,5 @@ public class CommandAddPlayerTest
 		assertEquals(4, p.getPlayerID());
 		assertEquals("Henry", p.getPlayerName());
 	}
-	
-	@Test
-	public void updatesThisClientsPlayer()
-	{
-		PlayerManager.getSingleton().getThisClientsPlayer().setId(4);
-		
-		CommandAddPlayer cmd = new CommandAddPlayer(4, "Henry");
-		PlayerManager pm = PlayerManager.getSingleton();
-		
-		assertTrue(cmd.execute());
-		
-		ThisClientsPlayer p = pm.getThisClientsPlayer();
-		assertEquals(4, p.getID());
-		assertEquals("Henry", p.getName());
-	}
 
 }
