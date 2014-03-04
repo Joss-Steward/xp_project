@@ -39,7 +39,7 @@ public class CommandAddPlayer extends Command
 		{
 			p = PlayerManager.getSingleton().addPlayer(playerID);
 		}
-		p.setPlayerName(playerName);
+		p.setName(playerName);
 		return true;
 	}
 

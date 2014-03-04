@@ -1,5 +1,9 @@
 package model;
 
+import static org.junit.Assert.*;
+
+import java.rmi.AlreadyBoundException;
+import java.rmi.NotBoundException;
 import java.util.Observer;
 import model.reports.ThisPlayerMovedReport;
 
@@ -37,14 +41,22 @@ public class ThisClientsPlayerTest
 		Observer obs = EasyMock.createMock(Observer.class);
 		ThisPlayerMovedReport report = new ThisPlayerMovedReport(new Position(
 				3, 4));
-		obs.update(EasyMock.eq(PlayerManager.getSingleton()
-				.getThisClientsPlayer()), EasyMock.eq(report));
+		obs.update(EasyMock.anyObject(ThisClientsPlayer.class), EasyMock.eq(report));
 		EasyMock.replay(obs);
-
-		PlayerManager.getSingleton().getThisClientsPlayer()
-				.addObserver(obs, ThisPlayerMovedReport.class);
-		PlayerManager.getSingleton().getThisClientsPlayer()
-				.move(new Position(3, 4));
+		
+		PlayerManager pm = PlayerManager.getSingleton();
+		pm.initiateLogin("john", "pw");
+		ThisClientsPlayer cp = null;
+		try {
+			cp = pm.setThisClientsPlayer(1);
+		} catch (AlreadyBoundException | NotBoundException e) {
+			e.printStackTrace();
+			fail("Could not create this client's player from login");
+		}
+		cp.addObserver(obs, ThisPlayerMovedReport.class);
+		cp.move(new Position(3, 4));
+		
 		EasyMock.verify(obs);
+		
 	}
 }

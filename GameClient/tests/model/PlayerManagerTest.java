@@ -40,16 +40,6 @@ public class PlayerManagerTest
 	}
 	
 	/**
-	 * The player manager should initialize this client's player on initialization
-	 */
-	@Test
-	public void shouldAlwaysHaveThisClientsPlayer()
-	{
-		PlayerManager pm = PlayerManager.getSingleton();
-		assertNotNull(pm.getThisClientsPlayer());
-	}
-	
-	/**
 	 * Make sure we can add players and retrieve them by their player names
 	 */
 	@Test
@@ -93,11 +83,11 @@ public class PlayerManagerTest
 		LoginInitiatedReport report = new LoginInitiatedReport("Fred", "daddy");
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				LoginInitiatedReport.class);
-		obs.update(EasyMock.eq(PlayerManager.getSingleton()
-				.getThisClientsPlayer()), EasyMock.eq(report));
+		obs.update(EasyMock.eq(PlayerManager.getSingleton()), EasyMock.eq(report));
 		EasyMock.replay(obs);
 
 		PlayerManager.getSingleton().initiateLogin("Fred", "daddy");
+		
 		EasyMock.verify(obs);
 	}
 }
