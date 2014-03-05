@@ -69,18 +69,6 @@ public class PlayerManager extends QualifiedObservable
 	{
 		return playerList.get(playerID);
 	}
-
-	/**
-	 * Add a new player to the list of active players
-	 * @param playerID the unique name of the player we should add
-	 * @return the player object we created
-	 */
-	public Player addPlayer(int playerID)
-	{
-		Player p = new Player(playerID);
-		playerList.put(playerID,p);
-		return p;
-	}
 	
 	/**
 	 * Sets the player controlled by this client
@@ -132,5 +120,28 @@ public class PlayerManager extends QualifiedObservable
 	{
 		loginInProgress = true;
 		notifyObservers(new LoginInitiatedReport(name, password));
+	}
+
+	/**
+	 * Either create a new player with the attributes given, or update an existing player
+	 * with the given playerID to have these attributes
+	 *
+	 * @param playerID The id of the player
+	 * @param playerName The name of the player
+	 * @param appearanceType The appearance type of the player
+	 * @return Player The player updated
+	 */
+	public Player initializePlayer(int playerID, String playerName, String appearanceType)
+	{
+		Player player = this.getPlayerFromID(playerID);
+		if(player == null)
+		{
+			player = new Player(playerID);
+			playerList.put(playerID, player);
+		}
+		player.setName(playerName);
+		player.setAppearanceType(appearanceType);
+		
+		return player;
 	}
 }

@@ -46,7 +46,7 @@ public class CommandMovePlayerTest
 	{
 		Player p1 = new Player(1);
 		p1.move(new Position(0, 0));
-		Player p = PlayerManager.getSingleton().addPlayer(1);
+		Player p = PlayerManager.getSingleton().initializePlayer(1, "1", "1");
 		assertEquals(new Position(0, 0), p.getPosition());
 		
 		CommandMovePlayer cm = new CommandMovePlayer(1,new Position(1, 0));
@@ -63,7 +63,7 @@ public class CommandMovePlayerTest
 	{
 		Player someGuy = new Player(1);
 		someGuy.move(new Position(0, 0));
-		Player p = PlayerManager.getSingleton().addPlayer(1);
+		Player p = PlayerManager.getSingleton().initializePlayer(1, "1", "1");
 		assertEquals(new Position(0, 0), p.getPosition());
 		
 		CommandMovePlayer cm = new CommandMovePlayer(1,new Position(1, 1));
