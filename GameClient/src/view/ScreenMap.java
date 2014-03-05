@@ -109,7 +109,7 @@ public class ScreenMap extends ScreenBasic
 			System.out.println("quest button is pressed");
 
 			CommandQuestScreenOpen lc = new CommandQuestScreenOpen();
-			ModelFacade.getSingleton(false).queueCommand(lc);
+			ModelFacade.getSingleton(false, false).queueCommand(lc);
 		}
 	}
 
@@ -151,6 +151,7 @@ public class ScreenMap extends ScreenBasic
 
 		// FIXME forcibly send the thisplayerconnectedreport so we can have visual feedback until it is implemented
 		ThisPlayerConnectedToAreaServerReport report = new ThisPlayerConnectedToAreaServerReport(
+					PlayerManager.getSingleton().getThisClientsPlayer().getID(),
 					PlayerManager.getSingleton().getThisClientsPlayer().getName(), 
 					PlayerType.MALEA.toString());
 		Screens.MAP_SCREEN.getScreenListener().update(null, report);

@@ -111,7 +111,7 @@ public class ScreenLogin extends ScreenBasic
 					
 					//Create the login command to allow the player to login
 					CommandLogin lc = new CommandLogin(loginField.getText(), pwField.getText());
-					ModelFacade.getSingleton(false).queueCommand(lc);
+					ModelFacade.getSingleton(false, false).queueCommand(lc);
 					return true;
 				}
 			}

@@ -11,20 +11,23 @@ import model.QualifiedObservableReport;
  */
 public class ThisPlayerConnectedToAreaServerReport implements QualifiedObservableReport
 {
-
+	private int playerID;
 	private String playerName;
 	private String playerType;
 
 	/**
 	 * 
+	 * @param playerID 
+	 * 	          the id of the player
 	 * @param playerName
 	 *            the name of the player
 	 * @param playerType
 	 *            the type of the player
 	 * @see view.PlayerType
 	 */
-	public ThisPlayerConnectedToAreaServerReport(String playerName, String playerType)
+	public ThisPlayerConnectedToAreaServerReport(int playerID, String playerName, String playerType)
 	{
+		this.playerID = playerID;
 		this.playerName = playerName;
 		this.playerType = playerType;
 	}
@@ -49,5 +52,13 @@ public class ThisPlayerConnectedToAreaServerReport implements QualifiedObservabl
 	public String getPlayerType()
 	{
 		return playerType;
+	}
+	
+	/**
+	 * @return the player id
+	 */
+	public int getPlayerID()
+	{
+		return playerID;
 	}
 }

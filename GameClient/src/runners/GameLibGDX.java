@@ -45,7 +45,7 @@ public class GameLibGDX extends Game implements ApplicationListener
 		}
 
 		// tell the model to initialize itself
-		ModelFacade.getSingleton(false);
+		ModelFacade.getSingleton(false, false);
 		Screens.LOGIN_SCREEN.setGame(this);
 
 		// start at the login screen

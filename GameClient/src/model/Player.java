@@ -15,6 +15,7 @@ public class Player extends QualifiedObservable
 	protected final int id;
 	protected String name;
 	protected Position position;
+	protected String appearanceType;
 
 	/**
 	 * Create a player
@@ -79,6 +80,14 @@ public class Player extends QualifiedObservable
 	{
 		return this.name;
 	}
+	
+	/**
+	 * @return this player's appearance type
+	 */
+	public String getAppearanceType()
+	{
+		return this.appearanceType;
+	}
 
 	/**
 	 * set this player's name
@@ -91,6 +100,15 @@ public class Player extends QualifiedObservable
 		this.name = playerName;
 	}
 
+	/**
+	 * Set this player's appearance
+	 * @param appearanceType the new appearance type
+	 */
+	public void setAppearanceType(String appearanceType)
+	{
+		this.appearanceType = appearanceType;
+	}
+	
 	/**
 	 * Move the player's position
 	 * 

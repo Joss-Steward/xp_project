@@ -26,8 +26,7 @@ public class MapFileMessageHandlerTest
 	@Before
 	public void setUp()
 	{
-		ModelFacade.resetSingleton(true);
-		
+		ModelFacade.resetSingleton(true, true);
 	}
 
 	/**
@@ -35,9 +34,11 @@ public class MapFileMessageHandlerTest
 	 * 
 	 * @throws IOException
 	 *             shouldn't
+	 * @throws InterruptedException 
+	 * 			   shouldn't
 	 */
 	@Test
-	public void writesTheFile() throws IOException
+	public void writesTheFile() throws IOException, InterruptedException
 	{
 		new File("/maps/current.tmx").delete();
 		new File("/maps/tileset/grass-tiles-2-small.png").delete();
@@ -66,13 +67,16 @@ public class MapFileMessageHandlerTest
 	 * 
 	 * @throws IOException
 	 *             shouldn't
+	 * @throws InterruptedException 
+	 * 			   shouldn't
 	 */
 	@Test
-	public void tellsEngine() throws IOException
+	public void tellsEngine() throws IOException, InterruptedException
 	{
 		MapFileMessage msg = new MapFileMessage("testMaps/simple.tmx");
 		MapFileMessageHandler handler = new MapFileMessageHandler();
 		handler.process(msg);
-		assertEquals(1, ModelFacade.getSingleton(false).getCommandQueueLength());
+		
+		assertEquals(1, ModelFacade.getSingleton(false, true).getCommandQueueLength());
 	}
 }

@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 import model.ModelFacade;
 
 
+
+
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,22 +26,22 @@ public class MovementMessageHandlerTest
 	@Before
 	public void setUp()
 	{
-		ModelFacade.resetSingleton(true);
-		
+		ModelFacade.resetSingleton(true, true);
 	}
 	
 	/**
 	 * Tests to see if the command is built correctly, and added to the Facade. 
+	 * @throws InterruptedException shouldn't
 	 */
 	@Test
-	public void test() 
+	public void engineNotified() throws InterruptedException 
 	{
-		
 		Position p = new Position(1,1);
 		MovementMessage msg = new MovementMessage(12 , p);
 		MovementMessageHandler handler = new MovementMessageHandler();
 		handler.process(msg);
-		assertEquals(1, ModelFacade.getSingleton(false).getCommandQueueLength());
+		
+		assertEquals(1, ModelFacade.getSingleton(true, true).getCommandQueueLength());
 	}
 
 }

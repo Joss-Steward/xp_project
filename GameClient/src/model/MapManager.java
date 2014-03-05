@@ -98,7 +98,7 @@ public class MapManager extends QualifiedObservable {
 	 */
 	public boolean getIsTilePassable(Position p) {
 
-		if (this.passabilityMap.equals(null)) {
+		if (this.passabilityMap == null) {
 			TiledMapTileLayer collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get("collision");
 
 			this.passabilityMap = new boolean[collisionLayer.getHeight()][collisionLayer.getWidth()];

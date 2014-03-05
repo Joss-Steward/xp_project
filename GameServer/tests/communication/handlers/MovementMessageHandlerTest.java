@@ -26,6 +26,7 @@ public class MovementMessageHandlerTest
 	public void reset()
 	{
 		PlayerManager.resetSingleton();
+		ModelFacade.resetSingleton();
 	}
 	
 	/**

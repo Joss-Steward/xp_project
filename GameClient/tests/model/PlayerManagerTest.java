@@ -54,12 +54,12 @@ public class PlayerManagerTest
 		Player p1 = new Player(1);
 		Player p2 = new Player(2);
 		Player p3 = new Player(3);
-		pm.addPlayer(1);
+		pm.initializePlayer(1, "Player 1", "Player 1 Type");
 		assertEquals(p1, pm.getPlayerFromID(1));
-		pm.addPlayer(2);
+		pm.initializePlayer(2, "Player 2", "Player 2 Type");
 		assertEquals(p1, pm.getPlayerFromID(1));
 		assertEquals(p2, pm.getPlayerFromID(2));
-		pm.addPlayer(3);
+		pm.initializePlayer(3, "Player 3", "Player 3 Type");
 		assertEquals(p1, pm.getPlayerFromID(1));
 		assertEquals(p2, pm.getPlayerFromID(2));
 		assertEquals(p3, pm.getPlayerFromID(3));
