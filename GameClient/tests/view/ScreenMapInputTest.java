@@ -39,7 +39,7 @@ public class ScreenMapInputTest {
 	{
 		InputProcessor input = new ScreenMapInput();
 		//Gdx.input.setInputProcessor(input);
-		ModelFacade mf = ModelFacade.getSingleton(true);
+		ModelFacade mf = ModelFacade.getSingleton(true, true);
 		//setup initial player for testing
 		PlayerManager pm = PlayerManager.getSingleton();
 		pm.initiateLogin("john", "pw");

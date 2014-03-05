@@ -35,6 +35,7 @@ public class CommandMovePlayerTest
 	public void cleanup()
 	{
 		MapManager.resetSingleton();
+		PlayerManager.resetSingleton();
 	}
 	
 
@@ -44,8 +45,6 @@ public class CommandMovePlayerTest
 	@Test
 	public void testMovePlayer() 
 	{
-		Player p1 = new Player(1);
-		p1.move(new Position(0, 0));
 		Player p = PlayerManager.getSingleton().initializePlayer(1, "1", "1");
 		assertEquals(new Position(0, 0), p.getPosition());
 		
@@ -61,13 +60,11 @@ public class CommandMovePlayerTest
 	@Test
 	public void testIllegalMove()
 	{
-		Player someGuy = new Player(1);
-		someGuy.move(new Position(0, 0));
-		Player p = PlayerManager.getSingleton().initializePlayer(1, "1", "1");
-		assertEquals(new Position(0, 0), p.getPosition());
+		Player someGuy = PlayerManager.getSingleton().initializePlayer(1, "1", "1");
+		assertEquals(new Position(0, 0), someGuy.getPosition());
 		
-		CommandMovePlayer cm = new CommandMovePlayer(1,new Position(1, 1));
+		CommandMovePlayer cm = new CommandMovePlayer(someGuy.getID(),new Position(1, 1));
 		cm.execute();
-		assertEquals(new Position(0, 0), p.getPosition());
+		assertEquals(new Position(0, 0), someGuy.getPosition());
 	}
 }

@@ -16,13 +16,14 @@ public class ModelFacade
 
 	/**
 	 * @param headless true if we are running libgdx headless
+	 * @param mockMode true if this is running in testing mode
 	 * @return the only one of these there is
 	 */
-	public synchronized static ModelFacade getSingleton(boolean headless)
+	public synchronized static ModelFacade getSingleton(boolean headless, boolean mockMode)
 	{
 		if (singleton == null)
 		{
-			singleton = new ModelFacade(headless);
+			singleton = new ModelFacade(headless, mockMode);
 		}
 		return singleton;
 	}
@@ -30,11 +31,12 @@ public class ModelFacade
 	/**
 	 * Used for testing to reset the state of the model
 	 * @param headless true if we are running libgdx headless
+	 * @param mockMode true if this is running in testing mode
 	 * 
 	 */
-	public synchronized static void resetSingleton(boolean headless)
+	public synchronized static void resetSingleton(boolean headless, boolean mockMode)
 	{
-		singleton = new ModelFacade(headless);
+		singleton = new ModelFacade(headless, mockMode);
 		MapManager.resetSingleton();
 		MapManager.getSingleton().setHeadless(headless);
 	}
@@ -47,40 +49,43 @@ public class ModelFacade
 	 * 
 	 * @param headless true if we are running libgdx headless
 	 */
-	private ModelFacade(boolean headless)
+	private ModelFacade(boolean headless, boolean mockMode)
 	{
 		setHeadless(headless);
 		commandQueue = new InformationQueue();
-		if (!headless)
+		if (!mockMode)
 		{
-			 com.badlogic.gdx.utils.Timer.schedule(new Task()
+			if (!headless)
 			{
-
-				@Override
-				public void run()
+				 com.badlogic.gdx.utils.Timer.schedule(new Task()
 				{
-					while (commandQueue.getQueueSize() > 0)
+	
+					@Override
+					public void run()
 					{
-						Command cmd;
-						try
+						while (commandQueue.getQueueSize() > 0)
 						{
-							cmd = (Command) commandQueue.getInfoPacket();
-							cmd.execute();
-						} catch (InterruptedException e)
-						{
-							e.printStackTrace();
+							Command cmd;
+							try
+							{
+								cmd = (Command) commandQueue.getInfoPacket();
+								cmd.execute();
+							} catch (InterruptedException e)
+							{
+								e.printStackTrace();
+							}
+	
 						}
-
 					}
-				}
-
-			}, (float) 0.25, (float) 0.25);
-		}
-		else
-		{
-			java.util.Timer timer = new java.util.Timer();
-			timer.schedule(new ProcessCommandQueueTask()
-				,0,250);
+	
+				}, (float) 0.25, (float) 0.25);
+			}
+			else
+			{
+				java.util.Timer timer = new java.util.Timer();
+				timer.schedule(new ProcessCommandQueueTask()
+					,0,250);
+			}
 		}
 	}
 	class ProcessCommandQueueTask extends java.util.TimerTask

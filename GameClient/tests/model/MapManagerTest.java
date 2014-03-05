@@ -30,7 +30,7 @@ public class MapManagerTest extends QualifiedObservableTestInherited
 	public void setup()
 	{
 		QualifiedObservableConnector.resetSingleton();
-		ModelFacade.resetSingleton(true);
+		ModelFacade.resetSingleton(true, true);
 	}
 
 	/**

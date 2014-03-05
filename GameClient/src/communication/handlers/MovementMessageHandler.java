@@ -24,7 +24,7 @@ public class MovementMessageHandler extends MessageHandler
 		{
 			MovementMessage movementMessage = (MovementMessage) msg;
 			CommandMovePlayer cmd = new CommandMovePlayer(movementMessage.getPlayerID(),movementMessage.getPosition());
-			ModelFacade.getSingleton(false).queueCommand(cmd);	
+			ModelFacade.getSingleton(false, false).queueCommand(cmd);	
 		}
 	}
 
