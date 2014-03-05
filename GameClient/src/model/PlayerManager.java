@@ -24,8 +24,9 @@ public class PlayerManager extends QualifiedObservable
 	private PlayerManager()
 	{
 		thisClientsPlayer = null;
-		playerList = new HashMap<Integer,Player>();
+		playerList = new HashMap<Integer, Player>();
 		reportTypes.add(LoginInitiatedReport.class);
+		registerReportTypesWeNotify();
 	}
 
 	/**
@@ -43,6 +44,7 @@ public class PlayerManager extends QualifiedObservable
 	}
 
 	private ThisClientsPlayer thisClientsPlayer;
+
 	/**
 	 * Used only in testing to re-initialize the singleton
 	 */
@@ -53,6 +55,7 @@ public class PlayerManager extends QualifiedObservable
 
 	/**
 	 * Get the player that is playing on this client
+	 * 
 	 * @return that player
 	 */
 	public ThisClientsPlayer getThisClientsPlayer()
@@ -62,7 +65,9 @@ public class PlayerManager extends QualifiedObservable
 
 	/**
 	 * Get a player with the given player id
-	 * @param playerID the unique player id of the player in which we are interested
+	 * 
+	 * @param playerID
+	 *            the unique player id of the player in which we are interested
 	 * @return the appropriate Player object or null if no such player exists
 	 */
 	public Player getPlayerFromID(int playerID)
@@ -72,29 +77,38 @@ public class PlayerManager extends QualifiedObservable
 	
 	/**
 	 * Sets the player controlled by this client
-	 * @param playerID ths unique identifier of the player
+	 * 
+	 * @param playerID
+	 *            ths unique identifier of the player
 	 * @return the player object we created
-	 * @throws AlreadyBoundException when a login has occurred and the player is set
-	 * @throws NotBoundException when the player has not yet been set because login has not be called
+	 * @throws AlreadyBoundException
+	 *             when a login has occurred and the player is set
+	 * @throws NotBoundException
+	 *             when the player has not yet been set because login has not be
+	 *             called
 	 */
-	public ThisClientsPlayer setThisClientsPlayer(int playerID) throws AlreadyBoundException, NotBoundException
+	public ThisClientsPlayer setThisClientsPlayer(int playerID)
+			throws AlreadyBoundException, NotBoundException
 	{
-		if (this.loginInProgress) {
+		if (this.loginInProgress)
+		{
 			ThisClientsPlayer p = new ThisClientsPlayer(playerID);
 			playerList.put(playerID, p);
 			this.thisClientsPlayer = p;
-			
-			//prevent replacing the player after logging in
+
+			// prevent replacing the player after logging in
 			loginInProgress = false;
 			return p;
-		}
-		else
+		} else
 		{
-			if (this.thisClientsPlayer == null) {
-				throw new NotBoundException("Login has not yet been called, player has not been set.");
-			}
-			else {
-				throw new AlreadyBoundException("Login has already been called, you can not reset the player until logging out.");
+			if (this.thisClientsPlayer == null)
+			{
+				throw new NotBoundException(
+						"Login has not yet been called, player has not been set.");
+			} else
+			{
+				throw new AlreadyBoundException(
+						"Login has already been called, you can not reset the player until logging out.");
 			}
 		}
 	}
