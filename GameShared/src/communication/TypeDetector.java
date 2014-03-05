@@ -19,30 +19,6 @@ public abstract class TypeDetector
 	 */
 	protected ArrayList<Class<?>> detectAllExtendersInPackage(Class<?> type)
 	{
-//		ArrayList<Class<?>> results = new ArrayList<Class<?>>();
-//		Reflections reflections = new Reflections(this.getClass().getPackage()
-//				.getName());
-//
-//		Multimap<String, String> mmap = reflections.getStore().getStoreMap()
-//				.get("SubTypesScanner");
-//		for (Map.Entry<String, String> entry : mmap.entries())
-//		{
-//			// skip over private classes that are inside another class
-//			if (!entry.getValue().contains("$"))
-//			{
-//				try
-//				{
-//					Class<?> classToRegister = Class.forName(entry.getValue());
-//					if (extendsClass(classToRegister, type))
-//					{
-//						results.add(classToRegister);
-//					}
-//				} catch (ClassNotFoundException e)
-//				{
-//					e.printStackTrace();
-//				}
-//			}
-//		}
 		return detectAllExtendersInPackage(type, this.getClass().getPackage()
 				.getName());
 	}

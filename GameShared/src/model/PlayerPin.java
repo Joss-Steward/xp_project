@@ -87,14 +87,22 @@ public class PlayerPin
 			new DatabaseException("Unable to generate pin for player id # " + playerID, e);
 		}
 	}
-	protected void deletePlayerPin() throws SQLException, DatabaseException
+	protected void deletePlayerPin() throws DatabaseException
 	{
 		Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
 
 		String sql = "DELETE from PlayerPins WHERE PlayerID = ?";
-		PreparedStatement stmt = connectionStatus.prepareStatement(sql);
-		stmt.setInt(1, playerID);
-		stmt.executeUpdate();
+		PreparedStatement stmt;
+		try
+		{
+			stmt = connectionStatus.prepareStatement(sql);
+			stmt.setInt(1, playerID);
+			stmt.executeUpdate();
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Unable to delete the pin for player id # " + playerID, e);
+		}
+		
 	}
 
 	/**
@@ -106,6 +114,7 @@ public class PlayerPin
 	 */
 	public GregorianCalendar getExpirationTime() throws DatabaseException
 	{
+		GregorianCalendar changedOn = null;
 		try
 		{
 			Connection connection = DatabaseManager.getSingleton().getConnection();
@@ -113,7 +122,7 @@ public class PlayerPin
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, playerID);
 			ResultSet resultSet = stmt.executeQuery();
-			GregorianCalendar changedOn = null;
+			changedOn = null;
 			if (resultSet.next())
 			{
 				String timeString = resultSet.getString(1);
@@ -121,13 +130,12 @@ public class PlayerPin
 				changedOn.add(EXPIRATION_TIME_UNITS, EXPIRATION_TIME_QUANTITY);
 			} 
 			resultSet.close();
-			return changedOn;
 		
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
-		return null;
+		return changedOn;
 	}
 
 	protected GregorianCalendar parseTimeString(String timeString)
@@ -139,7 +147,6 @@ public class PlayerPin
 			result.setTime(sdf.parse(timeString));
 		} catch (ParseException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
@@ -172,7 +179,10 @@ public class PlayerPin
 			if (resultSet.next())
 			{
 				pin = resultSet.getDouble(1);
-			} 
+			} else
+			{
+				throw new DatabaseException("No pin for player id "+ playerID);
+			}
 			resultSet.close();
 			return pin;
 		
