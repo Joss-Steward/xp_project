@@ -26,6 +26,7 @@ public class ConnectMessageHandlerTest
 	public void reset()
 	{
 		PlayerManager.resetSingleton();
+		ModelFacade.resetSingleton();
 	}
 	
 	/**

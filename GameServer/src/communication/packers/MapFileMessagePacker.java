@@ -9,7 +9,7 @@ import communication.messages.Message;
 
 /**
  * @author Merlin
- *
+ * 
  */
 public class MapFileMessagePacker extends MessagePacker
 {
@@ -20,24 +20,21 @@ public class MapFileMessagePacker extends MessagePacker
 	@Override
 	public Message pack(QualifiedObservableReport object)
 	{
-		if (object.getClass().equals(PlayerConnectionReport.class))
+		PlayerConnectionReport report = (PlayerConnectionReport) object;
+		try
 		{
-			PlayerConnectionReport report = (PlayerConnectionReport) object;
-			try
+			int playerID = report.getPlayerID();
+			if (this.getAccumulator().getPlayerID() == playerID)
 			{
-				int playerID = report.getPlayerID();
-				if (this.getAccumulator().getPlayerID() == playerID)
-				{
-					MapFileMessage msg = new MapFileMessage("maps/current.tmx");
-					return msg;
-				}
-			} catch (IOException e)
-			{
-				e.printStackTrace();
-				return null;
-			} 
-
+				MapFileMessage msg = new MapFileMessage("maps/current.tmx");
+				return msg;
+			}
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+			return null;
 		}
+
 		return null;
 	}
 
