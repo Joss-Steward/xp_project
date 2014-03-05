@@ -26,6 +26,7 @@ public class PlayerManager extends QualifiedObservable
 		thisClientsPlayer = null;
 		playerList = new HashMap<Integer, Player>();
 		reportTypes.add(LoginInitiatedReport.class);
+		registerReportTypesWeNotify();
 	}
 
 	/**
