@@ -2,6 +2,8 @@ package model;
 
 import static org.junit.Assert.*;
 
+import java.rmi.AlreadyBoundException;
+import java.rmi.NotBoundException;
 import java.util.Observer;
 
 import model.reports.LoginInitiatedReport;
@@ -11,9 +13,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests the player manager to make sure it maintains the list of players correctly
+ * Tests the player manager to make sure it maintains the list of players
+ * correctly
+ * 
  * @author merlin
- *
+ * 
  */
 public class PlayerManagerTest
 {
@@ -27,6 +31,7 @@ public class PlayerManagerTest
 		PlayerManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 	}
+
 	/**
 	 * There should be only one player
 	 */
@@ -34,11 +39,11 @@ public class PlayerManagerTest
 	public void testSingleton()
 	{
 		PlayerManager player1 = PlayerManager.getSingleton();
-		assertSame(player1,PlayerManager.getSingleton());
+		assertSame(player1, PlayerManager.getSingleton());
 		PlayerManager.resetSingleton();
-		assertNotSame(player1,PlayerManager.getSingleton());
+		assertNotSame(player1, PlayerManager.getSingleton());
 	}
-	
+
 	/**
 	 * Make sure we can add players and retrieve them by their player names
 	 */
@@ -59,7 +64,7 @@ public class PlayerManagerTest
 		assertEquals(p2, pm.getPlayerFromID(2));
 		assertEquals(p3, pm.getPlayerFromID(3));
 	}
-	
+
 	/**
 	 * Just make sure he remembers when a login is started
 	 */
@@ -71,7 +76,7 @@ public class PlayerManagerTest
 		p.initiateLogin("Fred", "mommy");
 		assertTrue(p.isLoginInProgress());
 	}
-	
+
 	/**
 	 * Make sure that observers who want to be told when a login is initiated
 	 * are told
@@ -83,12 +88,52 @@ public class PlayerManagerTest
 		LoginInitiatedReport report = new LoginInitiatedReport("Fred", "daddy");
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				LoginInitiatedReport.class);
-		obs.update(EasyMock.eq(PlayerManager.getSingleton()), EasyMock.eq(report));
+		obs.update(EasyMock.eq(PlayerManager.getSingleton()),
+				EasyMock.eq(report));
 		EasyMock.replay(obs);
 
 		PlayerManager.getSingleton().initiateLogin("Fred", "daddy");
-		
+
 		EasyMock.verify(obs);
 	}
-}
 
+	/**
+	 * Test all the conditions behind setting this client's player to ensure the
+	 * method is secure
+	 */
+	@Test
+	public void testSettingThisClientsPlayer()
+	{
+		PlayerManager pm = PlayerManager.getSingleton();
+
+		// test setting player without having tried logging in
+		try
+		{
+			pm.setThisClientsPlayer(1);
+		} catch (AlreadyBoundException | NotBoundException e)
+		{
+			assertTrue(e instanceof NotBoundException);
+		}
+
+		// test setting the player while trying to log in
+		try
+		{
+			pm.initiateLogin("bilbo", "baggins");
+			pm.setThisClientsPlayer(1);
+		} catch (AlreadyBoundException | NotBoundException e)
+		{
+			fail("Login should have been processed, and setting should work");
+		}
+
+		// player shouldn't be able to be set after having logged in without
+		// first logging out
+		try
+		{
+			pm.setThisClientsPlayer(2);
+			fail("Login should have already occured and it should not allow a new player to be set");
+		} catch (AlreadyBoundException | NotBoundException e)
+		{
+			assertTrue(e instanceof AlreadyBoundException);
+		}
+	}
+}

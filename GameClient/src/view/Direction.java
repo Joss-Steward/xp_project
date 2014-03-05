@@ -7,7 +7,8 @@ import data.Position;
 /**
  * Facing direction of the sprite
  */
-public enum Direction {
+public enum Direction
+{
 	/**
 	 * Looking down the screen
 	 */
@@ -24,13 +25,14 @@ public enum Direction {
 	 * Looking right on the screen
 	 */
 	East;
-	
+
 	/**
 	 * Get the direction of facing between two points
+	 * 
 	 * @param from
-	 * 	source position
+	 *            source position
 	 * @param to
-	 *  destination position
+	 *            destination position
 	 * @return the direction of facing between point a to point b
 	 */
 	public static Direction getFacing(Vector2 from, Vector2 to)
@@ -38,39 +40,46 @@ public enum Direction {
 		Direction out = North;
 		float diffX = Math.abs(to.x - from.x);
 		float diffY = Math.abs(to.y - from.y);
-		
-		if (diffX >= diffY) {
-		
-			if (from.x > to.x) {
+
+		if (diffX >= diffY)
+		{
+
+			if (from.x > to.x)
+			{
 				out = West;
-			}
-			else {
+			} else
+			{
 				out = East;
 			}
-		
-		}else{
-			if (from.y < to.y) {
-				out = South;	
-			} 
-			else {
+
+		} else
+		{
+			if (from.y < to.y)
+			{
+				out = South;
+			} else
+			{
 				out = North;
 			}
 		}
-		
+
 		return out;
 	}
-	
+
 	/**
 	 * Get the next step from a position in a direction
+	 * 
 	 * @param p
-	 * 	starting position
+	 *            starting position
 	 * @param dir
-	 * 	direction to walk
+	 *            direction to walk
 	 * @return next position
 	 */
-	public static Position getPositionInDirection(Position p, Direction dir) {
+	public static Position getPositionInDirection(Position p, Direction dir)
+	{
 		Position next = p;
-		switch (dir) {
+		switch (dir)
+		{
 			case North:
 				next = new Position(p.getRow() - 1, p.getColumn());
 				break;

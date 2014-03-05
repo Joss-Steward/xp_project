@@ -18,11 +18,11 @@ public class ThisClientsPlayer extends Player
 	protected ThisClientsPlayer(int playerID)
 	{
 		super(playerID);
-		
+
 		this.questManager = new QuestManager();
 		reportTypes.add(QuestScreenReport.class);
 		reportTypes.add(ThisPlayerMovedReport.class);
-		
+
 		this.registerReportTypesWeNotify();
 	}
 

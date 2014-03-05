@@ -20,58 +20,70 @@ import static org.junit.Assert.*;
 /**
  * @author nhydock
  */
-public class ScreenMapInputTest {
+public class ScreenMapInputTest
+{
 
 	/**
 	 * Reset the player manager before starting testing
 	 */
 	@Before
-	public void setup(){
+	public void setup()
+	{
 		PlayerManager.resetSingleton();
 	}
-	
+
 	/**
 	 * Test the input listener sending movement commands
-	 * @throws InterruptedException 
+	 * 
+	 * @throws InterruptedException
+	 *             when thread used to allow model facade command processing
+	 *             interrupts
 	 */
 	@Test
 	public void testMovementCommandIssuing() throws InterruptedException
 	{
 		InputProcessor input = new ScreenMapInput();
-		//Gdx.input.setInputProcessor(input);
+		// Gdx.input.setInputProcessor(input);
 		ModelFacade mf = ModelFacade.getSingleton(true);
-		//setup initial player for testing
+		// setup initial player for testing
 		PlayerManager pm = PlayerManager.getSingleton();
 		pm.initiateLogin("john", "pw");
-		try {
+		try
+		{
 			pm.setThisClientsPlayer(1);
-		} catch (AlreadyBoundException | NotBoundException e) {
+		} catch (AlreadyBoundException | NotBoundException e)
+		{
 			e.printStackTrace();
 			fail("crap happened");
 		}
-		ThisClientsPlayer testPlayer = PlayerManager.getSingleton().getThisClientsPlayer();
+		ThisClientsPlayer testPlayer = PlayerManager.getSingleton()
+				.getThisClientsPlayer();
 		assertEquals(new Position(0, 0), testPlayer.getPosition());
-		
-		//move player north
+
+		// move player north
 		assertEquals(0, mf.getCommandQueueLength());
 		input.keyDown(Keys.UP);
 		assertEquals(1, mf.getCommandQueueLength());
-		while (mf.getCommandQueueLength() > 0) Thread.sleep(100);
+		while (mf.getCommandQueueLength() > 0)
+			Thread.sleep(100);
 		assertEquals(new Position(-1, 0), testPlayer.getPosition());
-		
-		//move player south
+
+		// move player south
 		input.keyDown(Keys.DOWN);
-		while (mf.getCommandQueueLength() > 0) Thread.sleep(100);
+		while (mf.getCommandQueueLength() > 0)
+			Thread.sleep(100);
 		assertEquals(new Position(0, 0), testPlayer.getPosition());
-		
-		//move player east
+
+		// move player east
 		input.keyDown(Keys.RIGHT);
-		while (mf.getCommandQueueLength() > 0) Thread.sleep(100);
+		while (mf.getCommandQueueLength() > 0)
+			Thread.sleep(100);
 		assertEquals(new Position(0, 1), testPlayer.getPosition());
-		
-		//move player east
+
+		// move player east
 		input.keyDown(Keys.LEFT);
-		while (mf.getCommandQueueLength() > 0) Thread.sleep(100);
+		while (mf.getCommandQueueLength() > 0)
+			Thread.sleep(100);
 		assertEquals(new Position(0, 0), testPlayer.getPosition());
 	}
 }

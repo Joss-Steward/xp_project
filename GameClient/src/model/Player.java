@@ -5,10 +5,11 @@ import data.Position;
 
 /**
  * Holds the information about one player in the system
+ * 
  * @author merlin
- *
+ * 
  */
- public class Player extends QualifiedObservable
+public class Player extends QualifiedObservable
 {
 
 	protected final int id;
@@ -16,8 +17,10 @@ import data.Position;
 	protected Position position;
 
 	/**
-	 * Create a player 
-	 * @param playerID the unique ID of this player
+	 * Create a player
+	 * 
+	 * @param playerID
+	 *            the unique ID of this player
 	 */
 	public Player(int playerID)
 	{
@@ -25,7 +28,6 @@ import data.Position;
 		this.position = new Position(0, 0);
 	}
 
-	
 	/**
 	 * 
 	 * @see java.lang.Object#hashCode()
@@ -58,9 +60,9 @@ import data.Position;
 		return true;
 	}
 
-
 	/**
 	 * Get the unique ID name for this player
+	 * 
 	 * @return the player ID
 	 */
 	public int getID()
@@ -68,9 +70,9 @@ import data.Position;
 		return id;
 	}
 
-
 	/**
 	 * get this player's unique name
+	 * 
 	 * @return the name
 	 */
 	public String getName()
@@ -78,32 +80,35 @@ import data.Position;
 		return this.name;
 	}
 
-
 	/**
 	 * set this player's name
-	 * @param playerName the new name
+	 * 
+	 * @param playerName
+	 *            the new name
 	 */
 	public void setName(String playerName)
 	{
 		this.name = playerName;
 	}
-	
+
 	/**
 	 * Move the player's position
+	 * 
 	 * @param playerPosition
-	 * 			The new location the player is
-	 * Assuming a valid position.  Error checking else where
+	 *            The new location the player is Assuming a valid position.
+	 *            Error checking else where
 	 */
 	public void move(Position playerPosition)
 	{
 		this.position = playerPosition;
 		this.notifyObservers(new OtherPlayerMovedReport(playerPosition));
 	}
-	
+
 	/**
 	 * Get the player's position
-	 * @return playerPosition
-	 * 			Returns the player position. If a position is not set should return null.
+	 * 
+	 * @return playerPosition Returns the player position. If a position is not
+	 *         set should return null.
 	 */
 	public Position getPosition()
 	{
