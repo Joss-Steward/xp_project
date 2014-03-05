@@ -1,6 +1,6 @@
 package communication.handlers;
 
-import model.CommandAddPlayer;
+import model.CommandInitializePlayer;
 import model.ModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
@@ -27,7 +27,7 @@ public class PlayerJoinedMessageHandler extends MessageHandler
 	{
 		System.out.println("received " + msg);
 		PlayerJoinedMessage playerJoinedMessage = (PlayerJoinedMessage)msg;
-		CommandAddPlayer cmd = new CommandAddPlayer(playerJoinedMessage.getPlayerID(), playerJoinedMessage.getPlayerName());
+		CommandInitializePlayer cmd = new CommandInitializePlayer(playerJoinedMessage.getPlayerID(), playerJoinedMessage.getPlayerName(), playerJoinedMessage.getAppearanceType());
 		ModelFacade.getSingleton(false).queueCommand(cmd);
 	}
 

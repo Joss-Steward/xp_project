@@ -7,39 +7,30 @@ package model;
  * @author merlin
  * 
  */
-public class CommandAddPlayer extends Command
+public class CommandInitializePlayer extends Command
 {
 
 	private int playerID;
 	private String playerName;
+	private String appearanceType;
 
 	/**
 	 * For now, we just know his name
 	 * @param playerID the unique player name of the new player
 	 * @param playerName this player's name
+	 * @param appearanceType The appearance type of this player
 	 */
-	public CommandAddPlayer(int playerID, String playerName)
+	public CommandInitializePlayer(int playerID, String playerName, String appearanceType)
 	{
 		this.playerID = playerID;
 		this.playerName = playerName;
+		this.appearanceType = appearanceType;
 	}
 
 	@Override
 	protected boolean execute()
 	{
-		PlayerManager manager = PlayerManager.getSingleton();
-		Player p = null;
-		if(manager.getThisClientsPlayer().getID() == this.playerID)
-		{
-			//The player message is about this clients player
-			//TODO: This needs to be done when ThisClientsPlayer is a Player
-			//p = manager.getThisClientsPlayer();
-		}
-		else
-		{
-			p = PlayerManager.getSingleton().addPlayer(playerID);
-		}
-		p.setName(playerName);
+		PlayerManager.getSingleton().initializePlayer(playerID, playerName, appearanceType);
 		return true;
 	}
 
