@@ -8,7 +8,7 @@ import communication.packers.MessagePacker;
 
 /**
  * @author Merlin
- *
+ * 
  */
 public class LoginFailedMessagePacker extends MessagePacker
 {
@@ -18,12 +18,8 @@ public class LoginFailedMessagePacker extends MessagePacker
 	@Override
 	public Message pack(QualifiedObservableReport object)
 	{
-		if (object.getClass().equals(LoginFailedReport.class))
-		{
-			LoginFailedMessage msg = new LoginFailedMessage();
-			return msg;
-		}
-		return null;
+		LoginFailedMessage msg = new LoginFailedMessage();
+		return msg;
 	}
 
 	/**
