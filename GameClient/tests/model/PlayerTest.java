@@ -25,6 +25,20 @@ public class PlayerTest
 		Player p = new Player(1);
 		assertEquals(1, p.getID());
 	}
+	
+	/**
+	 * Simple test for all setters and getters
+	 */
+	@Test
+	public void testSettersGetters()
+	{
+		Player p = new Player(1);
+		p.setName("name");
+		p.setAppearanceType("type");
+		
+		assertEquals("name", p.getName());
+		assertEquals("type", p.getAppearanceType());
+	}
 
 	/**
 	 * Check the equals method

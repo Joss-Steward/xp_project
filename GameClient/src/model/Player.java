@@ -14,6 +14,7 @@ import data.Position;
 	protected final int id;
 	protected String name;
 	protected Position position;
+	protected String appearanceType;
 
 	/**
 	 * Create a player 
@@ -77,6 +78,14 @@ import data.Position;
 	{
 		return this.name;
 	}
+	
+	/**
+	 * @return this player's appearance type
+	 */
+	public String getAppearanceType()
+	{
+		return this.appearanceType;
+	}
 
 
 	/**
@@ -86,6 +95,15 @@ import data.Position;
 	public void setName(String playerName)
 	{
 		this.name = playerName;
+	}
+	
+	/**
+	 * Set this player's appearance
+	 * @param appearanceType the new appearance type
+	 */
+	public void setAppearanceType(String appearanceType)
+	{
+		this.appearanceType = appearanceType;
 	}
 	
 	/**
