@@ -26,6 +26,7 @@ public class CommandNewMapTest
 	@Before
 	public void setup()
 	{
+		ModelFacade.resetSingleton();
 		ModelFacade.getSingleton(true, true);
 	}
 	

@@ -2,7 +2,6 @@ package model;
 
 import static org.junit.Assert.*;
 
-
 import java.util.Observer;
 
 import model.reports.NewMapReport;
@@ -30,7 +29,8 @@ public class MapManagerTest extends QualifiedObservableTestInherited
 	public void setup()
 	{
 		QualifiedObservableConnector.resetSingleton();
-		ModelFacade.resetSingleton(true, true);
+		ModelFacade.resetSingleton();
+		ModelFacade.getSingleton(true,false);
 	}
 
 	/**

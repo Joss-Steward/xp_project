@@ -1,7 +1,6 @@
 package model;
 
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +18,7 @@ public class ModelFacadeTest
 	@Before
 	public void setup()
 	{
-		ModelFacade.resetSingleton(true, true);
+		ModelFacade.resetSingleton();
 		MapManager.resetSingleton();
 	}
 	
@@ -32,8 +31,41 @@ public class ModelFacadeTest
 		ModelFacade facade1 = ModelFacade.getSingleton(true, true);
 		ModelFacade facade2 = ModelFacade.getSingleton(true, true);
 		assertSame(facade1, facade2);
-		ModelFacade.resetSingleton(true, true);
+		ModelFacade.resetSingleton();
 		assertNotSame(facade1, ModelFacade.getSingleton(true, true));
+	}
+	
+	/**
+	 * Make sure that we get an exception if we ask for a facade in a different mode
+	 * than the current one without resetting it first
+	 */
+	@Test
+	public void cantChangeModes()
+	{
+		boolean sawException = false;
+		ModelFacade.getSingleton(true, true);
+		try
+		{
+			ModelFacade.getSingleton(true, false);
+		} 
+		catch(IllegalArgumentException e)
+		{
+			sawException = true;
+		}
+		assertTrue(sawException);
+		
+		ModelFacade.resetSingleton();
+		ModelFacade.getSingleton(true, true);
+		
+		try
+		{
+			ModelFacade.getSingleton(false, true);
+		} 
+		catch(IllegalArgumentException e)
+		{
+			sawException = true;
+		}
+		assertTrue(sawException);
 	}
 
 }

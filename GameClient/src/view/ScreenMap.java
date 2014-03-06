@@ -109,7 +109,7 @@ public class ScreenMap extends ScreenBasic
 			System.out.println("quest button is pressed");
 
 			CommandQuestScreenOpen lc = new CommandQuestScreenOpen();
-			ModelFacade.getSingleton(false, false).queueCommand(lc);
+			ModelFacade.getSingleton().queueCommand(lc);
 		}
 	}
 

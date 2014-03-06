@@ -56,7 +56,7 @@ public class MapFileMessageHandler extends MessageHandler
 			writeToFile(mapFile, mapFileMessage.getContents() );
 			writeTileSets(mapFileMessage, path.getSchemeSpecificPart());
 			
-			ModelFacade.getSingleton(false, false).queueCommand(new CommandNewMap(mapFile));
+			ModelFacade.getSingleton().queueCommand(new CommandNewMap(mapFile));
 		} catch (MalformedURLException | URISyntaxException e)
 		{
 			e.printStackTrace();

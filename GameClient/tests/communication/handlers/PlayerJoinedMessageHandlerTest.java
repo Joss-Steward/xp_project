@@ -24,7 +24,8 @@ public class PlayerJoinedMessageHandlerTest
 	@Before
 	public void reset()
 	{
-		ModelFacade.resetSingleton(true, true);
+		ModelFacade.resetSingleton();
+		ModelFacade.getSingleton(true,false);
 	}
 	
 	/**
@@ -38,7 +39,7 @@ public class PlayerJoinedMessageHandlerTest
 				PlayersInDB.MERLIN.getAppearanceType(), PlayersInDB.MERLIN.getPosition());
 		PlayerJoinedMessageHandler handler = new PlayerJoinedMessageHandler();
 		handler.process(msg);
-		assertEquals(1, ModelFacade.getSingleton(true, true).getCommandQueueLength());
+		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
 	}
 
 }

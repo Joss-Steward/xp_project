@@ -26,7 +26,8 @@ public class MovementMessageHandlerTest
 	@Before
 	public void setUp()
 	{
-		ModelFacade.resetSingleton(true, true);
+		ModelFacade.resetSingleton();
+		ModelFacade.getSingleton(true,false);
 	}
 	
 	/**
@@ -41,7 +42,7 @@ public class MovementMessageHandlerTest
 		MovementMessageHandler handler = new MovementMessageHandler();
 		handler.process(msg);
 		
-		assertEquals(1, ModelFacade.getSingleton(true, true).getCommandQueueLength());
+		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
 	}
 
 }

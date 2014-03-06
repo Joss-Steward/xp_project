@@ -36,7 +36,7 @@ public class ClientRunner
 	{
 		Socket socket = new Socket("localhost", 1871);
 		ConnectionManager cm = new ConnectionManager(socket, new MessageHandlerSet(), new MessagePackerSet());
-		ModelFacade modelFacade = ModelFacade.getSingleton(true, false);
+		ModelFacade modelFacade = ModelFacade.getSingleton();
 
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("input?");

@@ -50,7 +50,7 @@ public class ScreenMapInput implements InputProcessor {
 		}
 		
 		if (cm != null)
-			ModelFacade.getSingleton(false, false).queueCommand(cm);
+			ModelFacade.getSingleton().queueCommand(cm);
 		
 		return false;
 	}

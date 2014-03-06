@@ -26,7 +26,8 @@ public class MapFileMessageHandlerTest
 	@Before
 	public void setUp()
 	{
-		ModelFacade.resetSingleton(true, true);
+		ModelFacade.resetSingleton();
+		ModelFacade.getSingleton(true,false);
 	}
 
 	/**
@@ -77,6 +78,6 @@ public class MapFileMessageHandlerTest
 		MapFileMessageHandler handler = new MapFileMessageHandler();
 		handler.process(msg);
 		
-		assertEquals(1, ModelFacade.getSingleton(false, true).getCommandQueueLength());
+		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
 	}
 }

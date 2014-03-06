@@ -30,11 +30,11 @@ public class QuestScreenMessageHandler extends MessageHandler
 
 			if (rMsg.isLoadState() == false)
 			{
-				ModelFacade.getSingleton(false, false).queueCommand(
+				ModelFacade.getSingleton().queueCommand(
 						new CommandQuestScreenClose());
 			} else
 			{
-				ModelFacade.getSingleton(false, false).queueCommand(
+				ModelFacade.getSingleton().queueCommand(
 						new CommandQuestScreenOpen());
 			}
 		}
