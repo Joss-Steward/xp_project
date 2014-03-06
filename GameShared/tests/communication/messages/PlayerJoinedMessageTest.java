@@ -1,6 +1,7 @@
 package communication.messages;
 
 import static org.junit.Assert.assertEquals;
+import model.PlayersInDB;
 
 import org.junit.Test;
 
@@ -17,9 +18,13 @@ public class PlayerJoinedMessageTest
 	@Test
 	public void testToString()
 	{
-		PlayerJoinedMessage msg = new PlayerJoinedMessage("fred");
-		assertEquals("PlayerJoined Message: playerName = fred", msg.toString());
-		assertEquals("fred", msg.getPlayerName());
+		PlayerJoinedMessage msg = new PlayerJoinedMessage(2, PlayersInDB.MERLIN.getPlayerName(),
+				PlayersInDB.MERLIN.getAppearanceType(), PlayersInDB.MERLIN.getPosition());
+		assertEquals("PlayerJoined Message: playerName = Merlin", msg.toString());
+		assertEquals(2, msg.getPlayerID());
+		assertEquals("Merlin", msg.getPlayerName());
+		assertEquals(PlayersInDB.MERLIN.getAppearanceType(), msg.getAppearanceType());
+		assertEquals(PlayersInDB.MERLIN.getPosition(), msg.getPosition());
 	}
 	
 }

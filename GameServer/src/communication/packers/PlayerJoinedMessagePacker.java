@@ -24,13 +24,11 @@ public class PlayerJoinedMessagePacker extends MessagePacker
 		if (object.getClass().equals(PlayerConnectionReport.class))
 		{
 			PlayerConnectionReport report = (PlayerConnectionReport) object;
-			int playerID = report.getPlayerID();
-			if (this.getAccumulator().getPlayerID() != playerID)
-			{
-				PlayerJoinedMessage msg = new PlayerJoinedMessage(report.getPlayerName());
-				return msg;
-			}
 
+			PlayerJoinedMessage msg = new PlayerJoinedMessage(report.getPlayerID(),
+					report.getPlayerName(), report.getAppearanceType(),
+					report.getPosition());
+			return msg;
 		}
 		return null;
 	}

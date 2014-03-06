@@ -22,10 +22,10 @@ public class MovementMessageTest
 	public void testToString()
 	{
 		Position position = new Position(42, 13);
-		MovementMessage msg = new MovementMessage(176, position);
-		assertEquals(176, msg.getPlayerID());
+		MovementMessage msg = new MovementMessage(1, position);
+		assertEquals(1, msg.getPlayerID());
 		assertEquals(position, msg.getPosition());
-		assertEquals("Movement Message: playerID = 176, position = " + position.toString(),
+		assertEquals("Movement Message: playerID = 1, position = " + position.toString(),
 				msg.toString());
 	}
 

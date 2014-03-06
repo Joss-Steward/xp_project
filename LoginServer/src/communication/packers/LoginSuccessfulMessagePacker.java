@@ -8,7 +8,7 @@ import communication.packers.MessagePacker;
 
 /**
  * @author Merlin
- *
+ * 
  */
 public class LoginSuccessfulMessagePacker extends MessagePacker
 {
@@ -18,13 +18,10 @@ public class LoginSuccessfulMessagePacker extends MessagePacker
 	@Override
 	public Message pack(QualifiedObservableReport object)
 	{
-		if (object.getClass().equals(LoginSuccessfulReport.class))
-		{
-			LoginSuccessfulReport report = (LoginSuccessfulReport)object;
-			LoginSuccessfulMessage msg = new LoginSuccessfulMessage(report.getPlayerID(), report.getHostname(), report.getPort(), report.getPin());
-			return msg;
-		}
-		return null;
+		LoginSuccessfulReport report = (LoginSuccessfulReport) object;
+		LoginSuccessfulMessage msg = new LoginSuccessfulMessage(report.getPlayerID(),
+				report.getHostname(), report.getPort(), report.getPin());
+		return msg;
 	}
 
 	/**

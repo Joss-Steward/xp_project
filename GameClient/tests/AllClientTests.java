@@ -1,4 +1,4 @@
-import model.CommandAddOtherPlayerTest;
+import model.CommandInitializePlayerTest;
 import model.CommandLoginTest;
 import model.CommandNewMapTest;
 import model.MapManagerTest;
@@ -15,6 +15,7 @@ import org.junit.runners.Suite;
 
 import view.ScreenListenerTest;
 import communication.handlers.MapFileMessageHandlerTest;
+import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.PlayerJoinedMessageHandlerTest;
 import communication.packers.LoginMessagePackerTest;
 
@@ -32,12 +33,14 @@ import communication.packers.LoginMessagePackerTest;
 		// communication.handlers
 		MapFileMessageHandlerTest.class,
 		PlayerJoinedMessageHandlerTest.class,
+		MovementMessageHandlerTest.class,
 
 		// communication.packers
 		LoginMessagePackerTest.class,
+		PlayerJoinedMessageHandlerTest.class,
 
 		// model
-		CommandAddOtherPlayerTest.class, 
+		CommandInitializePlayerTest.class, 
 		CommandLoginTest.class, 
 		CommandNewMapTest.class, 
 		MapManagerTest.class,

@@ -1,13 +1,14 @@
 package communication.handlers;
 
-import model.PlayerManager;
+import model.CommandInitializePlayer;
+import model.ModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.PlayerJoinedMessage;
 
 /**
- * Should process an incoming MovementMessage that is reporting that someone
- * else moved
+ * Should process an incoming PlayerJoinedMessage that is reporting that someone
+ * joined our area server
  * 
  * @author merlin
  * 
@@ -26,7 +27,8 @@ public class PlayerJoinedMessageHandler extends MessageHandler
 	{
 		System.out.println("received " + msg);
 		PlayerJoinedMessage playerJoinedMessage = (PlayerJoinedMessage)msg;
-		PlayerManager.getSingleton().addPlayer(playerJoinedMessage.getPlayerName());
+		CommandInitializePlayer cmd = new CommandInitializePlayer(playerJoinedMessage.getPlayerID(), playerJoinedMessage.getPlayerName(), playerJoinedMessage.getAppearanceType());
+		ModelFacade.getSingleton(false, false).queueCommand(cmd);
 	}
 
 	/**

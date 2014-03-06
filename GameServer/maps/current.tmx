@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="32" tileheight="32">
- <tileset firstgid="1" name="qubodup-bush_0" tilewidth="32" tileheight="32">
-  <image source="tileset/qubodup-bush_0.png" width="32" height="32"/>
+ <tileset firstgid="1" name="grass-tiles-2-small" tilewidth="32" tileheight="32">
+  <image source="tileset/grass-tiles-2-small.png" width="384" height="192"/>
  </tileset>
- <tileset firstgid="2" name="qubodup-bush_berries_0" tilewidth="32" tileheight="32">
-  <image source="tileset/qubodup-bush_berries_0.png" width="32" height="32"/>
+ <tileset firstgid="73" name="tree2-final" tilewidth="32" tileheight="32">
+  <image source="tileset/tree2-final.png" width="256" height="256"/>
  </tileset>
- <layer name="Tile Layer 1" width="20" height="20">
+ <tileset firstgid="137" name="collision" tilewidth="32" tileheight="32">
+  <image source="tileset/collision.png" width="64" height="32"/>
+ </tileset>
+ <layer name="Background" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJztk1EKwCAMQ3X3P/TwL5QkdtHPBQTR+lK1HYPrISOVOp8y17lJximvrqFPRyoPdv9p9jCG7bt49w7I6v6ryuELw+VRvdCvU387//rOGOs81J+ndeJ4ipnWMzJxftLP2GdMCbf2r+Le5P26qxeE3gCn
+   eJzNk80KwjAQhJOCqIcG/Dv4APUFvOm17/9MrtCBYZhNQT1Y+Ag0m+nMblpLKXVhCBrxCLbBjtZ98JQ6ZiSq8NY7BWdaL4ue1sKLew96/uBhDm6E0+K88KV60DnKXpYVeVHLeQ+iw3tVNDWv8+d0NsE16ZvLwmdVpzeP2fREPTDIxvcFOtOileno2Sa5BtFhT6yjZ4Bqt5VsWnsXeA9zzTy5+6N6vIde6KzGL2gyq6wn6LveKwe89v5jfCP7luuj4vrXY+38p/3j9Rf8+/MC7XoTUQ==
+  </data>
+ </layer>
+ <layer name="Foreground" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztzrkJADAQA8Gr2z/4a9vbgxxqYVKhCOecWkJGQUVDxxA2JxY2Dq520bnvPcp4BgU=
+  </data>
+ </layer>
+ <layer name="Top" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztzEcKAlEUAME5nxEcA6Yx55w9vnWGJ7jxN9S2syz1i0qUqVClRv2LX4OcJi3adIKvLj36DBhSMGIc+E2YMmPOgiUr1oHfhi079hw4cuIc+F24cuPOgycv3oFfKvWvfQCfJxDX
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1">
+  <object x="354" y="328" width="120" height="56"/>
+ </objectgroup>
+ <layer name="Collision" width="20" height="20" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJzrYmBg6MKDsQF86gnh4WAeKXbhM48ctxMLKPEvtcwZ6DgdbO6hppvISYujmP54uAMASOmP7w==
   </data>
  </layer>
 </map>

@@ -135,7 +135,7 @@ public class ScreenQuest extends ScreenBasic
 		{
 			System.out.println("\n Return to map button is pressed \n");
 			CommandQuestScreenClose lc = new CommandQuestScreenClose();
-			ModelFacade.getSingleton(false).queueCommand(lc);
+			ModelFacade.getSingleton(false, false).queueCommand(lc);
 		}
 
 		// translates the click into stage input, not just on the screen

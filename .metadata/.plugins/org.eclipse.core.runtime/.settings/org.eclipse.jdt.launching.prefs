@@ -1,0 +1,4 @@
+#Wed Mar 05 17:31:28 EST 2014
+org.eclipse.jdt.launching.PREF_DEFAULT_ENVIRONMENTS_XML=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<defaultEnvironments>\n<defaultEnvironment environmentId\="JavaSE-1.6" vmId\="57,org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType13,1394058386156"/>\n<defaultEnvironment environmentId\="JavaSE-1.7" vmId\="57,org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType13,1394058386156"/>\n</defaultEnvironments>\n
+eclipse.preferences.version=1
+org.eclipse.jdt.launching.PREF_VM_XML=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<vmSettings defaultVM\="57,org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType13,1394058386156">\n<vmType id\="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType">\n<vm id\="1394058386156" javadocURL\="http\://java.sun.com/javase/7/docs/api/" name\="java-7-openjdk-amd64" path\="/usr/lib/jvm/java-7-openjdk-amd64"/>\n</vmType>\n</vmSettings>\n

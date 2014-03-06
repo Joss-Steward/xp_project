@@ -1,8 +1,7 @@
 package model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
+
 
 import java.util.Observer;
 
@@ -15,6 +14,8 @@ import org.junit.Test;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+
+import data.Position;
 
 /**
  * @author Merlin
@@ -29,7 +30,7 @@ public class MapManagerTest extends QualifiedObservableTestInherited
 	public void setup()
 	{
 		QualifiedObservableConnector.resetSingleton();
-		ModelFacade.resetSingleton(true);
+		ModelFacade.resetSingleton(true, true);
 	}
 
 	/**
@@ -79,13 +80,37 @@ public class MapManagerTest extends QualifiedObservableTestInherited
 		EasyMock.replay(mapLayers);
 		EasyMock.replay(mapLayer);
 
-		MapManager.getSingleton().setMapForTesting(tiledMap);
+		MapManager.getSingleton().setMap(tiledMap);
 		MapLayer layer1 = MapManager.getSingleton().getMapLayer("Foreground");
 		assertEquals(mapLayer, layer1);
 
 		EasyMock.verify(tiledMap);
 		EasyMock.verify(mapLayers);
 		EasyMock.verify(mapLayer);
+	}
+	
+	/**
+	 * Make sure that the passabilityMap, once created, can be properly processed
+	 */
+	@Test
+	public void canCheckCollision()
+	{
+		MapManager map = MapManager.getSingleton();
+		
+		boolean[][] passMap = {{false, false, true, false},
+							   {false, true, true, false},
+							   {false, true, false, false},
+							   {true, true, false, false}};
+		
+		map.setPassability(passMap);
+		
+		assertFalse(map.getIsTilePassable(new Position(0, 0)));
+		assertFalse(map.getIsTilePassable(new Position(0, 1)));
+		assertTrue(map.getIsTilePassable(new Position(0, 2)));
+		assertFalse(map.getIsTilePassable(new Position(0, 3)));
+		assertFalse(map.getIsTilePassable(new Position(1, 0)));
+		assertTrue(map.getIsTilePassable(new Position(2, 1)));
+		assertFalse(map.getIsTilePassable(new Position(3, 2)));
 	}
 
 	@Override

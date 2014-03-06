@@ -5,7 +5,7 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 
 import model.CommandLogin;
-import model.CommandMoveThisPlayer;
+import model.CommandMovePlayer;
 import model.ModelFacade;
 import model.PlayerManager;
 import communication.ConnectionManager;
@@ -36,7 +36,7 @@ public class ClientRunner
 	{
 		Socket socket = new Socket("localhost", 1871);
 		ConnectionManager cm = new ConnectionManager(socket, new MessageHandlerSet(), new MessagePackerSet());
-		ModelFacade modelFacade = ModelFacade.getSingleton(true);
+		ModelFacade modelFacade = ModelFacade.getSingleton(true, false);
 
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("input?");
@@ -47,7 +47,8 @@ public class ClientRunner
 			if (tokens[0].equalsIgnoreCase("move"))
 			{
 				String[] positionParts = tokens[1].split(",");
-				CommandMoveThisPlayer command = new CommandMoveThisPlayer(
+				CommandMovePlayer command = new CommandMovePlayer(
+						PlayerManager.getSingleton().getThisClientsPlayer().getID(),
 						new Position(Integer.parseInt(positionParts[0]),
 								Integer.parseInt(positionParts[1])));
 				modelFacade.queueCommand(command);

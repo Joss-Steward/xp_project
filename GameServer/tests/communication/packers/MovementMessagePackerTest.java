@@ -52,7 +52,7 @@ public class MovementMessagePackerTest
 	public void testPackedObjectIsCurrentPlayer()
 	{
 		Position position = new Position(1, 2);
-		PlayerMovedReport report = new PlayerMovedReport(stateAccumulator.getPlayerID(), position);
+		PlayerMovedReport report = new PlayerMovedReport(stateAccumulator.getPlayerID(), "fred", position);
 		MovementMessagePacker packer = new MovementMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		
@@ -68,7 +68,7 @@ public class MovementMessagePackerTest
 	public void testPackedObjectNotCurrentPlayer()
 	{
 		Position position = new Position(1, 2);
-		PlayerMovedReport report = new PlayerMovedReport(-1, position);
+		PlayerMovedReport report = new PlayerMovedReport(-1,"fred", position);
 		MovementMessagePacker packer = new MovementMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		

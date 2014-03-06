@@ -39,6 +39,7 @@ public class MovementMessage implements Message, Serializable
 		return playerID;
 	}
 
+
 	/**
 	 * 
 	 * @see java.lang.Object#hashCode()
@@ -49,8 +50,7 @@ public class MovementMessage implements Message, Serializable
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + playerID;
-		result = prime * result
-				+ ((position == null) ? 0 : position.hashCode());
+		result = prime * result + ((position == null) ? 0 : position.hashCode());
 		return result;
 	}
 
@@ -68,8 +68,10 @@ public class MovementMessage implements Message, Serializable
 		if (!(obj instanceof MovementMessage))
 			return false;
 		MovementMessage other = (MovementMessage) obj;
-		if (playerID != other.playerID)
+		if(playerID != other.playerID)
+		{
 			return false;
+		}
 		if (position == null)
 		{
 			if (other.position != null)
