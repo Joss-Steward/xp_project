@@ -162,7 +162,7 @@ public class PlayerManager extends QualifiedObservable
 		
 		player.setName(playerName);
 		player.setAppearanceType(appearanceType);
-		player.move(position);
+		player.setPosition(position);
 		
 		
 		return player;
