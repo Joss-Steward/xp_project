@@ -1,10 +1,7 @@
 package view;
 
-import model.CommandMovePlayer;
 import model.CommandQuestScreenOpen;
 import model.ModelFacade;
-import model.PlayerManager;
-import model.ThisClientsPlayer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -34,6 +31,7 @@ public class ScreenMap extends ScreenBasic
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private final float unitScale;
+	private ScreenMapInput input;
 
 	/**
 	 * 
@@ -49,6 +47,7 @@ public class ScreenMap extends ScreenBasic
 		stage.setCamera(camera);
 		batch = new SpriteBatch();
 		characters = new Array<PlayerSprite>();
+		input = new ScreenMapInput();
 	}
 
 	/**
@@ -107,50 +106,13 @@ public class ScreenMap extends ScreenBasic
 		// mapRenderer.render(backgroundLayers);
 		// renderMyCustomSprites();
 		// mapRenderer.render(foregroundLayers);
-		CommandMovePlayer cmd = null;
 		if (Gdx.input.isKeyPressed(Keys.Q))
 		{
 			System.out.println("quest button is pressed");
 
 			CommandQuestScreenOpen lc = new CommandQuestScreenOpen();
 			ModelFacade.getSingleton().queueCommand(lc);
-			
-		}else if(Gdx.input.isKeyPressed(Keys.UP))
-		{
-			cmd=createMoveCommand(Direction.North);
-		}else if(Gdx.input.isKeyPressed(Keys.DOWN))
-		{
-			cmd=createMoveCommand(Direction.South);
-		}else if(Gdx.input.isKeyPressed(Keys.RIGHT))
-		{
-			cmd=createMoveCommand(Direction.East);
-		}else if(Gdx.input.isKeyPressed(Keys.LEFT))
-		{
-			cmd=createMoveCommand(Direction.West);
 		}
-		if(cmd != null)
-		{
-			executeMoveCommand(cmd);
-		}
-	}
-	
-	private CommandMovePlayer createMoveCommand(Direction dir)
-	{
-		System.out.println("Created move command " + dir.toString());
-		CommandMovePlayer cm;
-		ThisClientsPlayer cp = PlayerManager.getSingleton().getThisClientsPlayer();
-		Position position = cp.getPosition();
-		Position to;
-		
-		to = Direction.getPositionInDirection(position, dir);
-		cm = new CommandMovePlayer(cp.getID(), to);
-		
-		return cm;
-	}
-	
-	private void executeMoveCommand(CommandMovePlayer command)
-	{
-		ModelFacade.getSingleton().queueCommand(command);
 	}
 
 	/**
@@ -188,6 +150,7 @@ public class ScreenMap extends ScreenBasic
 	public void show()
 	{
 		playerFactory = new PlayerSpriteFactory(Gdx.files.internal("data/characters.pack"));
+		Gdx.input.setInputProcessor(input);
 	}
 
 	/**
