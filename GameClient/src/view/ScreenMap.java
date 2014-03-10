@@ -2,8 +2,6 @@ package view;
 
 import model.CommandQuestScreenOpen;
 import model.ModelFacade;
-import model.PlayerManager;
-import model.reports.PlayerConnectedToAreaServerReport;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;

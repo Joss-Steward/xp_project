@@ -4,21 +4,15 @@ import static org.junit.Assert.*;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
-import java.util.ArrayList;
-import java.util.Observable;
 import java.util.Observer;
 
 import model.reports.LoginInitiatedReport;
 import model.reports.PlayerConnectedToAreaServerReport;
-import model.reports.StubQualifiedObservableReport1;
-import model.reports.StubQualifiedObservableReport2;
-import model.reports.ThisPlayerMovedReport;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
-import view.ScreenListener;
 import data.Position;
 
 /**
