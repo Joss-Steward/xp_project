@@ -32,23 +32,16 @@ public class ScreenMapListener extends ScreenListener
 		ScreenMap map = (ScreenMap) this.screen;
 		
 		// adds your player's sprite to this client
-		if (arg.getClass().equals(ThisPlayerConnectedToAreaServerReport.class)) 
+		if (arg.getClass().equals(PlayerConnectedToAreaServerReport.class)) 
 		{
-			ThisPlayerConnectedToAreaServerReport report = (ThisPlayerConnectedToAreaServerReport) arg;
-			PlayerType type = PlayerType.valueOf(report.getPlayerType());
+			PlayerConnectedToAreaServerReport report = (PlayerConnectedToAreaServerReport) arg;
+			PlayerType type = PlayerType.valueOf(report.getPlayerAppearanceType());
 			PlayerSprite sprite = map.addPlayer(report.getPlayerName(), type);
 			
 			//detect when the player being added is the client's player for finer control
 			if (report.getPlayerName().equals(PlayerManager.getSingleton().getThisClientsPlayer().getName())) {
 				map.mySprite = sprite;
 			}
-		}
-		// adds another player when they connect to the server while you're connected to your client's view
-		else if (arg.getClass().equals(OtherPlayerConnectedToAreaServerReport.class)) 
-		{
-			OtherPlayerConnectedToAreaServerReport report = (OtherPlayerConnectedToAreaServerReport) arg;
-			PlayerType type = PlayerType.valueOf(report.getPlayerType());
-			map.addPlayer(report.getPlayerName(), type);
 		}
 		// moves the player to a new position
 		else if (arg.getClass().equals(ThisPlayerMovedReport.class))
@@ -66,8 +59,7 @@ public class ScreenMapListener extends ScreenListener
 	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypes()
 	{
 		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
-		reportTypes.add(OtherPlayerConnectedToAreaServerReport.class);
-		reportTypes.add(ThisPlayerConnectedToAreaServerReport.class);
+		reportTypes.add(PlayerConnectedToAreaServerReport.class);
 		reportTypes.add(ThisPlayerMovedReport.class);
 		//reportTypes.add(OtherPlayerMovedReport.class);
 		
