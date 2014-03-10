@@ -1,8 +1,11 @@
 package view;
 
+import static view.Direction.North;
+import model.CommandMovePlayer;
 import model.CommandQuestScreenOpen;
 import model.ModelFacade;
 import model.PlayerManager;
+import model.ThisClientsPlayer;
 import model.reports.ThisPlayerConnectedToAreaServerReport;
 
 import com.badlogic.gdx.Gdx;
@@ -14,6 +17,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+
+import data.Position;
 
 /**
  * A basic screen that, for now, just displays the map
@@ -104,13 +109,50 @@ public class ScreenMap extends ScreenBasic
 		// mapRenderer.render(backgroundLayers);
 		// renderMyCustomSprites();
 		// mapRenderer.render(foregroundLayers);
+		CommandMovePlayer cmd = null;
 		if (Gdx.input.isKeyPressed(Keys.Q))
 		{
 			System.out.println("quest button is pressed");
 
 			CommandQuestScreenOpen lc = new CommandQuestScreenOpen();
 			ModelFacade.getSingleton().queueCommand(lc);
+			
+		}else if(Gdx.input.isKeyPressed(Keys.UP))
+		{
+			cmd=createMoveCommand(Direction.North);
+		}else if(Gdx.input.isKeyPressed(Keys.DOWN))
+		{
+			cmd=createMoveCommand(Direction.South);
+		}else if(Gdx.input.isKeyPressed(Keys.RIGHT))
+		{
+			cmd=createMoveCommand(Direction.East);
+		}else if(Gdx.input.isKeyPressed(Keys.LEFT))
+		{
+			cmd=createMoveCommand(Direction.West);
 		}
+		if(cmd != null)
+		{
+			executeMoveCommand(cmd);
+		}
+	}
+	
+	private CommandMovePlayer createMoveCommand(Direction dir)
+	{
+		System.out.println("Created move command " + dir.toString());
+		CommandMovePlayer cm;
+		ThisClientsPlayer cp = PlayerManager.getSingleton().getThisClientsPlayer();
+		Position position = cp.getPosition();
+		Position to;
+		
+		to = Direction.getPositionInDirection(position, dir);
+		cm = new CommandMovePlayer(cp.getID(), to);
+		
+		return cm;
+	}
+	
+	private void executeMoveCommand(CommandMovePlayer command)
+	{
+		ModelFacade.getSingleton().queueCommand(command);
 	}
 
 	/**

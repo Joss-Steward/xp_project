@@ -3,6 +3,7 @@ package view;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
+import model.MapManager;
 import model.ModelFacade;
 import model.PlayerManager;
 import model.ThisClientsPlayer;
@@ -20,7 +21,7 @@ import static org.junit.Assert.*;
 /**
  * @author nhydock
  */
-public class ScreenMapInputTest
+public class ScreenMapInputTest 
 {
 
 	/**
@@ -30,6 +31,13 @@ public class ScreenMapInputTest
 	public void setup()
 	{
 		PlayerManager.resetSingleton();
+		
+		boolean[][] passability = {{true, true, true},
+   				   {true, false, true},
+   				   {true, true, true}};
+		
+		MapManager.resetSingleton();
+		MapManager.getSingleton().setPassability(passability);
 	}
 
 	/**
@@ -60,17 +68,17 @@ public class ScreenMapInputTest
 				.getThisClientsPlayer();
 		assertEquals(new Position(0, 0), testPlayer.getPosition());
 
-		// move player north
-		assertEquals(0, mf.getCommandQueueLength());
-		input.keyDown(Keys.UP);
-		assertEquals(1, mf.getCommandQueueLength());
-		while (mf.getCommandQueueLength() > 0)
-			Thread.sleep(100);
-		assertEquals(new Position(-1, 0), testPlayer.getPosition());
-
-		// move player south
+		
+		//move player south
 		input.keyDown(Keys.DOWN);
-		while (mf.getCommandQueueLength() > 0)
+		assertEquals(1, mf.getCommandQueueLength());
+		while (mf.getCommandQueueLength() > 0) 
+			Thread.sleep(100);
+		assertEquals(new Position(1, 0), testPlayer.getPosition());
+		
+		//move player north
+		input.keyDown(Keys.UP);
+		while (mf.getCommandQueueLength() > 0) 
 			Thread.sleep(100);
 		assertEquals(new Position(0, 0), testPlayer.getPosition());
 
@@ -79,8 +87,8 @@ public class ScreenMapInputTest
 		while (mf.getCommandQueueLength() > 0)
 			Thread.sleep(100);
 		assertEquals(new Position(0, 1), testPlayer.getPosition());
-
-		// move player east
+		
+		//move player west
 		input.keyDown(Keys.LEFT);
 		while (mf.getCommandQueueLength() > 0)
 			Thread.sleep(100);
