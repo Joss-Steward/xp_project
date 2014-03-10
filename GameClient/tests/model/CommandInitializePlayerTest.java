@@ -8,6 +8,8 @@ import java.rmi.NotBoundException;
 import org.junit.Before;
 import org.junit.Test;
 
+import data.Position;
+
 /**
  * Tests the CommandAddOtherPlayer class
  * @author merlin
@@ -31,13 +33,15 @@ public class CommandInitializePlayerTest
 	@Test
 	public void addsNewPlayerWhoIsNotThisClientsPlayer()
 	{
-		CommandInitializePlayer cmd = new CommandInitializePlayer(4, "Henry", "Appearance");
+		Position pos = new Position(1,2);
+		CommandInitializePlayer cmd = new CommandInitializePlayer(4, "Henry", "Appearance", pos);
 		PlayerManager pm = PlayerManager.getSingleton();
 		assertNull (pm.getPlayerFromID(4));
 		assertTrue(cmd.execute());
 		Player p = pm.getPlayerFromID(4);
 		assertEquals(4, p.getID());
 		assertEquals("Henry", p.getName());
+		assertEquals(pos, p.getPosition());
 	}
 	
 	/**
@@ -46,14 +50,16 @@ public class CommandInitializePlayerTest
 	@Test
 	public void updatesExistingPlayerWhoIsNotThisClientsPlayer()
 	{
-		CommandInitializePlayer cmd = new CommandInitializePlayer(4, "Henry", "Appearance");
+		Position pos = new Position(1,2);
+		CommandInitializePlayer cmd = new CommandInitializePlayer(4, "Henry", "Appearance", pos);
 		PlayerManager pm = PlayerManager.getSingleton();
-		Player p = PlayerManager.getSingleton().initializePlayer(4, "4", "4");
+		Player p = PlayerManager.getSingleton().initializePlayer(4, "4", "4", pos);
 		assertNotNull (pm.getPlayerFromID(4));
 		assertTrue(cmd.execute());
 		p = pm.getPlayerFromID(4);
 		assertEquals(4, p.getID());
 		assertEquals("Henry", p.getName());
+		assertEquals(pos, p.getPosition());
 	}
 	
 	/**
@@ -64,7 +70,8 @@ public class CommandInitializePlayerTest
 	@Test
 	public void updatesExistingThisClientsPlayer() throws AlreadyBoundException, NotBoundException
 	{
-		CommandInitializePlayer cmd = new CommandInitializePlayer(4, "Henry", "Apperance");
+		Position pos = new Position(1,2);
+		CommandInitializePlayer cmd = new CommandInitializePlayer(4, "Henry", "Apperance", pos);
 		PlayerManager pm = PlayerManager.getSingleton();
 		pm.initiateLogin("not", "needed");
 		Player p = pm.setThisClientsPlayer(4);
@@ -73,6 +80,7 @@ public class CommandInitializePlayerTest
 		p = pm.getPlayerFromID(4);
 		assertEquals(4, p.getID());
 		assertEquals("Henry", p.getName());
+		assertEquals(pos, p.getPosition());
 	}
 
 }
