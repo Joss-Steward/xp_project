@@ -4,7 +4,9 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.util.HashMap;
 
+import data.Position;
 import model.reports.LoginInitiatedReport;
+import model.reports.PlayerConnectedToAreaServerReport;
 
 /**
  * Maintains the active set of players on the area server to which this client
@@ -26,6 +28,7 @@ public class PlayerManager extends QualifiedObservable
 		thisClientsPlayer = null;
 		playerList = new HashMap<Integer, Player>();
 		reportTypes.add(LoginInitiatedReport.class);
+		reportTypes.add(PlayerConnectedToAreaServerReport.class);
 		registerReportTypesWeNotify();
 	}
 
@@ -143,9 +146,10 @@ public class PlayerManager extends QualifiedObservable
 	 * @param playerID The id of the player
 	 * @param playerName The name of the player
 	 * @param appearanceType The appearance type of the player
+	 * @param position The position of this player
 	 * @return Player The player updated
 	 */
-	public Player initializePlayer(int playerID, String playerName, String appearanceType)
+	public Player initializePlayer(int playerID, String playerName, String appearanceType, Position position)
 	{
 		Player player = this.getPlayerFromID(playerID);
 		if(player == null)
@@ -153,9 +157,15 @@ public class PlayerManager extends QualifiedObservable
 			player = new Player(playerID);
 			playerList.put(playerID, player);
 		}
+		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(playerID, playerName, appearanceType, position);
+		this.notifyObservers(report);
+		
 		player.setName(playerName);
 		player.setAppearanceType(appearanceType);
+		player.setPosition(position);
+		
 		
 		return player;
+		
 	}
 }

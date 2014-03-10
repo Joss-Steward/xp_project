@@ -121,6 +121,18 @@ public class Player extends QualifiedObservable
 		this.position = playerPosition;
 		this.notifyObservers(new OtherPlayerMovedReport(playerPosition));
 	}
+	
+	/**
+	 * Forcibly sets the player's position without notifying observers.
+	 * </p>
+	 * Should only be called when the player is initialized.
+	 * @param playerPosition
+	 * 			  The new location of the player
+	 */
+	public void setPosition(Position playerPosition)
+	{
+		this.position = playerPosition;
+	}
 
 	/**
 	 * Get the player's position

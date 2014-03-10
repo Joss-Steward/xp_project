@@ -6,7 +6,6 @@ import model.CommandQuestScreenOpen;
 import model.ModelFacade;
 import model.PlayerManager;
 import model.ThisClientsPlayer;
-import model.reports.ThisPlayerConnectedToAreaServerReport;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -190,15 +189,6 @@ public class ScreenMap extends ScreenBasic
 	public void show()
 	{
 		playerFactory = new PlayerSpriteFactory(Gdx.files.internal("data/characters.pack"));
-
-		// FIXME forcibly send the thisplayerconnectedreport so we can have visual feedback until it is implemented
-		ThisPlayerConnectedToAreaServerReport report = new ThisPlayerConnectedToAreaServerReport(
-					PlayerManager.getSingleton().getThisClientsPlayer().getID(),
-					PlayerManager.getSingleton().getThisClientsPlayer().getName(), 
-					PlayerType.MALEA.toString());
-		Screens.MAP_SCREEN.getScreenListener().update(null, report);
-		
-		this.mySprite.setPosition(32, 32);
 	}
 
 	/**
