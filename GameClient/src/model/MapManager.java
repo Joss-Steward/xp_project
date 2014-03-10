@@ -14,17 +14,20 @@ import data.Position;
  * @author Merlin
  * 
  */
-public class MapManager extends QualifiedObservable {
+public class MapManager extends QualifiedObservable
+{
 
 	private static MapManager singleton;
 	private TiledMap tiledMap;
 	private boolean[][] passabilityMap;
 	private boolean headless;
+	private boolean noCollisionLayer;
 
 	/**
 	 * Make the default constructor private
 	 */
-	private MapManager() {
+	private MapManager()
+	{
 		reportTypes.add(NewMapReport.class);
 
 		registerReportTypesWeNotify();
@@ -33,15 +36,18 @@ public class MapManager extends QualifiedObservable {
 	/**
 	 * Used for testing purposes
 	 */
-	public static void resetSingleton() {
+	public static void resetSingleton()
+	{
 		singleton = null;
 	}
 
 	/**
 	 * @return the only one of these there is
 	 */
-	public synchronized static MapManager getSingleton() {
-		if (singleton == null) {
+	public synchronized static MapManager getSingleton()
+	{
+		if (singleton == null)
+		{
 			singleton = new MapManager();
 		}
 		return singleton;
@@ -51,8 +57,10 @@ public class MapManager extends QualifiedObservable {
 	 * @param fileTitle
 	 *            the title of the file we should switch to
 	 */
-	public void changeToNewFile(String fileTitle) {
-		if (!headless) {
+	public void changeToNewFile(String fileTitle)
+	{
+		if (!headless)
+		{
 			tiledMap = new TmxMapLoader().load(fileTitle);
 		}
 		this.notifyObservers(new NewMapReport(tiledMap));
@@ -65,7 +73,8 @@ public class MapManager extends QualifiedObservable {
 	 *            the name of the layer to get
 	 * @return MapLayer the map layer
 	 */
-	public MapLayer getMapLayer(String layerName) {
+	public MapLayer getMapLayer(String layerName)
+	{
 		MapLayers layers = tiledMap.getLayers();
 		return layers.get(layerName);
 	}
@@ -76,7 +85,8 @@ public class MapManager extends QualifiedObservable {
 	 * @param headless
 	 *            boolean running or not
 	 */
-	public void setHeadless(boolean headless) {
+	public void setHeadless(boolean headless)
+	{
 		this.headless = headless;
 	}
 
@@ -86,7 +96,8 @@ public class MapManager extends QualifiedObservable {
 	 * @param tiledMap
 	 *            TiledMap map
 	 */
-	public void setMap(TiledMap tiledMap) {
+	public void setMap(TiledMap tiledMap)
+	{
 		this.tiledMap = tiledMap;
 
 	}
@@ -96,21 +107,38 @@ public class MapManager extends QualifiedObservable {
 	 *            The position to check
 	 * @return TRUE if the given position is passable terrain, FALSE if not
 	 */
-	public boolean getIsTilePassable(Position p) {
+	public boolean getIsTilePassable(Position p)
+	{
 
-		if (this.passabilityMap == null) {
-			TiledMapTileLayer collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get("collision");
-
-			this.passabilityMap = new boolean[collisionLayer.getHeight()][collisionLayer.getWidth()];
+		if (!noCollisionLayer && this.passabilityMap == null)
+		{
+			TiledMapTileLayer collisionLayer = (TiledMapTileLayer) tiledMap
+					.getLayers().get("collision");
 			
-			for (int col = 0; col < collisionLayer.getWidth(); col++) {
-				for (int row = 0; row < collisionLayer.getHeight(); row++) {
-					this.passabilityMap[row][col] = collisionLayer
-							.getCell(col, row).getTile().getId() != 0;
+
+			if (collisionLayer != null)
+			{
+				this.passabilityMap = new boolean[collisionLayer.getHeight()][collisionLayer
+				                                          					.getWidth()];
+				for (int col = 0; col < collisionLayer.getWidth(); col++)
+				{
+					for (int row = 0; row < collisionLayer.getHeight(); row++)
+					{
+						this.passabilityMap[row][col] = collisionLayer
+								.getCell(col, row).getTile().getId() != 0;
+					}
 				}
+			} else
+			{
+				noCollisionLayer = true;
 			}
+
 		}
 
+		if (noCollisionLayer)
+		{
+			return true;
+		}
 		return this.passabilityMap[p.getRow()][p.getColumn()];
 	}
 
@@ -120,7 +148,8 @@ public class MapManager extends QualifiedObservable {
 	 * @param pass
 	 *            The new passabilityMap
 	 */
-	public void setPassability(boolean[][] pass) {
+	public void setPassability(boolean[][] pass)
+	{
 		this.passabilityMap = pass;
 	}
 }

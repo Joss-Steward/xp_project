@@ -13,7 +13,10 @@ import model.reports.ThisPlayerMovedReportTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import view.DirectionTest;
+import view.PlayerSpriteTest;
 import view.ScreenListenerTest;
+import view.ScreenMapInputTest;
 import communication.handlers.MapFileMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.PlayerJoinedMessageHandlerTest;
@@ -56,6 +59,9 @@ import communication.packers.LoginMessagePackerTest;
 
 		// view
 		ScreenListenerTest.class,
+		ScreenMapInputTest.class,
+		PlayerSpriteTest.class,
+		DirectionTest.class,
 
 })
 /**
