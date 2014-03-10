@@ -9,11 +9,11 @@ public enum PlayerType
 	/**
 	 * Male appearance, type 1
 	 */
-	MALEA("male_a"),
+	male_a("male_a"),
 	/**
 	 * Male appearance, type 2
 	 */
-	MALEB("male_b");
+	male_b("male_b");
 
 	/**
 	 * The name of the region in the loaded {@link:TextureAtlas} used by a
