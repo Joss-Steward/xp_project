@@ -75,7 +75,7 @@ public class PlayerSprite
 	}
 
 	/**
-	 * Sets the location on screen that the sprite is to move to
+	 * Sets the location on screen that the sprite is be located without animating
 	 * 
 	 * @param x
 	 *            horizontal screen location of the sprite
@@ -83,6 +83,21 @@ public class PlayerSprite
 	 *            vertical screen location
 	 */
 	public void setPosition(int x, int y)
+	{
+		this.current.set(x, y);
+		this.dest.set(x, y);
+		this.real.set(x, y);
+	}
+	
+	/**
+	 * Sets the location on screen that the sprite is to move to with animation
+	 * 
+	 * @param x
+	 *            horizontal screen location of the sprite
+	 * @param y
+	 *            vertical screen location
+	 */
+	public void move(int x, int y)
 	{
 		// change destination so the player may tween to the location instead of
 		// just popping up

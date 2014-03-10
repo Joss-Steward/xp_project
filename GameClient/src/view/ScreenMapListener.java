@@ -37,7 +37,8 @@ public class ScreenMapListener extends ScreenListener
 			PlayerConnectedToAreaServerReport report = (PlayerConnectedToAreaServerReport) arg;
 			PlayerType type = PlayerType.valueOf(report.getPlayerAppearanceType());
 			PlayerSprite sprite = map.addPlayer(report.getPlayerName(), type);
-			
+			Position p = report.getPlayerPosition();
+			sprite.setPosition(p.getColumn(), p.getRow());
 			//detect when the player being added is the client's player for finer control
 			if (report.getPlayerName().equals(PlayerManager.getSingleton().getThisClientsPlayer().getName())) {
 				map.mySprite = sprite;
