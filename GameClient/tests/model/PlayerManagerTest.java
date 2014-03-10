@@ -150,7 +150,7 @@ public class PlayerManagerTest
 		PlayerManager pm = PlayerManager.getSingleton();
 		Position pos = new Position(1,2);
 		Observer obs = EasyMock.createMock(Observer.class);
-		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(1, "Player 1", "Player 1 Type", pos);
+		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(1, "Player 1", "Player 1 Type", pos, false);
 		obs.update(EasyMock.anyObject(PlayerManager.class),
 				EasyMock.eq(report));
 		EasyMock.replay(obs);

@@ -1,6 +1,5 @@
 package view;
 
-import static view.Direction.North;
 import model.CommandMovePlayer;
 import model.CommandQuestScreenOpen;
 import model.ModelFacade;

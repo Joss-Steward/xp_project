@@ -157,7 +157,10 @@ public class PlayerManager extends QualifiedObservable
 			player = new Player(playerID);
 			playerList.put(playerID, player);
 		}
-		boolean isThisClientsPlayer = playerID == thisClientsPlayer.getID();
+		boolean isThisClientsPlayer = false;
+		if (thisClientsPlayer != null) {
+			isThisClientsPlayer = playerID == thisClientsPlayer.getID();
+		}
 		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(playerID, playerName, appearanceType, position, isThisClientsPlayer);
 		this.notifyObservers(report);
 		

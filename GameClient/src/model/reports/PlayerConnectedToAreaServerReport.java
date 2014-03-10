@@ -105,6 +105,7 @@ public class PlayerConnectedToAreaServerReport implements QualifiedObservableRep
 		result = result && this.getPlayerAppearanceType().equals(other.getPlayerAppearanceType());
 		result = result && this.getPlayerName().equals(other.getPlayerName());
 		result = result && this.getPlayerPosition().equals(other.getPlayerPosition());
+		result = result && this.isThisClientsPlayer() == other.isThisClientsPlayer();
 		return result;
 	}
 }
