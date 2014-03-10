@@ -13,6 +13,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
+import data.Position;
+
 /**
  * A basic screen that, for now, just displays the map
  * 
@@ -150,16 +152,22 @@ public class ScreenMap extends ScreenBasic
 
 	/**
 	 * Adds a new renderable instance of a player, identified by their name, to the map
-	 * @param playerName
-	 * 			name of the player being added
+	 * @param playerID 
+	 * 			the unique identifier of the player being added
 	 * @param type
 	 * 			sprite type visible to others
-	 * @return The sprite created if successfully added
+	 * @param pos
+	 * 			location to spawn the player
+	 * @param isThisClientsPlayer
+	 * 			if the player to spawn is controlled by this client
 	 */
-	public PlayerSprite addPlayer(String playerName, PlayerType type) {
+	public void addPlayer(int playerID, PlayerType type, Position pos, boolean isThisClientsPlayer) {
 		PlayerSprite sprite = playerFactory.create(type);
+		sprite.setPosition(pos.getRow(), pos.getColumn());
 		characters.add(sprite);
-		
-		return sprite;
+		//detect when the player being added is the client's player for finer control
+		if (isThisClientsPlayer) {
+			mySprite = sprite;
+		}
 	}
 }

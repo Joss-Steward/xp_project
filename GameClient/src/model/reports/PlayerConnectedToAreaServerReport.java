@@ -16,6 +16,7 @@ public class PlayerConnectedToAreaServerReport implements QualifiedObservableRep
 	private String playerName;
 	private String appearanceType;
 	private Position position;
+	private boolean isThisClientsPlayer;
 
 	/**
 	 * 
@@ -27,14 +28,17 @@ public class PlayerConnectedToAreaServerReport implements QualifiedObservableRep
 	 *            the type of the player
 	 * @param position 
 	 * 			  the position of the player
+	 * @param isThisClientsPlayer 
+	 * 			  statement saying if the player connected was the one controlled by the client
 	 * @see view.PlayerType
 	 */
-	public PlayerConnectedToAreaServerReport(int playerID, String playerName, String appearanceType, Position position)
+	public PlayerConnectedToAreaServerReport(int playerID, String playerName, String appearanceType, Position position, boolean isThisClientsPlayer)
 	{
 		this.playerID = playerID;
 		this.playerName = playerName;
 		this.appearanceType = appearanceType;
 		this.position = position;
+		this.isThisClientsPlayer = isThisClientsPlayer;
 	}
 
 	/**
@@ -73,6 +77,14 @@ public class PlayerConnectedToAreaServerReport implements QualifiedObservableRep
 	public Position getPlayerPosition()
 	{
 		return position;
+	}
+	
+	/**
+	 * @return if the player connected was the client's player
+	 */
+	public boolean isThisClientsPlayer()
+	{
+		return isThisClientsPlayer;
 	}
 	
 	/**

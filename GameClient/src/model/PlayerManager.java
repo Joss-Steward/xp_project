@@ -157,13 +157,13 @@ public class PlayerManager extends QualifiedObservable
 			player = new Player(playerID);
 			playerList.put(playerID, player);
 		}
-		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(playerID, playerName, appearanceType, position);
+		boolean isThisClientsPlayer = playerID == thisClientsPlayer.getID();
+		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(playerID, playerName, appearanceType, position, isThisClientsPlayer);
 		this.notifyObservers(report);
 		
 		player.setName(playerName);
 		player.setAppearanceType(appearanceType);
 		player.setPosition(position);
-		
 		
 		return player;
 		

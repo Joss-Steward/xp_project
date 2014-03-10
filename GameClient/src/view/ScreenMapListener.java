@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import data.Position;
-import model.PlayerManager;
 import model.QualifiedObservableReport;
 import model.reports.*;
 
@@ -36,13 +35,8 @@ public class ScreenMapListener extends ScreenListener
 		{
 			PlayerConnectedToAreaServerReport report = (PlayerConnectedToAreaServerReport) arg;
 			PlayerType type = PlayerType.valueOf(report.getPlayerAppearanceType());
-			PlayerSprite sprite = map.addPlayer(report.getPlayerName(), type);
-			Position p = report.getPlayerPosition();
-			sprite.setPosition(p.getColumn(), p.getRow());
-			//detect when the player being added is the client's player for finer control
-			if (report.getPlayerName().equals(PlayerManager.getSingleton().getThisClientsPlayer().getName())) {
-				map.mySprite = sprite;
-			}
+			Position pos = report.getPlayerPosition();
+			map.addPlayer(report.getPlayerID(), type, pos, report.isThisClientsPlayer());
 		}
 		// moves the player to a new position
 		else if (arg.getClass().equals(ThisPlayerMovedReport.class))
