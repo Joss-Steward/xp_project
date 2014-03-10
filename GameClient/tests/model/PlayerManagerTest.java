@@ -4,13 +4,22 @@ import static org.junit.Assert.*;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
+import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Observer;
 
 import model.reports.LoginInitiatedReport;
+import model.reports.PlayerConnectedToAreaServerReport;
+import model.reports.StubQualifiedObservableReport1;
+import model.reports.StubQualifiedObservableReport2;
+import model.reports.ThisPlayerMovedReport;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
+
+import view.ScreenListener;
+import data.Position;
 
 /**
  * Tests the player manager to make sure it maintains the list of players
@@ -50,16 +59,17 @@ public class PlayerManagerTest
 	@Test
 	public void canAddAndRetrievePlayers()
 	{
+		Position pos = new Position(1,2);
 		PlayerManager pm = PlayerManager.getSingleton();
 		Player p1 = new Player(1);
 		Player p2 = new Player(2);
 		Player p3 = new Player(3);
-		pm.initializePlayer(1, "Player 1", "Player 1 Type");
+		pm.initializePlayer(1, "Player 1", "Player 1 Type", pos);
 		assertEquals(p1, pm.getPlayerFromID(1));
-		pm.initializePlayer(2, "Player 2", "Player 2 Type");
+		pm.initializePlayer(2, "Player 2", "Player 2 Type", pos);
 		assertEquals(p1, pm.getPlayerFromID(1));
 		assertEquals(p2, pm.getPlayerFromID(2));
-		pm.initializePlayer(3, "Player 3", "Player 3 Type");
+		pm.initializePlayer(3, "Player 3", "Player 3 Type", pos);
 		assertEquals(p1, pm.getPlayerFromID(1));
 		assertEquals(p2, pm.getPlayerFromID(2));
 		assertEquals(p3, pm.getPlayerFromID(3));
@@ -136,4 +146,25 @@ public class PlayerManagerTest
 			assertTrue(e instanceof AlreadyBoundException);
 		}
 	}
+	
+	/**
+	 * Initialize player should send a PlayerConnectedToAreaServerReport
+	 */
+	@Test
+	public void testInitializePlayerFiresReport()
+	{
+		PlayerManager pm = PlayerManager.getSingleton();
+		Position pos = new Position(1,2);
+		Observer obs = EasyMock.createMock(Observer.class);
+		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(1, "Player 1", "Player 1 Type", pos);
+		obs.update(EasyMock.anyObject(PlayerManager.class),
+				EasyMock.eq(report));
+		EasyMock.replay(obs);
+
+		pm.addObserver(obs, PlayerConnectedToAreaServerReport.class);
+		pm.initializePlayer(1, "Player 1", "Player 1 Type", pos);
+
+		EasyMock.verify(obs);
+	}
 }
+
