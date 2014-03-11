@@ -10,8 +10,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.IntMap;
 
 import data.Position;
 
@@ -25,7 +26,7 @@ public class ScreenMap extends ScreenBasic
 {
 	OrthogonalTiledMapRenderer mapRenderer;
 	PlayerSpriteFactory playerFactory;
-	Array<PlayerSprite> characters;
+	IntMap<PlayerSprite> characters;
 	PlayerSprite mySprite;
 
 	private OrthographicCamera camera;
@@ -46,7 +47,7 @@ public class ScreenMap extends ScreenBasic
 		camera.update();
 		stage.setCamera(camera);
 		batch = new SpriteBatch();
-		characters = new Array<PlayerSprite>();
+		characters = new IntMap<PlayerSprite>();
 		input = new ScreenMapInput();
 	}
 
@@ -97,7 +98,7 @@ public class ScreenMap extends ScreenBasic
 			mapRenderer.render();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
-			for (PlayerSprite s : this.characters) {
+			for (PlayerSprite s : this.characters.values()) {
 				s.update(delta);
 				s.draw(batch);
 			}
@@ -166,11 +167,39 @@ public class ScreenMap extends ScreenBasic
 	 */
 	public void addPlayer(int playerID, PlayerType type, Position pos, boolean isThisClientsPlayer) {
 		PlayerSprite sprite = playerFactory.create(type);
-		sprite.setPosition(pos.getRow(), pos.getColumn());
-		characters.add(sprite);
+		Vector2 loc = positionToScale(pos);
+		sprite.setPosition(loc.x, loc.y);
+		characters.put(playerID, sprite);
 		//detect when the player being added is the client's player for finer control
 		if (isThisClientsPlayer) {
 			mySprite = sprite;
 		}
+	}
+	
+	/**
+	 * Moves a player on the map using the map's unit scaling
+	 * @param id
+	 * 			unique player identifier
+	 * @param pos
+	 * 			position to move to 
+	 */
+	public void movePlayer(int id, Position pos)
+	{
+		PlayerSprite sprite = this.characters.get(id);
+		Vector2 loc = positionToScale(pos);
+		sprite.move(loc.x, loc.y);
+	}
+	
+	/**
+	 * Scales a position to the proper pixel ratio of the map
+	 * @param pos
+	 * 			Position to scale into the proper ratio
+	 * @return the scaled position as a Vector
+	 */
+	private Vector2 positionToScale(Position pos)
+	{
+		Vector2 tmp = new Vector2(pos.getColumn(), pos.getRow());
+		tmp.scl(32f);
+		return tmp;
 	}
 }

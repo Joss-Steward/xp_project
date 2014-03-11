@@ -82,7 +82,7 @@ public class PlayerSprite
 	 * @param y
 	 *            vertical screen location
 	 */
-	public void setPosition(int x, int y)
+	public void setPosition(float x, float y)
 	{
 		this.current.set(x, y);
 		this.dest.set(x, y);
@@ -97,7 +97,7 @@ public class PlayerSprite
 	 * @param y
 	 *            vertical screen location
 	 */
-	public void move(int x, int y)
+	public void move(float x, float y)
 	{
 		// change destination so the player may tween to the location instead of
 		// just popping up
