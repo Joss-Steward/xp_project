@@ -38,7 +38,7 @@ public class PlayerSpriteTest
 		assertEquals(sprite.getFacing(), Direction.South);
 
 		// set position by pixel
-		sprite.setPosition(32, 32);
+		sprite.move(32, 32);
 		assertEquals(sprite.getX(), 0, .05);
 		assertEquals(sprite.getY(), 0, .05);
 		assertEquals(sprite.getFacing(), Direction.East);

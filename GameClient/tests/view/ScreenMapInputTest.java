@@ -72,26 +72,18 @@ public class ScreenMapInputTest
 		//move player south
 		input.keyDown(Keys.DOWN);
 		assertEquals(1, mf.getCommandQueueLength());
-		while (mf.getCommandQueueLength() > 0) 
-			Thread.sleep(100);
 		assertEquals(new Position(1, 0), testPlayer.getPosition());
 		
 		//move player north
 		input.keyDown(Keys.UP);
-		while (mf.getCommandQueueLength() > 0) 
-			Thread.sleep(100);
 		assertEquals(new Position(0, 0), testPlayer.getPosition());
 
 		// move player east
 		input.keyDown(Keys.RIGHT);
-		while (mf.getCommandQueueLength() > 0)
-			Thread.sleep(100);
 		assertEquals(new Position(0, 1), testPlayer.getPosition());
 		
 		//move player west
 		input.keyDown(Keys.LEFT);
-		while (mf.getCommandQueueLength() > 0)
-			Thread.sleep(100);
 		assertEquals(new Position(0, 0), testPlayer.getPosition());
 	}
 }

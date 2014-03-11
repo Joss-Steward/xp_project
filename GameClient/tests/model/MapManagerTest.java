@@ -81,8 +81,8 @@ public class MapManagerTest extends QualifiedObservableTestInherited
 		EasyMock.replay(mapLayer);
 
 		MapManager.getSingleton().setMap(tiledMap);
-		MapLayer layer1 = MapManager.getSingleton().getMapLayer("Foreground");
-		assertEquals(mapLayer, layer1);
+		MapLayer layer = MapManager.getSingleton().getMapLayer("Foreground");
+		assertEquals(mapLayer, layer);
 
 		EasyMock.verify(tiledMap);
 		EasyMock.verify(mapLayers);

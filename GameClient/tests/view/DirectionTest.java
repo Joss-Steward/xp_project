@@ -43,19 +43,19 @@ public class DirectionTest
 		// look north
 		from.set(0, 0);
 		to.set(0, -1);
-		assertEquals(Direction.North, Direction.getFacing(from, to));
+		assertEquals(Direction.South, Direction.getFacing(from, to));
 
 		// look south
 		from.set(0, 0);
 		to.set(0, 1);
-		assertEquals(Direction.South, Direction.getFacing(from, to));
+		assertEquals(Direction.North, Direction.getFacing(from, to));
 
 		// test priority difference for setting direction
 		from.set(0, 0);
 		to.set(5, 3);
 		assertEquals(Direction.East, Direction.getFacing(from, to));
 		to.set(3, 5);
-		assertEquals(Direction.South, Direction.getFacing(from, to));
+		assertEquals(Direction.North, Direction.getFacing(from, to));
 	}
 
 	/**

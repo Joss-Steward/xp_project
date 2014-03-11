@@ -67,6 +67,10 @@ public class MapManager extends QualifiedObservable
 		{
 			setMap(new TmxMapLoader().load(fileTitle));
 		}
+		else
+		{
+			this.noCollisionLayer = true;
+		}
 		this.notifyObservers(new NewMapReport(tiledMap));
 	}
 
@@ -104,9 +108,13 @@ public class MapManager extends QualifiedObservable
 	{
 		this.tiledMap = tiledMap;
 		
+		
 		//set the map's passability
-		TiledMapTileLayer collisionLayer = (TiledMapTileLayer) tiledMap
-				.getLayers().get(COLLISION_LAYER);
+		TiledMapTileLayer collisionLayer = null;
+		if (!headless)
+		{
+			collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get(COLLISION_LAYER);	
+		}
 
 		if (collisionLayer != null)
 		{
@@ -146,7 +154,7 @@ public class MapManager extends QualifiedObservable
 	public boolean getIsTilePassable(Position p)
 	{
 		//allow walking anywhere when there is no collision layer
-		if (noCollisionLayer || headless) 
+		if (noCollisionLayer) 
 		{
 			return true;
 		}
@@ -170,6 +178,7 @@ public class MapManager extends QualifiedObservable
 	 */
 	public void setPassability(boolean[][] pass)
 	{
+		this.noCollisionLayer = false;
 		this.passabilityMap = pass;
 	}
 }
