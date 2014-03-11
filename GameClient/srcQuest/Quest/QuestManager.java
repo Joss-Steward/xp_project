@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import model.QualifiedObservable;
 import model.QualifiedObservableConnector;
 import model.reports.QuestScreenReport;
-import model.reports.ThisPlayerMovedReport;
+import model.reports.PlayerMovedReport;
 import data.Position;
 
 /**
@@ -26,7 +26,7 @@ public class QuestManager extends QualifiedObservable
 	{
 		questList = new ArrayList<Quest>();
 		QualifiedObservableConnector.getSingleton()
-				.registerQualifiedObservable(this, ThisPlayerMovedReport.class);
+				.registerQualifiedObservable(this, PlayerMovedReport.class);
 
 		QualifiedObservableConnector.getSingleton()
 				.registerQualifiedObservable(this, QuestScreenReport.class);
@@ -133,8 +133,8 @@ public class QuestManager extends QualifiedObservable
 	@Override
 	public boolean notifiesOn(Class<?> reportType)
 	{
-		if (reportType.equals(ThisPlayerMovedReport.class)
-				|| reportType.equals(ThisPlayerMovedReport.class)
+		if (reportType.equals(PlayerMovedReport.class)
+				|| reportType.equals(PlayerMovedReport.class)
 				|| reportType.equals(QuestScreenReport.class))
 		{
 			return true;

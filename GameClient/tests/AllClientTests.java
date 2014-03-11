@@ -8,7 +8,7 @@ import model.PlayerTest;
 import model.ThisClientsPlayerTest;
 import model.reports.LoginInitiatedReportTest;
 import model.reports.NewMapReportTest;
-import model.reports.ThisPlayerMovedReportTest;
+import model.reports.PlayerMovedReportTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -55,7 +55,7 @@ import communication.packers.LoginMessagePackerTest;
 		// model.reports
 		LoginInitiatedReportTest.class, 
 		NewMapReportTest.class,
-		ThisPlayerMovedReportTest.class,
+		PlayerMovedReportTest.class,
 
 		// view
 		ScreenListenerTest.class,

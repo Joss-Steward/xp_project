@@ -8,16 +8,18 @@ import model.QualifiedObservableReport;
  * @author Matt Kujawski
  *
  */
-public final class OtherPlayerMovedReport implements QualifiedObservableReport
+public final class PlayerMovedReport implements QualifiedObservableReport
 {
-
+	private final int playerID;
 	private final Position thePosition;
 	/**
+	 * @param playerID the unique identifier of the player moving
 	 * @param position the position he moved to
 	 */
-	public OtherPlayerMovedReport(Position position)
+	public PlayerMovedReport(int playerID, Position position)
 	{
 		thePosition = position;
+		this.playerID = playerID;
 	}
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -31,7 +33,7 @@ public final class OtherPlayerMovedReport implements QualifiedObservableReport
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		OtherPlayerMovedReport other = (OtherPlayerMovedReport) obj;
+		PlayerMovedReport other = (PlayerMovedReport) obj;
 		if (thePosition == null)
 		{
 			if (other.thePosition != null)
@@ -57,6 +59,14 @@ public final class OtherPlayerMovedReport implements QualifiedObservableReport
 		int result = 1;
 		result = prime * result + ((thePosition == null) ? 0 : thePosition.hashCode());
 		return result;
+	}
+	
+	/**
+	 * @return the id of the player that is moving
+	 */
+	public int getID()
+	{
+		return playerID;
 	}
 
 }

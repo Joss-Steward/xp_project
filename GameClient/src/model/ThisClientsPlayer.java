@@ -2,8 +2,6 @@ package model;
 
 import Quest.QuestManager;
 import model.reports.QuestScreenReport;
-import model.reports.ThisPlayerMovedReport;
-import data.Position;
 
 /**
  * The player who is playing the game
@@ -21,21 +19,8 @@ public class ThisClientsPlayer extends Player
 
 		this.questManager = new QuestManager();
 		reportTypes.add(QuestScreenReport.class);
-		reportTypes.add(ThisPlayerMovedReport.class);
 
 		this.registerReportTypesWeNotify();
-	}
-
-	/**
-	 * Move this player to a given position
-	 * 
-	 * @param p
-	 *            where the player should move to
-	 */
-	public void move(Position p)
-	{
-		position = p;
-		this.notifyObservers(new ThisPlayerMovedReport(p));
 	}
 
 	/**

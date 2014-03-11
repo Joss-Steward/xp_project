@@ -14,17 +14,17 @@ public enum Direction
 	 */
 	South,
 	/**
-	 * Looking up the screen
-	 */
-	North,
-	/**
 	 * Looking left on the screen
 	 */
 	West,
 	/**
 	 * Looking right on the screen
 	 */
-	East;
+	East,
+	/**
+	 * Looking up the screen
+	 */
+	North;
 
 	/**
 	 * Get the direction of facing between two points
@@ -56,10 +56,10 @@ public enum Direction
 		{
 			if (from.y < to.y)
 			{
-				out = South;
+				out = North;
 			} else
 			{
-				out = North;
+				out = South;
 			}
 		}
 

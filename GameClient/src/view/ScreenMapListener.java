@@ -39,11 +39,10 @@ public class ScreenMapListener extends ScreenListener
 			map.addPlayer(report.getPlayerID(), type, pos, report.isThisClientsPlayer());
 		}
 		// moves the player to a new position
-		else if (arg.getClass().equals(ThisPlayerMovedReport.class))
+		else if (arg.getClass().equals(PlayerMovedReport.class))
 		{
-			ThisPlayerMovedReport report = (ThisPlayerMovedReport) arg;
-			Position p = report.getNewPosition();
-			map.mySprite.setPosition(p.getColumn(), p.getRow());
+			PlayerMovedReport report = (PlayerMovedReport) arg;
+			map.movePlayer(report.getID(), report.getNewPosition());
 		}
 	}
 
@@ -55,7 +54,7 @@ public class ScreenMapListener extends ScreenListener
 	{
 		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
 		reportTypes.add(PlayerConnectedToAreaServerReport.class);
-		reportTypes.add(ThisPlayerMovedReport.class);
+		reportTypes.add(PlayerMovedReport.class);
 		//reportTypes.add(OtherPlayerMovedReport.class);
 		
 		return reportTypes;

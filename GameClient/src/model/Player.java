@@ -1,6 +1,6 @@
 package model;
 
-import model.reports.OtherPlayerMovedReport;
+import model.reports.PlayerMovedReport;
 import data.Position;
 
 /**
@@ -27,6 +27,9 @@ public class Player extends QualifiedObservable
 	{
 		this.id = playerID;
 		this.position = new Position(0, 0);
+		
+		this.reportTypes.add(PlayerMovedReport.class);
+		this.registerReportTypesWeNotify();
 	}
 
 	/**
@@ -119,7 +122,7 @@ public class Player extends QualifiedObservable
 	public void move(Position playerPosition)
 	{
 		this.position = playerPosition;
-		this.notifyObservers(new OtherPlayerMovedReport(playerPosition));
+		this.notifyObservers(new PlayerMovedReport(this.id, playerPosition));
 	}
 	
 	/**

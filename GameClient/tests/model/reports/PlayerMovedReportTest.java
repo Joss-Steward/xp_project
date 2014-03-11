@@ -11,7 +11,7 @@ import data.Position;
  * @author Merlin
  *
  */
-public class ThisPlayerMovedReportTest
+public class PlayerMovedReportTest
 {
 
 	/**
@@ -20,7 +20,7 @@ public class ThisPlayerMovedReportTest
 	@Test
 	public void creation()
 	{
-		ThisPlayerMovedReport report = new ThisPlayerMovedReport(new Position(3,2));
+		PlayerMovedReport report = new PlayerMovedReport(1, new Position(3,2));
 		assertEquals(new Position(3,2), report.getNewPosition());
 	}
 
@@ -30,6 +30,6 @@ public class ThisPlayerMovedReportTest
 	@Test
 	public void equalsContract()
 	{
-		EqualsVerifier.forClass(ThisPlayerMovedReport.class).verify();
+		EqualsVerifier.forClass(PlayerMovedReport.class).verify();
 	}
 }

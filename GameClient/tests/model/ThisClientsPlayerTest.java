@@ -5,7 +5,8 @@ import static org.junit.Assert.*;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.util.Observer;
-import model.reports.ThisPlayerMovedReport;
+
+import model.reports.PlayerMovedReport;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -40,7 +41,7 @@ public class ThisClientsPlayerTest
 	public void notifiesOnMove()
 	{
 		Observer obs = EasyMock.createMock(Observer.class);
-		ThisPlayerMovedReport report = new ThisPlayerMovedReport(new Position(
+		PlayerMovedReport report = new PlayerMovedReport(1, new Position(
 				3, 4));
 		obs.update(EasyMock.anyObject(ThisClientsPlayer.class),
 				EasyMock.eq(report));
@@ -57,7 +58,7 @@ public class ThisClientsPlayerTest
 			e.printStackTrace();
 			fail("Could not create this client's player from login");
 		}
-		cp.addObserver(obs, ThisPlayerMovedReport.class);
+		cp.addObserver(obs, PlayerMovedReport.class);
 		cp.move(new Position(3, 4));
 
 		EasyMock.verify(obs);
