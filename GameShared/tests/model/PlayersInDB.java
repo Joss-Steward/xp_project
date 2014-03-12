@@ -13,11 +13,11 @@ public enum PlayersInDB
 	/**
 	 * 
 	 */
-	JOHN(1, "John", "male_a", 3, 42),
+	JOHN(1, "John", "male_a", 3, 12),
 	/**
 	 * 
 	 */
-	MERLIN(2, "Merlin", "male_b", 4, 54);
+	MERLIN(2, "Merlin", "male_b", 4, 13);
 
 	private int playerID;
 

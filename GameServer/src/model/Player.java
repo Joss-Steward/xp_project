@@ -97,6 +97,8 @@ public class Player extends QualifiedObservable
 	public void setPlayerPosition(Position playerPosition)
 	{
 		this.playerPosition = playerPosition;
+		PlayerMovedReport report = new PlayerMovedReport(this.playerID,this.playerName,playerPosition);
+		this.notifyObservers(report);
 	}
 	
 	/**

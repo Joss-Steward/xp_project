@@ -71,12 +71,12 @@ public class DirectionTest
 		// get in north
 		next = Direction.getPositionInDirection(p, Direction.North);
 		assertEquals(0, next.getColumn());
-		assertEquals(-1, next.getRow());
+		assertEquals(1, next.getRow());
 
 		// get in south
 		next = Direction.getPositionInDirection(p, Direction.South);
 		assertEquals(0, next.getColumn());
-		assertEquals(1, next.getRow());
+		assertEquals(-1, next.getRow());
 
 		// get in east
 		next = Direction.getPositionInDirection(p, Direction.East);

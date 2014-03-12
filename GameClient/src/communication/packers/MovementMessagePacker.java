@@ -1,7 +1,10 @@
 package communication.packers;
 
+import model.PlayerManager;
 import model.QualifiedObservableReport;
+import model.reports.PlayerMovedReport;
 import communication.messages.Message;
+import communication.messages.MovementMessage;
 import communication.packers.MessagePacker;
 
 /**
@@ -21,9 +24,13 @@ public class MovementMessagePacker extends MessagePacker
 	@Override
 	public Message pack(QualifiedObservableReport object)
 	{
-		// TODO When we re-implement movement
-		// Player player = (Player)obs;
-		// Message msg = new MovementMessage(player.getID(), (Position)object);
+		PlayerMovedReport movementReport = (PlayerMovedReport) object;
+		int playerID = movementReport.getID();
+		if (PlayerManager.getSingleton().getThisClientsPlayer().getID() == playerID)
+		{
+			Message msg = new MovementMessage(playerID, movementReport.getNewPosition());
+			return msg;
+		}
 		return null;
 	}
 
@@ -33,8 +40,7 @@ public class MovementMessagePacker extends MessagePacker
 	@Override
 	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
 	{
-		// TODO When we re-implement movement
-		return null;
+		return PlayerMovedReport.class;
 	}
 
 }

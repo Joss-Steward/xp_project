@@ -193,4 +193,13 @@ public class ModelFacade
 		MapManager.getSingleton().setHeadless(headless);
 	}
 
+	/**
+	 * Used by tests to wait until the command they have queued has been processed
+	 * @return the number of commands that are in the queue 
+	 */
+	public int queueSize()
+	{
+		return commandQueue.getQueueSize();
+	}
+
 }
