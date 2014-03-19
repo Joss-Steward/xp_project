@@ -3,7 +3,6 @@ import static org.junit.Assert.*;
 import model.ModelFacade;
 import model.Player;
 import model.PlayerManager;
-import model.PlayerPin;
 
 import org.junit.Before;
 import org.junit.Test;

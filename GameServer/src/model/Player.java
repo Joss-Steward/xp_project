@@ -1,20 +1,13 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import model.reports.PlayerMovedReport;
 import model.reports.QuestScreenReport;
 
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
 
 import data.Position;
@@ -39,6 +32,9 @@ public class Player extends QualifiedObservable
 	@DatabaseField(dataType = DataType.SERIALIZABLE)
 	private Position playerPosition;
 
+	/**
+	 * No arg constructor for ORMLite
+	 */
 	public Player()
 	{
 		registerOurReportTypes();
@@ -117,16 +113,28 @@ public class Player extends QualifiedObservable
 		this.registerReportTypesWeNotify();
 	}
 
+	/**
+	 * Set the appearance type for this player
+	 * @param appearanceType the new appearance type
+	 */
 	public void setAppearanceType(String appearanceType)
 	{
 		this.appearanceType = appearanceType;
 	}
 
+	/**
+	 * set this player's unique ID (should only be done when creating an entirely new player
+	 * @param playerID this player's ID
+	 */
 	public void setPlayerID(int playerID)
 	{
 		this.playerID = playerID;
 	}
 
+	/**
+	 * set this player's name 
+	 * @param playerName the player's name
+	 */
 	public void setPlayerName(String playerName)
 	{
 		this.playerName = playerName;

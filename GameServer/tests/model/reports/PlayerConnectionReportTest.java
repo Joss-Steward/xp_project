@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import model.DatabaseException;
 import model.Player;
 import model.PlayerManager;
-import model.PlayerPin;
 import model.PlayersInDB;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
@@ -18,6 +17,9 @@ import org.junit.Test;
 public class PlayerConnectionReportTest
 {
 
+	/**
+	 * reset the necessary singletons
+	 */
 	@Before
 	public void setUp()
 	{

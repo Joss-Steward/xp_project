@@ -1,16 +1,15 @@
-import java.sql.Connection;
 import java.sql.SQLException;
+
+import model.DatabaseException;
+import model.Player;
+import model.PlayerManager;
+import model.PlayersInDB;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import data.Position;
-import model.DatabaseException;
-import model.DatabaseManager;
-import model.Player;
-import model.PlayerManager;
-import model.PlayersInDB;
 
 /**
  * Builds the Player portion of the database
@@ -20,7 +19,6 @@ import model.PlayersInDB;
 public class BuildTestDBPlayers
 {
 
-		private static Connection connection;
 		private static JdbcConnectionSource connectionSource;
 		private static Dao<Player, Integer> playerDAO;
 
@@ -36,8 +34,6 @@ public class BuildTestDBPlayers
 		 */
 		public static void main(String[] args) throws DatabaseException, SQLException
 		{
-			connection = DatabaseManager.getSingleton().getConnection();
-			
 			createPlayerTable();
 		}
 

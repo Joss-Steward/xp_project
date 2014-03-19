@@ -9,7 +9,6 @@ import communication.StateAccumulator;
 import communication.messages.MovementMessage;
 import data.Position;
 import model.PlayerManager;
-import model.PlayerPin;
 import model.reports.PlayerMovedReport;
 
 /**
