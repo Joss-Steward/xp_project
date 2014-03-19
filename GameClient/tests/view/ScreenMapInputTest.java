@@ -53,7 +53,7 @@ public class ScreenMapInputTest
 	{
 		InputProcessor input = new ScreenMapInput();
 		// Gdx.input.setInputProcessor(input);
-		
+
 		// Make the model facade be headless, but not mocked so we can make sure
 		// that the movement commands generated when we hit a key cause the
 		// appropriate change in position

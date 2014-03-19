@@ -19,12 +19,18 @@ public class CommandInitializePlayer extends Command
 
 	/**
 	 * For now, we just know his name
-	 * @param playerID the unique player name of the new player
-	 * @param playerName this player's name
-	 * @param appearanceType The appearance type of this player
-	 * @param position The position of this player 
+	 * 
+	 * @param playerID
+	 *            the unique player name of the new player
+	 * @param playerName
+	 *            this player's name
+	 * @param appearanceType
+	 *            The appearance type of this player
+	 * @param position
+	 *            The position of this player
 	 */
-	public CommandInitializePlayer(int playerID, String playerName, String appearanceType, Position position)
+	public CommandInitializePlayer(int playerID, String playerName,
+			String appearanceType, Position position)
 	{
 		this.playerID = playerID;
 		this.playerName = playerName;
@@ -35,7 +41,8 @@ public class CommandInitializePlayer extends Command
 	@Override
 	protected boolean execute()
 	{
-		PlayerManager.getSingleton().initializePlayer(playerID, playerName, appearanceType, position);
+		PlayerManager.getSingleton().initializePlayer(playerID, playerName,
+				appearanceType, position);
 		return true;
 	}
 

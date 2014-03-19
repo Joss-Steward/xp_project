@@ -10,10 +10,11 @@ import communication.TypeDetector;
 
 /**
  * These tests should be inherited into the tests for every QualifiedObservable
+ * 
  * @author Merlin
- *
+ * 
  */
-public abstract class QualifiedObservableTestInherited  extends TypeDetector
+public abstract class QualifiedObservableTestInherited extends TypeDetector
 {
 
 	/**
@@ -23,9 +24,11 @@ public abstract class QualifiedObservableTestInherited  extends TypeDetector
 	public void reportsConsistently()
 	{
 		QualifiedObservable obs = getObservableBeingTested();
-		ArrayList<Class<?>> reportTypes = this.detectAllExtendersInPackage(QualifiedObservableReport.class) ;
-		ArrayList<Class<? extends QualifiedObservableReport>> usedReports = obs.getReportTypesWeSend();
-		for (Class<?> reportType:reportTypes)
+		ArrayList<Class<?>> reportTypes = this
+				.detectAllExtendersInPackage(QualifiedObservableReport.class);
+		ArrayList<Class<? extends QualifiedObservableReport>> usedReports = obs
+				.getReportTypesWeSend();
+		for (Class<?> reportType : reportTypes)
 		{
 			if (usedReports.contains(reportType))
 			{
@@ -35,9 +38,9 @@ public abstract class QualifiedObservableTestInherited  extends TypeDetector
 				assertFalse(obs.notifiesOn(reportType));
 			}
 		}
-		
+
 	}
-	
+
 	abstract QualifiedObservable getObservableBeingTested();
 
 }

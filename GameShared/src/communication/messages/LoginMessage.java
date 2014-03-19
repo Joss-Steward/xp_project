@@ -4,8 +4,9 @@ import java.io.Serializable;
 
 /**
  * Used to log a player into a server
+ * 
  * @author merlin
- *
+ * 
  */
 public class LoginMessage implements Message, Serializable
 {
@@ -36,23 +37,25 @@ public class LoginMessage implements Message, Serializable
 
 	/**
 	 * 
-	 * @param playerName the player's name
-	 * @param password the player's password
+	 * @param playerName
+	 *            the player's name
+	 * @param password
+	 *            the player's password
 	 */
 	public LoginMessage(String playerName, String password)
 	{
 		this.playerName = playerName;
 		this.password = password;
 	}
-	
+
 	/**
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString()
 	{
-		return "Login Message: playerName = " + playerName + " and password = " + password;
+		return "Login Message: playerName = " + playerName + " and password = "
+				+ password;
 	}
-	
-	
+
 }

@@ -10,9 +10,9 @@ import data.Position;
 
 /**
  * @author Josh
- *
+ * 
  */
-public class CommandMovePlayerTest 
+public class CommandMovePlayerTest
 {
 	/**
 	 * Create the passability map to simulate a map being loaded in.
@@ -20,14 +20,15 @@ public class CommandMovePlayerTest
 	@Before
 	public void setup()
 	{
-		boolean[][] passability = {{true, true, true},
-			   	   				   {true, false, true},
-			   	   				   {true, true, true}};
-		
+		boolean[][] passability =
+		{
+		{ true, true, true },
+		{ true, false, true },
+		{ true, true, true } };
+
 		MapManager.getSingleton().setPassability(passability);
 	}
-	
-	
+
 	/**
 	 * Reset the MapManager after we're done.
 	 */
@@ -37,35 +38,33 @@ public class CommandMovePlayerTest
 		MapManager.resetSingleton();
 		PlayerManager.resetSingleton();
 	}
-	
 
 	/**
 	 * Testing the command to move other player
 	 */
 	@Test
-	public void testMovePlayer() 
+	public void testMovePlayer()
 	{
-		Position pos = new Position(1,2);
+		Position pos = new Position(1, 2);
 		Player p = PlayerManager.getSingleton().initializePlayer(1, "1", "1", pos);
 		assertEquals(new Position(0, 0), p.getPosition());
-		
-		CommandMovePlayer cm = new CommandMovePlayer(1,new Position(1, 0));
+
+		CommandMovePlayer cm = new CommandMovePlayer(1, new Position(1, 0));
 		cm.execute();
 		assertEquals(new Position(1, 0), p.getPosition());
 	}
-	
-	
+
 	/**
 	 * Test attempting to move into an impassable position
 	 */
 	@Test
 	public void testIllegalMove()
 	{
-		Position pos = new Position(1,2);
+		Position pos = new Position(1, 2);
 		Player someGuy = PlayerManager.getSingleton().initializePlayer(1, "1", "1", pos);
 		assertEquals(new Position(0, 0), someGuy.getPosition());
-		
-		CommandMovePlayer cm = new CommandMovePlayer(someGuy.getID(),new Position(1, 1));
+
+		CommandMovePlayer cm = new CommandMovePlayer(someGuy.getID(), new Position(1, 1));
 		cm.execute();
 		assertEquals(new Position(0, 0), someGuy.getPosition());
 	}

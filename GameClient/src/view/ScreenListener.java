@@ -20,15 +20,17 @@ public abstract class ScreenListener implements Observer
 
 	protected ScreenBasic screen;
 	private Game gameToUse;
-	
+
 	/**
 	 * @return the report types this listener should pay attention to
 	 */
 	public abstract ArrayList<Class<? extends QualifiedObservableReport>> getReportTypes();
-	
+
 	/**
 	 * Tell this listener which screen it is managing
-	 * @param screen the screen
+	 * 
+	 * @param screen
+	 *            the screen
 	 */
 	public void setAssociatedScreen(ScreenBasic screen)
 	{
@@ -36,8 +38,11 @@ public abstract class ScreenListener implements Observer
 	}
 
 	/**
-	 * Tell this listener what game it is attached to so that it can change screens if necessary
-	 * @param gameToUse the game we are using
+	 * Tell this listener what game it is attached to so that it can change
+	 * screens if necessary
+	 * 
+	 * @param gameToUse
+	 *            the game we are using
 	 */
 	public void setGame(Game gameToUse)
 	{
@@ -51,15 +56,17 @@ public abstract class ScreenListener implements Observer
 	{
 		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
 		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = getReportTypes();
-		for (Class<? extends QualifiedObservableReport> reportType:reportTypes)
+		for (Class<? extends QualifiedObservableReport> reportType : reportTypes)
 		{
 			cm.registerObserver(this, reportType);
 		}
 	}
-	
+
 	/**
 	 * Switch to another screen
-	 * @param screen the screen we should switch to
+	 * 
+	 * @param screen
+	 *            the screen we should switch to
 	 */
 	public void switchToScreen(Screens screen)
 	{

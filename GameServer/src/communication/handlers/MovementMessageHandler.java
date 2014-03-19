@@ -6,17 +6,18 @@ import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.MovementMessage;
 
-
 /**
  * Handles a report of a player moving
+ * 
  * @author merlin
- *
+ * 
  */
 public class MovementMessageHandler extends MessageHandler
 {
 
 	/**
 	 * When one player moves, we should update the state of the engine
+	 * 
 	 * @see communication.handlers.MessageHandler#process(communication.messages.Message)
 	 */
 	@Override
@@ -25,7 +26,8 @@ public class MovementMessageHandler extends MessageHandler
 		if (msg.getClass().equals(MovementMessage.class))
 		{
 			MovementMessage mMsg = (MovementMessage) msg;
-			MovePlayerCommand cmd = new MovePlayerCommand(mMsg.getPlayerID(), mMsg.getPosition());
+			MovePlayerCommand cmd = new MovePlayerCommand(mMsg.getPlayerID(),
+					mMsg.getPosition());
 			ModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}

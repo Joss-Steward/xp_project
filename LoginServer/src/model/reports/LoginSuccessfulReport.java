@@ -4,7 +4,7 @@ import model.QualifiedObservableReport;
 
 /**
  * @author Merlin
- *
+ * 
  */
 public final class LoginSuccessfulReport implements QualifiedObservableReport
 {
@@ -15,10 +15,15 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 	private final int playerID;
 
 	/**
-	 * @param playerID the playerID who was successful
-	 * @param hostname the hostname of the area server the client should connect to
-	 * @param port the port number of the area server the client should connect to
-	 * @param d the pin the client should use in its connection
+	 * @param playerID
+	 *            the playerID who was successful
+	 * @param hostname
+	 *            the hostname of the area server the client should connect to
+	 * @param port
+	 *            the port number of the area server the client should connect
+	 *            to
+	 * @param d
+	 *            the pin the client should use in its connection
 	 * 
 	 */
 	public LoginSuccessfulReport(int playerID, String hostname, int port, double d)
@@ -28,7 +33,7 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 		this.pin = d;
 		this.playerID = playerID;
 	}
-	
+
 	/**
 	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -64,7 +69,6 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 		return hostname;
 	}
 
-
 	/**
 	 * @return the pin
 	 */
@@ -72,6 +76,7 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 	{
 		return pin;
 	}
+
 	/**
 	 * @return the port
 	 */
@@ -79,6 +84,7 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 	{
 		return port;
 	}
+
 	/**
 	 * @return the player ID in this report
 	 */
@@ -102,5 +108,4 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 		return result;
 	}
 
-	
 }

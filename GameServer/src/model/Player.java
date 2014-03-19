@@ -115,7 +115,9 @@ public class Player extends QualifiedObservable
 
 	/**
 	 * Set the appearance type for this player
-	 * @param appearanceType the new appearance type
+	 * 
+	 * @param appearanceType
+	 *            the new appearance type
 	 */
 	public void setAppearanceType(String appearanceType)
 	{
@@ -123,8 +125,11 @@ public class Player extends QualifiedObservable
 	}
 
 	/**
-	 * set this player's unique ID (should only be done when creating an entirely new player
-	 * @param playerID this player's ID
+	 * set this player's unique ID (should only be done when creating an
+	 * entirely new player
+	 * 
+	 * @param playerID
+	 *            this player's ID
 	 */
 	public void setPlayerID(int playerID)
 	{
@@ -132,8 +137,10 @@ public class Player extends QualifiedObservable
 	}
 
 	/**
-	 * set this player's name 
-	 * @param playerName the player's name
+	 * set this player's name
+	 * 
+	 * @param playerName
+	 *            the player's name
 	 */
 	public void setPlayerName(String playerName)
 	{

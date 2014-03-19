@@ -64,8 +64,8 @@ public class SpriteSheet
 		this.frameCount = xFrames * yFrames;
 		rows = new TextureRegion[yFrames][xFrames];
 		columns = new TextureRegion[xFrames][yFrames];
-		frameSize = new int[] { tex.getRegionWidth() / xFrames,
-				tex.getRegionHeight() / yFrames };
+		frameSize = new int[]
+		{ tex.getRegionWidth() / xFrames, tex.getRegionHeight() / yFrames };
 		rows = tex.split(frameSize[0], frameSize[1]);
 
 		for (int y = 0; y < yFrames; y++)

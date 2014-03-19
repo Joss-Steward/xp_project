@@ -1,4 +1,5 @@
 package communication.packers;
+
 import model.QualifiedObservableReport;
 import model.reports.PlayerMovedReport;
 import communication.messages.Message;
@@ -6,18 +7,20 @@ import communication.messages.MovementMessage;
 import communication.packers.MessagePacker;
 
 /**
- * Takes the information given to us when MovementNotifier updates and translates it to the appropriate MovementMessage.
- * It turns out this is pretty trivial since the MovementNotifier pushes a MovementMessage
+ * Takes the information given to us when MovementNotifier updates and
+ * translates it to the appropriate MovementMessage. It turns out this is pretty
+ * trivial since the MovementNotifier pushes a MovementMessage
+ * 
  * @author merlin
- *
+ * 
  */
 public class MovementMessagePacker extends MessagePacker
 {
 
 	/**
-	 * Generates a MovementMessage for a PlayerMovedReport that not associated with
-	 * the player in the accumulator.
-	 *  
+	 * Generates a MovementMessage for a PlayerMovedReport that not associated
+	 * with the player in the accumulator.
+	 * 
 	 * @see communication.packers.MessagePacker#pack(model.QualifiedObservableReport)
 	 */
 	@Override
@@ -29,7 +32,8 @@ public class MovementMessagePacker extends MessagePacker
 			int playerID = report.getPlayerID();
 			if (this.getAccumulator().getPlayerID() != playerID)
 			{
-				MovementMessage msg = new MovementMessage(playerID, report.getNewPosition());
+				MovementMessage msg = new MovementMessage(playerID,
+						report.getNewPosition());
 				return msg;
 			}
 		}

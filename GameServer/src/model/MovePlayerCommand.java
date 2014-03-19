@@ -4,24 +4,27 @@ import data.Position;
 
 /**
  * Command used to move a player on the server's part of the game
+ * 
  * @author Frank
- *
+ * 
  */
 public class MovePlayerCommand extends Command
 {
 	private int playerId;
 	private Position newPosition;
-	
+
 	/**
-	 * @param playerId The player who to move
-	 * @param newPosition The new Position to move
+	 * @param playerId
+	 *            The player who to move
+	 * @param newPosition
+	 *            The new Position to move
 	 */
-	public MovePlayerCommand(int playerId, Position newPosition) 
+	public MovePlayerCommand(int playerId, Position newPosition)
 	{
 		this.playerId = playerId;
 		this.newPosition = newPosition;
 	}
-	
+
 	@Override
 	protected boolean execute()
 	{
@@ -30,8 +33,7 @@ public class MovePlayerCommand extends Command
 		{
 			player.setPlayerPosition(newPosition);
 			return true;
-		}
-		else 
+		} else
 		{
 			return false;
 		}

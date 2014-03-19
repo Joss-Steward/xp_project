@@ -41,10 +41,8 @@ public class ThisClientsPlayerTest
 	public void notifiesOnMove()
 	{
 		Observer obs = EasyMock.createMock(Observer.class);
-		PlayerMovedReport report = new PlayerMovedReport(1, new Position(
-				3, 4));
-		obs.update(EasyMock.anyObject(ThisClientsPlayer.class),
-				EasyMock.eq(report));
+		PlayerMovedReport report = new PlayerMovedReport(1, new Position(3, 4));
+		obs.update(EasyMock.anyObject(ThisClientsPlayer.class), EasyMock.eq(report));
 		EasyMock.replay(obs);
 
 		PlayerManager pm = PlayerManager.getSingleton();

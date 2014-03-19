@@ -4,6 +4,7 @@ import model.QualifiedObservableReport;
 
 /**
  * This report is sent when the player initiates his login to the system
+ * 
  * @author Merlin
  * 
  */
@@ -14,14 +15,17 @@ public final class LoginInitiatedReport implements QualifiedObservableReport
 	private final String password;
 
 	/**
-	 * @param name the player's name
-	 * @param password the player's password
+	 * @param name
+	 *            the player's name
+	 * @param password
+	 *            the player's password
 	 */
 	public LoginInitiatedReport(String name, String password)
 	{
 		this.name = name;
 		this.password = password;
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */

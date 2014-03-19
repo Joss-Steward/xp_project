@@ -1,4 +1,5 @@
 package Quest;
+
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -8,9 +9,9 @@ import org.junit.Test;
 import Quest.Quest;
 import Quest.QuestManager;
 import data.Position;
+
 /**
- * @author Joshua
- *Tests the QuestManager
+ * @author Joshua Tests the QuestManager
  */
 public class QuestManagerTest
 {
@@ -68,11 +69,11 @@ public class QuestManagerTest
 		assertEquals(q2, qm.getQuestList().get(1));
 
 	}
-	
-/**
- * Tests changing player position
- * TODO need to change to observable ->observe movement message
- */
+
+	/**
+	 * Tests changing player position TODO need to change to observable
+	 * ->observe movement message
+	 */
 	@Test
 	public void testPlayerPosition()
 	{
@@ -89,8 +90,7 @@ public class QuestManagerTest
 	}
 
 	/**
-	 * Tests that quests update from player movement
-	 * TODO: see bottom of test
+	 * Tests that quests update from player movement TODO: see bottom of test
 	 */
 	@Test
 	public void testCheckQuests()

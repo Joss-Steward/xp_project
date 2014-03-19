@@ -25,6 +25,7 @@ public class PlayerConnectionReportTest
 	{
 		PlayerManager.resetSingleton();
 	}
+
 	/**
 	 * make sure it gets built correctly
 	 * 

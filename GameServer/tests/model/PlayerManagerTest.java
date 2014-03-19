@@ -23,11 +23,11 @@ public class PlayerManagerTest
 	@Before
 	public void setUp()
 	{
-//		QualifiedObservableConnector.resetSingleton();
+		// QualifiedObservableConnector.resetSingleton();
 		PlayerManager.resetSingleton();
 		PlayerManager playerManager = PlayerManager.getSingleton();
-		assertEquals(0,playerManager.countObservers());
-		assertEquals(0,playerManager.countObservers(PlayerConnectionReport.class));
+		assertEquals(0, playerManager.countObservers());
+		assertEquals(0, playerManager.countObservers(PlayerConnectionReport.class));
 
 	}
 
@@ -70,7 +70,8 @@ public class PlayerManagerTest
 				EasyMock.isA(PlayerConnectionReport.class));
 		EasyMock.replay(obs);
 
-		assertEquals(1, PlayerManager.getSingleton().countObservers(PlayerConnectionReport.class));
+		assertEquals(1,
+				PlayerManager.getSingleton().countObservers(PlayerConnectionReport.class));
 		PlayerManager.getSingleton().addPlayer(2);
 		EasyMock.verify(obs);
 	}

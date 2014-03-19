@@ -53,7 +53,7 @@ public class PlayerManagerTest
 	@Test
 	public void canAddAndRetrievePlayers()
 	{
-		Position pos = new Position(1,2);
+		Position pos = new Position(1, 2);
 		PlayerManager pm = PlayerManager.getSingleton();
 		Player p1 = new Player(1);
 		Player p2 = new Player(2);
@@ -92,8 +92,7 @@ public class PlayerManagerTest
 		LoginInitiatedReport report = new LoginInitiatedReport("Fred", "daddy");
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				LoginInitiatedReport.class);
-		obs.update(EasyMock.eq(PlayerManager.getSingleton()),
-				EasyMock.eq(report));
+		obs.update(EasyMock.eq(PlayerManager.getSingleton()), EasyMock.eq(report));
 		EasyMock.replay(obs);
 
 		PlayerManager.getSingleton().initiateLogin("Fred", "daddy");
@@ -140,7 +139,7 @@ public class PlayerManagerTest
 			assertTrue(e instanceof AlreadyBoundException);
 		}
 	}
-	
+
 	/**
 	 * Initialize player should send a PlayerConnectedToAreaServerReport
 	 */
@@ -148,11 +147,11 @@ public class PlayerManagerTest
 	public void testInitializePlayerFiresReport()
 	{
 		PlayerManager pm = PlayerManager.getSingleton();
-		Position pos = new Position(1,2);
+		Position pos = new Position(1, 2);
 		Observer obs = EasyMock.createMock(Observer.class);
-		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(1, "Player 1", "Player 1 Type", pos, false);
-		obs.update(EasyMock.anyObject(PlayerManager.class),
-				EasyMock.eq(report));
+		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(
+				1, "Player 1", "Player 1 Type", pos, false);
+		obs.update(EasyMock.anyObject(PlayerManager.class), EasyMock.eq(report));
 		EasyMock.replay(obs);
 
 		pm.addObserver(obs, PlayerConnectedToAreaServerReport.class);
@@ -161,4 +160,3 @@ public class PlayerManagerTest
 		EasyMock.verify(obs);
 	}
 }
-

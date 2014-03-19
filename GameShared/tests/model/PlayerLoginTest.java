@@ -57,7 +57,7 @@ public class PlayerLoginTest extends DatabaseTest
 		{
 			return password;
 		}
-	}	
+	}
 
 	/**
 	 * If the name and password are in the db, we should be able to determine
@@ -98,5 +98,4 @@ public class PlayerLoginTest extends DatabaseTest
 		new PlayerLogin(Players.JOHN.getName(), Players.JOHN.getPassword() + 'Z');
 	}
 
-	
 }

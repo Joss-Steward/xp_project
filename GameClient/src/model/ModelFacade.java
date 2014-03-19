@@ -39,7 +39,8 @@ public class ModelFacade
 	private boolean mockMode;
 
 	/**
-	 * Get the singleton.  If one is there, use it.  Otherwise set it up in production mode
+	 * Get the singleton. If one is there, use it. Otherwise set it up in
+	 * production mode
 	 * 
 	 * @return the only one of these we have
 	 */
@@ -59,16 +60,14 @@ public class ModelFacade
 	 *            true if this is running in testing mode
 	 * @return the only one of these there is
 	 */
-	public synchronized static ModelFacade getSingleton(boolean headless,
-			boolean mockMode)
+	public synchronized static ModelFacade getSingleton(boolean headless, boolean mockMode)
 	{
 		if (singleton == null)
 		{
 			singleton = new ModelFacade(headless, mockMode);
 		} else
 		{
-			if ((singleton.headless != headless)
-					|| (singleton.mockMode != mockMode))
+			if ((singleton.headless != headless) || (singleton.mockMode != mockMode))
 			{
 				throw new IllegalArgumentException(
 						"Can't change the mode of this singleton without resetting it first");
@@ -194,8 +193,10 @@ public class ModelFacade
 	}
 
 	/**
-	 * Used by tests to wait until the command they have queued has been processed
-	 * @return the number of commands that are in the queue 
+	 * Used by tests to wait until the command they have queued has been
+	 * processed
+	 * 
+	 * @return the number of commands that are in the queue
 	 */
 	public int queueSize()
 	{

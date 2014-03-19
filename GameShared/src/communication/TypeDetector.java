@@ -19,18 +19,17 @@ public abstract class TypeDetector
 	 */
 	protected ArrayList<Class<?>> detectAllExtendersInPackage(Class<?> type)
 	{
-		return detectAllExtendersInPackage(type, this.getClass().getPackage()
-				.getName());
+		return detectAllExtendersInPackage(type, this.getClass().getPackage().getName());
 	}
-	
+
 	/**
 	 * 
 	 */
-	protected ArrayList<Class<?>> detectAllExtendersInPackage(Class<?> type, String packageName)
+	protected ArrayList<Class<?>> detectAllExtendersInPackage(Class<?> type,
+			String packageName)
 	{
 		ArrayList<Class<?>> results = new ArrayList<Class<?>>();
-		Reflections reflections = new Reflections(this.getClass().getPackage()
-				.getName());
+		Reflections reflections = new Reflections(this.getClass().getPackage().getName());
 
 		Multimap<String, String> mmap = reflections.getStore().getStoreMap()
 				.get("SubTypesScanner");
@@ -61,8 +60,7 @@ public abstract class TypeDetector
 	protected ArrayList<Class<?>> detectAllImplementorsInPackage(Class<?> type)
 	{
 		ArrayList<Class<?>> results = new ArrayList<Class<?>>();
-		Reflections reflections = new Reflections(this.getClass().getPackage()
-				.getName());
+		Reflections reflections = new Reflections(this.getClass().getPackage().getName());
 
 		Multimap<String, String> mmap = reflections.getStore().getStoreMap()
 				.get("SubTypesScanner");
@@ -122,8 +120,7 @@ public abstract class TypeDetector
 	 *            the interface we want to check
 	 * @return true if the class implements that interface
 	 */
-	private boolean implementsInterface(Class<?> classToRegister,
-			Class<?> interfaceType)
+	private boolean implementsInterface(Class<?> classToRegister, Class<?> interfaceType)
 	{
 		if (classToRegister.equals(interfaceType))
 		{
@@ -144,8 +141,11 @@ public abstract class TypeDetector
 
 	/**
 	 * looks recursively to see if a class implements a given interface
-	 * @param item the class we are checking
-	 * @param interfaceType the interface we want to look for
+	 * 
+	 * @param item
+	 *            the class we are checking
+	 * @param interfaceType
+	 *            the interface we want to look for
 	 * @return true if the class implements the interface
 	 */
 	private boolean recursivelyImplements(Class<?> item, Class<?> interfaceType)

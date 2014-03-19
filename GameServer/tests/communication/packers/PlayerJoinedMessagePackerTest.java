@@ -30,8 +30,11 @@ public class PlayerJoinedMessagePackerTest
 	}
 
 	/**
-	 * If we are notified about a player, pack his information and send it to our client
-	 * @throws DatabaseException shouldn't
+	 * If we are notified about a player, pack his information and send it to
+	 * our client
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
 	public void ifThePlayerIsNotOnThisConnection() throws DatabaseException
@@ -41,8 +44,8 @@ public class PlayerJoinedMessagePackerTest
 		stateAccumulator.setPlayerId(1);
 		PlayerManager.getSingleton().addPlayer(2, PlayerPin.DEFAULT_PIN);
 
-		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager.getSingleton()
-				.getPlayerFromID(2));
+		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager
+				.getSingleton().getPlayerFromID(2));
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);

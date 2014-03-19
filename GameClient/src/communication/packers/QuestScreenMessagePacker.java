@@ -27,7 +27,8 @@ public class QuestScreenMessagePacker extends MessagePacker
 							+ object.getClass());
 		}
 		QuestScreenReport report = (QuestScreenReport) object;
-		Message msg = new QuestScreenMessage(report.getLoadState(), PlayerManager.getSingleton().getThisClientsPlayer().getID());
+		Message msg = new QuestScreenMessage(report.getLoadState(), PlayerManager
+				.getSingleton().getThisClientsPlayer().getID());
 		return msg;
 	}
 

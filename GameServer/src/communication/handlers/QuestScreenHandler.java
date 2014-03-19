@@ -25,8 +25,7 @@ public class QuestScreenHandler extends MessageHandler
 		{
 			QuestScreenMessage cMsg = (QuestScreenMessage) msg;
 			cMsg.isLoadState();
-			System.out
-					.println("hello from server quest screen message handler");
+			System.out.println("hello from server quest screen message handler");
 
 			// Tell someone in the client
 			Player player = PlayerManager.getSingleton().getPlayerFromID(

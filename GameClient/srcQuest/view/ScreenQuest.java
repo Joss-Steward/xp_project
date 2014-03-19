@@ -74,8 +74,8 @@ public class ScreenQuest extends ScreenBasic
 		stage.getCamera().update();
 		// builds the quest screen background
 		Texture texture = new Texture("data/journal.png");
-		background = new Image(new TextureRegion(texture, 0, 0,
-				texture.getWidth(), texture.getHeight()));
+		background = new Image(new TextureRegion(texture, 0, 0, texture.getWidth(),
+				texture.getHeight()));
 		stage.addActor(background);
 
 		Texture texture2 = new Texture("data/QuestLogo.png");
@@ -116,8 +116,7 @@ public class ScreenQuest extends ScreenBasic
 	public void render(float delta)
 	{
 		// checks for resizing the screen
-		if (width != Gdx.graphics.getWidth()
-				|| height != Gdx.graphics.getHeight())
+		if (width != Gdx.graphics.getWidth() || height != Gdx.graphics.getHeight())
 		{
 			initializeScreen();
 		}
@@ -229,8 +228,7 @@ public class ScreenQuest extends ScreenBasic
 				{
 					for (int j = 0; j < qm.getQuestList().get(i).getTaskCount(); j++)
 					{
-						buildTaskRow(qm.getQuestList().get(i).getTask(j),
-								questTable);
+						buildTaskRow(qm.getQuestList().get(i).getTask(j), questTable);
 					}
 
 					// adds a description of the task
@@ -238,11 +236,9 @@ public class ScreenQuest extends ScreenBasic
 					{
 						if (selectedQuest.getTaskByName(selectedTask.getName()) != null)
 						{
-							nameLabel = new Label(
-									selectedTask.getDescription(), skin);
+							nameLabel = new Label(selectedTask.getDescription(), skin);
 							taskButtonListener(nameLabel);
-							questTable.add(nameLabel).colspan(2).pad(2)
-									.padRight(5);
+							questTable.add(nameLabel).colspan(2).pad(2).padRight(5);
 						}
 					}
 				}
@@ -351,12 +347,11 @@ public class ScreenQuest extends ScreenBasic
 		questLabel.addListener(new ClickListener()
 		{
 			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button)
+			public boolean touchDown(InputEvent event, float x, float y, int pointer,
+					int button)
 			{
 
-				System.out.println("Touched quest"
-						+ event.getListenerActor().getName());
+				System.out.println("Touched quest" + event.getListenerActor().getName());
 				Label questLbl = (Label) event.getListenerActor();
 				String name = questLbl.getName();
 				// TODO testing purposes
@@ -379,18 +374,17 @@ public class ScreenQuest extends ScreenBasic
 		taskLabel.addListener(new ClickListener()
 		{
 			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button)
+			public boolean touchDown(InputEvent event, float x, float y, int pointer,
+					int button)
 			{
 
-				System.out.println("Touched task"
-						+ event.getListenerActor().getName());
+				System.out.println("Touched task" + event.getListenerActor().getName());
 				Label taskLbl = (Label) event.getListenerActor();
 				String name = taskLbl.getName();
 
 				selectedTask = selectedQuest.getTaskByName(name);
 				selectedQuest.setSelectedTask(selectedTask);
-				//TODO delete after show
+				// TODO delete after show
 				if (selectedTask.isActive() == true)
 				{
 					selectedQuest.completeCurrentTask();
@@ -440,7 +434,6 @@ public class ScreenQuest extends ScreenBasic
 		stage.addActor(logo);
 		stage.addActor(questTable);
 	}
-
 
 	/**
 	 * @see com.badlogic.gdx.Screen#resize(int, int)

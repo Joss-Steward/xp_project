@@ -18,6 +18,7 @@ public class LoginServer implements Runnable
 	private ServerSocket servSock;
 	private MessageHandlerSet handlers;
 	private MessagePackerSet packers;
+
 	/**
 	 * 
 	 */
@@ -28,7 +29,7 @@ public class LoginServer implements Runnable
 
 	private void initializeMessageHandlers()
 	{
-		
+
 	}
 
 	/**

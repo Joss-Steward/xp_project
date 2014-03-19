@@ -2,7 +2,7 @@ package model;
 
 /**
  * @author Merlin
- *
+ * 
  */
 public class PlayerNotFoundException extends Exception
 {

@@ -108,8 +108,7 @@ public class QuestSystemLargeTest
 			{
 				Task t = new Task("Task" + j);
 				t.setParentName(q.getName());
-				t.setDescription("This is task number " + j + "in"
-						+ q.getName());
+				t.setDescription("This is task number " + j + "in" + q.getName());
 				t.setPosition(new Position(i, j));
 				t.setTrigger(null);
 				// adds task to the quest

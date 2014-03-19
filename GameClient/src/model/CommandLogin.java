@@ -2,7 +2,7 @@ package model;
 
 /**
  * @author Merlin
- *
+ * 
  */
 public class CommandLogin extends Command
 {
@@ -11,8 +11,10 @@ public class CommandLogin extends Command
 	private String password;
 
 	/**
-	 * @param name the player's name
-	 * @param password the password
+	 * @param name
+	 *            the player's name
+	 * @param password
+	 *            the password
 	 */
 	public CommandLogin(String name, String password)
 	{
@@ -24,8 +26,7 @@ public class CommandLogin extends Command
 	 * @see model.Command#execute()
 	 */
 	@Override
-	protected
-	boolean execute()
+	protected boolean execute()
 	{
 		PlayerManager p = PlayerManager.getSingleton();
 		p.initiateLogin(name, password);

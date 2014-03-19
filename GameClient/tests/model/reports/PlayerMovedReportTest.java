@@ -9,7 +9,7 @@ import data.Position;
 
 /**
  * @author Merlin
- *
+ * 
  */
 public class PlayerMovedReportTest
 {
@@ -20,8 +20,8 @@ public class PlayerMovedReportTest
 	@Test
 	public void creation()
 	{
-		PlayerMovedReport report = new PlayerMovedReport(1, new Position(3,2));
-		assertEquals(new Position(3,2), report.getNewPosition());
+		PlayerMovedReport report = new PlayerMovedReport(1, new Position(3, 2));
+		assertEquals(new Position(3, 2), report.getNewPosition());
 	}
 
 	/**

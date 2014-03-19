@@ -6,7 +6,7 @@ import org.junit.Test;
 
 /**
  * @author Merlin
- *
+ * 
  */
 public class ConnectionManagerTest
 {
@@ -17,12 +17,11 @@ public class ConnectionManagerTest
 	@Test
 	public void settingPlayerIDTellsStateAccumulator()
 	{
-		ConnectionManager cm = new ConnectionManager ();
+		ConnectionManager cm = new ConnectionManager();
 		cm.stateAccumulator = new StateAccumulator(null);
 		cm.setPlayerID(33);
 		assertEquals(33, cm.getPlayerID());
 		assertEquals(33, cm.stateAccumulator.getPlayerID());
 	}
-	
 
 }

@@ -6,8 +6,9 @@ import org.junit.Test;
 
 /**
  * Tests a login message
+ * 
  * @author merlin
- *
+ * 
  */
 public class LoginMessageTest
 {
@@ -17,10 +18,11 @@ public class LoginMessageTest
 	@Test
 	public void testToString()
 	{
-		LoginMessage msg = new LoginMessage("fred","xxx");
-		assertEquals("Login Message: playerName = fred and password = xxx", msg.toString());
+		LoginMessage msg = new LoginMessage("fred", "xxx");
+		assertEquals("Login Message: playerName = fred and password = xxx",
+				msg.toString());
 		assertEquals("fred", msg.getPlayerName());
 		assertEquals("xxx", msg.getPassword());
 	}
-	
+
 }

@@ -25,11 +25,11 @@ public class QuestManager extends QualifiedObservable
 	public QuestManager()
 	{
 		questList = new ArrayList<Quest>();
-		QualifiedObservableConnector.getSingleton()
-				.registerQualifiedObservable(this, PlayerMovedReport.class);
+		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this,
+				PlayerMovedReport.class);
 
-		QualifiedObservableConnector.getSingleton()
-				.registerQualifiedObservable(this, QuestScreenReport.class);
+		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this,
+				QuestScreenReport.class);
 	}
 
 	/**

@@ -127,11 +127,11 @@ public class MapManager extends QualifiedObservable
 					Cell cell = collisionLayer.getCell(col, row);
 					if (cell == null)
 					{
-						passabilityMap[collisionLayer.getHeight()-row-1][col] = true;
+						passabilityMap[collisionLayer.getHeight() - row - 1][col] = true;
 						System.out.print("t");
 					} else
 					{
-						this.passabilityMap[collisionLayer.getHeight()-row-1][col] = false;
+						this.passabilityMap[collisionLayer.getHeight() - row - 1][col] = false;
 						System.out.print("f");
 					}
 

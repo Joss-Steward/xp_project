@@ -80,18 +80,18 @@ public enum Direction
 		Position next = p;
 		switch (dir)
 		{
-			case North:
-				next = new Position(p.getRow() + 1, p.getColumn());
-				break;
-			case South:
-				next = new Position(p.getRow() - 1, p.getColumn());
-				break;
-			case East:
-				next = new Position(p.getRow(), p.getColumn() + 1);
-				break;
-			case West:
-				next = new Position(p.getRow(), p.getColumn() - 1);
-				break;
+		case North:
+			next = new Position(p.getRow() + 1, p.getColumn());
+			break;
+		case South:
+			next = new Position(p.getRow() - 1, p.getColumn());
+			break;
+		case East:
+			next = new Position(p.getRow(), p.getColumn() + 1);
+			break;
+		case West:
+			next = new Position(p.getRow(), p.getColumn() - 1);
+			break;
 		}
 		return next;
 	}

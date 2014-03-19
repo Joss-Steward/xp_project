@@ -4,12 +4,13 @@ import java.io.Serializable;
 
 /**
  * Used to log a player into a server
+ * 
  * @author merlin
- *
+ * 
  */
 public class StubMessage2 implements Message, Serializable
 {
-	
+
 	/**
 	 * 
 	 */
@@ -23,5 +24,5 @@ public class StubMessage2 implements Message, Serializable
 	{
 		return "This is a stub message (2) - why are you outputting it!";
 	}
-	
+
 }

@@ -2,8 +2,9 @@ package model;
 
 /**
  * Command used to add a new player to this area server's part of the game
+ * 
  * @author Merlin
- *
+ * 
  */
 public class AddPlayerCommand extends Command
 {
@@ -13,8 +14,10 @@ public class AddPlayerCommand extends Command
 
 	/**
 	 * 
-	 * @param playerID the player's player id
-	 * @param pin the player's pin
+	 * @param playerID
+	 *            the player's player id
+	 * @param pin
+	 *            the player's pin
 	 */
 	public AddPlayerCommand(int playerID, double pin)
 	{

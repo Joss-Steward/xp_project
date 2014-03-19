@@ -26,11 +26,11 @@ public class PlayerJoinedMessageHandler extends MessageHandler
 	public void process(Message msg)
 	{
 		System.out.println("received " + msg);
-		PlayerJoinedMessage playerJoinedMessage = (PlayerJoinedMessage)msg;
-		CommandInitializePlayer cmd = new CommandInitializePlayer(playerJoinedMessage.getPlayerID(), 
-																  playerJoinedMessage.getPlayerName(), 
-																  playerJoinedMessage.getAppearanceType(), 
-																  playerJoinedMessage.getPosition());
+		PlayerJoinedMessage playerJoinedMessage = (PlayerJoinedMessage) msg;
+		CommandInitializePlayer cmd = new CommandInitializePlayer(
+				playerJoinedMessage.getPlayerID(), playerJoinedMessage.getPlayerName(),
+				playerJoinedMessage.getAppearanceType(),
+				playerJoinedMessage.getPosition());
 		ModelFacade.getSingleton().queueCommand(cmd);
 	}
 

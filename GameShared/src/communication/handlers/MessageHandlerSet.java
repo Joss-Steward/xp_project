@@ -5,8 +5,10 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import communication.CommunicationException;
-import communication.ConnectionManager;import communication.TypeDetector;
+import communication.ConnectionManager;
+import communication.TypeDetector;
 import communication.messages.Message;
+
 /**
  * Manages a set of MessageHandlers and the type of message each one can process
  * and uses the appropriate one to process each message. It is important to note
@@ -26,9 +28,10 @@ public class MessageHandlerSet extends TypeDetector
 	public MessageHandlerSet()
 	{
 		handlers = new HashMap<Class<?>, MessageHandler>();
-		
-		ArrayList<Class<?>> handlerTypes = this.detectAllExtendersInPackage(MessageHandler.class) ;
-		for(Class<?> handlerType:handlerTypes)
+
+		ArrayList<Class<?>> handlerTypes = this
+				.detectAllExtendersInPackage(MessageHandler.class);
+		for (Class<?> handlerType : handlerTypes)
 		{
 			try
 			{
@@ -38,7 +41,7 @@ public class MessageHandlerSet extends TypeDetector
 			{
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
 
@@ -48,7 +51,7 @@ public class MessageHandlerSet extends TypeDetector
 	 * @param handler
 	 *            the handler
 	 */
-	public void registerHandler( MessageHandler handler)
+	public void registerHandler(MessageHandler handler)
 	{
 		Class<?> messageTypeWeHandle = handler.getMessageTypeWeHandle();
 		handlers.put(messageTypeWeHandle, handler);
@@ -62,8 +65,7 @@ public class MessageHandlerSet extends TypeDetector
 	 * @throws CommunicationException
 	 *             if there is not handler for the given type of message
 	 */
-	public void process(Message msg)
-			throws CommunicationException
+	public void process(Message msg) throws CommunicationException
 	{
 		if (handlers.containsKey(msg.getClass()))
 		{
@@ -76,20 +78,24 @@ public class MessageHandlerSet extends TypeDetector
 	}
 
 	/**
-	 * set the connection manager associated with the connection using these handlers
-	 * @param connectionManager the manager
+	 * set the connection manager associated with the connection using these
+	 * handlers
+	 * 
+	 * @param connectionManager
+	 *            the manager
 	 */
 	public void setConnectionManager(ConnectionManager connectionManager)
 	{
-		for(MessageHandler h:handlers.values())
+		for (MessageHandler h : handlers.values())
 		{
 			h.setConnectionManager(connectionManager);
 		}
-		
+
 	}
 
 	/**
 	 * For testing purposes only
+	 * 
 	 * @return all of the handlers in this set
 	 */
 	public Collection<MessageHandler> getHandlers()

@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 /**
  * The message that goes from the main server to the client on a successful
- * login. It tells the client what the player's ID number is and where to connect
- * to begin playing.
+ * login. It tells the client what the player's ID number is and where to
+ * connect to begin playing.
  * 
  * @author Merlin
  * 
@@ -35,7 +35,8 @@ public class LoginSuccessfulMessage implements Message, Serializable
 	 * @param pin
 	 *            the magic number required to connect to area servers
 	 */
-	public LoginSuccessfulMessage(int playerID, String hostName, int portNumber, double pin)
+	public LoginSuccessfulMessage(int playerID, String hostName, int portNumber,
+			double pin)
 	{
 		this.playerID = playerID;
 		this.hostName = hostName;

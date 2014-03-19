@@ -10,7 +10,7 @@ import communication.packers.LoginFailedMessagePacker;
 
 /**
  * @author Merlin
- *
+ * 
  */
 public class LoginFailedMessagePackerTest
 {
@@ -23,7 +23,7 @@ public class LoginFailedMessagePackerTest
 	{
 		LoginFailedReport report = new LoginFailedReport();
 		LoginFailedMessagePacker packer = new LoginFailedMessagePacker();
-		Object msg = packer.pack(report);	
+		Object msg = packer.pack(report);
 		assertEquals(LoginFailedMessage.class, msg.getClass());
 	}
 

@@ -78,7 +78,7 @@ public class ModelFacade
 	{
 		commandQueue.queueInfoPacket(cmd);
 	}
-	
+
 	/**
 	 * @return The number of commands in queue
 	 */

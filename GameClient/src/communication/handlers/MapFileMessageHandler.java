@@ -1,4 +1,5 @@
 package communication.handlers;
+
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -16,12 +17,13 @@ import model.ModelFacade;
 import communication.messages.MapFileMessage;
 import communication.messages.Message;
 
-
-
 /**
- * Should process an incoming LoginResponseMessage.  This means that we should move our connection to the area server specified by that msg and initiate a session with that server
+ * Should process an incoming LoginResponseMessage. This means that we should
+ * move our connection to the area server specified by that msg and initiate a
+ * session with that server
+ * 
  * @author merlin
- *
+ * 
  */
 public class MapFileMessageHandler extends MessageHandler
 {
@@ -39,29 +41,33 @@ public class MapFileMessageHandler extends MessageHandler
 	public void process(Message msg)
 	{
 		URI path;
-		try {
-			path = MapFileMessageHandler.class.getProtectionDomain().getCodeSource().getLocation().toURI();
-		} catch (URISyntaxException e1) {
+		try
+		{
+			path = MapFileMessageHandler.class.getProtectionDomain().getCodeSource()
+					.getLocation().toURI();
+		} catch (URISyntaxException e1)
+		{
 			e1.printStackTrace();
 			return;
 		}
-		
+
 		try
 		{
 			System.out.println("received " + msg);
-			
+
 			URL decodedPath = path.toURL();
-			MapFileMessage mapFileMessage = (MapFileMessage)msg;
-			String mapFile = (new URL(decodedPath, "../"+MAP_FILE_TITLE)).toURI().getSchemeSpecificPart();
-			writeToFile(mapFile, mapFileMessage.getContents() );
+			MapFileMessage mapFileMessage = (MapFileMessage) msg;
+			String mapFile = (new URL(decodedPath, "../" + MAP_FILE_TITLE)).toURI()
+					.getSchemeSpecificPart();
+			writeToFile(mapFile, mapFileMessage.getContents());
 			writeTileSets(mapFileMessage, path.getSchemeSpecificPart());
-			
+
 			ModelFacade.getSingleton().queueCommand(new CommandNewMap(mapFile));
 		} catch (MalformedURLException | URISyntaxException e)
 		{
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	/**
@@ -71,7 +77,7 @@ public class MapFileMessageHandler extends MessageHandler
 	{
 		ArrayList<String> imgFileTitles = msg.getImageFileTitles();
 		ArrayList<byte[]> imgFiles = msg.getImageFiles();
-		for (int i=0;i<imgFileTitles.size();i++)
+		for (int i = 0; i < imgFileTitles.size(); i++)
 		{
 			writeToFile(path + "../maps/" + imgFileTitles.get(i), imgFiles.get(i));
 		}

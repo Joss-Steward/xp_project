@@ -33,7 +33,8 @@ import communication.packers.MovementMessagePackerTest;
  * 
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({
+@Suite.SuiteClasses(
+{
 		// communication.handlers
 		MapFileMessageHandlerTest.class,
 		PlayerJoinedMessageHandlerTest.class,
@@ -44,24 +45,17 @@ import communication.packers.MovementMessagePackerTest;
 		MovementMessagePackerTest.class,
 
 		// model
-		CommandInitializePlayerTest.class, 
-		CommandLoginTest.class, 
-		CommandNewMapTest.class, 
-		MapManagerTest.class,
-		ModelFacadeTest.class, 
-		PlayerManagerTest.class, 
-		PlayerTest.class,
+		CommandInitializePlayerTest.class, CommandLoginTest.class,
+		CommandNewMapTest.class, MapManagerTest.class, ModelFacadeTest.class,
+		PlayerManagerTest.class, PlayerTest.class,
 		ThisClientsPlayerTest.class,
 
 		// model.reports
-		LoginInitiatedReportTest.class, 
-		NewMapReportTest.class,
+		LoginInitiatedReportTest.class, NewMapReportTest.class,
 		PlayerMovedReportTest.class,
 
 		// view
-		ScreenListenerTest.class,
-		ScreenMapInputTest.class,
-		PlayerSpriteTest.class,
+		ScreenListenerTest.class, ScreenMapInputTest.class, PlayerSpriteTest.class,
 		DirectionTest.class,
 
 })
@@ -70,6 +64,7 @@ import communication.packers.MovementMessagePackerTest;
  * @author Merlin
  *
  */
-public class AllClientTests {
+public class AllClientTests
+{
 	// empty block
 }

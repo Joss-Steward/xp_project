@@ -7,7 +7,7 @@ import org.junit.Test;
 
 /**
  * @author Merlin
- *
+ * 
  */
 public class LoginInitiatedReportTest
 {
@@ -20,7 +20,7 @@ public class LoginInitiatedReportTest
 	{
 		LoginInitiatedReport report = new LoginInitiatedReport("playername", "pw");
 		assertEquals("playername", report.getPlayerName());
-		assertEquals("pw",report.getPassword());
+		assertEquals("pw", report.getPassword());
 	}
 
 	/**

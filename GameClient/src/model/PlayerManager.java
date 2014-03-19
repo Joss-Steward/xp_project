@@ -77,7 +77,7 @@ public class PlayerManager extends QualifiedObservable
 	{
 		return playerList.get(playerID);
 	}
-	
+
 	/**
 	 * Sets the player controlled by this client
 	 * 
@@ -140,35 +140,42 @@ public class PlayerManager extends QualifiedObservable
 	}
 
 	/**
-	 * Either create a new player with the attributes given, or update an existing player
-	 * with the given playerID to have these attributes
-	 *
-	 * @param playerID The id of the player
-	 * @param playerName The name of the player
-	 * @param appearanceType The appearance type of the player
-	 * @param position The position of this player
+	 * Either create a new player with the attributes given, or update an
+	 * existing player with the given playerID to have these attributes
+	 * 
+	 * @param playerID
+	 *            The id of the player
+	 * @param playerName
+	 *            The name of the player
+	 * @param appearanceType
+	 *            The appearance type of the player
+	 * @param position
+	 *            The position of this player
 	 * @return Player The player updated
 	 */
-	public Player initializePlayer(int playerID, String playerName, String appearanceType, Position position)
+	public Player initializePlayer(int playerID, String playerName,
+			String appearanceType, Position position)
 	{
 		Player player = this.getPlayerFromID(playerID);
-		if(player == null)
+		if (player == null)
 		{
 			player = new Player(playerID);
 			playerList.put(playerID, player);
 		}
 		boolean isThisClientsPlayer = false;
-		if (thisClientsPlayer != null) {
+		if (thisClientsPlayer != null)
+		{
 			isThisClientsPlayer = playerID == thisClientsPlayer.getID();
 		}
-		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(playerID, playerName, appearanceType, position, isThisClientsPlayer);
+		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(
+				playerID, playerName, appearanceType, position, isThisClientsPlayer);
 		this.notifyObservers(report);
-		
+
 		player.setName(playerName);
 		player.setAppearanceType(appearanceType);
 		player.setPosition(position);
-		
+
 		return player;
-		
+
 	}
 }

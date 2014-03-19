@@ -9,8 +9,9 @@ import model.reports.*;
 
 /**
  * Not much for now!
+ * 
  * @author Merlin
- *
+ * 
  */
 public class ScreenMapListener extends ScreenListener
 {
@@ -29,9 +30,9 @@ public class ScreenMapListener extends ScreenListener
 	public void update(Observable o, Object arg)
 	{
 		ScreenMap map = (ScreenMap) this.screen;
-		
+
 		// adds your player's sprite to this client
-		if (arg.getClass().equals(PlayerConnectedToAreaServerReport.class)) 
+		if (arg.getClass().equals(PlayerConnectedToAreaServerReport.class))
 		{
 			PlayerConnectedToAreaServerReport report = (PlayerConnectedToAreaServerReport) arg;
 			PlayerType type = PlayerType.valueOf(report.getPlayerAppearanceType());
@@ -55,8 +56,8 @@ public class ScreenMapListener extends ScreenListener
 		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
 		reportTypes.add(PlayerConnectedToAreaServerReport.class);
 		reportTypes.add(PlayerMovedReport.class);
-		//reportTypes.add(OtherPlayerMovedReport.class);
-		
+		// reportTypes.add(OtherPlayerMovedReport.class);
+
 		return reportTypes;
 	}
 

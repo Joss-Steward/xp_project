@@ -30,7 +30,8 @@ public class ConnectionOutgoing implements Runnable
 	 * @throws IOException
 	 *             Exception thrown for invalid input or output
 	 */
-	public ConnectionOutgoing(Socket socket, MessagePackerSet messagePackerSet) throws IOException
+	public ConnectionOutgoing(Socket socket, MessagePackerSet messagePackerSet)
+			throws IOException
 	{
 		if (socket != null)
 		{

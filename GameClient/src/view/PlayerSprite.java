@@ -75,7 +75,8 @@ public class PlayerSprite
 	}
 
 	/**
-	 * Sets the location on screen that the sprite is be located without animating
+	 * Sets the location on screen that the sprite is be located without
+	 * animating
 	 * 
 	 * @param x
 	 *            horizontal screen location of the sprite
@@ -88,7 +89,7 @@ public class PlayerSprite
 		this.dest.set(x, y);
 		this.real.set(x, y);
 	}
-	
+
 	/**
 	 * Sets the location on screen that the sprite is to move to with animation
 	 * 

@@ -69,7 +69,7 @@ public class StateAccumulator implements Observer
 				msgs = packerSet.pack((QualifiedObservableReport) arg1);
 				if (msgs != null)
 				{
-					for(Message msg:msgs)
+					for (Message msg : msgs)
 					{
 						pendingMsgs.add(msg);
 					}
@@ -96,7 +96,8 @@ public class StateAccumulator implements Observer
 	}
 
 	/**
-	 * @param i the playerID of the player associated with this accumulator
+	 * @param i
+	 *            the playerID of the player associated with this accumulator
 	 */
 	public void setPlayerId(int i)
 	{
@@ -110,5 +111,5 @@ public class StateAccumulator implements Observer
 	{
 		return playerID;
 	}
-	
+
 }

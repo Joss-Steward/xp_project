@@ -11,7 +11,7 @@ import communication.packers.LoginMessagePacker;
 /**
  * 
  * @author merlin
- *
+ * 
  */
 public class LoginMessagePackerTest
 {
@@ -23,7 +23,8 @@ public class LoginMessagePackerTest
 	public void test()
 	{
 		LoginMessagePacker packer = new LoginMessagePacker();
-		LoginMessage msg = (LoginMessage) packer.pack(new LoginInitiatedReport("harry","elizabeth"));
+		LoginMessage msg = (LoginMessage) packer.pack(new LoginInitiatedReport("harry",
+				"elizabeth"));
 		assertEquals("harry", msg.getPlayerName());
 		assertEquals("elizabeth", msg.getPassword());
 	};

@@ -25,12 +25,14 @@ public class PlayerJoinedMessageHandlerTest
 	public void reset()
 	{
 		ModelFacade.resetSingleton();
-		ModelFacade.getSingleton(true,false);
+		ModelFacade.getSingleton(true, false);
 	}
-	
+
 	/**
 	 * We should add the player to the player manager
-	 * @throws InterruptedException shouldn't
+	 * 
+	 * @throws InterruptedException
+	 *             shouldn't
 	 */
 	@Test
 	public void test() throws InterruptedException

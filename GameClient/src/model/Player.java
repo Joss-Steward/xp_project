@@ -27,7 +27,7 @@ public class Player extends QualifiedObservable
 	{
 		this.id = playerID;
 		this.position = new Position(0, 0);
-		
+
 		this.reportTypes.add(PlayerMovedReport.class);
 		this.registerReportTypesWeNotify();
 	}
@@ -83,7 +83,7 @@ public class Player extends QualifiedObservable
 	{
 		return this.name;
 	}
-	
+
 	/**
 	 * @return this player's appearance type
 	 */
@@ -105,13 +105,15 @@ public class Player extends QualifiedObservable
 
 	/**
 	 * Set this player's appearance
-	 * @param appearanceType the new appearance type
+	 * 
+	 * @param appearanceType
+	 *            the new appearance type
 	 */
 	public void setAppearanceType(String appearanceType)
 	{
 		this.appearanceType = appearanceType;
 	}
-	
+
 	/**
 	 * Move the player's position
 	 * 
@@ -124,13 +126,13 @@ public class Player extends QualifiedObservable
 		this.position = playerPosition;
 		this.notifyObservers(new PlayerMovedReport(this.id, playerPosition));
 	}
-	
+
 	/**
-	 * Forcibly sets the player's position without notifying observers.
-	 * </p>
+	 * Forcibly sets the player's position without notifying observers. </p>
 	 * Should only be called when the player is initialized.
+	 * 
 	 * @param playerPosition
-	 * 			  The new location of the player
+	 *            The new location of the player
 	 */
 	public void setPosition(Position playerPosition)
 	{

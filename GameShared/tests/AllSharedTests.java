@@ -36,25 +36,22 @@ import data.PositionTest;
 @Suite.SuiteClasses(
 {
 		// communication
-		ConnectionIncomingTest.class, 
-		ConnectionManagerTest.class, 
+		ConnectionIncomingTest.class,
+		ConnectionManagerTest.class,
 		StateAccumulatorTest.class,
 
-		//communication.handlers
+		// communication.handlers
 		MessageHandlerSetTest.class,
-		//StubMessageHandler1.class,
-		//StubMessageHandler2.class,
-		
+		// StubMessageHandler1.class,
+		// StubMessageHandler2.class,
+
 		// communication.messages
-		ConnectionMessageTest.class, 
-		LoginMessageTest.class, 
-		LoginResponseMessageTest.class,
-		MapFileMessageTest.class,
-		MessageStructureVerifier.class,
-		MovementMessageTest.class,
+		ConnectionMessageTest.class, LoginMessageTest.class,
+		LoginResponseMessageTest.class, MapFileMessageTest.class,
+		MessageStructureVerifier.class, MovementMessageTest.class,
 		PlayerJoinedMessageTest.class,
-		//StubMessage1.class,
-		//StubMessage2.class,
+		// StubMessage1.class,
+		// StubMessage2.class,
 
 		// communicatiaon.packers
 		MessagePackerSetTest.class,
@@ -66,10 +63,8 @@ import data.PositionTest;
 
 		// model
 		// DatabaseTest.class
-		PlayerLoginTest.class,
-		PlayerPinTest.class,
-		QualifiedObservableTest.class,
-		//QualifiedObservableTestInherited.class,
+		PlayerLoginTest.class, PlayerPinTest.class, QualifiedObservableTest.class,
+		// QualifiedObservableTestInherited.class,
 		QualifiedObserverConnectorTest.class,
 
 		// model.reports
@@ -77,26 +72,28 @@ import data.PositionTest;
 		// StubQualifiedObservableReport2.class
 
 		// tmxfiles
-		TMXMapReaderTest.class,
-})
+		TMXMapReaderTest.class, })
 public class AllSharedTests
 {
 
-	 /**
+	/**
 	 * Make sure we default all of the PINs at the beginning of running the
 	 * tests so that none will be expired
 	 */
 	@ClassRule
-	    public static ExternalResource testRule = new ExternalResource(){
-	            @Override
-	            protected void before() throws Throwable{
-	               PlayerPinTest.defaultAllPins();
-	            };
+	public static ExternalResource testRule = new ExternalResource()
+	{
+		@Override
+		protected void before() throws Throwable
+		{
+			PlayerPinTest.defaultAllPins();
+		};
 
-	            @Override
-	            protected void after(){
-	               
-	            };
-	        };
+		@Override
+		protected void after()
+		{
+
+		};
+	};
 
 }

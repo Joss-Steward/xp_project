@@ -31,7 +31,9 @@ public class MapFileMessagePackerTest
 	/**
 	 * If we are notified about a player other than the one we are associated
 	 * with, we shouldn't pack a message
-	 * @throws DatabaseException shouldn't 
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
 	public void ifThePlayerIsNotOnThisConnection() throws DatabaseException
@@ -52,7 +54,9 @@ public class MapFileMessagePackerTest
 	/**
 	 * If we are notified about a player that is the one we are associated with,
 	 * return null (no need to send this on)
-	 * @throws DatabaseException shouldn't
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
 	public void ifThePlayerIsOnThisConnection() throws DatabaseException

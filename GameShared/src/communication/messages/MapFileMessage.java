@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 import tmxfiles.TMXMapReader;
 
-
-
 /**
  * @author Merlin
  * 
@@ -28,8 +26,10 @@ public class MapFileMessage implements Message, Serializable
 	private ArrayList<byte[]> imageFiles;
 
 	/**
-	 * @param fileTitle the name of the file we want to send
-	 * @throws IOException if the file doesn't exist or is poorly formatted
+	 * @param fileTitle
+	 *            the name of the file we want to send
+	 * @throws IOException
+	 *             if the file doesn't exist or is poorly formatted
 	 */
 	public MapFileMessage(String fileTitle) throws IOException
 	{
@@ -37,11 +37,11 @@ public class MapFileMessage implements Message, Serializable
 		contents = readInFile(fileTitle);
 		TMXMapReader mapFileReader = new TMXMapReader(fileTitle);
 		imageFileTitles = mapFileReader.getImageFileTitles();
-		imageFiles = new ArrayList<byte[]> ();
+		imageFiles = new ArrayList<byte[]>();
 		ArrayList<String> modifiedTitles = new ArrayList<String>();
 		String absolutePath = file.toURI().getPath();
-		String path = absolutePath.substring(0, absolutePath.lastIndexOf('/')+1);
-		for (String imgTitle:imageFileTitles)
+		String path = absolutePath.substring(0, absolutePath.lastIndexOf('/') + 1);
+		for (String imgTitle : imageFileTitles)
 		{
 			String absoluteImgFileTitle = path + imgTitle;
 			modifiedTitles.add(absoluteImgFileTitle);
@@ -58,15 +58,17 @@ public class MapFileMessage implements Message, Serializable
 		dis = new DataInputStream(new FileInputStream(thisfile));
 		dis.readFully(results);
 		dis.close();
-		
+
 		return results;
 	}
+
 	/**
 	 * @return a string describing this message
 	 */
 	public String toString()
 	{
-		return "FileMessage: number of bytes = " + contents.length + " number of tilesets = " + imageFileTitles.size();
+		return "FileMessage: number of bytes = " + contents.length
+				+ " number of tilesets = " + imageFileTitles.size();
 	}
 
 	/**

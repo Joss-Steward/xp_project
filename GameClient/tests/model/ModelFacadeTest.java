@@ -7,11 +7,11 @@ import org.junit.Test;
 
 /**
  * @author Merlin
- *
+ * 
  */
 public class ModelFacadeTest
 {
-	
+
 	/**
 	 * reset the necessary singletons
 	 */
@@ -21,7 +21,7 @@ public class ModelFacadeTest
 		ModelFacade.resetSingleton();
 		MapManager.resetSingleton();
 	}
-	
+
 	/**
 	 * make sure it is a singleton
 	 */
@@ -34,10 +34,10 @@ public class ModelFacadeTest
 		ModelFacade.resetSingleton();
 		assertNotSame(facade1, ModelFacade.getSingleton(true, true));
 	}
-	
+
 	/**
-	 * Make sure that we get an exception if we ask for a facade in a different mode
-	 * than the current one without resetting it first
+	 * Make sure that we get an exception if we ask for a facade in a different
+	 * mode than the current one without resetting it first
 	 */
 	@Test
 	public void cantChangeModes()
@@ -47,21 +47,19 @@ public class ModelFacadeTest
 		try
 		{
 			ModelFacade.getSingleton(true, false);
-		} 
-		catch(IllegalArgumentException e)
+		} catch (IllegalArgumentException e)
 		{
 			sawException = true;
 		}
 		assertTrue(sawException);
-		
+
 		ModelFacade.resetSingleton();
 		ModelFacade.getSingleton(true, true);
-		
+
 		try
 		{
 			ModelFacade.getSingleton(false, true);
-		} 
-		catch(IllegalArgumentException e)
+		} catch (IllegalArgumentException e)
 		{
 			sawException = true;
 		}

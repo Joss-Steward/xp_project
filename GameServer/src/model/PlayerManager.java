@@ -60,6 +60,7 @@ public class PlayerManager extends QualifiedObservable
 
 	/**
 	 * Get the connection source ormlite will use (only for testing)
+	 * 
 	 * @return the connection source
 	 */
 	public JdbcConnectionSource getConnectionSource()
@@ -69,6 +70,7 @@ public class PlayerManager extends QualifiedObservable
 
 	/**
 	 * Get the player Data Access Object (only for testing
+	 * 
 	 * @return the DAO from ormlite
 	 */
 	public Dao<Player, Integer> getPlayerDao()
@@ -114,7 +116,8 @@ public class PlayerManager extends QualifiedObservable
 	 * @param pin
 	 *            the pin we gave the client to connect to this server
 	 * @return the player object that we added
-	 * @throws DatabaseException if the player's pin was not correct
+	 * @throws DatabaseException
+	 *             if the player's pin was not correct
 	 */
 	public Player addPlayer(int playerID, double pin) throws DatabaseException
 	{

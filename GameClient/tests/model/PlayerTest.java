@@ -25,7 +25,7 @@ public class PlayerTest
 		Player p = new Player(1);
 		assertEquals(1, p.getID());
 	}
-	
+
 	/**
 	 * Simple test for all setters and getters
 	 */
@@ -35,7 +35,7 @@ public class PlayerTest
 		Player p = new Player(1);
 		p.setName("name");
 		p.setAppearanceType("type");
-		
+
 		assertEquals("name", p.getName());
 		assertEquals("type", p.getAppearanceType());
 	}
@@ -48,10 +48,12 @@ public class PlayerTest
 	{
 		EqualsVerifier.forClass(Player.class).verify();
 	}
-	
+
 	/**
 	 * Sets the players position and checks it
-	 * @throws DatabaseException shouldn'ts
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn'ts
 	 */
 	@Test
 	public void testPlayerPosition() throws DatabaseException

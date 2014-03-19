@@ -40,7 +40,8 @@ public abstract class QualifiedObservable extends Observable
 	 * @param reportType
 	 *            the condition under which they want to be notified
 	 */
-	public void addObserver(Observer observer, Class<? extends QualifiedObservableReport> reportType)
+	public void addObserver(Observer observer,
+			Class<? extends QualifiedObservableReport> reportType)
 	{
 		if (!this.notifiesOn(reportType))
 		{

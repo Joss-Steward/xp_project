@@ -5,8 +5,9 @@ import model.QualifiedObservableReport;
 
 /**
  * Reports movement of any player playing on this server
+ * 
  * @author Merlin
- *
+ * 
  */
 public final class PlayerMovedReport implements QualifiedObservableReport
 {
@@ -14,10 +15,14 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 	private final Position newPosition;
 	private final int playerID;
 	private String playerName;
+
 	/**
-	 * @param playerID the ID of the player that moved
-	 * @param playerName the unique name of the player that moved
-	 * @param position the position he moved to
+	 * @param playerID
+	 *            the ID of the player that moved
+	 * @param playerName
+	 *            the unique name of the player that moved
+	 * @param position
+	 *            the position he moved to
 	 */
 	public PlayerMovedReport(int playerID, String playerName, Position position)
 	{
@@ -25,6 +30,7 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 		this.playerID = playerID;
 		this.playerName = playerName;
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -46,6 +52,7 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 			return false;
 		return true;
 	}
+
 	/**
 	 * @return the newPosition
 	 */
@@ -53,6 +60,7 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 	{
 		return newPosition;
 	}
+
 	/**
 	 * @return the playerID
 	 */
@@ -60,6 +68,7 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 	{
 		return playerID;
 	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -71,9 +80,10 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 		result = prime * result + ((newPosition == null) ? 0 : newPosition.hashCode());
 		return result;
 	}
-	
+
 	/**
 	 * Get the players unique name
+	 * 
 	 * @return the name
 	 */
 	public String getPlayerName()

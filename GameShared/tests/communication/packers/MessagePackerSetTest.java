@@ -41,8 +41,8 @@ public class MessagePackerSetTest
 
 	/**
 	 * Detects and registers all message packers in the same package the
-	 * MessagePackerSet is in.  In this case, it should detect the packers that
-	 * pack the two stub report types.  If can pack them, the packers must have
+	 * MessagePackerSet is in. In this case, it should detect the packers that
+	 * pack the two stub report types. If can pack them, the packers must have
 	 * been detected
 	 * 
 	 * @throws CommunicationException
@@ -60,7 +60,9 @@ public class MessagePackerSetTest
 
 	/**
 	 * Two of the stub packers listen to the same report
-	 * @throws CommunicationException shouldn't
+	 * 
+	 * @throws CommunicationException
+	 *             shouldn't
 	 */
 	@Test
 	public void canHaveTwo() throws CommunicationException
@@ -69,6 +71,7 @@ public class MessagePackerSetTest
 		ArrayList<Message> result = set.pack(new StubQualifiedObservableReport2());
 		assertEquals(2, result.size());
 	}
+
 	/**
 	 * If there isn't any handler for the type of message, an exception should
 	 * be thrown
@@ -81,7 +84,8 @@ public class MessagePackerSetTest
 	{
 		MessagePackerSet set = new MessagePackerSet();
 		Message msg = EasyMock.createMock(Message.class);
-		QualifiedObservableReport report = EasyMock.createMock(QualifiedObservableReport.class);
+		QualifiedObservableReport report = EasyMock
+				.createMock(QualifiedObservableReport.class);
 		EasyMock.replay(msg);
 
 		set.pack(report);

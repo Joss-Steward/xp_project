@@ -20,19 +20,21 @@ public class PlayerConnectedToAreaServerReport implements QualifiedObservableRep
 
 	/**
 	 * 
-	 * @param playerID 
-	 * 	          the id of the player
+	 * @param playerID
+	 *            the id of the player
 	 * @param playerName
 	 *            the name of the player
 	 * @param appearanceType
 	 *            the type of the player
-	 * @param position 
-	 * 			  the position of the player
-	 * @param isThisClientsPlayer 
-	 * 			  statement saying if the player connected was the one controlled by the client
+	 * @param position
+	 *            the position of the player
+	 * @param isThisClientsPlayer
+	 *            statement saying if the player connected was the one
+	 *            controlled by the client
 	 * @see view.PlayerType
 	 */
-	public PlayerConnectedToAreaServerReport(int playerID, String playerName, String appearanceType, Position position, boolean isThisClientsPlayer)
+	public PlayerConnectedToAreaServerReport(int playerID, String playerName,
+			String appearanceType, Position position, boolean isThisClientsPlayer)
 	{
 		this.playerID = playerID;
 		this.playerName = playerName;
@@ -62,7 +64,7 @@ public class PlayerConnectedToAreaServerReport implements QualifiedObservableRep
 	{
 		return appearanceType;
 	}
-	
+
 	/**
 	 * @return the player id
 	 */
@@ -70,7 +72,7 @@ public class PlayerConnectedToAreaServerReport implements QualifiedObservableRep
 	{
 		return playerID;
 	}
-	
+
 	/**
 	 * @return the player's position
 	 */
@@ -78,7 +80,7 @@ public class PlayerConnectedToAreaServerReport implements QualifiedObservableRep
 	{
 		return position;
 	}
-	
+
 	/**
 	 * @return if the player connected was the client's player
 	 */
@@ -86,7 +88,7 @@ public class PlayerConnectedToAreaServerReport implements QualifiedObservableRep
 	{
 		return isThisClientsPlayer;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -102,7 +104,8 @@ public class PlayerConnectedToAreaServerReport implements QualifiedObservableRep
 		PlayerConnectedToAreaServerReport other = (PlayerConnectedToAreaServerReport) obj;
 		boolean result = true;
 		result = result && this.getPlayerID() == other.getPlayerID();
-		result = result && this.getPlayerAppearanceType().equals(other.getPlayerAppearanceType());
+		result = result
+				&& this.getPlayerAppearanceType().equals(other.getPlayerAppearanceType());
 		result = result && this.getPlayerName().equals(other.getPlayerName());
 		result = result && this.getPlayerPosition().equals(other.getPlayerPosition());
 		result = result && this.isThisClientsPlayer() == other.isThisClientsPlayer();

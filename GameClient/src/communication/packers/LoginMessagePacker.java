@@ -24,8 +24,9 @@ public class LoginMessagePacker extends MessagePacker
 	{
 		if (object.getClass() != LoginInitiatedReport.class)
 		{
-			throw new IllegalArgumentException("LoginMessagePacker cannot pack messages of type "
-					+ object.getClass());
+			throw new IllegalArgumentException(
+					"LoginMessagePacker cannot pack messages of type "
+							+ object.getClass());
 		}
 		LoginInitiatedReport report = (LoginInitiatedReport) object;
 		Message msg = new LoginMessage(report.getPlayerName(), report.getPassword());

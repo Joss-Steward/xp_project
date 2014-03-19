@@ -1,4 +1,5 @@
 package runners;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -31,11 +32,11 @@ public class ClientRunner
 	 * @throws IOException
 	 *             shouldn't
 	 */
-	public static void main(String[] args) throws UnknownHostException,
-			IOException
+	public static void main(String[] args) throws UnknownHostException, IOException
 	{
 		Socket socket = new Socket("localhost", 1871);
-		ConnectionManager cm = new ConnectionManager(socket, new MessageHandlerSet(), new MessagePackerSet());
+		ConnectionManager cm = new ConnectionManager(socket, new MessageHandlerSet(),
+				new MessagePackerSet());
 		ModelFacade modelFacade = ModelFacade.getSingleton(true, false);
 
 		Scanner scanner = new Scanner(System.in);
@@ -47,24 +48,27 @@ public class ClientRunner
 			if (tokens[0].equalsIgnoreCase("move"))
 			{
 				String[] positionParts = tokens[1].split(",");
-				CommandMovePlayer command = new CommandMovePlayer(
-						PlayerManager.getSingleton().getThisClientsPlayer().getID(),
-						new Position(Integer.parseInt(positionParts[0]),
-								Integer.parseInt(positionParts[1])));
+				CommandMovePlayer command = new CommandMovePlayer(PlayerManager
+						.getSingleton().getThisClientsPlayer().getID(), new Position(
+						Integer.parseInt(positionParts[0]),
+						Integer.parseInt(positionParts[1])));
 				modelFacade.queueCommand(command);
-				System.out.println("player moved " + PlayerManager.getSingleton().getThisClientsPlayer().getID() + " to " + positionParts[0] + ", " + positionParts[1]);
+				System.out.println("player moved "
+						+ PlayerManager.getSingleton().getThisClientsPlayer().getID()
+						+ " to " + positionParts[0] + ", " + positionParts[1]);
 			} else if (tokens[0].equalsIgnoreCase("login"))
 			{
-				CommandLogin command = new CommandLogin(tokens[1],tokens[2]);
+				CommandLogin command = new CommandLogin(tokens[1], tokens[2]);
 				modelFacade.queueCommand(command);
 				System.out.println("player specified id " + tokens[1]);
-			} else 
+			} else
 			{
 				System.out.println("unrecognized command " + tokens[0]);
 			}
 			input = scanner.nextLine();
 			tokens = input.split(" ");
-		};
+		}
+		;
 		System.out.println("leaving");
 		scanner.close();
 		cm.disconnect();

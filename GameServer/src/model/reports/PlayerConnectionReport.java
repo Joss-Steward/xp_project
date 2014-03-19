@@ -22,7 +22,9 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 	/**
 	 * @param p
 	 *            the player who connected to this server
-	 * @throws DatabaseException only of something is badly broken at the database - the player should be there, so we should be able to retrieve this
+	 * @throws DatabaseException
+	 *             only of something is badly broken at the database - the
+	 *             player should be there, so we should be able to retrieve this
 	 */
 	public PlayerConnectionReport(Player p) throws DatabaseException
 	{
@@ -95,6 +97,7 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 
 	/**
 	 * Get this player's position on this area's map
+	 * 
 	 * @return the position
 	 */
 	public Position getPosition()

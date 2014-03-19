@@ -10,10 +10,11 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * The behaviors associated with the PINs that are given to players when the
- * are switching servers
+ * The behaviors associated with the PINs that are given to players when the are
+ * switching servers
+ * 
  * @author Merlin
- *
+ * 
  */
 public class PlayerPin
 {
@@ -30,6 +31,7 @@ public class PlayerPin
 	{
 		this.playerID = playerID;
 	}
+
 	/**
 	 * Generate the PIN this player should use for logging into his area server
 	 * and put it in the DB
@@ -44,6 +46,7 @@ public class PlayerPin
 		setPin(pin);
 		return pin;
 	}
+
 	private void setPin(double pin) throws DatabaseException
 	{
 		Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
@@ -66,7 +69,9 @@ public class PlayerPin
 
 	/**
 	 * Used only for testing!!!!! Used to set the timestamp on the player's PIN
-	 * @param newTime the time we want 
+	 * 
+	 * @param newTime
+	 *            the time we want
 	 * @throws DatabaseException
 	 */
 	protected void setChangedOn(String newTime) throws DatabaseException
@@ -76,10 +81,10 @@ public class PlayerPin
 		{
 			String sql;
 			PreparedStatement stmt;
-			
+
 			sql = "UPDATE PlayerPins SET changed_On=? WHERE PlayerID = ?";
 			stmt = connectionStatus.prepareStatement(sql);
-			stmt.setString(1,newTime);
+			stmt.setString(1, newTime);
 			stmt.setInt(2, playerID);
 			stmt.executeUpdate();
 		} catch (SQLException e)
@@ -87,6 +92,7 @@ public class PlayerPin
 			new DatabaseException("Unable to generate pin for player id # " + playerID, e);
 		}
 	}
+
 	protected void deletePlayerPin() throws DatabaseException
 	{
 		Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
@@ -100,9 +106,10 @@ public class PlayerPin
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Unable to delete the pin for player id # " + playerID, e);
+			throw new DatabaseException("Unable to delete the pin for player id # "
+					+ playerID, e);
 		}
-		
+
 	}
 
 	/**
@@ -128,9 +135,9 @@ public class PlayerPin
 				String timeString = resultSet.getString(1);
 				changedOn = parseTimeString(timeString);
 				changedOn.add(EXPIRATION_TIME_UNITS, EXPIRATION_TIME_QUANTITY);
-			} 
+			}
 			resultSet.close();
-		
+
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
@@ -151,20 +158,24 @@ public class PlayerPin
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Generates the default PIN for testing purposes only!
-	 * @throws DatabaseException shouldn't
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	public void generateTestPin() throws DatabaseException
 	{
 		this.setPin(DEFAULT_PIN);
 	}
-	
+
 	/**
 	 * Retrieve the PIN from the database
+	 * 
 	 * @return the pin we read
-	 * @throws DatabaseException shouldn't
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	public double retrievePin() throws DatabaseException
 	{
@@ -181,14 +192,14 @@ public class PlayerPin
 				pin = resultSet.getDouble(1);
 			} else
 			{
-				throw new DatabaseException("No pin for player id "+ playerID);
+				throw new DatabaseException("No pin for player id " + playerID);
 			}
 			resultSet.close();
 			return pin;
-		
+
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Error retrieving Pin for user #" + playerID,e);
+			throw new DatabaseException("Error retrieving Pin for user #" + playerID, e);
 		}
 	}
 }

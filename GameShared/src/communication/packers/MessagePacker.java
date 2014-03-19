@@ -41,7 +41,8 @@ public abstract class MessagePacker
 	}
 
 	/**
-	 * @param obs the StateAccumulator we should be associated with
+	 * @param obs
+	 *            the StateAccumulator we should be associated with
 	 */
 	public void setAccumulator(StateAccumulator obs)
 	{

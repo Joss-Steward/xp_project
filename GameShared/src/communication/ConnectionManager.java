@@ -31,7 +31,6 @@ public class ConnectionManager
 	StateAccumulator stateAccumulator;
 	private int playerID;
 
-
 	/**
 	 * Create everything necessary for building messages to send to the other
 	 * side and handling messages that come from the other side.
@@ -63,7 +62,6 @@ public class ConnectionManager
 		stateAccumulator = outgoing.getStateAccumulator();
 		messageHandlerSet.setConnectionManager(this);
 
-		
 		incoming = new ConnectionIncoming(sock, messageHandlerSet);
 		incomingThread = new Thread(incoming);
 		// for simplictly
@@ -73,7 +71,7 @@ public class ConnectionManager
 	}
 
 	/**
-	 * For testing purposes only 
+	 * For testing purposes only
 	 */
 	public ConnectionManager()
 	{

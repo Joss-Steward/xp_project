@@ -7,7 +7,7 @@ import org.junit.Test;
 
 /**
  * @author Merlin
- *
+ * 
  */
 public class CommandLoginTest
 {
@@ -20,17 +20,17 @@ public class CommandLoginTest
 	{
 		PlayerManager.resetSingleton();
 	}
-	
+
 	/**
 	 * We just need to tell the player to initiate this
 	 */
 	@Test
 	public void shouldTellPlayer()
 	{
-		CommandLogin cmd = new CommandLogin("Fred","pw");
+		CommandLogin cmd = new CommandLogin("Fred", "pw");
 		cmd.execute();
 		PlayerManager p = PlayerManager.getSingleton();
 		assertTrue(p.isLoginInProgress());
-		
+
 	}
 }

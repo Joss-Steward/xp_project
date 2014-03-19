@@ -6,8 +6,9 @@ import data.Position;
 
 /**
  * Sent to all clients when a new player connects to an area server
+ * 
  * @author Merlin
- *
+ * 
  */
 public class PlayerJoinedMessage implements Message, Serializable
 {
@@ -22,12 +23,17 @@ public class PlayerJoinedMessage implements Message, Serializable
 	private Position position;
 
 	/**
-	 * @param playerID the unique ID of the player
-	 * @param playerName the name of the new player
-	 * @param position where this player is on the map on this server
-	 * @param appearanceType the way the player should be drawn on the screen
+	 * @param playerID
+	 *            the unique ID of the player
+	 * @param playerName
+	 *            the name of the new player
+	 * @param position
+	 *            where this player is on the map on this server
+	 * @param appearanceType
+	 *            the way the player should be drawn on the screen
 	 */
-	public PlayerJoinedMessage(int playerID, String playerName, String appearanceType, Position position)
+	public PlayerJoinedMessage(int playerID, String playerName, String appearanceType,
+			Position position)
 	{
 		this.playerID = playerID;
 		this.playerName = playerName;
@@ -37,6 +43,7 @@ public class PlayerJoinedMessage implements Message, Serializable
 
 	/**
 	 * get this player's unique ID
+	 * 
 	 * @return the player's ID
 	 */
 	public int getPlayerID()
@@ -63,6 +70,7 @@ public class PlayerJoinedMessage implements Message, Serializable
 
 	/**
 	 * Get the appearance type that shows how this player wants to be displayed
+	 * 
 	 * @return the appearance type
 	 */
 	public String getAppearanceType()
@@ -72,6 +80,7 @@ public class PlayerJoinedMessage implements Message, Serializable
 
 	/**
 	 * Get the position this player is in
+	 * 
 	 * @return the position
 	 */
 	public Position getPosition()

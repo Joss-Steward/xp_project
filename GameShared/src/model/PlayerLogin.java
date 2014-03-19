@@ -13,7 +13,6 @@ import java.sql.SQLException;
 public class PlayerLogin
 {
 
-	
 	private Connection connection;
 	private int playerID;
 
@@ -56,8 +55,5 @@ public class PlayerLogin
 	{
 		return playerID;
 	}
-
-	
-
 
 }

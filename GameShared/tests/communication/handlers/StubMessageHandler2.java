@@ -4,17 +4,18 @@ import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.StubMessage2;
 
-
 /**
  * empty handler for testing purposes
+ * 
  * @author merlin
- *
+ * 
  */
 public class StubMessageHandler2 extends MessageHandler
 {
 
 	/**
 	 * We don't have to do anything
+	 * 
 	 * @see communication.handlers.MessageHandler#process(communication.messages.Message)
 	 */
 	@Override

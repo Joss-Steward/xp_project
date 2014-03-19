@@ -15,7 +15,7 @@ import org.junit.Test;
 
 /**
  * @author Merlin
- *
+ * 
  */
 public class CommandNewMapTest
 {
@@ -29,7 +29,7 @@ public class CommandNewMapTest
 		ModelFacade.resetSingleton();
 		ModelFacade.getSingleton(true, true);
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -41,20 +41,22 @@ public class CommandNewMapTest
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				NewMapReport.class);
 		EasyMock.replay(obs);
-		
-		//setup the player
+
+		// setup the player
 		PlayerManager pm = PlayerManager.getSingleton();
 		pm.initiateLogin("john", "pw");
-		try {
+		try
+		{
 			pm.setThisClientsPlayer(1);
-		} catch (AlreadyBoundException | NotBoundException e) {
+		} catch (AlreadyBoundException | NotBoundException e)
+		{
 			e.printStackTrace();
 			fail("Could not create this client's player from login");
 		}
-		
+
 		CommandNewMap cmd = new CommandNewMap("testMaps/simple.tmx");
 		cmd.execute();
-		
+
 		EasyMock.verify(obs);
 	}
 }

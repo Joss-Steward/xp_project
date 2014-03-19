@@ -169,25 +169,29 @@ public class PlayerPinTest extends DatabaseTest
 		assertEquals(expected.get(Calendar.SECOND), actual.get(Calendar.SECOND));
 
 	}
-	
+
 	/**
 	 * Make sure that if we set the pin, we can retrieve it
-	 * @throws DatabaseException shouldn't
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
-	public void canRetrievePin() throws DatabaseException 
+	public void canRetrievePin() throws DatabaseException
 	{
 		PlayerPin playerPin = new PlayerPin(2);
 		double pin = playerPin.generatePin();
-		assertEquals(pin, playerPin.retrievePin(),0.000001);
+		assertEquals(pin, playerPin.retrievePin(), 0.000001);
 	}
-	
+
 	/**
 	 * Make sure that if there is no pin, we retrieve a pin of zero
-	 * @throws DatabaseException should
+	 * 
+	 * @throws DatabaseException
+	 *             should
 	 */
 	@Test(expected = DatabaseException.class)
-	public void cannotRetrieveMissingPin() throws DatabaseException 
+	public void cannotRetrieveMissingPin() throws DatabaseException
 	{
 		PlayerPin playerPin = new PlayerPin(2);
 		playerPin.deletePlayerPin();

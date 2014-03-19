@@ -29,11 +29,12 @@ public class NewMapReportTest
 	}
 
 	/**
-	 * Make sure the equals contract is obeyed.  In this case, we had to do some magic to
-	 * suppress some troubles in the TiledMap object we are transporting.  In particular, its structure
-	 * is recursive (twice), so we had to use .withPrefabValues to stop the recursion and it contains
-	 * mutable fields so we had to suppress that warning.  These things shouldn't cause problems in
-	 * this environment
+	 * Make sure the equals contract is obeyed. In this case, we had to do some
+	 * magic to suppress some troubles in the TiledMap object we are
+	 * transporting. In particular, its structure is recursive (twice), so we
+	 * had to use .withPrefabValues to stop the recursion and it contains
+	 * mutable fields so we had to suppress that warning. These things shouldn't
+	 * cause problems in this environment
 	 */
 	@Test
 	public void equalsContract()
@@ -45,7 +46,6 @@ public class NewMapReportTest
 		EqualsVerifier.forClass(NewMapReport.class)
 				.withPrefabValues(Array.class, array1, new Array<Integer>())
 				.withPrefabValues(MapProperties.class, p1, new MapProperties())
-				.suppress(Warning.NONFINAL_FIELDS)
-				.verify();
+				.suppress(Warning.NONFINAL_FIELDS).verify();
 	}
 }

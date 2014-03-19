@@ -11,13 +11,15 @@ import com.badlogic.gdx.maps.MapProperties;
 /**
  * @author Joshua Tests the QuestObjectReader
  */
-public class QuestLayerObjectReaderTest {
+public class QuestLayerObjectReaderTest
+{
 
 	/**
 	 * Tests creating a QuestLayerObjectReader
 	 */
 	@Test
-	public void testInitialization() {
+	public void testInitialization()
+	{
 		QuestPropertiesObjectReader qor = new QuestPropertiesObjectReader();
 		assertNotNull(qor);
 
@@ -27,7 +29,8 @@ public class QuestLayerObjectReaderTest {
 	 * Tests all defaults of newly created QuestLayerObjectReader
 	 */
 	@Test
-	public void testNullProperties() {
+	public void testNullProperties()
+	{
 		// trigger properties
 
 		MapProperties properties = null;
@@ -41,7 +44,8 @@ public class QuestLayerObjectReaderTest {
 	 * Tests putting in triggers into map properties
 	 */
 	@Test
-	public void testFillingInTriggerProperties() {
+	public void testFillingInTriggerProperties()
+	{
 		MapProperties properties = new MapProperties();
 
 		MapObject bob = new MapObject();

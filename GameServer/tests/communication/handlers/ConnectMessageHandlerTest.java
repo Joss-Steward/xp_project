@@ -28,21 +28,24 @@ public class ConnectMessageHandlerTest
 		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
 	}
-	
+
 	/**
 	 * The incoming message should cause creation of the player in the model and
 	 * notification of the player's playerID to the state accumulator
-	 * @throws InterruptedException Shouldn't
+	 * 
+	 * @throws InterruptedException
+	 *             Shouldn't
 	 */
 	@Test
-	public void tellsStateAccumulatorIfPlayerIDPinIsRecognized() throws InterruptedException
+	public void tellsStateAccumulatorIfPlayerIDPinIsRecognized()
+			throws InterruptedException
 	{
 		ConnectMessageHandler handler = new ConnectMessageHandler();
 		ConnectionManager connectionManager = new ConnectionManager();
 		handler.setConnectionManager(connectionManager);
 		ConnectMessage msg = new ConnectMessage(1, PlayerPin.DEFAULT_PIN);
 		handler.process(msg);
-		while(ModelFacade.getSingleton().queueSize() > 0) 
+		while (ModelFacade.getSingleton().queueSize() > 0)
 		{
 			Thread.sleep(100);
 		}
@@ -52,7 +55,9 @@ public class ConnectMessageHandlerTest
 	/**
 	 * The incoming message should cause creation of the player in the model and
 	 * notification of the player's player ID to the state accumulator
-	 * @throws InterruptedException Shouldn't
+	 * 
+	 * @throws InterruptedException
+	 *             Shouldn't
 	 */
 	@Test
 	public void tellsModel() throws InterruptedException
@@ -60,7 +65,7 @@ public class ConnectMessageHandlerTest
 		ConnectMessageHandler handler = new ConnectMessageHandler();
 		ConnectMessage msg = new ConnectMessage(1, PlayerPin.DEFAULT_PIN);
 		handler.process(msg);
-		while(ModelFacade.getSingleton().queueSize() > 0) 
+		while (ModelFacade.getSingleton().queueSize() > 0)
 		{
 			Thread.sleep(100);
 		}

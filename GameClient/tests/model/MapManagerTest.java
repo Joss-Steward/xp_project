@@ -30,7 +30,7 @@ public class MapManagerTest extends QualifiedObservableTestInherited
 	{
 		QualifiedObservableConnector.resetSingleton();
 		ModelFacade.resetSingleton();
-		ModelFacade.getSingleton(true,false);
+		ModelFacade.getSingleton(true, false);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class MapManagerTest extends QualifiedObservableTestInherited
 		MapManager.resetSingleton();
 		assertNotSame(facade1, MapManager.getSingleton());
 	}
-	
+
 	/**
 	 * Should update observers of NewMapReport when it gets a new map
 	 */
@@ -59,7 +59,7 @@ public class MapManagerTest extends QualifiedObservableTestInherited
 		EasyMock.replay(obs);
 
 		MapManager map = MapManager.getSingleton();
-		
+
 		map.changeToNewFile("testmaps/simple.tmx");
 		EasyMock.verify(obs);
 	}
@@ -88,22 +88,25 @@ public class MapManagerTest extends QualifiedObservableTestInherited
 		EasyMock.verify(mapLayers);
 		EasyMock.verify(mapLayer);
 	}
-	
+
 	/**
-	 * Make sure that the passabilityMap, once created, can be properly processed
+	 * Make sure that the passabilityMap, once created, can be properly
+	 * processed
 	 */
 	@Test
 	public void canCheckCollision()
 	{
 		MapManager map = MapManager.getSingleton();
-		
-		boolean[][] passMap = {{false, false, true, false},
-							   {false, true, true, false},
-							   {false, true, false, false},
-							   {true, true, false, false}};
-		
+
+		boolean[][] passMap =
+		{
+		{ false, false, true, false },
+		{ false, true, true, false },
+		{ false, true, false, false },
+		{ true, true, false, false } };
+
 		map.setPassability(passMap);
-		
+
 		assertFalse(map.getIsTilePassable(new Position(0, 0)));
 		assertFalse(map.getIsTilePassable(new Position(0, 1)));
 		assertTrue(map.getIsTilePassable(new Position(0, 2)));

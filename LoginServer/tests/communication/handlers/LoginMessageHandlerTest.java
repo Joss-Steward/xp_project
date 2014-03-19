@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import communication.messages.LoginMessage;
 
-
 /**
  * @author Merlin
  * 
@@ -25,7 +24,7 @@ public class LoginMessageHandlerTest
 	{
 		PlayerManager.resetSingleton();
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -33,7 +32,8 @@ public class LoginMessageHandlerTest
 	public void tellsTheModel()
 	{
 		LoginMessageHandler handler = new LoginMessageHandler();
-		handler.process(new LoginMessage(PlayerLoginTest.Players.MERLIN.getName(),PlayerLoginTest.Players.MERLIN.getPassword()));
+		handler.process(new LoginMessage(PlayerLoginTest.Players.MERLIN.getName(),
+				PlayerLoginTest.Players.MERLIN.getPassword()));
 		assertEquals(1, PlayerManager.getSingleton().getNumberOfPlayers());
 	}
 }

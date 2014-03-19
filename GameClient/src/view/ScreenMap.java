@@ -40,7 +40,7 @@ public class ScreenMap extends ScreenBasic
 	public ScreenMap()
 	{
 		stage = new Stage();
-		//unitScale = 1 / 32f;
+		// unitScale = 1 / 32f;
 		unitScale = .5f;
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -81,9 +81,10 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void render(float delta)
 	{
-		// TODO once movement is working, uncomment these so the camera follows the player
-		//camera.position.x = this.mySprite.getX();
-		//camera.position.y = this.mySprite.getY();
+		// TODO once movement is working, uncomment these so the camera follows
+		// the player
+		// camera.position.x = this.mySprite.getX();
+		// camera.position.y = this.mySprite.getY();
 		camera.update();
 		stage.act();
 		stage.draw();
@@ -98,7 +99,8 @@ public class ScreenMap extends ScreenBasic
 			mapRenderer.render();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
-			for (PlayerSprite s : this.characters.values()) {
+			for (PlayerSprite s : this.characters.values())
+			{
 				s.update(delta);
 				s.draw(batch);
 			}
@@ -150,38 +152,46 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void show()
 	{
-		playerFactory = new PlayerSpriteFactory(Gdx.files.internal("data/characters.pack"));
+		playerFactory = new PlayerSpriteFactory(
+				Gdx.files.internal("data/characters.pack"));
 		Gdx.input.setInputProcessor(input);
 	}
 
 	/**
-	 * Adds a new renderable instance of a player, identified by their name, to the map
-	 * @param playerID 
-	 * 			the unique identifier of the player being added
+	 * Adds a new renderable instance of a player, identified by their name, to
+	 * the map
+	 * 
+	 * @param playerID
+	 *            the unique identifier of the player being added
 	 * @param type
-	 * 			sprite type visible to others
+	 *            sprite type visible to others
 	 * @param pos
-	 * 			location to spawn the player
+	 *            location to spawn the player
 	 * @param isThisClientsPlayer
-	 * 			if the player to spawn is controlled by this client
+	 *            if the player to spawn is controlled by this client
 	 */
-	public void addPlayer(int playerID, PlayerType type, Position pos, boolean isThisClientsPlayer) {
+	public void addPlayer(int playerID, PlayerType type, Position pos,
+			boolean isThisClientsPlayer)
+	{
 		PlayerSprite sprite = playerFactory.create(type);
 		Vector2 loc = positionToScale(pos);
 		sprite.setPosition(loc.x, loc.y);
 		characters.put(playerID, sprite);
-		//detect when the player being added is the client's player for finer control
-		if (isThisClientsPlayer) {
+		// detect when the player being added is the client's player for finer
+		// control
+		if (isThisClientsPlayer)
+		{
 			mySprite = sprite;
 		}
 	}
-	
+
 	/**
 	 * Moves a player on the map using the map's unit scaling
+	 * 
 	 * @param id
-	 * 			unique player identifier
+	 *            unique player identifier
 	 * @param pos
-	 * 			position to move to 
+	 *            position to move to
 	 */
 	public void movePlayer(int id, Position pos)
 	{
@@ -189,11 +199,12 @@ public class ScreenMap extends ScreenBasic
 		Vector2 loc = positionToScale(pos);
 		sprite.move(loc.x, loc.y);
 	}
-	
+
 	/**
 	 * Scales a position to the proper pixel ratio of the map
+	 * 
 	 * @param pos
-	 * 			Position to scale into the proper ratio
+	 *            Position to scale into the proper ratio
 	 * @return the scaled position as a Vector
 	 */
 	private Vector2 positionToScale(Position pos)

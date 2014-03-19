@@ -9,10 +9,12 @@ public class CommandMovePlayer extends Command
 {
 	private int thePlayerID;
 	private Position thePosition;
-	
+
 	/**
-	 * @param playerID is the name of the player
-	 * @param position is the position of the player
+	 * @param playerID
+	 *            is the name of the player
+	 * @param position
+	 *            is the position of the player
 	 */
 	public CommandMovePlayer(int playerID, Position position)
 	{
@@ -24,16 +26,16 @@ public class CommandMovePlayer extends Command
 	 * Moves a certain Player into the designated position if move is legal.
 	 */
 	@Override
-	protected boolean execute() 
+	protected boolean execute()
 	{
 		boolean moved = false;
-		
-		if(MapManager.getSingleton().getIsTilePassable(thePosition))
+
+		if (MapManager.getSingleton().getIsTilePassable(thePosition))
 		{
 			PlayerManager.getSingleton().getPlayerFromID(thePlayerID).move(thePosition);
 			moved = true;
 		}
-		
+
 		return moved;
 	}
 }

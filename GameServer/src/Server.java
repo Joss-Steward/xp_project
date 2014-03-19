@@ -5,6 +5,7 @@ import java.net.Socket;
 import communication.ConnectionManager;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
+
 /**
  * A daemon that resides on the server listening to the gigabuds and to client
  * requests
@@ -31,7 +32,8 @@ public class Server implements Runnable
 				Socket sock = servSock.accept();
 				System.out.println(i + ":  got something from " + sock);
 				i++;
-				new ConnectionManager(sock, new MessageHandlerSet(), new MessagePackerSet());
+				new ConnectionManager(sock, new MessageHandlerSet(),
+						new MessagePackerSet());
 			}
 
 		} catch (Throwable e)

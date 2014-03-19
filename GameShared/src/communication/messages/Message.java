@@ -43,14 +43,15 @@ package communication.messages;
  * <br>
  * 
  * <pre>
- * 	public void testToString()
- * 	{
- * 		LoginMessage msg = new LoginMessage("fred","xxx");
- * 		assertEquals("Login Message: playerName = fred and password = xxx", msg.toString());
- * 		assertEquals("fred", msg.getPlayerName());
- * 		assertEquals("xxx", msg.getPassword());
- * 	}
+ * public void testToString()
+ * {
+ * 	LoginMessage msg = new LoginMessage(&quot;fred&quot;, &quot;xxx&quot;);
+ * 	assertEquals(&quot;Login Message: playerName = fred and password = xxx&quot;, msg.toString());
+ * 	assertEquals(&quot;fred&quot;, msg.getPlayerName());
+ * 	assertEquals(&quot;xxx&quot;, msg.getPassword());
+ * }
  * </pre>
+ * 
  * @author merlin
  * 
  */

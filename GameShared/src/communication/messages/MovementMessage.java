@@ -4,12 +4,11 @@ import java.io.Serializable;
 
 import data.Position;
 
-
-
 /**
  * Encodes the fact that a player has moved to a given location
+ * 
  * @author merlin
- *
+ * 
  */
 public class MovementMessage implements Message, Serializable
 {
@@ -19,11 +18,13 @@ public class MovementMessage implements Message, Serializable
 	private static final long serialVersionUID = 1L;
 	private final int playerID;
 	private final Position position;
-	
+
 	/**
 	 * 
-	 * @param playerID The player who moved
-	 * @param p Where the player moved to
+	 * @param playerID
+	 *            The player who moved
+	 * @param p
+	 *            Where the player moved to
 	 */
 	public MovementMessage(int playerID, Position p)
 	{
@@ -38,7 +39,6 @@ public class MovementMessage implements Message, Serializable
 	{
 		return playerID;
 	}
-
 
 	/**
 	 * 
@@ -68,7 +68,7 @@ public class MovementMessage implements Message, Serializable
 		if (!(obj instanceof MovementMessage))
 			return false;
 		MovementMessage other = (MovementMessage) obj;
-		if(playerID != other.playerID)
+		if (playerID != other.playerID)
 		{
 			return false;
 		}
@@ -88,14 +88,14 @@ public class MovementMessage implements Message, Serializable
 	{
 		return position;
 	}
-	
+
 	/**
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString()
 	{
-		return "Movement Message: playerID = " + playerID  + ", position = " + position;
+		return "Movement Message: playerID = " + playerID + ", position = " + position;
 	}
 
 }

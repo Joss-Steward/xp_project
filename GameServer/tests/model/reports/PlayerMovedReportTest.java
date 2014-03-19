@@ -7,10 +7,9 @@ import org.junit.Test;
 
 import data.Position;
 
-
 /**
  * @author Merlin
- *
+ * 
  */
 public class PlayerMovedReportTest
 {
@@ -21,9 +20,9 @@ public class PlayerMovedReportTest
 	@Test
 	public void creation()
 	{
-		PlayerMovedReport report = new PlayerMovedReport(33, "fred", new Position(3,4));
+		PlayerMovedReport report = new PlayerMovedReport(33, "fred", new Position(3, 4));
 		assertEquals(33, report.getPlayerID());
-		assertEquals(new Position(3,4), report.getNewPosition());
+		assertEquals(new Position(3, 4), report.getNewPosition());
 	}
 
 	/**

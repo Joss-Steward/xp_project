@@ -2,7 +2,6 @@ package model.reports;
 
 import model.QualifiedObservableReport;
 
-
 /**
  * @author Joshua Tells the model to change the screen to quests
  */
@@ -44,4 +43,3 @@ public class QuestScreenReport implements QualifiedObservableReport
 	}
 
 }
-

@@ -1,25 +1,29 @@
 package data;
+
 import java.io.Serializable;
 
 /**
  * Just holds a row/column position
+ * 
  * @author merlin
- *
+ * 
  */
 public class Position implements Serializable
 {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private final int row;
 	private final int column;
-	
+
 	/**
 	 * 
-	 * @param r the row
-	 * @param c the column
+	 * @param r
+	 *            the row
+	 * @param c
+	 *            the column
 	 */
 	public Position(int r, int c)
 	{
@@ -79,7 +83,7 @@ public class Position implements Serializable
 			return false;
 		return true;
 	}
-	
+
 	/**
 	 * 
 	 * @see java.lang.Object#toString()
