@@ -2,6 +2,7 @@ import java.sql.SQLException;
 
 import model.DatabaseException;
 import model.Player;
+import model.PlayerLogin;
 import model.PlayerManager;
 import model.PlayersInDB;
 
@@ -37,22 +38,23 @@ public class BuildTestDBPlayers
 		createPlayerTable();
 	}
 
-	private static void createPlayerTable() throws SQLException
+	private static void createPlayerTable() throws SQLException, DatabaseException
 	{
 
 		PlayerManager pm = PlayerManager.getSingleton();
 		connectionSource = pm.getConnectionSource();
 		playerDAO = pm.getPlayerDao();
+		TableUtils.dropTable(connectionSource, Player.class, true);
 		TableUtils.createTableIfNotExists(connectionSource, Player.class);
 
 		for (PlayersInDB p : PlayersInDB.values())
 		{
 			Position pos = p.getPosition();
 			Player player = new Player();
+			PlayerLogin pl = PlayerLogin.readPlayerLogin(p.getPlayerName());
+			player.setPlayerLogin(pl);
 			player.setPlayerPosition(pos);
-			player.setPlayerName(p.getPlayerName());
 			player.setAppearanceType(p.getAppearanceType());
-			player.setPlayerID(p.getPlayerID());
 			playerDAO.create(player);
 		}
 

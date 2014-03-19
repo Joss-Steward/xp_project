@@ -22,11 +22,11 @@ import data.Position;
 public class Player extends QualifiedObservable
 {
 
-	@DatabaseField(id = true)
+	@DatabaseField(generatedId = true)
 	private int playerID;
 	
-	@DatabaseField
-	private String playerName;
+	@DatabaseField(foreign = true)
+	private PlayerLogin playerLogin;
 	
 	@DatabaseField
 	private String appearanceType;
@@ -93,7 +93,7 @@ public class Player extends QualifiedObservable
 	 */
 	public String getPlayerName()
 	{
-		return playerName;
+		return playerLogin.getPlayerName();
 	}
 
 	/**
@@ -127,29 +127,6 @@ public class Player extends QualifiedObservable
 	}
 
 	/**
-	 * set this player's unique ID (should only be done when creating an
-	 * entirely new player
-	 * 
-	 * @param playerID
-	 *            this player's ID
-	 */
-	public void setPlayerID(int playerID)
-	{
-		this.playerID = playerID;
-	}
-
-	/**
-	 * set this player's name
-	 * 
-	 * @param playerName
-	 *            the player's name
-	 */
-	public void setPlayerName(String playerName)
-	{
-		this.playerName = playerName;
-	}
-
-	/**
 	 * Set the player's position
 	 * 
 	 * @param playerPosition
@@ -159,8 +136,13 @@ public class Player extends QualifiedObservable
 	public void setPlayerPosition(Position playerPosition)
 	{
 		this.playerPosition = playerPosition;
-		PlayerMovedReport report = new PlayerMovedReport(this.playerID, this.playerName,
+		PlayerMovedReport report = new PlayerMovedReport(this.playerID, this.playerLogin.getPlayerName(),
 				playerPosition);
 		this.notifyObservers(report);
+	}
+
+	public void setPlayerLogin(PlayerLogin pl)
+	{
+		this.playerLogin = pl;
 	}
 }

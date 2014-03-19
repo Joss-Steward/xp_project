@@ -30,8 +30,11 @@ public class PlayerLogin
 
 	/**
 	 * Create a new record in the database
-	 * @param name the player's name
-	 * @param password the player's password
+	 * 
+	 * @param name
+	 *            the player's name
+	 * @param password
+	 *            the player's password
 	 */
 	public static void createNewPlayerLogin(String name, String password)
 	{
@@ -102,6 +105,37 @@ public class PlayerLogin
 		}
 
 		throw new DatabaseException("incorrect password");
+	}
+
+	public static PlayerLogin readPlayerLogin(String name) throws DatabaseException
+	{
+		try
+		{
+			setUpORMLite();
+
+			List<PlayerLogin> list;
+
+			list = playerLoginDao.queryBuilder().where()
+					.eq(PlayerLogin.PLAYERNAME_FIELD_NAME, name).query();
+			if (list.size() == 1)
+			{
+				return list.get(0);
+			} else if (list.size() == 0)
+			{
+				throw new DatabaseException("no login information for " + name);
+			} else
+			{
+				throw new DatabaseException("more than one login record for " + name);
+			}
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Error retrieving login information for " + name);
+		}
+	}
+
+	public String getPlayerName()
+	{
+		return playerName;
 	}
 
 	/**
