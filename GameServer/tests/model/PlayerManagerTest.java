@@ -23,8 +23,12 @@ public class PlayerManagerTest
 	@Before
 	public void setUp()
 	{
+//		QualifiedObservableConnector.resetSingleton();
 		PlayerManager.resetSingleton();
-		QualifiedObservableConnector.resetSingleton();
+		PlayerManager playerManager = PlayerManager.getSingleton();
+		assertEquals(0,playerManager.countObservers());
+		assertEquals(0,playerManager.countObservers(PlayerConnectionReport.class));
+
 	}
 
 	/**
@@ -46,7 +50,7 @@ public class PlayerManagerTest
 	@Test
 	public void canAddPlayer()
 	{
-		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
+		PlayerManager.getSingleton().addPlayer(1);
 		assertEquals(1, PlayerManager.getSingleton().numberOfPlayers());
 		Player p = PlayerManager.getSingleton().getPlayerFromID(1);
 		assertEquals(1, p.getPlayerID());
@@ -58,6 +62,7 @@ public class PlayerManagerTest
 	@Test
 	public void notifiesOnAddPlayer()
 	{
+		System.out.println("starting . . . . .");
 		Observer obs = EasyMock.createMock(Observer.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				PlayerConnectionReport.class);
@@ -65,7 +70,8 @@ public class PlayerManagerTest
 				EasyMock.isA(PlayerConnectionReport.class));
 		EasyMock.replay(obs);
 
-		PlayerManager.getSingleton().addPlayer(2, PlayerPin.DEFAULT_PIN);
+		assertEquals(1, PlayerManager.getSingleton().countObservers(PlayerConnectionReport.class));
+		PlayerManager.getSingleton().addPlayer(2);
 		EasyMock.verify(obs);
 	}
 
@@ -78,7 +84,7 @@ public class PlayerManagerTest
 	@Test
 	public void canGetPlayerIDFromPlayerNameOnlyOne() throws PlayerNotFoundException
 	{
-		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
+		PlayerManager.getSingleton().addPlayer(1);
 		assertEquals(1, PlayerManager.getSingleton().getPlayerIDFromPlayerName("John"));
 	}
 
@@ -91,8 +97,8 @@ public class PlayerManagerTest
 	@Test
 	public void canGetPlayerIDFromPlayerName() throws PlayerNotFoundException
 	{
-		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
-		PlayerManager.getSingleton().addPlayer(2, PlayerPin.DEFAULT_PIN);
+		PlayerManager.getSingleton().addPlayer(1);
+		PlayerManager.getSingleton().addPlayer(2);
 		assertEquals(2, PlayerManager.getSingleton().getPlayerIDFromPlayerName("Merlin"));
 	}
 

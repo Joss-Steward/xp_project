@@ -3,10 +3,12 @@ package model.reports;
 import static org.junit.Assert.*;
 import model.DatabaseException;
 import model.Player;
+import model.PlayerManager;
 import model.PlayerPin;
 import model.PlayersInDB;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -16,6 +18,11 @@ import org.junit.Test;
 public class PlayerConnectionReportTest
 {
 
+	@Before
+	public void setUp()
+	{
+		PlayerManager.resetSingleton();
+	}
 	/**
 	 * make sure it gets built correctly
 	 * 
@@ -25,8 +32,7 @@ public class PlayerConnectionReportTest
 	@Test
 	public void creation() throws DatabaseException
 	{
-		Player john = new Player(1,
-				PlayerPin.DEFAULT_PIN);
+		Player john = PlayerManager.getSingleton().addPlayer(1);
 		PlayerConnectionReport report = new PlayerConnectionReport(john);
 		assertEquals(1, report.getPlayerID());
 		assertEquals(PlayersInDB.JOHN.getPlayerName(), report.getPlayerName());

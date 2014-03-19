@@ -24,7 +24,7 @@ public class MapManager extends QualifiedObservable
 	private boolean[][] passabilityMap;
 	private boolean headless;
 	private boolean noCollisionLayer;
-	
+
 	private static final String COLLISION_LAYER = "Collision";
 
 	/**
@@ -66,8 +66,7 @@ public class MapManager extends QualifiedObservable
 		if (!headless)
 		{
 			setMap(new TmxMapLoader().load(fileTitle));
-		}
-		else
+		} else
 		{
 			this.noCollisionLayer = true;
 		}
@@ -107,40 +106,41 @@ public class MapManager extends QualifiedObservable
 	public void setMap(TiledMap tiledMap)
 	{
 		this.tiledMap = tiledMap;
-		
-		
-		//set the map's passability
+
+		// set the map's passability
 		TiledMapTileLayer collisionLayer = null;
 		if (!headless)
 		{
-			collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get(COLLISION_LAYER);	
+			collisionLayer = (TiledMapTileLayer) tiledMap.getLayers()
+					.get(COLLISION_LAYER);
 		}
 
 		if (collisionLayer != null)
 		{
-			this.passabilityMap = new boolean[collisionLayer.getHeight()][collisionLayer.getWidth()];
-			
-			for (int col = 0; col < collisionLayer.getWidth(); col++)
+			this.passabilityMap = new boolean[collisionLayer.getHeight()][collisionLayer
+					.getWidth()];
+
+			for (int row = 0; row < collisionLayer.getHeight(); row++)
 			{
-				for (int row = 0; row < collisionLayer.getHeight(); row++)
+				for (int col = 0; col < collisionLayer.getWidth(); col++)
 				{
-					try 
+
+					Cell cell = collisionLayer.getCell(col, row);
+					if (cell == null)
 					{
-						Cell cell = collisionLayer.getCell(col, row);
-						TiledMapTile tile = cell.getTile();
-						int id = tile.getId();
-						this.passabilityMap[row][col] = id != 0;
-					}
-					// Null pointers appear when a tile is not drawn in the map
-					// at a specified location
-					catch (NullPointerException e)
+						passabilityMap[collisionLayer.getHeight()-row-1][col] = true;
+						System.out.print("t");
+					} else
 					{
-						this.passabilityMap[row][col] = true;
+						this.passabilityMap[collisionLayer.getHeight()-row-1][col] = false;
+						System.out.print("f");
 					}
+
 				}
+				System.out.println();
 			}
-		} 
-		else
+
+		} else
 		{
 			noCollisionLayer = true;
 		}
@@ -153,20 +153,20 @@ public class MapManager extends QualifiedObservable
 	 */
 	public boolean getIsTilePassable(Position p)
 	{
-		//allow walking anywhere when there is no collision layer
-		if (noCollisionLayer) 
+		// allow walking anywhere when there is no collision layer
+		if (noCollisionLayer)
 		{
 			return true;
 		}
-		//prevent walking out of bounds
-		if (p.getColumn() > this.passabilityMap.length || 
-			p.getColumn() < 0 ||
-			p.getRow() > this.passabilityMap[0].length ||
-			p.getRow() < 0)
+		// prevent walking out of bounds
+		if (p.getColumn() > this.passabilityMap.length || p.getColumn() < 0
+				|| p.getRow() > this.passabilityMap[0].length || p.getRow() < 0)
 		{
 			return false;
 		}
-		//check against the passability map for capable movement
+		System.out.println("passability at " + p.getRow() + " " + p.getColumn() + " is "
+				+ passabilityMap[p.getRow()][p.getColumn()]);
+		// check against the passability map for capable movement
 		return this.passabilityMap[p.getRow()][p.getColumn()];
 	}
 

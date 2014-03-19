@@ -1,6 +1,11 @@
 package model;
 
+import java.sql.SQLException;
 import java.util.HashMap;
+
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
 
 import model.reports.PlayerConnectionReport;
 
@@ -20,7 +25,14 @@ public class PlayerManager extends QualifiedObservable
 	{
 		if (singleton == null)
 		{
-			singleton = new PlayerManager();
+			try
+			{
+				singleton = new PlayerManager();
+			} catch (DatabaseException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return singleton;
 	}
@@ -30,15 +42,51 @@ public class PlayerManager extends QualifiedObservable
 	 */
 	public static void resetSingleton()
 	{
-		singleton = null;
+		if (singleton != null)
+		{
+			for (Class<?> reportType : singleton.reportTypes)
+			{
+				QualifiedObservableConnector.getSingleton()
+						.unregisterQualifiedObservable(singleton, reportType);
+			}
+			singleton = null;
+		}
 	}
 
 	private HashMap<Integer, Player> players;
+	private JdbcConnectionSource connectionSource;
 
-	private PlayerManager()
+	private Dao<Player, Integer> playerDao;
+
+	public JdbcConnectionSource getConnectionSource()
 	{
+		return connectionSource;
+	}
+
+	public Dao<Player, Integer> getPlayerDao()
+	{
+		return playerDao;
+	}
+
+	private void setUpDAOObject() throws SQLException
+	{
+		String databaseUrl = "jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players";
+		connectionSource = new JdbcConnectionSource(databaseUrl, "program", "ShipSim");
+		playerDao = DaoManager.createDao(connectionSource, Player.class);
+	}
+
+	private PlayerManager() throws DatabaseException
+	{
+		try
+		{
+			setUpDAOObject();
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Unable to set up Player DAO");
+		}
 		players = new HashMap<Integer, Player>();
 		reportTypes.add(PlayerConnectionReport.class);
+
 		this.registerReportTypesWeNotify();
 	}
 
@@ -57,20 +105,53 @@ public class PlayerManager extends QualifiedObservable
 	 *            the players id number
 	 * @param pin
 	 *            the pin we gave the client to connect to this server
+	 * @return the player object that we added
+	 * @throws DatabaseException
 	 */
-	public void addPlayer(int playerID, double pin)
+	public Player addPlayer(int playerID, double pin) throws DatabaseException
 	{
 		try
 		{
-			Player player = new Player(playerID, pin);
+			Player player = playerDao.queryForId(playerID);
+			player.checkThePin(pin);
 			players.put(playerID, player);
 
 			this.notifyObservers(new PlayerConnectionReport(player));
-		} catch (DatabaseException e)
+			return player;
+		} catch (SQLException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	/**
+	 * Adds a player to the list of active players on this server without
+	 * checking its pin - only for testing purposes
+	 * 
+	 * @param playerID
+	 *            the players id number
+	 */
+	public Player addPlayer(int playerID)
+	{
+		try
+		{
+			Player player = playerDao.queryForId(playerID);
+			players.put(playerID, player);
+
+			this.notifyObservers(new PlayerConnectionReport(player));
+			return player;
+		} catch (DatabaseException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**

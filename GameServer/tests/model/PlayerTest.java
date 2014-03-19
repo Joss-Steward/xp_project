@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
+import model.reports.PlayerConnectionReport;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import data.Position;
@@ -17,6 +20,19 @@ import data.Position;
  */
 public class PlayerTest extends DatabaseTest
 {
+	
+	private PlayerManager playerManager;
+
+	@Before
+	public void setUp()
+	{
+		QualifiedObservableConnector.resetSingleton();
+		PlayerManager.resetSingleton();
+		playerManager = PlayerManager.getSingleton();
+		assertEquals(0,playerManager.countObservers());
+		assertEquals(0,playerManager.countObservers(PlayerConnectionReport.class));
+	}
+	
 
 	/**
 	 * Make sure we can retrieve a player's appearanceType
@@ -27,7 +43,7 @@ public class PlayerTest extends DatabaseTest
 	@Test
 	public void canGetAppearanceType() throws DatabaseException
 	{
-		Player p = new Player(1);
+		Player p = playerManager.addPlayer(1);
 		assertEquals(PlayersInDB.JOHN.getAppearanceType(), p.getAppearanceType());
 	}
 	
@@ -40,7 +56,7 @@ public class PlayerTest extends DatabaseTest
 	@Test
 	public void canGetPlayerName() throws DatabaseException
 	{
-		Player p = new Player(1);
+		Player p = playerManager.addPlayer(1);
 		assertEquals("John", p.getPlayerName());
 	}
 	
@@ -51,7 +67,9 @@ public class PlayerTest extends DatabaseTest
 	@Test
 	public void legitPin() throws DatabaseException
 	{
-		new Player(1, PlayerPin.DEFAULT_PIN);
+		PlayerPin playerPin = new PlayerPin(1);
+		playerPin.generateTestPin();
+		playerManager.addPlayer(1, PlayerPin.DEFAULT_PIN);
 	}
 
 	/**
@@ -70,7 +88,7 @@ public class PlayerTest extends DatabaseTest
 		boolean gotTheException = false;
 		try
 		{
-			new Player(1, PlayerPin.DEFAULT_PIN);
+			Player p = playerManager.addPlayer(1, PlayerPin.DEFAULT_PIN);
 		} catch (DatabaseException e)
 		{
 			gotTheException = true;
@@ -85,7 +103,7 @@ public class PlayerTest extends DatabaseTest
 	@Test
 	public void testPlayerPosition() throws DatabaseException
 	{
-		Player p = new Player(1);
+		Player p = playerManager.addPlayer(1);
 		Position pos = new Position(3, 3);
 		p.setPlayerPosition(pos);
 		assertEquals(pos, p.getPlayerPosition());
@@ -98,6 +116,7 @@ public class PlayerTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void wrongPin() throws DatabaseException
 	{
-		new Player(1, 1);
+		System.out.println("Just started");
+		Player p = playerManager.addPlayer(1, 1);
 	}
 }

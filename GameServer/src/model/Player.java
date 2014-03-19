@@ -7,9 +7,17 @@ import java.sql.SQLException;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import data.Position;
 import model.reports.PlayerMovedReport;
 import model.reports.QuestScreenReport;
+
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.field.DataType;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.table.DatabaseTable;
+
+import data.Position;
 
 /**
  * Very simple for now . . .
@@ -17,49 +25,38 @@ import model.reports.QuestScreenReport;
  * @author Merlin
  * 
  */
+@DatabaseTable(tableName = "Player")
 public class Player extends QualifiedObservable
 {
 
+	@DatabaseField(id = true)
 	private int playerID;
+	@DatabaseField
 	private String playerName;
+	@DatabaseField
+	private String appearanceType;
+
+	@DatabaseField(dataType = DataType.SERIALIZABLE)
 	private Position playerPosition;
 
-	/**
-	 * Create a player without checking the pin (for testing purposes only)
-	 * @param playerID
-	 *            the unique ID of this player
-	 * @throws DatabaseException 
-	 */
-	protected Player(int playerID) throws DatabaseException
+	public Player()
 	{
-		this.playerID = playerID;
-		this.playerName = readPlayerName();
-		this.playerPosition = readPlayerPosition();
-		reportTypes.add(PlayerMovedReport.class);
-		reportTypes.add(QuestScreenReport.class);
-		
-		this.registerReportTypesWeNotify();
-		// this.setQuestManager(new QuestManager());
+		registerOurReportTypes();
 	}
 
 	/**
-	 * Create a player that is connecting to this area server.  Check the pin to make sure it is correct
-	 * @param playerID
-	 *            the unique player id of this player
+	 * Check the pin to make sure it is correct
+	 * 
 	 * @param pin
 	 *            the pin we gave the player to connect to this area server
-	 * @throws DatabaseException  shouldn't
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
-	public Player(int playerID, double pin) throws DatabaseException
-	{
-		this(playerID);
-		checkThePin(pin);
-	}
-	
-	private void checkThePin(double pin) throws DatabaseException
+
+	public void checkThePin(double pin) throws DatabaseException
 	{
 		PlayerPin pl = new PlayerPin(playerID);
-		if(pin!= pl.retrievePin())
+		if (pin != pl.retrievePin())
 		{
 			throw new DatabaseException("Wrong PIN for player #" + playerID);
 		}
@@ -70,7 +67,19 @@ public class Player extends QualifiedObservable
 			throw new DatabaseException("Expired PIN for player #" + playerID);
 		}
 	}
-	
+
+	/**
+	 * Get the appearance type for how this player should be drawn
+	 * 
+	 * @return a string matching one of the enum names in the PlayerType enum
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	public String getAppearanceType() throws DatabaseException
+	{
+		return appearanceType;
+	}
+
 	/**
 	 * @return the playerID of this player
 	 */
@@ -78,9 +87,10 @@ public class Player extends QualifiedObservable
 	{
 		return playerID;
 	}
-	
+
 	/**
 	 * Get the unique player name of this player
+	 * 
 	 * @return the player's name
 	 */
 	public String getPlayerName()
@@ -89,100 +99,51 @@ public class Player extends QualifiedObservable
 	}
 
 	/**
-	 * Set the player's position
-	 * @param playerPosition
-	 * 			The new location the player is
-	 * Assuming a valid position.  Error checking else where
-	 */
-	public void setPlayerPosition(Position playerPosition)
-	{
-		this.playerPosition = playerPosition;
-		PlayerMovedReport report = new PlayerMovedReport(this.playerID,this.playerName,playerPosition);
-		this.notifyObservers(report);
-	}
-	
-	/**
 	 * Get the player's position
-	 * @return playerPosition
-	 * 			Returns the player position. If a position is not set should return null.
+	 * 
+	 * @return playerPosition Returns the player position. If a position is not
+	 *         set should return null.
 	 */
 	public Position getPlayerPosition()
 	{
 		return this.playerPosition;
 	}
-	
-	
-	/**
-	 * Get this player's player name from the database
-	 * 
-	 * @return the players player name
-	 * @throws DatabaseException if the player isn't found
-	 */
-	private String readPlayerName() throws DatabaseException
+
+	private void registerOurReportTypes()
 	{
-		Connection connection = DatabaseManager.getSingleton().getConnection();
-		String playerName;
-		try
-		{
-			PreparedStatement stmt = connection.prepareStatement("SELECT PlayerName from Players.PlayerLogins where PlayerID = ?");
-			stmt.setInt(1, playerID);
-			ResultSet resultSet = stmt.executeQuery();
-			resultSet.first();
-			playerName = resultSet.getString(1);
-			resultSet.close();
-		} catch (SQLException e)
-		{
-			throw new DatabaseException("Unable to retrieve player with id = " + playerID, e);
-		}
-		return playerName;
+		reportTypes.add(PlayerMovedReport.class);
+		reportTypes.add(QuestScreenReport.class);
+
+		this.registerReportTypesWeNotify();
+	}
+
+	public void setAppearanceType(String appearanceType)
+	{
+		this.appearanceType = appearanceType;
+	}
+
+	public void setPlayerID(int playerID)
+	{
+		this.playerID = playerID;
+	}
+
+	public void setPlayerName(String playerName)
+	{
+		this.playerName = playerName;
 	}
 
 	/**
-	 * Get the appearance type for how this player should be drawn
-	 * @return a string matching one of the enum names in the PlayerType enum
-	 * @throws DatabaseException shouldn't
-	 */
-	public String getAppearanceType() throws DatabaseException
-	{
-		Connection connection = DatabaseManager.getSingleton().getConnection();
-		String playerName;
-		try
-		{
-			PreparedStatement stmt = connection.prepareStatement("SELECT AppearanceType from Players.Player where PlayerID = ?");
-			stmt.setInt(1, playerID);
-			ResultSet resultSet = stmt.executeQuery();
-			resultSet.first();
-			playerName = resultSet.getString(1);
-			resultSet.close();
-		} catch (SQLException e)
-		{
-			throw new DatabaseException("Unable to retrieve appearance for player with id = " + playerID, e);
-		}
-		return playerName;
-	}
-
-	/**
-	 * Get this player's position from the database
+	 * Set the player's position
 	 * 
-	 * @return the players position
-	 * @throws DatabaseException if the player isn't found
+	 * @param playerPosition
+	 *            The new location the player is Assuming a valid position.
+	 *            Error checking else where
 	 */
-	private Position readPlayerPosition() throws DatabaseException
+	public void setPlayerPosition(Position playerPosition)
 	{
-		Connection connection = DatabaseManager.getSingleton().getConnection();
-		Position position = null;
-		try
-		{
-			PreparedStatement stmt = connection.prepareStatement("SELECT Row, Col from Players.Player where PlayerID = ?");
-			stmt.setInt(1, playerID);
-			ResultSet resultSet = stmt.executeQuery();
-			resultSet.first();
-			position = new Position(resultSet.getInt(1), resultSet.getInt(2));
-			resultSet.close();
-		} catch (SQLException e)
-		{
-			throw new DatabaseException("Unable to retrieve player with id = " + playerID, e);
-		}
-		return position;
+		this.playerPosition = playerPosition;
+		PlayerMovedReport report = new PlayerMovedReport(this.playerID, this.playerName,
+				playerPosition);
+		this.notifyObservers(report);
 	}
 }

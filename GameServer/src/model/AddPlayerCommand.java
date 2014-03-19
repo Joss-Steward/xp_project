@@ -29,7 +29,14 @@ public class AddPlayerCommand extends Command
 	@Override
 	protected boolean execute()
 	{
-		PlayerManager.getSingleton().addPlayer(playerID, pin);
+		try
+		{
+			PlayerManager.getSingleton().addPlayer(playerID, pin);
+		} catch (DatabaseException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return true;
 	}
 

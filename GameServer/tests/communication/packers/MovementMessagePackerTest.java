@@ -30,7 +30,7 @@ public class MovementMessagePackerTest
 	{
 		PlayerManager.resetSingleton();
 
-		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
+		PlayerManager.getSingleton().addPlayer(1);
 		stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
 	}	

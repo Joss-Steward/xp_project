@@ -1,10 +1,15 @@
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
+
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.table.TableUtils;
 
 import data.Position;
 import model.DatabaseException;
 import model.DatabaseManager;
+import model.Player;
+import model.PlayerManager;
 import model.PlayersInDB;
 
 /**
@@ -16,6 +21,8 @@ public class BuildTestDBPlayers
 {
 
 		private static Connection connection;
+		private static JdbcConnectionSource connectionSource;
+		private static Dao<Player, Integer> playerDAO;
 
 
 		/**
@@ -30,32 +37,27 @@ public class BuildTestDBPlayers
 		public static void main(String[] args) throws DatabaseException, SQLException
 		{
 			connection = DatabaseManager.getSingleton().getConnection();
+			
 			createPlayerTable();
 		}
 
 		private static void createPlayerTable() throws SQLException
 		{
-			Statement stmt = connection.createStatement();
-
-			stmt.executeUpdate("DROP TABLE Player");
-			StringBuffer sql = new StringBuffer("CREATE TABLE Player(");
-			sql.append("PlayerID int NOT NULL, \n");
-			sql.append("AppearanceType VARCHAR(30) NOT NULL,\n");
-			sql.append("Row int, \n");
-			sql.append("Col int, \n");
-			sql.append("PRIMARY KEY (PlayerID),\n");
-			sql.append("FOREIGN KEY (PlayerId) REFERENCES PlayerLogins(PlayerId));");
-			System.out.println(sql);
-			stmt.executeUpdate(new String(sql));
-			stmt.executeUpdate("ALTER TABLE PlayerLogins ENGINE = INNODB");
+			
+			PlayerManager pm = PlayerManager.getSingleton();
+			connectionSource = pm.getConnectionSource();
+			playerDAO = pm.getPlayerDao();
+			TableUtils.createTableIfNotExists(connectionSource, Player.class);
 			
 			for (PlayersInDB p : PlayersInDB.values())
 			{
 				Position pos = p.getPosition();
-				int row = pos.getRow();
-				int column = pos.getColumn();
-				stmt.executeUpdate("INSERT INTO Player (PlayerID, AppearanceType, row, col ) VALUES ('" + p.getPlayerID() + "', '" + p.getAppearanceType() +
-						"', " + row + "," + column + ");");
+				Player player = new Player();
+				player.setPlayerPosition(pos);
+				player.setPlayerName(p.getPlayerName());
+				player.setAppearanceType(p.getAppearanceType());
+				player.setPlayerID(p.getPlayerID());
+				playerDAO.create(player);
 			}
 
 		}

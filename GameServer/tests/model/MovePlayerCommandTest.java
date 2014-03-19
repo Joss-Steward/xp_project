@@ -33,7 +33,7 @@ public class MovePlayerCommandTest
 		Position startPosition = new Position(0,0);
 		Position newPosition = new Position(10, 10);
 		
-		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
+		PlayerManager.getSingleton().addPlayer(1);
 		Player p = PlayerManager.getSingleton().getPlayerFromID(1);
 		p.setPlayerPosition(startPosition);
 		

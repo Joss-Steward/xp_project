@@ -41,7 +41,7 @@ public class MovementMessageHandlerTest
 		Position startPosition = new Position(0,0);
 		Position newPosition = new Position(1337, 1337);
 		
-		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
+		PlayerManager.getSingleton().addPlayer(1);
 		Player p = PlayerManager.getSingleton().getPlayerFromID(1);
 		p.setPlayerPosition(startPosition);
 		
