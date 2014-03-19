@@ -24,11 +24,13 @@ public class Player extends QualifiedObservable
 
 	@DatabaseField(id = true)
 	private int playerID;
+	
 	@DatabaseField
 	private String playerName;
+	
 	@DatabaseField
 	private String appearanceType;
-
+	
 	@DatabaseField(dataType = DataType.SERIALIZABLE)
 	private Position playerPosition;
 

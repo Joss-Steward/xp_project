@@ -69,7 +69,7 @@ public class PlayerLoginTest extends DatabaseTest
 	@Test
 	public void simpleRead() throws DatabaseException
 	{
-		PlayerLogin pl = new PlayerLogin(Players.JOHN.getName(),
+		PlayerLogin pl = PlayerLogin.readAndVerifyPlayerLogin(Players.JOHN.getName(),
 				Players.JOHN.getPassword());
 		assertEquals(1, pl.getPlayerID());
 	}
@@ -83,7 +83,7 @@ public class PlayerLoginTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void notThere() throws DatabaseException
 	{
-		new PlayerLogin(Players.JOHN.getName() + "z", Players.JOHN.getPassword());
+		PlayerLogin.readAndVerifyPlayerLogin(Players.JOHN.getName() + "z", Players.JOHN.getPassword());
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class PlayerLoginTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void wrongPassword() throws DatabaseException
 	{
-		new PlayerLogin(Players.JOHN.getName(), Players.JOHN.getPassword() + 'Z');
+		PlayerLogin.readAndVerifyPlayerLogin(Players.JOHN.getName(), Players.JOHN.getPassword() + 'Z');
 	}
 
 }
