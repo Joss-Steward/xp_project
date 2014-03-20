@@ -141,6 +141,10 @@ public class Player extends QualifiedObservable
 		this.notifyObservers(report);
 	}
 
+	/**
+	 * Tell this player what his login information is
+	 * @param pl his login information
+	 */
 	public void setPlayerLogin(PlayerLogin pl)
 	{
 		this.playerLogin = pl;

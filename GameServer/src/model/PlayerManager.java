@@ -49,6 +49,13 @@ public class PlayerManager extends QualifiedObservable
 				QualifiedObservableConnector.getSingleton()
 						.unregisterQualifiedObservable(singleton, reportType);
 			}
+			try
+			{
+				singleton.connectionSource.close();
+			} catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
 			singleton = null;
 		}
 	}

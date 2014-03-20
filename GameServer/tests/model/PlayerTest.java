@@ -2,11 +2,13 @@ package model;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 import model.reports.PlayerConnectionReport;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,6 +43,17 @@ public class PlayerTest extends DatabaseTest
 		assertEquals(0, playerManager.countObservers(PlayerConnectionReport.class));
 	}
 
+	/**
+	 * cleanup the singletons we played with
+	 * @see model.DatabaseTest#tearDown()
+	 */
+	@After
+	public void tearDown() throws DatabaseException, SQLException
+	{
+		super.tearDown();
+		QualifiedObservableConnector.resetSingleton();
+		PlayerManager.resetSingleton();
+	}
 	/**
 	 * Make sure we can retrieve a player's appearanceType
 	 * 
