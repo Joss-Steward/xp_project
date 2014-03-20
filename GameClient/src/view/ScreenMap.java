@@ -8,6 +8,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -209,7 +210,10 @@ public class ScreenMap extends ScreenBasic
 	 */
 	private Vector2 positionToScale(Position pos)
 	{
-		Vector2 tmp = new Vector2(pos.getColumn(), pos.getRow());
+	
+		float y = Gdx.graphics.getHeight()/32f-pos.getRow()-1;
+		System.out.println("height = " + Gdx.graphics.getHeight()/32f + "y = " + y + " row = " + pos.getRow());
+		Vector2 tmp = new Vector2(pos.getColumn(), y);
 		tmp.scl(32f);
 		return tmp;
 	}

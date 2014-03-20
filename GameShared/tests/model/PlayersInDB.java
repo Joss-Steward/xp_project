@@ -13,7 +13,7 @@ public enum PlayersInDB
 	/**
 	 * 
 	 */
-	JOHN(1, "John", "male_a", 3, 12),
+	JOHN(1, "John", "male_a", 0, 4),
 	/**
 	 * 
 	 */
