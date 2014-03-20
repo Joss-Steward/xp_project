@@ -55,7 +55,7 @@ public class PlayerManager extends QualifiedObservable
 	{
 		try
 		{
-			PlayerLogin pl = new PlayerLogin(playerName, password);
+			PlayerLogin pl = PlayerLogin.readAndVerifyPlayerLogin(playerName, password);
 			numberOfPlayers++;
 			PlayerPin pp = new PlayerPin(pl.getPlayerID());
 			LoginSuccessfulReport report = new LoginSuccessfulReport(pl.getPlayerID(),
