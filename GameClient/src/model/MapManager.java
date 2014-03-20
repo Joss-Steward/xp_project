@@ -121,6 +121,7 @@ public class MapManager extends QualifiedObservable
 
 			for (int row = 0; row < collisionLayer.getHeight(); row++)
 			{
+				System.out.println((collisionLayer.getHeight()-row-1)+ ": ");
 				for (int col = 0; col < collisionLayer.getWidth(); col++)
 				{
 

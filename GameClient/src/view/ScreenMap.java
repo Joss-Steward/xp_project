@@ -210,10 +210,10 @@ public class ScreenMap extends ScreenBasic
 	private Vector2 positionToScale(Position pos)
 	{
 	
-		float y = Gdx.graphics.getHeight()/32f-pos.getRow()-1;
-		System.out.println("height = " + Gdx.graphics.getHeight()/32f + "y = " + y + " row = " + pos.getRow());
+		float y = Gdx.graphics.getHeight()/16f-pos.getRow()-1;
+		System.out.println("height = " + Gdx.graphics.getHeight()/16f + "y = " + y + " row = " + pos.getRow());
 		Vector2 tmp = new Vector2(pos.getColumn(), y);
-		tmp.scl(32f);
+		tmp.scl(16f);
 		return tmp;
 	}
 }

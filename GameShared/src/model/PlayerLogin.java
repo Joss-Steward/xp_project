@@ -52,16 +52,6 @@ public class PlayerLogin
 		}
 	}
 
-	private static void setUpORMLite() throws SQLException
-	{
-		if (connectionSource == null)
-		{
-			String databaseUrl = "jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players";
-			connectionSource = new JdbcConnectionSource(databaseUrl, "program", "ShipSim");
-			playerLoginDao = DaoManager.createDao(connectionSource, PlayerLogin.class);
-		}
-	}
-
 	/**
 	 * Create an object if the name and password are found in the db
 	 * 
@@ -107,6 +97,12 @@ public class PlayerLogin
 		throw new DatabaseException("incorrect password");
 	}
 
+	/**
+	 * Get a player's login information without checking his password
+	 * @param name the player's player name
+	 * @return the player's login information
+	 * @throws DatabaseException if the player doesn't exist, or has two records
+	 */
 	public static PlayerLogin readPlayerLogin(String name) throws DatabaseException
 	{
 		try
@@ -133,9 +129,14 @@ public class PlayerLogin
 		}
 	}
 
-	public String getPlayerName()
+	private static void setUpORMLite() throws SQLException
 	{
-		return playerName;
+		if (connectionSource == null)
+		{
+			String databaseUrl = "jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players";
+			connectionSource = new JdbcConnectionSource(databaseUrl, "program", "ShipSim");
+			playerLoginDao = DaoManager.createDao(connectionSource, PlayerLogin.class);
+		}
 	}
 
 	/**
@@ -153,6 +154,15 @@ public class PlayerLogin
 	public int getPlayerID()
 	{
 		return playerID;
+	}
+
+	/**
+	 * Get the player's playername
+	 * @return the playername
+	 */
+	public String getPlayerName()
+	{
+		return playerName;
 	}
 
 }
