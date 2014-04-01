@@ -16,6 +16,16 @@ import communication.packers.MessagePackerSet;
 public class Server implements Runnable
 {
 	private ServerSocket servSock;
+	private int port;
+	
+	/**
+	 * Create a new Server listening on a given port
+	 * @param port The port to listen on
+	 */
+	public Server(int port) 
+	{
+		this.port = port;
+	}
 
 	/**
 	 * @see java.lang.Runnable#run()
@@ -25,10 +35,10 @@ public class Server implements Runnable
 		int i = 0;
 		try
 		{
-			servSock = new ServerSocket(1872, 10);
+			servSock = new ServerSocket(port, 10);
 			while (true)
 			{
-				System.out.println("Listening");
+				System.out.println("Listening on port " + port);
 				Socket sock = servSock.accept();
 				System.out.println(i + ":  got something from " + sock);
 				i++;
@@ -57,10 +67,15 @@ public class Server implements Runnable
 	/**
 	 * @param args
 	 *            Main runner
+	 * @throws IllegalArgumentException Thrown when the port is not given as an argument to the execution
 	 */
-	public static void main(String args[])
+	public static void main(String args[]) throws IllegalArgumentException
 	{
-		Server S = new Server();
+		if(args.length != 1) {
+			throw new IllegalArgumentException("Port is required to run the server. Run the server like 'java server 1872'");
+		}
+		int port = Integer.parseInt(args[0]);
+		Server S = new Server(port);
 		S.run();
 	}
 }
