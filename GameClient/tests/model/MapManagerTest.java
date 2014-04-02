@@ -13,6 +13,7 @@ import org.junit.Test;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.utils.ObjectMap;
 
 import data.Position;
 
@@ -114,6 +115,26 @@ public class MapManagerTest extends QualifiedObservableTestInherited
 		assertFalse(map.getIsTilePassable(new Position(1, 0)));
 		assertTrue(map.getIsTilePassable(new Position(2, 1)));
 		assertFalse(map.getIsTilePassable(new Position(3, 2)));
+	}
+	
+	/**
+	 * Make sure the map manager recognizes when a position is
+	 * 	a teleportation hotspot.
+	 */
+	@Test
+	public void canCheckTeleport()
+	{
+		MapManager map = MapManager.getSingleton();
+		
+		ObjectMap<Position, TeleportHotSpot> teleportMap = new ObjectMap<Position, TeleportHotSpot>();
+		TeleportHotSpot hotspot = new TeleportHotSpot("Map Name", new Position(1,2));
+		
+		teleportMap.put(new Position(5,5), hotspot);
+		
+		map.setTeleportHotspots(teleportMap);
+		
+		assertTrue(map.getIsTileTeleport(new Position(5,5)));
+		assertFalse(map.getIsTileTeleport(new Position(0, 0)));
 	}
 
 	@Override
