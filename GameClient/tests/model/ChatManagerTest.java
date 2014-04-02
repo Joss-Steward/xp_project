@@ -7,6 +7,7 @@ import java.rmi.NotBoundException;
 import java.util.Observer;
 
 import model.reports.ChatReceivedReport;
+import model.reports.ChatSentReport;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -129,5 +130,30 @@ public class ChatManagerTest
 		assertFalse(ChatManager.getSingleton().canReceiveLocalMessage(new Position(0,11)));
 		assertFalse(ChatManager.getSingleton().canReceiveLocalMessage(new Position(5,11)));
 		assertFalse(ChatManager.getSingleton().canReceiveLocalMessage(new Position(11,5)));
+	}
+	
+	/**
+	 * Properly sends a report for a message going to the server
+	 * @throws NotBoundException shouldn't
+	 * @throws AlreadyBoundException shouldn't
+	 */
+	@Test
+	public void notifiesOnSendChatToServer() throws AlreadyBoundException, NotBoundException
+	{
+		PlayerManager.getSingleton().initiateLogin("X", "X");
+		Player p = PlayerManager.getSingleton().setThisClientsPlayer(1);
+		p.setPosition(new Position(5,5));
+		p.setName("my name");
+		
+		Observer obs = EasyMock.createMock(Observer.class);
+		ChatSentReport report = new ChatSentReport("message", "my name", p.getPosition(), ChatType.Local);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs,
+				ChatSentReport.class);
+		obs.update(EasyMock.eq(ChatManager.getSingleton()), EasyMock.eq(report));
+		EasyMock.replay(obs);
+
+		ChatManager.getSingleton().sendChatToServer("message", ChatType.Local);
+
+		EasyMock.verify(obs);
 	}
 }

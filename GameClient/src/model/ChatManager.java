@@ -1,6 +1,7 @@
 package model;
 
 import model.reports.ChatReceivedReport;
+import model.reports.ChatSentReport;
 import communication.messages.ChatMessage.ChatType;
 import data.Position;
 
@@ -25,6 +26,7 @@ public class ChatManager extends QualifiedObservable
 	private ChatManager()
 	{
 		reportTypes.add(ChatReceivedReport.class);
+		reportTypes.add(ChatSentReport.class);
 		registerReportTypesWeNotify();
 	}
 	
@@ -72,6 +74,18 @@ public class ChatManager extends QualifiedObservable
 				this.notifyObservers(report);
 			}
 		}
+	}
+	
+	/**
+	 * Send a report for a message this client generated, fetching the proper player name and location
+	 * @param message  chat message to send to the ui
+	 * @param type the type of this message
+	 */
+	public void sendChatToServer(String message, ChatType type)
+	{
+		Player thisPlayer = PlayerManager.getSingleton().getThisClientsPlayer();
+		ChatSentReport report = new ChatSentReport(message, thisPlayer.getName(), thisPlayer.getPosition(), type);
+		this.notifyObservers(report);
 	}
 	
 	/**
