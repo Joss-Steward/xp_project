@@ -55,13 +55,13 @@ public class ChatManagerTest
 	public void notifiesOnAreaChatReceived()
 	{
 		Observer obs = EasyMock.createMock(Observer.class);
-		ChatReceivedReport report = new ChatReceivedReport("message", "sender", ChatType.Area);
+		ChatReceivedReport report = new ChatReceivedReport("message", "sender", ChatType.Zone);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				ChatReceivedReport.class);
 		obs.update(EasyMock.eq(ChatManager.getSingleton()), EasyMock.eq(report));
 		EasyMock.replay(obs);
 
-		ChatManager.getSingleton().sendChatToUI("message", "sender", new Position(0,0), ChatType.Area);
+		ChatManager.getSingleton().sendChatToUI("message", "sender", new Position(0,0), ChatType.Zone);
 
 		EasyMock.verify(obs);
 	}

@@ -1,4 +1,6 @@
 import model.ChatManagerTest;
+import model.CommandChatMessageReceivedTest;
+import model.CommandChatMessageSentTest;
 import model.CommandInitializePlayerTest;
 import model.CommandLoginTest;
 import model.CommandNewMapTest;
@@ -51,6 +53,8 @@ import communication.packers.MovementMessagePackerTest;
 		PlayerManagerTest.class, PlayerTest.class,
 		ThisClientsPlayerTest.class,
 		ChatManagerTest.class,
+		CommandChatMessageReceivedTest.class,
+		CommandChatMessageSentTest.class,
 
 		// model.reports
 		LoginInitiatedReportTest.class, NewMapReportTest.class,

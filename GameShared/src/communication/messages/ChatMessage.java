@@ -23,7 +23,7 @@ public class ChatMessage implements Message, Serializable
 		/**
 		 * Chat is available to anyone in this area server
 		 */
-		Area,
+		Zone,
 		/**
 		 * Chat is only visible to nearby entities
 		 */
