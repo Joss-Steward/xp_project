@@ -322,7 +322,7 @@ public class Quest
 	/**
 	 * testing purposes
 	 * 
-	 * @param selectedTask
+	 * @param selectedTask the task we selected
 	 */
 	public void setSelectedTask(Task selectedTask)
 	{
