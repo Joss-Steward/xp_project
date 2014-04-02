@@ -78,13 +78,13 @@ public class ScreenMapInputTest
 		MapManager.getSingleton().setHeadless(true);
 		MapManager.getSingleton().changeToNewFile("current.tmx");
 
-		// move player north
-		input.keyDown(Keys.UP);
-		pauseForCommandExecution();
-		assertEquals(new Position(1, 0), testPlayer.getPosition());
-
 		// move player south
 		input.keyDown(Keys.DOWN);
+		pauseForCommandExecution();
+		assertEquals(new Position(1, 0), testPlayer.getPosition());
+		
+		// move player north
+		input.keyDown(Keys.UP);
 		pauseForCommandExecution();
 		assertEquals(new Position(0, 0), testPlayer.getPosition());
 
