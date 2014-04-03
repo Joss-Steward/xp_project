@@ -4,6 +4,7 @@ import model.CommandQuestScreenOpen;
 import model.ModelFacade;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -32,8 +33,9 @@ public class ScreenMap extends ScreenBasic
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private final float unitScale;
-	private ScreenMapInput input;
-
+	private ScreenMapInput mapInput;
+	private ChatUi chatArea;
+	
 	/**
 	 * 
 	 */
@@ -48,7 +50,7 @@ public class ScreenMap extends ScreenBasic
 		stage.setCamera(camera);
 		batch = new SpriteBatch();
 		characters = new IntMap<PlayerSprite>();
-		input = new ScreenMapInput();
+		mapInput = new ScreenMapInput();
 	}
 
 	/**
@@ -105,6 +107,8 @@ public class ScreenMap extends ScreenBasic
 				s.draw(batch);
 			}
 			batch.end();
+			
+			chatArea.draw(delta);
 		}
 		// mapRenderer.render(backgroundLayers);
 		// renderMyCustomSprites();
@@ -154,7 +158,12 @@ public class ScreenMap extends ScreenBasic
 	{
 		playerFactory = new PlayerSpriteFactory(
 				Gdx.files.internal("data/characters.pack"));
-		Gdx.input.setInputProcessor(input);
+		chatArea = new ChatUi();
+		InputMultiplexer multiplexer = new InputMultiplexer();
+		multiplexer.addProcessor(mapInput);
+		chatArea.addToInput(multiplexer);
+		
+		Gdx.input.setInputProcessor(multiplexer);
 	}
 
 	/**
