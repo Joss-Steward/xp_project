@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.IntMap;
+import communication.messages.ChatMessage.ChatType;
 
 import data.Position;
 
@@ -224,5 +225,17 @@ public class ScreenMap extends ScreenBasic
 		Vector2 tmp = new Vector2(pos.getColumn(), y);
 		tmp.scl(16f);
 		return tmp;
+	}
+	
+	/**
+	 * Adds a chat message from another player to the chat history of the ui
+	 * @param message
+	 * 	message to add to the ui
+	 * @param type
+	 *  type of broadcasting of the message
+	 */
+	public void addChat(String message, ChatType type)
+	{
+		chatArea.addMessage(message, type);
 	}
 }

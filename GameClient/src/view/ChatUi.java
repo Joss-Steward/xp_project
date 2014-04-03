@@ -16,6 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Array;
 
+import communication.messages.ChatMessage;
+import communication.messages.ChatMessage.ChatType;
+
 /**
  * 
  * @author nhydock
@@ -23,10 +26,15 @@ import com.badlogic.gdx.utils.Array;
  */
 public class ChatUi
 {
-	Array<String> history;
+	//chat historys
+	Array<String> allHistory;
+	Array<String> zoneHistory;
+	Array<String> localHistory;
+	
+	Array<String> activeHistory;
+	
 	List chatHistoryView;
 	TextField messageBox;
-	Button sendButton;
 	
 	Stage stage;
 	
@@ -45,7 +53,7 @@ public class ChatUi
 		messageBox = new TextField("", skin);
 		
 		//create the message button
-		sendButton = new TextButton("Send", skin);
+		TextButton sendButton = new TextButton("Send", skin);
 		
 		//add button listener
 		sendButton.addListener(new InputListener(){
@@ -68,11 +76,27 @@ public class ChatUi
 		
 		//create chat log area
 		String[] chat = {"hello", "world", "you", "sexy", "thing"};
-		history = new Array<String>();
-		history.addAll(chat);
-		chatHistoryView = new List(history.toArray(), skin);
+		allHistory = new Array<String>();
+		localHistory = new Array<String>();
+		zoneHistory = new Array<String>();
+		activeHistory = allHistory;
+		allHistory.addAll(chat);
+		chatHistoryView = new List(activeHistory.toArray(), skin);
 		ScrollPane listPane = new ScrollPane(chatHistoryView, skin);
 		
+		//create chat filter buttons
+		Table tabs = new Table();
+		TextButton allButton = new TextButton("All", skin);
+		TextButton localButton = new TextButton("Local", skin);
+		TextButton zoneButton = new TextButton("Zone", skin);
+		
+		tabs.add(allButton).expandX().fill();
+		tabs.row();
+		tabs.add(localButton).fill();
+		tabs.row();
+		tabs.add(zoneButton).fill();
+		
+		grid.left().add(tabs).width(80f);
 		grid.add(listPane).expandX().fill().height(80f);
 		
 		grid.row();
@@ -136,8 +160,47 @@ public class ChatUi
 	private void sendMessage()
 	{
 		// TODO send message command
-		// String message = messageBox.getMessageText();
-		
 		messageBox.setText("");
+	}
+
+	/**
+	 * Adds a new message into the chat history
+	 * @param message
+	 * 	message to add
+	 */
+	public void addMessage(String message, ChatType type)
+	{
+		switch (type)
+		{
+			case Zone:
+				zoneHistory.add(message);
+				break;
+			case Local:
+				localHistory.add(message);
+				break;
+		}
+		allHistory.add(message);
+		chatHistoryView.setItems(activeHistory.toArray());
+	}
+	
+	/**
+	 * Changes the history filter of messages
+	 * @param type
+	 */
+	private void changeFilter(ChatType type)
+	{
+		switch (type)
+		{
+			case Zone:
+				activeHistory = zoneHistory;
+				break;
+			case Local:
+				activeHistory = localHistory;
+				break;
+			default:
+				activeHistory = allHistory;
+				break;
+		}
+		chatHistoryView.setItems(activeHistory.toArray());
 	}
 }
