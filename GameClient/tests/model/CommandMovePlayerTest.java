@@ -20,11 +20,11 @@ public class CommandMovePlayerTest
 	@Before
 	public void setup()
 	{
-		boolean[][] passability =
-		{
-		{ true, true, true },
-		{ true, false, true },
-		{ true, true, true } };
+		boolean[][] passability = {
+			{ true, true, true },
+			{ true, false, true },
+			{ true, true, true } 
+		};
 
 		MapManager.getSingleton().setPassability(passability);
 	}
