@@ -1,22 +1,26 @@
 package view;
 
+import model.CommandChatMessageSent;
+import model.ModelFacade;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 
-import communication.messages.ChatMessage;
 import communication.messages.ChatMessage.ChatType;
 
 /**
@@ -26,6 +30,8 @@ import communication.messages.ChatMessage.ChatType;
  */
 public class ChatUi
 {
+	public static final float YSIZE = 200f;
+	
 	//chat historys
 	Array<String> allHistory;
 	Array<String> zoneHistory;
@@ -43,9 +49,23 @@ public class ChatUi
 	 */
 	public ChatUi()
 	{
+		allHistory = new Array<String>();
+		localHistory = new Array<String>();
+		zoneHistory = new Array<String>();
+		
+		setupUI();
+	}
+	
+	/**
+	 * Prepare the actual ui elements for the display
+	 */
+	private void setupUI()
+	{
 		final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 		
 		stage = new Stage();
+		stage.setViewport(Gdx.graphics.getWidth(), YSIZE, true, 0, YSIZE, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
 		Table grid = new Table();
 		grid.setFillParent(true);
 		
@@ -62,12 +82,7 @@ public class ChatUi
 			{
 				if (button == Buttons.LEFT)
 				{
-					String message = messageBox.getText();
-					if (message.trim().length() > 0) 
-					{
-						sendMessage();
-						System.out.println("Send Button Clicked");
-					}
+					sendMessage();
 					return true;
 				}
 				return false;
@@ -75,12 +90,7 @@ public class ChatUi
 		});
 		
 		//create chat log area
-		String[] chat = {"hello", "world", "you", "sexy", "thing"};
-		allHistory = new Array<String>();
-		localHistory = new Array<String>();
-		zoneHistory = new Array<String>();
 		activeHistory = allHistory;
-		allHistory.addAll(chat);
 		chatHistoryView = new List(activeHistory.toArray(), skin);
 		ScrollPane listPane = new ScrollPane(chatHistoryView, skin);
 		
@@ -90,18 +100,46 @@ public class ChatUi
 		TextButton localButton = new TextButton("Local", skin);
 		TextButton zoneButton = new TextButton("Zone", skin);
 		
-		tabs.add(allButton).expandX().fill();
+		allButton.addListener(new ChangeListener(){
+
+			@Override
+			public void changed(ChangeEvent event, Actor actor)
+			{
+				changeFilter(null);
+			}
+			
+		});
+		localButton.addListener(new ChangeListener(){
+
+			@Override
+			public void changed(ChangeEvent event, Actor actor)
+			{
+				changeFilter(ChatType.Local);
+			}
+			
+		});
+		zoneButton.addListener(new ChangeListener(){
+
+			@Override
+			public void changed(ChangeEvent event, Actor actor)
+			{
+				changeFilter(ChatType.Zone);
+			}
+			
+		});
+		
+		tabs.add(allButton).fill();
 		tabs.row();
 		tabs.add(localButton).fill();
 		tabs.row();
 		tabs.add(zoneButton).fill();
 		
-		grid.left().add(tabs).width(80f);
-		grid.add(listPane).expandX().fill().height(80f);
+		grid.add(tabs).fill().colspan(1);
+		grid.add(listPane).expandX().fill().height(100f).colspan(9);
 		
 		grid.row();
-		grid.add(messageBox).expandX().fillX().height(32f);
-		grid.add(sendButton).width(50f).height(32f);
+		grid.left().add(messageBox).expandX().fillX().height(32f).colspan(9);
+		grid.add(sendButton).width(100f).height(32f).colspan(1);
 		
 		grid.bottom();
 		
@@ -120,7 +158,6 @@ public class ChatUi
 					else if (stage.getKeyboardFocus() == messageBox)
 					{
 						sendMessage();
-						System.out.println("Enter pressed to send message");
 						stage.setKeyboardFocus(null);
 						return true;
 					}
@@ -159,7 +196,26 @@ public class ChatUi
 	 */
 	private void sendMessage()
 	{
-		// TODO send message command
+		String message = messageBox.getText();
+		
+		//don't send a message if the message is blank
+		if (message.trim().length() == 0)
+			return;
+		
+		if (!(message.startsWith("/z") || message.startsWith("/l") || message.startsWith("/w")))
+		{
+			if (activeHistory == zoneHistory)
+			{
+				message = "/z " + message;
+			}
+			else
+			{
+				message = "/l " + message;
+			}
+		}
+		CommandChatMessageSent cmd = new CommandChatMessageSent(message);
+		ModelFacade.getSingleton().queueCommand(cmd);
+		
 		messageBox.setText("");
 	}
 
@@ -167,6 +223,8 @@ public class ChatUi
 	 * Adds a new message into the chat history
 	 * @param message
 	 * 	message to add
+	 * @param type 
+	 *  type of the message to add to the history
 	 */
 	public void addMessage(String message, ChatType type)
 	{
@@ -178,6 +236,8 @@ public class ChatUi
 			case Local:
 				localHistory.add(message);
 				break;
+			default:
+				break;
 		}
 		allHistory.add(message);
 		chatHistoryView.setItems(activeHistory.toArray());
@@ -186,20 +246,24 @@ public class ChatUi
 	/**
 	 * Changes the history filter of messages
 	 * @param type
+	 * 	type of messages to filter
 	 */
 	private void changeFilter(ChatType type)
 	{
-		switch (type)
+		if (type != null)
 		{
-			case Zone:
-				activeHistory = zoneHistory;
-				break;
-			case Local:
-				activeHistory = localHistory;
-				break;
-			default:
-				activeHistory = allHistory;
-				break;
+			switch (type)
+			{
+				case Zone:
+					activeHistory = zoneHistory;
+					break;
+				case Local:
+					activeHistory = localHistory;
+					break;
+				default:
+					activeHistory = allHistory;
+					break;
+			}
 		}
 		chatHistoryView.setItems(activeHistory.toArray());
 	}

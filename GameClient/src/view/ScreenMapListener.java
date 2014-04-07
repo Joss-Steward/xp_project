@@ -45,6 +45,7 @@ public class ScreenMapListener extends ScreenListener
 			PlayerMovedReport report = (PlayerMovedReport) arg;
 			map.movePlayer(report.getID(), report.getNewPosition());
 		}
+		// adds a message spoken by users to be displayed in the UI
 		else if (arg.getClass().equals(ChatReceivedReport.class))
 		{
 			ChatReceivedReport report = (ChatReceivedReport) arg;
