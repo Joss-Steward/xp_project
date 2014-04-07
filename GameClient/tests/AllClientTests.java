@@ -20,6 +20,7 @@ import view.DirectionTest;
 import view.PlayerSpriteTest;
 import view.ScreenListenerTest;
 import view.ScreenMapInputTest;
+import communication.handlers.ChatMessageHandlerTest;
 import communication.handlers.MapFileMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.PlayerJoinedMessageHandlerTest;
@@ -42,6 +43,7 @@ import communication.packers.MovementMessagePackerTest;
 		MapFileMessageHandlerTest.class,
 		PlayerJoinedMessageHandlerTest.class,
 		MovementMessageHandlerTest.class,
+		ChatMessageHandlerTest.class,
 
 		// communication.packers
 		LoginMessagePackerTest.class,
