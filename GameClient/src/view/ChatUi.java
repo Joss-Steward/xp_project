@@ -6,8 +6,6 @@ import model.ModelFacade;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.Input.Buttons;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -30,6 +28,9 @@ import communication.messages.ChatMessage.ChatType;
  */
 public class ChatUi
 {
+	/**
+	 * Expected height of the chat ui
+	 */
 	public static final float YSIZE = 200f;
 	
 	//chat historys
@@ -64,7 +65,7 @@ public class ChatUi
 		final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 		
 		stage = new Stage();
-		stage.setViewport(Gdx.graphics.getWidth(), YSIZE, true, 0, YSIZE, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		stage.setViewport(Gdx.graphics.getWidth(), YSIZE, true, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		Table grid = new Table();
 		grid.setFillParent(true);
@@ -76,17 +77,15 @@ public class ChatUi
 		TextButton sendButton = new TextButton("Send", skin);
 		
 		//add button listener
-		sendButton.addListener(new InputListener(){
+		sendButton.addListener(new ChangeListener(){
+
 			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+			public void changed(ChangeEvent event, Actor actor)
 			{
-				if (button == Buttons.LEFT)
-				{
-					sendMessage();
-					return true;
-				}
-				return false;
+				sendMessage();
+				System.out.println("button clicked");
 			}
+			
 		});
 		
 		//create chat log area
