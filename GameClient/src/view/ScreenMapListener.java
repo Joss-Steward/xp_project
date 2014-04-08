@@ -45,6 +45,12 @@ public class ScreenMapListener extends ScreenListener
 			PlayerMovedReport report = (PlayerMovedReport) arg;
 			map.movePlayer(report.getID(), report.getNewPosition());
 		}
+		// adds a message spoken by users to be displayed in the UI
+		else if (arg.getClass().equals(ChatReceivedReport.class))
+		{
+			ChatReceivedReport report = (ChatReceivedReport) arg;
+			map.addChat(report.toString(), report.getType());
+		}
 	}
 
 	/**
@@ -56,6 +62,7 @@ public class ScreenMapListener extends ScreenListener
 		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
 		reportTypes.add(PlayerConnectedToAreaServerReport.class);
 		reportTypes.add(PlayerMovedReport.class);
+		reportTypes.add(ChatReceivedReport.class);
 		// reportTypes.add(OtherPlayerMovedReport.class);
 
 		return reportTypes;

@@ -12,9 +12,9 @@ import model.QualifiedObservableReport;
  */
 public class ChatReceivedReport implements QualifiedObservableReport
 {
-	private String message;
-	private String senderName;
-	private ChatType type;
+	private final String message;
+	private final String senderName;
+	private final ChatType type;
 	
 	/**
 	 * 
@@ -49,5 +49,21 @@ public class ChatReceivedReport implements QualifiedObservableReport
 		equals = equals && type.equals(other.type);
 
 		return equals;
+	}
+	
+	/**
+	 * @return the readable form of the message for the chat history
+	 */
+	public String toString()
+	{
+		return "["+this.senderName+"] "+this.message;
+	}
+	
+	/**
+	 * @return the type of message this chat is broadcast as
+	 */
+	public ChatType getType()
+	{
+		return this.type;
 	}
 }

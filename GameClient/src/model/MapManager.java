@@ -170,16 +170,24 @@ public class MapManager extends QualifiedObservable
 				//parse position of the hotspot
 				String[] values = key.split(" ");
 				int x, y;
-				x = Integer.parseInt(values[0]);
-				y = Integer.parseInt(values[1]);
-				Position from = new Position(x, y);
-				
-				values = properties.get(key).toString().split(" ");
-				String mapName = values[0];
-				Position to = new Position(Integer.parseInt(values[1]), Integer.parseInt(values[2]));
-				
-				TeleportHotSpot hotspot = new TeleportHotSpot(mapName, to);
-				this.teleportMap.put(from, hotspot);
+				try
+				{
+					x = Integer.parseInt(values[0]);
+					y = Integer.parseInt(values[1]);
+					Position from = new Position(x, y);
+					
+					values = properties.get(key).toString().split(" ");
+					String mapName = values[0];
+					Position to = new Position(Integer.parseInt(values[1]), Integer.parseInt(values[2]));
+					
+					TeleportHotSpot hotspot = new TeleportHotSpot(mapName, to);
+					this.teleportMap.put(from, hotspot);
+				}
+				//catch when a property isn't a hotspot definition
+				catch (NumberFormatException e)
+				{
+					
+				}
 			}
 		}
 	}
