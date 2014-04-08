@@ -30,7 +30,7 @@ public class ConnectionIncomingTest
 	{
 		Message msg = new StubMessage1();
 
-		MessageHandlerSet messageHandlerSet = new MessageHandlerSet();
+		MessageHandlerSet messageHandlerSet = new MessageHandlerSet(null);
 		ConnectionIncoming connection = new ConnectionIncoming(null, messageHandlerSet);
 		connection.processRequest(msg);
 

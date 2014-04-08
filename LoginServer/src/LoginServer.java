@@ -3,6 +3,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import communication.ConnectionManager;
+import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
 
@@ -47,9 +48,13 @@ public class LoginServer implements Runnable
 				Socket sock = servSock.accept();
 				System.out.println(i + ":  got something from " + sock);
 				i++;
-				handlers = new MessageHandlerSet();
 				packers = new MessagePackerSet();
-				new ConnectionManager(sock, handlers, packers);
+				StateAccumulator stateAccumulator = new StateAccumulator(packers);
+				
+				handlers = new MessageHandlerSet(stateAccumulator);
+				new ConnectionManager(sock, handlers,
+						packers);
+
 			}
 
 		} catch (Throwable e)

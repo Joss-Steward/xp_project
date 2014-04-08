@@ -1,6 +1,7 @@
 package communication.handlers;
 
 import communication.ConnectionManager;
+import communication.StateAccumulator;
 import communication.messages.Message;
 
 /**
@@ -14,6 +15,7 @@ import communication.messages.Message;
 public abstract class MessageHandler
 {
 	protected ConnectionManager connectionManager;
+	private StateAccumulator stateAccumulator;
 
 	/**
 	 * Processes an incoming message
@@ -42,5 +44,10 @@ public abstract class MessageHandler
 	protected ConnectionManager getConnectionManager()
 	{
 		return connectionManager;
+	}
+
+	public void setAccumulator(StateAccumulator stateAccumulator)
+	{
+		this.stateAccumulator = stateAccumulator;
 	}
 }
