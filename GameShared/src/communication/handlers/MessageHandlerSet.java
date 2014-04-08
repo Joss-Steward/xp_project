@@ -24,7 +24,9 @@ public class MessageHandlerSet extends TypeDetector
 	private HashMap<Class<?>, MessageHandler> handlers;
 
 	/**
-	 * @param stateAccumulator 
+	 * @param stateAccumulator
+	 *            the accumulator associated with our socket so that the
+	 *            handlers we create have the ability to reply to requests
 	 * 
 	 */
 	public MessageHandlerSet(StateAccumulator stateAccumulator)

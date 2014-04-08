@@ -46,8 +46,17 @@ public abstract class MessageHandler
 		return connectionManager;
 	}
 
-	public void setAccumulator(StateAccumulator stateAccumulator)
+	protected void setAccumulator(StateAccumulator stateAccumulator)
 	{
 		this.stateAccumulator = stateAccumulator;
+	}
+
+	/**
+	 * get the accumulator that we should use for responses to incoming messages
+	 * @return the state accumulator
+	 */
+	public StateAccumulator getStateAccumulator()
+	{
+		return stateAccumulator;
 	}
 }
