@@ -167,11 +167,11 @@ public class MapManager extends QualifiedObservable
 			{
 				String key = propKeys.next();
 				
-				//parse position of the hotspot
-				String[] values = key.split(" ");
-				int x, y;
-				try
+				//parse position of the hotspot when a property isn't a hotspot definition
+				if (key.matches("[0-9]+ [0-9]+"))
 				{
+					String[] values = key.split(" ", 2);
+					int x, y;
 					x = Integer.parseInt(values[0]);
 					y = Integer.parseInt(values[1]);
 					Position from = new Position(x, y);
@@ -181,12 +181,7 @@ public class MapManager extends QualifiedObservable
 					Position to = new Position(Integer.parseInt(values[1]), Integer.parseInt(values[2]));
 					
 					TeleportHotSpot hotspot = new TeleportHotSpot(mapName, to);
-					this.teleportMap.put(from, hotspot);
-				}
-				//catch when a property isn't a hotspot definition
-				catch (NumberFormatException e)
-				{
-					
+					this.teleportMap.put(from, hotspot);		
 				}
 			}
 		}
