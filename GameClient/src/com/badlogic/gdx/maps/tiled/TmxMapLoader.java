@@ -583,6 +583,10 @@ public class TmxMapLoader extends AsynchronousAssetLoader<TiledMap, TmxMapLoader
 	private void loadImageLayer(TiledMap map, Element element, FileHandle tmxFile, ImageResolver imageResolver)
 	{
 		if (element.getName().equals("imagelayer")) {
+			String name = element.getAttribute("name", null);
+			boolean visible = element.getIntAttribute("visible", 1) == 1;
+			float opacity = element.getFloatAttribute("opacity", 1.0f);
+			
 			FileHandle image = null;
 			String source = element.getAttribute("source", null);
 			String imageSource = null;
@@ -603,7 +607,10 @@ public class TmxMapLoader extends AsynchronousAssetLoader<TiledMap, TmxMapLoader
 			TextureRegion texture = imageResolver.getImage(image.path());
 			
 			TiledMapImageLayer layer = new TiledMapImageLayer(0, 0, texture);
-			
+			layer.setVisible(visible);
+			layer.setOpacity(opacity);
+			layer.setName(name);
+
 			map.getLayers().add(layer);
 		}
 	}
