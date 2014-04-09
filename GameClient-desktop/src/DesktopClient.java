@@ -16,6 +16,6 @@ public class DesktopClient
 	 */
 	public static void main(String[] args)
 	{
-		new LwjglApplication(new GameLibGDX(), "Game", 480, 320, true);
+		new LwjglApplication(new GameLibGDX(), "Game", 800, 800, true);
 	}
 }

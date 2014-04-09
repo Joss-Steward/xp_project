@@ -8,14 +8,20 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapLayers;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.IntMap;
-import communication.messages.ChatMessage.ChatType;
 
+import communication.messages.ChatMessage.ChatType;
 import data.Position;
 
 /**
@@ -27,9 +33,13 @@ import data.Position;
 public class ScreenMap extends ScreenBasic
 {
 	OrthogonalTiledMapRenderer mapRenderer;
+	PlayerSprite mySprite;
+	
 	PlayerSpriteFactory playerFactory;
 	IntMap<PlayerSprite> characters;
-	PlayerSprite mySprite;
+
+	//holds characters that need to be added until the map is loaded
+	IntMap<Position> characterQueue;	
 
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
@@ -37,21 +47,31 @@ public class ScreenMap extends ScreenBasic
 	private ScreenMapInput mapInput;
 	private ChatUi chatArea;
 	
+	//tile size that we will be moving in according to the collision masking tileset
+	private Vector2 tileSize;
+	private Vector2 mapPixelSize;
+	private Vector2 mapSize;
+	
+	private BitmapFont loadingFont;
+	
+	private int[] bgLayers, fgLayers;
+	
 	/**
 	 * 
 	 */
 	public ScreenMap()
 	{
-		stage = new Stage();
 		// unitScale = 1 / 32f;
-		unitScale = .5f;
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.update();
-		stage.setCamera(camera);
+		unitScale = 1f;
 		batch = new SpriteBatch();
 		characters = new IntMap<PlayerSprite>();
+		characterQueue = new IntMap<Position>();
 		mapInput = new ScreenMapInput();
+		
+		tileSize = new Vector2(16,16);
+		mapSize = new Vector2(1,1);
+		mapPixelSize = new Vector2(16,16);
+		
 	}
 
 	/**
@@ -84,22 +104,32 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void render(float delta)
 	{
-		// TODO once movement is working, uncomment these so the camera follows
-		// the player
-		// camera.position.x = this.mySprite.getX();
-		// camera.position.y = this.mySprite.getY();
 		camera.update();
 		stage.act();
 		stage.draw();
 
-		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		// int[] backgroundLayers = { 0, 1 }; // don't allocate every frame!
-		// int[] foregroundLayers = { 2 }; // don't allocate every frame!
 		if (mapRenderer != null)
 		{
+			Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
+			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
+			//insures players will be positioned at the right location when a map is set
+			IntMap.Keys ids = this.characterQueue.keys();
+			while (ids.hasNext)
+			{
+				int id = ids.next();
+				Position pos = this.characterQueue.remove(id);
+				Vector2 where = this.positionToScale(pos);
+				PlayerSprite sprite = this.characters.get(id);
+				sprite.setPosition(where.x, where.y);
+				if (sprite == this.mySprite)
+				{
+					camera.position.set(where.x, where.y, 0);
+				}
+			}
+			
 			mapRenderer.setView(camera);
-			mapRenderer.render();
+			mapRenderer.render(bgLayers);
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
 			for (PlayerSprite s : this.characters.values())
@@ -108,12 +138,25 @@ public class ScreenMap extends ScreenBasic
 				s.draw(batch);
 			}
 			batch.end();
+			mapRenderer.render(fgLayers);
 			
 			chatArea.draw(delta);
+			
+			//have the camera follow the player when moving
+			camera.position.set(this.mySprite.getPosition(), 0);
 		}
-		// mapRenderer.render(backgroundLayers);
-		// renderMyCustomSprites();
-		// mapRenderer.render(foregroundLayers);
+		else
+		{
+			Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
+			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+			batch.begin();
+			loadingFont.draw(batch, "Loading...", Gdx.graphics.getWidth() - loadingFont.getBounds("Loading...").width - 10, 10 + loadingFont.getLineHeight());
+			batch.end();
+			// fake load time to test the loading screen's visibility
+			//int i = 100000;
+			//while (i > 0) i--;
+		}
+		
 		if (Gdx.input.isKeyPressed(Keys.Q))
 		{
 			System.out.println("quest button is pressed");
@@ -129,6 +172,14 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void resize(int width, int height)
 	{
+		camera.setToOrtho(false, width, height);
+		camera.update();
+		if (mapRenderer != null)
+		{
+			mapRenderer.setView(camera);
+		}
+		chatArea.resize(width, height);
+		System.out.println(width + " " + height);
 	}
 
 	/**
@@ -149,6 +200,39 @@ public class ScreenMap extends ScreenBasic
 	{
 		System.out.println("updated tile map in the screen " + tiledMap);
 		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, unitScale);
+		
+		//determine constant sizing properties of the map
+		MapProperties prop = tiledMap.getProperties();
+		int mapWidth = prop.get("width", Integer.class);
+		int mapHeight = prop.get("height", Integer.class);
+		int tilePixelWidth = prop.get("tilewidth", Integer.class);
+		int tilePixelHeight = prop.get("tileheight", Integer.class);
+
+		tileSize.set(tilePixelWidth, tilePixelHeight);
+		tileSize.scl(unitScale);
+		mapSize.set(mapWidth, mapHeight);
+		mapPixelSize.set(mapSize.x * tileSize.x, mapSize.y * tileSize.y);
+		
+		//figure out which layers are foreground and background layers;
+		IntArray background = new IntArray();
+		IntArray foreground = new IntArray();
+		
+		MapLayers layers = mapRenderer.getMap().getLayers();
+		for (int i = 0; i < layers.getCount(); i++)
+		{
+			MapLayer layer = layers.get(i);
+			if (layer.getName().startsWith("foreground"))
+			{
+				foreground.add(i);
+			}
+			else
+			{
+				background.add(i);
+			}
+		}
+		
+		bgLayers = background.toArray();
+		fgLayers = foreground.toArray();
 	}
 
 	/**
@@ -157,6 +241,15 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void show()
 	{
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera.update();
+		stage = new Stage();
+		stage.setCamera(camera);
+		
+		final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		loadingFont = skin.getFont("default-font");
+	
 		playerFactory = new PlayerSpriteFactory(
 				Gdx.files.internal("data/characters.pack"));
 		chatArea = new ChatUi();
@@ -184,11 +277,9 @@ public class ScreenMap extends ScreenBasic
 			boolean isThisClientsPlayer)
 	{
 		PlayerSprite sprite = playerFactory.create(type);
-		Vector2 loc = positionToScale(pos);
-		sprite.setPosition(loc.x, loc.y);
+		characterQueue.put(playerID, pos);
 		characters.put(playerID, sprite);
-		// detect when the player being added is the client's player for finer
-		// control
+		// detect when the player being added is the client's player for finer control
 		if (isThisClientsPlayer)
 		{
 			mySprite = sprite;
@@ -219,11 +310,7 @@ public class ScreenMap extends ScreenBasic
 	 */
 	private Vector2 positionToScale(Position pos)
 	{
-	
-		float y = Gdx.graphics.getHeight()/16f-pos.getRow()-1;
-		System.out.println("height = " + Gdx.graphics.getHeight()/16f + "y = " + y + " row = " + pos.getRow());
-		Vector2 tmp = new Vector2(pos.getColumn(), y);
-		tmp.scl(16f);
+		Vector2 tmp = new Vector2(pos.getColumn()*tileSize.x, mapPixelSize.y - (pos.getRow()+1)*tileSize.y);
 		return tmp;
 	}
 	

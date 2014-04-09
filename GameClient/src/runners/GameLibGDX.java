@@ -7,7 +7,6 @@ import model.ModelFacade;
 import view.ScreenBasic;
 import view.Screens;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
@@ -22,7 +21,7 @@ import communication.packers.MessagePackerSet;
  * @author Merlin
  * 
  */
-public class GameLibGDX extends Game implements ApplicationListener
+public class GameLibGDX extends Game
 {
 	private ConnectionManager cm;
 
@@ -61,32 +60,11 @@ public class GameLibGDX extends Game implements ApplicationListener
 	}
 
 	/**
-	 * @see com.badlogic.gdx.ApplicationListener#resize(int, int)
-	 */
-	public void resize(int width, int height)
-	{
-	}
-
-	/**
-	 * @see com.badlogic.gdx.ApplicationListener#pause()
-	 */
-	public void pause()
-	{
-	}
-
-	/**
-	 * @see com.badlogic.gdx.ApplicationListener#resume()
-	 */
-	public void resume()
-	{
-	}
-
-	/**
 	 * @see com.badlogic.gdx.ApplicationListener#dispose()
 	 */
 	public void dispose()
 	{
-
+		super.dispose();
 		cm.disconnect();
 	}
 }

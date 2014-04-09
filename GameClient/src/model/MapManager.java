@@ -124,28 +124,29 @@ public class MapManager extends QualifiedObservable
 
 		if (collisionLayer != null)
 		{
-			this.passabilityMap = new boolean[collisionLayer.getHeight()][collisionLayer
-					.getWidth()];
+			int width = tiledMap.getProperties().get("width", Integer.class);
+			int height = tiledMap.getProperties().get("height", Integer.class);
+			this.passabilityMap = new boolean[height][width];
 
-			for (int row = 0; row < collisionLayer.getHeight(); row++)
+			for (int row = 0; row < height; row++)
 			{
-				System.out.println((collisionLayer.getHeight()-row-1)+ ": ");
-				for (int col = 0; col < collisionLayer.getWidth(); col++)
+				//System.out.println((collisionLayer.getHeight()-row-1)+ ": ");
+				for (int col = 0; col < width; col++)
 				{
 
 					Cell cell = collisionLayer.getCell(col, row);
 					if (cell == null)
 					{
-						passabilityMap[collisionLayer.getHeight() - row - 1][col] = true;
-						System.out.print("t");
+						passabilityMap[height - row - 1][col] = true;
+						//System.out.print("t");
 					} else
 					{
-						this.passabilityMap[collisionLayer.getHeight() - row - 1][col] = false;
-						System.out.print("f");
+						this.passabilityMap[height - row - 1][col] = false;
+						//System.out.print("f");
 					}
 
 				}
-				System.out.println();
+				//System.out.println();
 			}
 
 		} else
@@ -166,12 +167,11 @@ public class MapManager extends QualifiedObservable
 			while (propKeys.hasNext())
 			{
 				String key = propKeys.next();
-				
-				//parse position of the hotspot
-				String[] values = key.split(" ");
-				int x, y;
-				try
+				//parse position of the hotspot when a property isn't a hotspot definition
+				if (key.matches("[0-9]+ [0-9]+"))
 				{
+					String[] values = key.split(" ", 2);
+					int x, y;
 					x = Integer.parseInt(values[0]);
 					y = Integer.parseInt(values[1]);
 					Position from = new Position(x, y);
@@ -181,12 +181,7 @@ public class MapManager extends QualifiedObservable
 					Position to = new Position(Integer.parseInt(values[1]), Integer.parseInt(values[2]));
 					
 					TeleportHotSpot hotspot = new TeleportHotSpot(mapName, to);
-					this.teleportMap.put(from, hotspot);
-				}
-				//catch when a property isn't a hotspot definition
-				catch (NumberFormatException e)
-				{
-					
+					this.teleportMap.put(from, hotspot);		
 				}
 			}
 		}
@@ -205,13 +200,13 @@ public class MapManager extends QualifiedObservable
 			return true;
 		}
 		// prevent walking out of bounds
-		if (p.getColumn() > this.passabilityMap.length || p.getColumn() < 0
-				|| p.getRow() > this.passabilityMap[0].length || p.getRow() < 0)
+		if (p.getColumn() >= this.passabilityMap[0].length || p.getColumn() < 0
+				|| p.getRow() >= this.passabilityMap.length || p.getRow() < 0)
 		{
 			return false;
 		}
-		System.out.println("passability at " + p.getRow() + " " + p.getColumn() + " is "
-				+ passabilityMap[p.getRow()][p.getColumn()]);
+		//System.out.println("passability at " + p.getRow() + " " + p.getColumn() + " is "
+		//		+ passabilityMap[p.getRow()][p.getColumn()]);
 		// check against the passability map for capable movement
 		return this.passabilityMap[p.getRow()][p.getColumn()];
 	}
