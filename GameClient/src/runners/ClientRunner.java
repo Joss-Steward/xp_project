@@ -10,6 +10,7 @@ import model.CommandMovePlayer;
 import model.ModelFacade;
 import model.PlayerManager;
 import communication.ConnectionManager;
+import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
 import data.Position;
@@ -35,8 +36,11 @@ public class ClientRunner
 	public static void main(String[] args) throws UnknownHostException, IOException
 	{
 		Socket socket = new Socket("localhost", 1871);
-		ConnectionManager cm = new ConnectionManager(socket, new MessageHandlerSet(),
-				new MessagePackerSet());
+		MessagePackerSet messagePackerSet = new MessagePackerSet();
+		StateAccumulator stateAccumulator = new StateAccumulator(messagePackerSet);
+		
+		ConnectionManager cm = new ConnectionManager(socket, new MessageHandlerSet(stateAccumulator),
+				messagePackerSet);
 		ModelFacade modelFacade = ModelFacade.getSingleton(true, false);
 
 		Scanner scanner = new Scanner(System.in);

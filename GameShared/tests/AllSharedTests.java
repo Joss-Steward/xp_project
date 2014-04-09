@@ -14,6 +14,8 @@ import communication.ConnectionManagerTest;
 import communication.StateAccumulatorTest;
 import communication.handlers.MessageHandlerSetTest;
 import communication.messages.ConnectionMessageTest;
+import communication.messages.GetServerInfoMessageTest;
+import communication.messages.GetServerInfoResponseMessageTest;
 import communication.messages.LoginMessageTest;
 import communication.messages.LoginResponseMessageTest;
 import communication.messages.MapFileMessageTest;
@@ -47,6 +49,8 @@ import data.PositionTest;
 
 		// communication.messages
 		ConnectionMessageTest.class, LoginMessageTest.class,
+		GetServerInfoMessageTest.class,
+		GetServerInfoResponseMessageTest.class,
 		LoginResponseMessageTest.class, MapFileMessageTest.class,
 		MessageStructureVerifier.class, MovementMessageTest.class,
 		PlayerJoinedMessageTest.class,

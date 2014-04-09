@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import communication.CommunicationException;
 import communication.ConnectionManager;
+import communication.StateAccumulator;
 import communication.TypeDetector;
 import communication.messages.Message;
 
@@ -23,9 +24,12 @@ public class MessageHandlerSet extends TypeDetector
 	private HashMap<Class<?>, MessageHandler> handlers;
 
 	/**
+	 * @param stateAccumulator
+	 *            the accumulator associated with our socket so that the
+	 *            handlers we create have the ability to reply to requests
 	 * 
 	 */
-	public MessageHandlerSet()
+	public MessageHandlerSet(StateAccumulator stateAccumulator)
 	{
 		handlers = new HashMap<Class<?>, MessageHandler>();
 
@@ -36,6 +40,7 @@ public class MessageHandlerSet extends TypeDetector
 			try
 			{
 				MessageHandler handler = (MessageHandler) handlerType.newInstance();
+				handler.setAccumulator(stateAccumulator);
 				registerHandler(handler);
 			} catch (InstantiationException | IllegalAccessException e)
 			{

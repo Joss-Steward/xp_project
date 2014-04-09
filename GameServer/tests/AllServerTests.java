@@ -1,4 +1,5 @@
 import model.AddCommandTest;
+import model.MapToServerMappingTest;
 import model.MovePlayerCommandTest;
 import model.PlayerManagerTest;
 import model.PlayerPinTest;
@@ -35,12 +36,13 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 		MovementMessageHandlerTest.class,
 
 		// communication.packers
-		MovementMessagePackerTest.class, 
 		MapFileMessagePackerTest.class,
+		MovementMessagePackerTest.class, 
 		PlayerJoinedMessagePackerTest.class,
 
 		// model
 		AddCommandTest.class, 
+		MapToServerMappingTest.class,
 		MovePlayerCommandTest.class, 
 		PlayerManagerTest.class,
 		PlayerTest.class,

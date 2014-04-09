@@ -35,7 +35,7 @@ public class MessageHandlerSetTest
 	@Test
 	public void detectsAndRegisters() throws CommunicationException
 	{
-		MessageHandlerSet proc = new MessageHandlerSet();
+		MessageHandlerSet proc = new MessageHandlerSet(null);
 
 		proc.process(new StubMessage1());
 		proc.process(new StubMessage2());
@@ -52,7 +52,7 @@ public class MessageHandlerSetTest
 	@Test(expected = CommunicationException.class)
 	public void noSuchHandler() throws CommunicationException
 	{
-		MessageHandlerSet proc = new MessageHandlerSet();
+		MessageHandlerSet proc = new MessageHandlerSet(null);
 		Message msg = EasyMock.createMock(Message.class);
 		EasyMock.replay(msg);
 
@@ -68,7 +68,7 @@ public class MessageHandlerSetTest
 	public void accumulatorIsBroadcast()
 	{
 		ConnectionManager cm = EasyMock.createMock(ConnectionManager.class);
-		MessageHandlerSet proc = new MessageHandlerSet();
+		MessageHandlerSet proc = new MessageHandlerSet(null);
 		proc.setConnectionManager(cm);
 
 		Collection<MessageHandler> handlers = proc.getHandlers();

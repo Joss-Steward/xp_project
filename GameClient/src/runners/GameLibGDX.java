@@ -9,7 +9,9 @@ import view.Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+
 import communication.ConnectionManager;
+import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
 
@@ -34,8 +36,12 @@ public class GameLibGDX extends Game
 		try
 		{
 			socket = new Socket("localhost", 1871);
-			cm = new ConnectionManager(socket, new MessageHandlerSet(),
-					new MessagePackerSet());
+			MessagePackerSet messagePackerSet = new MessagePackerSet();
+			StateAccumulator stateAccumulator = new StateAccumulator(messagePackerSet);
+			
+			new ConnectionManager(socket, new MessageHandlerSet(stateAccumulator),
+					messagePackerSet);
+			
 
 		} catch (IOException e)
 		{
