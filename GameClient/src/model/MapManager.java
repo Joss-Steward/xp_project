@@ -124,28 +124,29 @@ public class MapManager extends QualifiedObservable
 
 		if (collisionLayer != null)
 		{
-			this.passabilityMap = new boolean[collisionLayer.getHeight()][collisionLayer
-					.getWidth()];
+			int width = tiledMap.getProperties().get("width", Integer.class);
+			int height = tiledMap.getProperties().get("height", Integer.class);
+			this.passabilityMap = new boolean[height][width];
 
-			for (int row = 0; row < collisionLayer.getHeight(); row++)
+			for (int row = 0; row < height; row++)
 			{
-				System.out.println((collisionLayer.getHeight()-row-1)+ ": ");
-				for (int col = 0; col < collisionLayer.getWidth(); col++)
+				//System.out.println((collisionLayer.getHeight()-row-1)+ ": ");
+				for (int col = 0; col < width; col++)
 				{
 
 					Cell cell = collisionLayer.getCell(col, row);
 					if (cell == null)
 					{
-						passabilityMap[collisionLayer.getHeight() - row - 1][col] = true;
+						passabilityMap[height - row - 1][col] = true;
 						System.out.print("t");
 					} else
 					{
-						this.passabilityMap[collisionLayer.getHeight() - row - 1][col] = false;
+						this.passabilityMap[height - row - 1][col] = false;
 						System.out.print("f");
 					}
 
 				}
-				System.out.println();
+				//System.out.println();
 			}
 
 		} else
@@ -200,8 +201,8 @@ public class MapManager extends QualifiedObservable
 			return true;
 		}
 		// prevent walking out of bounds
-		if (p.getColumn() > this.passabilityMap.length || p.getColumn() < 0
-				|| p.getRow() > this.passabilityMap[0].length || p.getRow() < 0)
+		if (p.getColumn() >= this.passabilityMap[0].length || p.getColumn() < 0
+				|| p.getRow() >= this.passabilityMap.length || p.getRow() < 0)
 		{
 			return false;
 		}
