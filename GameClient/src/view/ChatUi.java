@@ -65,7 +65,7 @@ public class ChatUi
 		final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 		
 		stage = new Stage();
-		stage.setViewport(Gdx.graphics.getWidth(), YSIZE, true, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		stage.setViewport(600, YSIZE, true, 0, 0, Math.min(600, Gdx.graphics.getWidth()), Gdx.graphics.getHeight());
 		
 		Table grid = new Table();
 		grid.setFillParent(true);
@@ -167,6 +167,11 @@ public class ChatUi
 		
 		//add the ui to the stage
 		stage.addActor(grid);
+	}
+	
+	public void resize(int width, int height)
+	{
+		stage.setViewport(600, YSIZE, true, 0, 0, width, height);
 	}
 	
 	/**

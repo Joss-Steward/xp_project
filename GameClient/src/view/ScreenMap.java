@@ -16,6 +16,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.IntArray;
@@ -108,8 +109,6 @@ public class ScreenMap extends ScreenBasic
 		stage.act();
 		stage.draw();
 
-		// int[] backgroundLayers = { 0, 1 }; // don't allocate every frame!
-		// int[] foregroundLayers = { 2 }; // don't allocate every frame!
 		if (mapRenderer != null)
 		{
 			Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
@@ -122,7 +121,12 @@ public class ScreenMap extends ScreenBasic
 				int id = ids.next();
 				Position pos = this.characterQueue.remove(id);
 				Vector2 where = this.positionToScale(pos);
-				this.characters.get(id).setPosition(where.x, where.y);
+				PlayerSprite sprite = this.characters.get(id);
+				sprite.setPosition(where.x, where.y);
+				if (sprite == this.mySprite)
+				{
+					camera.position.set(where.x, where.y, 0);
+				}
 			}
 			
 			mapRenderer.setView(camera);
@@ -140,8 +144,7 @@ public class ScreenMap extends ScreenBasic
 			chatArea.draw(delta);
 			
 			//have the camera follow the player when moving
-			camera.position.x = this.mySprite.getX();
-			camera.position.y = this.mySprite.getY();
+			camera.position.set(this.mySprite.getPosition(), 0);
 		}
 		else
 		{
@@ -154,9 +157,7 @@ public class ScreenMap extends ScreenBasic
 			//int i = 100000;
 			//while (i > 0) i--;
 		}
-		// mapRenderer.render(backgroundLayers);
-		// renderMyCustomSprites();
-		// mapRenderer.render(foregroundLayers);
+		
 		if (Gdx.input.isKeyPressed(Keys.Q))
 		{
 			System.out.println("quest button is pressed");
@@ -172,6 +173,14 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void resize(int width, int height)
 	{
+		camera.setToOrtho(false, width, height);
+		camera.update();
+		if (mapRenderer != null)
+		{
+			mapRenderer.setView(camera);
+		}
+		chatArea.resize(width, height);
+		System.out.println(width + " " + height);
 	}
 
 	/**
@@ -213,7 +222,7 @@ public class ScreenMap extends ScreenBasic
 		for (int i = 0; i < layers.getCount(); i++)
 		{
 			MapLayer layer = layers.get(i);
-			if (layer.getName().matches("^\bforeground\b"))
+			if (layer.getName().startsWith("foreground"))
 			{
 				foreground.add(i);
 			}
