@@ -138,11 +138,11 @@ public class MapManager extends QualifiedObservable
 					if (cell == null)
 					{
 						passabilityMap[height - row - 1][col] = true;
-						System.out.print("t");
+						//System.out.print("t");
 					} else
 					{
 						this.passabilityMap[height - row - 1][col] = false;
-						System.out.print("f");
+						//System.out.print("f");
 					}
 
 				}
@@ -167,7 +167,6 @@ public class MapManager extends QualifiedObservable
 			while (propKeys.hasNext())
 			{
 				String key = propKeys.next();
-				
 				//parse position of the hotspot when a property isn't a hotspot definition
 				if (key.matches("[0-9]+ [0-9]+"))
 				{
@@ -206,8 +205,8 @@ public class MapManager extends QualifiedObservable
 		{
 			return false;
 		}
-		System.out.println("passability at " + p.getRow() + " " + p.getColumn() + " is "
-				+ passabilityMap[p.getRow()][p.getColumn()]);
+		//System.out.println("passability at " + p.getRow() + " " + p.getColumn() + " is "
+		//		+ passabilityMap[p.getRow()][p.getColumn()]);
 		// check against the passability map for capable movement
 		return this.passabilityMap[p.getRow()][p.getColumn()];
 	}
