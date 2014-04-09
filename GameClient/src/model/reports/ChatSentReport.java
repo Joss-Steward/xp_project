@@ -16,7 +16,7 @@ public class ChatSentReport implements QualifiedObservableReport
 	private String senderName;
 	private Position position;
 	private ChatType type;
-	
+
 	/**
 	 * 
 	 * @param message The message we received
@@ -31,6 +31,43 @@ public class ChatSentReport implements QualifiedObservableReport
 		this.position = position;
 		this.type = type;
 	}
+	
+	
+	/**
+	 * @return The message we received
+	 */
+	public String getMessage()
+	{
+		return message;
+	}
+
+	
+	/**
+	 * @return Who sent the message
+	 */
+	public String getSenderName()
+	{
+		return senderName;
+	}
+
+	
+	/**
+	 * @return Location of sender
+	 */
+	public Position getPosition()
+	{
+		return position;
+	}
+
+	
+	/**
+	 * @return What type of message this is
+	 */
+	public ChatType getType()
+	{
+		return type;
+	}
+	
 	
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)

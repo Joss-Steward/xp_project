@@ -7,7 +7,7 @@ package communication.messages;
  * @author Merlin
  * 
  */
-public class GetServerInfoMessage
+public class GetServerInfoMessage implements Message
 {
 
 	private String mapName;
