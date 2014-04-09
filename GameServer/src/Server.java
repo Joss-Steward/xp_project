@@ -1,7 +1,9 @@
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import model.OptionsManager;
 import communication.ConnectionManager;
 import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
@@ -18,6 +20,7 @@ public class Server implements Runnable
 {
 	private ServerSocket servSock;
 	private int port;
+	private String mapName;
 	
 	/**
 	 * Create a new Server listening on a given port
@@ -27,6 +30,7 @@ public class Server implements Runnable
 	public Server(String map, int port) 
 	{
 		this.port = port;
+		this.mapName = map;
 	}
 
 	/**
@@ -38,6 +42,8 @@ public class Server implements Runnable
 		try
 		{
 			servSock = new ServerSocket(port, 10);
+			String hostName = InetAddress.getLocalHost().getHostName();
+			OptionsManager.getSingleton().updateMapInformation(mapName, hostName, port);
 			while (true)
 			{
 				System.out.println("Listening on port " + port);
