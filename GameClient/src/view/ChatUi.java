@@ -169,6 +169,13 @@ public class ChatUi
 		stage.addActor(grid);
 	}
 	
+	/**
+	 * Rescale the ui for different resolutions
+	 * @param width
+	 * 	viewport width
+	 * @param height
+	 *  viewport height
+	 */
 	public void resize(int width, int height)
 	{
 		stage.setViewport(600, YSIZE, true, 0, 0, width, height);
