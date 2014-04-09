@@ -29,6 +29,11 @@ public class CommandMovePlayer extends Command
 	protected boolean execute()
 	{
 		boolean moved = false;
+		
+		if(MapManager.getSingleton().getIsTileTeleport(thePosition))
+		{
+			PlayerManager.getSingleton().getPlayerFromID(thePlayerID).teleport(thePosition);
+		}
 
 		if (MapManager.getSingleton().getIsTilePassable(thePosition))
 		{
