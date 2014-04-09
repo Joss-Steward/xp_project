@@ -15,7 +15,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * 
  */
 @DatabaseTable(tableName = "Server")
-public class MapToServerMapping
+public final class MapToServerMapping
 {
 
 	@DatabaseField(id = true)
@@ -152,5 +152,61 @@ public class MapToServerMapping
 	public String getMapName()
 	{
 		return mapName;
+	}
+
+	/**
+	 * Persist this object out to the db
+	 * @throws SQLException if updating the db failed
+	 */
+	public void persist() throws SQLException
+	{
+		serverDao.update(this);
+		
+	}
+
+	/**
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((hostName == null) ? 0 : hostName.hashCode());
+		result = prime * result + ((mapName == null) ? 0 : mapName.hashCode());
+		result = prime * result + portNumber;
+		return result;
+	}
+
+	/**
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MapToServerMapping other = (MapToServerMapping) obj;
+		if (hostName == null)
+		{
+			if (other.hostName != null)
+				return false;
+		} else if (!hostName.equals(other.hostName))
+			return false;
+		if (mapName == null)
+		{
+			if (other.mapName != null)
+				return false;
+		} else if (!mapName.equals(other.mapName))
+			return false;
+		if (portNumber != other.portNumber)
+			return false;
+		return true;
 	}
 }
