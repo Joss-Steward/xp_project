@@ -20,9 +20,10 @@ public class Server implements Runnable
 	
 	/**
 	 * Create a new Server listening on a given port
+	 * @param map The map that this server will serve
 	 * @param port The port to listen on
 	 */
-	public Server(int port) 
+	public Server(String map, int port) 
 	{
 		this.port = port;
 	}
@@ -65,17 +66,36 @@ public class Server implements Runnable
 	}
 
 	/**
+	 * Run like java -jar server.jar --port=1000 map=quiznasium
 	 * @param args
 	 *            Main runner
 	 * @throws IllegalArgumentException Thrown when the port is not given as an argument to the execution
 	 */
 	public static void main(String args[]) throws IllegalArgumentException
 	{
-		if(args.length != 1) {
-			throw new IllegalArgumentException("Port is required to run the server. Run the server like 'java server 1872'");
+		String map = null;
+		Integer port = null;
+		for(String arg: args)
+		{
+			String[] splitArg = arg.split("=");
+			if(splitArg[0].equals("--port"))
+			{
+				port = Integer.parseInt(splitArg[1]);
+			}
+			else if(splitArg[0].equals("--map"))
+			{
+				map = splitArg[1];
+			}
 		}
-		int port = Integer.parseInt(args[0]);
-		Server S = new Server(port);
+		if(map == null)
+		{
+			throw new IllegalArgumentException("Map name is required to run the server. Use the --map=STRING option.");
+		}
+		else if(port == null)
+		{
+			throw new IllegalArgumentException("Port is required to run the server. Use the --port=INTEGER option.");
+		}
+		Server S = new Server(map, port);
 		S.run();
 	}
 }
