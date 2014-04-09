@@ -246,4 +246,14 @@ public class MapManager extends QualifiedObservable
 	{
 		this.teleportMap = teleportMap;
 	}
+
+	/**
+	 * @param thePosition
+	 * 			the position the player is currently in
+	 * @return telportMap's value where the key is thePosition
+	 */
+	public TeleportHotSpot getTeleportHotSpot(Position thePosition) 
+	{
+		return teleportMap.get(thePosition);
+	}
 }
