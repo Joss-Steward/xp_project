@@ -12,19 +12,19 @@ import data.Position;
 public final class ChangeMapReport implements QualifiedObservableReport
 {
 	private final Position position;
-	private final String destination;
-	private final int port;
+	private final String mapName;
+
 	
 	/**
 	 * @param position The position to connect to
-	 * @param destination The URL to connect to
-	 * @param port The port to connect to
+	 * @param mapName is the Map the player is going to
+
 	 */
-	public ChangeMapReport(Position position, String destination, int port) 
+	public ChangeMapReport(Position position, String mapName) 
 	{
 		this.position = position;
-		this.destination = destination;
-		this.port = port;
+		this.mapName = mapName;
+		
 	}
 
 	/**
@@ -38,21 +38,13 @@ public final class ChangeMapReport implements QualifiedObservableReport
 	
 	/**
 	 * 
-	 * @return The server to connect to
+	 * @return The map the player is going to
 	 */
-	public String getDestination()
+	public String getMapName()
 	{
-		return destination;
+		return mapName;
 	}
 
-	/**
-	 * 
-	 * @return The port to connect to
-	 */
-	public int getPort()
-	{
-		return port;
-	}
 	
 
 	/**
@@ -70,10 +62,10 @@ public final class ChangeMapReport implements QualifiedObservableReport
 		ChangeMapReport other = (ChangeMapReport) obj;
 		boolean equals = true;
 		
-		if(this.getDestination() == null) {
-			equals = equals && other.getDestination() == null;
+		if(this.getMapName() == null) {
+			equals = equals && other.getMapName() == null;
 		} else {
-			equals = equals && this.getDestination().equals(other.getDestination());
+			equals = equals && this.getMapName().equals(other.getMapName());
 		}
 		
 		if(this.getPosition() == null) {
@@ -82,7 +74,6 @@ public final class ChangeMapReport implements QualifiedObservableReport
 			equals = equals && this.getPosition().equals(other.getPosition());
 		}
 		
-		equals = equals && this.getPort() == other.getPort();
 		
 		return equals;
 	}
@@ -95,9 +86,8 @@ public final class ChangeMapReport implements QualifiedObservableReport
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.getDestination() == null) ? 0 : this.getDestination().hashCode());
+		result = prime * result + ((this.getMapName() == null) ? 0 : this.getMapName().hashCode());
 		result = prime * result + ((this.getPosition() == null) ? 0 : this.getPosition().hashCode());
-		result = prime * result + this.getPort();
 		return result;
 	}
 }

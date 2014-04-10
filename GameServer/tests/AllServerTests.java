@@ -1,4 +1,6 @@
 import model.AddCommandTest;
+import model.ChatManagerTest;
+import model.ChatMessageReceivedCommandTest;
 import model.MapToServerMappingTest;
 import model.MovePlayerCommandTest;
 import model.MovePlayerSilentlyCommandTest;
@@ -7,12 +9,14 @@ import model.PlayerPinTest;
 import model.PlayerTest;
 import model.reports.PlayerConnectionReportTest;
 import model.reports.PlayerMovedReportTest;
+import model.reports.SendChatMessageReportTest;
 
 import org.junit.ClassRule;
 import org.junit.rules.ExternalResource;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import communication.handlers.ChatMessageHandlerTest;
 import communication.handlers.ConnectMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.TeleportationInitiationHandlerTest;
@@ -37,6 +41,7 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 		ConnectMessageHandlerTest.class,
 		MovementMessageHandlerTest.class,
 		TeleportationInitiationHandlerTest.class,
+		ChatMessageHandlerTest.class,
 
 		// communication.packers
 		MapFileMessagePackerTest.class,
@@ -50,11 +55,15 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 		MovePlayerSilentlyCommandTest.class,
 		PlayerManagerTest.class,
 		PlayerTest.class,
+		ChatManagerTest.class,
+		ChatMessageReceivedCommandTest.class,
 
 		// model.reports
 		PlayerConnectionReportTest.class, 
 		PlayerMovedReportTest.class, 
+		SendChatMessageReportTest.class,
 		})
+
 public class AllServerTests
 {
 	/**

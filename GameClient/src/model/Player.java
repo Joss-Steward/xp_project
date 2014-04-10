@@ -1,5 +1,6 @@
 package model;
 
+import model.reports.ChangeMapReport;
 import model.reports.PlayerMovedReport;
 import data.Position;
 
@@ -125,6 +126,7 @@ public class Player extends QualifiedObservable
 	{
 		this.position = playerPosition;
 		this.notifyObservers(new PlayerMovedReport(this.id, playerPosition));
+	
 	}
 
 	/**
@@ -148,6 +150,16 @@ public class Player extends QualifiedObservable
 	public Position getPosition()
 	{
 		return this.position;
+	}
+
+	/**
+	 * @param thePosition is the position of the hotspot
+	 * Creates a ChangeMapReport with the Map and location the player will teleport to.
+	 */
+	public void teleport(Position thePosition) 
+	{
+		TeleportHotSpot hotSpot = MapManager.getSingleton().getTeleportHotSpot(thePosition);
+		this.notifyObservers(new ChangeMapReport(hotSpot.getTeleportPosition(), hotSpot.getMapName()));
 	}
 
 }

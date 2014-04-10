@@ -22,10 +22,9 @@ public class ChangeMapReportTest
 	@Test
 	public void creation()
 	{
-		ChangeMapReport report = new ChangeMapReport(new Position(0,0), "destination", 1000);
+		ChangeMapReport report = new ChangeMapReport(new Position(0,0), "destination");
 		assertEquals(new Position(0, 0), report.getPosition());
-		assertEquals("destination", report.getDestination());
-		assertEquals(1000, report.getPort());
+		assertEquals("destination", report.getMapName());
 	}
 	
 	/**
