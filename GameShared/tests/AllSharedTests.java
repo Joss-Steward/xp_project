@@ -13,9 +13,10 @@ import communication.ConnectionIncomingTest;
 import communication.ConnectionManagerTest;
 import communication.StateAccumulatorTest;
 import communication.handlers.MessageHandlerSetTest;
+import communication.messages.ChatMessageTest;
 import communication.messages.ConnectionMessageTest;
-import communication.messages.GetServerInfoMessageTest;
-import communication.messages.GetServerInfoResponseMessageTest;
+import communication.messages.TeleportationInitiationMessageTest;
+import communication.messages.TeleportationContinuationMessageTest;
 import communication.messages.LoginMessageTest;
 import communication.messages.LoginResponseMessageTest;
 import communication.messages.MapFileMessageTest;
@@ -48,28 +49,39 @@ import data.PositionTest;
 		// StubMessageHandler2.class,
 
 		// communication.messages
-		ConnectionMessageTest.class, LoginMessageTest.class,
-		GetServerInfoMessageTest.class,
-		GetServerInfoResponseMessageTest.class,
-		LoginResponseMessageTest.class, MapFileMessageTest.class,
-		MessageStructureVerifier.class, MovementMessageTest.class,
+		ChatMessageTest.class,
+		ConnectionMessageTest.class,
+		TeleportationContinuationMessageTest.class,
+		LoginMessageTest.class,
+		TeleportationContinuationMessageTest.class,
+		LoginResponseMessageTest.class,
+		MapFileMessageTest.class,
+		MessageStructureVerifier.class, 
+		MovementMessageTest.class,
 		PlayerJoinedMessageTest.class,
 		// StubMessage1.class,
 		// StubMessage2.class,
+		TeleportationInitiationMessageTest.class,
+		
 
 		// communicatiaon.packers
 		MessagePackerSetTest.class,
-		// StubMessagePacker1.class,
-		// StubMessagePacker2.class,
+		// StubMessagePacker1,
+		// StubMessagePacker2,
+		// StubMessagePacker2a,
 
 		// data
 		PositionTest.class,
 
 		// model
 		// DatabaseTest.class
-		PlayerLoginTest.class, PlayerPinTest.class, QualifiedObservableTest.class,
-		// QualifiedObservableTestInherited.class,
+		PlayerLoginTest.class, 
+		PlayerPinTest.class, 
+		// PlayersInDB
+		QualifiedObservableTest.class,
+		// QualifiedObservableTestInherited,
 		QualifiedObserverConnectorTest.class,
+		// ServersInDB
 
 		// model.reports
 		// StubQualifiedObservableReport1.class,

@@ -1,5 +1,7 @@
 package communication.messages;
 
+import java.io.Serializable;
+
 /**
  * A message that allows a client to ask for the server & port number that are
  * managing a given map (tmx file)
@@ -7,9 +9,13 @@ package communication.messages;
  * @author Merlin
  * 
  */
-public class GetServerInfoResponseMessage implements Message
+public class TeleportationContinuationMessage implements Message, Serializable
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String mapName;
 	private String hostName;
 	private int portNumber;
@@ -25,7 +31,7 @@ public class GetServerInfoResponseMessage implements Message
 	 * @param portNumber
 	 *            the port number the server managing the given map is listening
 	 */
-	public GetServerInfoResponseMessage(String mapName, String hostName, int portNumber)
+	public TeleportationContinuationMessage(String mapName, String hostName, int portNumber)
 	{
 		this.mapName = mapName;
 		this.hostName = hostName;
@@ -48,7 +54,7 @@ public class GetServerInfoResponseMessage implements Message
 	 */
 	public String toString()
 	{
-		return "GetServerInfoResponseMessage: mapName = " + mapName + " and hostName = "
+		return "TeleportationContinuationMessage: mapName = " + mapName + " and hostName = "
 				+ hostName + " and portNumber = " + portNumber;
 	}
 

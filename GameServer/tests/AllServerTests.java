@@ -1,6 +1,7 @@
 import model.AddCommandTest;
 import model.MapToServerMappingTest;
 import model.MovePlayerCommandTest;
+import model.MovePlayerSilentlyCommandTest;
 import model.PlayerManagerTest;
 import model.PlayerPinTest;
 import model.PlayerTest;
@@ -14,6 +15,7 @@ import org.junit.runners.Suite;
 
 import communication.handlers.ConnectMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
+import communication.handlers.TeleportationInitiationHandlerTest;
 import communication.packers.MapFileMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.PlayerJoinedMessagePackerTest;
@@ -34,6 +36,7 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 		// communication.handlers
 		ConnectMessageHandlerTest.class,
 		MovementMessageHandlerTest.class,
+		TeleportationInitiationHandlerTest.class,
 
 		// communication.packers
 		MapFileMessagePackerTest.class,
@@ -44,6 +47,7 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 		AddCommandTest.class, 
 		MapToServerMappingTest.class,
 		MovePlayerCommandTest.class, 
+		MovePlayerSilentlyCommandTest.class,
 		PlayerManagerTest.class,
 		PlayerTest.class,
 
