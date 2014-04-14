@@ -11,20 +11,29 @@ import data.Position;
  */
 public final class ChangeMapReport implements QualifiedObservableReport
 {
+	private final int playerID;
 	private final Position position;
 	private final String mapName;
 
 	
 	/**
+	 * @param playerID the ID of the player teleporting
 	 * @param position The position to connect to
 	 * @param mapName is the Map the player is going to
-
 	 */
-	public ChangeMapReport(Position position, String mapName) 
+	public ChangeMapReport(int playerID, Position position, String mapName) 
 	{
+		this.playerID = playerID;
 		this.position = position;
 		this.mapName = mapName;
-		
+	}
+	
+	/**
+	 * @return the Id of the player teleporting
+	 */
+	public int getPlayerID()
+	{
+		return playerID;
 	}
 
 	/**
