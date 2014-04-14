@@ -11,7 +11,7 @@ import org.junit.Test;
  * @author merlin
  * 
  */
-public class GetServerInfoResponseMessageTest
+public class TeleportationContinuationMessageTest
 {
 	/**
 	 * Make sure its toString is correct
@@ -19,12 +19,12 @@ public class GetServerInfoResponseMessageTest
 	@Test
 	public void testToStringAndGetters()
 	{
-		GetServerInfoResponseMessage msg = new GetServerInfoResponseMessage(
+		TeleportationContinuationMessage msg = new TeleportationContinuationMessage(
 				ServersInDB.FIRST_SERVER.getMapName(),
 				ServersInDB.FIRST_SERVER.getHostName(),
 				ServersInDB.FIRST_SERVER.getPortNumber());
 		assertEquals(
-				"GetServerInfoResponseMessage: mapName = "
+				"TeleportationContinuationMessage: mapName = "
 						+ ServersInDB.FIRST_SERVER.getMapName() + " and hostName = "
 						+ ServersInDB.FIRST_SERVER.getHostName() + " and portNumber = "
 						+ ServersInDB.FIRST_SERVER.getPortNumber(), msg.toString());

@@ -17,7 +17,7 @@ import data.Position;
  * @author Merlin
  * 
  */
-public class MovePlayerCommandTest
+public class MovePlayerSilentlyCommandTest
 {
 
 	/**
@@ -47,26 +47,25 @@ public class MovePlayerCommandTest
 		p.setPlayerPosition(startPosition);
 
 		assertEquals(startPosition, p.getPlayerPosition());
-
-		MovePlayerCommand cmd = new MovePlayerCommand(1, newPosition);
+		
+		MovePlayerSilentlyCommand cmd = new MovePlayerSilentlyCommand(1, newPosition);
 		cmd.execute();
 
 		assertEquals(newPosition, p.getPlayerPosition());
 	}
 
 	/**
-	 * Make sure anyone who is observing for movement reports hears about this one
+	 * Make sure anyone who is observing for movement reports doesn't hear about this one
 	 */
 	@Test
-	public void notifyObservers()
+	public void doesntNotifyObservers()
 	{
 		PlayerManager.getSingleton().addPlayer(1);
 		Observer obs = EasyMock.createMock(Observer.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerMovedReport.class);
-		obs.update(EasyMock.anyObject(Player.class), EasyMock.anyObject(PlayerMovedReport.class));
 		EasyMock.replay(obs);
 		
-		MovePlayerCommand cmd = new MovePlayerCommand(1, new Position(4,3));
+		MovePlayerSilentlyCommand cmd = new MovePlayerSilentlyCommand(1, new Position(4,3));
 		cmd.execute();
 		
 		EasyMock.verify(obs);

@@ -135,7 +135,7 @@ public class Player extends QualifiedObservable
 	 */
 	public void setPlayerPosition(Position playerPosition)
 	{
-		this.playerPosition = playerPosition;
+		setPlayerPositionWithoutNotifying(playerPosition);
 		PlayerMovedReport report = new PlayerMovedReport(this.playerID, this.playerLogin.getPlayerName(),
 				playerPosition);
 		this.notifyObservers(report);
@@ -148,5 +148,15 @@ public class Player extends QualifiedObservable
 	public void setPlayerLogin(PlayerLogin pl)
 	{
 		this.playerLogin = pl;
+	}
+
+	/**
+	 * Move a player without notifying the other players (used when moving from one map to another
+	 * @param newPosition the position the player should move to
+	 */
+	public void setPlayerPositionWithoutNotifying(Position newPosition)
+	{
+		this.playerPosition = newPosition;
+		
 	}
 }

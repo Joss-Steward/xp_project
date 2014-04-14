@@ -3,8 +3,10 @@ package communication.handlers;
 import java.sql.SQLException;
 
 import model.MapToServerMapping;
-import communication.messages.GetServerInfoMessage;
-import communication.messages.GetServerInfoResponseMessage;
+import model.ModelFacade;
+import model.MovePlayerSilentlyCommand;
+import communication.messages.TeleportationInitiationMessage;
+import communication.messages.TeleportationContinuationMessage;
 import communication.messages.Message;
 
 /**
@@ -12,7 +14,7 @@ import communication.messages.Message;
  * @author Merlin
  *
  */
-public class GetServerInfoMessageHandler extends MessageHandler
+public class TeleportationInitiationHandler extends MessageHandler
 {
 
 	/**
@@ -22,11 +24,14 @@ public class GetServerInfoMessageHandler extends MessageHandler
 	@Override
 	public void process(Message msg)
 	{
-		GetServerInfoMessage currentMsg = (GetServerInfoMessage)msg;
+		TeleportationInitiationMessage currentMsg = (TeleportationInitiationMessage)msg;
 		try
 		{
+			MovePlayerSilentlyCommand command = new MovePlayerSilentlyCommand(currentMsg.getPlayerId(), currentMsg.getPosition());
+			ModelFacade.getSingleton().queueCommand(command);
+			
 			MapToServerMapping mapping = MapToServerMapping.retrieveMapping(currentMsg.getMapName());
-			GetServerInfoResponseMessage response = new GetServerInfoResponseMessage(mapping.getMapName(), mapping.getHostName(), mapping.getPortNumber());
+			TeleportationContinuationMessage response = new TeleportationContinuationMessage(mapping.getMapName(), mapping.getHostName(), mapping.getPortNumber());
 			this.getStateAccumulator().queueMessage(response);
 		} catch (SQLException e)
 		{
@@ -43,7 +48,7 @@ public class GetServerInfoMessageHandler extends MessageHandler
 	@Override
 	public Class<?> getMessageTypeWeHandle()
 	{
-		return GetServerInfoMessage.class;
+		return TeleportationInitiationMessage.class;
 	}
 
 }

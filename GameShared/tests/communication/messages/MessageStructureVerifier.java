@@ -57,7 +57,7 @@ public class MessageStructureVerifier extends TypeDetector
 					}
 					if (!serializableClasses.contains(classToCheck))
 					{
-						fail(classToCheck.getName() + " must implement Message");
+						fail(classToCheck.getName() + " must implement Serializable");
 					}
 
 					verifyStructureForSerializability(classToCheck);
