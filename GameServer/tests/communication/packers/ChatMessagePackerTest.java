@@ -6,7 +6,7 @@ import model.reports.SendChatMessageReport;
 import org.junit.Test;
 
 import communication.messages.ChatMessage;
-import communication.messages.ChatMessage.ChatType;
+import data.ChatType;
 import data.Position;
 
 /**

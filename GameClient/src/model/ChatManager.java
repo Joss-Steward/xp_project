@@ -2,7 +2,7 @@ package model;
 
 import model.reports.ChatReceivedReport;
 import model.reports.ChatSentReport;
-import communication.messages.ChatMessage.ChatType;
+import data.ChatType;
 import data.Position;
 
 /**

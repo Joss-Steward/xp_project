@@ -1,6 +1,6 @@
 package model;
 
-import communication.messages.ChatMessage.ChatType;
+import data.ChatType;
 
 /**
  * @author Matthew Kujawski

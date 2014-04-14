@@ -1,6 +1,6 @@
 package model.reports;
 
-import communication.messages.ChatMessage.ChatType;
+import data.ChatType;
 import data.Position;
 import model.QualifiedObservableReport;
 
