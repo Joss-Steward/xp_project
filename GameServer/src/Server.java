@@ -1,7 +1,9 @@
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import model.OptionsManager;
 import communication.ConnectionManager;
 import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
@@ -18,14 +20,17 @@ public class Server implements Runnable
 {
 	private ServerSocket servSock;
 	private int port;
+	private String mapName;
 	
 	/**
 	 * Create a new Server listening on a given port
+	 * @param map The map that this server will serve
 	 * @param port The port to listen on
 	 */
-	public Server(int port) 
+	public Server(String map, int port) 
 	{
 		this.port = port;
+		this.mapName = map;
 	}
 
 	/**
@@ -36,10 +41,12 @@ public class Server implements Runnable
 		int i = 0;
 		try
 		{
-			servSock = new ServerSocket(port, 10);
+			String hostName = InetAddress.getLocalHost().getHostName();
+			OptionsManager.getSingleton().updateMapInformation(mapName, hostName, port);
+			servSock = new ServerSocket(OptionsManager.getSingleton().getPortNumber(), 10);
 			while (true)
 			{
-				System.out.println("Listening on port " + port);
+				System.out.println("Listening on port " + OptionsManager.getSingleton().getPortNumber());
 				Socket sock = servSock.accept();
 				System.out.println(i + ":  got something from " + sock);
 				i++;
@@ -69,17 +76,44 @@ public class Server implements Runnable
 	}
 
 	/**
+	 * Run like java -jar server.jar --port=1000 map=quiznasium
 	 * @param args
 	 *            Main runner
 	 * @throws IllegalArgumentException Thrown when the port is not given as an argument to the execution
 	 */
 	public static void main(String args[]) throws IllegalArgumentException
 	{
-		if(args.length != 1) {
-			throw new IllegalArgumentException("Port is required to run the server. Run the server like 'java server 1872'");
+		String map = null;
+		Integer port = null;
+		for(String arg: args)
+		{
+			String[] splitArg = arg.split("=");
+			if(splitArg[0].equals("--port"))
+			{
+				port = Integer.parseInt(splitArg[1]);
+			}
+			else if(splitArg[0].equals("--map"))
+			{
+				/*
+				 * Valid map names:
+				 * 	current
+				 */
+				map = splitArg[1];
+			}
+			else if(splitArg[0].equals("--localhost"))
+			{
+				OptionsManager.getSingleton().setTestMode();
+			}
 		}
-		int port = Integer.parseInt(args[0]);
-		Server S = new Server(port);
+		if(map == null)
+		{
+			throw new IllegalArgumentException("Map name is required to run the server. Use the --map=STRING option.");
+		}
+		else if(port == null)
+		{
+			throw new IllegalArgumentException("Port is required to run the server. Use the --port=INTEGER option.");
+		}
+		Server S = new Server(map, port);
 		S.run();
 	}
 }

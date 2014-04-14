@@ -1,5 +1,7 @@
 package model;
 
+import communication.LocalPortMapper;
+
 import model.reports.LoginFailedReport;
 import model.reports.LoginSuccessfulReport;
 
@@ -9,8 +11,9 @@ import model.reports.LoginSuccessfulReport;
  */
 public class PlayerManager extends QualifiedObservable
 {
-
+	private String STARTING_MAP = "current.tmx";
 	private static PlayerManager singleton;
+	private LocalPortMapper localPortMapper;
 
 	/**
 	 * @return the only PlayerManger in the system
@@ -36,6 +39,7 @@ public class PlayerManager extends QualifiedObservable
 
 	private PlayerManager()
 	{
+		localPortMapper = new LocalPortMapper();
 		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this,
 				LoginSuccessfulReport.class);
 		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this,
@@ -59,7 +63,7 @@ public class PlayerManager extends QualifiedObservable
 			numberOfPlayers++;
 			PlayerPin pp = new PlayerPin(pl.getPlayerID());
 			LoginSuccessfulReport report = new LoginSuccessfulReport(pl.getPlayerID(),
-					"localhost", 1872, pp.generatePin());
+					"localhost", localPortMapper.getPortForMapName(STARTING_MAP), pp.generatePin());
 			this.notifyObservers(report);
 		} catch (DatabaseException e)
 		{

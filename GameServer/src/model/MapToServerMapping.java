@@ -209,4 +209,12 @@ public final class MapToServerMapping
 			return false;
 		return true;
 	}
+	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString()
+	{
+		return this.mapName + " on " + this.hostName + ":" + this.portNumber;
+	}
 }

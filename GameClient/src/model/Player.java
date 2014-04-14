@@ -159,7 +159,7 @@ public class Player extends QualifiedObservable
 	public void teleport(Position thePosition) 
 	{
 		TeleportHotSpot hotSpot = MapManager.getSingleton().getTeleportHotSpot(thePosition);
-		this.notifyObservers(new ChangeMapReport(hotSpot.getTeleportPosition(), hotSpot.getMapName()));
+		this.notifyObservers(new ChangeMapReport(id, hotSpot.getTeleportPosition(), hotSpot.getMapName()));
 	}
 
 }
