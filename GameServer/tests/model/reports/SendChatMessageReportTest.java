@@ -5,7 +5,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
-import communication.messages.ChatMessage.ChatType;
+import data.ChatType;
 import data.Position;
 
 /**
@@ -28,9 +28,9 @@ public class SendChatMessageReportTest
 		
 		SendChatMessageReport report = new SendChatMessageReport(msg, sender, pos, type);
 		
-		assertEquals(msg, report.getMessageText());
-		assertEquals(sender, report.getPlayerName());
-		assertEquals(pos, report.getPlayerLocation());
+		assertEquals(msg, report.getMessage());
+		assertEquals(sender, report.getSenderName());
+		assertEquals(pos, report.getPosition());
 		assertEquals(type, report.getType());
 	}
 	

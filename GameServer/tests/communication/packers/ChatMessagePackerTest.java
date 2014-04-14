@@ -1,7 +1,7 @@
 package communication.packers;
 
 import static org.junit.Assert.assertEquals;
-import model.reports.ChatSentReport;
+import model.reports.SendChatMessageReport;
 
 import org.junit.Test;
 
@@ -28,7 +28,7 @@ public class ChatMessagePackerTest
 		Position loc = new Position(0,0);
 		ChatType type = ChatType.Local;
 		
-		ChatSentReport report = new ChatSentReport(text, sender, loc, type);
+		SendChatMessageReport report = new SendChatMessageReport(text, sender, loc, type);
 		ChatMessagePacker packer = new ChatMessagePacker();
 		ChatMessage msg = (ChatMessage) packer.pack(report);
 		

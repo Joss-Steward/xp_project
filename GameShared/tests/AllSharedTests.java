@@ -11,6 +11,7 @@ import org.junit.runners.Suite;
 import tmxfiles.TMXMapReaderTest;
 import communication.ConnectionIncomingTest;
 import communication.ConnectionManagerTest;
+import communication.LocalPortMapperTest;
 import communication.StateAccumulatorTest;
 import communication.handlers.MessageHandlerSetTest;
 import communication.messages.ChatMessageTest;
@@ -42,6 +43,7 @@ import data.PositionTest;
 		ConnectionIncomingTest.class,
 		ConnectionManagerTest.class,
 		StateAccumulatorTest.class,
+		LocalPortMapperTest.class,
 
 		// communication.handlers
 		MessageHandlerSetTest.class,

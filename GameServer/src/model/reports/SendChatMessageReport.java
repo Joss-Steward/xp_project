@@ -1,6 +1,6 @@
 package model.reports;
 
-import communication.messages.ChatMessage.ChatType;
+import data.ChatType;
 import data.Position;
 import model.QualifiedObservableReport;
 
@@ -32,7 +32,7 @@ public final class SendChatMessageReport implements QualifiedObservableReport
 	/**
 	 * @return The position of the player when they sent the message
 	 */
-	public Position getPlayerLocation() 
+	public Position getPosition() 
 	{
 		return location;
 	}
@@ -40,7 +40,7 @@ public final class SendChatMessageReport implements QualifiedObservableReport
 	/**
 	 * @return The name of the player who sent the message
 	 */
-	public String getPlayerName() 
+	public String getSenderName() 
 	{
 		return name;
 	}
@@ -48,7 +48,7 @@ public final class SendChatMessageReport implements QualifiedObservableReport
 	/**
 	 * @return The text of the message
 	 */
-	public String getMessageText() 
+	public String getMessage() 
 	{
 		return text;
 	}

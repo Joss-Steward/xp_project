@@ -2,6 +2,7 @@ package communication.messages;
 
 import java.io.Serializable;
 
+import data.ChatType;
 import data.Position;
 
 /**
@@ -11,25 +12,6 @@ import data.Position;
  */
 public class ChatMessage implements Message, Serializable
 {
-	/**
-	 * Types of chat messages that can be sent
-	 */
-	public static enum ChatType
-	{
-		/**
-		 * Chat is available to anyone on all servers
-		 */
-		World,
-		/**
-		 * Chat is available to anyone in this area server
-		 */
-		Zone,
-		/**
-		 * Chat is only visible to nearby entities
-		 */
-		Local;
-	}
-
 	private static final long serialVersionUID = 1L;
 	private final String message;
 	private final String senderName;

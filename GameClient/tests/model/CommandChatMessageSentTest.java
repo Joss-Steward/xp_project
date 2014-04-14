@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import communication.messages.ChatMessage.ChatType;
+import data.ChatType;
 
 /**
  * @author Matthew Kujawski and Dave Abrams
