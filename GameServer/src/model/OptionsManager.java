@@ -1,7 +1,8 @@
 package model;
 
 import java.sql.SQLException;
-import java.util.HashMap;
+
+import communication.LocalPortMapper;
 
 /**
  * Contain information about this server's mapping so it can be used easily in the system
@@ -15,19 +16,12 @@ public class OptionsManager
 	private MapToServerMapping mapping;
 	
 	private boolean testMode = false;
-	
-	/*
-	 * Used in testing mode to get the port from the map name
-	 */
-	private HashMap<String, Integer> localhostPortMapping;
 
 	/**
 	 * I'm a singleton
 	 */
 	private OptionsManager()
 	{
-		localhostPortMapping = new HashMap<String, Integer>();
-		localhostPortMapping.put("current.tmx", 4000);
 	}
 	
 	/**
@@ -73,7 +67,7 @@ public class OptionsManager
 			mapping = new MapToServerMapping();
 			mapping.setHostName("localhost");
 			mapping.setMapName(mapName);
-			mapping.setPortNumber(localhostPortMapping.get(mapName));
+			mapping.setPortNumber(new LocalPortMapper().getPortForMapName(mapName));
 		}
 	}
 
