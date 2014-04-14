@@ -145,6 +145,17 @@ public class PlayerManager extends QualifiedObservable
 	}
 
 	/**
+	 * Get a new PIN for a player so they can connect to a different area server
+	 * @param playerID the player ID
+	 * @return the pin they should use for their next connection
+	 * @throws DatabaseException shouldn't
+	 */
+	public double getNewPinFor(int playerID) throws DatabaseException
+	{
+		PlayerPin pin = new PlayerPin(playerID);
+		return pin.generatePin();
+	}
+	/**
 	 * Adds a player to the list of active players on this server without
 	 * checking its pin - only for testing purposes
 	 * 

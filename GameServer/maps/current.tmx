@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="60" height="30" tilewidth="32" tileheight="32">
  <properties>
-  <property name="25 15" value="homework.tmx 5 15"/>
+  <property name="15 29" value="homework.tmx 5 15"/>
   <property name="47 16" value="quiznasium.tmx 50 5"/>
  </properties>
  <tileset firstgid="1" name="collision" tilewidth="32" tileheight="32">
