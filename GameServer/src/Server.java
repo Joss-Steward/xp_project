@@ -41,12 +41,12 @@ public class Server implements Runnable
 		int i = 0;
 		try
 		{
-			servSock = new ServerSocket(port, 10);
 			String hostName = InetAddress.getLocalHost().getHostName();
 			OptionsManager.getSingleton().updateMapInformation(mapName, hostName, port);
+			servSock = new ServerSocket(OptionsManager.getSingleton().getPortNumber(), 10);
 			while (true)
 			{
-				System.out.println("Listening on port " + port);
+				System.out.println("Listening on port " + OptionsManager.getSingleton().getPortNumber());
 				Socket sock = servSock.accept();
 				System.out.println(i + ":  got something from " + sock);
 				i++;
@@ -94,7 +94,15 @@ public class Server implements Runnable
 			}
 			else if(splitArg[0].equals("--map"))
 			{
+				/*
+				 * Valid map names:
+				 * 	current
+				 */
 				map = splitArg[1];
+			}
+			else if(splitArg[0].equals("--localhost"))
+			{
+				OptionsManager.getSingleton().setTestMode();
 			}
 		}
 		if(map == null)
