@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="25" tilewidth="32" tileheight="32">
+ <properties>
+  <property name="4 24" value="current.tmx 47 17"/>
+ </properties>
+ <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MI- Medieval Indoors.png" width="256" height="8704"/>
+ </tileset>
+ <tileset firstgid="2177" name="Inq XP MT- Medieval Town" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MT- Medieval Town.png" width="256" height="16704"/>
+ </tileset>
+ <tileset firstgid="6353" name="collision" tilewidth="32" tileheight="32">
+  <image source="tileset/collision.png" width="64" height="32"/>
+ </tileset>
+ <layer name="Background" width="40" height="25">
+  <data encoding="base64" compression="zlib">
+   eJx7xMXA8IgKWJObgUEJiFWAWJebcvMUoeatR8LbBwkGuQXkXy0kt20AYq9BgtcBsSEQG6G5L4hCzMgDwZSaQwv3+XCiYlq4L4oCHMKJiikxC5f72jiIw99FyMPEmk+J+8h1GyluHCnu+4SE0d2BS45e7vuEBRMjN+q+oeG+oZA/Rt03/NxHiRuJNZ9S95HjRlLMpob7aIlH3Ud79y0D8k8NEL5EhPvWIcnREl/CgS2B2GoQuA8XdgRiJyAGAPMFl3c=
+  </data>
+ </layer>
+ <layer name="Background Front" width="40" height="25">
+  <data encoding="base64" compression="zlib">
+   eJztlrtLw1AUhzMWI53aDm7ipE7qpOig2H/JUfCNb3zjWydfLSoItQ5qfVRXnV3ESdwcnfyCLT2NSXNpbipIf/CRm5xzz/mR5JAYhn5lo/pqvdTood00jA7ohC7Tfz3d6sZTD/RC3NRf30mfIee1k+KxYnTVLaWvUPF6IPbDIAzBsMDuT8ZGYBTGoC/8u65OjdNjAiZhSmD3J2PTMAOz0B8uv3e61jtnjh7zsACL4jm+ipl9E2srZwmWYcW6jx7+SnnIKPhbpccarMOGx3tmycrZhC3Yhh2PPSoeSmlXwZOb9ti772O/ivL+3iOGURct8BEp5LjFKumv3vaNaBDnbjG//lTmI2h/fucj76+Rnk2CZuHJLabiT9d8tNCzFVK5Y5vw5xar5PtXjirh74D6h3AECYVeVk4yl3fM8SRgf6ei/plCL5mTYn0e8PymqX9RRo9L9lzBdcDzm6H+DdzCne0/4AmebdesnHvIwgM8Bjy/Vf0PJcy/oyp9+gbjqqPt
+  </data>
+ </layer>
+ <layer name="Foreground" width="40" height="25">
+  <data encoding="base64" compression="zlib">
+   eJxjYECAyZwMDFM4GYgC37kZGGKA+Ac3ZWqQASH7ZwPl5hDpvv9AO5l4gAweytSQYv9ioNwSIt3HDrRzDdB+DiS7T/FDMD41+AAh+1cD5dYQ6T50cFMUwb4tilsdPkDI/s1AuS0kuG87L4L9EMlNj0lw3wkkMwjZvxsot4dI9/0Dmrsfj/veAeU+QOXf8zJggPNQsQtIcqTYTwiw8TEwHMdiLwx8A8r9gMp/x6LuOlTsBh4zRsEoGAWjYBQML7BJjHQ928jQQwloEcPEJ4H4FBDvwYJHwSgY6uAJsK/wFIifAfEyIvtc9AIbgO75AsRfgfgb1G2XuOmDiXUfCLwaZOEGADXJWHw=
+  </data>
+ </layer>
+ <layer name="Foreground Front" width="40" height="25">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFIwmo8Ayc3cpE2K1Dpvu2CCDY2wRwq8MHtGkYNnuAbtoLxfvIdB8twVNRVDwKRsEoGAWjYBSMglEwCgY/WMONikfB0AcAyP0MUQ==
+  </data>
+ </layer>
+ <layer name="Collision" width="40" height="25" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztk0sKACAIRD1G9z9SJ2oVbVT8kCLMwEDkaK+FexFtGDb4qptjKl/V/zV5stG+LF9U4Hs573508HH3Wg18s/i4s1bD/oIvy+d5J9qT5ZNmWGpVfD8FvpwsfFKm0+Dz+wB0RdFS
+  </data>
+ </layer>
+</map>
