@@ -26,6 +26,7 @@ import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.PlayerJoinedMessageHandlerTest;
 import communication.packers.LoginMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
+import communication.packers.TeleportationInitiationMessagePackerTest;
 
 /**
  * All of the tests for the client code. Notice that the packages, and classes
@@ -48,6 +49,7 @@ import communication.packers.MovementMessagePackerTest;
 		// communication.packers
 		LoginMessagePackerTest.class,
 		MovementMessagePackerTest.class,
+		TeleportationInitiationMessagePackerTest.class,
 
 		// model
 		CommandInitializePlayerTest.class, CommandLoginTest.class,
