@@ -5,7 +5,6 @@ import java.util.Observable;
 
 import model.QualifiedObservableReport;
 import model.reports.LoginInitiatedReport;
-import model.reports.NewMapReport;
 
 /**
  * Every screen has one of these and it is responsible for listening for the
