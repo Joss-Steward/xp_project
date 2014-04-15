@@ -3,7 +3,6 @@ package communication.handlers;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -100,16 +99,17 @@ public class MapFileMessageHandler extends MessageHandler
 	{
 		File f = new File(title);
 		FileOutputStream output;
+		
+		//make sure the directories exist for the file
+		f.getParentFile().mkdirs();
 		try
 		{
+			//make sure the file exists
+			f.createNewFile();
 			output = new FileOutputStream(f);
 			output.write(contents);
 			output.close();
-		} catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-			fail();
-		} catch (IOException e)
+		}catch (IOException e)
 		{
 			e.printStackTrace();
 			fail();
