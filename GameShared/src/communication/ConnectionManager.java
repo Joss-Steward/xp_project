@@ -37,6 +37,7 @@ public class ConnectionManager
 	 * 
 	 * @param sock
 	 *            the socket connection we are managing
+	 * @param stateAccumulator TODO
 	 * @param messageHandlerSet
 	 *            the set of MessageHandlers hat will process the incoming
 	 *            messages on this connection
@@ -46,20 +47,20 @@ public class ConnectionManager
 	 * @throws IOException
 	 *             caused by socket issues
 	 */
-	public ConnectionManager(Socket sock, MessageHandlerSet messageHandlerSet,
-			MessagePackerSet messagePackerSet) throws IOException
+	public ConnectionManager(Socket sock, StateAccumulator stateAccumulator,
+			MessageHandlerSet messageHandlerSet, MessagePackerSet messagePackerSet) throws IOException
 	{
 		System.out.println("Starting new ConnectionManager");
 		this.socket = sock;
 		this.messagePackerSet = messagePackerSet;
 		this.handlerSet = messageHandlerSet;
 
-		outgoing = new ConnectionOutgoing(sock, messagePackerSet);
+		outgoing = new ConnectionOutgoing(sock, stateAccumulator, messagePackerSet);
 		outgoingThread = new Thread(outgoing);
 		// for simplictly
 		// T.setDaemon(true);
 		outgoingThread.start();
-		stateAccumulator = outgoing.getStateAccumulator();
+		this.stateAccumulator = stateAccumulator;
 		messageHandlerSet.setConnectionManager(this);
 
 		incoming = new ConnectionIncoming(sock, messageHandlerSet);
@@ -95,12 +96,11 @@ public class ConnectionManager
 		disconnect();
 		this.socket = sock;
 
-		outgoing = new ConnectionOutgoing(sock, messagePackerSet);
+		outgoing = new ConnectionOutgoing(sock, this.stateAccumulator, messagePackerSet);
 		outgoingThread = new Thread(outgoing);
 		// for simplictly
 		// T.setDaemon(true);
 		outgoingThread.start();
-		stateAccumulator = outgoing.getStateAccumulator();
 		getStateAccumulator().queueMessage(new ConnectMessage(playerID, pin));
 
 		incoming = new ConnectionIncoming(sock, handlerSet);

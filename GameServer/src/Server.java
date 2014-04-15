@@ -53,8 +53,8 @@ public class Server implements Runnable
 				MessagePackerSet messagePackerSet = new MessagePackerSet();
 				StateAccumulator stateAccumulator = new StateAccumulator(messagePackerSet);
 				
-				new ConnectionManager(sock, new MessageHandlerSet(stateAccumulator),
-						messagePackerSet);
+				new ConnectionManager(sock, stateAccumulator,
+						new MessageHandlerSet(stateAccumulator), messagePackerSet);
 			}
 
 		} catch (Throwable e)

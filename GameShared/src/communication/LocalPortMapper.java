@@ -19,6 +19,7 @@ public class LocalPortMapper
 	{
 		mapping = new HashMap<String, Integer>();
 		mapping.put("current.tmx", 1872);
+		mapping.put("quiznasium.tmx", 1873);
 	}
 	
 	/**

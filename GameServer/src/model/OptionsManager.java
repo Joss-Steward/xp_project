@@ -105,4 +105,13 @@ public class OptionsManager
 	{
 		testMode = true;
 	}
+
+	/**
+	 * returns true if this server is running in localhost mode for testing purposes
+	 * @return local mode
+	 */
+	public boolean isTestMode()
+	{
+		return testMode;
+	}
 }

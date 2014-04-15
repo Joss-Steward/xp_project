@@ -52,8 +52,8 @@ public class LoginServer implements Runnable
 				StateAccumulator stateAccumulator = new StateAccumulator(packers);
 				
 				handlers = new MessageHandlerSet(stateAccumulator);
-				new ConnectionManager(sock, handlers,
-						packers);
+				new ConnectionManager(sock, stateAccumulator,
+						handlers, packers);
 
 			}
 

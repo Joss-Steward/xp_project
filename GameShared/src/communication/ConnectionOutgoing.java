@@ -25,19 +25,20 @@ public class ConnectionOutgoing implements Runnable
 	/**
 	 * @param socket
 	 *            Socket being used - will be null for JUnit tests
+	 * @param stateAccumulator TODO
 	 * @param messagePackerSet
 	 *            the set of messagepackers the outgoing connection should use
 	 * @throws IOException
 	 *             Exception thrown for invalid input or output
 	 */
-	public ConnectionOutgoing(Socket socket, MessagePackerSet messagePackerSet)
+	public ConnectionOutgoing(Socket socket, StateAccumulator stateAccumulator, MessagePackerSet messagePackerSet)
 			throws IOException
 	{
 		if (socket != null)
 		{
 			this.ostream = new ObjectOutputStream(socket.getOutputStream());
 		}
-		this.stateAccumulator = new StateAccumulator(messagePackerSet);
+		this.stateAccumulator = stateAccumulator;
 
 	}
 

@@ -39,8 +39,8 @@ public class ClientRunner
 		MessagePackerSet messagePackerSet = new MessagePackerSet();
 		StateAccumulator stateAccumulator = new StateAccumulator(messagePackerSet);
 		
-		ConnectionManager cm = new ConnectionManager(socket, new MessageHandlerSet(stateAccumulator),
-				messagePackerSet);
+		ConnectionManager cm = new ConnectionManager(socket, stateAccumulator,
+				new MessageHandlerSet(stateAccumulator), messagePackerSet);
 		ModelFacade modelFacade = ModelFacade.getSingleton(true, false);
 
 		Scanner scanner = new Scanner(System.in);

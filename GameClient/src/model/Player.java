@@ -30,6 +30,7 @@ public class Player extends QualifiedObservable
 		this.position = new Position(0, 0);
 
 		this.reportTypes.add(PlayerMovedReport.class);
+		this.reportTypes.add(ChangeMapReport.class);
 		this.registerReportTypesWeNotify();
 	}
 
