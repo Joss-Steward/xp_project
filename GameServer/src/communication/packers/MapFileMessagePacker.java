@@ -2,6 +2,7 @@ package communication.packers;
 
 import java.io.IOException;
 
+import model.OptionsManager;
 import model.QualifiedObservableReport;
 import model.reports.PlayerConnectionReport;
 import communication.messages.MapFileMessage;
@@ -26,7 +27,9 @@ public class MapFileMessagePacker extends MessagePacker
 			int playerID = report.getPlayerID();
 			if (this.getAccumulator().getPlayerID() == playerID)
 			{
-				MapFileMessage msg = new MapFileMessage("maps/current.tmx");
+				//send this server's map file back to the client when they connect to the server
+				String mapName = OptionsManager.getSingleton().getMapName();
+				MapFileMessage msg = new MapFileMessage("maps/"+mapName);
 				return msg;
 			}
 		} catch (IOException e)
