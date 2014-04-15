@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="60" height="30" tilewidth="32" tileheight="32">
  <properties>
-  <property name="15 29" value="homework.tmx 5 15"/>
+  <property name="15 29" value="homework.tmx 25 47"/>
   <property name="16 47" value="quiznasium.tmx 50 5"/>
  </properties>
  <tileset firstgid="1" name="collision" tilewidth="32" tileheight="32">
@@ -10,7 +10,7 @@
  <imagelayer name="background" width="60" height="30">
   <image source="tileset/hubbackground.png"/>
  </imagelayer>
- <layer name="Collision" width="60" height="30" visible="0" opacity="0.69">
+ <layer name="Collision" width="60" height="30" visible="0">
   <data encoding="base64" compression="zlib">
    eJztleEKhTAIhaX3f+joRxCSTY865707MKLaPH5L10FEhzAqJeWUOSr1b7yXKpgzuLUenRlHHJa5q/LyWF7Pal4+7+0+y9fLJfkheWXvd+Z3tK6bUWObF6/n0fPN25tXG7s7rzX2r/JK8SNzmeExm/f5ns+L8liRN9Ljy8/Da1GUj5Z35GvJA8mV1y66px15tfMjasLDy/vjy8PqKfl4ldW/GT1/xx3VqXa9p575NfOs0+rNO7J/IxgtfYHEiurfFWXlJdq8nYTmjf7jqqXtVe/5swovos65I7p5TzIHBjs=
   </data>
