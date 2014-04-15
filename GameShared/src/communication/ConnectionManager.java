@@ -95,13 +95,13 @@ public class ConnectionManager
 
 		disconnect();
 		this.socket = sock;
-
+		
 		outgoing = new ConnectionOutgoing(sock, this.stateAccumulator, messagePackerSet);
 		outgoingThread = new Thread(outgoing);
 		// for simplictly
 		// T.setDaemon(true);
 		outgoingThread.start();
-		getStateAccumulator().queueMessage(new ConnectMessage(playerID, pin));
+		stateAccumulator.queueMessage(new ConnectMessage(playerID, pin));
 
 		incoming = new ConnectionIncoming(sock, handlerSet);
 		incomingThread = new Thread(incoming);
