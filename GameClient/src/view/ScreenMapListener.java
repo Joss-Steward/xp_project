@@ -32,24 +32,29 @@ public class ScreenMapListener extends ScreenListener
 		ScreenMap map = (ScreenMap) this.screen;
 
 		// adds your player's sprite to this client
-		if (arg.getClass().equals(PlayerConnectedToAreaServerReport.class))
+		if (arg.getClass().equals(PlayerMovedReport.class))
+		{
+			PlayerMovedReport report = (PlayerMovedReport) arg;
+			map.movePlayer(report.getID(), report.getNewPosition());
+		}
+		// moves the player to a new position
+		// adds a message spoken by users to be displayed in the UI
+		else if (arg.getClass().equals(ChatReceivedReport.class))
+		{
+			ChatReceivedReport report = (ChatReceivedReport) arg;
+			map.addChat(report.toString(), report.getType());
+		}
+		else if (arg.getClass().equals(PlayerConnectedToAreaServerReport.class))
 		{
 			PlayerConnectedToAreaServerReport report = (PlayerConnectedToAreaServerReport) arg;
 			PlayerType type = PlayerType.valueOf(report.getPlayerAppearanceType());
 			Position pos = report.getPlayerPosition();
 			map.addPlayer(report.getPlayerID(), type, pos, report.isThisClientsPlayer());
 		}
-		// moves the player to a new position
-		else if (arg.getClass().equals(PlayerMovedReport.class))
+		else if (arg.getClass().equals(NewMapReport.class))
 		{
-			PlayerMovedReport report = (PlayerMovedReport) arg;
-			map.movePlayer(report.getID(), report.getNewPosition());
-		}
-		// adds a message spoken by users to be displayed in the UI
-		else if (arg.getClass().equals(ChatReceivedReport.class))
-		{
-			ChatReceivedReport report = (ChatReceivedReport) arg;
-			map.addChat(report.toString(), report.getType());
+			NewMapReport report = (NewMapReport) arg;
+			map.setTiledMap(report.getTiledMap());
 		}
 	}
 
@@ -63,6 +68,7 @@ public class ScreenMapListener extends ScreenListener
 		reportTypes.add(PlayerConnectedToAreaServerReport.class);
 		reportTypes.add(PlayerMovedReport.class);
 		reportTypes.add(ChatReceivedReport.class);
+		reportTypes.add(NewMapReport.class);
 		// reportTypes.add(OtherPlayerMovedReport.class);
 
 		return reportTypes;
