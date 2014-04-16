@@ -56,12 +56,9 @@ public class PlayerTest extends DatabaseTest
 	}
 	/**
 	 * Make sure we can retrieve a player's appearanceType
-	 * 
-	 * @throws DatabaseException
-	 *             shouldn'ts
 	 */
 	@Test
-	public void canGetAppearanceType() throws DatabaseException
+	public void canGetAppearanceType()
 	{
 		Player p = playerManager.addPlayer(1);
 		assertEquals(PlayersInDB.JOHN.getAppearanceType(), p.getAppearanceType());

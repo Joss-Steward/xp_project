@@ -70,10 +70,8 @@ public class Player extends QualifiedObservable
 	 * Get the appearance type for how this player should be drawn
 	 * 
 	 * @return a string matching one of the enum names in the PlayerType enum
-	 * @throws DatabaseException
-	 *             shouldn't
 	 */
-	public String getAppearanceType() throws DatabaseException
+	public String getAppearanceType()
 	{
 		return appearanceType;
 	}
@@ -157,6 +155,5 @@ public class Player extends QualifiedObservable
 	public void setPlayerPositionWithoutNotifying(Position newPosition)
 	{
 		this.playerPosition = newPosition;
-		
 	}
 }
