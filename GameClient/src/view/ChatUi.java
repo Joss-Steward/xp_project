@@ -261,20 +261,17 @@ public class ChatUi
 	 */
 	private void changeFilter(ChatType type)
 	{
-		if (type != null)
+		if (type == ChatType.Zone)
 		{
-			switch (type)
-			{
-				case Zone:
-					activeHistory = zoneHistory;
-					break;
-				case Local:
-					activeHistory = localHistory;
-					break;
-				default:
-					activeHistory = allHistory;
-					break;
-			}
+			activeHistory = zoneHistory;
+		}
+		else if (type == ChatType.Local)
+		{
+			activeHistory = localHistory;
+		}
+		else
+		{
+			activeHistory = allHistory;
 		}
 		chatHistoryView.setItems(activeHistory.toArray());
 	}
