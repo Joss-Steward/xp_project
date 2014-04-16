@@ -1,7 +1,11 @@
 package communication.packers;
 
 import static org.junit.Assert.*;
+
+import java.sql.SQLException;
+
 import model.DatabaseException;
+import model.OptionsManager;
 import model.PlayerManager;
 import model.PlayerPin;
 import model.reports.PlayerConnectionReport;
@@ -57,9 +61,10 @@ public class MapFileMessagePackerTest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
+	 * @throws SQLException shouldn't
 	 */
 	@Test
-	public void ifThePlayerIsOnThisConnection() throws DatabaseException
+	public void ifThePlayerIsOnThisConnection() throws DatabaseException, SQLException
 	{
 		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
@@ -69,9 +74,12 @@ public class MapFileMessagePackerTest
 				.getSingleton().getPlayerFromID(1));
 		MapFileMessagePacker packer = new MapFileMessagePacker();
 		packer.setAccumulator(stateAccumulator);
+		OptionsManager.getSingleton().setTestMode();
+		OptionsManager.getSingleton().updateMapInformation("current.tmx", "", 1);
 		MapFileMessage msg = (MapFileMessage) packer.pack(report);
 		assertEquals("current.tmx", msg.getFileTitle());
 		assertNotNull(msg.getContents());
+		OptionsManager.resetSingleton();
 	}
 
 }
