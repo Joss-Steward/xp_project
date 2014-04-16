@@ -5,7 +5,6 @@ import java.util.Observable;
 
 import model.QualifiedObservableReport;
 import model.reports.LoginInitiatedReport;
-import model.reports.NewMapReport;
 
 /**
  * Every screen has one of these and it is responsible for listening for the
@@ -32,12 +31,7 @@ public class ScreenLoginListener extends ScreenListener
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		if (arg.getClass().equals(NewMapReport.class))
-		{
-			NewMapReport report = (NewMapReport) arg;
-			ScreenMap nextScreen = (ScreenMap) Screens.MAP_SCREEN.getScreen();
-			nextScreen.setTiledMap(report.getTiledMap());
-		} else if (arg.getClass().equals(LoginInitiatedReport.class))
+		if (arg.getClass().equals(LoginInitiatedReport.class))
 		{
 			this.switchToScreen(Screens.MAP_SCREEN);
 		}
@@ -51,7 +45,6 @@ public class ScreenLoginListener extends ScreenListener
 	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypes()
 	{
 		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
-		reportTypes.add(NewMapReport.class);
 		reportTypes.add(LoginInitiatedReport.class);
 		return reportTypes;
 	}

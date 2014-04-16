@@ -10,6 +10,8 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
+import data.Position;
+
 /**
  * @author Merlin
  * 
@@ -23,7 +25,7 @@ public class PlayerManagerTest
 	@Before
 	public void setUp()
 	{
-		// QualifiedObservableConnector.resetSingleton();
+		QualifiedObservableConnector.resetSingleton();
 		PlayerManager.resetSingleton();
 		PlayerManager playerManager = PlayerManager.getSingleton();
 		assertEquals(0, playerManager.countObservers());
@@ -114,5 +116,21 @@ public class PlayerManagerTest
 	public void playerNameNotFound() throws PlayerNotFoundException
 	{
 		PlayerManager.getSingleton().getPlayerIDFromPlayerName("henry");
+	}
+
+	/**
+	 * Test that a player can be persisted by saving an attribute and fetching the player again
+	 */
+	@Test
+	public void playerIsSaved()
+	{
+		Player player = PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID());
+		player.setPlayerPosition(new Position(100, 100));
+		assertTrue(PlayerManager.getSingleton().persistPlayer(player.getPlayerID()));
+		
+		PlayerManager.resetSingleton();
+		
+		Player fetched = PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID());
+		assertEquals(new Position(100, 100), fetched.getPlayerPosition());
 	}
 }

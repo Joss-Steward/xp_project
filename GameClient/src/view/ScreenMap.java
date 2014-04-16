@@ -6,6 +6,7 @@ import model.ModelFacade;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -55,6 +56,7 @@ public class ScreenMap extends ScreenBasic
 	private BitmapFont loadingFont;
 	
 	private int[] bgLayers, fgLayers;
+	private Color clearColor;
 	
 	/**
 	 * 
@@ -72,6 +74,7 @@ public class ScreenMap extends ScreenBasic
 		mapSize = new Vector2(1,1);
 		mapPixelSize = new Vector2(16,16);
 		
+		clearColor = new Color(0.7f, 0.7f, 1.0f, 1);
 	}
 
 	/**
@@ -108,9 +111,9 @@ public class ScreenMap extends ScreenBasic
 		stage.act();
 		stage.draw();
 
-		if (mapRenderer != null)
+		if (mapRenderer != null && mySprite != null)
 		{
-			Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
+			Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, 1);
 			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 			//insures players will be positioned at the right location when a map is set
@@ -233,6 +236,18 @@ public class ScreenMap extends ScreenBasic
 		
 		bgLayers = background.toArray();
 		fgLayers = foreground.toArray();
+		
+		String colProp = prop.get("color", String.class);
+		System.out.println(colProp);
+		if (colProp != null)
+		{
+			String[] col = colProp.split("[\r\b\t\n ]+");
+			clearColor = new Color(Float.parseFloat(col[0]), Float.parseFloat(col[1]), Float.parseFloat(col[2]), 1.0f);
+		}
+		else
+		{
+			clearColor.set(0.7f, 0.7f, 1.0f, 1);
+		}
 	}
 
 	/**

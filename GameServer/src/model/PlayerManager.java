@@ -183,6 +183,25 @@ public class PlayerManager extends QualifiedObservable
 		}
 		return null;
 	}
+	
+	/**
+	 * Persist the player with a given ID
+	 * @param playerID The player id of the player to persist
+	 * @return Success status of persistence
+	 */
+	public boolean persistPlayer(int playerID)
+	{
+		try
+		{
+			Player player = this.getPlayerFromID(playerID);
+			playerDao.createOrUpdate(player);
+			return true;
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	/**
 	 * @param playerID

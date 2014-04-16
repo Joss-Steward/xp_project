@@ -6,6 +6,7 @@ import model.DatabaseException;
 import model.MapToServerMapping;
 import model.ModelFacade;
 import model.MovePlayerSilentlyCommand;
+import model.PersistPlayerCommand;
 import model.PlayerManager;
 import communication.messages.TeleportationInitiationMessage;
 import communication.messages.TeleportationContinuationMessage;
@@ -37,6 +38,9 @@ public class TeleportationInitiationHandler extends MessageHandler
 					currentMsg.getPlayerId(), currentMsg.getPosition());
 			ModelFacade.getSingleton().queueCommand(command);
 
+			PersistPlayerCommand persistCommand = new PersistPlayerCommand(currentMsg.getPlayerId());
+			ModelFacade.getSingleton().queueCommand(persistCommand);
+			
 			MapToServerMapping mapping = MapToServerMapping.retrieveMapping(currentMsg
 					.getMapName());
 			double pin = PlayerManager.getSingleton().getNewPinFor(playerID);

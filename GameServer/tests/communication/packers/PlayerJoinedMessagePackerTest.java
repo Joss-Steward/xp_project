@@ -39,20 +39,20 @@ public class PlayerJoinedMessagePackerTest
 	@Test
 	public void ifThePlayerIsNotOnThisConnection() throws DatabaseException
 	{
-		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
+		PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID(), PlayerPin.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
-		stateAccumulator.setPlayerId(1);
-		PlayerManager.getSingleton().addPlayer(2, PlayerPin.DEFAULT_PIN);
+		stateAccumulator.setPlayerId(PlayersInDB.MERLIN.getPlayerID());
+		PlayerManager.getSingleton().addPlayer(PlayersInDB.JOHN.getPlayerID(), PlayerPin.DEFAULT_PIN);
 
 		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager
-				.getSingleton().getPlayerFromID(2));
+				.getSingleton().getPlayerFromID(PlayersInDB.JOHN.getPlayerID()));
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);
-		assertEquals(PlayersInDB.MERLIN.getPlayerName(), msg.getPlayerName());
-		assertEquals(PlayersInDB.MERLIN.getAppearanceType(), msg.getAppearanceType());
-		assertEquals(PlayersInDB.MERLIN.getPlayerID(), msg.getPlayerID());
-		assertEquals(PlayersInDB.MERLIN.getPosition(), msg.getPosition());
+		assertEquals(PlayersInDB.JOHN.getPlayerName(), msg.getPlayerName());
+		assertEquals(PlayersInDB.JOHN.getAppearanceType(), msg.getAppearanceType());
+		assertEquals(PlayersInDB.JOHN.getPlayerID(), msg.getPlayerID());
+		assertEquals(PlayersInDB.JOHN.getPosition(), msg.getPosition());
 	}
 
 }
