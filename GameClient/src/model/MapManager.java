@@ -171,14 +171,16 @@ public class MapManager extends QualifiedObservable
 				if (key.matches("[0-9]+ [0-9]+"))
 				{
 					String[] values = key.split(" ", 2);
-					int x, y;
-					x = Integer.parseInt(values[0]);
-					y = Integer.parseInt(values[1]);
-					Position from = new Position(x, y);
+					int col, row;
+					col = Integer.parseInt(values[0]);
+					row = Integer.parseInt(values[1]);
+					Position from = new Position(row, col);
 					
 					values = properties.get(key).toString().split(" ");
 					String mapName = values[0];
-					Position to = new Position(Integer.parseInt(values[1]), Integer.parseInt(values[2]));
+					col = Integer.parseInt(values[1]);
+					row = Integer.parseInt(values[2]);
+					Position to = new Position(row, col);
 					
 					TeleportHotSpot hotspot = new TeleportHotSpot(mapName, to);
 					this.teleportMap.put(from, hotspot);		
