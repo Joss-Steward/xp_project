@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="75" height="28" tilewidth="32" tileheight="32">
  <properties>
-  <property name="25 48" value="current.tmx 16 29 "/>
+  <property name="48 25" value="current.tmx 29 16"/>
  </properties>
  <tileset firstgid="1" name="collision" tilewidth="32" tileheight="32">
   <image source="tileset/collision.png" width="64" height="32"/>
@@ -14,7 +14,7 @@
  </imagelayer>
  <layer name="Collision" width="75" height="28" visible="0">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2UwQ7DMAhDo/7/R+80rapawOAA1bDEKQScF5JjrXVMTExMTEw0ibMqej4Jycvw4/E5rDAxvCG+pXUWK8sbs6ydcxj+pBp3qmAVFZMV09POu2PdgcRgWP3qRs6BStob7aGxesq3erjWv+7R6qDysELuc6eyWWle3sDKmlvJSuvfnZX3TXn/VoQVOpNarvbu7upVsdLEZGVloa13ZSUJrRPt+0+sWP3eyIohz1x6zxBlZfkjdio6D55+UVbSHO9UNivEF9qngpWU2/Ef+Spyv8x/NDpXGVw7sIr8yZlzmMGK7aV7VJztA+CYqhDQIAAA
+   H4sIAAAAAAAAA+2USw7EMAhDo97/0F1VraIWMDif0dgSqxAgD8jRWjtkMplMJtvEnlqR80uI34x6MnWKFSZGbUjd1jmLVWTHImdPH0Z9Vow3rWBVFZMVs6aRvWP1wGIgVnfcyjtQWXerOTxWX/7RGvr4/R0vDqoMK6SfIzWblVcLulv9/ZFCZ1ys4r7Inoz4WxFW6P56vt7evcVbxcoTk1WUhXe+KytLaJxq3n9ixcr3i6wYysxl9g1VVpHejFR1HjL5xIpfF5pnBSvLd8d/5FKlv8x/tDpXM7gy9rrCqhpr5hyya63OhixnJ3qVtArQIAAA
   </data>
  </layer>
 </map>

@@ -3,38 +3,50 @@
  <properties>
   <property name="4 24" value="current.tmx 47 17"/>
  </properties>
- <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32">
-  <image source="tileset/Inq XP MI- Medieval Indoors.png" width="256" height="8704"/>
- </tileset>
- <tileset firstgid="2177" name="Inq XP MT- Medieval Town" tilewidth="32" tileheight="32">
-  <image source="tileset/Inq XP MT- Medieval Town.png" width="256" height="16704"/>
- </tileset>
- <tileset firstgid="6353" name="collision" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="collision" tilewidth="32" tileheight="32">
   <image source="tileset/collision.png" width="64" height="32"/>
  </tileset>
- <layer name="Background" width="40" height="25">
+ <tileset firstgid="3" name="terrain" tilewidth="32" tileheight="32">
+  <image source="tileset/terrain.png" width="256" height="64"/>
+ </tileset>
+ <tileset firstgid="19" name="Ext Buildings" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MT- Medieval Town - Buildings.png" width="512" height="1728"/>
+ </tileset>
+ <tileset firstgid="883" name="Ext Castle" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MT- Medieval Town - Castle.png" width="512" height="1152"/>
+ </tileset>
+ <tileset firstgid="1459" name="Int Upper Class" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MI- Medieval Indoors - Hi Class.png" width="512" height="1216"/>
+ </tileset>
+ <tileset firstgid="2067" name="Int Mid Class" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MI- Medieval Indoors - Mid Class.png" width="512" height="1888"/>
+ </tileset>
+ <tileset firstgid="3011" name="Grasslands" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MT- Medieval Town - Grasslands.png" width="768" height="1696"/>
+ </tileset>
+ <layer name="background" width="40" height="25">
   <data encoding="base64" compression="zlib">
-   eJx7xMXA8IgKWJObgUEJiFWAWJebcvMUoeatR8LbBwkGuQXkXy0kt20AYq9BgtcBsSEQG6G5L4hCzMgDwZSaQwv3+XCiYlq4L4oCHMKJiikxC5f72jiIw99FyMPEmk+J+8h1GyluHCnu+4SE0d2BS45e7vuEBRMjN+q+oeG+oZA/Rt03/NxHiRuJNZ9S95HjRlLMpob7aIlH3Ud79y0D8k8NEL5EhPvWIcnREl/CgS2B2GoQuA8XdgRiJyAGAPMFl3c=
+   eJzt0zEKwjAYxfGvNINz6RE8Qi/vDYyrojgregBFV1+HYi0pfM1LLNEE/lPC47ekEZEmQFu0Q3t0CLDXHVu8OxKdsHVGF3QVbkscvg0yRDds3dEDPYXbWhduX03WHXYnhq+Sz2L4lkRDH7M15luIrtIz7T7j87VNMf6Lz/QaOsbuvuUzjjR32ZeGL4X/kX2/52OM2n3W52Ocsh3CF7Psi+9r36xmyip9dsZS8b0ATs3Vvw==
   </data>
  </layer>
- <layer name="Background Front" width="40" height="25">
+ <layer name="background Front" width="40" height="25">
   <data encoding="base64" compression="zlib">
-   eJztlrtLw1AUhzMWI53aDm7ipE7qpOig2H/JUfCNb3zjWydfLSoItQ5qfVRXnV3ESdwcnfyCLT2NSXNpbipIf/CRm5xzz/mR5JAYhn5lo/pqvdTood00jA7ohC7Tfz3d6sZTD/RC3NRf30mfIee1k+KxYnTVLaWvUPF6IPbDIAzBsMDuT8ZGYBTGoC/8u65OjdNjAiZhSmD3J2PTMAOz0B8uv3e61jtnjh7zsACL4jm+ipl9E2srZwmWYcW6jx7+SnnIKPhbpccarMOGx3tmycrZhC3Yhh2PPSoeSmlXwZOb9ti772O/ivL+3iOGURct8BEp5LjFKumv3vaNaBDnbjG//lTmI2h/fucj76+Rnk2CZuHJLabiT9d8tNCzFVK5Y5vw5xar5PtXjirh74D6h3AECYVeVk4yl3fM8SRgf6ei/plCL5mTYn0e8PymqX9RRo9L9lzBdcDzm6H+DdzCne0/4AmebdesnHvIwgM8Bjy/Vf0PJcy/oyp9+gbjqqPt
+   eJzdlklOw0AQAO0knJBBiC0cQdwAQfhADoCAN8CB8IWc4AtwAMQP2EG8gH2VOLNvTyARD2Apy4lowhhPTOyEtFSacXqmuzTxSDaMyoy46VCJcWFWtp8dOn5NMfVcFUny6YhD0mOtTl0dv87Yz3ljHTWhGVoEtpNE5lohDm3wGlHX9eOnii56dEMP3AgKQ+Z6oQ8SYEadfHtu7IiW1m+AHoMwBA2i9os4hwzzrHgeZu0IjIo9idzYX4RfrYbvGD3GFef1m58dE+xJwaRir8rB7/mlXeq/CZ935h+K92qKvdMefvn4q1/UMoxFQY31tcYtF6bflvX9923x7Jardj+d+5H3O6Hnaa6vPZ4JJ7ecjl+p7scjPZ8gVe+Mz8LPLRfm/+snwvCbof6sD8c59szDQsB+S9RfhhVY1ey1xrp12IDNgP12qL8Le7AvKAyZO4BDOILjgO/vJfWv4LqI74NbuIN7eAj4/hYbGXyyPt7Xavh+Lmd4+Z2b5UPHr9zxX/w+AVetfKw=
   </data>
  </layer>
- <layer name="Foreground" width="40" height="25">
+ <layer name="foreground" width="40" height="25">
   <data encoding="base64" compression="zlib">
-   eJxjYECAyZwMDFM4GYgC37kZGGKA+Ac3ZWqQASH7ZwPl5hDpvv9AO5l4gAweytSQYv9ioNwSIt3HDrRzDdB+DiS7T/FDMD41+AAh+1cD5dYQ6T50cFMUwb4tilsdPkDI/s1AuS0kuG87L4L9EMlNj0lw3wkkMwjZvxsot4dI9/0Dmrsfj/veAeU+QOXf8zJggPNQsQtIcqTYTwiw8TEwHMdiLwx8A8r9gMp/x6LuOlTsBh4zRsEoGAWjYBQML7BJjHQ928jQQwloEcPEJ4H4FBDvwYJHwSgY6uAJsK/wFIifAfEyIvtc9AIbgO75AsRfgfgb1G2XuOmDiXUfCLwaZOEGADXJWHw=
+   eJxjYECAUFYGhjBWBqJAJBMDgyYQRzFRpgYZELI/FSiXRqT7MoF2lgBxFh67iVFDiv2lQLkyIt1XCbTzGCMDQxWS3VnsEIxPDT5AyP5WoFwbke5DB29ZEOx3LLjV4QOE7J8KlJtGgvs+IoULyH3foJhc9xGyfylQbhkJ7mNkRrCF0DAI8ALlFZgx9ZFrfzQH8WaBgCABu2WB8gYkuI8cN4yCUUAvMBjS5mBwwygYBUMRDIa8MxjcMApGATbgBmwPuwOxB5H9BXqDMKC7woE4YpC6bzACAN99IMQ=
   </data>
  </layer>
- <layer name="Foreground Front" width="40" height="25">
+ <layer name="foreground Front" width="40" height="25">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFIwmo8Ayc3cpE2K1Dpvu2CCDY2wRwq8MHtGkYNnuAbtoLxfvIdB8twVNRVDwKRsEoGAWjYBSMglEwCgY/WMONikfB0AcAyP0MUQ==
+   eJxjYBgFIwlsYyJPXzgrgu3OilsdPrCVCLuPkem+rywI9ncW3OrwgaNk2k0MYAWGGRsUs5MZfqNgFIyCUTAKRsEoGAWjYBQgg2OMCDwKhgcAAIYwCBw=
   </data>
  </layer>
  <layer name="Collision" width="40" height="25" visible="0">
   <data encoding="base64" compression="zlib">
-   eJztk0sKACAIRD1G9z9SJ2oVbVT8kCLMwEDkaK+FexFtGDb4qptjKl/V/zV5stG+LF9U4Hs573508HH3Wg18s/i4s1bD/oIvy+d5J9qT5ZNmWGpVfD8FvpwsfFKm0+Dz+wB0RdFS
+   eJztlN0KgDAIhWXv/9BdBSEp/k1XnAMHRmp+W7lFRAuGDb41zfFVvq79a3rm8jPja57r7RFhlHIkVkttFZu1R7a2gs87HxN8b8+12N/5PPOxi69qPrS7Q4p1ft+IwHc+n6dPtCY7I9I7LLEOtt0CX04WPu0/mDL4/L4Aa+wEFQ==
   </data>
  </layer>
 </map>

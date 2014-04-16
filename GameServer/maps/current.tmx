@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="60" height="30" tilewidth="32" tileheight="32">
  <properties>
-  <property name="15 29" value="homework.tmx 23 48"/>
-  <property name="16 47" value="quiznasium.tmx 23 4"/>
+  <property name="29 15" value="homework.tmx 48 27"/>
+  <property name="47 16" value="quiznasium.tmx 4 23"/>
  </properties>
  <tileset firstgid="1" name="collision" tilewidth="32" tileheight="32">
   <image source="tileset/collision.png" width="64" height="32"/>
