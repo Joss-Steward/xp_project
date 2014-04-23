@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="40" height="25" tilewidth="32" tileheight="32">
  <properties>
+  <property name="3 24" value="current.tmx 47 17"/>
   <property name="4 24" value="current.tmx 47 17"/>
+  <property name="5 24" value="current.tmx 47 17"/>
  </properties>
  <tileset firstgid="1" name="collision" tilewidth="32" tileheight="32">
   <image source="tileset/collision.png" width="64" height="32"/>
@@ -36,7 +38,7 @@
  </layer>
  <layer name="foreground" width="40" height="25">
   <data encoding="base64" compression="zlib">
-   eJxjYECAUFYGhjBWBqJAJBMDgyYQRzFRpgYZELI/FSiXRqT7MoF2lgBxFh67iVFDiv2lQLkyIt1XCbTzGCMDQxWS3VnsEIxPDT5AyP5WoFwbke5DB29ZEOx3LLjV4QOE7J8KlJtGgvs+IoULyH3foJhc9xGyfylQbhkJ7mNkRrCF0DAI8ALlFZgx9ZFrfzQH8WaBgCABu2WB8gYkuI8cN4yCUUAvMBjS5mBwwygYBUMRDIa8MxjcMApGATbgBmwPuwOxB5H9BXqDMKC7woE4YpC6bzACAN99IMQ=
+   eJxjYECAUFYGhjBWBqJAJBMDgyYQRzFRpgYZELI/FSiXRqT7MoF2lgBxFh67iVFDiv2lQLkyIt1XCbTzGCMDQxWS3VnsEIxPDT5AyP5WoFwbke5DB29ZEOx3LLjV4QOE7J8KlJtGgvs+IoULyH3foJhc9xGyfylQbhkJ7mNkRrCF0DAI8ALlFZgx9ZFrfzQH8WaBgCABu2WB8gYkuI8cN4yCUUAvMBjS5mBwwygYBUMRkJJ39vIxMOxDwugAWW4/FnlquGEUjAJ6Ajdge9gdiD2I7C/QG4QB3RUOxBGD1H2DEQAAz2MnJA==
   </data>
  </layer>
  <layer name="foreground Front" width="40" height="25">
@@ -46,7 +48,7 @@
  </layer>
  <layer name="Collision" width="40" height="25" visible="0">
   <data encoding="base64" compression="zlib">
-   eJztlN0KgDAIhWXv/9BdBSEp/k1XnAMHRmp+W7lFRAuGDb41zfFVvq79a3rm8jPja57r7RFhlHIkVkttFZu1R7a2gs87HxN8b8+12N/5PPOxi69qPrS7Q4p1ft+IwHc+n6dPtCY7I9I7LLEOtt0CX04WPu0/mDL4/L4Aa+wEFQ==
+   eJztlN0KgDAIhWXv/9BdBSFTPP7MCg8cGKn5beUWEa3x2OBb3Rxf5Tu1f03PXH5mfM1z0R4eRilHYrXUZrFZe0RrM/jQ+ejg2z3XYn/nQ+ajii9rPrS7Q4qd/L4eDd/7+ZA+3projOzegcYr2ao1fDFZ+LT/oMvDh/sCW6QEEQ==
   </data>
  </layer>
 </map>

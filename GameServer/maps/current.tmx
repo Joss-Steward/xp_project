@@ -12,7 +12,7 @@
  </imagelayer>
  <layer name="Collision" width="60" height="30" visible="0">
   <data encoding="base64" compression="zlib">
-   eJztleEKhTAIhaX3f+joRxCSTY865707MKLaPH5L10FEhzAqJeWUOSr1b7yXKpgzuLUenRlHHJa5q/LyWF7Pal4+7+0+y9fLJfkheWXvd+Z3tK6bUWObF6/n0fPN25tXG7s7rzX2r/JK8SNzmeExm/f5ns+L8liRN9Ljy8/Da1GUj5Z35GvJA8mV1y66px15tfMjasLDy/vjy8PqKfl4ldW/GT1/xx3VqXa9p575NfOs0+rNO7J/IxgtfYHEiurfFWXlJdq8nYTmjf7jqqXtVe/5swovos65I7p5TzIHBjs=
+   eJztlVEOxCAIREnvf+h+NWlIXZgBRDdOYpq2yvAU9RKRa9A6NcqpsnWqg/cw13F4++3CaHEgfVfl1bGint28ut/Xe5VvlGvkx+RVPd+V64iOm1Fjh5evZ+v74d2b1xt7d1409r/yjuJn5jLDYzbv+7/ul+WxIm+mxy+/CC+iLB8vr+WL5MHkq2uXndMOXkZozIzcovWM7DnUl/HxqGp9K2riiWvVqXd8ZP/qZ+Ve8OrLO/u8ijJa50801oz92yWUV+Tw7iQ2b/au7BZy30bOn1V4Ge2cO6OH9wZUVwY7
   </data>
  </layer>
  <imagelayer name="foreground" width="60" height="30">

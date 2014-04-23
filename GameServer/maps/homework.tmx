@@ -15,7 +15,7 @@
  </imagelayer>
  <layer name="Collision" width="75" height="28" visible="0">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2U0Q7FIAhDzf7/o+/jXcwGFIqarE14ErE7wK4xxqVQKBQKxSFx144334TkrfCT8SlWmBjeEN/WOYtVZMciZ/cchj+rxpN2sKqKyYrpqbN3rB5YDMTqX7fyHaisu9U3PFZv+VEPc/35jlcHVYYV0s9OrWbleUF3a77fKXTGxSqei+xJx78VYYXur5fr7d1TvV2sPDFZRVl456eysoTWqb77JVas905l1c0iM5fZfldZRXrTqeo8ZN4TK76vL+9gtyr9Zf5Hq3O1gitjryusqrVWziHba3U2FLn4ATvfxX3QIAAA
+   H4sIAAAAAAAAC+2U0Q7FIAhDzf7/o+/jXcwGFIqarE14ErE7wK4xxqVQKBQKxSFx144334TkrfCT8SlWmBjeEN/WOYtVZMciZ/cchj+rxpN2sKqKyYrpqbN3rB5YDMTqX7fyHaisu9U3PFZv+VEPc/35jlcHVYYV0s9OrWbleUF3a77fKXTGxSqei+xJx78VYYXur5fr7d1TvV2sPDFZRVl456eysoTWqb77JVas905l1c0iM5fZfldZRXrTqeo8ZN4TK76vL+9gtyr9Zf5Hq3O1gitjryusqrVWziHba3U2FLn4ATvfxX3QIAAA
   </data>
  </layer>
 </map>
