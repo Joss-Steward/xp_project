@@ -238,7 +238,6 @@ public class ScreenMap extends ScreenBasic
 		fgLayers = foreground.toArray();
 		
 		String colProp = prop.get("color", String.class);
-		System.out.println(colProp);
 		if (colProp != null)
 		{
 			String[] col = colProp.split("[\r\b\t\n ]+");
