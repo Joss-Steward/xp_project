@@ -56,6 +56,7 @@ public class PlayerManagerTest
 		assertEquals(1, PlayerManager.getSingleton().numberOfPlayers());
 		Player p = PlayerManager.getSingleton().getPlayerFromID(1);
 		assertEquals(1, p.getPlayerID());
+		assertTrue(PlayerManager.getSingleton().getConnectedPlayers().contains(p));
 	}
 
 	/**

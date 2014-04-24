@@ -1,10 +1,13 @@
 package communication.handlers;
 
+import model.Player;
 import model.AddPlayerCommand;
 import model.ModelFacade;
+import model.PlayerManager;
 import communication.handlers.MessageHandler;
 import communication.messages.ConnectMessage;
 import communication.messages.Message;
+import communication.messages.PlayerJoinedMessage;
 
 /**
  * Handles a message that the player is connecting to this area server
@@ -31,7 +34,15 @@ public class ConnectMessageHandler extends MessageHandler
 				connectionManager.setPlayerID(cMsg.getPlayerID());
 			}
 			AddPlayerCommand cmd = new AddPlayerCommand(cMsg.getPlayerID(), cMsg.getPin());
+			
 			ModelFacade.getSingleton().queueCommand(cmd);
+			
+			for (Player p : PlayerManager.getSingleton().getConnectedPlayers())
+			{
+				PlayerJoinedMessage pMsg = new PlayerJoinedMessage(
+						p.getPlayerID(), p.getPlayerName(), p.getAppearanceType(), p.getPlayerPosition());
+				this.getStateAccumulator().queueMessage(pMsg);
+			}
 		}
 	}
 

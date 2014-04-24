@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashMap;
 
 import com.j256.ormlite.dao.Dao;
@@ -233,5 +234,14 @@ public class PlayerManager extends QualifiedObservable
 			}
 		}
 		throw new PlayerNotFoundException();
+	}
+
+	/**
+	 * @return a collection of all the players currently connected to 
+	 *  the player manager
+	 */
+	public Collection<Player> getConnectedPlayers()
+	{
+		return this.players.values();
 	}
 }
