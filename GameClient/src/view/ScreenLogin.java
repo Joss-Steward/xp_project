@@ -27,20 +27,19 @@ public class ScreenLogin extends ScreenBasic
 	private Texture logo;
 	private TextField loginField;
 	private TextButton connectButton;
-
+	
 	private Table table;
 
 	private TextField pwField;
+	
+	private String flagMsg;
 
 	/**
 	 * Create a login screen
 	 */
 	public ScreenLogin()
 	{
-		if (Gdx.graphics != null)
-		{
-			initializeScreen();
-		}
+		flagMsg = "";
 	}
 
 	/**
@@ -70,8 +69,11 @@ public class ScreenLogin extends ScreenBasic
 		pwField = new TextField("", skin);
 		pwField.setMessageText("Password");
 
-		initializeTableContents(nameLabel, pwLabel, connectingLabel);
+		Label flagLabel = new Label(this.flagMsg, skin);
+		initializeTableContents(nameLabel, pwLabel, connectingLabel, flagLabel);
 		stage.addActor(table);
+		
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	/**
@@ -130,7 +132,7 @@ public class ScreenLogin extends ScreenBasic
 	 * @param connectingLabel
 	 */
 	private void initializeTableContents(Label nameLabel, Label pwLabel,
-			Label connectingLabel)
+			Label connectingLabel, Label flagLabel)
 	{
 		table = new Table();
 		table.setFillParent(true);
@@ -157,6 +159,8 @@ public class ScreenLogin extends ScreenBasic
 		table.row();
 		connectingLabel.setVisible(false);
 		table.add(connectingLabel).colspan(4);
+		table.row();
+		table.add(flagLabel).colspan(4);
 	}
 
 	/**
@@ -224,6 +228,17 @@ public class ScreenLogin extends ScreenBasic
 	@Override
 	public void show()
 	{
-
+		initializeScreen();	
+		
+	}
+	
+	/**
+	 * Set an error message to show on the login screen
+	 * @param msg
+	 * 	message to show
+	 */
+	public void showFlagMessage(String msg)
+	{
+		this.flagMsg = msg;
 	}
 }

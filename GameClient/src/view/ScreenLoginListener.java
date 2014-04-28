@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import model.QualifiedObservableReport;
+import model.reports.LoginFailedReport;
 import model.reports.LoginInitiatedReport;
 
 /**
@@ -35,6 +36,14 @@ public class ScreenLoginListener extends ScreenListener
 		{
 			this.switchToScreen(Screens.MAP_SCREEN);
 		}
+		
+		if (arg.getClass().equals(LoginFailedReport.class))
+		{
+			ScreenLogin screen = (ScreenLogin)Screens.LOGIN_SCREEN.getScreen();
+			LoginFailedReport report = (LoginFailedReport)arg;
+			screen.showFlagMessage(report.toString());
+			this.switchToScreen(Screens.LOGIN_SCREEN);
+		}
 
 	}
 
@@ -46,6 +55,7 @@ public class ScreenLoginListener extends ScreenListener
 	{
 		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
 		reportTypes.add(LoginInitiatedReport.class);
+		reportTypes.add(LoginFailedReport.class);
 		return reportTypes;
 	}
 
