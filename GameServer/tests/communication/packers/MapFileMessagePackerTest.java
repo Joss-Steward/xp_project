@@ -77,8 +77,7 @@ public class MapFileMessagePackerTest
 		OptionsManager.getSingleton().setTestMode();
 		OptionsManager.getSingleton().updateMapInformation("current.tmx", "", 1);
 		MapFileMessage msg = (MapFileMessage) packer.pack(report);
-		assertEquals("current.tmx", msg.getFileTitle());
-		assertNotNull(msg.getContents());
+		assertEquals("current.tmx", msg.getFileName());
 		OptionsManager.resetSingleton();
 	}
 
