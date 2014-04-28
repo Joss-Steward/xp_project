@@ -5,6 +5,7 @@ import java.rmi.NotBoundException;
 import java.util.HashMap;
 
 import data.Position;
+import model.reports.LoginFailedReport;
 import model.reports.LoginInitiatedReport;
 import model.reports.PlayerConnectedToAreaServerReport;
 
@@ -28,6 +29,7 @@ public class PlayerManager extends QualifiedObservable
 		thisClientsPlayer = null;
 		playerList = new HashMap<Integer, Player>();
 		reportTypes.add(LoginInitiatedReport.class);
+		reportTypes.add(LoginFailedReport.class);
 		reportTypes.add(PlayerConnectedToAreaServerReport.class);
 		registerReportTypesWeNotify();
 	}
@@ -177,5 +179,15 @@ public class PlayerManager extends QualifiedObservable
 
 		return player;
 
+	}
+	
+	/**
+	 * Report when a login has failed
+	 */
+	public void loginFailed()
+	{
+		LoginFailedReport report = new LoginFailedReport("Invalid Login - Incorrect Username/Password");
+		loginInProgress = false;
+		this.notifyObservers(report);
 	}
 }
