@@ -21,7 +21,7 @@ public class LoginFailedReportTest
 	public void creation()
 	{
 		LoginFailedReport report = new LoginFailedReport("Login Failed");
-		assertEquals("Login Failed", report.getError());
+		assertEquals("Login Failed", report.toString());
 	}
 
 	/**

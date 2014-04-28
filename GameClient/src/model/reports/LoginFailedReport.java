@@ -21,7 +21,7 @@ public final class LoginFailedReport implements QualifiedObservableReport
 	/**
 	 * @return the kind of login error message this is
 	 */
-	public String getError()
+	public String toString()
 	{
 		return errMsg;
 	}
