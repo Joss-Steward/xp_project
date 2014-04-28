@@ -51,6 +51,10 @@ public class ScreenMapListener extends ScreenListener
 			Position pos = report.getPlayerPosition();
 			map.addPlayer(report.getPlayerID(), type, pos, report.isThisClientsPlayer());
 		}
+		else if (arg.getClass().equals(ChangeMapReport.class))
+		{
+			map.setTiledMap(null);
+		}
 		else if (arg.getClass().equals(NewMapReport.class))
 		{
 			NewMapReport report = (NewMapReport) arg;
@@ -69,6 +73,7 @@ public class ScreenMapListener extends ScreenListener
 		reportTypes.add(PlayerMovedReport.class);
 		reportTypes.add(ChatReceivedReport.class);
 		reportTypes.add(NewMapReport.class);
+		reportTypes.add(ChangeMapReport.class);
 		// reportTypes.add(OtherPlayerMovedReport.class);
 
 		return reportTypes;

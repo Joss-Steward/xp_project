@@ -152,12 +152,10 @@ public class ScreenMap extends ScreenBasic
 		{
 			Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
 			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
 			loadingFont.draw(batch, "Loading...", Gdx.graphics.getWidth() - loadingFont.getBounds("Loading...").width - 10, 10 + loadingFont.getLineHeight());
 			batch.end();
-			// fake load time to test the loading screen's visibility
-			//int i = 100000;
-			//while (i > 0) i--;
 		}
 		
 		if (Gdx.input.isKeyPressed(Keys.Q))
@@ -201,6 +199,17 @@ public class ScreenMap extends ScreenBasic
 	 */
 	public void setTiledMap(TiledMap tiledMap)
 	{
+		//clear things when changing maps
+		if (tiledMap == null)
+		{
+			camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			System.out.println("clearing tile map");
+			characters.clear();
+			this.mySprite = null;
+			mapRenderer = null;
+			return;
+		}
+		
 		System.out.println("updated tile map in the screen " + tiledMap);
 		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, unitScale);
 		
@@ -311,8 +320,11 @@ public class ScreenMap extends ScreenBasic
 	public void movePlayer(int id, Position pos)
 	{
 		PlayerSprite sprite = this.characters.get(id);
-		Vector2 loc = positionToScale(pos);
-		sprite.move(loc.x, loc.y);
+		if (sprite != null)
+		{
+			Vector2 loc = positionToScale(pos);
+			sprite.move(loc.x, loc.y);
+		}
 	}
 
 	/**
