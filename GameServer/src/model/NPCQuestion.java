@@ -34,29 +34,16 @@ public class NPCQuestion
 	private static JdbcConnectionSource connectionSource;
 
 	/**
-	 * 
-	 * @return
-	 * 			the DAO for NPCQuestion
-	 * @throws SQLException when database goes wrong
-	 */
-	public static Dao<NPCQuestion, Integer> getQuestionDao() throws SQLException
-	{
-		return questionDao;
-	}
-
-	/**
 	 * Sets up DAO Object for this class.
 	 * Must be called before using this class's DAO.
-	 * @throws SQLException
+	 * @return The Dao for NPCQuestion
+	 * @throws SQLException when the database messes up
 	 */
-	private static Dao<NPCQuestion, Integer> getDao() throws SQLException
+	public static Dao<NPCQuestion, Integer> getDao() throws SQLException
 	{
-		if (questionDao == null)
-		{
-			String databaseUrl = "jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players";
-			connectionSource = new JdbcConnectionSource(databaseUrl, "program", "ShipSim");
-			questionDao = DaoManager.createDao(connectionSource, NPCQuestion.class);
-		}
+		String databaseUrl = "jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players";
+		connectionSource = new JdbcConnectionSource(databaseUrl, "program", "ShipSim");
+		questionDao = DaoManager.createDao(connectionSource, NPCQuestion.class);
 		return questionDao;
 	}
 
@@ -79,7 +66,6 @@ public class NPCQuestion
 	{
 		this.question = question;
 		this.answer = answer;
-		getDao().create(this);
 	}
 
 	/**

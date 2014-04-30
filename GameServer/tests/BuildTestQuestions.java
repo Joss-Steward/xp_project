@@ -19,7 +19,6 @@ public class BuildTestQuestions
 {
 
 	private static JdbcConnectionSource connectionSource;
-	private static Dao<NPCQuestion, Integer> questionDao;
 
 	/**
 	 * 
@@ -43,14 +42,14 @@ public class BuildTestQuestions
 	private static void createQuestionTable() throws SQLException, DatabaseException
 	{
 		connectionSource = PlayerManager.getSingleton().getConnectionSource();
-		questionDao = NPCQuestion.getQuestionDao();
+		Dao<NPCQuestion, Integer> questionDao = NPCQuestion.getDao();
 		TableUtils.dropTable(connectionSource, NPCQuestion.class, true);
 		TableUtils.createTableIfNotExists(connectionSource, NPCQuestion.class);
 
-		for (QuestionsInDB d:QuestionsInDB.values())
+		for (QuestionsInDB question : QuestionsInDB.values())
 		{
-			new NPCQuestion(d.getQ(),d.getA());
+			NPCQuestion q = new NPCQuestion(question.getQ(),question.getA());
+			questionDao.create(q);
 		}
-
 	}
 }

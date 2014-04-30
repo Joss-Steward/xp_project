@@ -8,9 +8,15 @@ package model;
  */
 public enum QuestionsInDB
 {
-
-	ONE("First question", "First answer"), TWO("Second question",
-			"Second answer");
+	/**
+	 * 
+	 */
+	ONE("First question", "First answer"), 
+	
+	/**
+	 * 
+	 */
+	TWO("Second question", "Second answer");
 
 	private String q;
 
