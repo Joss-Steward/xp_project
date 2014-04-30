@@ -2,6 +2,7 @@ import java.sql.SQLException;
 
 import model.DatabaseException;
 import model.NPCQuestion;
+import model.PlayerManager;
 import model.QuestionsInDB;
 
 import com.j256.ormlite.dao.Dao;
@@ -37,8 +38,7 @@ public class BuildTestQuestions
 	
 	private static void createQuestionTable() throws SQLException, DatabaseException
 	{
-
-		connectionSource = NPCQuestion.getConnectionSource();
+		connectionSource = PlayerManager.getSingleton().getConnectionSource();
 		questionDao = NPCQuestion.getQuestionDao();
 		TableUtils.dropTable(connectionSource, NPCQuestion.class, true);
 		TableUtils.createTableIfNotExists(connectionSource, NPCQuestion.class);
