@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="PlayerManagerTest" project="GameClient" tests="5" started="5" failures="0" errors="0" ignored="0">
-  <testsuite name="model.PlayerManagerTest" time="0.065">
-    <testcase name="canAddAndRetrievePlayers" classname="model.PlayerManagerTest" time="0.018"/>
-    <testcase name="notifiesOnLoginInitiation" classname="model.PlayerManagerTest" time="0.035"/>
-    <testcase name="canStartToLogin" classname="model.PlayerManagerTest" time="0.001"/>
-    <testcase name="testSingleton" classname="model.PlayerManagerTest" time="0.0"/>
-    <testcase name="testSettingThisClientsPlayer" classname="model.PlayerManagerTest" time="0.011"/>
-  </testsuite>
-</testrun>
