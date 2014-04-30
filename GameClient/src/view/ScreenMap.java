@@ -33,6 +33,7 @@ import data.Position;
  */
 public class ScreenMap extends ScreenBasic
 {
+	InputMultiplexer multiplexer;
 	OrthogonalTiledMapRenderer mapRenderer;
 	PlayerSprite mySprite;
 	
@@ -58,6 +59,8 @@ public class ScreenMap extends ScreenBasic
 	private int[] bgLayers, fgLayers;
 	private Color clearColor;
 	
+	boolean loading;
+	
 	/**
 	 * 
 	 */
@@ -75,6 +78,8 @@ public class ScreenMap extends ScreenBasic
 		mapPixelSize = new Vector2(16,16);
 		
 		clearColor = new Color(0.7f, 0.7f, 1.0f, 1);
+		
+		multiplexer = new InputMultiplexer();	
 	}
 
 	/**
@@ -111,11 +116,13 @@ public class ScreenMap extends ScreenBasic
 		stage.act();
 		stage.draw();
 
-		if (mapRenderer != null && mySprite != null)
+		if (!loading)
 		{
 			Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, 1);
 			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
+			mapInput.update(delta);
+			
 			//insures players will be positioned at the right location when a map is set
 			IntMap.Keys ids = this.characterQueue.keys();
 			while (ids.hasNext)
@@ -147,23 +154,30 @@ public class ScreenMap extends ScreenBasic
 			
 			//have the camera follow the player when moving
 			camera.position.set(this.mySprite.getPosition(), 0);
+			
+			if (Gdx.input.isKeyPressed(Keys.Q))
+			{
+				System.out.println("quest button is pressed");
+
+				CommandQuestScreenOpen lc = new CommandQuestScreenOpen();
+				ModelFacade.getSingleton().queueCommand(lc);
+			}
 		}
 		else
 		{
+			Gdx.input.setInputProcessor(null);
 			Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
 			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
 			loadingFont.draw(batch, "Loading...", Gdx.graphics.getWidth() - loadingFont.getBounds("Loading...").width - 10, 10 + loadingFont.getLineHeight());
 			batch.end();
-		}
-		
-		if (Gdx.input.isKeyPressed(Keys.Q))
-		{
-			System.out.println("quest button is pressed");
-
-			CommandQuestScreenOpen lc = new CommandQuestScreenOpen();
-			ModelFacade.getSingleton().queueCommand(lc);
+			
+			if (mapRenderer != null && mySprite != null)
+			{
+				Gdx.input.setInputProcessor(multiplexer);
+				loading = false;
+			}
 		}
 	}
 
@@ -199,6 +213,8 @@ public class ScreenMap extends ScreenBasic
 	 */
 	public void setTiledMap(TiledMap tiledMap)
 	{
+		loading = true;
+		
 		//clear things when changing maps
 		if (tiledMap == null)
 		{
@@ -206,6 +222,7 @@ public class ScreenMap extends ScreenBasic
 			System.out.println("clearing tile map");
 			characters.clear();
 			this.mySprite = null;
+			mapInput.setSprite(null);
 			mapRenderer = null;
 			return;
 		}
@@ -276,11 +293,10 @@ public class ScreenMap extends ScreenBasic
 		playerFactory = new PlayerSpriteFactory(
 				Gdx.files.internal("data/characters.pack"));
 		chatArea = new ChatUi();
-		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(mapInput);
 		chatArea.addToInput(multiplexer);
 		
-		Gdx.input.setInputProcessor(multiplexer);
+		loading = true;
 	}
 
 	/**
@@ -306,6 +322,7 @@ public class ScreenMap extends ScreenBasic
 		if (isThisClientsPlayer)
 		{
 			mySprite = sprite;
+			mapInput.setSprite(mySprite);
 		}
 	}
 

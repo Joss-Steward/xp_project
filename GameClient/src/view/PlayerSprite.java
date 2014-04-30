@@ -138,7 +138,7 @@ public class PlayerSprite
 			animationTimer = 0f;
 
 		// tween to destination
-		if (!real.epsilonEquals(dest, .05f))
+		if (!doneWalking())
 		{
 			real = current.lerp(dest, 1f - lastMoved);
 		}
@@ -179,5 +179,13 @@ public class PlayerSprite
 	public Direction getFacing()
 	{
 		return facing;
+	}
+	
+	/**
+	 * @return if the player's pixel position is that of their destination position
+	 */
+	public boolean doneWalking()
+	{
+		return real.epsilonEquals(dest, .05f);
 	}
 }
