@@ -28,7 +28,7 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 	 */
 	public PlayerConnectionReport(Player p) throws DatabaseException
 	{
-		this.playerID = p.getPlayerID();
+		this.playerID = p.getID();
 		this.playerName = p.getPlayerName();
 		this.appearanceType = p.getAppearanceType();
 		this.position = p.getPlayerPosition();
