@@ -62,10 +62,13 @@ public class Npc extends Player
 	 */
 	public void start()
 	{
-		timedEvent = new NpcTimerTask(behavior);
-		//The event is going to occur every seconds*1000 ms (second param), but will start after seconds*1000ms (first)
-		// has passed. This is so behavior doesn't occur as soon as start happens
-		timer.scheduleAtFixedRate(timedEvent, behavior.getPollingInterval(), behavior.getPollingInterval());
+		if(behavior.getPollingInterval() > 0)
+		{
+			//The event is going to occur every seconds*1000 ms (second param), but will start after seconds*1000ms (first)
+			// has passed. This is so behavior doesn't occur as soon as start happens
+			timedEvent = new NpcTimerTask(behavior);
+			timer.scheduleAtFixedRate(timedEvent, behavior.getPollingInterval(), behavior.getPollingInterval());
+		}
 	}
 	
 	/**

@@ -36,6 +36,27 @@ public class NpcTest
 	}
 	
 	/**
+	 * Test that the npc polling is optional
+	 * @throws InterruptedException shouldn't
+	 */
+	@Test
+	public void testBehaviorPollingIsOptional() throws InterruptedException 
+	{
+		MockBehavior mb = new MockBehavior();
+		mb.pollingInterval = 0;
+		Npc npc = new Npc();
+		npc.setBehavior(mb);
+		npc.start();
+		
+		//Need to sleep for a known count + a grace period because threads are unpredictable
+		Thread.sleep(mb.getPollingInterval() * 3 + (mb.getPollingInterval() / 5));
+		
+		npc.stop();
+		
+		assertEquals(0, mb.count);
+	}
+	
+	/**
 	 */
 	private class MockBehavior extends Behavior
 	{
