@@ -14,7 +14,11 @@ import communication.messages.Message;
  */
 public class MapFileMessagePacker extends MessagePacker
 {
-
+	/**
+	 * The prefix for where maps are stored on the client
+	 */
+	public static String DIRECTORY_PREFIX = "maps/";
+	
 	/**
 	 * @see communication.packers.MessagePacker#pack(model.QualifiedObservableReport)
 	 */
@@ -29,7 +33,7 @@ public class MapFileMessagePacker extends MessagePacker
 			{
 				//send this server's map file back to the client when they connect to the server
 				String mapName = OptionsManager.getSingleton().getMapName();
-				MapFileMessage msg = new MapFileMessage("maps/"+mapName);
+				MapFileMessage msg = new MapFileMessage(DIRECTORY_PREFIX + mapName);
 				return msg;
 			}
 		} catch (IOException e)
