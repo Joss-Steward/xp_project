@@ -40,7 +40,7 @@ public class ConnectMessageHandler extends MessageHandler
 			for (Player p : PlayerManager.getSingleton().getConnectedPlayers())
 			{
 				PlayerJoinedMessage pMsg = new PlayerJoinedMessage(
-						p.getPlayerID(), p.getPlayerName(), p.getAppearanceType(), p.getPlayerPosition());
+						p.getID(), p.getPlayerName(), p.getAppearanceType(), p.getPlayerPosition());
 				this.getStateAccumulator().queueMessage(pMsg);
 			}
 		}

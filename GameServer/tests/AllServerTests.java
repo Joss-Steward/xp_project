@@ -1,4 +1,5 @@
 import model.AddCommandTest;
+import model.CharacterIDGeneratorTest;
 import model.ChatManagerTest;
 import model.ChatMessageReceivedCommandTest;
 import model.MapToServerMappingTest;
@@ -57,7 +58,8 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 		PlayerTest.class,
 		ChatManagerTest.class,
 		ChatMessageReceivedCommandTest.class,
-
+		CharacterIDGeneratorTest.class,
+		
 		// model.reports
 		PlayerConnectionReportTest.class, 
 		PlayerMovedReportTest.class, 

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -16,6 +17,21 @@ import org.junit.Test;
  */
 public class MapToServerMappingTest
 {
+	/**
+	 * Reset the database to have consistent data all of the time
+	 * OptionsManager should not be in test mode, because we want to hit the actual database
+	 * @throws SQLException shouldn't
+	 */
+	@Before
+	public void resetMappingInDB() throws SQLException
+	{
+		MapToServerMapping reset = new MapToServerMapping();
+		reset.setHostName(ServersInDB.FIRST_SERVER.getHostName());
+		reset.setMapName(ServersInDB.FIRST_SERVER.getMapName());
+		reset.setPortNumber(ServersInDB.FIRST_SERVER.getPortNumber());
+		MapToServerMapping.getServerDao().update(reset);
+		OptionsManager.resetSingleton();
+	}
 
 	/**
 	 * Can retrieve one
@@ -24,6 +40,7 @@ public class MapToServerMappingTest
 	@Test
 	public void retrieval() throws SQLException
 	{
+		this.resetMappingInDB();
 		ServersInDB expected = ServersInDB.FIRST_SERVER;
 		MapToServerMapping map = MapToServerMapping.retrieveMapping(expected.getMapName());
 		assertEquals(expected.getMapName(), map.getMapName());

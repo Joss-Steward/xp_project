@@ -55,7 +55,7 @@ public class PlayerManagerTest
 		PlayerManager.getSingleton().addPlayer(1);
 		assertEquals(1, PlayerManager.getSingleton().numberOfPlayers());
 		Player p = PlayerManager.getSingleton().getPlayerFromID(1);
-		assertEquals(1, p.getPlayerID());
+		assertEquals(1, p.getID());
 		assertTrue(PlayerManager.getSingleton().getConnectedPlayers().contains(p));
 	}
 
@@ -127,7 +127,7 @@ public class PlayerManagerTest
 	{
 		Player player = PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID());
 		player.setPlayerPosition(new Position(100, 100));
-		assertTrue(PlayerManager.getSingleton().persistPlayer(player.getPlayerID()));
+		assertTrue(PlayerManager.getSingleton().persistPlayer(player.getID()));
 		
 		PlayerManager.resetSingleton();
 		

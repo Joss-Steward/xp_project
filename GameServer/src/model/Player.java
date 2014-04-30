@@ -22,8 +22,8 @@ import data.Position;
 public class Player extends QualifiedObservable
 {
 
-	@DatabaseField(generatedId = true)
-	private int playerID;
+	@DatabaseField(id = true)
+	private int id;
 	
 	@DatabaseField(foreign = true)
 	private PlayerLogin playerLogin;
@@ -53,16 +53,16 @@ public class Player extends QualifiedObservable
 
 	public void checkThePin(double pin) throws DatabaseException
 	{
-		PlayerPin pl = new PlayerPin(playerID);
+		PlayerPin pl = new PlayerPin(id);
 		if (pin != pl.retrievePin())
 		{
-			throw new DatabaseException("Wrong PIN for player #" + playerID);
+			throw new DatabaseException("Wrong PIN for player #" + id);
 		}
 		GregorianCalendar now = new GregorianCalendar();
 		now.setTimeZone(TimeZone.getTimeZone("GMT"));
 		if (pl.getExpirationTime().before(now))
 		{
-			throw new DatabaseException("Expired PIN for player #" + playerID);
+			throw new DatabaseException("Expired PIN for player #" + id);
 		}
 	}
 
@@ -77,11 +77,11 @@ public class Player extends QualifiedObservable
 	}
 
 	/**
-	 * @return the playerID of this player
+	 * @return the id of this player
 	 */
-	public int getPlayerID()
+	public int getID()
 	{
-		return playerID;
+		return id;
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class Player extends QualifiedObservable
 	public void setPlayerPosition(Position playerPosition)
 	{
 		setPlayerPositionWithoutNotifying(playerPosition);
-		PlayerMovedReport report = new PlayerMovedReport(this.playerID, this.playerLogin.getPlayerName(),
+		PlayerMovedReport report = new PlayerMovedReport(this.id, this.playerLogin.getPlayerName(),
 				playerPosition);
 		this.notifyObservers(report);
 	}
@@ -155,5 +155,14 @@ public class Player extends QualifiedObservable
 	public void setPlayerPositionWithoutNotifying(Position newPosition)
 	{
 		this.playerPosition = newPosition;
+	}
+
+	/**
+	 * Set the id
+	 * @param id the new id
+	 */
+	public void setId(int id) 
+	{
+		this.id = id;
 	}
 }

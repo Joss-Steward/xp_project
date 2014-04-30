@@ -3,9 +3,8 @@ package communication.messages;
 import java.io.Serializable;
 
 /**
- * The message that goes from the main server to the client on a successful
- * login. It tells the client what the player's ID number is and where to
- * connect to begin playing.
+ * The message that goes from the main server to the client when the user enterse invalid 
+ * login credentials.
  * 
  * @author Merlin
  * 
@@ -32,7 +31,7 @@ public class LoginFailedMessage implements Message, Serializable
 	@Override
 	public String toString()
 	{
-		return "Failed login ";
+		return "Failed login";
 	}
 
 }

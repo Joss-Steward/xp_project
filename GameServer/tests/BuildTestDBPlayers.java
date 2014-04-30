@@ -1,6 +1,8 @@
 import java.sql.SQLException;
 
+import model.CharacterIDGenerator;
 import model.DatabaseException;
+import model.Npc;
 import model.Player;
 import model.PlayerLogin;
 import model.PlayerManager;
@@ -23,6 +25,7 @@ public class BuildTestDBPlayers
 
 	private static JdbcConnectionSource connectionSource;
 	private static Dao<Player, Integer> playerDAO;
+	private static Dao<Npc, Integer> npcDAO;
 
 	/**
 	 * 
@@ -35,12 +38,21 @@ public class BuildTestDBPlayers
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
+		createCharacterIDTable();
 		createPlayerTable();
+		createNpcTable();
+	}
+	
+	private static void createCharacterIDTable() throws SQLException, DatabaseException
+	{
+		PlayerManager pm = PlayerManager.getSingleton();
+		connectionSource = pm.getConnectionSource();
+		TableUtils.dropTable(connectionSource, CharacterIDGenerator.class, true);
+		TableUtils.createTable(connectionSource, CharacterIDGenerator.class);
 	}
 
 	private static void createPlayerTable() throws SQLException, DatabaseException
 	{
-
 		PlayerManager pm = PlayerManager.getSingleton();
 		connectionSource = pm.getConnectionSource();
 		playerDAO = pm.getPlayerDao();
@@ -51,6 +63,7 @@ public class BuildTestDBPlayers
 		{
 			Position pos = p.getPosition();
 			Player player = new Player();
+			player.setId(CharacterIDGenerator.getNextId());
 			PlayerLogin pl = PlayerLogin.readPlayerLogin(p.getPlayerName());
 			player.setPlayerLogin(pl);
 			player.setPlayerPosition(pos);
@@ -58,5 +71,27 @@ public class BuildTestDBPlayers
 			playerDAO.create(player);
 		}
 
+	}
+	
+	private static void createNpcTable() throws SQLException, DatabaseException
+	{
+		PlayerManager pm = PlayerManager.getSingleton();
+		connectionSource = pm.getConnectionSource();
+		npcDAO = pm.getNpcDao();
+		TableUtils.dropTable(connectionSource, Npc.class, true);
+		TableUtils.createTable(connectionSource, Npc.class);
+		
+		for (PlayersInDB p : PlayersInDB.values())
+		{
+			Position pos = p.getPosition();
+			Npc player = new Npc();
+			player.setId(CharacterIDGenerator.getNextId());
+			PlayerLogin pl = PlayerLogin.readPlayerLogin(p.getPlayerName());
+			player.setPlayerLogin(pl);
+			player.setPlayerPosition(pos);
+			player.setAppearanceType(p.getAppearanceType());
+			player.setMap("testing");
+			npcDAO.create(player);
+		}
 	}
 }

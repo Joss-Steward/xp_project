@@ -33,7 +33,7 @@ public class PersistPlayerCommandTest
 		Player player = PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID());
 		player.setPlayerPositionWithoutNotifying(new Position(101, 101));
 		player.setAppearanceType("appearance");
-		PlayerManager.getSingleton().persistPlayer(player.getPlayerID());
+		PlayerManager.getSingleton().persistPlayer(player.getID());
 		
 		PlayerManager.resetSingleton();
 		
