@@ -16,7 +16,10 @@ import model.reports.PlayerConnectionReport;
  */
 public class PlayerManager extends QualifiedObservable
 {
-
+	/**
+	 * String for jdbc connection to database
+	 */
+	public static String DATABASE_URL = "jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players";
 	private static PlayerManager singleton;
 
 	/**
@@ -65,6 +68,7 @@ public class PlayerManager extends QualifiedObservable
 	private JdbcConnectionSource connectionSource;
 
 	private Dao<Player, Integer> playerDao;
+	private Dao<Npc, Integer> npcDao;
 
 	/**
 	 * Get the connection source ormlite will use (only for testing)
@@ -85,19 +89,22 @@ public class PlayerManager extends QualifiedObservable
 	{
 		return playerDao;
 	}
-
-	private void setUpDAOObject() throws SQLException
-	{
-		String databaseUrl = "jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players";
-		connectionSource = new JdbcConnectionSource(databaseUrl, "program", "ShipSim");
-		playerDao = DaoManager.createDao(connectionSource, Player.class);
+	
+	/**
+	 * Get the npc Data Access Object
+	 * @return the DAO from orm lite
+	 */
+	public Dao<Npc, Integer> getNpcDao() {
+		return npcDao;
 	}
 
 	private PlayerManager() throws DatabaseException
 	{
 		try
 		{
-			setUpDAOObject();
+			connectionSource = new JdbcConnectionSource(DATABASE_URL, "program", "ShipSim");
+			playerDao = DaoManager.createDao(connectionSource, Player.class);
+			npcDao = DaoManager.createDao(connectionSource, Npc.class);
 		} catch (SQLException e)
 		{
 			throw new DatabaseException("Unable to set up Player DAO");
@@ -230,7 +237,7 @@ public class PlayerManager extends QualifiedObservable
 			Player p = i.next();
 			if (p.getPlayerName().equals(playerName))
 			{
-				return p.getPlayerID();
+				return p.getID();
 			}
 		}
 		throw new PlayerNotFoundException();
