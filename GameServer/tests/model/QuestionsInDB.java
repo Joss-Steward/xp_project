@@ -1,5 +1,11 @@
 package model;
 
+/**
+ * Create test questions for the DB.
+ * 
+ * @author gl9859
+ *
+ */
 public enum QuestionsInDB
 {
 
@@ -8,11 +14,19 @@ public enum QuestionsInDB
 
 	private String q;
 
+	/**
+	 * @return
+	 * 			the question
+	 */
 	public String getQ()
 	{
 		return q;
 	}
 
+	/**
+	 * @return
+	 * 			the answer
+	 */
 	public String getA()
 	{
 		return a;
@@ -20,6 +34,13 @@ public enum QuestionsInDB
 
 	private String a;
 
+	/**
+	 * Constructor
+	 * @param q
+	 * 			question
+	 * @param a
+	 * 			answer
+	 */
 	QuestionsInDB(String q, String a)
 	{
 		this.q = q;
