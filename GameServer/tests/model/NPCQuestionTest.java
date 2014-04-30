@@ -6,9 +6,18 @@ import java.sql.SQLException;
 
 import org.junit.Test;
 
+/**
+ * Tests retrieving questions from the database
+ * 
+ * @author gl9859
+ *
+ */
 public class NPCQuestionTest extends DatabaseTest
 {
 
+	/**
+	 * The actual test.
+	 */
 	@Test
 	public void test() throws SQLException {
 		NPCQuestion question = NPCQuestion.getQuestionFromID(1);

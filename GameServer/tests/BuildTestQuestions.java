@@ -34,7 +34,11 @@ public class BuildTestQuestions
 		createQuestionTable();
 	}
 
-	
+	/**
+	 * Create a table of test questions
+	 * @throws SQLException
+	 * @throws DatabaseException
+	 */
 	private static void createQuestionTable() throws SQLException, DatabaseException
 	{
 
