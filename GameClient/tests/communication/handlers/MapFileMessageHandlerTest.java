@@ -2,10 +2,8 @@ package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.File;
 import java.io.IOException;
 
-import junitx.framework.FileAssert;
 import model.ModelFacade;
 
 import org.junit.Before;
