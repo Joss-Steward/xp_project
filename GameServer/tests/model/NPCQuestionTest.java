@@ -11,7 +11,6 @@ import org.junit.Test;
  * Test the NPCQuestion
  * 
  * @author Steve
- *
  */
 public class NPCQuestionTest extends DatabaseTest
 {
