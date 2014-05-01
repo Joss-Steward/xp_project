@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import model.CharacterIDGenerator;
 import model.DatabaseException;
 import model.Npc;
+import model.NpcsInDB;
 import model.Player;
 import model.PlayerLogin;
 import model.PlayerManager;
@@ -63,7 +64,7 @@ public class BuildTestDBPlayers
 		{
 			Position pos = p.getPosition();
 			Player player = new Player();
-			player.setId(CharacterIDGenerator.getNextId());
+			player.setId(p.getPlayerID());
 			PlayerLogin pl = PlayerLogin.readPlayerLogin(p.getPlayerName());
 			player.setPlayerLogin(pl);
 			player.setPlayerPosition(pos);
@@ -81,16 +82,15 @@ public class BuildTestDBPlayers
 		TableUtils.dropTable(connectionSource, Npc.class, true);
 		TableUtils.createTable(connectionSource, Npc.class);
 		
-		for (PlayersInDB p : PlayersInDB.values())
+		for (NpcsInDB p : NpcsInDB.values())
 		{
 			Position pos = p.getPosition();
 			Npc player = new Npc();
-			player.setId(CharacterIDGenerator.getNextId());
-			PlayerLogin pl = PlayerLogin.readPlayerLogin(p.getPlayerName());
-			player.setPlayerLogin(pl);
+			player.setId(p.getPlayerID());
+			player.setName(p.getPlayerName());
 			player.setPlayerPosition(pos);
 			player.setAppearanceType(p.getAppearanceType());
-			player.setMap("testing");
+			player.setMap("current.tmx");
 			npcDAO.create(player);
 		}
 	}

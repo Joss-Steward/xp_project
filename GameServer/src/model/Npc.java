@@ -22,6 +22,9 @@ public class Npc extends Player
 	
 	@DatabaseField(canBeNull = false)
 	private String mapName;
+	
+	@DatabaseField(canBeNull = false)
+	private String name;
 
 	private NpcTimerTask timedEvent;
 	private Timer timer;
@@ -58,11 +61,20 @@ public class Npc extends Player
 	}
 	
 	/**
+	 * 
+	 * @return the npc's name
+	 */
+	public String getPlayerName()
+	{
+		return name;
+	}
+	
+	/**
 	 * Begin timing for the npc's behavior
 	 */
 	public void start()
 	{
-		if(behavior.getPollingInterval() > 0)
+		if(behavior != null && behavior.getPollingInterval() > 0)
 		{
 			//The event is going to occur every seconds*1000 ms (second param), but will start after seconds*1000ms (first)
 			// has passed. This is so behavior doesn't occur as soon as start happens
@@ -103,5 +115,14 @@ public class Npc extends Player
 		{
 			this.behavior.doTimedEvent();
 		}
+	}
+
+	/**
+	 * 
+	 * @param name the new name
+	 */
+	public void setName(String name) 
+	{
+		this.name = name;
 	}
 }
