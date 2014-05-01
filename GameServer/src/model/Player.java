@@ -134,7 +134,7 @@ public class Player extends QualifiedObservable
 	public void setPlayerPosition(Position playerPosition)
 	{
 		setPlayerPositionWithoutNotifying(playerPosition);
-		PlayerMovedReport report = new PlayerMovedReport(this.id, this.playerLogin.getPlayerName(),
+		PlayerMovedReport report = new PlayerMovedReport(this.id, this.getPlayerName(),
 				playerPosition);
 		this.notifyObservers(report);
 	}
