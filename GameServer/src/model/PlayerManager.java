@@ -3,6 +3,7 @@ package model;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
@@ -56,6 +57,7 @@ public class PlayerManager extends QualifiedObservable
 			try
 			{
 				singleton.connectionSource.close();
+				singleton.stopNpcs();
 			} catch (SQLException e)
 			{
 				e.printStackTrace();
@@ -65,6 +67,7 @@ public class PlayerManager extends QualifiedObservable
 	}
 
 	private HashMap<Integer, Player> players;
+	private List<Npc> npcs;
 	private JdbcConnectionSource connectionSource;
 
 	private Dao<Player, Integer> playerDao;
@@ -107,7 +110,7 @@ public class PlayerManager extends QualifiedObservable
 			npcDao = DaoManager.createDao(connectionSource, Npc.class);
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Unable to set up Player DAO");
+			throw new DatabaseException("Unable to set up DAO");
 		}
 		players = new HashMap<Integer, Player>();
 		reportTypes.add(PlayerConnectionReport.class);
@@ -250,5 +253,43 @@ public class PlayerManager extends QualifiedObservable
 	public Collection<Player> getConnectedPlayers()
 	{
 		return this.players.values();
+	}
+	
+	/**
+	 * Load the npcs that belong on this map, add them to player manager, and start them
+	 * @throws DatabaseException when database goes wrong
+	 */
+	public void loadNpcs() throws DatabaseException
+	{
+		stopNpcs();
+		HashMap<String, Object> queryParams = new HashMap<String, Object>();
+		queryParams.put("mapName", OptionsManager.getSingleton().getMapName());
+		try 
+		{
+			npcs = this.getNpcDao().queryForFieldValues(queryParams);
+			for(Npc npc: npcs)
+			{
+				players.put(npc.getID(), npc);
+				npc.start();
+			}
+		} catch (SQLException e) 
+		{
+			throw new DatabaseException("Unable to load npcs");
+		}
+	}
+	
+	/**
+	 * Stop all of the npcs. This is necessary when the PlayerManager is reset so that the npcs do
+	 * not have runaway timers that may be re-created.
+	 */
+	private void stopNpcs()
+	{
+		if(npcs != null)
+		{
+			for(Npc npc: npcs)
+			{
+				npc.stop();
+			}
+		}
 	}
 }

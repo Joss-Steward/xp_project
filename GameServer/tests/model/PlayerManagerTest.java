@@ -2,6 +2,7 @@ package model;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.util.Observer;
 
 import model.reports.PlayerConnectionReport;
@@ -133,5 +134,22 @@ public class PlayerManagerTest
 		
 		Player fetched = PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID());
 		assertEquals(new Position(100, 100), fetched.getPlayerPosition());
+	}
+	
+	/**
+	 * Test that the known npcs will be in the database
+	 * @throws DatabaseException shouldn't
+	 * @throws SQLException shouldn't
+	 */
+	@Test
+	public void testNpcsLoaded() throws DatabaseException, SQLException
+	{
+		OptionsManager.getSingleton().setTestMode();
+		OptionsManager.getSingleton().updateMapInformation("current.tmx", "local", 1337);
+		PlayerManager.getSingleton().loadNpcs();
+		for(NpcsInDB npc: NpcsInDB.values())
+		{
+			assertNotNull(PlayerManager.getSingleton().getPlayerFromID(npc.getPlayerID()));
+		}
 	}
 }
