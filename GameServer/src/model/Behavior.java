@@ -27,6 +27,21 @@ public abstract class Behavior implements Serializable, Observer
 		return this.pollingInterval;
 	}
 	
+	
+	/**
+	 * EVERY subclass should call this method in its constructor!!!!!!
+	 */
+	public void setUpListening()
+	{
+		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
+		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = getReportTypes();
+		for (Class<? extends QualifiedObservableReport> reportType : reportTypes)
+		{
+			cm.registerObserver(this, reportType);
+		}
+	}
+	
+	
 	/**
 	 * Execute the timed event
 	 */

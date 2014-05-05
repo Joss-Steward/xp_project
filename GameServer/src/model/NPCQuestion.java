@@ -1,7 +1,6 @@
 package model;
 
 import java.sql.SQLException;
-import java.util.Random;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
@@ -109,11 +108,10 @@ public class NPCQuestion
 	 */
 	public static NPCQuestion getRandomQuestion() throws SQLException
 	{
-		Random rand = new Random();
 		//get a count of all questions
 		int questionCount = (int) getDao().countOf();
 		
-		int randomNumber = rand.nextInt(questionCount);
+		int randomNumber = (int)(Math.random()*questionCount);
 		
 		//return question offset by our random amount
 		return getQuestionFromID(randomNumber);
