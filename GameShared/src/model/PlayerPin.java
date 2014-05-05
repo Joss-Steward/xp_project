@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * The behaviors associated with the PINs that are given to players when the are
@@ -21,6 +22,9 @@ public class PlayerPin
 
 	static final int EXPIRATION_TIME_UNITS = Calendar.HOUR;
 	static final int EXPIRATION_TIME_QUANTITY = 12;
+	static final String ERROR_PIN_NOT_EXIST = "Pin does not exist";
+	static final String ERROR_PIN_EXPIRED = "Pin has expired";
+	
 	/**
 	 * Used as the default pin in testing
 	 */
@@ -116,12 +120,13 @@ public class PlayerPin
 	 * Get the time when this player's pin expires in GMT
 	 * 
 	 * @return the expiration time
-	 * @throws DatabaseException
-	 *             shouldn't
 	 */
-	public GregorianCalendar getExpirationTime() throws DatabaseException
+	public boolean isExpired()
 	{
-		GregorianCalendar changedOn = null;
+		GregorianCalendar now = new GregorianCalendar();
+		now.setTimeZone(TimeZone.getTimeZone("GMT"));
+		GregorianCalendar expirationTime = null;
+		boolean expired = true;
 		try
 		{
 			Connection connection = DatabaseManager.getSingleton().getConnection();
@@ -129,20 +134,24 @@ public class PlayerPin
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, playerID);
 			ResultSet resultSet = stmt.executeQuery();
-			changedOn = null;
 			if (resultSet.next())
 			{
 				String timeString = resultSet.getString(1);
-				changedOn = parseTimeString(timeString);
-				changedOn.add(EXPIRATION_TIME_UNITS, EXPIRATION_TIME_QUANTITY);
+				expirationTime = parseTimeString(timeString);
+				expirationTime.add(EXPIRATION_TIME_UNITS, EXPIRATION_TIME_QUANTITY);
+				if(expirationTime.after(now))
+				{
+					expired = false;
+				}
 			}
+			
 			resultSet.close();
-
-		} catch (SQLException e)
+		} catch (SQLException | DatabaseException e)
 		{
 			e.printStackTrace();
 		}
-		return changedOn;
+		
+		return expired;
 	}
 
 	protected GregorianCalendar parseTimeString(String timeString)
@@ -171,35 +180,32 @@ public class PlayerPin
 	}
 
 	/**
-	 * Retrieve the PIN from the database
+	 * check if a pin is valid for a given player
 	 * 
-	 * @return the pin we read
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @param pin The pin to check against
+	 * @return true or false for whether the given pin is valid or not
 	 */
-	public double retrievePin() throws DatabaseException
+	public boolean isPinValid(double pin)
 	{
+		boolean found = false;
 		try
 		{
 			Connection connection = DatabaseManager.getSingleton().getConnection();
-			String sql = "SELECT Pin FROM PlayerPins WHERE PlayerID = ?";
+			String sql = "SELECT * FROM PlayerPins WHERE PlayerID = ? AND Pin = ?";
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, playerID);
+			stmt.setDouble(2, pin);
 			ResultSet resultSet = stmt.executeQuery();
-			double pin = 0;
 			if (resultSet.next())
 			{
-				pin = resultSet.getDouble(1);
-			} else
-			{
-				throw new DatabaseException("No pin for player id " + playerID);
+				found = true;
 			}
 			resultSet.close();
-			return pin;
-
-		} catch (SQLException e)
+		} catch (SQLException | DatabaseException e)
 		{
-			throw new DatabaseException("Error retrieving Pin for user #" + playerID, e);
+			e.printStackTrace();
 		}
+		
+		return found;
 	}
 }

@@ -74,6 +74,7 @@ public class ScreenMapListener extends ScreenListener
 		reportTypes.add(ChatReceivedReport.class);
 		reportTypes.add(NewMapReport.class);
 		reportTypes.add(ChangeMapReport.class);
+		reportTypes.add(PinFailedReport.class);
 		// reportTypes.add(OtherPlayerMovedReport.class);
 
 		return reportTypes;

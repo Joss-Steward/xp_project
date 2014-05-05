@@ -142,14 +142,19 @@ public class PlayerManager extends QualifiedObservable
 		try
 		{
 			Player player = playerDao.queryForId(playerID);
-			player.checkThePin(pin);
-			players.put(playerID, player);
-
-			this.notifyObservers(new PlayerConnectionReport(player));
-			return player;
+			if(player.isPinValid(pin))
+			{
+				players.put(playerID, player);
+	
+				this.notifyObservers(new PlayerConnectionReport(player));
+				return player;
+			}
+			else
+			{
+				throw new DatabaseException("Pin is not valid");
+			}
 		} catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
