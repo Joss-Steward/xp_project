@@ -96,6 +96,7 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void hide()
 	{
+		multiplexer.clear();
 	}
 
 	/**
