@@ -32,6 +32,7 @@ public class CommandMovePlayer extends Command
 		
 		if(MapManager.getSingleton().getIsTileTeleport(thePosition))
 		{
+			
 			PlayerManager.getSingleton().getPlayerFromID(thePlayerID).teleport(thePosition);
 		}
 

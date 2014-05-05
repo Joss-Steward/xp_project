@@ -43,10 +43,11 @@ public class TeleportationInitiationHandler extends MessageHandler
 			
 			MapToServerMapping mapping = MapToServerMapping.retrieveMapping(currentMsg
 					.getMapName());
-			double pin = PlayerManager.getSingleton().getNewPinFor(playerID);
+			int pin = PlayerManager.getSingleton().getNewPinFor(playerID);
 			TeleportationContinuationMessage response = new TeleportationContinuationMessage(
 					mapping.getMapName(), mapping.getHostName(), mapping.getPortNumber(),
 					playerID, pin);
+			System.err.println("[DEBUG] pin is " + response.getPin());
 			this.getStateAccumulator().queueMessage(response);
 		} catch (SQLException e)
 		{

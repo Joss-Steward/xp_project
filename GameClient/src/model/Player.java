@@ -126,8 +126,8 @@ public class Player extends QualifiedObservable
 	public void move(Position playerPosition)
 	{
 		this.position = playerPosition;
+		System.out.println("Moving to " + this.countObservers(PlayerMovedReport.class) + " observers");
 		this.notifyObservers(new PlayerMovedReport(this.id, playerPosition));
-	
 	}
 
 	/**

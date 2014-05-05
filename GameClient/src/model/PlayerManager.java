@@ -7,6 +7,7 @@ import java.util.HashMap;
 import data.Position;
 import model.reports.LoginFailedReport;
 import model.reports.LoginInitiatedReport;
+import model.reports.PinFailedReport;
 import model.reports.PlayerConnectedToAreaServerReport;
 
 /**
@@ -31,6 +32,7 @@ public class PlayerManager extends QualifiedObservable
 		reportTypes.add(LoginInitiatedReport.class);
 		reportTypes.add(LoginFailedReport.class);
 		reportTypes.add(PlayerConnectedToAreaServerReport.class);
+		reportTypes.add(PinFailedReport.class);
 		registerReportTypesWeNotify();
 	}
 
@@ -113,7 +115,7 @@ public class PlayerManager extends QualifiedObservable
 			} else
 			{
 				throw new AlreadyBoundException(
-						"Login has already been called, you can not reset the player until logging out.");
+						"Login has already been called, you canDave,  not reset the player until logging out.");
 			}
 		}
 	}
@@ -187,6 +189,17 @@ public class PlayerManager extends QualifiedObservable
 	public void loginFailed()
 	{
 		LoginFailedReport report = new LoginFailedReport("Invalid Login - Incorrect Username/Password");
+		loginInProgress = false;
+		this.notifyObservers(report);
+	}
+
+	/**
+	 * Report when a pin has failed
+	 * @param err is the error message from a pin failure
+	 */
+	public void pinFailed(String err)
+	{
+		PinFailedReport report = new PinFailedReport(err);
 		loginInProgress = false;
 		this.notifyObservers(report);
 	}
