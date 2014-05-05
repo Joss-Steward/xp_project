@@ -166,7 +166,7 @@ public class PlayerManager extends QualifiedObservable
 	 * @return the pin they should use for their next connection
 	 * @throws DatabaseException shouldn't
 	 */
-	public double getNewPinFor(int playerID) throws DatabaseException
+	public int getNewPinFor(int playerID) throws DatabaseException
 	{
 		PlayerPin pin = new PlayerPin(playerID);
 		return pin.generatePin();

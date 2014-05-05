@@ -142,6 +142,6 @@ public class PlayerTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void wrongPin() throws DatabaseException
 	{
-		playerManager.addPlayer(1, 1);
+		playerManager.addPlayer(1, -1);
 	}
 }

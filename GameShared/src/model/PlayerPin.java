@@ -28,7 +28,7 @@ public class PlayerPin
 	/**
 	 * Used as the default pin in testing
 	 */
-	public static final double DEFAULT_PIN = 0.5;
+	public static final int DEFAULT_PIN = 1;
 	private int playerID;
 
 	PlayerPin(int playerID)
@@ -44,14 +44,14 @@ public class PlayerPin
 	 * @throws DatabaseException
 	 *             shouldn't
 	 */
-	public double generatePin() throws DatabaseException
+	public int generatePin() throws DatabaseException
 	{
-		double pin = Math.random();
+		int pin = (int)(Math.random() * Integer.MAX_VALUE);
 		setPin(pin);
 		return pin;
 	}
 
-	private void setPin(double pin) throws DatabaseException
+	private void setPin(int pin) throws DatabaseException
 	{
 		Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
 		try
@@ -61,9 +61,10 @@ public class PlayerPin
 			deletePlayerPin();
 
 			sql = "INSERT INTO PlayerPins (PlayerID, Pin) VALUES (?, ?)";
+			System.err.println("[DEBUG] " + sql + " " + playerID + " " + pin);
 			stmt = connectionStatus.prepareStatement(sql);
 			stmt.setInt(1, playerID);
-			stmt.setDouble(2, pin);
+			stmt.setInt(2, pin);
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -192,6 +193,7 @@ public class PlayerPin
 		{
 			Connection connection = DatabaseManager.getSingleton().getConnection();
 			String sql = "SELECT * FROM PlayerPins WHERE PlayerID = ? AND Pin = ?";
+			System.err.println("[DEBUG] " + sql + ": " + playerID + " " + pin);
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, playerID);
 			stmt.setDouble(2, pin);
