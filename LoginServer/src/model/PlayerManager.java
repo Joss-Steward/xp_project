@@ -1,7 +1,5 @@
 package model;
 
-import java.sql.SQLException;
-
 import model.reports.LoginFailedReport;
 import model.reports.LoginSuccessfulReport;
 
@@ -11,7 +9,6 @@ import model.reports.LoginSuccessfulReport;
  */
 public class PlayerManager extends QualifiedObservable
 {
-	private String STARTING_MAP = "current.tmx";
 	private static PlayerManager singleton;
 
 	/**
@@ -61,13 +58,11 @@ public class PlayerManager extends QualifiedObservable
 			numberOfPlayers++;
 			PlayerPin pp = new PlayerPin(pl.getPlayerID());
 			
-			MapToServerMapping mapping = MapToServerMapping.retrieveMapping(STARTING_MAP);
-			
 			LoginSuccessfulReport report = new LoginSuccessfulReport(pl.getPlayerID(),
-					mapping.getHostName(), mapping.getPortNumber(), pp.generatePin());
+					"localhost", 1872, pp.generatePin());
 			this.notifyObservers(report);
 		} 
-		catch (DatabaseException | SQLException e)
+		catch (DatabaseException e)
 		{
 			this.notifyObservers(new LoginFailedReport());
 		}
