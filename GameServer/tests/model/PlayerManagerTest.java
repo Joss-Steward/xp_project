@@ -145,7 +145,7 @@ public class PlayerManagerTest
 	public void testNpcsLoaded() throws DatabaseException, SQLException
 	{
 		OptionsManager.getSingleton().setTestMode();
-		OptionsManager.getSingleton().updateMapInformation("current.tmx", "local", 1337);
+		OptionsManager.getSingleton().updateMapInformation("quiznasium.tmx", "local", 1337);
 		PlayerManager.getSingleton().loadNpcs();
 		for(NpcsInDB npc: NpcsInDB.values())
 		{

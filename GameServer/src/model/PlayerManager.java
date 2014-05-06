@@ -114,7 +114,7 @@ public class PlayerManager extends QualifiedObservable
 		}
 		players = new HashMap<Integer, Player>();
 		reportTypes.add(PlayerConnectionReport.class);
-
+		
 		this.registerReportTypesWeNotify();
 	}
 
@@ -274,6 +274,7 @@ public class PlayerManager extends QualifiedObservable
 			npcs = this.getNpcDao().queryForFieldValues(queryParams);
 			for(Npc npc: npcs)
 			{
+				npc.initializeFromDatabase();
 				players.put(npc.getID(), npc);
 				npc.start();
 			}

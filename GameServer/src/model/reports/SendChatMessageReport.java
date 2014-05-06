@@ -5,9 +5,9 @@ import data.Position;
 import model.QualifiedObservableReport;
 
 /**
- * @author Dave
- *
  * Carries information from a chat message from the ChatManager to the ChatMessagePacker.
+ * 
+ * @author Dave
  */
 public final class SendChatMessageReport implements QualifiedObservableReport
 {

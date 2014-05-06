@@ -32,13 +32,7 @@ public class QuizBotBehaviorTest {
 	{
 		behavior = new QuizBotBehavior();
 		question = behavior.getQuestion();
-	}
-	
-	
-	@Test
-	public void testAskingQuestion()
-	{
-		
+		QualifiedObservableConnector.resetSingleton();
 	}
 	
 	/**
@@ -52,7 +46,8 @@ public class QuizBotBehaviorTest {
 		String answer = question.getAnswer();
 		String playerName = p.getPlayerName();
 		
-		SendChatMessageReport message = new SendChatMessageReport(answer, playerName, new Position(0,0), ChatType.Zone);
+		// check that spaces don't matter
+		SendChatMessageReport message = new SendChatMessageReport("    " + answer + " ", playerName, new Position(0,0), ChatType.Zone);
 		
 		int score = p.getQuizScore();
 		
@@ -70,7 +65,7 @@ public class QuizBotBehaviorTest {
 	public void testIncorrectAnswer()
 	{
 		Player p = PlayerManager.getSingleton().addPlayer(1);
-		SendChatMessageReport message = new SendChatMessageReport(question.getAnswer() + " ", p.getPlayerName(), new Position(0,0), ChatType.Zone);
+		SendChatMessageReport message = new SendChatMessageReport("incorrect", p.getPlayerName(), new Position(0,0), ChatType.Zone);
 		
 		int score = p.getQuizScore();
 		

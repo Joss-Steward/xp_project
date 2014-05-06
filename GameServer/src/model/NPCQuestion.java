@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 
 import com.j256.ormlite.dao.Dao;
@@ -17,8 +18,13 @@ import com.j256.ormlite.table.DatabaseTable;
  *
  */
 @DatabaseTable(tableName = "NPCQuestion")
-public class NPCQuestion
+public class NPCQuestion implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2652068822205218746L;
+
 	@DatabaseField(generatedId = true)
 	private int questionID;
 

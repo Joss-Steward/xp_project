@@ -13,22 +13,21 @@ import data.Position;
  * 
  * @author Frank and Dave
  */
-public class QuizBotBehavior extends Behavior {
-
+public class QuizBotBehavior extends Behavior 
+{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1511084096181049717L;
 	
-	/*
-	 * 30 Seconds.
-	 */
-	protected int pollingInterval = 30000;
-	
 	private NPCQuestion question;
 
+	/**
+	 * Initialize the QuizBotBehavior
+	 */
 	public QuizBotBehavior()
 	{
+		pollingInterval = 30000;
 		pullNewQuestion();
 		setUpListening();
 	}
@@ -47,44 +46,30 @@ public class QuizBotBehavior extends Behavior {
 		
 		if(message instanceof SendChatMessageReport)
 		{
-			String answer = question.getAnswer();
+			String answer = question.getAnswer().toLowerCase().replaceAll(" ", "");
 			SendChatMessageReport report = (SendChatMessageReport)message;
-			
-			if (answer.equals(report.getMessage()))
-			{
-				Player player = null;
-				
-				
+			String userAnswer = report.getMessage().toLowerCase().replaceAll(" ", "");
+			System.out.println("[DEBUG] Answer is '" + answer + "' user answered '" + userAnswer + "'");
+			if (answer.equals(userAnswer))
+			{				
 				try 
 				{
 					int playerID = PlayerManager.getSingleton().getPlayerIDFromPlayerName(report.getSenderName());
-					player = PlayerManager.getSingleton().getPlayerFromID(playerID);
+					Player player = PlayerManager.getSingleton().getPlayerFromID(playerID);
+					
+					ChatManager.getSingleton().sendChatToClients(player.getPlayerName() +" answered correctly.  The answer was " +question.getAnswer(),
+							"Quiz Bot", new Position(0,0), ChatType.Zone);
+					player.incrementQuizScore();
 				} 
 				catch (PlayerNotFoundException e) 
 				{
 					e.printStackTrace();
 				}
 				
-				correctAnswer(player);
-				//pull new question
 				pullNewQuestion();
-				//ask new question
 				askQuestion();
 			}
 		}
-	}
-	
-	/**
-	 * @param player
-	 * 			the player that correctly answered the question
-	 * 
-	 * Announce a correct answer and increment the player's quiz score.
-	 */
-	private void correctAnswer(Player player)
-	{
-		ChatManager.getSingleton().sendChatToClients(player.getPlayerName() +" answered correctly.  The answer was " +question.getAnswer(),
-				"Quiz Bot", new Position(0,0), ChatType.Zone);
-		player.incrementQuizScore();
 	}
 	
 	/**
@@ -134,11 +119,10 @@ public class QuizBotBehavior extends Behavior {
 	 * Get report types that this class watches for.
 	 */
 	@Override
-	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypes() {
-		final ArrayList<Class<? extends QualifiedObservableReport>> listOfObservables = new ArrayList<>();
-		listOfObservables.add(SendChatMessageReport.class);
-		return listOfObservables;
+	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypes() 
+	{
+		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
+		reportTypes.add(SendChatMessageReport.class);
+		return reportTypes;
 	}
-
-
 }
