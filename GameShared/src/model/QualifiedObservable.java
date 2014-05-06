@@ -125,7 +125,14 @@ public abstract class QualifiedObservable extends Observable
 			QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this,
 					reportType);
 		}
-
 	}
 
+	protected void unregisterReportTypesWeNotify()
+	{
+		for (Class<? extends QualifiedObservableReport> reportType : reportTypes)
+		{
+			QualifiedObservableConnector.getSingleton().unregisterQualifiedObservable(this,
+					reportType);
+		}
+	}
 }

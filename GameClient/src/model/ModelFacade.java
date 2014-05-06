@@ -120,6 +120,14 @@ public class ModelFacade
 							{
 								cmd = (Command) commandQueue.getInfoPacket();
 								cmd.execute();
+								if (cmd.doDump())
+								{
+									//let it clear
+									while (commandQueue.getQueueSize() > 0) 
+									{
+										commandQueue.getInfoPacket();
+									}
+								}
 							} catch (InterruptedException e)
 							{
 								e.printStackTrace();

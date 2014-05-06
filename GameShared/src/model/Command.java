@@ -14,4 +14,14 @@ public abstract class Command implements InfoPacket
 	 */
 	protected abstract boolean execute();
 
+	/**
+	 * 
+	 * @return true if the command should dump the queue 
+	 * 	of other commands after it executes
+	 */
+	protected boolean doDump()
+	{
+		return false;
+	}
+	
 }

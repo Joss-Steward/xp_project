@@ -176,6 +176,7 @@ public class ScreenMap extends ScreenBasic
 			
 			if (mapRenderer != null && mySprite != null)
 			{
+				mapInput.initialize(); 
 				Gdx.input.setInputProcessor(multiplexer);
 				loading = false;
 			}

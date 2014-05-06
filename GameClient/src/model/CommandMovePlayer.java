@@ -9,6 +9,7 @@ public class CommandMovePlayer extends Command
 {
 	private int thePlayerID;
 	private Position thePosition;
+	private boolean isTeleporting;
 
 	/**
 	 * @param playerID
@@ -20,6 +21,7 @@ public class CommandMovePlayer extends Command
 	{
 		thePlayerID = playerID;
 		thePosition = position;
+		isTeleporting = false;
 	}
 
 	/**
@@ -32,8 +34,8 @@ public class CommandMovePlayer extends Command
 		
 		if(MapManager.getSingleton().getIsTileTeleport(thePosition))
 		{
-			
 			PlayerManager.getSingleton().getPlayerFromID(thePlayerID).teleport(thePosition);
+			isTeleporting = true;
 		}
 
 		if (MapManager.getSingleton().getIsTilePassable(thePosition))
@@ -43,5 +45,13 @@ public class CommandMovePlayer extends Command
 		}
 
 		return moved;
+	}
+	
+	/**
+	 * Only dump when teleporting
+	 */
+	protected boolean doDump()
+	{
+		return isTeleporting;
 	}
 }

@@ -204,4 +204,15 @@ public class ScreenMapInput implements InputProcessor
 	{
 		this.sprite = sprite;
 	}
+
+	/**
+	 * Initializes key held input values of the input processor
+	 */
+	public void initialize() 
+	{
+		up = false;
+		down = false;
+		left = false;
+		right = false;
+	}
 }
