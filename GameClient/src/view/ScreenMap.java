@@ -1,11 +1,11 @@
 package view;
 
-import model.CommandQuestScreenOpen;
-import model.ModelFacade;
+//import model.CommandQuestScreenOpen;
+//import model.ModelFacade;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.Input.Keys;
+//import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -156,13 +156,13 @@ public class ScreenMap extends ScreenBasic
 			//have the camera follow the player when moving
 			camera.position.set(this.mySprite.getPosition(), 0);
 			
-			if (Gdx.input.isKeyPressed(Keys.Q))
-			{
-				System.out.println("quest button is pressed");
-
-				CommandQuestScreenOpen lc = new CommandQuestScreenOpen();
-				ModelFacade.getSingleton().queueCommand(lc);
-			}
+//			if (Gdx.input.isKeyPressed(Keys.Q))
+//			{
+//				System.out.println("quest button is pressed");
+//
+//				CommandQuestScreenOpen lc = new CommandQuestScreenOpen();
+//				ModelFacade.getSingleton().queueCommand(lc);
+//			}
 		}
 		else
 		{
