@@ -31,6 +31,9 @@ public class Player extends QualifiedObservable
 
 	@DatabaseField(dataType = DataType.SERIALIZABLE)
 	private Position playerPosition;
+	
+	@DatabaseField
+	private int quizScore;
 
 	/**
 	 * No arg constructor for ORMLite
@@ -170,5 +173,33 @@ public class Player extends QualifiedObservable
 	public void setId(int id) 
 	{
 		this.id = id;
+	}
+	
+	/**
+	 * Get the quizScore
+	 * @return
+	 * 			the quiz score
+	 */
+	public int getQuizScore()
+	{
+		return this.quizScore;
+	}
+	
+	/**
+	 * Set the quizScore
+	 * @param score
+	 * 			the new quiz score
+	 */
+	public void setQuizScore(int score)
+	{
+		this.quizScore = score;
+	}
+	
+	/**
+	 * Increment quiz score;
+	 */
+	public void incrementQuizScore()
+	{
+		this.quizScore++;
 	}
 }

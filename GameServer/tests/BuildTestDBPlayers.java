@@ -8,6 +8,7 @@ import model.Player;
 import model.PlayerLogin;
 import model.PlayerManager;
 import model.PlayersInDB;
+import model.QuizBotBehavior;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
@@ -90,7 +91,15 @@ public class BuildTestDBPlayers
 			player.setName(p.getPlayerName());
 			player.setPlayerPosition(pos);
 			player.setAppearanceType(p.getAppearanceType());
-			player.setMap("current.tmx");
+			
+			if(player.getID() == 100)
+			{
+				//this is the Quizzard
+				player.setMap("quiznasium.tmx");
+				player.setBehavior(new QuizBotBehavior());
+			}
+			
+			
 			npcDAO.create(player);
 		}
 	}

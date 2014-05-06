@@ -13,11 +13,11 @@ public enum NpcsInDB
 	/**
 	 * 
 	 */
-	QUIZ_BOT(100, "Quizard", "male_a", 0, 8),
+	QUIZ_BOT(100, "Quizard", "male_a", 0, 8);
 	/**
 	 * 
 	 */
-	OTHER_BOT(101, "Other Npc", "male_b", 4, 13);
+	//OTHER_BOT(101, "Other Npc", "male_b", 4, 13);
 
 	private int playerID;
 

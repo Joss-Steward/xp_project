@@ -3,7 +3,6 @@ package model;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -17,7 +16,9 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "Npc")
 public class Npc extends Player
 {
-	@DatabaseField(dataType = DataType.SERIALIZABLE)
+	@DatabaseField
+	private String behaviorClassName;
+	
 	private Behavior behavior;
 	
 	@DatabaseField(canBeNull = false)
@@ -43,6 +44,26 @@ public class Npc extends Player
 	}
 	
 	/**
+	 * Use the behavior class name stored in the database to create a Behavior instance
+	 * if available
+	 */
+	public void initializeFromDatabase()
+	{
+		if(behaviorClassName != null)
+		{
+			try
+			{
+				System.out.println("Creating behavior for " + behaviorClassName);
+				behavior = (Behavior) Class.forName(behaviorClassName).newInstance();
+			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) 
+			{
+				behavior = null;
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
 	 * Set the map this npc is on
 	 * @param name The map name
 	 */
@@ -58,6 +79,7 @@ public class Npc extends Player
 	public void setBehavior(Behavior behavior)
 	{
 		this.behavior = behavior;
+		this.behaviorClassName = behavior.getClass().getName();
 	}
 	
 	/**
@@ -79,6 +101,7 @@ public class Npc extends Player
 			//The event is going to occur every seconds*1000 ms (second param), but will start after seconds*1000ms (first)
 			// has passed. This is so behavior doesn't occur as soon as start happens
 			timedEvent = new NpcTimerTask(behavior);
+			System.out.println("[DEBUG] Creating timer with interval " + behavior.getPollingInterval());
 			timer.scheduleAtFixedRate(timedEvent, behavior.getPollingInterval(), behavior.getPollingInterval());
 		}
 	}

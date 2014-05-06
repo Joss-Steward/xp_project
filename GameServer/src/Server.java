@@ -4,6 +4,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import model.OptionsManager;
+import model.PlayerManager;
 import communication.ConnectionManager;
 import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
@@ -43,6 +44,7 @@ public class Server implements Runnable
 		{
 			String hostName = InetAddress.getLocalHost().getHostName();
 			OptionsManager.getSingleton().updateMapInformation(mapName, hostName, port);
+			PlayerManager.getSingleton().loadNpcs();
 			servSock = new ServerSocket(OptionsManager.getSingleton().getPortNumber(), 10);
 			while (true)
 			{
