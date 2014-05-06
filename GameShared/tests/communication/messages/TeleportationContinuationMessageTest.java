@@ -22,7 +22,7 @@ public class TeleportationContinuationMessageTest
 		TeleportationContinuationMessage msg = new TeleportationContinuationMessage(
 				ServersInDB.FIRST_SERVER.getMapName(),
 				ServersInDB.FIRST_SERVER.getHostName(),
-				ServersInDB.FIRST_SERVER.getPortNumber(), 2, 0.25);
+				ServersInDB.FIRST_SERVER.getPortNumber(), 2, 4);
 		assertEquals(
 				"TeleportationContinuationMessage: mapName = "
 						+ ServersInDB.FIRST_SERVER.getMapName() + " and hostName = "
@@ -32,7 +32,7 @@ public class TeleportationContinuationMessageTest
 		assertEquals(ServersInDB.FIRST_SERVER.getHostName(), msg.getHostName());
 		assertEquals(ServersInDB.FIRST_SERVER.getPortNumber(), msg.getPortNumber());
 		assertEquals(2, msg.getPlayerID());
-		assertEquals(0.25, msg.getPin(), 0.00001);
+		assertEquals(4, msg.getPin());
 	}
 
 }

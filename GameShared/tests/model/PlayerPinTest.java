@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 import org.junit.Test;
 
@@ -119,12 +118,12 @@ public class PlayerPinTest extends DatabaseTest
 	 *             shouldn't
 	 */
 	@Test
-	public void testDeleteAndHavingNoSuchPin() throws DatabaseException, SQLException
+	public void testIsExpiredWithoutAPin() throws DatabaseException, SQLException
 	{
 		PlayerPin playerPin = new PlayerPin(2);
 		playerPin.generatePin();
 		playerPin.deletePlayerPin();
-		assertNull(playerPin.getExpirationTime());
+		assertTrue(playerPin.isExpired());
 	}
 
 	/**
@@ -135,39 +134,11 @@ public class PlayerPinTest extends DatabaseTest
 	 *             shouldn't
 	 */
 	@Test
-	public void expirationDateIsForward() throws DatabaseException
+	public void testNewPinIsNotExpired() throws DatabaseException
 	{
 		PlayerPin playerPin = new PlayerPin(2);
 		playerPin.generatePin();
-		GregorianCalendar now = new GregorianCalendar();
-		now.setTimeZone(TimeZone.getTimeZone("GMT"));
-		GregorianCalendar expTime = playerPin.getExpirationTime();
-		assertTrue(expTime.after(now));
-	}
-
-	/**
-	 * Make sure we can play with the time stamp. This shouldn't be done
-	 * normally, but tests require it.
-	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
-	 */
-	@Test
-	public void canSetExpirationTime() throws DatabaseException
-	{
-		PlayerPin playerPin = new PlayerPin(2);
-		playerPin.setChangedOn("2013-12-25 12:13:14");
-		GregorianCalendar expected = playerPin.parseTimeString("2013-12-25 12:13:14");
-		expected.add(PlayerPin.EXPIRATION_TIME_UNITS, PlayerPin.EXPIRATION_TIME_QUANTITY);
-		GregorianCalendar actual = playerPin.getExpirationTime();
-		assertEquals(expected.get(Calendar.YEAR), actual.get(Calendar.YEAR));
-		assertEquals(expected.get(Calendar.MONTH), actual.get(Calendar.MONTH));
-		assertEquals(expected.get(Calendar.DAY_OF_MONTH),
-				actual.get(Calendar.DAY_OF_MONTH));
-		assertEquals(expected.get(Calendar.HOUR_OF_DAY), actual.get(Calendar.HOUR_OF_DAY));
-		assertEquals(expected.get(Calendar.MINUTE), actual.get(Calendar.MINUTE));
-		assertEquals(expected.get(Calendar.SECOND), actual.get(Calendar.SECOND));
-
+		assertFalse(playerPin.isExpired());
 	}
 
 	/**
@@ -177,25 +148,11 @@ public class PlayerPinTest extends DatabaseTest
 	 *             shouldn't
 	 */
 	@Test
-	public void canRetrievePin() throws DatabaseException
+	public void isPinValid() throws DatabaseException
 	{
 		PlayerPin playerPin = new PlayerPin(2);
 		double pin = playerPin.generatePin();
-		assertEquals(pin, playerPin.retrievePin(), 0.000001);
+		assertTrue(playerPin.isPinValid(pin));
+		assertFalse(playerPin.isPinValid(pin+1));
 	}
-
-	/**
-	 * Make sure that if there is no pin, we retrieve a pin of zero
-	 * 
-	 * @throws DatabaseException
-	 *             should
-	 */
-	@Test(expected = DatabaseException.class)
-	public void cannotRetrieveMissingPin() throws DatabaseException
-	{
-		PlayerPin playerPin = new PlayerPin(2);
-		playerPin.deletePlayerPin();
-		playerPin.retrievePin();
-	}
-
 }

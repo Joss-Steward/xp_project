@@ -1,8 +1,6 @@
 package model;
 
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
-
+import model.reports.PinFailedReport;
 import model.reports.PlayerMovedReport;
 import model.reports.QuestScreenReport;
 
@@ -24,13 +22,13 @@ public class Player extends QualifiedObservable
 
 	@DatabaseField(id = true)
 	private int id;
-	
+
 	@DatabaseField(foreign = true)
 	private PlayerLogin playerLogin;
-	
+
 	@DatabaseField
 	private String appearanceType;
-	
+
 	@DatabaseField(dataType = DataType.SERIALIZABLE)
 	private Position playerPosition;
 	
@@ -46,27 +44,34 @@ public class Player extends QualifiedObservable
 	}
 
 	/**
-	 * Check the pin to make sure it is correct
+	 * Check the pin to make sure it is correct with regards to contents and expiration
 	 * 
-	 * @param pin
+	 * @param pinToCheck
 	 *            the pin we gave the player to connect to this area server
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @return true or false with pin validity
 	 */
 
-	public void checkThePin(double pin) throws DatabaseException
+	public boolean isPinValid(double pinToCheck)
 	{
 		PlayerPin pl = new PlayerPin(id);
-		if (pin != pl.retrievePin())
+		PinFailedReport report = null;
+		
+		if(!pl.isPinValid(pinToCheck))
 		{
-			throw new DatabaseException("Wrong PIN for player #" + id);
+			report = new PinFailedReport(PlayerPin.ERROR_PIN_NOT_EXIST);
 		}
-		GregorianCalendar now = new GregorianCalendar();
-		now.setTimeZone(TimeZone.getTimeZone("GMT"));
-		if (pl.getExpirationTime().before(now))
+		else if (pl.isExpired())
 		{
-			throw new DatabaseException("Expired PIN for player #" + id);
+			report = new PinFailedReport(PlayerPin.ERROR_PIN_EXPIRED);
 		}
+		
+		if(report != null)
+		{
+			System.err.println("Pin is not valid for " + id + " because " + report.toString());
+			this.notifyObservers(report);
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -112,6 +117,7 @@ public class Player extends QualifiedObservable
 	{
 		reportTypes.add(PlayerMovedReport.class);
 		reportTypes.add(QuestScreenReport.class);
+		reportTypes.add(PinFailedReport.class);
 
 		this.registerReportTypesWeNotify();
 	}

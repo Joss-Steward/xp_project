@@ -20,6 +20,8 @@ public class ScreenMapInput implements InputProcessor
 {
 	PlayerSprite sprite;
 	boolean up, down, left, right;
+	float delay;
+	final float DELAY_RATE = .5f;
 	
 	/**
 	 * @seecom.badlogic.gdx.InputProcessor
@@ -27,6 +29,7 @@ public class ScreenMapInput implements InputProcessor
 	@Override
 	public boolean keyDown(int keycode)
 	{
+		System.out.println("Key down received: " + keycode);
 		CommandMovePlayer cm = null;
 		ThisClientsPlayer cp = PlayerManager.getSingleton().getThisClientsPlayer();
 		Position position = cp.getPosition();
@@ -59,7 +62,9 @@ public class ScreenMapInput implements InputProcessor
 		}
 
 		if (cm != null)
+		{
 			ModelFacade.getSingleton().queueCommand(cm);
+		}
 
 		return false;
 	}
@@ -154,7 +159,8 @@ public class ScreenMapInput implements InputProcessor
 	{
 		if (sprite != null)
 		{
-			if (sprite.doneWalking())
+			delay += delta;
+			if (delay > DELAY_RATE)
 			{
 				CommandMovePlayer cm = null;
 				ThisClientsPlayer cp = PlayerManager.getSingleton().getThisClientsPlayer();
@@ -183,6 +189,8 @@ public class ScreenMapInput implements InputProcessor
 				
 				if (cm != null)
 					ModelFacade.getSingleton().queueCommand(cm);
+				
+				delay = 0f;
 			}
 		}
 	}

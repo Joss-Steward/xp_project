@@ -6,6 +6,7 @@ import java.util.Observable;
 import model.QualifiedObservableReport;
 import model.reports.LoginFailedReport;
 import model.reports.LoginInitiatedReport;
+import model.reports.PinFailedReport;
 
 /**
  * Every screen has one of these and it is responsible for listening for the
@@ -44,6 +45,15 @@ public class ScreenLoginListener extends ScreenListener
 			screen.showFlagMessage(report.toString());
 			this.switchToScreen(Screens.LOGIN_SCREEN);
 		}
+		
+		if (arg.getClass().equals(PinFailedReport.class))
+		{
+			ScreenLogin screen = (ScreenLogin)Screens.LOGIN_SCREEN.getScreen();
+			PinFailedReport report = (PinFailedReport)arg;
+			screen.showFlagMessage(report.toString());
+			this.switchToScreen(Screens.LOGIN_SCREEN);
+		}
+
 
 	}
 
@@ -56,6 +66,7 @@ public class ScreenLoginListener extends ScreenListener
 		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
 		reportTypes.add(LoginInitiatedReport.class);
 		reportTypes.add(LoginFailedReport.class);
+		reportTypes.add(PinFailedReport.class);
 		return reportTypes;
 	}
 

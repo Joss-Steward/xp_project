@@ -30,6 +30,7 @@ public class TeleportationContinuationMessageHandler extends MessageHandler
 			TeleportationContinuationMessage rMsg = (TeleportationContinuationMessage) msg;
 			try
 			{
+				System.err.println("Debug player id: " + rMsg.getPlayerID() + " & Pin: " + rMsg.getPin());
 				connectionManager.moveToNewSocket(
 						new Socket(rMsg.getHostName(), rMsg.getPortNumber()),
 						rMsg.getPlayerID(), rMsg.getPin());

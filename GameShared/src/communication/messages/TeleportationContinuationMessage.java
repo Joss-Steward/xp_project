@@ -20,7 +20,7 @@ public class TeleportationContinuationMessage implements Message, Serializable
 	private String hostName;
 	private int portNumber;
 	private int playerID;
-	private double pin;
+	private int pin;
 
 	/**
 	 * Create the request message
@@ -38,7 +38,7 @@ public class TeleportationContinuationMessage implements Message, Serializable
 	 *            the pin the player must use to connect to the new server
 	 */
 	public TeleportationContinuationMessage(String mapName, String hostName,
-			int portNumber, int playerID, double pin)
+			int portNumber, int playerID, int pin)
 	{
 		this.mapName = mapName;
 		this.hostName = hostName;
@@ -64,7 +64,7 @@ public class TeleportationContinuationMessage implements Message, Serializable
 	public String toString()
 	{
 		return "TeleportationContinuationMessage: mapName = " + mapName
-				+ " and hostName = " + hostName + " and portNumber = " + portNumber;
+				+ " and hostName = " + hostName + " and portNumber = " + portNumber + " and pin = " + pin;
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class TeleportationContinuationMessage implements Message, Serializable
 	 * Get the pin the player will use to connect to the new area server
 	 * @return the pin
 	 */
-	public double getPin()
+	public int getPin()
 	{
 		return pin;
 	}
