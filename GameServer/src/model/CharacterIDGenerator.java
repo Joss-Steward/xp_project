@@ -29,6 +29,7 @@ public class CharacterIDGenerator
 		
 	}
 	
+	private static Dao<CharacterIDGenerator, Integer> dao = null;
 	/**
 	 * 
 	 * @return A DAO For Character ID
@@ -36,8 +37,11 @@ public class CharacterIDGenerator
 	 */
 	public static Dao<CharacterIDGenerator, Integer> getDao() throws SQLException
 	{
-		JdbcConnectionSource connectionSource = new JdbcConnectionSource(PlayerManager.DATABASE_URL, "program", "ShipSim");
-		Dao<CharacterIDGenerator, Integer> dao = DaoManager.createDao(connectionSource, CharacterIDGenerator.class);
+		if(dao == null)
+		{
+			JdbcConnectionSource connectionSource = new JdbcConnectionSource(PlayerManager.DATABASE_URL, "program", "ShipSim");
+			dao = DaoManager.createDao(connectionSource, CharacterIDGenerator.class);
+		}
 		return dao;
 	}
 	

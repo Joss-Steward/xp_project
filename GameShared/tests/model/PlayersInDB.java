@@ -21,11 +21,11 @@ public enum PlayersInDB
 	/**
 	 * 
 	 */
-	NICK(3, "Nick", "male_b", 4, 13, "pw"),
+	NICK(3, "Nick", "magi", 4, 13, "pw"),
 	/**
 	 * 
 	 */
-	JOSH(4, "Josh", "male_b", 4, 13, "pw"),
+	JOSH(4, "Josh", "ninja", 4, 13, "pw"),
 	/**
 	 * 
 	 */
@@ -33,7 +33,7 @@ public enum PlayersInDB
 	/**
 	 * 
 	 */
-	STEVE(2, "Steve", "male_a", 4, 13, "pw"),
+	STEVE(2, "Steve", "knight_with_straw_hat", 4, 13, "pw"),
 	/**
 	 * 
 	 */

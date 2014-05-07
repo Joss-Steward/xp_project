@@ -13,7 +13,19 @@ public enum PlayerType
 	/**
 	 * Male appearance, type 2
 	 */
-	male_b("male_b");
+	male_b("male_b"),
+	/**
+	 * Knight who has a straw hat
+	 */
+	knight_with_straw_hat("knight_with_straw_hat"),
+	/**
+	 * Magic guy
+	 */
+	magi("magi"),
+	/**
+	 * Ninja
+	 */
+	ninja("ninja");
 
 	/**
 	 * The name of the region in the loaded {@link:TextureAtlas} used by a
