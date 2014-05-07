@@ -35,7 +35,6 @@ public class PlayerManager extends QualifiedObservable
 				singleton = new PlayerManager();
 			} catch (DatabaseException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

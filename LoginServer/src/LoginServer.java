@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import model.OptionsManager;
 import communication.ConnectionManager;
 import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
@@ -81,6 +82,14 @@ public class LoginServer implements Runnable
 	 */
 	public static void main(String args[])
 	{
+		for(String arg: args)
+		{
+			String[] splitArg = arg.split("=");
+			if(splitArg[0].equals("--localhost"))
+			{
+				OptionsManager.getSingleton().setTestMode();
+			}
+		}
 		LoginServer S = new LoginServer();
 		S.run();
 	}

@@ -59,7 +59,11 @@ public final class MapToServerMapping
 			
 		}
 		getServerDao();
-		return serverDao.queryForId(mapName);
+		MapToServerMapping mapping = serverDao.queryForId(mapName);
+		if(mapping == null) {
+			mapping = new MapToServerMapping();
+		}
+		return mapping;
 	}
 
 	private static JdbcConnectionSource connectionSource;
@@ -171,8 +175,7 @@ public final class MapToServerMapping
 	 */
 	public void persist() throws SQLException
 	{
-		serverDao.update(this);
-		
+		serverDao.createOrUpdate(this);
 	}
 
 	/**

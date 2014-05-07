@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 import model.ModelFacade;
+import model.OptionsManager;
 import view.ScreenBasic;
 import view.Screens;
 
@@ -35,7 +36,7 @@ public class GameLibGDX extends Game
 		Socket socket;
 		try
 		{
-			socket = new Socket("localhost", 1871);
+			socket = new Socket(OptionsManager.getSingleton().getLoginHost(), 1871);
 			MessagePackerSet messagePackerSet = new MessagePackerSet();
 			StateAccumulator stateAccumulator = new StateAccumulator(messagePackerSet);
 			
