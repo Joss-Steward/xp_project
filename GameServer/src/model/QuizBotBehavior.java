@@ -33,10 +33,6 @@ public class QuizBotBehavior extends Behavior
 	}
 	
 	/**
-	 * @param o
-	 * @param message
-	 *			the chat message that is broadcast to the clients
-	 * 
 	 * Watches SendChatMessageReports for a correct answer.
 	 * On correct answer, announce the correct answer, pull a new random question, and ask that question.
 	 */
