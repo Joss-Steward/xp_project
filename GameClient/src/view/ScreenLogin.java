@@ -210,7 +210,8 @@ public class ScreenLogin extends ScreenBasic
 	@Override
 	public void resize(int arg0, int arg1)
 	{
-
+		stage.setViewport(arg0, arg1);
+		stage.act();
 	}
 
 	/**
