@@ -36,7 +36,8 @@ public class GameLibGDX extends Game
 		Socket socket;
 		try
 		{
-			socket = new Socket(OptionsManager.getSingleton().getLoginHost(), 1871);
+			String host = OptionsManager.getSingleton().getLoginHost();
+			socket = new Socket(host, 1871);
 			MessagePackerSet messagePackerSet = new MessagePackerSet();
 			StateAccumulator stateAccumulator = new StateAccumulator(messagePackerSet);
 			
