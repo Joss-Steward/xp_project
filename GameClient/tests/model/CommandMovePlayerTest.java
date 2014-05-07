@@ -2,6 +2,9 @@ package model;
 
 import static org.junit.Assert.*;
 
+import java.rmi.AlreadyBoundException;
+import java.rmi.NotBoundException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,11 +23,11 @@ public class CommandMovePlayerTest
 	@Before
 	public void setup()
 	{
-		boolean[][] passability = {
-			{ true, true, true },
-			{ true, false, true },
-			{ true, true, true } 
-		};
+		boolean[][] passability =
+		{
+		{ true, true, true },
+		{ true, false, true },
+		{ true, true, true } };
 
 		MapManager.getSingleton().setPassability(passability);
 	}
@@ -40,32 +43,68 @@ public class CommandMovePlayerTest
 	}
 
 	/**
-	 * Testing the command to move other player
+	 * Testing the command to move our player
+	 * 
+	 * @throws NotBoundException shouldn't
+	 * @throws AlreadyBoundException shouldnt
 	 */
 	@Test
-	public void testMovePlayer()
+	public void testMovePlayer() throws AlreadyBoundException,
+			NotBoundException
 	{
 		Position pos = new Position(1, 2);
-		Player p = PlayerManager.getSingleton().initializePlayer(1, "1", "1", pos);
-		assertEquals(new Position(0, 0), p.getPosition());
+		PlayerManager.getSingleton().initiateLogin("1", "1");
+		PlayerManager.getSingleton().setThisClientsPlayer(1);
+		PlayerManager.getSingleton().getThisClientsPlayer().setPosition(pos);
+		assertEquals(new Position(1, 2), PlayerManager.getSingleton().getThisClientsPlayer().getPosition());
 
 		CommandMovePlayer cm = new CommandMovePlayer(1, new Position(1, 0));
-		cm.execute();
-		assertEquals(new Position(1, 0), p.getPosition());
+		assertTrue(cm.execute());
+		assertEquals(new Position(1, 0), PlayerManager.getSingleton().getThisClientsPlayer().getPosition());
+	}
+
+	/**
+	 * Let other people move anywhere they want
+	 * @throws AlreadyBoundException shouldn't
+	 * @throws NotBoundException shouldn't
+	 */
+	@Test
+	public void testIllegalMoveNotThisClient() throws AlreadyBoundException,
+			NotBoundException
+	{
+		Position pos = new Position(1, 2);
+		Player someGuy = PlayerManager.getSingleton().initializePlayer(2, "1",
+				"1", pos);
+		PlayerManager.getSingleton().initiateLogin("1", "1");
+		PlayerManager.getSingleton().setThisClientsPlayer(1);
+		assertEquals(new Position(1, 2), someGuy.getPosition());
+
+		CommandMovePlayer cm = new CommandMovePlayer(someGuy.getID(),
+				new Position(1, 1));
+		assertTrue(cm.execute());
+		assertEquals(new Position(1, 1), someGuy.getPosition());
 	}
 
 	/**
 	 * Test attempting to move into an impassable position
+	 * 
+	 * @throws NotBoundException shouldn't
+	 * @throws AlreadyBoundException shouldn't
 	 */
 	@Test
-	public void testIllegalMove()
+	public void testIllegalMove() throws AlreadyBoundException,
+			NotBoundException
 	{
 		Position pos = new Position(1, 2);
-		Player someGuy = PlayerManager.getSingleton().initializePlayer(1, "1", "1", pos);
-		assertEquals(new Position(0, 0), someGuy.getPosition());
+		Player me = PlayerManager.getSingleton().initializePlayer(1, "1", "1",
+				pos);
+		PlayerManager.getSingleton().initiateLogin("1", "1");
+		PlayerManager.getSingleton().setThisClientsPlayer(1);
+		assertEquals(new Position(1, 2), me.getPosition());
 
-		CommandMovePlayer cm = new CommandMovePlayer(someGuy.getID(), new Position(1, 1));
-		cm.execute();
-		assertEquals(new Position(0, 0), someGuy.getPosition());
+		CommandMovePlayer cm = new CommandMovePlayer(me.getID(), new Position(
+				1, 1));
+		assertFalse(cm.execute());
+		assertEquals(new Position(1, 2), me.getPosition());
 	}
 }

@@ -25,28 +25,41 @@ public class CommandMovePlayer extends Command
 	}
 
 	/**
-	 * Moves a certain Player into the designated position if move is legal.
+	 * Moves a certain Player into the designated position. If the player moving
+	 * is this client's player, we check to see if the move is legal and
+	 * initiate teleportation if appropriate. If the player is another player,
+	 * we have just been informed that they moved and we should just put them
+	 * there.
 	 */
 	@Override
 	protected boolean execute()
 	{
 		boolean moved = false;
-		
-		if(MapManager.getSingleton().getIsTileTeleport(thePosition))
-		{
-			PlayerManager.getSingleton().getPlayerFromID(thePlayerID).teleport(thePosition);
-			isTeleporting = true;
-		}
 
-		if (MapManager.getSingleton().getIsTilePassable(thePosition))
+		ThisClientsPlayer thisClientsPlayer = PlayerManager.getSingleton()
+				.getThisClientsPlayer();
+		if (thisClientsPlayer.getID() == thePlayerID)
 		{
-			PlayerManager.getSingleton().getPlayerFromID(thePlayerID).move(thePosition);
+			if (MapManager.getSingleton().getIsTileTeleport(thePosition))
+			{
+				thisClientsPlayer.teleport(thePosition);
+				isTeleporting = true;
+			}
+
+			if (MapManager.getSingleton().getIsTilePassable(thePosition))
+			{
+				thisClientsPlayer.move(thePosition);
+				moved = true;
+			}
+		} else
+		{
+			PlayerManager.getSingleton().getPlayerFromID(thePlayerID)
+					.move(thePosition);
 			moved = true;
 		}
-
 		return moved;
 	}
-	
+
 	/**
 	 * Only dump when teleporting
 	 */
