@@ -13,11 +13,43 @@ public enum PlayersInDB
 	/**
 	 * 
 	 */
-	JOHN(1, "John", "male_a", 0, 8),
+	JOHN(1, "John", "male_a", 0, 8, "pw"),
 	/**
 	 * 
 	 */
-	MERLIN(2, "Merlin", "male_b", 4, 13);
+	MERLIN(2, "Merlin", "male_b", 4, 13, "pw"),
+	/**
+	 * 
+	 */
+	NICK(3, "Nick", "male_b", 4, 13, "pw"),
+	/**
+	 * 
+	 */
+	JOSH(4, "Josh", "male_b", 4, 13, "pw"),
+	/**
+	 * 
+	 */
+	MATT(2, "Matt", "male_b", 4, 13, "pw"),
+	/**
+	 * 
+	 */
+	STEVE(2, "Steve", "male_a", 4, 13, "pw"),
+	/**
+	 * 
+	 */
+	FRANK(2, "Frank", "male_b", 4, 13, "pw"),
+	/**
+	 * 
+	 */
+	GA(2, "Ga", "male_b", 4, 13, "pw"),
+	/**
+	 * 
+	 */
+	ANDY(2, "Andy", "male_b", 4, 13, "pw"),
+	/**
+	 * 
+	 */
+	DAVE(2, "Dave", "male_b", 4, 13, "pw");
 
 	private int playerID;
 
@@ -28,14 +60,17 @@ public enum PlayersInDB
 	private int col;
 
 	private String playerName;
+	
+	private String password;
 
-	PlayersInDB(int id, String playerName, String type, int row, int col)
+	PlayersInDB(int id, String playerName, String type, int row, int col, String password)
 	{
 		this.playerID = id;
 		this.playerName = playerName;
 		this.appearanceType = type;
 		this.row = row;
 		this.col = col;
+		this.password = password;
 	}
 
 	/**
@@ -77,6 +112,15 @@ public enum PlayersInDB
 	public Position getPosition()
 	{
 		return new Position(row, col);
+	}
+
+	/**
+	 * 
+	 * @return the player's password
+	 */
+	public String getPlayerPassword() 
+	{
+		return password;
 	}
 
 }

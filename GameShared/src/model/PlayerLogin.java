@@ -35,19 +35,28 @@ public class PlayerLogin
 	 *            the player's name
 	 * @param password
 	 *            the player's password
+	 * @param id The id of the player
 	 */
-	public static void createNewPlayerLogin(String name, String password)
+	public static void createNewPlayerLogin(String name, String password, int id)
 	{
 		try
 		{
 			setUpORMLite();
 			PlayerLogin pl = new PlayerLogin();
+			try 
+			{
+				PlayerLogin.readPlayerLogin(name);
+			}
+			catch(DatabaseException e)
+			{
+				// do nothing because we'll create it
+			}
 			pl.playerName = name;
+			pl.playerID = id;
 			pl.password = password;
-			playerLoginDao.create(pl);
+			playerLoginDao.createOrUpdate(pl);
 		} catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -65,7 +65,8 @@ public class BuildTestDBPlayers
 		{
 			Position pos = p.getPosition();
 			Player player = new Player();
-			player.setId(p.getPlayerID());
+			player.setId(CharacterIDGenerator.getNextId());
+			PlayerLogin.createNewPlayerLogin(p.getPlayerName(), p.getPlayerPassword(), player.getID());
 			PlayerLogin pl = PlayerLogin.readPlayerLogin(p.getPlayerName());
 			player.setPlayerLogin(pl);
 			player.setPlayerPosition(pos);
@@ -87,18 +88,17 @@ public class BuildTestDBPlayers
 		{
 			Position pos = p.getPosition();
 			Npc player = new Npc();
-			player.setId(p.getPlayerID());
+			player.setId(CharacterIDGenerator.getNextId());
 			player.setName(p.getPlayerName());
 			player.setPlayerPosition(pos);
 			player.setAppearanceType(p.getAppearanceType());
 			
-			if(player.getID() == 100)
+			if(player.getPlayerName().equals("Quizard"))
 			{
 				//this is the Quizzard
 				player.setMap("quiznasium.tmx");
 				player.setBehavior(new QuizBotBehavior());
 			}
-			
 			
 			npcDAO.create(player);
 		}
