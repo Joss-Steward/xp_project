@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 /**
  * The renderable instance of a player on a map
  */
-public class PlayerSprite
+public class PlayerSprite implements Comparable<PlayerSprite>
 {
 
 	protected SpriteSheet sourceImg;
@@ -187,5 +187,18 @@ public class PlayerSprite
 	public boolean doneWalking()
 	{
 		return real.epsilonEquals(dest, .05f);
+	}
+
+	/**
+	 * Compares and sorts player sprites by their Y position
+	 */
+	@Override
+	public int compareTo(PlayerSprite p) {
+		if (this.real.epsilonEquals(p.real, .05f))
+			return 0;
+		else if (this.real.y < p.real.y)
+			return 1;
+		else
+			return -1;
 	}
 }

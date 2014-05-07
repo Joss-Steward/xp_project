@@ -19,8 +19,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ArrayMap.Values;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.IntMap;
+import com.badlogic.gdx.utils.Sort;
 
 import data.ChatType;
 import data.Position;
@@ -143,7 +146,10 @@ public class ScreenMap extends ScreenBasic
 			mapRenderer.render(bgLayers);
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
-			for (PlayerSprite s : this.characters.values())
+			
+			Array<PlayerSprite> sprites = this.characters.values().toArray();
+			Sort.instance().sort(sprites);
+			for (PlayerSprite s : sprites)
 			{
 				s.update(delta);
 				s.draw(batch);
