@@ -3,6 +3,13 @@ characters.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+magi
+  rotate: false
+  xy: 0, 194
+  size: 130, 194
+  orig: 130, 194
+  offset: 0, 0
+  index: -1
 male_b
   rotate: false
   xy: 0, 0
@@ -12,7 +19,28 @@ male_b
   index: -1
 male_a
   rotate: false
+  xy: 130, 194
+  size: 130, 194
+  orig: 130, 194
+  offset: 0, 0
+  index: -1
+knight_with_straw_hat
+  rotate: false
   xy: 130, 0
+  size: 130, 194
+  orig: 130, 194
+  offset: 0, 0
+  index: -1
+ga
+  rotate: false
+  xy: 260, 194
+  size: 130, 194
+  orig: 130, 194
+  offset: 0, 0
+  index: -1
+ninja
+  rotate: false
+  xy: 260, 0
   size: 130, 194
   orig: 130, 194
   offset: 0, 0
