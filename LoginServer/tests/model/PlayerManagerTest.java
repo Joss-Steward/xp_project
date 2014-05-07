@@ -1,13 +1,10 @@
 package model;
 
-import static org.junit.Assert.*;
-
-import java.util.Observer;
-
-import model.reports.LoginFailedReport;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import model.reports.LoginSuccessfulReport;
 
-import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,40 +41,30 @@ public class PlayerManagerTest
 	/**
 	 * When a login is successful, the PlayerManager should send a
 	 * LoginSuccessfulReport
+	 * @throws LoginFailedException shouldn't
 	 */
 	@Test
-	public void notifiesOnSuccessfulLogin()
+	public void respondsOnSuccessfulLogin() throws LoginFailedException
 	{
 		PlayerManager pm = PlayerManager.getSingleton();
-		Observer obs = EasyMock.createMock(Observer.class);
-		LoginSuccessfulReport expected = new LoginSuccessfulReport(2, "localhost", 1872,
+		LoginSuccessfulReport expected = new LoginSuccessfulReport(PlayersInDB.MERLIN.getPlayerID(), "isabella", 1872,
 				0);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs,
-				LoginSuccessfulReport.class);
-		obs.update(EasyMock.eq(pm), EasyMock.eq(expected));
-		EasyMock.replay(obs);
-
-		pm.login(PlayerLoginTest.Players.MERLIN.getName(),
-				PlayerLoginTest.Players.MERLIN.getPassword());
-		EasyMock.verify(obs);
+		
+		LoginSuccessfulReport actual = pm.login(PlayersInDB.MERLIN.getPlayerName(),
+				PlayersInDB.MERLIN.getPlayerPassword());
+		assertEquals(expected, actual);
 	}
 
 	/**
-	 * When a login fails, the PlayerManager should send a LoginFailedReport
+	 * When a login fails, the PlayerManager should throw an exception
+	 * @throws LoginFailedException should
 	 */
-	@Test
-	public void notifiesOnFailedLogin()
+	@Test (expected = LoginFailedException.class)
+	public void notifiesOnFailedLogin() throws LoginFailedException
 	{
 		PlayerManager pm = PlayerManager.getSingleton();
-		Observer obs = EasyMock.createMock(Observer.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs,
-				LoginFailedReport.class);
-		obs.update(EasyMock.eq(pm), EasyMock.isA(LoginFailedReport.class));
-		EasyMock.replay(obs);
-
-		pm.login(PlayerLoginTest.Players.MERLIN.getName(),
-				PlayerLoginTest.Players.MERLIN.getPassword() + "Z");
-		EasyMock.verify(obs);
+		pm.login(PlayersInDB.MERLIN.getPlayerName(),
+				PlayersInDB.MERLIN.getPlayerPassword() + "Z");
 	}
 
 }

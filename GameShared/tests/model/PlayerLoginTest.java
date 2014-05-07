@@ -12,52 +12,7 @@ import org.junit.Test;
  */
 public class PlayerLoginTest extends DatabaseTest
 {
-	/**
-	 * The players that are in the test database
-	 * 
-	 * @author Merlin
-	 * 
-	 */
-	public enum Players
-	{
-		/**
-		 * 
-		 */
-		JOHN("John", "pw"),
-		/**
-		 * 
-		 */
-		MERLIN("Merlin", "mypwd");
 
-		private String name;
-		private String password;
-
-		Players(String n, String pwd)
-		{
-			this.name = n;
-			this.password = pwd;
-		}
-
-		/**
-		 * Get the name of the player
-		 * 
-		 * @return the player's name
-		 */
-		public String getName()
-		{
-			return name;
-		}
-
-		/**
-		 * Get the player's password
-		 * 
-		 * @return the password
-		 */
-		public String getPassword()
-		{
-			return password;
-		}
-	}
 
 	/**
 	 * If the name and password are in the db, we should be able to determine
@@ -69,8 +24,8 @@ public class PlayerLoginTest extends DatabaseTest
 	@Test
 	public void simpleRead() throws DatabaseException
 	{
-		PlayerLogin pl = PlayerLogin.readAndVerifyPlayerLogin(Players.JOHN.getName(),
-				Players.JOHN.getPassword());
+		PlayerLogin pl = PlayerLogin.readAndVerifyPlayerLogin(PlayersInDB.JOHN.getPlayerName(),
+				PlayersInDB.JOHN.getPlayerPassword());
 		assertEquals(1, pl.getPlayerID());
 	}
 
@@ -83,7 +38,7 @@ public class PlayerLoginTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void notThere() throws DatabaseException
 	{
-		PlayerLogin.readAndVerifyPlayerLogin(Players.JOHN.getName() + "z", Players.JOHN.getPassword());
+		PlayerLogin.readAndVerifyPlayerLogin(PlayersInDB.JOHN.getPlayerName() + "z", PlayersInDB.JOHN.getPlayerPassword());
 	}
 
 	/**
@@ -95,7 +50,7 @@ public class PlayerLoginTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void wrongPassword() throws DatabaseException
 	{
-		PlayerLogin.readAndVerifyPlayerLogin(Players.JOHN.getName(), Players.JOHN.getPassword() + 'Z');
+		PlayerLogin.readAndVerifyPlayerLogin(PlayersInDB.JOHN.getPlayerName(), PlayersInDB.JOHN.getPlayerPassword() + 'Z');
 	}
 
 }

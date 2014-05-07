@@ -6,8 +6,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import communication.handlers.LoginMessageHandlerTest;
-import communication.packers.LoginFailedMessagePackerTest;
-import communication.packers.LoginSuccessfulMessagePackerTest;
 
 /**
  * @author Merlin
@@ -20,7 +18,7 @@ import communication.packers.LoginSuccessfulMessagePackerTest;
 		LoginMessageHandlerTest.class,
 
 		// communication.packers
-		LoginFailedMessagePackerTest.class, LoginSuccessfulMessagePackerTest.class,
+
 
 		// model
 		PlayerLoginTest.class, PlayerManagerTest.class,

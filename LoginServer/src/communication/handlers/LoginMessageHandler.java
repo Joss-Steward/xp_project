@@ -1,8 +1,12 @@
 package communication.handlers;
 
+import model.LoginFailedException;
 import model.PlayerManager;
+import model.reports.LoginSuccessfulReport;
 import communication.handlers.MessageHandler;
+import communication.messages.LoginFailedMessage;
 import communication.messages.LoginMessage;
+import communication.messages.LoginSuccessfulMessage;
 import communication.messages.Message;
 
 /**
@@ -25,8 +29,18 @@ public class LoginMessageHandler extends MessageHandler
 	{
 		System.out.println("Received a login message: " + msg);
 		LoginMessage loginMsg = (LoginMessage) msg;
-		PlayerManager.getSingleton().login(loginMsg.getPlayerName(),
-				loginMsg.getPassword());
+		try
+		{
+			LoginSuccessfulReport report = PlayerManager.getSingleton().login(loginMsg.getPlayerName(),
+					loginMsg.getPassword());
+			LoginSuccessfulMessage response = new LoginSuccessfulMessage(report.getPlayerID(),
+					report.getHostname(), report.getPort(), report.getPin());
+			this.getStateAccumulator().queueMessage(response);
+		} catch (LoginFailedException e)
+		{
+			LoginFailedMessage response = new LoginFailedMessage();
+			this.getStateAccumulator().queueMessage(response);
+		}
 	}
 
 	/**

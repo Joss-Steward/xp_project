@@ -4,7 +4,7 @@ import java.sql.Statement;
 
 import model.DatabaseException;
 import model.DatabaseManager;
-import model.PlayerLoginTest;
+import model.PlayersInDB;
 
 /**
  * Builds the login portion of the database
@@ -67,10 +67,10 @@ public class BuildTestDBPlayerLogin
 		stmt.executeUpdate("ALTER TABLE PlayerLogins ENGINE = INNODB");
 		stmt.executeUpdate("ALTER TABLE PlayerLogins ADD UNIQUE (PlayerName)");
 
-		for (PlayerLoginTest.Players p : PlayerLoginTest.Players.values())
+		for (PlayersInDB p : PlayersInDB.values())
 		{
 			stmt.executeUpdate("INSERT INTO PlayerLogins (PlayerName, Password) VALUES ('"
-					+ p.getName() + "', '" + p.getPassword() + "');");
+					+ p.getPlayerName() + "', '" + p.getPlayerPassword() + "');");
 		}
 
 	}
