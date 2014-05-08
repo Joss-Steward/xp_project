@@ -56,6 +56,8 @@ public class QuizBotBehavior extends Behavior
 					ChatManager.getSingleton().sendChatToClients(player.getPlayerName() +" answered correctly.  The answer was " +question.getAnswer(),
 							"Quiz Bot", new Position(0,0), ChatType.Zone);
 					player.incrementQuizScore();
+					ChatManager.getSingleton().sendChatToClients(player.getPlayerName() +" score is now " + player.getQuizScore(),
+							"Quiz Bot", new Position(0,0), ChatType.Zone);
 				} 
 				catch (PlayerNotFoundException e) 
 				{
