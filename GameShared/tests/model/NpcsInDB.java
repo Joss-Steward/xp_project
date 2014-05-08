@@ -13,7 +13,7 @@ public enum NpcsInDB
 	/**
 	 * 
 	 */
-	QUIZ_BOT(100, "Quizard", "male_a", 0, 8);
+	QUIZ_BOT(100, "Quizard", "magi", 4, 19);
 	/**
 	 * 
 	 */
