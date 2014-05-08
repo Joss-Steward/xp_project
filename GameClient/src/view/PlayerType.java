@@ -25,7 +25,32 @@ public enum PlayerType
 	/**
 	 * Ninja
 	 */
-	ninja("ninja");
+	ninja("ninja"),
+	/**
+	 * Merlin
+	 */
+	merlin("merlin"),
+	/**
+	 * Andy
+	 */
+	andy("andy"),
+	/**
+	 * Dave
+	 */
+	dave("dave"),
+	/**
+	 * Party Guy Frank
+	 */
+	partyguy("partyguy"),
+	/**
+	 * Matt
+	 */
+	matt_kujo("matt_kujo"),
+	/**
+	 * Ga
+	 */
+	ga("ga");
+	
 
 	/**
 	 * The name of the region in the loaded {@link:TextureAtlas} used by a
