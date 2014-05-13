@@ -17,7 +17,7 @@ public enum PlayersInDB
 	/**
 	 * 
 	 */
-	MERLIN(2, "Merlin", "male_b", 4, 13, "pw"),
+	MERLIN(2, "Merlin", "merlin", 4, 13, "pw"),
 	/**
 	 * 
 	 */
