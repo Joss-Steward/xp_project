@@ -8,7 +8,7 @@ import data.Position;
  * @author Frank
  * 
  */
-public class MovePlayerCommand extends Command
+public class CommandMovePlayer extends Command
 {
 	private int playerId;
 	private Position newPosition;
@@ -19,7 +19,7 @@ public class MovePlayerCommand extends Command
 	 * @param newPosition
 	 *            The new Position to move
 	 */
-	public MovePlayerCommand(int playerId, Position newPosition)
+	public CommandMovePlayer(int playerId, Position newPosition)
 	{
 		this.playerId = playerId;
 		this.newPosition = newPosition;

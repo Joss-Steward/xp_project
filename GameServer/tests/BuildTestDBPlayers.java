@@ -92,13 +92,8 @@ public class BuildTestDBPlayers
 			player.setName(p.getPlayerName());
 			player.setPlayerPosition(pos);
 			player.setAppearanceType(p.getAppearanceType());
-			
-			if(player.getPlayerName().equals("Quizard"))
-			{
-				//this is the Quizzard
-				player.setMap("quiznasium.tmx");
-				player.setBehavior(new QuizBotBehavior());
-			}
+			player.setMap(p.getMapName());
+			player.setBehavior(new QuizBotBehavior());
 			
 			npcDAO.create(player);
 		}

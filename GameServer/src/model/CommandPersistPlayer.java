@@ -6,7 +6,7 @@ package model;
  * @author Steve
  *
  */
-public class PersistPlayerCommand extends Command
+public class CommandPersistPlayer extends Command
 {
 	private int playerID;
 	
@@ -14,7 +14,7 @@ public class PersistPlayerCommand extends Command
 	 * 
 	 * @param playerID The playerID to persist
 	 */
-	public PersistPlayerCommand(int playerID)
+	public CommandPersistPlayer(int playerID)
 	{
 		this.playerID = playerID;
 	}

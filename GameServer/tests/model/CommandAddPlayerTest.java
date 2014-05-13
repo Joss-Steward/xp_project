@@ -10,7 +10,7 @@ import org.junit.Test;
  * @author Merlin
  * 
  */
-public class AddCommandTest
+public class CommandAddPlayerTest
 {
 
 	/**
@@ -31,7 +31,7 @@ public class AddCommandTest
 	@Test
 	public void test() throws PlayerNotFoundException
 	{
-		AddPlayerCommand cmd = new AddPlayerCommand(1, PlayerPin.DEFAULT_PIN);
+		CommandAddPlayer cmd = new CommandAddPlayer(1, PlayerPin.DEFAULT_PIN);
 		cmd.execute();
 		assertNotNull(PlayerManager.getSingleton().getPlayerFromID(1));
 	}

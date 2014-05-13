@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import model.DatabaseException;
 import model.MapToServerMapping;
 import model.ModelFacade;
-import model.MovePlayerSilentlyCommand;
-import model.PersistPlayerCommand;
+import model.CommandMovePlayerSilently;
+import model.CommandPersistPlayer;
 import model.PlayerManager;
 import communication.messages.TeleportationInitiationMessage;
 import communication.messages.TeleportationContinuationMessage;
@@ -34,11 +34,11 @@ public class TeleportationInitiationHandler extends MessageHandler
 		TeleportationInitiationMessage currentMsg = (TeleportationInitiationMessage) msg;
 		try
 		{
-			MovePlayerSilentlyCommand command = new MovePlayerSilentlyCommand(
+			CommandMovePlayerSilently command = new CommandMovePlayerSilently(
 					currentMsg.getPlayerId(), currentMsg.getPosition());
 			ModelFacade.getSingleton().queueCommand(command);
 
-			PersistPlayerCommand persistCommand = new PersistPlayerCommand(currentMsg.getPlayerId());
+			CommandPersistPlayer persistCommand = new CommandPersistPlayer(currentMsg.getPlayerId());
 			ModelFacade.getSingleton().queueCommand(persistCommand);
 			
 			MapToServerMapping mapping = MapToServerMapping.retrieveMapping(currentMsg

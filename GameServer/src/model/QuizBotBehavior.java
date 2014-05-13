@@ -13,7 +13,7 @@ import data.Position;
  * 
  * @author Frank and Dave
  */
-public class QuizBotBehavior extends Behavior 
+public class QuizBotBehavior extends NPCBehavior 
 {
 	/**
 	 * 

@@ -58,7 +58,7 @@ public class NpcTest
 	
 	/**
 	 */
-	private class MockBehavior extends Behavior
+	private class MockBehavior extends NPCBehavior
 	{
 		private static final long serialVersionUID = -1879830711372276973L;
 		

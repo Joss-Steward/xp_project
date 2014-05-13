@@ -19,7 +19,7 @@ public class Npc extends Player
 	@DatabaseField
 	private String behaviorClassName;
 	
-	private Behavior behavior;
+	private NPCBehavior behavior;
 	
 	@DatabaseField(canBeNull = false)
 	private String mapName;
@@ -54,7 +54,7 @@ public class Npc extends Player
 			try
 			{
 				System.out.println("Creating behavior for " + behaviorClassName);
-				behavior = (Behavior) Class.forName(behaviorClassName).newInstance();
+				behavior = (NPCBehavior) Class.forName(behaviorClassName).newInstance();
 			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) 
 			{
 				behavior = null;
@@ -76,7 +76,7 @@ public class Npc extends Player
 	 * 
 	 * @param behavior The new behavior
 	 */
-	public void setBehavior(Behavior behavior)
+	public void setBehavior(NPCBehavior behavior)
 	{
 		this.behavior = behavior;
 		this.behaviorClassName = behavior.getClass().getName();
@@ -126,9 +126,9 @@ public class Npc extends Player
 	 */
 	private class NpcTimerTask extends TimerTask
 	{
-		Behavior behavior;
+		NPCBehavior behavior;
 		
-		public NpcTimerTask(Behavior behavior)
+		public NpcTimerTask(NPCBehavior behavior)
 		{
 			this.behavior = behavior;
 		}

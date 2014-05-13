@@ -12,7 +12,7 @@ import data.Position;
  * @author Steve
  *
  */
-public class PersistPlayerCommandTest 
+public class CommandPersistPlayerTest 
 {
 
 	/**

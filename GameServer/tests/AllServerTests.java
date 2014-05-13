@@ -1,10 +1,10 @@
-import model.AddCommandTest;
+import model.CommandAddPlayerTest;
 import model.CharacterIDGeneratorTest;
 import model.ChatManagerTest;
 import model.ChatMessageReceivedCommandTest;
 import model.MapToServerMappingTest;
-import model.MovePlayerCommandTest;
-import model.MovePlayerSilentlyCommandTest;
+import model.CommandMovePlayerTest;
+import model.CommandMovePlayerSilentlyTest;
 import model.PlayerManagerTest;
 import model.PlayerPinTest;
 import model.PlayerTest;
@@ -50,10 +50,10 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 		PlayerJoinedMessagePackerTest.class,
 
 		// model
-		AddCommandTest.class, 
+		CommandAddPlayerTest.class, 
 		MapToServerMappingTest.class,
-		MovePlayerCommandTest.class, 
-		MovePlayerSilentlyCommandTest.class,
+		CommandMovePlayerTest.class, 
+		CommandMovePlayerSilentlyTest.class,
 		PlayerManagerTest.class,
 		PlayerTest.class,
 		ChatManagerTest.class,

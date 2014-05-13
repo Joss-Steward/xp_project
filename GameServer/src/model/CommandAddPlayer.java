@@ -6,7 +6,7 @@ package model;
  * @author Merlin
  * 
  */
-public class AddPlayerCommand extends Command
+public class CommandAddPlayer extends Command
 {
 
 	private int playerID;
@@ -19,7 +19,7 @@ public class AddPlayerCommand extends Command
 	 * @param pin
 	 *            the player's pin
 	 */
-	public AddPlayerCommand(int playerID, double pin)
+	public CommandAddPlayer(int playerID, double pin)
 	{
 		this.playerID = playerID;
 		this.pin = pin;

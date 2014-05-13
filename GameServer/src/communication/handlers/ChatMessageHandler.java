@@ -1,6 +1,6 @@
 package communication.handlers;
 
-import model.ChatMessageReceivedCommand;
+import model.CommandChatMessageReceived;
 import model.ModelFacade;
 import communication.messages.ChatMessage;
 import communication.messages.Message;
@@ -27,8 +27,8 @@ public class ChatMessageHandler extends MessageHandler
 		{
 			ChatMessage cMsg = (ChatMessage) msg;
 			
-			ChatMessageReceivedCommand cmd = 
-					new ChatMessageReceivedCommand(
+			CommandChatMessageReceived cmd = 
+					new CommandChatMessageReceived(
 					cMsg.getSenderName(), 
 					cMsg.getMessage(),
 					cMsg.getPosition(), 

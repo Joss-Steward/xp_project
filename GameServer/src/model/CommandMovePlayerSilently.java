@@ -7,7 +7,7 @@ import data.Position;
  * @author Merlin
  *
  */
-public class MovePlayerSilentlyCommand extends Command
+public class CommandMovePlayerSilently extends Command
 {
 
 	private Position newPosition;
@@ -18,7 +18,7 @@ public class MovePlayerSilentlyCommand extends Command
 	 * @param playerId the player who is moving
 	 * @param position the position they should be moving to
 	 */
-	public MovePlayerSilentlyCommand(int playerId, Position position)
+	public CommandMovePlayerSilently(int playerId, Position position)
 	{
 		this.newPosition = position;
 		this.playerId = playerId;

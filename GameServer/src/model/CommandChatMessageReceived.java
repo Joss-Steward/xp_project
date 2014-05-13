@@ -8,7 +8,7 @@ import data.Position;
  *
  *Receives the message parameters and passes them to the ChatManager 
  */
-public class ChatMessageReceivedCommand extends Command
+public class CommandChatMessageReceived extends Command
 {
 	private String message;
 	private String senderName;
@@ -21,7 +21,7 @@ public class ChatMessageReceivedCommand extends Command
 	 * @param location of the player when the message was sent
 	 * @param type is the type of message: local, world, area
 	 */
-	public ChatMessageReceivedCommand(String senderName, String message, Position location, ChatType type)
+	public CommandChatMessageReceived(String senderName, String message, Position location, ChatType type)
 	{
 		this.senderName = senderName;
 		this.message = message;

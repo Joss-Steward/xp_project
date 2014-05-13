@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import model.Player;
-import model.AddPlayerCommand;
+import model.CommandAddPlayer;
 import model.ModelFacade;
 import model.PlayerManager;
 import communication.handlers.MessageHandler;
@@ -33,7 +33,7 @@ public class ConnectMessageHandler extends MessageHandler
 			{
 				connectionManager.setPlayerID(cMsg.getPlayerID());
 			}
-			AddPlayerCommand cmd = new AddPlayerCommand(cMsg.getPlayerID(), cMsg.getPin());
+			CommandAddPlayer cmd = new CommandAddPlayer(cMsg.getPlayerID(), cMsg.getPin());
 			
 			ModelFacade.getSingleton().queueCommand(cmd);
 			

@@ -10,7 +10,7 @@ import java.util.Observer;
  * @author Steve
  *
  */
-public abstract class Behavior implements Serializable, Observer
+public abstract class NPCBehavior implements Serializable, Observer
 {
 	private static final long serialVersionUID = -1535370359851281459L;
 	
