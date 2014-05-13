@@ -23,7 +23,7 @@ public class MapFileMessageTest
 	{
 		MapFileMessage msg = new MapFileMessage("current.tmx");
 		assertEquals("current.tmx", msg.toString());
-		assertEquals("current.tmx", msg.getFileName());
+		assertEquals("current.tmx", msg.getMapFileName());
 	}
 
 }

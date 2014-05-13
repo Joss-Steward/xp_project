@@ -39,7 +39,7 @@ public class MapFileMessage implements Message, Serializable
 	/**
 	 * @return the name of the map file we're referencing
 	 */
-	public String getFileName()
+	public String getMapFileName()
 	{
 		return this.mapFileName;
 	}
