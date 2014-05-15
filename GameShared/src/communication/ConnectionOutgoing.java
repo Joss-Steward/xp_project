@@ -50,8 +50,8 @@ public class ConnectionOutgoing implements Runnable
 		try
 		{
 			System.out.println("Connection to client created");
-
-			while (!Thread.currentThread().isInterrupted())
+			boolean done = false;
+			while (!Thread.currentThread().isInterrupted() && !done)
 			{
 				ArrayList<Message> msgs = stateAccumulator.getPendingMsgs();
 				if (msgs.size() == 0)
@@ -72,6 +72,7 @@ public class ConnectionOutgoing implements Runnable
 						{
 							System.out.println("Write failed");
 							cleanUpAndExit();
+							done = true;
 						}
 					}
 				}
@@ -103,5 +104,12 @@ public class ConnectionOutgoing implements Runnable
 	{
 		return stateAccumulator;
 	}
-
+	
+	/**
+	 * @return the output stream we are writing to
+	 */
+	public ObjectOutputStream getStream()
+	{
+		return this.ostream;
+	}
 }

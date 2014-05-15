@@ -58,21 +58,29 @@ public class ConnectionIncoming implements Runnable
 						Thread.sleep(100);
 						continue;
 					}
-				} else
+				} 
+				else
 				{
 					Thread.sleep(100);
 					continue;
 				}
-				System.out.println("starting to read from " + socket);
 				if (socket != null)
 				{
+					System.out.println("starting to read from " + socket);
+					
 					Object inputObject = this.istream.readObject();
-					// this.ostream.write(bytes,0,read);
+					//catch the normal connection polling
+					if (Message.class.isAssignableFrom(inputObject.getClass()))
+					{
+						System.out.println("processing:  ");
+						System.out.println(inputObject.getClass());
 
-					System.out.println("processing:  ");
-					System.out.println(inputObject.getClass());
-
-					processRequest((Message) inputObject);
+						processRequest((Message) inputObject);
+					}
+					else
+					{
+						//System.out.println("recieved polling signal");
+					}
 				}
 
 			}

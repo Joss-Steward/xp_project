@@ -10,6 +10,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 
 import model.reports.PlayerConnectionReport;
+import model.reports.PlayerLeaveReport;
 
 /**
  * @author Merlin
@@ -48,7 +49,7 @@ public class PlayerManager extends QualifiedObservable
 	{
 		if (singleton != null)
 		{
-			for (Class<?> reportType : singleton.reportTypes)
+			for (Class<? extends QualifiedObservableReport> reportType : singleton.reportTypes)
 			{
 				QualifiedObservableConnector.getSingleton()
 						.unregisterQualifiedObservable(singleton, reportType);
@@ -295,6 +296,37 @@ public class PlayerManager extends QualifiedObservable
 			{
 				npc.stop();
 			}
+		}
+	}
+
+	/**
+	 * Remove a player from this server's player manager and inform all connected clients of the
+	 * disconnection
+	 * @param playerID
+	 */
+	public void removePlayer(int playerID) {
+		Player p = this.players.remove(playerID);
+		if (p != null)
+		{
+			// attempt to persist the player on logoff/disconnect
+			try
+			{
+				playerDao.createOrUpdate(p);
+			}
+			catch (SQLException e)
+			{
+
+			}
+			// unregister this player from all observers
+			QualifiedObservableConnector qoc = QualifiedObservableConnector.getSingleton();
+			for (Class<? extends QualifiedObservableReport> type : p.getReportTypesWeSend())
+			{
+				qoc.unregisterQualifiedObservable(p, type);
+			}
+			System.out.println("Player " + p.getPlayerName() + " has left");
+			// send the disconnect message to clients
+			PlayerLeaveReport report = new PlayerLeaveReport(playerID);
+			this.notifyObservers(report);
 		}
 	}
 }
