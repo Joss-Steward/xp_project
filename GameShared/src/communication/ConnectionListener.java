@@ -45,7 +45,6 @@ public class ConnectionListener implements Runnable {
 			{
 				//write a single byte to poll if the socket is still available
 				stream.writeObject(new Byte((byte)0));
-				System.out.println(System.nanoTime());
 				//poll every few seconds
 				try
 				{

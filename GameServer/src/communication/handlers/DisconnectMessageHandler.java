@@ -7,7 +7,7 @@ import communication.messages.DisconnectMessage;
 import communication.messages.Message;
 
 /**
- * 
+ * Handles a message that the player has disconnected from this area server
  * @author nhydock
  *
  */
@@ -24,12 +24,6 @@ public class DisconnectMessageHandler extends MessageHandler
 		if (msg.getClass().equals(DisconnectMessage.class))
 		{
 			DisconnectMessage cMsg = (DisconnectMessage) msg;
-			System.err.println("removing player");
-			if (connectionManager != null)
-			{
-				System.err.println("setting player");
-				connectionManager.setPlayerID(cMsg.getPlayerID());
-			}
 			
 			CommandRemovePlayer cmd = new CommandRemovePlayer(cMsg.getPlayerID());
 			

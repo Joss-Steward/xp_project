@@ -33,6 +33,6 @@ public class DisconnectMessage implements Message, Serializable {
 	 */
 	public String toString()
 	{
-		return "Connect Message: playerID = " + playerID;
+		return "Disconnect Message: playerID = " + playerID;
 	}
 }

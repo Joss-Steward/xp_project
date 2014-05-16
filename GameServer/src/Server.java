@@ -43,7 +43,8 @@ public class Server implements Runnable
 		try
 		{
 			String hostName = InetAddress.getLocalHost().getHostName();
-			OptionsManager.getSingleton().updateMapInformation(mapName, hostName, port);
+			OptionsManager om = OptionsManager.getSingleton();
+			om.updateMapInformation(mapName, hostName, port);
 			PlayerManager.getSingleton().loadNpcs();
 			servSock = new ServerSocket(OptionsManager.getSingleton().getPortNumber(), 10);
 			while (true)
@@ -105,13 +106,14 @@ public class Server implements Runnable
 			else if(splitArg[0].equals("--localhost"))
 			{
 				OptionsManager.getSingleton().setTestMode();
+				port = 0;
 			}
 		}
 		if(map == null)
 		{
 			throw new IllegalArgumentException("Map name is required to run the server. Use the --map=STRING option.");
 		}
-		else if(port == null)
+		else if(port == null && !OptionsManager.getSingleton().isTestMode())
 		{
 			throw new IllegalArgumentException("Port is required to run the server. Use the --port=INTEGER option.");
 		}

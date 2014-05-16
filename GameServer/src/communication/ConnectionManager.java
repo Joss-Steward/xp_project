@@ -74,7 +74,7 @@ public class ConnectionManager
 		// T.setDaemon(true);
 		incomingThread.start();
 		
-		ConnectionListener cl = new ConnectionListener(socket, outgoing.getStream(), 5000);
+		ConnectionListener cl = new ConnectionListener(outgoing.getStream(), 5000);
 		cl.setDisconnectionAction(new Runnable(){
 			public void run(){
 				disconnect();
@@ -129,7 +129,7 @@ public class ConnectionManager
 	 */
 	public StateAccumulator getStateAccumulator()
 	{
-		return outgoing.stateAccumulator;
+		return stateAccumulator;
 	}
 
 	/**
