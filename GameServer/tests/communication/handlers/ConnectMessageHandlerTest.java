@@ -3,7 +3,7 @@ package communication.handlers;
 import static org.junit.Assert.assertEquals;
 import model.ModelFacade;
 import model.PlayerManager;
-import model.PlayerPin;
+import model.PlayerConnection;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +43,7 @@ public class ConnectMessageHandlerTest
 		ConnectMessageHandler handler = new ConnectMessageHandler();
 		ConnectionManager connectionManager = new ConnectionManager();
 		handler.setConnectionManager(connectionManager);
-		ConnectMessage msg = new ConnectMessage(1, PlayerPin.DEFAULT_PIN);
+		ConnectMessage msg = new ConnectMessage(1, PlayerConnection.DEFAULT_PIN);
 		handler.process(msg);
 		while (ModelFacade.getSingleton().queueSize() > 0)
 		{
@@ -63,7 +63,7 @@ public class ConnectMessageHandlerTest
 	public void tellsModel() throws InterruptedException
 	{
 		ConnectMessageHandler handler = new ConnectMessageHandler();
-		ConnectMessage msg = new ConnectMessage(1, PlayerPin.DEFAULT_PIN);
+		ConnectMessage msg = new ConnectMessage(1, PlayerConnection.DEFAULT_PIN);
 		handler.process(msg);
 		while (ModelFacade.getSingleton().queueSize() > 0)
 		{

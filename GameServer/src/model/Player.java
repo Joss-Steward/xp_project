@@ -53,16 +53,16 @@ public class Player extends QualifiedObservable
 
 	public boolean isPinValid(double pinToCheck)
 	{
-		PlayerPin pl = new PlayerPin(id);
+		PlayerConnection pl = new PlayerConnection(id);
 		PinFailedReport report = null;
 		
 		if(!pl.isPinValid(pinToCheck))
 		{
-			report = new PinFailedReport(PlayerPin.ERROR_PIN_NOT_EXIST);
+			report = new PinFailedReport(PlayerConnection.ERROR_PIN_NOT_EXIST);
 		}
 		else if (pl.isExpired())
 		{
-			report = new PinFailedReport(PlayerPin.ERROR_PIN_EXPIRED);
+			report = new PinFailedReport(PlayerConnection.ERROR_PIN_EXPIRED);
 		}
 		
 		if(report != null)

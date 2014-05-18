@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import model.DatabaseException;
 import model.OptionsManager;
 import model.PlayerManager;
-import model.PlayerPin;
+import model.PlayerConnection;
 import model.reports.PlayerConnectionReport;
 
 import org.junit.Before;
@@ -42,8 +42,8 @@ public class MapFileMessagePackerTest
 	@Test
 	public void ifThePlayerIsNotOnThisConnection() throws DatabaseException
 	{
-		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
-		PlayerManager.getSingleton().addPlayer(2, PlayerPin.DEFAULT_PIN);
+		PlayerManager.getSingleton().addPlayer(1, PlayerConnection.DEFAULT_PIN);
+		PlayerManager.getSingleton().addPlayer(2, PlayerConnection.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
 
@@ -66,7 +66,7 @@ public class MapFileMessagePackerTest
 	@Test
 	public void ifThePlayerIsOnThisConnection() throws DatabaseException, SQLException
 	{
-		PlayerManager.getSingleton().addPlayer(1, PlayerPin.DEFAULT_PIN);
+		PlayerManager.getSingleton().addPlayer(1, PlayerConnection.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
 

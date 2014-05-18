@@ -17,7 +17,7 @@ import java.util.TimeZone;
  * @author Merlin
  * 
  */
-public class PlayerPin
+public class PlayerConnection
 {
 
 	static final int EXPIRATION_TIME_UNITS = Calendar.HOUR;
@@ -31,7 +31,7 @@ public class PlayerPin
 	public static final int DEFAULT_PIN = 1;
 	private int playerID;
 
-	PlayerPin(int playerID)
+	PlayerConnection(int playerID)
 	{
 		this.playerID = playerID;
 	}
@@ -60,7 +60,7 @@ public class PlayerPin
 			PreparedStatement stmt;
 			deletePlayerPin();
 
-			sql = "INSERT INTO PlayerPins (PlayerID, Pin) VALUES (?, ?)";
+			sql = "INSERT INTO PlayerConnection (PlayerID, Pin) VALUES (?, ?)";
 			System.err.println("[DEBUG] " + sql + " " + playerID + " " + pin);
 			stmt = connectionStatus.prepareStatement(sql);
 			stmt.setInt(1, playerID);
@@ -87,14 +87,14 @@ public class PlayerPin
 			String sql;
 			PreparedStatement stmt;
 
-			sql = "UPDATE PlayerPins SET changed_On=? WHERE PlayerID = ?";
+			sql = "UPDATE PlayerConnection SET changed_On=? WHERE PlayerID = ?";
 			stmt = connectionStatus.prepareStatement(sql);
 			stmt.setString(1, newTime);
 			stmt.setInt(2, playerID);
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
-			new DatabaseException("Unable to generate pin for player id # " + playerID, e);
+			throw new DatabaseException("Unable to generate pin for player id # " + playerID, e);
 		}
 	}
 
@@ -102,7 +102,7 @@ public class PlayerPin
 	{
 		Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
 
-		String sql = "DELETE from PlayerPins WHERE PlayerID = ?";
+		String sql = "DELETE from PlayerConnection WHERE PlayerID = ?";
 		PreparedStatement stmt;
 		try
 		{
@@ -131,7 +131,7 @@ public class PlayerPin
 		try
 		{
 			Connection connection = DatabaseManager.getSingleton().getConnection();
-			String sql = "SELECT changed_on FROM PlayerPins WHERE PlayerID = ?";
+			String sql = "SELECT changed_on FROM PlayerConnection WHERE PlayerID = ?";
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, playerID);
 			ResultSet resultSet = stmt.executeQuery();
@@ -192,7 +192,7 @@ public class PlayerPin
 		try
 		{
 			Connection connection = DatabaseManager.getSingleton().getConnection();
-			String sql = "SELECT * FROM PlayerPins WHERE PlayerID = ? AND Pin = ?";
+			String sql = "SELECT * FROM PlayerConnection WHERE PlayerID = ? AND Pin = ?";
 			System.err.println("[DEBUG] " + sql + ": " + playerID + " " + pin);
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, playerID);
@@ -209,5 +209,57 @@ public class PlayerPin
 		}
 		
 		return found;
+	}
+
+	/**
+	 * Get the name of the map the player was most recently on
+	 * @return the name of the tmx file
+	 */
+	public String getMapName()
+	{
+		String mapName = null;
+		try
+		{
+			Connection connection = DatabaseManager.getSingleton().getConnection();
+			String sql = "SELECT MapName FROM PlayerConnection WHERE PlayerID = ?";
+			System.err.println("[DEBUG] " + sql + ": " + playerID);
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, playerID);
+			ResultSet resultSet = stmt.executeQuery();
+			resultSet.first();
+			mapName = resultSet.getString(1);
+			
+			resultSet.close();
+			stmt.close();
+		} catch (SQLException | DatabaseException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return mapName;
+	}
+	/**
+	 * Store the map that the player is using
+	 * @param mapFileTitle the title of the tmx file
+	 * @throws DatabaseException if we cannot update their state in the database
+	 */
+	public void setMapName(String mapFileTitle) throws DatabaseException
+	{
+		try
+		{
+			Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
+			
+			String sql;
+			PreparedStatement stmt;
+
+			sql = "UPDATE PlayerConnection SET mapName=? WHERE PlayerID = ?";
+			stmt = connectionStatus.prepareStatement(sql);
+			stmt.setString(1, mapFileTitle);
+			stmt.setInt(2, playerID);
+			stmt.executeUpdate();
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Unable to store map information for player id # " + playerID, e);
+		} 
 	}
 }

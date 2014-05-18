@@ -18,7 +18,7 @@ import org.junit.Test;
  * @author Merlin
  * 
  */
-public class PlayerPinTest extends DatabaseTest
+public class PlayerConnectionTest extends DatabaseTest
 {
 
 	/**
@@ -31,11 +31,34 @@ public class PlayerPinTest extends DatabaseTest
 	{
 		for (int userID = 1; userID < 3; userID++)
 		{
-			PlayerPin pp = new PlayerPin(userID);
+			PlayerConnection pp = new PlayerConnection(userID);
 			pp.generateTestPin();
 		}
 	}
 
+	/**
+	 * Can store a new map file name
+	 * @throws DatabaseException shouldn't
+	 * @throws SQLException shouldn't
+	 */
+	@Test
+	public void storesMapName() throws DatabaseException, SQLException
+	{
+		PlayerConnection pc = new PlayerConnection(2);
+		pc.setMapName("thisMap.tmx");
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		String sql = "SELECT MapName FROM PlayerConnection WHERE PlayerID = ?";
+		System.err.println("[DEBUG] " + sql + ": " + 2);
+		PreparedStatement stmt = connection.prepareStatement(sql);
+		stmt.setInt(1, 2);
+		ResultSet resultSet = stmt.executeQuery();
+		resultSet.first();
+		String actual  = resultSet.getString(1);
+		resultSet.close();
+		stmt.close();
+		assertEquals( "thisMap.tmx", actual);
+		assertEquals( actual, pc.getMapName());
+	}
 	/**
 	 * When we generate a PIN for a player, it should be stored into the db
 	 * 
@@ -47,16 +70,17 @@ public class PlayerPinTest extends DatabaseTest
 	@Test
 	public void generatesAndStoresPin() throws DatabaseException, SQLException
 	{
-		PlayerPin playerPin = new PlayerPin(2);
+		PlayerConnection playerPin = new PlayerConnection(2);
 		double pin = playerPin.generatePin();
 		Connection connection = DatabaseManager.getSingleton().getConnection();
-		String sql = "SELECT pin FROM PlayerPins WHERE PlayerID = ?";
+		String sql = "SELECT pin FROM PlayerConnection WHERE PlayerID = ?";
 		PreparedStatement stmt = connection.prepareStatement(sql);
 		stmt.setInt(1, 2);
 		ResultSet resultSet = stmt.executeQuery();
 		resultSet.first();
 		double storedPin = resultSet.getDouble(1);
 		resultSet.close();
+		stmt.close();
 		assertEquals(pin, storedPin, 0.00001);
 	}
 
@@ -72,10 +96,10 @@ public class PlayerPinTest extends DatabaseTest
 	@Test
 	public void cantHaveTwoPins() throws DatabaseException, SQLException
 	{
-		PlayerPin playerPin = new PlayerPin(2);
+		PlayerConnection playerPin = new PlayerConnection(2);
 		playerPin.generatePin();
 		double pin2 = playerPin.generatePin();
-		String sql = "SELECT pin FROM PlayerPins WHERE PlayerID = ?";
+		String sql = "SELECT pin FROM PlayerConnection WHERE PlayerID = ?";
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		PreparedStatement stmt = connection.prepareStatement(sql);
 		stmt.setInt(1, 2);
@@ -97,7 +121,7 @@ public class PlayerPinTest extends DatabaseTest
 	@Test
 	public void canParseTime() throws DatabaseException
 	{
-		PlayerPin playerPin = new PlayerPin(2);
+		PlayerConnection playerPin = new PlayerConnection(2);
 		GregorianCalendar cal = playerPin.parseTimeString("2013-10-07 13:24:23");
 		assertEquals(2013, cal.get(Calendar.YEAR));
 		assertEquals(9, cal.get(Calendar.MONTH));
@@ -120,7 +144,7 @@ public class PlayerPinTest extends DatabaseTest
 	@Test
 	public void testIsExpiredWithoutAPin() throws DatabaseException, SQLException
 	{
-		PlayerPin playerPin = new PlayerPin(2);
+		PlayerConnection playerPin = new PlayerConnection(2);
 		playerPin.generatePin();
 		playerPin.deletePlayerPin();
 		assertTrue(playerPin.isExpired());
@@ -136,7 +160,7 @@ public class PlayerPinTest extends DatabaseTest
 	@Test
 	public void testNewPinIsNotExpired() throws DatabaseException
 	{
-		PlayerPin playerPin = new PlayerPin(2);
+		PlayerConnection playerPin = new PlayerConnection(2);
 		playerPin.generatePin();
 		assertFalse(playerPin.isExpired());
 	}
@@ -150,7 +174,7 @@ public class PlayerPinTest extends DatabaseTest
 	@Test
 	public void isPinValid() throws DatabaseException
 	{
-		PlayerPin playerPin = new PlayerPin(2);
+		PlayerConnection playerPin = new PlayerConnection(2);
 		double pin = playerPin.generatePin();
 		assertTrue(playerPin.isPinValid(pin));
 		assertFalse(playerPin.isPinValid(pin+1));

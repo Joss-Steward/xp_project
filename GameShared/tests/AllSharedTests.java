@@ -1,5 +1,5 @@
 import model.PlayerLoginTest;
-import model.PlayerPinTest;
+import model.PlayerConnectionTest;
 import model.QualifiedObservableTest;
 import model.QualifiedObserverConnectorTest;
 
@@ -78,7 +78,7 @@ import data.PositionTest;
 		// model
 		// DatabaseTest.class
 		PlayerLoginTest.class, 
-		PlayerPinTest.class, 
+		PlayerConnectionTest.class, 
 		// PlayersInDB
 		QualifiedObservableTest.class,
 		// QualifiedObservableTestInherited,
@@ -104,7 +104,7 @@ public class AllSharedTests
 		@Override
 		protected void before() throws Throwable
 		{
-			PlayerPinTest.defaultAllPins();
+			PlayerConnectionTest.defaultAllPins();
 		};
 
 		@Override

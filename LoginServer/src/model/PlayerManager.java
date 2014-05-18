@@ -62,7 +62,7 @@ public class PlayerManager extends QualifiedObservable
 			PlayerLogin pl = PlayerLogin.readAndVerifyPlayerLogin(playerName,
 					password);
 			numberOfPlayers++;
-			PlayerPin pp = new PlayerPin(pl.getPlayerID());
+			PlayerConnection pp = new PlayerConnection(pl.getPlayerID());
 
 			String server;
 			int port;

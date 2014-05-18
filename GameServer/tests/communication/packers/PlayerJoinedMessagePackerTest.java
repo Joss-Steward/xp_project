@@ -3,7 +3,7 @@ package communication.packers;
 import static org.junit.Assert.*;
 import model.DatabaseException;
 import model.PlayerManager;
-import model.PlayerPin;
+import model.PlayerConnection;
 import model.PlayersInDB;
 import model.reports.PlayerConnectionReport;
 
@@ -39,10 +39,10 @@ public class PlayerJoinedMessagePackerTest
 	@Test
 	public void ifThePlayerIsNotOnThisConnection() throws DatabaseException
 	{
-		PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID(), PlayerPin.DEFAULT_PIN);
+		PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID(), PlayerConnection.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(PlayersInDB.MERLIN.getPlayerID());
-		PlayerManager.getSingleton().addPlayer(PlayersInDB.JOHN.getPlayerID(), PlayerPin.DEFAULT_PIN);
+		PlayerManager.getSingleton().addPlayer(PlayersInDB.JOHN.getPlayerID(), PlayerConnection.DEFAULT_PIN);
 
 		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager
 				.getSingleton().getPlayerFromID(PlayersInDB.JOHN.getPlayerID()));

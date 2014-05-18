@@ -31,7 +31,7 @@ public class CommandAddPlayerTest
 	@Test
 	public void test() throws PlayerNotFoundException
 	{
-		CommandAddPlayer cmd = new CommandAddPlayer(1, PlayerPin.DEFAULT_PIN);
+		CommandAddPlayer cmd = new CommandAddPlayer(1, PlayerConnection.DEFAULT_PIN);
 		cmd.execute();
 		assertNotNull(PlayerManager.getSingleton().getPlayerFromID(1));
 	}

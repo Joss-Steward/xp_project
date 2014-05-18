@@ -167,7 +167,7 @@ public class PlayerManager extends QualifiedObservable
 	 */
 	public int getNewPinFor(int playerID) throws DatabaseException
 	{
-		PlayerPin pin = new PlayerPin(playerID);
+		PlayerConnection pin = new PlayerConnection(playerID);
 		return pin.generatePin();
 	}
 	/**

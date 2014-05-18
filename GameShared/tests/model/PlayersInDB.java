@@ -13,43 +13,43 @@ public enum PlayersInDB
 	/**
 	 * 
 	 */
-	JOHN(1, "John", "male_a", 0, 8, "pw"),
+	JOHN(1, "John", "male_a", 0, 8, "pw", "quiznasium.tmx"),
 	/**
 	 * 
 	 */
-	MERLIN(2, "Merlin", "merlin", 4, 13, "pw"),
+	MERLIN(2, "Merlin", "merlin", 4, 13, "pw", null),
 	/**
 	 * 
 	 */
-	NICK(3, "Nick", "magi", 4, 13, "pw"),
+	NICK(3, "Nick", "magi", 4, 13, "pw", null),
 	/**
 	 * 
 	 */
-	JOSH(4, "Josh", "ninja", 4, 13, "pw"),
+	JOSH(4, "Josh", "ninja", 4, 13, "pw", null),
 	/**
 	 * 
 	 */
-	MATT(2, "Matt", "male_b", 4, 13, "pw"),
+	MATT(5, "Matt", "male_b", 4, 13, "pw", null),
 	/**
 	 * 
 	 */
-	STEVE(2, "Steve", "knight_with_straw_hat", 4, 13, "pw"),
+	STEVE(6, "Steve", "knight_with_straw_hat", 4, 13, "pw", null),
 	/**
 	 * 
 	 */
-	FRANK(2, "Frank", "male_b", 4, 13, "pw"),
+	FRANK(7, "Frank", "male_b", 4, 13, "pw", null),
 	/**
 	 * 
 	 */
-	GA(2, "Ga", "male_b", 4, 13, "pw"),
+	GA(8, "Ga", "male_b", 4, 13, "pw", null),
 	/**
 	 * 
 	 */
-	ANDY(2, "Andy", "male_b", 4, 13, "pw"),
+	ANDY(9, "Andy", "male_b", 4, 13, "pw", null),
 	/**
 	 * 
 	 */
-	DAVE(2, "Dave", "male_b", 4, 13, "pw");
+	DAVE(10, "Dave", "male_b", 4, 13, "pw", null);
 
 	private int playerID;
 
@@ -62,8 +62,10 @@ public enum PlayersInDB
 	private String playerName;
 	
 	private String password;
+	
+	private String mapName;
 
-	PlayersInDB(int id, String playerName, String type, int row, int col, String password)
+	PlayersInDB(int id, String playerName, String type, int row, int col, String password, String mapName)
 	{
 		this.playerID = id;
 		this.playerName = playerName;
@@ -71,16 +73,7 @@ public enum PlayersInDB
 		this.row = row;
 		this.col = col;
 		this.password = password;
-	}
-
-	/**
-	 * Get the player's unique name
-	 * 
-	 * @return the name
-	 */
-	public String getPlayerName()
-	{
-		return playerName;
+		this.mapName = mapName;
 	}
 
 	/**
@@ -95,6 +88,15 @@ public enum PlayersInDB
 	}
 
 	/**
+	 * Get the name of the map the player was most recently on
+	 * @return the map name
+	 */
+	public String getMapName()
+	{
+		return mapName;
+	}
+
+	/**
 	 * Get the player's unique ID
 	 * 
 	 * @return the id
@@ -105,13 +107,13 @@ public enum PlayersInDB
 	}
 
 	/**
-	 * get this player's most recent position
+	 * Get the player's unique name
 	 * 
-	 * @return this player's position
+	 * @return the name
 	 */
-	public Position getPosition()
+	public String getPlayerName()
 	{
-		return new Position(row, col);
+		return playerName;
 	}
 
 	/**
@@ -121,6 +123,16 @@ public enum PlayersInDB
 	public String getPlayerPassword() 
 	{
 		return password;
+	}
+
+	/**
+	 * get this player's most recent position
+	 * 
+	 * @return this player's position
+	 */
+	public Position getPosition()
+	{
+		return new Position(row, col);
 	}
 
 }

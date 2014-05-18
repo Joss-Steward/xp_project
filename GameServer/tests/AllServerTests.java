@@ -6,7 +6,7 @@ import model.MapToServerMappingTest;
 import model.CommandMovePlayerTest;
 import model.CommandMovePlayerSilentlyTest;
 import model.PlayerManagerTest;
-import model.PlayerPinTest;
+import model.PlayerConnectionTest;
 import model.PlayerTest;
 import model.reports.PlayerConnectionReportTest;
 import model.reports.PlayerMovedReportTest;
@@ -78,7 +78,7 @@ public class AllServerTests
 		@Override
 		protected void before() throws Throwable
 		{
-			PlayerPinTest.defaultAllPins();
+			PlayerConnectionTest.defaultAllPins();
 		};
 
 		@Override

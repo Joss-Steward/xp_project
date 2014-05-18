@@ -86,9 +86,9 @@ public class PlayerTest extends DatabaseTest
 	@Test
 	public void legitPin() throws DatabaseException
 	{
-		PlayerPin playerPin = new PlayerPin(1);
+		PlayerConnection playerPin = new PlayerConnection(1);
 		playerPin.generateTestPin();
-		playerManager.addPlayer(1, PlayerPin.DEFAULT_PIN);
+		playerManager.addPlayer(1, PlayerConnection.DEFAULT_PIN);
 	}
 
 	/**
@@ -100,16 +100,16 @@ public class PlayerTest extends DatabaseTest
 	@Test
 	public void oldPin() throws DatabaseException
 	{
-		PlayerPin playerPin = new PlayerPin(1);
+		PlayerConnection playerPin = new PlayerConnection(1);
 		GregorianCalendar cal = new GregorianCalendar();
-		cal.add(PlayerPin.EXPIRATION_TIME_UNITS, -1 * PlayerPin.EXPIRATION_TIME_QUANTITY
+		cal.add(PlayerConnection.EXPIRATION_TIME_UNITS, -1 * PlayerConnection.EXPIRATION_TIME_QUANTITY
 				- 1);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		playerPin.setChangedOn(sdf.format(cal.getTime()));
 		boolean gotTheException = false;
 		try
 		{
-			playerManager.addPlayer(1, PlayerPin.DEFAULT_PIN);
+			playerManager.addPlayer(1, PlayerConnection.DEFAULT_PIN);
 		} catch (DatabaseException e)
 		{
 			gotTheException = true;
