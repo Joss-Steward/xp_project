@@ -19,6 +19,7 @@ import org.junit.runners.Suite;
 
 import communication.handlers.ChatMessageHandlerTest;
 import communication.handlers.ConnectMessageHandlerTest;
+import communication.handlers.DisconnectMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.TeleportationInitiationHandlerTest;
 import communication.packers.MapFileMessagePackerTest;
@@ -40,6 +41,7 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 {
 		// communication.handlers
 		ConnectMessageHandlerTest.class,
+		DisconnectMessageHandlerTest.class,
 		MovementMessageHandlerTest.class,
 		TeleportationInitiationHandlerTest.class,
 		ChatMessageHandlerTest.class,

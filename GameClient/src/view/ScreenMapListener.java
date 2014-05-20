@@ -51,6 +51,11 @@ public class ScreenMapListener extends ScreenListener
 			Position pos = report.getPlayerPosition();
 			map.addPlayer(report.getPlayerID(), type, pos, report.isThisClientsPlayer());
 		}
+		else if (arg.getClass().equals(PlayerDisconnectedFromAreaServerReport.class))
+		{
+			PlayerDisconnectedFromAreaServerReport report = (PlayerDisconnectedFromAreaServerReport) arg;
+			map.removePlayer(report.getPlayerID());
+		}
 		else if (arg.getClass().equals(ChangeMapReport.class))
 		{
 			map.setTiledMap(null);
@@ -70,6 +75,7 @@ public class ScreenMapListener extends ScreenListener
 	{
 		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
 		reportTypes.add(PlayerConnectedToAreaServerReport.class);
+		reportTypes.add(PlayerDisconnectedFromAreaServerReport.class);
 		reportTypes.add(PlayerMovedReport.class);
 		reportTypes.add(ChatReceivedReport.class);
 		reportTypes.add(NewMapReport.class);

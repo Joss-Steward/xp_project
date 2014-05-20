@@ -10,6 +10,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 
 import model.reports.PlayerConnectionReport;
+import model.reports.PlayerLeaveReport;
 
 /**
  * @author Merlin
@@ -48,7 +49,7 @@ public class PlayerManager extends QualifiedObservable
 	{
 		if (singleton != null)
 		{
-			for (Class<?> reportType : singleton.reportTypes)
+			for (Class<? extends QualifiedObservableReport> reportType : singleton.reportTypes)
 			{
 				QualifiedObservableConnector.getSingleton()
 						.unregisterQualifiedObservable(singleton, reportType);
@@ -158,7 +159,6 @@ public class PlayerManager extends QualifiedObservable
 		}
 		return null;
 	}
-
 	/**
 	 * Get a new PIN for a player so they can connect to a different area server
 	 * @param playerID the player ID
@@ -170,6 +170,7 @@ public class PlayerManager extends QualifiedObservable
 		PlayerConnection pin = new PlayerConnection(playerID);
 		return pin.generatePin();
 	}
+	
 	/**
 	 * Adds a player to the list of active players on this server without
 	 * checking its pin - only for testing purposes
@@ -217,7 +218,6 @@ public class PlayerManager extends QualifiedObservable
 			return false;
 		}
 	}
-
 	/**
 	 * @param playerID
 	 *            the playerID of the player we are looking for
@@ -295,6 +295,37 @@ public class PlayerManager extends QualifiedObservable
 			{
 				npc.stop();
 			}
+		}
+	}
+
+	/**
+	 * Remove a player from this server's player manager and inform all connected clients of the
+	 * disconnection
+	 * @param playerID
+	 */
+	public void removePlayer(int playerID) {
+		Player p = this.players.remove(playerID);
+		if (p != null)
+		{
+			// attempt to persist the player on logoff/disconnect
+			try
+			{
+				playerDao.createOrUpdate(p);
+			}
+			catch (SQLException e)
+			{
+
+			}
+			// unregister this player from all observers
+			QualifiedObservableConnector qoc = QualifiedObservableConnector.getSingleton();
+			for (Class<? extends QualifiedObservableReport> type : p.getReportTypesWeSend())
+			{
+				qoc.unregisterQualifiedObservable(p, type);
+			}
+			System.out.println("Player " + p.getPlayerName() + " has left");
+			// send the disconnect message to clients
+			PlayerLeaveReport report = new PlayerLeaveReport(playerID);
+			this.notifyObservers(report);
 		}
 	}
 }

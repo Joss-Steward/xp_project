@@ -43,7 +43,9 @@ public class ScreenMap extends ScreenBasic
 	IntMap<PlayerSprite> characters;
 
 	//holds characters that need to be added until the map is loaded
-	IntMap<Position> characterQueue;	
+	IntMap<Position> characterQueue;
+	//holds list of characters that need to be removed after the render cycle is complete
+	IntArray characterDequeue;
 
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
@@ -73,6 +75,7 @@ public class ScreenMap extends ScreenBasic
 		batch = new SpriteBatch();
 		characters = new IntMap<PlayerSprite>();
 		characterQueue = new IntMap<Position>();
+		characterDequeue = new IntArray();
 		mapInput = new ScreenMapInput();
 		
 		tileSize = new Vector2(16,16);
@@ -140,6 +143,7 @@ public class ScreenMap extends ScreenBasic
 					camera.position.set(where.x, where.y, 0);
 				}
 			}
+			this.characterQueue.clear();
 			
 			mapRenderer.setView(camera);
 			mapRenderer.render(bgLayers);
@@ -160,6 +164,14 @@ public class ScreenMap extends ScreenBasic
 			
 			//have the camera follow the player when moving
 			camera.position.set(this.mySprite.getPosition(), 0);
+			
+			//insures players are removed at the end of the render cycle to prevent race conditions
+			for (int i = 0; i < characterDequeue.size; i++)
+			{
+				int id = characterDequeue.get(i);
+				this.characters.remove(id);
+			}
+			characterDequeue.clear();
 			
 //			if (Gdx.input.isKeyPressed(Keys.Q))
 //			{
@@ -374,5 +386,14 @@ public class ScreenMap extends ScreenBasic
 	public void addChat(String message, ChatType type)
 	{
 		chatArea.addMessage(message, type);
+	}
+
+	/**
+	 * Removes a player from this display
+	 * @param playerID
+	 *  the player's unique identifying code
+	 */
+	public void removePlayer(int playerID) {
+		characterDequeue.add(playerID);
 	}
 }
