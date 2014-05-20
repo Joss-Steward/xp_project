@@ -2,13 +2,15 @@ package model;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
-import java.util.HashMap;
+
+import com.badlogic.gdx.utils.IntMap;
 
 import data.Position;
 import model.reports.LoginFailedReport;
 import model.reports.LoginInitiatedReport;
 import model.reports.PinFailedReport;
 import model.reports.PlayerConnectedToAreaServerReport;
+import model.reports.PlayerDisconnectedFromAreaServerReport;
 
 /**
  * Maintains the active set of players on the area server to which this client
@@ -21,17 +23,18 @@ public class PlayerManager extends QualifiedObservable
 {
 
 	private static PlayerManager singleton;
-	private HashMap<Integer, Player> playerList;
+	private IntMap<Player> playerList;
 
 	private boolean loginInProgress;
 
 	private PlayerManager()
 	{
 		thisClientsPlayer = null;
-		playerList = new HashMap<Integer, Player>();
+		playerList = new IntMap<Player>();
 		reportTypes.add(LoginInitiatedReport.class);
 		reportTypes.add(LoginFailedReport.class);
 		reportTypes.add(PlayerConnectedToAreaServerReport.class);
+		reportTypes.add(PlayerDisconnectedFromAreaServerReport.class);
 		reportTypes.add(PinFailedReport.class);
 		registerReportTypesWeNotify();
 	}
@@ -180,7 +183,28 @@ public class PlayerManager extends QualifiedObservable
 		player.setPosition(position);
 
 		return player;
-
+	}
+	
+	/**
+	 * Removes a player from being managed by this manager
+	 * @param playerID
+	 *            The id of the player
+	 */
+	public void removePlayer(int playerID)
+	{
+		Player player = this.playerList.remove(playerID);
+		if (player != null)
+		{
+			//unregister this player
+			QualifiedObservableConnector qoc = QualifiedObservableConnector.getSingleton();
+			for (Class<? extends QualifiedObservableReport> r : player.getReportTypesWeSend())
+			{
+				qoc.unregisterQualifiedObservable(player, r);
+			}
+			
+			PlayerDisconnectedFromAreaServerReport report = new PlayerDisconnectedFromAreaServerReport(playerID);
+			this.notifyObservers(report);
+		}
 	}
 	
 	/**

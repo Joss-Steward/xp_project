@@ -16,6 +16,7 @@ import communication.StateAccumulatorTest;
 import communication.handlers.MessageHandlerSetTest;
 import communication.messages.ChatMessageTest;
 import communication.messages.ConnectionMessageTest;
+import communication.messages.DisconnectionMessageTest;
 import communication.messages.TeleportationInitiationMessageTest;
 import communication.messages.TeleportationContinuationMessageTest;
 import communication.messages.LoginMessageTest;
@@ -53,6 +54,7 @@ import data.PositionTest;
 		// communication.messages
 		ChatMessageTest.class,
 		ConnectionMessageTest.class,
+		DisconnectionMessageTest.class,
 		TeleportationContinuationMessageTest.class,
 		LoginMessageTest.class,
 		TeleportationContinuationMessageTest.class,

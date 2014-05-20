@@ -194,7 +194,7 @@ public class QualifiedObservableConnector
 	 *            the report type that will no longer be reported
 	 */
 	public void unregisterQualifiedObservable(QualifiedObservable observable,
-			Class<?> reportType)
+			Class<? extends QualifiedObservableReport> reportType)
 	{
 		disconnectObserversFrom(observable, reportType);
 
@@ -215,7 +215,7 @@ public class QualifiedObservableConnector
 	 *            the report type that should not longer be reported
 	 */
 	private void disconnectObserversFrom(QualifiedObservable observable,
-			Class<?> reportType)
+			Class<? extends QualifiedObservableReport> reportType)
 	{
 		ArrayList<Observer> relevantObservers = observers.get(reportType);
 		if (relevantObservers != null)
@@ -236,7 +236,7 @@ public class QualifiedObservableConnector
 	 * @param reportType
 	 *            the report types they no longer want to receive
 	 */
-	public void unregisterObserver(Observer observer, Class<?> reportType)
+	public void unregisterObserver(Observer observer, Class<? extends QualifiedObservableReport> reportType)
 	{
 
 		disconnectFromObservables(observer, reportType);
@@ -256,7 +256,7 @@ public class QualifiedObservableConnector
 	 * @param reportType
 	 *            the report type that should no longer be reported
 	 */
-	private void disconnectFromObservables(Observer observer, Class<?> reportType)
+	private void disconnectFromObservables(Observer observer, Class<? extends QualifiedObservableReport> reportType)
 	{
 		ArrayList<QualifiedObservable> relevantObservables = observables.get(reportType);
 		if (relevantObservables != null)
@@ -278,7 +278,7 @@ public class QualifiedObservableConnector
 	 *            the report type
 	 * @return true if the observer is hooked up for that report type
 	 */
-	public boolean doIObserve(Observer obs, Class<?> reportType)
+	public boolean doIObserve(Observer obs, Class<? extends QualifiedObservableReport> reportType)
 	{
 
 		ArrayList<Observer> relavantObservers = observers.get(reportType);
