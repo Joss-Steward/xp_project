@@ -13,7 +13,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -25,6 +25,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import view.ScreenBasic;
 
@@ -46,7 +48,7 @@ public class ScreenQuest extends ScreenBasic
 	private Image background;
 	private Image logo;
 	private Table questTable;
-	final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+	private Skin skin;
 	private QuestManager qm = new QuestManager();
 	private Quest selectedQuest;
 	private Task selectedTask;
@@ -57,7 +59,6 @@ public class ScreenQuest extends ScreenBasic
 	public ScreenQuest()
 	{
 		getQuestForDebug();
-		initializeScreen();
 	}
 
 	/**
@@ -65,13 +66,16 @@ public class ScreenQuest extends ScreenBasic
 	 */
 	private void initializeScreen()
 	{
+		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		
 		// initialize variables
 		width = Gdx.graphics.getWidth();
 		height = Gdx.graphics.getHeight();
 
-		stage = new Stage();
-		stage.setCamera(new OrthographicCamera());
-		stage.getCamera().update();
+		Viewport viewport = new ExtendViewport(width, height);
+		viewport.setCamera(new OrthographicCamera());
+		stage = new Stage(viewport);
+		
 		// builds the quest screen background
 		Texture texture = new Texture("data/journal.png");
 		background = new Image(new TextureRegion(texture, 0, 0, texture.getWidth(),
@@ -81,8 +85,8 @@ public class ScreenQuest extends ScreenBasic
 		Texture texture2 = new Texture("data/QuestLogo.png");
 		logo = new Image(new TextureRegion(texture2, 0, 0, texture2.getWidth(),
 				texture2.getHeight()));
-		stage.setViewport(texture.getWidth(), texture.getHeight(), false);
-
+		viewport.update(texture.getWidth(), texture.getHeight());
+		
 		// adds quest journal logo
 		logo.setX((float) (stage.getWidth() / 2 - (logo.getWidth() / 2)));
 		logo.setY(stage.getHeight() - logo.getHeight());
@@ -121,9 +125,8 @@ public class ScreenQuest extends ScreenBasic
 			initializeScreen();
 		}
 
-		Gdx.graphics.getGL10().glClearColor(0, 0, 0, 1);
-		Gdx.graphics.getGL10().glClear(
-				GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 		stage.act();
 		stage.draw();
@@ -458,7 +461,7 @@ public class ScreenQuest extends ScreenBasic
 	@Override
 	public void show()
 	{
-
+		initializeScreen();
 	}
 
 	/**

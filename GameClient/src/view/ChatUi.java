@@ -6,20 +6,29 @@ import model.ModelFacade;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectFloatMap;
+import com.badlogic.gdx.utils.viewport.*;
 
 import data.ChatType;
+
+import static view.Screens.DEFAULT_RES;
 
 /**
  * 
@@ -40,10 +49,16 @@ public class ChatUi
 	
 	Array<String> activeHistory;
 	
-	List chatHistoryView;
+	ScrollPane listPane;
+	Table chatHistoryView;
 	TextField messageBox;
 	
-	Stage stage;
+	private Stage stage;
+	
+	private Skin skin;
+	
+	private static final float FadeRate = .25f;
+	private ObjectFloatMap<Label> newLabels;
 	
 	/**
 	 * Create a new chat ui that displays at the bottom of the screen
@@ -62,19 +77,19 @@ public class ChatUi
 	 */
 	private void setupUI()
 	{
-		final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		skin = new Skin(Gdx.files.internal("data/ui/chat.json"));
 		
-		stage = new Stage();
-		stage.setViewport(600, YSIZE, true, 0, 0, Math.min(600, Gdx.graphics.getWidth()), Gdx.graphics.getHeight());
+		Viewport v = new ExtendViewport(DEFAULT_RES[0], DEFAULT_RES[1]);
+		stage = new Stage(v);
 		
 		Table grid = new Table();
-		grid.setFillParent(true);
+		grid.setWidth(800f);
 		
 		//create text box for typing messages
 		messageBox = new TextField("", skin);
-		
 		//create the message button
-		TextButton sendButton = new TextButton("Send", skin);
+		ImageButtonStyle sendButtonStyle = skin.get("submit", ImageButtonStyle.class);
+		Button sendButton = new ImageButton(sendButtonStyle);
 		
 		//add button listener
 		sendButton.addListener(new ChangeListener(){
@@ -90,55 +105,67 @@ public class ChatUi
 		
 		//create chat log area
 		activeHistory = allHistory;
-		chatHistoryView = new List(activeHistory.toArray(), skin);
-		ScrollPane listPane = new ScrollPane(chatHistoryView, skin);
+		chatHistoryView = new Table();
+		listPane = new ScrollPane(chatHistoryView, skin);
 		
 		//create chat filter buttons
+		ButtonGroup tabGroup = new ButtonGroup();
 		Table tabs = new Table();
-		TextButton allButton = new TextButton("All", skin);
-		TextButton localButton = new TextButton("Local", skin);
-		TextButton zoneButton = new TextButton("Zone", skin);
-		
-		allButton.addListener(new ChangeListener(){
-
-			@Override
-			public void changed(ChangeEvent event, Actor actor)
+		tabs.top();
+		{
+			//all button
 			{
-				changeFilter(null);
+				ImageButtonStyle style = skin.get("all", ImageButtonStyle.class);
+				ImageButton btn = new ImageButton(style);
+				btn.addListener(new ChangeListener(){
+					@Override
+					public void changed(ChangeEvent event, Actor actor)
+					{
+						changeFilter(null);
+					}	
+				});
+				tabs.add(btn).size(32f);
+				tabs.row();
+				tabGroup.add(btn);
+				btn.setChecked(true);
 			}
-			
-		});
-		localButton.addListener(new ChangeListener(){
-
-			@Override
-			public void changed(ChangeEvent event, Actor actor)
+			//local button
 			{
-				changeFilter(ChatType.Local);
+				ImageButtonStyle style = skin.get("local", ImageButtonStyle.class);
+				ImageButton btn = new ImageButton(style);
+				btn.addListener(new ChangeListener(){
+					@Override
+					public void changed(ChangeEvent event, Actor actor)
+					{
+						changeFilter(ChatType.Local);
+					}	
+				});
+				tabs.add(btn).size(32f);
+				tabs.row();
+				tabGroup.add(btn);
 			}
-			
-		});
-		zoneButton.addListener(new ChangeListener(){
-
-			@Override
-			public void changed(ChangeEvent event, Actor actor)
+			//zone button
 			{
-				changeFilter(ChatType.Zone);
+				ImageButtonStyle style = skin.get("zone", ImageButtonStyle.class);
+				ImageButton btn = new ImageButton(style);
+				btn.addListener(new ChangeListener(){
+					@Override
+					public void changed(ChangeEvent event, Actor actor)
+					{
+						changeFilter(ChatType.Zone);
+					}	
+				});
+				tabs.add(btn).size(32f);
+				tabGroup.add(btn);
 			}
-			
-		});
-		
-		tabs.add(allButton).fill();
-		tabs.row();
-		tabs.add(localButton).fill();
-		tabs.row();
-		tabs.add(zoneButton).fill();
-		
-		grid.add(tabs).fill().colspan(1);
-		grid.add(listPane).expandX().fill().height(100f).colspan(9);
+		}
+				
+		grid.add(tabs).width(32f).height(130f).colspan(1);
+		grid.add(listPane).expandX().fill().colspan(9);
 		
 		grid.row();
-		grid.left().add(messageBox).expandX().fillX().height(32f).colspan(9);
-		grid.add(sendButton).width(100f).height(32f).colspan(1);
+		grid.add(sendButton).size(32f).colspan(1);
+		grid.add(messageBox).expandX().fillX().height(32f).colspan(9);
 		
 		grid.bottom();
 		
@@ -167,6 +194,8 @@ public class ChatUi
 		
 		//add the ui to the stage
 		stage.addActor(grid);
+		
+		newLabels = new ObjectFloatMap<Label>();
 	}
 	
 	/**
@@ -178,7 +207,7 @@ public class ChatUi
 	 */
 	public void resize(int width, int height)
 	{
-		stage.setViewport(600, YSIZE, true, 0, 0, width, height);
+		stage.getViewport().update(width, height);
 	}
 	
 	/**
@@ -188,6 +217,20 @@ public class ChatUi
 	 */
 	public void draw(float deltaTime)
 	{
+		for (Label label : newLabels.keys())
+		{
+			float fade = newLabels.get(label, 0f);
+			fade += deltaTime;
+			Color c = label.getColor();
+			c.a = fade/FadeRate;
+			newLabels.put(label, fade);
+			
+			if (fade > FadeRate)
+			{
+				newLabels.remove(label, 0f);
+			}
+		}
+		
 		stage.act(deltaTime);
 		stage.draw();
 	}
@@ -239,19 +282,32 @@ public class ChatUi
 	 */
 	public void addMessage(String message, ChatType type)
 	{
+		LabelStyle style;
 		switch (type)
 		{
 			case Zone:
 				zoneHistory.add(message);
+				style = skin.get("zone", LabelStyle.class);
 				break;
 			case Local:
 				localHistory.add(message);
+				style = skin.get("local", LabelStyle.class);
 				break;
 			default:
+				style = skin.get("default", LabelStyle.class);
 				break;
 		}
 		allHistory.add(message);
-		chatHistoryView.setItems(activeHistory.toArray());
+		
+		Label l = new Label(message, style);
+		l.getColor().a = 0;
+		l.setWrap(true);
+		this.newLabels.put(l, 0f);
+		chatHistoryView.top().add(l).expandX().fillX();
+		chatHistoryView.row();
+	
+		listPane.setScrollPercentY(1f);
+		listPane.setScrollPercentX(0f);
 	}
 	
 	/**
@@ -273,6 +329,29 @@ public class ChatUi
 		{
 			activeHistory = allHistory;
 		}
-		chatHistoryView.setItems(activeHistory.toArray());
+		chatHistoryView.clear();
+		for (int i = 0; i < activeHistory.size; i++)
+		{
+			String msg = activeHistory.get(i);
+			LabelStyle style;
+			if (zoneHistory.contains(msg, false))
+			{
+				style = skin.get("zone", LabelStyle.class);
+			}
+			else if (localHistory.contains(msg, false))
+			{
+				style = skin.get("local", LabelStyle.class);
+			}
+			else
+			{
+				style = skin.get("default", LabelStyle.class);
+			}
+			Label l = new Label(msg, style);
+			l.setWrap(true);
+			chatHistoryView.top().add(l).expandX().fillX();
+			chatHistoryView.row();
+		}
+		listPane.setScrollPercentY(1f);
+		listPane.setScrollPercentX(0f);
 	}
 }

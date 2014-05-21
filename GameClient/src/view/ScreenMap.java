@@ -7,7 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 //import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,9 +23,13 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Sort;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import data.ChatType;
 import data.Position;
+
+import static view.Screens.DEFAULT_RES;
 
 /**
  * A basic screen that, for now, just displays the map
@@ -125,7 +129,7 @@ public class ScreenMap extends ScreenBasic
 		if (!loading)
 		{
 			Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, 1);
-			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 			mapInput.update(delta);
 			
@@ -185,7 +189,7 @@ public class ScreenMap extends ScreenBasic
 		{
 			Gdx.input.setInputProcessor(null);
 			Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
-			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
 			loadingFont.draw(batch, "Loading...", Gdx.graphics.getWidth() - loadingFont.getBounds("Loading...").width - 10, 10 + loadingFont.getLineHeight());
@@ -206,6 +210,7 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void resize(int width, int height)
 	{
+		stage.getViewport().update(width, height);
 		camera.setToOrtho(false, width, height);
 		camera.update();
 		if (mapRenderer != null)
@@ -213,7 +218,6 @@ public class ScreenMap extends ScreenBasic
 			mapRenderer.setView(camera);
 		}
 		chatArea.resize(width, height);
-		System.out.println(width + " " + height);
 	}
 
 	/**
@@ -303,8 +307,9 @@ public class ScreenMap extends ScreenBasic
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
-		stage = new Stage();
-		stage.setCamera(camera);
+		Viewport v = new ExtendViewport(DEFAULT_RES[0], DEFAULT_RES[1]);
+		v.setCamera(camera);
+		stage = new Stage(v);
 		
 		final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 		loadingFont = skin.getFont("default-font");

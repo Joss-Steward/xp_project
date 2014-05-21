@@ -27,6 +27,11 @@ public enum Screens
 
 	private ScreenListener screenListener;
 
+	/**
+	 * Default expected internal resolution in pixels around which we can program
+	 */
+	public static float[] DEFAULT_RES = {800f, 800f};
+	
 	Screens(ScreenBasic screen, ScreenListener listener)
 	{
 		this.screen = screen;
