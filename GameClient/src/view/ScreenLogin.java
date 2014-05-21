@@ -4,7 +4,7 @@ import model.CommandLogin;
 import model.ModelFacade;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -15,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
  * First screen the player sees to start playing.
@@ -47,7 +49,8 @@ public class ScreenLogin extends ScreenBasic
 	 */
 	private void initializeScreen()
 	{
-		stage = new Stage();
+		Viewport v = new ExtendViewport(800, 800);
+		stage = new Stage(v);
 
 		final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 		logo = new Texture("data/GameLogo.jpg");
@@ -197,7 +200,7 @@ public class ScreenLogin extends ScreenBasic
 	public void render(float arg0)
 	{
 		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 		stage.act();
 		stage.draw();
@@ -208,9 +211,9 @@ public class ScreenLogin extends ScreenBasic
 	 * @see com.badlogic.gdx.Screen
 	 */
 	@Override
-	public void resize(int arg0, int arg1)
+	public void resize(int width, int height)
 	{
-		stage.setViewport(arg0, arg1);
+		stage.getViewport().update(width, height);
 		stage.act();
 	}
 

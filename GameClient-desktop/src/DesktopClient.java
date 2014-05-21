@@ -3,6 +3,8 @@ import runners.GameLibGDX;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 
+import static view.Screens.DEFAULT_RES;
+
 /**
  * 
  * @author Merlin
@@ -28,6 +30,6 @@ public class DesktopClient
 		}
 		OptionsManager.getSingleton().setLoginHost(host);
 		
-		new LwjglApplication(new GameLibGDX(), "Game", 800, 800, true);
+		new LwjglApplication(new GameLibGDX(), "Game", (int)DEFAULT_RES[0], (int)DEFAULT_RES[1]);
 	}
 }

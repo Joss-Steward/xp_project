@@ -7,10 +7,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 //import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapProperties;
@@ -23,9 +27,12 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Sort;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import data.ChatType;
 import data.Position;
+import static view.Screens.DEFAULT_RES;
 
 /**
  * A basic screen that, for now, just displays the map
@@ -65,6 +72,18 @@ public class ScreenMap extends ScreenBasic
 	
 	boolean loading;
 	
+	//these frame buffers are used to so we can apply OpenGL Gaussian blur to the UI, giving
+	// it an Aero Glass like appearance based on UI alpha levels
+	private FrameBuffer mapBuffer;
+	private Texture mapTexture;
+	private FrameBuffer uiBuffer;
+	private Texture uiTexture;
+	private ShaderProgram aeroGlass;
+	private OrthographicCamera defaultCamera;
+	private boolean bufferSet;
+	//batch specifically used for post shader effects
+	private SpriteBatch blurBatch;
+	
 	/**
 	 * 
 	 */
@@ -72,7 +91,6 @@ public class ScreenMap extends ScreenBasic
 	{
 		// unitScale = 1 / 32f;
 		unitScale = 1f;
-		batch = new SpriteBatch();
 		characters = new IntMap<PlayerSprite>();
 		characterQueue = new IntMap<Position>();
 		characterDequeue = new IntArray();
@@ -84,7 +102,7 @@ public class ScreenMap extends ScreenBasic
 		
 		clearColor = new Color(0.7f, 0.7f, 1.0f, 1);
 		
-		multiplexer = new InputMultiplexer();	
+		multiplexer = new InputMultiplexer();
 	}
 
 	/**
@@ -118,6 +136,9 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void render(float delta)
 	{
+		float width = Gdx.graphics.getWidth();
+		float height = Gdx.graphics.getHeight();
+		
 		camera.update();
 		stage.act();
 		stage.draw();
@@ -125,7 +146,7 @@ public class ScreenMap extends ScreenBasic
 		if (!loading)
 		{
 			Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, 1);
-			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 			mapInput.update(delta);
 			
@@ -145,22 +166,64 @@ public class ScreenMap extends ScreenBasic
 			}
 			this.characterQueue.clear();
 			
-			mapRenderer.setView(camera);
-			mapRenderer.render(bgLayers);
-			batch.setProjectionMatrix(camera.combined);
-			batch.begin();
-			
-			Array<PlayerSprite> sprites = this.characters.values().toArray();
-			Sort.instance().sort(sprites);
-			for (PlayerSprite s : sprites)
+			//make sure the shader effect frame buffers are properly created when needed
+			if (!bufferSet)
 			{
-				s.update(delta);
-				s.draw(batch);
+				mapBuffer = new FrameBuffer(Format.RGBA8888, (int)width, (int)height, false);
+				mapTexture = mapBuffer.getColorBufferTexture();
+				uiBuffer = new FrameBuffer(Format.RGBA8888, (int)width, (int)height, false);
+				uiTexture = uiBuffer.getColorBufferTexture();
+				bufferSet = true;
 			}
-			batch.end();
-			mapRenderer.render(fgLayers);
 			
-			chatArea.draw(delta);
+			//render the map buffer
+			mapBuffer.begin();
+			{
+				//remember to clear in here else the buffer will smear the map where the
+				// tiled map renderer doesn't draw
+				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+				mapRenderer.setView(camera);
+				mapRenderer.render(bgLayers);
+				
+				batch.setProjectionMatrix(camera.combined);
+				batch.begin();
+				
+				Array<PlayerSprite> sprites = this.characters.values().toArray();
+				Sort.instance().sort(sprites);
+				for (PlayerSprite s : sprites)
+				{
+					s.update(delta);
+					s.draw(batch);
+				}
+				batch.end();
+				mapRenderer.render(fgLayers);
+			}
+			mapBuffer.end();
+			
+			//render the ui buffer
+			uiBuffer.begin();
+			{
+				chatArea.draw(delta);
+			}
+			uiBuffer.end();
+			
+			//use the ui's alpha as our blur mask multiplier
+			uiTexture.bind(1);
+			
+			//reset glActiveTexture to zero since SpriteBatch doesn't do this for us
+			Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
+			
+			//draw the map/blur
+			blurBatch.setShader(aeroGlass);
+			blurBatch.begin();
+			blurBatch.draw(mapTexture, 0f, 0f);
+			blurBatch.end();
+			
+			//draw the ui
+			blurBatch.setShader(null);
+			blurBatch.begin();
+			blurBatch.draw(uiTexture, 0f, 0f);
+			blurBatch.end();
 			
 			//have the camera follow the player when moving
 			camera.position.set(this.mySprite.getPosition(), 0);
@@ -181,11 +244,12 @@ public class ScreenMap extends ScreenBasic
 //				ModelFacade.getSingleton().queueCommand(lc);
 //			}
 		}
+		//draw a loading screen
 		else
 		{
 			Gdx.input.setInputProcessor(null);
 			Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
-			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
 			loadingFont.draw(batch, "Loading...", Gdx.graphics.getWidth() - loadingFont.getBounds("Loading...").width - 10, 10 + loadingFont.getLineHeight());
@@ -206,14 +270,22 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void resize(int width, int height)
 	{
+		stage.getViewport().update(width, height);
 		camera.setToOrtho(false, width, height);
-		camera.update();
 		if (mapRenderer != null)
 		{
+			camera.position.set(this.mySprite.getPosition(), 0);
 			mapRenderer.setView(camera);
 		}
+		camera.update();
 		chatArea.resize(width, height);
-		System.out.println(width + " " + height);
+		
+		defaultCamera.setToOrtho(true, width, height);
+		defaultCamera.update();
+		blurBatch.setProjectionMatrix(defaultCamera.combined);
+		
+		//make sure buffers are resized
+		bufferSet = false;
 	}
 
 	/**
@@ -300,11 +372,19 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void show()
 	{
+		batch = new SpriteBatch();
+		blurBatch = new SpriteBatch();
+		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
-		stage = new Stage();
-		stage.setCamera(camera);
+		defaultCamera = new OrthographicCamera();
+		defaultCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		defaultCamera.update();
+		
+		Viewport v = new ExtendViewport(DEFAULT_RES[0], DEFAULT_RES[1]);
+		v.setCamera(camera);
+		stage = new Stage(v);
 		
 		final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 		loadingFont = skin.getFont("default-font");
@@ -314,6 +394,24 @@ public class ScreenMap extends ScreenBasic
 		chatArea = new ChatUi();
 		multiplexer.addProcessor(mapInput);
 		chatArea.addToInput(multiplexer);
+	
+		//prepare the shader
+		//create the Blur Shader for our pretty ui
+		aeroGlass = new ShaderProgram(
+				Gdx.files.classpath("util/shaders/Aero.vertex.glsl"),
+				Gdx.files.classpath("util/shaders/Aero.fragment.glsl")
+			);
+		if (!aeroGlass.isCompiled()) {
+			System.err.println(aeroGlass.getLog());
+			System.exit(0);
+		}
+		if (aeroGlass.getLog().length()!=0) {
+			System.out.println(aeroGlass.getLog());
+		}
+		aeroGlass.begin();
+		aeroGlass.setUniformi("u_mask", 1);
+		aeroGlass.end();
+		blurBatch.setShader(aeroGlass);
 		
 		loading = true;
 	}

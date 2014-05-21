@@ -43,7 +43,7 @@ public class PlayerSprite implements Comparable<PlayerSprite>
 		for (Direction dir : Direction.values())
 		{
 			Animation a = new Animation(.25f, sourceImg.getRow(dir.ordinal()));
-			a.setPlayMode(Animation.LOOP);
+			a.setPlayMode(Animation.PlayMode.LOOP);
 			animation.put(dir, a);
 		}
 		currentAnimation = animation.get(Direction.South);
