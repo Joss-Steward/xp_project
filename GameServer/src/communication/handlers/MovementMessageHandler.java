@@ -1,10 +1,10 @@
 package communication.handlers;
 
-import model.ModelFacade;
-import model.CommandMovePlayer;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.MovementMessage;
+import edu.ship.shipsim.areaserver.model.CommandMovePlayer;
+import edu.ship.shipsim.areaserver.model.ModelFacade;
 
 /**
  * Handles a report of a player moving

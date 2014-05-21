@@ -2,7 +2,6 @@ package model;
 
 import data.ChatType;
 import data.Position;
-
 /**
  * @author Matthew Kujawski
  *

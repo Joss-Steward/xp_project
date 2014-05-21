@@ -2,11 +2,15 @@ package model;
 
 import java.sql.SQLException;
 
+import model.MapToServerMapping;
+
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
+
+import communication.LocalPortMapper;
 
 /**
  * Keeps track of which server/port number each map is being managed by
@@ -47,8 +51,22 @@ public final class MapToServerMapping
 	 */
 	public static MapToServerMapping retrieveMapping(String mapName) throws SQLException
 	{
+		if (OptionsManager.getSingleton().isTestMode())
+		{
+			LocalPortMapper mapper = new LocalPortMapper();
+			MapToServerMapping localOnly = new MapToServerMapping();
+			localOnly.mapName = mapName;
+			localOnly.hostName = "localhost";
+			localOnly.portNumber = mapper.getPortForMapName(mapName);
+			return localOnly;
+			
+		}
 		getServerDao();
-		return serverDao.queryForId(mapName);
+		MapToServerMapping mapping = serverDao.queryForId(mapName);
+		if(mapping == null) {
+			mapping = new MapToServerMapping();
+		}
+		return mapping;
 	}
 
 	private static JdbcConnectionSource connectionSource;
@@ -160,8 +178,7 @@ public final class MapToServerMapping
 	 */
 	public void persist() throws SQLException
 	{
-		serverDao.update(this);
-		
+		serverDao.createOrUpdate(this);
 	}
 
 	/**

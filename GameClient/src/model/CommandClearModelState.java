@@ -1,5 +1,6 @@
 package model;
 
+
 /**
  * Command to reset the entire client model state
  * @author Steve
@@ -8,6 +9,10 @@ package model;
 public class CommandClearModelState extends Command 
 {
 
+	/**
+	 * 
+	 * @see model.Command#execute()
+	 */
 	protected boolean execute() 
 	{
 		PlayerManager.resetSingleton();

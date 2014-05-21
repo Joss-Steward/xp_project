@@ -1,16 +1,5 @@
-import model.CommandAddPlayerTest;
-import model.CharacterIDGeneratorTest;
-import model.ChatManagerTest;
-import model.ChatMessageReceivedCommandTest;
-import model.MapToServerMappingTest;
-import model.CommandMovePlayerTest;
-import model.CommandMovePlayerSilentlyTest;
-import model.PlayerManagerTest;
+
 import model.PlayerConnectionTest;
-import model.PlayerTest;
-import model.reports.PlayerConnectionReportTest;
-import model.reports.PlayerMovedReportTest;
-import model.reports.SendChatMessageReportTest;
 
 import org.junit.ClassRule;
 import org.junit.rules.ExternalResource;
@@ -25,6 +14,17 @@ import communication.handlers.TeleportationInitiationHandlerTest;
 import communication.packers.MapFileMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.PlayerJoinedMessagePackerTest;
+import edu.ship.shipsim.areaserver.model.CharacterIDGeneratorTest;
+import edu.ship.shipsim.areaserver.model.ChatManagerTest;
+import edu.ship.shipsim.areaserver.model.ChatMessageReceivedCommandTest;
+import edu.ship.shipsim.areaserver.model.CommandAddPlayerTest;
+import edu.ship.shipsim.areaserver.model.CommandMovePlayerSilentlyTest;
+import edu.ship.shipsim.areaserver.model.CommandMovePlayerTest;
+import edu.ship.shipsim.areaserver.model.PlayerManagerTest;
+import edu.ship.shipsim.areaserver.model.PlayerTest;
+import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReportTest;
+import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReportTest;
+import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 
 /**
  * All of the tests for the area servers code. Notice that the packages, and
@@ -53,7 +53,6 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 
 		// model
 		CommandAddPlayerTest.class, 
-		MapToServerMappingTest.class,
 		CommandMovePlayerTest.class, 
 		CommandMovePlayerSilentlyTest.class,
 		PlayerManagerTest.class,

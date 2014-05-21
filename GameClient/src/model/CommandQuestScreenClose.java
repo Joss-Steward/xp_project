@@ -10,7 +10,7 @@ public class CommandQuestScreenClose extends Command
 {
 
 	/**
-	 * executes the new quest screen close command
+	 * @see Command#execute()
 	 */
 	@Override
 	protected boolean execute()

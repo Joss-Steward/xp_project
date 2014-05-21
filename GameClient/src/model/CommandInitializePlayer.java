@@ -38,6 +38,9 @@ public class CommandInitializePlayer extends Command
 		this.position = position;
 	}
 
+	/**
+	 * @see Command#execute()
+	 */
 	@Override
 	protected boolean execute()
 	{

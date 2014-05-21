@@ -1,10 +1,9 @@
 package communication.handlers;
 
-import model.CommandRemovePlayer;
-import model.ModelFacade;
-
 import communication.messages.DisconnectMessage;
 import communication.messages.Message;
+import edu.ship.shipsim.areaserver.model.CommandRemovePlayer;
+import edu.ship.shipsim.areaserver.model.ModelFacade;
 
 /**
  * Handles a message that the player has disconnected from this area server

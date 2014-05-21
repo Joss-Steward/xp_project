@@ -1,5 +1,6 @@
 package model;
 
+
 /**
  * Command to the model signifying the a player has been disconnected from the
  * area server that the player is on, and no longer needs to be watched by this client
@@ -19,6 +20,9 @@ public class CommandRemovePlayer extends Command {
 		this.playerID = id;
 	}
 	
+	/**
+	 * @see Command#execute()
+	 */
 	@Override
 	protected boolean execute() {
 		PlayerManager.getSingleton().removePlayer(playerID);

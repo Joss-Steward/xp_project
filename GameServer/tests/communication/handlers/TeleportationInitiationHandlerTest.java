@@ -14,13 +14,13 @@ import communication.messages.TeleportationInitiationMessage;
 import communication.messages.TeleportationContinuationMessage;
 import communication.messages.Message;
 import data.Position;
-import model.ModelFacade;
-import model.Player;
-import model.PlayerManager;
+import edu.ship.shipsim.areaserver.model.ModelFacade;
+import edu.ship.shipsim.areaserver.model.Player;
+import edu.ship.shipsim.areaserver.model.PlayerManager;
+import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
 import model.PlayersInDB;
 import model.QualifiedObservableConnector;
 import model.ServersInDB;
-import model.reports.PlayerMovedReport;
 
 /**
  * Test the handler for GetServerInfoMessages

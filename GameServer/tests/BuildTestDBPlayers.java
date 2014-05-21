@@ -1,20 +1,20 @@
 import java.sql.SQLException;
 
-import model.CharacterIDGenerator;
 import model.DatabaseException;
-import model.Npc;
-import model.NpcsInDB;
-import model.Player;
 import model.PlayerLogin;
-import model.PlayerManager;
 import model.PlayersInDB;
-import model.QuizBotBehavior;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import data.Position;
+import edu.ship.shipsim.areaserver.model.CharacterIDGenerator;
+import edu.ship.shipsim.areaserver.model.Npc;
+import edu.ship.shipsim.areaserver.model.NpcsInDB;
+import edu.ship.shipsim.areaserver.model.Player;
+import edu.ship.shipsim.areaserver.model.PlayerManager;
+import edu.ship.shipsim.areaserver.model.QuizBotBehavior;
 
 /**
  * Builds the Player portion of the database

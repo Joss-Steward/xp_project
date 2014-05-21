@@ -73,11 +73,13 @@ public class CommandChatMessageSent extends Command
 		return isValidMessage;
 	}
 
+
 	/**
-	 * Sends information about a chat message to the ChatManager
+	 * 
+	 * @see model.Command#execute()
 	 */
 	@Override
-	public boolean execute()
+	protected boolean execute()
 	{
 		boolean successful;
 		

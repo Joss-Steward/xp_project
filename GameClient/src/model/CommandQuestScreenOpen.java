@@ -1,5 +1,6 @@
 package model;
 
+
 /**
  * 
  * @author Joshua Opends the quest screen
@@ -9,7 +10,7 @@ public class CommandQuestScreenOpen extends Command
 {
 
 	/**
-	 * executes the new quest screen command
+	 * @see Command#execute()
 	 */
 	@Override
 	protected boolean execute()

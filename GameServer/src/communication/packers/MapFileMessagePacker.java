@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import model.OptionsManager;
 import model.QualifiedObservableReport;
-import model.reports.PlayerConnectionReport;
 import communication.messages.MapFileMessage;
 import communication.messages.Message;
+import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 
 /**
  * @author Merlin

@@ -1,7 +1,6 @@
 package model;
 
 import data.Position;
-
 /**
  * @author Matt Kujawski
  */
@@ -30,6 +29,8 @@ public class CommandMovePlayer extends Command
 	 * initiate teleportation if appropriate. If the player is another player,
 	 * we have just been informed that they moved and we should just put them
 	 * there.
+	 * 
+	 * @see Command#execute()
 	 */
 	@Override
 	protected boolean execute()

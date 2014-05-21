@@ -1,10 +1,10 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
-import model.reports.PlayerConnectionReport;
 import communication.messages.Message;
 import communication.messages.PlayerJoinedMessage;
 import communication.packers.MessagePacker;
+import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 
 /**
  * Packs a message telling clients that a new player has joined this area server

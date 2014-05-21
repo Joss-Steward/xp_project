@@ -19,7 +19,7 @@ public class CommandNewMap extends Command
 	}
 
 	/**
-	 * @see model.Command#execute()
+	 * @see Command#execute()
 	 */
 	@Override
 	protected boolean execute()

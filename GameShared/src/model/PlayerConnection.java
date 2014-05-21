@@ -20,18 +20,35 @@ import java.util.TimeZone;
 public class PlayerConnection
 {
 
-	static final int EXPIRATION_TIME_UNITS = Calendar.HOUR;
-	static final int EXPIRATION_TIME_QUANTITY = 12;
-	static final String ERROR_PIN_NOT_EXIST = "Pin does not exist";
-	static final String ERROR_PIN_EXPIRED = "Pin has expired";
+	/**
+	 * The units in which we measure expiration time of a pin
+	 */
+	public static final int EXPIRATION_TIME_UNITS = Calendar.HOUR;
 	
+	/**
+	 * The number of expiration time units before a pin should expire
+	 */
+	public static final int EXPIRATION_TIME_QUANTITY = 12;
+	/**
+	 * An error message
+	 */
+	public static final String ERROR_PIN_NOT_EXIST = "Pin does not exist";
+	/**
+	 * An error message
+	 */
+	public static final String ERROR_PIN_EXPIRED = "Pin has expired";
+
 	/**
 	 * Used as the default pin in testing
 	 */
 	public static final int DEFAULT_PIN = 1;
 	private int playerID;
 
-	PlayerConnection(int playerID)
+	/**
+	 * @param playerID
+	 *            the player whose information we are using
+	 */
+	public PlayerConnection(int playerID)
 	{
 		this.playerID = playerID;
 	}
@@ -46,14 +63,15 @@ public class PlayerConnection
 	 */
 	public int generatePin() throws DatabaseException
 	{
-		int pin = (int)(Math.random() * Integer.MAX_VALUE);
+		int pin = (int) (Math.random() * Integer.MAX_VALUE);
 		setPin(pin);
 		return pin;
 	}
 
 	private void setPin(int pin) throws DatabaseException
 	{
-		Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
+		Connection connectionStatus = DatabaseManager.getSingleton()
+				.getConnection();
 		try
 		{
 			String sql;
@@ -68,7 +86,8 @@ public class PlayerConnection
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
-			new DatabaseException("Unable to generate pin for player id # " + playerID, e);
+			new DatabaseException("Unable to generate pin for player id # "
+					+ playerID, e);
 		}
 	}
 
@@ -77,11 +96,12 @@ public class PlayerConnection
 	 * 
 	 * @param newTime
 	 *            the time we want
-	 * @throws DatabaseException
+	 * @throws DatabaseException if we cant set the time whan a player's connection info was changes
 	 */
-	protected void setChangedOn(String newTime) throws DatabaseException
+	public void setChangedOn(String newTime) throws DatabaseException
 	{
-		Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
+		Connection connectionStatus = DatabaseManager.getSingleton()
+				.getConnection();
 		try
 		{
 			String sql;
@@ -94,13 +114,15 @@ public class PlayerConnection
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Unable to generate pin for player id # " + playerID, e);
+			throw new DatabaseException(
+					"Unable to generate pin for player id # " + playerID, e);
 		}
 	}
 
 	protected void deletePlayerPin() throws DatabaseException
 	{
-		Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
+		Connection connectionStatus = DatabaseManager.getSingleton()
+				.getConnection();
 
 		String sql = "DELETE from PlayerConnection WHERE PlayerID = ?";
 		PreparedStatement stmt;
@@ -111,8 +133,8 @@ public class PlayerConnection
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Unable to delete the pin for player id # "
-					+ playerID, e);
+			throw new DatabaseException(
+					"Unable to delete the pin for player id # " + playerID, e);
 		}
 
 	}
@@ -130,7 +152,8 @@ public class PlayerConnection
 		boolean expired = true;
 		try
 		{
-			Connection connection = DatabaseManager.getSingleton().getConnection();
+			Connection connection = DatabaseManager.getSingleton()
+					.getConnection();
 			String sql = "SELECT changed_on FROM PlayerConnection WHERE PlayerID = ?";
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, playerID);
@@ -139,19 +162,20 @@ public class PlayerConnection
 			{
 				String timeString = resultSet.getString(1);
 				expirationTime = parseTimeString(timeString);
-				expirationTime.add(EXPIRATION_TIME_UNITS, EXPIRATION_TIME_QUANTITY);
-				if(expirationTime.after(now))
+				expirationTime.add(EXPIRATION_TIME_UNITS,
+						EXPIRATION_TIME_QUANTITY);
+				if (expirationTime.after(now))
 				{
 					expired = false;
 				}
 			}
-			
+
 			resultSet.close();
 		} catch (SQLException | DatabaseException e)
 		{
 			e.printStackTrace();
 		}
-		
+
 		return expired;
 	}
 
@@ -183,7 +207,8 @@ public class PlayerConnection
 	/**
 	 * check if a pin is valid for a given player
 	 * 
-	 * @param pin The pin to check against
+	 * @param pin
+	 *            The pin to check against
 	 * @return true or false for whether the given pin is valid or not
 	 */
 	public boolean isPinValid(double pin)
@@ -191,7 +216,8 @@ public class PlayerConnection
 		boolean found = false;
 		try
 		{
-			Connection connection = DatabaseManager.getSingleton().getConnection();
+			Connection connection = DatabaseManager.getSingleton()
+					.getConnection();
 			String sql = "SELECT * FROM PlayerConnection WHERE PlayerID = ? AND Pin = ?";
 			System.err.println("[DEBUG] " + sql + ": " + playerID + " " + pin);
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -207,12 +233,13 @@ public class PlayerConnection
 		{
 			e.printStackTrace();
 		}
-		
+
 		return found;
 	}
 
 	/**
 	 * Get the name of the map the player was most recently on
+	 * 
 	 * @return the name of the tmx file
 	 */
 	public String getMapName()
@@ -220,7 +247,8 @@ public class PlayerConnection
 		String mapName = null;
 		try
 		{
-			Connection connection = DatabaseManager.getSingleton().getConnection();
+			Connection connection = DatabaseManager.getSingleton()
+					.getConnection();
 			String sql = "SELECT MapName FROM PlayerConnection WHERE PlayerID = ?";
 			System.err.println("[DEBUG] " + sql + ": " + playerID);
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -228,27 +256,32 @@ public class PlayerConnection
 			ResultSet resultSet = stmt.executeQuery();
 			resultSet.first();
 			mapName = resultSet.getString(1);
-			
+
 			resultSet.close();
 			stmt.close();
 		} catch (SQLException | DatabaseException e)
 		{
 			e.printStackTrace();
 		}
-		
+
 		return mapName;
 	}
+
 	/**
 	 * Store the map that the player is using
-	 * @param mapFileTitle the title of the tmx file
-	 * @throws DatabaseException if we cannot update their state in the database
+	 * 
+	 * @param mapFileTitle
+	 *            the title of the tmx file
+	 * @throws DatabaseException
+	 *             if we cannot update their state in the database
 	 */
 	public void setMapName(String mapFileTitle) throws DatabaseException
 	{
 		try
 		{
-			Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
-			
+			Connection connectionStatus = DatabaseManager.getSingleton()
+					.getConnection();
+
 			String sql;
 			PreparedStatement stmt;
 
@@ -259,7 +292,9 @@ public class PlayerConnection
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Unable to store map information for player id # " + playerID, e);
-		} 
+			throw new DatabaseException(
+					"Unable to store map information for player id # "
+							+ playerID, e);
+		}
 	}
 }

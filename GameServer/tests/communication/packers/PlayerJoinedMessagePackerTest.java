@@ -2,16 +2,16 @@ package communication.packers;
 
 import static org.junit.Assert.*;
 import model.DatabaseException;
-import model.PlayerManager;
 import model.PlayerConnection;
 import model.PlayersInDB;
-import model.reports.PlayerConnectionReport;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.StateAccumulator;
 import communication.messages.PlayerJoinedMessage;
+import edu.ship.shipsim.areaserver.model.PlayerManager;
+import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 
 /**
  * @author Merlin

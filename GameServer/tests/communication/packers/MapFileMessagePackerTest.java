@@ -6,15 +6,15 @@ import java.sql.SQLException;
 
 import model.DatabaseException;
 import model.OptionsManager;
-import model.PlayerManager;
 import model.PlayerConnection;
-import model.reports.PlayerConnectionReport;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.StateAccumulator;
 import communication.messages.MapFileMessage;
+import edu.ship.shipsim.areaserver.model.PlayerManager;
+import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 
 /**
  * @author Merlin

@@ -8,8 +8,8 @@ import org.junit.Test;
 import communication.StateAccumulator;
 import communication.messages.MovementMessage;
 import data.Position;
-import model.PlayerManager;
-import model.reports.PlayerMovedReport;
+import edu.ship.shipsim.areaserver.model.PlayerManager;
+import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
 
 /**
  * 

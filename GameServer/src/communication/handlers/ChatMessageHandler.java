@@ -1,9 +1,9 @@
 package communication.handlers;
 
-import model.CommandChatMessageReceived;
-import model.ModelFacade;
 import communication.messages.ChatMessage;
 import communication.messages.Message;
+import edu.ship.shipsim.areaserver.model.CommandChatMessageReceived;
+import edu.ship.shipsim.areaserver.model.ModelFacade;
 
 /**
  * Handles ChatMessages from the client and creates the command to change the

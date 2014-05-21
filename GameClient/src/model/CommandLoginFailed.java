@@ -1,6 +1,7 @@
 package model;
 
 
+
 /**
  * @author Dave, Andy, Matt
  *
@@ -10,12 +11,11 @@ package model;
 public class CommandLoginFailed extends Command
 {
 
-/**
- * Executes the loginFailed which fires the logInFailedReport
- * 
- */
+	/**
+	 * @see Command#execute()
+	 */
 	@Override
-	public boolean execute() 
+	protected boolean execute() 
 	{
 
 		PlayerManager.getSingleton().loginFailed();

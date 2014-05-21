@@ -1,3 +1,4 @@
+import model.MapToServerMappingTest;
 import model.PlayerLoginTest;
 import model.PlayerConnectionTest;
 import model.QualifiedObservableTest;
@@ -79,6 +80,7 @@ import data.PositionTest;
 
 		// model
 		// DatabaseTest.class
+		MapToServerMappingTest.class,
 		PlayerLoginTest.class, 
 		PlayerConnectionTest.class, 
 		// PlayersInDB
