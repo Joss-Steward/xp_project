@@ -2,10 +2,13 @@ package communication.handlers;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.rmi.AlreadyBoundException;
+import java.rmi.NotBoundException;
 
 import communication.handlers.MessageHandler;
 import communication.messages.LoginSuccessfulMessage;
 import communication.messages.Message;
+import edu.ship.shipsim.client.model.PlayerManager;
 
 /**
  * Should process an incoming LoginSuccessulMessage. This means that we should
@@ -33,7 +36,14 @@ public class LoginSuccessfulMessageHandler extends MessageHandler
 			{
 				connectionManager.moveToNewSocket(
 						new Socket(rMsg.getHostName(), rMsg.getPortNumber()),
-						rMsg.getUserID(), rMsg.getPin());
+						rMsg.getPlayerID(), rMsg.getPin());
+				try
+				{
+					PlayerManager.getSingleton().setThisClientsPlayer(rMsg.getPlayerID());
+				} catch (AlreadyBoundException | NotBoundException e)
+				{
+					e.printStackTrace();
+				}
 			} catch (IOException e)
 			{
 				e.printStackTrace();

@@ -8,7 +8,8 @@ import data.Position;
  * @author joshua
  * 
  */
-public class Trigger {
+public class Trigger
+{
 	private boolean active;
 	private String name;
 	private TriggerTypes type;
@@ -18,7 +19,8 @@ public class Trigger {
 	/**
 	 * Constructor is created as inactive
 	 */
-	public Trigger() {
+	public Trigger()
+	{
 		this.active = false;
 	}
 
@@ -28,7 +30,8 @@ public class Trigger {
 	 * @param b
 	 *            boolean
 	 */
-	public void activateTrigger(boolean b) {
+	public void activateTrigger(boolean b)
+	{
 		this.active = b;
 
 	}
@@ -38,14 +41,16 @@ public class Trigger {
 	 * 
 	 * @return boolean active
 	 */
-	public boolean isActive() {
+	public boolean isActive()
+	{
 		return this.active;
 	}
 
 	/**
 	 * @return the position
 	 */
-	public Position getPosition() {
+	public Position getPosition()
+	{
 		return position;
 	}
 
@@ -53,14 +58,16 @@ public class Trigger {
 	 * @param position
 	 *            the position to set
 	 */
-	public void setPosition(Position position) {
+	public void setPosition(Position position)
+	{
 		this.position = position;
 	}
 
 	/**
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
@@ -68,14 +75,16 @@ public class Trigger {
 	 * @param name
 	 *            the name to set
 	 */
-	public void setName(String name) {
+	public void setName(String name)
+	{
 		this.name = name;
 	}
 
 	/**
 	 * @return the parentName
 	 */
-	public String getParentName() {
+	public String getParentName()
+	{
 		return parentName;
 	}
 
@@ -83,14 +92,16 @@ public class Trigger {
 	 * @param parentName
 	 *            the parentName to set
 	 */
-	public void setParentName(String parentName) {
+	public void setParentName(String parentName)
+	{
 		this.parentName = parentName;
 	}
 
 	/**
 	 * @return the type
 	 */
-	public TriggerTypes getTriggerType() {
+	public TriggerTypes getTriggerType()
+	{
 		return type;
 	}
 
@@ -98,7 +109,8 @@ public class Trigger {
 	 * @param myType
 	 *            the type to set
 	 */
-	public void setTriggerType(TriggerTypes myType) {
+	public void setTriggerType(TriggerTypes myType)
+	{
 		this.type = myType;
 	}
 }

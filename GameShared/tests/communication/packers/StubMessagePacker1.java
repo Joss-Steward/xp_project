@@ -7,11 +7,12 @@ import communication.messages.Message;
 import communication.packers.MessagePacker;
 
 /**
- * A relatively empty packer that the tests for MessagePackerSet will detect.  This will
- * let us test that it detects the MessagePackers that are in its package.  This is also used
- * by the StateAccumulator tests.
+ * A relatively empty packer that the tests for MessagePackerSet will detect.
+ * This will let us test that it detects the MessagePackers that are in its
+ * package. This is also used by the StateAccumulator tests.
+ * 
  * @author Merlin
- *
+ * 
  */
 public class StubMessagePacker1 extends MessagePacker
 {
@@ -29,7 +30,7 @@ public class StubMessagePacker1 extends MessagePacker
 	 * @see communication.packers.MessagePacker#getReportTypeWePack()
 	 */
 	@Override
-	public Class<?> getReportTypeWePack()
+	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
 	{
 		return StubQualifiedObservableReport1.class;
 	}

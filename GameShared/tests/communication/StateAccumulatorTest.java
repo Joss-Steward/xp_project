@@ -1,4 +1,5 @@
 package communication;
+
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -12,18 +13,18 @@ import org.junit.Test;
 import communication.messages.Message;
 import communication.packers.MessagePackerSet;
 
-
-/** 
+/**
  * Tests for StateAccumulators
+ * 
  * @author merlin
- *
+ * 
  */
 public class StateAccumulatorTest
 {
 
 	/**
-	 * When it initializes, it should use the given StateAccumulatorConnector to register itself as an
-	 * observer to all of the things it should observe
+	 * When it initializes, it should use the given StateAccumulatorConnector to
+	 * register itself as an observer to all of the things it should observe
 	 */
 	@Test
 	public void initializes()
@@ -31,13 +32,14 @@ public class StateAccumulatorTest
 		MessagePackerSet packerSet = EasyMock.createMock(MessagePackerSet.class);
 		packerSet.hookUpObservationFor(EasyMock.isA(StateAccumulator.class));
 		EasyMock.replay(packerSet);
-		
+
 		new StateAccumulator(packerSet);
 		EasyMock.verify(packerSet);
 	}
-	
+
 	/**
-	 * When we ask it for the pending messages, it should empty itself so we don't see them again
+	 * When we ask it for the pending messages, it should empty itself so we
+	 * don't see them again
 	 */
 	@Test
 	public void emptiesOnQuery()
@@ -47,7 +49,7 @@ public class StateAccumulatorTest
 		Message msg = EasyMock.createMock(Message.class);
 		EasyMock.replay(msg);
 		EasyMock.replay(packerSet);
-		
+
 		StateAccumulator accum = new StateAccumulator(packerSet);
 		ArrayList<Message> mockMessages = new ArrayList<Message>();
 		mockMessages.add(msg);
@@ -60,14 +62,15 @@ public class StateAccumulatorTest
 	}
 
 	/**
-	 * Make sure that an appropriate message gets queued when the accumulator gets updated
+	 * Make sure that an appropriate message gets queued when the accumulator
+	 * gets updated
 	 */
 	@Test
 	public void queuesOnUpdate()
 	{
 		MockObservable obs = new MockObservable();
 		MessagePackerSet packerSet = new MessagePackerSet();
-		
+
 		StateAccumulator accum = new StateAccumulator(packerSet);
 		accum.update(obs, new StubQualifiedObservableReport1());
 		ArrayList<Message> pending = accum.pendingMsgs;
@@ -86,7 +89,8 @@ public class StateAccumulatorTest
 		assertEquals(1, accum.pendingMsgs.size());
 		assertEquals(m, accum.pendingMsgs.get(0));
 	}
+
 	private class MockObservable extends Observable
-	{	
+	{
 	}
 }

@@ -1,14 +1,20 @@
 package communication.packers;
 
 import static org.junit.Assert.*;
-import model.PlayerManager;
-import model.reports.PlayerConnectionReport;
+
+import java.sql.SQLException;
+
+import model.DatabaseException;
+import model.OptionsManager;
+import model.PlayerConnection;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.StateAccumulator;
 import communication.messages.MapFileMessage;
+import edu.ship.shipsim.areaserver.model.PlayerManager;
+import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 
 /**
  * @author Merlin
@@ -25,44 +31,54 @@ public class MapFileMessagePackerTest
 	{
 		PlayerManager.resetSingleton();
 	}
-	
+
 	/**
 	 * If we are notified about a player other than the one we are associated
-	 * with, pack the right message
+	 * with, we shouldn't pack a message
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
-	public void ifThePlayerIsNotOnThisConnection()
+	public void ifThePlayerIsNotOnThisConnection() throws DatabaseException
 	{
-		PlayerManager.getSingleton().addPlayer(42, 1234);
+		PlayerManager.getSingleton().addPlayer(1, PlayerConnection.DEFAULT_PIN);
+		PlayerManager.getSingleton().addPlayer(2, PlayerConnection.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
-		stateAccumulator.setPlayerUserId(43);
+		stateAccumulator.setPlayerId(1);
 
-		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager.getSingleton()
-				.getPlayerFromID(42));
+		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager
+				.getSingleton().getPlayerFromID(2));
 		MapFileMessagePacker packer = new MapFileMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		MapFileMessage msg = (MapFileMessage) packer.pack(report);
 		assertNull(msg);
 	}
-	
+
 	/**
-	 * If we are notified about a player that is the one we are associated
-	 * with, return null (no need to send this on)
+	 * If we are notified about a player that is the one we are associated with,
+	 * return null (no need to send this on)
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
+	 * @throws SQLException shouldn't
 	 */
 	@Test
-	public void ifThePlayerIsOnThisConnection()
+	public void ifThePlayerIsOnThisConnection() throws DatabaseException, SQLException
 	{
-		PlayerManager.getSingleton().addPlayer(42, 1234);
+		PlayerManager.getSingleton().addPlayer(1, PlayerConnection.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
-		stateAccumulator.setPlayerUserId(42);
+		stateAccumulator.setPlayerId(1);
 
-		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager.getSingleton()
-				.getPlayerFromID(42));
+		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager
+				.getSingleton().getPlayerFromID(1));
 		MapFileMessagePacker packer = new MapFileMessagePacker();
 		packer.setAccumulator(stateAccumulator);
+		OptionsManager.getSingleton().setTestMode();
+		OptionsManager.getSingleton().updateMapInformation("current.tmx", "", 1);
 		MapFileMessage msg = (MapFileMessage) packer.pack(report);
-		assertEquals("current.tmx",msg.getFileTitle());
-		assertNotNull(msg.getContents());
+		assertEquals(MapFileMessagePacker.DIRECTORY_PREFIX + "current.tmx", msg.getMapFileName());
+		OptionsManager.resetSingleton();
 	}
 
 }

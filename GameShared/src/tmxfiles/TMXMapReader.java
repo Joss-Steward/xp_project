@@ -10,18 +10,21 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * parses a TMX map.  Right now, all we need to find are the locations of the images the file references
+ * parses a TMX map. Right now, all we need to find are the locations of the
+ * images the file references
+ * 
  * @author Merlin
- *
+ * 
  */
 public class TMXMapReader extends DefaultHandler
 {
-	
+
 	private ArrayList<String> imageFileTitles = new ArrayList<String>();
 
 	/**
 	 * 
-	 * @param fileTitle The title of the tmx file we should parse
+	 * @param fileTitle
+	 *            The title of the tmx file we should parse
 	 */
 	public TMXMapReader(String fileTitle)
 	{
@@ -44,17 +47,17 @@ public class TMXMapReader extends DefaultHandler
 	}
 
 	/**
-	 * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
+	 * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String,
+	 *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
 	 */
-	public void startElement(String namespaceURI, String localName, String qName, Attributes atts)
-			throws SAXException
+	public void startElement(String namespaceURI, String localName, String qName,
+			Attributes atts) throws SAXException
 	{
 		if (qName.equals("image"))
 		{
 			imageFileTitles.add(atts.getValue("source"));
 		}
 	}
-
 
 	/**
 	 * 

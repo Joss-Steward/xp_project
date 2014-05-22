@@ -15,14 +15,10 @@ import Quest.TriggerTest;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
-{ 
+{
 		// Quest system Tests
-		QuestSystemLargeTest.class, 
-		QuestTest.class, 
-		TaskTest.class,
-		TriggerTest.class, 
-		QuestManagerTest.class,
-		QuestLayerObjectReaderTest.class,
+		QuestSystemLargeTest.class, QuestTest.class, TaskTest.class, TriggerTest.class,
+		QuestManagerTest.class, QuestLayerObjectReaderTest.class,
 		QuestLayerReaderTest.class,
 
 })

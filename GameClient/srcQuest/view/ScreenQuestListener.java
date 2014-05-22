@@ -3,10 +3,10 @@ package view;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import edu.ship.shipsim.client.model.reports.NewMapReport;
+import edu.ship.shipsim.client.model.reports.QuestScreenReport;
+import edu.ship.shipsim.client.model.reports.QuestUpdateReport;
 import model.QualifiedObservableReport;
-import model.reports.NewMapReport;
-import model.reports.QuestScreenReport;
-import model.reports.QuestUpdateReport;
 
 /**
  * @author Joshua Beck
@@ -35,8 +35,7 @@ public class ScreenQuestListener extends ScreenListener
 	{
 		if (arg.getClass().equals(QuestUpdateReport.class))
 		{
-			System.out
-					.print("hello from QuestScreen listener : QuestScreenReport");
+			System.out.print("hello from QuestScreen listener : QuestScreenReport");
 			NewMapReport report = (NewMapReport) arg;
 			ScreenMap nextScreen = (ScreenMap) Screens.QUEST_SCREEN.getScreen();
 			nextScreen.setTiledMap(report.getTiledMap());
@@ -45,16 +44,14 @@ public class ScreenQuestListener extends ScreenListener
 
 		if (arg.getClass().equals(QuestScreenReport.class))
 		{
-			System.out
-					.print("hello from QuestScreen listener : QuestScreenReport");
+			System.out.print("hello from QuestScreen listener : QuestScreenReport");
 			QuestScreenReport report = (QuestScreenReport) arg;
 			if (report.getLoadState() == true)
 			{
-				ScreenQuest nextScreen = (ScreenQuest) Screens.QUEST_SCREEN
-						.getScreen();
+				ScreenQuest nextScreen = (ScreenQuest) Screens.QUEST_SCREEN.getScreen();
 
 				// TODO transfer quest information in Quest
-				 nextScreen.setQuests(null);
+				nextScreen.setQuests(null);
 
 				this.switchToScreen(Screens.QUEST_SCREEN);
 			} else

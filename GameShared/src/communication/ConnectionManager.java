@@ -31,13 +31,13 @@ public class ConnectionManager
 	StateAccumulator stateAccumulator;
 	private int playerID;
 
-
 	/**
 	 * Create everything necessary for building messages to send to the other
 	 * side and handling messages that come from the other side.
 	 * 
 	 * @param sock
 	 *            the socket connection we are managing
+	 * @param stateAccumulator TODO
 	 * @param messageHandlerSet
 	 *            the set of MessageHandlers hat will process the incoming
 	 *            messages on this connection
@@ -47,23 +47,22 @@ public class ConnectionManager
 	 * @throws IOException
 	 *             caused by socket issues
 	 */
-	public ConnectionManager(Socket sock, MessageHandlerSet messageHandlerSet,
-			MessagePackerSet messagePackerSet) throws IOException
+	public ConnectionManager(Socket sock, StateAccumulator stateAccumulator,
+			MessageHandlerSet messageHandlerSet, MessagePackerSet messagePackerSet) throws IOException
 	{
 		System.out.println("Starting new ConnectionManager");
 		this.socket = sock;
 		this.messagePackerSet = messagePackerSet;
 		this.handlerSet = messageHandlerSet;
 
-		outgoing = new ConnectionOutgoing(sock, messagePackerSet);
+		outgoing = new ConnectionOutgoing(sock, stateAccumulator, messagePackerSet);
 		outgoingThread = new Thread(outgoing);
 		// for simplictly
 		// T.setDaemon(true);
 		outgoingThread.start();
-		stateAccumulator = outgoing.getStateAccumulator();
+		this.stateAccumulator = stateAccumulator;
 		messageHandlerSet.setConnectionManager(this);
 
-		
 		incoming = new ConnectionIncoming(sock, messageHandlerSet);
 		incomingThread = new Thread(incoming);
 		// for simplictly
@@ -73,11 +72,10 @@ public class ConnectionManager
 	}
 
 	/**
-	 * For testing purposes only 
+	 * For testing purposes only
 	 */
 	public ConnectionManager()
 	{
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -97,14 +95,13 @@ public class ConnectionManager
 
 		disconnect();
 		this.socket = sock;
-
-		outgoing = new ConnectionOutgoing(sock, messagePackerSet);
+		
+		outgoing = new ConnectionOutgoing(sock, this.stateAccumulator, messagePackerSet);
 		outgoingThread = new Thread(outgoing);
 		// for simplictly
 		// T.setDaemon(true);
 		outgoingThread.start();
-		stateAccumulator = outgoing.getStateAccumulator();
-		getStateAccumulator().queueMessage(new ConnectMessage(playerID, pin));
+		stateAccumulator.queueMessage(new ConnectMessage(playerID, pin));
 
 		incoming = new ConnectionIncoming(sock, handlerSet);
 		incomingThread = new Thread(incoming);
@@ -143,7 +140,7 @@ public class ConnectionManager
 	}
 
 	/**
-	 * @return the player ID for the user connected through this connection
+	 * @return the player ID for the player connected through this connection
 	 */
 	public int getPlayerID()
 	{
@@ -151,18 +148,18 @@ public class ConnectionManager
 	}
 
 	/**
-	 * set the playerID for the user connected through this connection
+	 * set the playerID for the player connected through this connection
 	 * 
 	 * @param playerID
 	 *            the playerID
 	 * 
 	 */
-	public void setPlayerUserId(int playerID)
+	public void setPlayerID(int playerID)
 	{
 		this.playerID = playerID;
 		if (stateAccumulator != null)
 		{
-			stateAccumulator.setPlayerUserId(playerID);
+			stateAccumulator.setPlayerId(playerID);
 		}
 	}
 }

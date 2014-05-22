@@ -3,16 +3,18 @@ package runners;
 import java.io.IOException;
 import java.net.Socket;
 
-import model.ModelFacade;
 import view.ScreenBasic;
 import view.Screens;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+
 import communication.ConnectionManager;
+import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
+import edu.ship.shipsim.client.model.ModelFacade;
+import edu.ship.shipsim.client.model.OptionsManager;
 
 /**
  * The most basic gui!
@@ -20,7 +22,7 @@ import communication.packers.MessagePackerSet;
  * @author Merlin
  * 
  */
-public class GameLibGDX extends Game implements ApplicationListener
+public class GameLibGDX extends Game
 {
 	private ConnectionManager cm;
 
@@ -34,9 +36,14 @@ public class GameLibGDX extends Game implements ApplicationListener
 		Socket socket;
 		try
 		{
-			socket = new Socket("localhost", 1871);
-			cm = new ConnectionManager(socket, new MessageHandlerSet(),
-					new MessagePackerSet());
+			String host = OptionsManager.getSingleton().getLoginHost();
+			socket = new Socket(host, 1871);
+			MessagePackerSet messagePackerSet = new MessagePackerSet();
+			StateAccumulator stateAccumulator = new StateAccumulator(messagePackerSet);
+			
+			cm = new ConnectionManager(socket, stateAccumulator,
+					new MessageHandlerSet(stateAccumulator), messagePackerSet);
+			
 
 		} catch (IOException e)
 		{
@@ -45,7 +52,7 @@ public class GameLibGDX extends Game implements ApplicationListener
 		}
 
 		// tell the model to initialize itself
-		ModelFacade.getSingleton(false);
+		ModelFacade.getSingleton();
 		Screens.LOGIN_SCREEN.setGame(this);
 
 		// start at the login screen
@@ -55,32 +62,11 @@ public class GameLibGDX extends Game implements ApplicationListener
 	}
 
 	/**
-	 * @see com.badlogic.gdx.ApplicationListener#resize(int, int)
-	 */
-	public void resize(int width, int height)
-	{
-	}
-
-	/**
-	 * @see com.badlogic.gdx.ApplicationListener#pause()
-	 */
-	public void pause()
-	{
-	}
-
-	/**
-	 * @see com.badlogic.gdx.ApplicationListener#resume()
-	 */
-	public void resume()
-	{
-	}
-
-	/**
 	 * @see com.badlogic.gdx.ApplicationListener#dispose()
 	 */
 	public void dispose()
 	{
-
+		super.dispose();
 		cm.disconnect();
 	}
 }

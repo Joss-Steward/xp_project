@@ -1,14 +1,20 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
-import model.PlayerLoginTest;
+
+import java.util.ArrayList;
+
 import model.PlayerManager;
+import model.PlayersInDB;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import communication.StateAccumulator;
+import communication.messages.LoginFailedMessage;
 import communication.messages.LoginMessage;
-
+import communication.messages.LoginSuccessfulMessage;
+import communication.messages.Message;
 
 /**
  * @author Merlin
@@ -25,7 +31,7 @@ public class LoginMessageHandlerTest
 	{
 		PlayerManager.resetSingleton();
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -33,7 +39,48 @@ public class LoginMessageHandlerTest
 	public void tellsTheModel()
 	{
 		LoginMessageHandler handler = new LoginMessageHandler();
-		handler.process(new LoginMessage(PlayerLoginTest.Players.MERLIN.getName(),PlayerLoginTest.Players.MERLIN.getPassword()));
+		StateAccumulator accum = new StateAccumulator(null);
+		handler.setAccumulator(accum);
+		handler.process(new LoginMessage(PlayersInDB.MERLIN.getPlayerName(),
+				PlayersInDB.MERLIN.getPlayerPassword()));
 		assertEquals(1, PlayerManager.getSingleton().getNumberOfPlayers());
+	}
+	
+	/**
+	 * Make sure that the login message handler queues the appropriate response for successful login
+	 */
+	@Test
+	public void queuesResonse()
+	{
+		LoginMessageHandler handler = new LoginMessageHandler();
+		StateAccumulator accum = new StateAccumulator(null);
+		handler.setAccumulator(accum);
+		handler.process(new LoginMessage(PlayersInDB.MERLIN.getPlayerName(),
+				PlayersInDB.MERLIN.getPlayerPassword()));
+		
+		ArrayList<Message> x = accum.getPendingMsgs();
+		LoginSuccessfulMessage response = (LoginSuccessfulMessage) x.get(0);
+		assertEquals(PlayersInDB.MERLIN.getPlayerID(), response.getPlayerID());
+		assertEquals("isabella", response.getHostName());
+		assertEquals(1872, response.getPortNumber());
+		//Can't really check the pin since it is randomly generated
+//		assertEquals(?, response.getPin(), 0.000001);
+	}
+	
+	/**
+	 * Make sure that the login message handler queues the appropriate response for successful login
+	 */
+	@Test
+	public void queuesResonseFailure()
+	{
+		LoginMessageHandler handler = new LoginMessageHandler();
+		StateAccumulator accum = new StateAccumulator(null);
+		handler.setAccumulator(accum);
+		handler.process(new LoginMessage(PlayersInDB.MERLIN.getPlayerName(),
+				PlayersInDB.MERLIN.getPlayerPassword() + 'Z'));
+		
+		ArrayList<Message> x = accum.getPendingMsgs();
+		assertEquals(LoginFailedMessage.class, x.get(0).getClass());
+		
 	}
 }

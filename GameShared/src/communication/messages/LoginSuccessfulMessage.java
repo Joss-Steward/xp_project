@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 /**
  * The message that goes from the main server to the client on a successful
- * login. It tells the client what the user's ID number is and where to connect
- * to begin playing.
+ * login. It tells the client what the player's ID number is and where to
+ * connect to begin playing.
  * 
  * @author Merlin
  * 
@@ -17,30 +17,31 @@ public class LoginSuccessfulMessage implements Message, Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int userID;
+	private int playerID;
 	private String hostName;
 	private int portNumber;
 	private double pin;
 
 	/**
 	 * 
-	 * @param userID
-	 *            the ID of the user that logged in
+	 * @param playerID
+	 *            the ID of the player that logged in
 	 * @param hostName
 	 *            the host name of the first area server the client should
 	 *            connect to
 	 * @param portNumber
 	 *            the port number of the first area server the client should
 	 *            connect to
-	 * @param d
+	 * @param pin
 	 *            the magic number required to connect to area servers
 	 */
-	public LoginSuccessfulMessage(int userID, String hostName, int portNumber, double d)
+	public LoginSuccessfulMessage(int playerID, String hostName, int portNumber,
+			double pin)
 	{
-		this.userID = userID;
+		this.playerID = playerID;
 		this.hostName = hostName;
 		this.portNumber = portNumber;
-		this.pin = d;
+		this.pin = pin;
 	}
 
 	/**
@@ -53,11 +54,11 @@ public class LoginSuccessfulMessage implements Message, Serializable
 
 	/**
 	 * 
-	 * @return the userID of the user that just logged in
+	 * @return the player ID of the player that just logged in
 	 */
-	public int getUserID()
+	public int getPlayerID()
 	{
-		return userID;
+		return playerID;
 	}
 
 	/**
@@ -87,7 +88,7 @@ public class LoginSuccessfulMessage implements Message, Serializable
 	@Override
 	public String toString()
 	{
-		return "Successful login of user " + userID;
+		return "Successful login of player " + playerID;
 	}
 
 }

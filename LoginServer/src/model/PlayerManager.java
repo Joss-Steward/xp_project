@@ -1,6 +1,9 @@
 package model;
 
-import model.reports.LoginFailedReport;
+import java.sql.SQLException;
+
+import communication.LocalPortMapper;
+
 import model.reports.LoginSuccessfulReport;
 
 /**
@@ -9,6 +12,7 @@ import model.reports.LoginSuccessfulReport;
  */
 public class PlayerManager extends QualifiedObservable
 {
+	final String DEFAULT_MAP = "current.tmx";
 
 	private static PlayerManager singleton;
 
@@ -36,26 +40,51 @@ public class PlayerManager extends QualifiedObservable
 
 	private PlayerManager()
 	{
-		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this, LoginSuccessfulReport.class);
-		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this, LoginFailedReport.class);
+
 	}
 
 	/**
-	 * Attempt to login to the system.  Credentials will be checked and appropriate reports will be made
-	 * @param playerName the user name
-	 * @param password the password
+	 * Attempt to login to the system. Credentials will be checked and
+	 * appropriate reports will be made
+	 * 
+	 * @param playerName
+	 *            the player's name
+	 * @param password
+	 *            the password
+	 * @return a report giving the instructions for how the client should connect to an area server
+	 * @throws LoginFailedException for database errors or invalid credentials
 	 */
-	public void login(String playerName, String password)
+	public LoginSuccessfulReport login(String playerName, String password)
+			throws LoginFailedException
 	{
 		try
 		{
-			PlayerLogin pl = new PlayerLogin(playerName, password);
+			PlayerLogin pl = PlayerLogin.readAndVerifyPlayerLogin(playerName,
+					password);
 			numberOfPlayers++;
-			LoginSuccessfulReport report = new LoginSuccessfulReport(42, "localhost",1872, pl.generatePin()); 
-			this.notifyObservers(report);
-		} catch (DatabaseException e)
+			PlayerConnection pp = new PlayerConnection(pl.getPlayerID());
+
+			String server;
+			int port;
+			if (!OptionsManager.getSingleton().isTestMode())
+			{
+				MapToServerMapping mapping = MapToServerMapping
+						.retrieveMapping(DEFAULT_MAP);
+				server = mapping.getHostName();
+				port = mapping.getPortNumber();
+			} else
+			{
+				LocalPortMapper mapping = new LocalPortMapper();
+				server = "localhost";
+				port = mapping.getPortForMapName(DEFAULT_MAP);
+			}
+
+			LoginSuccessfulReport report = new LoginSuccessfulReport(
+					pl.getPlayerID(), server, port, pp.generatePin());
+			return report;
+		} catch (DatabaseException | SQLException e)
 		{
-			this.notifyObservers(new LoginFailedReport());
+			throw new LoginFailedException();
 		}
 
 	}
@@ -66,11 +95,7 @@ public class PlayerManager extends QualifiedObservable
 	@Override
 	public boolean notifiesOn(Class<?> reportType)
 	{
-		if (reportType.equals(LoginSuccessfulReport.class) ||
-				reportType.equals(LoginFailedReport.class))
-		{
-			return true;
-		}
+		
 		return false;
 	}
 

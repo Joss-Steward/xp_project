@@ -1,9 +1,9 @@
 package communication.handlers;
 
-import model.Player;
-import model.PlayerManager;
 import communication.messages.Message;
 import communication.messages.QuestScreenMessage;
+import edu.ship.shipsim.areaserver.model.Player;
+import edu.ship.shipsim.areaserver.model.PlayerManager;
 
 /**
  * 
@@ -25,8 +25,7 @@ public class QuestScreenHandler extends MessageHandler
 		{
 			QuestScreenMessage cMsg = (QuestScreenMessage) msg;
 			cMsg.isLoadState();
-			System.out
-					.println("hello from server quest screen message handler");
+			System.out.println("hello from server quest screen message handler");
 
 			// Tell someone in the client
 			Player player = PlayerManager.getSingleton().getPlayerFromID(

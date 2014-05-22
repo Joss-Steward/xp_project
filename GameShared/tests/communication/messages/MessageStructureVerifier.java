@@ -40,12 +40,12 @@ public class MessageStructureVerifier extends TypeDetector
 	{
 		ArrayList<Class<?>> messageClasses = detectAllImplementorsInPackage(Message.class);
 		ArrayList<Class<?>> serializableClasses = detectAllImplementorsInPackage(Serializable.class);
-		
-		
+
 		Reflections reflections = new Reflections(this.getClass().getPackage().getName());
 		for (String mmapName : reflections.getStore().getStoreMap().keySet())
 		{
-			Multimap<String, String> mmap = reflections.getStore().getStoreMap().get(mmapName);
+			Multimap<String, String> mmap = reflections.getStore().getStoreMap()
+					.get(mmapName);
 			for (Map.Entry<String, String> entry : mmap.entries())
 			{
 				Class<?> classToCheck = Class.forName(entry.getValue());
@@ -57,7 +57,7 @@ public class MessageStructureVerifier extends TypeDetector
 					}
 					if (!serializableClasses.contains(classToCheck))
 					{
-						fail(classToCheck.getName() + " must implement Message");
+						fail(classToCheck.getName() + " must implement Serializable");
 					}
 
 					verifyStructureForSerializability(classToCheck);
@@ -76,7 +76,7 @@ public class MessageStructureVerifier extends TypeDetector
 	 */
 	public void verifyStructureForSerializability(Class<?> classToCheck)
 	{
-		
+
 		ArrayList<Field> storedFields = getStoredFields(classToCheck);
 		for (Field fieldToCheck : storedFields)
 		{
@@ -101,7 +101,8 @@ public class MessageStructureVerifier extends TypeDetector
 			if (type.toString().equals("boolean"))
 				classToCheck.getDeclaredMethod("is" + capitalizedFieldName, new Class[0]);
 			else
-				classToCheck.getDeclaredMethod("get" + capitalizedFieldName, new Class[0]);
+				classToCheck
+						.getDeclaredMethod("get" + capitalizedFieldName, new Class[0]);
 		} catch (NoSuchMethodException e)
 		{
 			fail(classToCheck.getName() + " is missing a getter for " + fieldToCheck);
@@ -162,7 +163,8 @@ public class MessageStructureVerifier extends TypeDetector
 		for (int i = 0; i < allFields.length; i++)
 		{
 			int modifiers = allFields[i].getModifiers();
-			if (!Modifier.isTransient(modifiers) && !Modifier.isFinal(allFields[i].getModifiers()))
+			if (!Modifier.isTransient(modifiers)
+					&& !Modifier.isFinal(allFields[i].getModifiers()))
 			{
 				storedFields.add(allFields[i]);
 			}

@@ -4,17 +4,20 @@ import java.util.Vector;
 
 /**
  * A queue to pass information between two threads
+ * 
  * @author Merlin
- *
+ * 
  */
 public class InformationQueue
 {
-	
+
 	private Vector<InfoPacket> infoPackets = new Vector<InfoPacket>();
 
 	/**
-	 * Put a message in the queue to the view.  
-	 * @param infoPacket the view command to be added to the buffer
+	 * Put a message in the queue to the view.
+	 * 
+	 * @param infoPacket
+	 *            the view command to be added to the buffer
 	 */
 	public synchronized void queueInfoPacket(InfoPacket infoPacket)
 	{
@@ -24,7 +27,8 @@ public class InformationQueue
 
 	/**
 	 * @return the next message that should be processed by the GUI
-	 * @throws InterruptedException if this synchronized section is interrupted
+	 * @throws InterruptedException
+	 *             if this synchronized section is interrupted
 	 */
 	public synchronized InfoPacket getInfoPacket() throws InterruptedException
 	{
@@ -37,7 +41,8 @@ public class InformationQueue
 	}
 
 	/**
-	 * @return the number of commands that are waiting to be processed by the view
+	 * @return the number of commands that are waiting to be processed by the
+	 *         view
 	 */
 	public int getQueueSize()
 	{

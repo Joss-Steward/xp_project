@@ -1,10 +1,10 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
-import model.reports.LoginInitiatedReport;
 import communication.messages.LoginMessage;
 import communication.messages.Message;
 import communication.packers.MessagePacker;
+import edu.ship.shipsim.client.model.reports.LoginInitiatedReport;
 
 /**
  * Takes the information given to us when MovementNotifier updates and
@@ -24,11 +24,12 @@ public class LoginMessagePacker extends MessagePacker
 	{
 		if (object.getClass() != LoginInitiatedReport.class)
 		{
-			throw new IllegalArgumentException("LoginMessagePacker cannot pack messages of type "
-					+ object.getClass());
+			throw new IllegalArgumentException(
+					"LoginMessagePacker cannot pack messages of type "
+							+ object.getClass());
 		}
 		LoginInitiatedReport report = (LoginInitiatedReport) object;
-		Message msg = new LoginMessage(report.getUserName(), report.getPassword());
+		Message msg = new LoginMessage(report.getPlayerName(), report.getPassword());
 		return msg;
 	}
 
@@ -36,7 +37,7 @@ public class LoginMessagePacker extends MessagePacker
 	 * @see communication.packers.MessagePacker#getReportTypeWePack()
 	 */
 	@Override
-	public Class<?> getReportTypeWePack()
+	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
 	{
 		return LoginInitiatedReport.class;
 	}

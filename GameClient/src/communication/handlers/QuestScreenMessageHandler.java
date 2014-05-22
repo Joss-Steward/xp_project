@@ -1,10 +1,10 @@
 package communication.handlers;
 
-import model.CommandQuestScreenClose;
-import model.CommandQuestScreenOpen;
-import model.ModelFacade;
 import communication.messages.Message;
 import communication.messages.QuestScreenMessage;
+import edu.ship.shipsim.client.model.CommandQuestScreenClose;
+import edu.ship.shipsim.client.model.CommandQuestScreenOpen;
+import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * 
@@ -30,12 +30,10 @@ public class QuestScreenMessageHandler extends MessageHandler
 
 			if (rMsg.isLoadState() == false)
 			{
-				ModelFacade.getSingleton(false).queueCommand(
-						new CommandQuestScreenClose());
+				ModelFacade.getSingleton().queueCommand(new CommandQuestScreenClose());
 			} else
 			{
-				ModelFacade.getSingleton(false).queueCommand(
-						new CommandQuestScreenOpen());
+				ModelFacade.getSingleton().queueCommand(new CommandQuestScreenOpen());
 			}
 		}
 	}

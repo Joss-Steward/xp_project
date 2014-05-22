@@ -1,0 +1,74 @@
+package communication.messages;
+
+import java.io.Serializable;
+
+import data.ChatType;
+import data.Position;
+
+/**
+ * 
+ * Create a ChatMessage that is used for sending messages.
+ * 
+ */
+public class ChatMessage implements Message, Serializable
+{
+	private static final long serialVersionUID = 1L;
+	private final String message;
+	private final String senderName;
+	private final Position position;
+	private final ChatType type;
+
+	/**
+	 * Create a chat message
+	 * 
+	 * @param senderName
+	 *            user sending the message
+	 * @param message
+	 *            the message to be sent
+	 * @param location
+	 *            the location of the sender
+	 * @param type
+	 *            the type of chat message being sent
+	 */
+	public ChatMessage(String senderName, String message, Position location,
+			ChatType type)
+	{
+		this.message = message;
+		this.senderName = senderName;
+		this.position = location;
+		this.type = type;
+	}
+
+	/**
+	 * @return the message sent by the chat
+	 */
+	public String getMessage()
+	{
+		return this.message;
+	}
+
+	/**
+	 * @return name of the user sending the chat message
+	 */
+	public String getSenderName()
+	{
+		return this.senderName;
+	}
+
+	/**
+	 * @return the location of the sender
+	 */
+	public Position getPosition()
+	{
+		return this.position;
+	}
+
+	/**
+	 * @return the type of chat message being sent
+	 */
+	public ChatType getType()
+	{
+		return type;
+	}
+
+}

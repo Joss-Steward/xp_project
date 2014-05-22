@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="75" height="28" tilewidth="32" tileheight="32">
+ <properties>
+  <property name="48 25" value="current.tmx 29 16"/>
+  <property name="color" value="0 0 0"/>
+ </properties>
+ <tileset firstgid="1" name="collision" tilewidth="32" tileheight="32">
+  <image source="tileset/collision.png" width="64" height="32"/>
+ </tileset>
+ <imagelayer name="background" width="75" height="28">
+  <image source="tileset/hmbg.png"/>
+ </imagelayer>
+ <imagelayer name="foreground" width="75" height="28">
+  <image source="tileset/hmfg.png"/>
+ </imagelayer>
+ <layer name="Collision" width="75" height="28" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2U0Q7FIAhDzf7/o+/jXcwGFIqarE14ErE7wK4xxqVQKBQKxSFx144334TkrfCT8SlWmBjeEN/WOYtVZMciZ/cchj+rxpN2sKqKyYrpqbN3rB5YDMTqX7fyHaisu9U3PFZv+VEPc/35jlcHVYYV0s9OrWbleUF3a77fKXTGxSqei+xJx78VYYXur5fr7d1TvV2sPDFZRVl456eysoTWqb77JVas905l1c0iM5fZfldZRXrTqeo8ZN4TK76vL+9gtyr9Zf5Hq3O1gitjryusqrVWziHba3U2FLn4ATvfxX3QIAAA
+  </data>
+ </layer>
+</map>

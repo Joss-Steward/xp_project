@@ -1,16 +1,19 @@
 package runners;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-import model.CommandLogin;
-import model.ModelFacade;
-import model.ThisClientsPlayer;
 import communication.ConnectionManager;
+import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
 import data.Position;
+import edu.ship.shipsim.client.model.CommandLogin;
+import edu.ship.shipsim.client.model.CommandMovePlayer;
+import edu.ship.shipsim.client.model.ModelFacade;
+import edu.ship.shipsim.client.model.PlayerManager;
 
 /**
  * Temporary to play with communication protocols. Will eventually start a
@@ -30,12 +33,15 @@ public class ClientRunner
 	 * @throws IOException
 	 *             shouldn't
 	 */
-	public static void main(String[] args) throws UnknownHostException,
-			IOException
+	public static void main(String[] args) throws UnknownHostException, IOException
 	{
 		Socket socket = new Socket("localhost", 1871);
-		ConnectionManager cm = new ConnectionManager(socket, new MessageHandlerSet(), new MessagePackerSet());
-		ModelFacade modelFacade = ModelFacade.getSingleton(false);
+		MessagePackerSet messagePackerSet = new MessagePackerSet();
+		StateAccumulator stateAccumulator = new StateAccumulator(messagePackerSet);
+		
+		ConnectionManager cm = new ConnectionManager(socket, stateAccumulator,
+				new MessageHandlerSet(stateAccumulator), messagePackerSet);
+		ModelFacade modelFacade = ModelFacade.getSingleton(true, false);
 
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("input?");
@@ -46,22 +52,27 @@ public class ClientRunner
 			if (tokens[0].equalsIgnoreCase("move"))
 			{
 				String[] positionParts = tokens[1].split(",");
-				ThisClientsPlayer.getSingleton().move(
-						new Position(Integer.parseInt(positionParts[0]),
-								Integer.parseInt(positionParts[1])));
-				System.out.println("user moved " + ThisClientsPlayer.getSingleton().getID() + " to " + positionParts[0] + ", " + positionParts[1]);
+				CommandMovePlayer command = new CommandMovePlayer(PlayerManager
+						.getSingleton().getThisClientsPlayer().getID(), new Position(
+						Integer.parseInt(positionParts[0]),
+						Integer.parseInt(positionParts[1])));
+				modelFacade.queueCommand(command);
+				System.out.println("player moved "
+						+ PlayerManager.getSingleton().getThisClientsPlayer().getID()
+						+ " to " + positionParts[0] + ", " + positionParts[1]);
 			} else if (tokens[0].equalsIgnoreCase("login"))
 			{
-				CommandLogin command = new CommandLogin(tokens[1],tokens[2]);
+				CommandLogin command = new CommandLogin(tokens[1], tokens[2]);
 				modelFacade.queueCommand(command);
-				System.out.println("user specified id " + tokens[1]);
-			} else 
+				System.out.println("player specified id " + tokens[1]);
+			} else
 			{
 				System.out.println("unrecognized command " + tokens[0]);
 			}
 			input = scanner.nextLine();
 			tokens = input.split(" ");
-		};
+		}
+		;
 		System.out.println("leaving");
 		scanner.close();
 		cm.disconnect();

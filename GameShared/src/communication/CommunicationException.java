@@ -2,8 +2,9 @@ package communication;
 
 /**
  * A problem with the communication between the client and the game server
+ * 
  * @author merlin
- *
+ * 
  */
 public class CommunicationException extends Exception
 {
@@ -15,7 +16,9 @@ public class CommunicationException extends Exception
 
 	/**
 	 * Just remember the string
-	 * @param string a message describing what went wrong
+	 * 
+	 * @param string
+	 *            a message describing what went wrong
 	 */
 	public CommunicationException(String string)
 	{

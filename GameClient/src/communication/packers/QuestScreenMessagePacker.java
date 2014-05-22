@@ -1,10 +1,10 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
-import model.ThisClientsPlayer;
-import model.reports.QuestScreenReport;
 import communication.messages.Message;
 import communication.messages.QuestScreenMessage;
+import edu.ship.shipsim.client.model.PlayerManager;
+import edu.ship.shipsim.client.model.reports.QuestScreenReport;
 
 /**
  * 
@@ -27,8 +27,8 @@ public class QuestScreenMessagePacker extends MessagePacker
 							+ object.getClass());
 		}
 		QuestScreenReport report = (QuestScreenReport) object;
-		Message msg = new QuestScreenMessage(report.getLoadState(), ThisClientsPlayer
-				.getSingleton().getID());
+		Message msg = new QuestScreenMessage(report.getLoadState(), PlayerManager
+				.getSingleton().getThisClientsPlayer().getID());
 		return msg;
 	}
 
@@ -36,7 +36,7 @@ public class QuestScreenMessagePacker extends MessagePacker
 	 * 
 	 */
 	@Override
-	public Class<?> getReportTypeWePack()
+	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
 	{
 		return QuestScreenReport.class;
 	}

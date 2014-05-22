@@ -3,8 +3,10 @@ package view;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import edu.ship.shipsim.client.model.reports.LoginFailedReport;
+import edu.ship.shipsim.client.model.reports.LoginInitiatedReport;
+import edu.ship.shipsim.client.model.reports.PinFailedReport;
 import model.QualifiedObservableReport;
-import model.reports.NewMapReport;
 
 /**
  * Every screen has one of these and it is responsible for listening for the
@@ -31,13 +33,27 @@ public class ScreenLoginListener extends ScreenListener
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		if (arg.getClass().equals(NewMapReport.class))
+		if (arg.getClass().equals(LoginInitiatedReport.class))
 		{
-			NewMapReport report = (NewMapReport) arg;
-			ScreenMap nextScreen = (ScreenMap) Screens.MAP_SCREEN.getScreen();
-			nextScreen.setTiledMap(report.getTiledMap());
 			this.switchToScreen(Screens.MAP_SCREEN);
 		}
+		
+		if (arg.getClass().equals(LoginFailedReport.class))
+		{
+			ScreenLogin screen = (ScreenLogin)Screens.LOGIN_SCREEN.getScreen();
+			LoginFailedReport report = (LoginFailedReport)arg;
+			screen.showFlagMessage(report.toString());
+			this.switchToScreen(Screens.LOGIN_SCREEN);
+		}
+		
+		if (arg.getClass().equals(PinFailedReport.class))
+		{
+			ScreenLogin screen = (ScreenLogin)Screens.LOGIN_SCREEN.getScreen();
+			PinFailedReport report = (PinFailedReport)arg;
+			screen.showFlagMessage(report.toString());
+			this.switchToScreen(Screens.LOGIN_SCREEN);
+		}
+
 
 	}
 
@@ -48,7 +64,9 @@ public class ScreenLoginListener extends ScreenListener
 	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypes()
 	{
 		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
-		reportTypes.add(NewMapReport.class);
+		reportTypes.add(LoginInitiatedReport.class);
+		reportTypes.add(LoginFailedReport.class);
+		reportTypes.add(PinFailedReport.class);
 		return reportTypes;
 	}
 

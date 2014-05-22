@@ -49,8 +49,7 @@ public class QuestPropertiesObjectReader
 				tempTrigger.setPosition(new Position(x, y));
 			} catch (NullPointerException e)
 			{
-				System.out
-						.println("Trigger did not load from the map correctly");
+				System.out.println("Trigger did not load from the map correctly");
 				e.printStackTrace();
 			}
 		}

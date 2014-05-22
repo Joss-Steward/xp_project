@@ -4,7 +4,7 @@ import model.QualifiedObservableReport;
 
 /**
  * @author Merlin
- *
+ * 
  */
 public final class LoginSuccessfulReport implements QualifiedObservableReport
 {
@@ -12,23 +12,28 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 	private final String hostname;
 	private final int port;
 	private final double pin;
-	private final int userID;
+	private final int playerID;
 
 	/**
-	 * @param userID the userID who was successful
-	 * @param hostname the hostname of the area server the client should connect to
-	 * @param port the port number of the area server the client should connect to
-	 * @param d the pin the client should use in its connection
+	 * @param playerID
+	 *            the playerID who was successful
+	 * @param hostname
+	 *            the hostname of the area server the client should connect to
+	 * @param port
+	 *            the port number of the area server the client should connect
+	 *            to
+	 * @param d
+	 *            the pin the client should use in its connection
 	 * 
 	 */
-	public LoginSuccessfulReport(int userID, String hostname, int port, double d)
+	public LoginSuccessfulReport(int playerID, String hostname, int port, double d)
 	{
 		this.hostname = hostname;
 		this.port = port;
 		this.pin = d;
-		this.userID = userID;
+		this.playerID = playerID;
 	}
-	
+
 	/**
 	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -51,7 +56,7 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 			return false;
 		if (port != other.port)
 			return false;
-		if (userID != other.userID)
+		if (playerID != other.playerID)
 			return false;
 		return true;
 	}
@@ -64,7 +69,6 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 		return hostname;
 	}
 
-
 	/**
 	 * @return the pin
 	 */
@@ -72,6 +76,7 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 	{
 		return pin;
 	}
+
 	/**
 	 * @return the port
 	 */
@@ -79,12 +84,13 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 	{
 		return port;
 	}
+
 	/**
-	 * @return the userID in this report
+	 * @return the player ID in this report
 	 */
-	public int getUserID()
+	public int getPlayerID()
 	{
-		return userID;
+		return playerID;
 	}
 
 	/**
@@ -98,9 +104,8 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 		int result = 1;
 		result = prime * result + ((hostname == null) ? 0 : hostname.hashCode());
 		result = prime * result + port;
-		result = prime * result + userID;
+		result = prime * result + playerID;
 		return result;
 	}
 
-	
 }

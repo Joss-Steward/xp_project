@@ -2,6 +2,9 @@ import runners.GameLibGDX;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 
+import edu.ship.shipsim.client.model.OptionsManager;
+import static view.Screens.DEFAULT_RES;
+
 /**
  * 
  * @author Merlin
@@ -16,6 +19,17 @@ public class DesktopClient
 	 */
 	public static void main(String[] args)
 	{
-		new LwjglApplication(new GameLibGDX(), "Game", 480, 320, false);
+		String host = "localhost";
+		for(String arg: args)
+		{
+			String[] splitArg = arg.split("=");
+			if(splitArg[0].equals("--host"))
+			{
+				host = splitArg[1];
+			}
+		}
+		OptionsManager.getSingleton().setLoginHost(host);
+		
+		new LwjglApplication(new GameLibGDX(), "Game", (int)DEFAULT_RES[0], (int)DEFAULT_RES[1]);
 	}
 }

@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  * @author Merlin
- *
+ * 
  */
 public class TMXMapReaderTest
 {
@@ -20,11 +20,11 @@ public class TMXMapReaderTest
 	public void test()
 	{
 		TMXMapReader reader = new TMXMapReader("maps/current.tmx");
-		
+
 		ArrayList<String> imageFileTitles = reader.getImageFileTitles();
 		assertEquals(2, imageFileTitles.size());
-		assertEquals("tileset/qubodup-bush_0.png",imageFileTitles.get(0));
-		assertEquals("tileset/qubodup-bush_berries_0.png",imageFileTitles.get(1));
+		assertEquals("tileset/qubodup-bush_0.png", imageFileTitles.get(0));
+		assertEquals("tileset/qubodup-bush_berries_0.png", imageFileTitles.get(1));
 
 	}
 

@@ -1,14 +1,17 @@
 package communication.packers;
 
 import static org.junit.Assert.*;
-import model.PlayerManager;
-import model.reports.PlayerConnectionReport;
+import model.DatabaseException;
+import model.PlayerConnection;
+import model.PlayersInDB;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.StateAccumulator;
 import communication.messages.PlayerJoinedMessage;
+import edu.ship.shipsim.areaserver.model.PlayerManager;
+import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 
 /**
  * @author Merlin
@@ -27,42 +30,29 @@ public class PlayerJoinedMessagePackerTest
 	}
 
 	/**
-	 * If we are notified about a player other than the one we are associated
-	 * with, pack the right message
+	 * If we are notified about a player, pack his information and send it to
+	 * our client
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
-	public void ifThePlayerIsNotOnThisConnection()
+	public void ifThePlayerIsNotOnThisConnection() throws DatabaseException
 	{
-		PlayerManager.getSingleton().addPlayer(42, 1234);
+		PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID(), PlayerConnection.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
-		stateAccumulator.setPlayerUserId(43);
+		stateAccumulator.setPlayerId(PlayersInDB.MERLIN.getPlayerID());
+		PlayerManager.getSingleton().addPlayer(PlayersInDB.JOHN.getPlayerID(), PlayerConnection.DEFAULT_PIN);
 
-		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager.getSingleton()
-				.getPlayerFromID(42));
+		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager
+				.getSingleton().getPlayerFromID(PlayersInDB.JOHN.getPlayerID()));
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);
-		// TODO for now all users are named Fred
-		assertEquals("fred", msg.getUserName());
-	}
-
-	/**
-	 * If we are notified about a player that is the one we are associated with,
-	 * return null (no need to send this on)
-	 */
-	@Test
-	public void ifThePlayerIsOnThisConnection()
-	{
-		PlayerManager.getSingleton().addPlayer(42, 1234);
-		StateAccumulator stateAccumulator = new StateAccumulator(null);
-		stateAccumulator.setPlayerUserId(42);
-
-		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager.getSingleton()
-				.getPlayerFromID(42));
-		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
-		packer.setAccumulator(stateAccumulator);
-		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);
-		assertNull(msg);
+		assertEquals(PlayersInDB.JOHN.getPlayerName(), msg.getPlayerName());
+		assertEquals(PlayersInDB.JOHN.getAppearanceType(), msg.getAppearanceType());
+		assertEquals(PlayersInDB.JOHN.getPlayerID(), msg.getPlayerID());
+		assertEquals(PlayersInDB.JOHN.getPosition(), msg.getPosition());
 	}
 
 }

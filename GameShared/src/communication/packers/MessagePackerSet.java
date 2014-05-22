@@ -73,7 +73,8 @@ public class MessagePackerSet extends TypeDetector
 	 * @throws CommunicationException
 	 *             if there is no packer registered for this type of event
 	 */
-	public ArrayList<Message> pack(QualifiedObservableReport report) throws CommunicationException
+	public ArrayList<Message> pack(QualifiedObservableReport report)
+			throws CommunicationException
 	{
 		ArrayList<Message> results = new ArrayList<Message>();
 		Class<? extends QualifiedObservableReport> classWeArePacking = report.getClass();
@@ -107,7 +108,7 @@ public class MessagePackerSet extends TypeDetector
 			packers.put(reportWePack, relevantPackers);
 		}
 		relevantPackers.add(packer);
-		
+
 	}
 
 	/**

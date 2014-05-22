@@ -8,7 +8,7 @@ import org.junit.Test;
 /**
  * 
  * @author Merlin
- *
+ * 
  */
 public class LoginSuccessfulReportTest
 {
@@ -18,11 +18,11 @@ public class LoginSuccessfulReportTest
 	@Test
 	public void creation()
 	{
-		LoginSuccessfulReport report = new LoginSuccessfulReport(42, "LLL",56, 0.76);
-		assertEquals(42, report.getUserID());
+		LoginSuccessfulReport report = new LoginSuccessfulReport(42, "LLL", 56, 0.76);
+		assertEquals(42, report.getPlayerID());
 		assertEquals("LLL", report.getHostname());
 		assertEquals(56, report.getPort());
-		assertEquals(0.76, report.getPin(),0.00001);
+		assertEquals(0.76, report.getPin(), 0.00001);
 	}
 
 	/**

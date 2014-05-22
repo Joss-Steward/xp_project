@@ -1,12 +1,10 @@
 package communication.packers;
 
-import model.PlayerManager;
-import model.PlayerNotFoundException;
 import model.QualifiedObservableReport;
-import model.reports.PlayerConnectionReport;
 import communication.messages.Message;
 import communication.messages.PlayerJoinedMessage;
 import communication.packers.MessagePacker;
+import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 
 /**
  * Packs a message telling clients that a new player has joined this area server
@@ -26,20 +24,11 @@ public class PlayerJoinedMessagePacker extends MessagePacker
 		if (object.getClass().equals(PlayerConnectionReport.class))
 		{
 			PlayerConnectionReport report = (PlayerConnectionReport) object;
-			try
-			{
-				int userID = PlayerManager.getSingleton().getUserIDFromUserName(
-						report.getUserName());
-				if (this.getAccumulator().getPlayerUserID() != userID)
-				{
-					PlayerJoinedMessage msg = new PlayerJoinedMessage(report.getUserName());
-					return msg;
-				}
-			} catch (PlayerNotFoundException e)
-			{
-				return null;
-			}
 
+			PlayerJoinedMessage msg = new PlayerJoinedMessage(report.getPlayerID(),
+					report.getPlayerName(), report.getAppearanceType(),
+					report.getPosition());
+			return msg;
 		}
 		return null;
 	}
@@ -48,7 +37,7 @@ public class PlayerJoinedMessagePacker extends MessagePacker
 	 * @see communication.packers.MessagePacker#getReportTypeWePack()
 	 */
 	@Override
-	public Class<?> getReportTypeWePack()
+	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
 	{
 		return PlayerConnectionReport.class;
 	}

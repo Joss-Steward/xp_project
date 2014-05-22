@@ -1,11 +1,11 @@
 package communication;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
 import communication.handlers.MessageHandlerSet;
 import communication.messages.Message;
-
 
 /**
  * Responsible for communication between the server and a single connected
@@ -20,17 +20,20 @@ public class ConnectionIncoming implements Runnable
 	private ObjectInputStream istream;
 	private Socket socket;
 	private MessageHandlerSet messageHandlers;
-	
+
 	/**
 	 * @param socket
-	 *            Socket being used.  Will be null for JUnit testing
-	 * @param processor the message processor which should handle messages that come in via this connection
+	 *            Socket being used. Will be null for JUnit testing
+	 * @param processor
+	 *            the message processor which should handle messages that come
+	 *            in via this connection
 	 * @throws IOException
 	 *             Exception thrown for invalid input or output
 	 */
-	public ConnectionIncoming(Socket socket, MessageHandlerSet processor) throws IOException
+	public ConnectionIncoming(Socket socket, MessageHandlerSet processor)
+			throws IOException
 	{
-		
+
 		this.socket = socket;
 		this.messageHandlers = processor;
 	}
@@ -41,7 +44,7 @@ public class ConnectionIncoming implements Runnable
 	public void run()
 	{
 		try
-		{	
+		{
 			if (socket != null)
 			{
 				this.istream = new ObjectInputStream(socket.getInputStream());
@@ -55,23 +58,30 @@ public class ConnectionIncoming implements Runnable
 						Thread.sleep(100);
 						continue;
 					}
-				} else
+				} 
+				else
 				{
 					Thread.sleep(100);
 					continue;
 				}
-				System.out.println("starting to read from "+ socket);
 				if (socket != null)
 				{
+					System.out.println("starting to read from " + socket);
+					
 					Object inputObject = this.istream.readObject();
-					// this.ostream.write(bytes,0,read);
+					//catch the normal connection polling
+					if (Message.class.isAssignableFrom(inputObject.getClass()))
+					{
+						System.out.println("processing:  ");
+						System.out.println(inputObject.getClass());
 
-					System.out.println("processing:  ");
-					System.out.println(inputObject.getClass());
-
-					processRequest((Message) inputObject);
+						processRequest((Message) inputObject);
+					}
+					else
+					{
+						//System.out.println("recieved polling signal");
+					}
 				}
-				
 
 			}
 		} catch (InterruptedException E)

@@ -3,7 +3,8 @@ package Quest;
 /**
  * @author Joshua Enum of triggers that are found in the quest layer
  */
-public enum TriggerTypes {
+public enum TriggerTypes
+{
 
 	/**
 	 * Activates a quest

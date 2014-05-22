@@ -1,19 +1,24 @@
 package communication.handlers;
+
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.PlayerJoinedMessage;
-
-
+import edu.ship.shipsim.client.model.CommandInitializePlayer;
+import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
- * Should process an incoming MovementMessage that is reporting that someone else moved
+ * Should process an incoming PlayerJoinedMessage that is reporting that someone
+ * joined our area server
+ * 
  * @author merlin
- *
+ * 
  */
 public class PlayerJoinedMessageHandler extends MessageHandler
 {
 
 	/**
+	 * A player has joined our area server, so notify the PlayerManager of his
+	 * presence
 	 * 
 	 * @see MessageHandler#process(Message)
 	 */
@@ -21,6 +26,12 @@ public class PlayerJoinedMessageHandler extends MessageHandler
 	public void process(Message msg)
 	{
 		System.out.println("received " + msg);
+		PlayerJoinedMessage playerJoinedMessage = (PlayerJoinedMessage) msg;
+		CommandInitializePlayer cmd = new CommandInitializePlayer(
+				playerJoinedMessage.getPlayerID(), playerJoinedMessage.getPlayerName(),
+				playerJoinedMessage.getAppearanceType(),
+				playerJoinedMessage.getPosition());
+		ModelFacade.getSingleton().queueCommand(cmd);
 	}
 
 	/**

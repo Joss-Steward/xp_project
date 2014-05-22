@@ -1,12 +1,16 @@
 package communication.handlers;
 
-import model.PlayerManager;
 import communication.handlers.MessageHandler;
 import communication.messages.ConnectMessage;
 import communication.messages.Message;
+import communication.messages.PlayerJoinedMessage;
+import edu.ship.shipsim.areaserver.model.CommandAddPlayer;
+import edu.ship.shipsim.areaserver.model.ModelFacade;
+import edu.ship.shipsim.areaserver.model.Player;
+import edu.ship.shipsim.areaserver.model.PlayerManager;
 
 /**
- * Handles a message that the user is connecting to this area server
+ * Handles a message that the player is connecting to this area server
  * 
  * @author merlin
  * 
@@ -15,7 +19,7 @@ public class ConnectMessageHandler extends MessageHandler
 {
 
 	/**
-	 * Add this user to the player list
+	 * Add this player to the player list
 	 * 
 	 * @see communication.handlers.MessageHandler#process(communication.messages.Message)
 	 */
@@ -25,14 +29,21 @@ public class ConnectMessageHandler extends MessageHandler
 		if (msg.getClass().equals(ConnectMessage.class))
 		{
 			ConnectMessage cMsg = (ConnectMessage) msg;
-			// assume this connection is going to work
 			if (connectionManager != null)
 			{
-				connectionManager.setPlayerUserId(cMsg.getUserID());
+				System.err.println("setting player");
+				connectionManager.setPlayerID(cMsg.getPlayerID());
 			}
-			PlayerManager.getSingleton().addPlayer(cMsg.getUserID(), cMsg.getPin());
-			// TODO what should we do if the information in the message isn't correct
+			CommandAddPlayer cmd = new CommandAddPlayer(cMsg.getPlayerID(), cMsg.getPin());
 			
+			ModelFacade.getSingleton().queueCommand(cmd);
+			
+			for (Player p : PlayerManager.getSingleton().getConnectedPlayers())
+			{
+				PlayerJoinedMessage pMsg = new PlayerJoinedMessage(
+						p.getID(), p.getPlayerName(), p.getAppearanceType(), p.getPlayerPosition());
+				this.getStateAccumulator().queueMessage(pMsg);
+			}
 		}
 	}
 

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="25" tilewidth="32" tileheight="32">
+ <properties>
+  <property name="3 24" value="current.tmx 47 17"/>
+  <property name="4 24" value="current.tmx 47 17"/>
+  <property name="5 24" value="current.tmx 47 17"/>
+ </properties>
+ <tileset firstgid="1" name="collision" tilewidth="32" tileheight="32">
+  <image source="tileset/collision.png" width="64" height="32"/>
+ </tileset>
+ <tileset firstgid="3" name="terrain" tilewidth="32" tileheight="32">
+  <image source="tileset/terrain.png" width="256" height="64"/>
+ </tileset>
+ <tileset firstgid="19" name="Ext Buildings" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MT- Medieval Town - Buildings.png" width="512" height="1728"/>
+ </tileset>
+ <tileset firstgid="883" name="Ext Castle" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MT- Medieval Town - Castle.png" width="512" height="1152"/>
+ </tileset>
+ <tileset firstgid="1459" name="Int Upper Class" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MI- Medieval Indoors - Hi Class.png" width="512" height="1216"/>
+ </tileset>
+ <tileset firstgid="2067" name="Int Mid Class" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MI- Medieval Indoors - Mid Class.png" width="512" height="1888"/>
+ </tileset>
+ <tileset firstgid="3011" name="Grasslands" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MT- Medieval Town - Grasslands.png" width="768" height="1696"/>
+ </tileset>
+ <layer name="background" width="40" height="25">
+  <data encoding="base64" compression="zlib">
+   eJzt0zEKwjAYxfGvNINz6RE8Qi/vDYyrojgregBFV1+HYi0pfM1LLNEE/lPC47ekEZEmQFu0Q3t0CLDXHVu8OxKdsHVGF3QVbkscvg0yRDds3dEDPYXbWhduX03WHXYnhq+Sz2L4lkRDH7M15luIrtIz7T7j87VNMf6Lz/QaOsbuvuUzjjR32ZeGL4X/kX2/52OM2n3W52Ocsh3CF7Psi+9r36xmyip9dsZS8b0ATs3Vvw==
+  </data>
+ </layer>
+ <layer name="background Front" width="40" height="25">
+  <data encoding="base64" compression="zlib">
+   eJzdlklOw0AQAO0knJBBiC0cQdwAQfhADoCAN8CB8IWc4AtwAMQP2EG8gH2VOLNvTyARD2Apy4lowhhPTOyEtFSacXqmuzTxSDaMyoy46VCJcWFWtp8dOn5NMfVcFUny6YhD0mOtTl0dv87Yz3ljHTWhGVoEtpNE5lohDm3wGlHX9eOnii56dEMP3AgKQ+Z6oQ8SYEadfHtu7IiW1m+AHoMwBA2i9os4hwzzrHgeZu0IjIo9idzYX4RfrYbvGD3GFef1m58dE+xJwaRir8rB7/mlXeq/CZ935h+K92qKvdMefvn4q1/UMoxFQY31tcYtF6bflvX9923x7Jardj+d+5H3O6Hnaa6vPZ4JJ7ecjl+p7scjPZ8gVe+Mz8LPLRfm/+snwvCbof6sD8c59szDQsB+S9RfhhVY1ey1xrp12IDNgP12qL8Le7AvKAyZO4BDOILjgO/vJfWv4LqI74NbuIN7eAj4/hYbGXyyPt7Xavh+Lmd4+Z2b5UPHr9zxX/w+AVetfKw=
+  </data>
+ </layer>
+ <layer name="foreground" width="40" height="25">
+  <data encoding="base64" compression="zlib">
+   eJxjYECAUFYGhjBWBqJAJBMDgyYQRzFRpgYZELI/FSiXRqT7MoF2lgBxFh67iVFDiv2lQLkyIt1XCbTzGCMDQxWS3VnsEIxPDT5AyP5WoFwbke5DB29ZEOx3LLjV4QOE7J8KlJtGgvs+IoULyH3foJhc9xGyfylQbhkJ7mNkRrCF0DAI8ALlFZgx9ZFrfzQH8WaBgCABu2WB8gYkuI8cN4yCUUAvMBjS5mBwwygYBUMRkJJ39vIxMOxDwugAWW4/FnlquGEUjAJ6Ajdge9gdiD2I7C/QG4QB3RUOxBGD1H2DEQAAz2MnJA==
+  </data>
+ </layer>
+ <layer name="foreground Front" width="40" height="25">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFIwlsYyJPXzgrgu3OilsdPrCVCLuPkem+rywI9ncW3OrwgaNk2k0MYAWGGRsUs5MZfqNgFIyCUTAKRsEoGAWjYBQgg2OMCDwKhgcAAIYwCBw=
+  </data>
+ </layer>
+ <layer name="Collision" width="40" height="25" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztlN0KgDAIhWXv/9BdBSFTPP7MCg8cGKn5beUWEa3x2OBb3Rxf5Tu1f03PXH5mfM1z0R4eRilHYrXUZrFZe0RrM/jQ+ejg2z3XYn/nQ+ajii9rPrS7Q4qd/L4eDd/7+ZA+3projOzegcYr2ao1fDFZ+LT/oMvDh/sCW6QEEQ==
+  </data>
+ </layer>
+</map>

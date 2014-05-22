@@ -25,18 +25,20 @@ public class ConnectionOutgoing implements Runnable
 	/**
 	 * @param socket
 	 *            Socket being used - will be null for JUnit tests
+	 * @param stateAccumulator TODO
 	 * @param messagePackerSet
 	 *            the set of messagepackers the outgoing connection should use
 	 * @throws IOException
 	 *             Exception thrown for invalid input or output
 	 */
-	public ConnectionOutgoing(Socket socket, MessagePackerSet messagePackerSet) throws IOException
+	public ConnectionOutgoing(Socket socket, StateAccumulator stateAccumulator, MessagePackerSet messagePackerSet)
+			throws IOException
 	{
 		if (socket != null)
 		{
 			this.ostream = new ObjectOutputStream(socket.getOutputStream());
 		}
-		this.stateAccumulator = new StateAccumulator(messagePackerSet);
+		this.stateAccumulator = stateAccumulator;
 
 	}
 
@@ -48,8 +50,8 @@ public class ConnectionOutgoing implements Runnable
 		try
 		{
 			System.out.println("Connection to client created");
-
-			while (!Thread.currentThread().isInterrupted())
+			boolean done = false;
+			while (!Thread.currentThread().isInterrupted() && !done)
 			{
 				ArrayList<Message> msgs = stateAccumulator.getPendingMsgs();
 				if (msgs.size() == 0)
@@ -70,6 +72,7 @@ public class ConnectionOutgoing implements Runnable
 						{
 							System.out.println("Write failed");
 							cleanUpAndExit();
+							done = true;
 						}
 					}
 				}
@@ -101,5 +104,12 @@ public class ConnectionOutgoing implements Runnable
 	{
 		return stateAccumulator;
 	}
-
+	
+	/**
+	 * @return the output stream we are writing to
+	 */
+	public ObjectOutputStream getStream()
+	{
+		return this.ostream;
+	}
 }
