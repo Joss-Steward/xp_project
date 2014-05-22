@@ -1,14 +1,13 @@
 package view;
 
-import model.CommandMovePlayer;
-import model.ModelFacade;
-import model.PlayerManager;
-import model.ThisClientsPlayer;
-
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
 import data.Position;
+import edu.ship.shipsim.client.model.CommandMovePlayer;
+import edu.ship.shipsim.client.model.ModelFacade;
+import edu.ship.shipsim.client.model.PlayerManager;
+import edu.ship.shipsim.client.model.ThisClientsPlayer;
 import static view.Direction.*;
 
 /**

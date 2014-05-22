@@ -3,10 +3,10 @@ package view;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import edu.ship.shipsim.client.model.reports.NewMapReport;
+import edu.ship.shipsim.client.model.reports.QuestScreenReport;
+import edu.ship.shipsim.client.model.reports.QuestUpdateReport;
 import model.QualifiedObservableReport;
-import model.reports.NewMapReport;
-import model.reports.QuestScreenReport;
-import model.reports.QuestUpdateReport;
 
 /**
  * @author Joshua Beck

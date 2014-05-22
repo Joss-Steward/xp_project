@@ -3,8 +3,6 @@ package runners;
 import java.io.IOException;
 import java.net.Socket;
 
-import model.ModelFacade;
-import model.OptionsManager;
 import view.ScreenBasic;
 import view.Screens;
 
@@ -15,6 +13,8 @@ import communication.ConnectionManager;
 import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
+import edu.ship.shipsim.client.model.ModelFacade;
+import edu.ship.shipsim.client.model.OptionsManager;
 
 /**
  * The most basic gui!

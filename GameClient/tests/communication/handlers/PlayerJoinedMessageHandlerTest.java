@@ -1,13 +1,13 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
-import model.ModelFacade;
 import model.PlayersInDB;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.PlayerJoinedMessage;
+import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Make sure the message is handled properly

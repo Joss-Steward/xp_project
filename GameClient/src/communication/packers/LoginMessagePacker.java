@@ -1,10 +1,10 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
-import model.reports.LoginInitiatedReport;
 import communication.messages.LoginMessage;
 import communication.messages.Message;
 import communication.packers.MessagePacker;
+import edu.ship.shipsim.client.model.reports.LoginInitiatedReport;
 
 /**
  * Takes the information given to us when MovementNotifier updates and

@@ -1,9 +1,9 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
-import model.reports.ChatSentReport;
 import communication.messages.ChatMessage;
 import communication.messages.Message;
+import edu.ship.shipsim.client.model.reports.ChatSentReport;
 
 /**
  * @author Dave

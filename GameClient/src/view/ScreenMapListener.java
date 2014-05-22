@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import data.Position;
+import edu.ship.shipsim.client.model.reports.*;
 import model.QualifiedObservableReport;
-import model.reports.*;
 
 /**
  * Not much for now!

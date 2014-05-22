@@ -1,10 +1,10 @@
 package communication.handlers;
 
-import model.CommandLoginFailed;
-import model.ModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.LoginFailedMessage;
 import communication.messages.Message;
+import edu.ship.shipsim.client.model.CommandLoginFailed;
+import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Should process an incoming LoginFailedMessage. 

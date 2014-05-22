@@ -2,12 +2,12 @@ package Quest;
 
 import java.util.ArrayList;
 
-import model.MapManager;
-
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
+
+import edu.ship.shipsim.client.model.MapManager;
 
 /**
  * 

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import model.QualifiedObservable;
 import model.QualifiedObservableConnector;
-import model.reports.QuestScreenReport;
-import model.reports.PlayerMovedReport;
 import data.Position;
+import edu.ship.shipsim.client.model.reports.PlayerMovedReport;
+import edu.ship.shipsim.client.model.reports.QuestScreenReport;
 
 /**
  * Class look watches movement of player and updates the quests

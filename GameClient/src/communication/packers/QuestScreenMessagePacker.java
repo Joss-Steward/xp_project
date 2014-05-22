@@ -1,10 +1,10 @@
 package communication.packers;
 
-import model.PlayerManager;
 import model.QualifiedObservableReport;
-import model.reports.QuestScreenReport;
 import communication.messages.Message;
 import communication.messages.QuestScreenMessage;
+import edu.ship.shipsim.client.model.PlayerManager;
+import edu.ship.shipsim.client.model.reports.QuestScreenReport;
 
 /**
  * 

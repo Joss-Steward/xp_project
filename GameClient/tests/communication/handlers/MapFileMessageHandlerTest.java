@@ -4,12 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
-import model.ModelFacade;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.MapFileMessage;
+import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * @author Merlin

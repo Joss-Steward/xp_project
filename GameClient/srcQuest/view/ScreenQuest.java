@@ -2,8 +2,6 @@ package view;
 
 import java.util.ArrayList;
 
-import model.CommandQuestScreenClose;
-import model.ModelFacade;
 import Quest.Quest;
 import Quest.QuestManager;
 import Quest.QuestSystemLargeTest;
@@ -28,6 +26,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import edu.ship.shipsim.client.model.CommandQuestScreenClose;
+import edu.ship.shipsim.client.model.ModelFacade;
 import view.ScreenBasic;
 
 /**
