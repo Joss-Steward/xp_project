@@ -6,11 +6,15 @@ import model.QualifiedObservable;
 
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
 import data.Position;
@@ -29,8 +33,11 @@ public class MapManager extends QualifiedObservable
 	private boolean headless;
 	private boolean noCollisionLayer;
 	private ObjectMap<Position, TeleportHotSpot> teleportMap;
+	private Array<MapObject> regions;
 
 	private static final String COLLISION_LAYER = "Collision";
+	private static final String REGION_LAYER = "Regions";
+	
 
 	/**
 	 * Make the default constructor private
@@ -114,6 +121,7 @@ public class MapManager extends QualifiedObservable
 
 		// set the map's passability
 		TiledMapTileLayer collisionLayer = null;
+		MapLayer regionLayer = null;
 		MapProperties properties = null;
 		
 		if (!headless)
@@ -121,6 +129,7 @@ public class MapManager extends QualifiedObservable
 			collisionLayer = (TiledMapTileLayer) tiledMap.getLayers()
 					.get(COLLISION_LAYER);
 			properties = this.tiledMap.getProperties();
+			regionLayer = tiledMap.getLayers().get(REGION_LAYER);
 		}
 
 		if (collisionLayer != null)
@@ -153,6 +162,20 @@ public class MapManager extends QualifiedObservable
 		} else
 		{
 			noCollisionLayer = true;
+		}
+		
+		//parse out regions, which are mainly used for quests
+		if (regionLayer != null)
+		{
+			this.regions = new Array<MapObject>();
+			for (MapObject object : regionLayer.getObjects())
+			{
+				//only add named regions, else we can't identify where we are
+				if (object.getName() != null)
+				{
+					regions.add(object);
+				}
+			}
 		}
 		
 		//handle parsing out teleportation hotspots
@@ -229,6 +252,59 @@ public class MapManager extends QualifiedObservable
 	}
 
 	/**
+	 * @param p
+	 * 		the location in that map that is being checked to see if it is with
+	 * 		a particular region
+	 * @return a name of a region if the position is in one, or null if not
+	 */
+	public String getIsInRegion(Position p)
+	{
+		Vector2 pos = this.positionToPixel(p);
+		String name = null;
+		if (regions != null)
+		{
+			for (int i = 0; i < regions.size && name == null; i++)
+			{
+				MapObject object = regions.get(i);
+				//go through types
+				if (object instanceof RectangleMapObject)
+				{
+					Rectangle shape = ((RectangleMapObject)object).getRectangle();
+					if (shape.contains(pos))
+					{
+						name = object.getName();
+					}
+				}
+				else if (object instanceof CircleMapObject)
+				{
+					Circle shape = ((CircleMapObject)object).getCircle();
+					if (shape.contains(pos))
+					{
+						name = object.getName();
+					}
+				}
+				else if (object instanceof EllipseMapObject)
+				{
+					Ellipse shape = ((EllipseMapObject)object).getEllipse();
+					if (shape.contains(pos))
+					{
+						name = object.getName();
+					} 
+				}
+				else if (object instanceof PolygonMapObject)
+				{
+					Polygon shape = ((PolygonMapObject)object).getPolygon();
+					if (shape.contains(pos.x, pos.y))
+					{
+						name = object.getName();
+					} 
+				}
+			}
+		}
+		return name;
+	}
+	
+	/**
 	 * Sets the passabilityMap for testing purposes
 	 * 
 	 * @param pass
@@ -258,5 +334,25 @@ public class MapManager extends QualifiedObservable
 	public TeleportHotSpot getTeleportHotSpot(Position thePosition) 
 	{
 		return teleportMap.get(thePosition);
+	}
+	
+	/**
+	 * @param p the position we're converting
+	 * @return a position into a pixel scaled vector
+	 */
+	public Vector2 positionToPixel(Position p)
+	{
+		Vector2 vec;
+		int width = 1;
+		int height = 1;
+		if (tiledMap != null)
+		{
+			MapProperties prop = tiledMap.getProperties();
+			width = prop.get("tilewidth", Integer.class);
+			height = prop.get("tileheight", Integer.class);
+		}
+		vec = new Vector2(p.getColumn() * width, p.getRow()*height);
+		
+		return vec;
 	}
 }

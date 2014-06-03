@@ -10,6 +10,8 @@ import communication.handlers.LoginFailedMessageHandlerTest;
 import communication.handlers.MapFileMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.PlayerJoinedMessageHandlerTest;
+import communication.packers.AreaCollisionMessagePackerTest;
+import communication.packers.ChatMessagePackerTest;
 import communication.packers.LoginMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.TeleportationInitiationMessagePackerTest;
@@ -25,6 +27,7 @@ import edu.ship.shipsim.client.model.ModelFacadeTest;
 import edu.ship.shipsim.client.model.PlayerManagerTest;
 import edu.ship.shipsim.client.model.PlayerTest;
 import edu.ship.shipsim.client.model.ThisClientsPlayerTest;
+import edu.ship.shipsim.client.model.reports.AreaCollisionReportTest;
 import edu.ship.shipsim.client.model.reports.LoginFailedReportTest;
 import edu.ship.shipsim.client.model.reports.LoginInitiatedReportTest;
 import edu.ship.shipsim.client.model.reports.NewMapReportTest;
@@ -50,6 +53,8 @@ import edu.ship.shipsim.client.model.reports.PlayerMovedReportTest;
 		LoginFailedMessageHandlerTest.class,
 
 		// communication.packers
+		AreaCollisionMessagePackerTest.class,
+		ChatMessagePackerTest.class,
 		LoginMessagePackerTest.class,
 		MovementMessagePackerTest.class,
 		TeleportationInitiationMessagePackerTest.class,
@@ -65,12 +70,16 @@ import edu.ship.shipsim.client.model.reports.PlayerMovedReportTest;
 		CommandLoginFailedTest.class,
 
 		// model.reports
-		LoginInitiatedReportTest.class, NewMapReportTest.class,
+		AreaCollisionReportTest.class,
+		LoginInitiatedReportTest.class, 
+		NewMapReportTest.class,
 		PlayerMovedReportTest.class,
 		LoginFailedReportTest.class,
 
 		// view
-		ScreenListenerTest.class, ScreenMapInputTest.class, PlayerSpriteTest.class,
+		ScreenListenerTest.class, 
+		ScreenMapInputTest.class, 
+		PlayerSpriteTest.class,
 		DirectionTest.class,
 
 })
