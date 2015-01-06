@@ -2,9 +2,10 @@ package communication.messages;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import model.ServersInDB;
 
 import org.junit.Test;
+
+import datasource.ServersInDB;
 
 /**
  * Tests a login message

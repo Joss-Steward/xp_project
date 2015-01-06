@@ -4,12 +4,13 @@ import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 
-import model.ServersInDB;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import datasource.ServersInDB;
 
 /**
  * 
@@ -31,6 +32,14 @@ public class MapToServerMappingTest
 		reset.setMapName(ServersInDB.FIRST_SERVER.getMapName());
 		reset.setPortNumber(ServersInDB.FIRST_SERVER.getPortNumber());
 		MapToServerMapping.getServerDao().update(reset);
+	}
+
+	/**
+	 * Initialize the necessary singletons
+	 */
+	@Before
+	public void setup()
+	{
 		OptionsManager.resetSingleton();
 	}
 

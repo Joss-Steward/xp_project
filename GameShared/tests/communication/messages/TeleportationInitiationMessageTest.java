@@ -1,11 +1,11 @@
 package communication.messages;
 
 import static org.junit.Assert.assertEquals;
-import model.ServersInDB;
 
 import org.junit.Test;
 
 import data.Position;
+import datasource.ServersInDB;
 
 /**
  * Tests a login message

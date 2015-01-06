@@ -6,10 +6,11 @@ import java.sql.SQLException;
 
 import model.MapToServerMapping;
 import model.OptionsManager;
-import model.ServersInDB;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import datasource.ServersInDB;
 
 /**
  * Tests the OptionsManager

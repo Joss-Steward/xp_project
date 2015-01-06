@@ -28,6 +28,7 @@ import communication.messages.MovementMessageTest;
 import communication.messages.PlayerJoinedMessageTest;
 import communication.packers.MessagePackerSetTest;
 import data.PositionTest;
+import datasource.ServerRowDataGatewayTest;
 
 /**
  * All of the tests for the shared code. Notice that the packages, and classes
@@ -77,6 +78,9 @@ import data.PositionTest;
 
 		// data
 		PositionTest.class,
+		
+		//datasource
+		ServerRowDataGatewayTest.class,
 
 		// model
 		// DatabaseTest.class
