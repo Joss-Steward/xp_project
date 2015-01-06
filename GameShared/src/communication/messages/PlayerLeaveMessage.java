@@ -35,6 +35,9 @@ public class PlayerLeaveMessage implements Message, Serializable {
 		return this.playerID;
 	}
 	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString()
 	{
 		return "PlayerLeaveMessage: playerID = " + playerID;

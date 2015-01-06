@@ -17,7 +17,7 @@ public class ConnectionListener implements Runnable {
 	
 	/**
 	 * Creates a new listener
-	 * @param socket
+	 * @param stream
 	 * 	The socket to listen to
 	 * @param frequency
 	 * 	The rate at which we should poll the socket to check the availability of the connection
@@ -34,6 +34,9 @@ public class ConnectionListener implements Runnable {
 		};
 	}
 	
+	/**
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		try
@@ -65,6 +68,7 @@ public class ConnectionListener implements Runnable {
 	
 	/**
 	 * Performs an action when a connection no longer exists
+	 * @param action the thing we should do when this connection disconnects
 	 */
 	public void setDisconnectionAction(Runnable action) {
 		this.disconnectAction = action;

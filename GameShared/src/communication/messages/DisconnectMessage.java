@@ -2,6 +2,11 @@ package communication.messages;
 
 import java.io.Serializable;
 
+/**
+ * A message that the client has disconnected
+ * @author Nick?
+ *
+ */
 public class DisconnectMessage implements Message, Serializable {
 
 	/**
