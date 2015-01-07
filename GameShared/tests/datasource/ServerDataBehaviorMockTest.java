@@ -10,6 +10,7 @@ public class ServerDataBehaviorMockTest extends ServerDataBehaviorTest
 
 	ServerDataBehavior createBehavior()
 	{
-		return new ServerDataBehaviorMock();
+		ServerDataBehaviorMock x = new ServerDataBehaviorMock();
+		return x;
 	}
 }

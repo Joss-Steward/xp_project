@@ -3,6 +3,7 @@ package communication;
 import java.util.HashMap;
 
 /**
+ * TODO we should get rid of this
  * Contains hardcoded localhost mapping of mapfile name -> port number
  * 
  * @author Steve

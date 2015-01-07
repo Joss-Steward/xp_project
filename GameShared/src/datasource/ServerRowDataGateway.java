@@ -13,6 +13,8 @@ import model.DatabaseException;
 public class ServerRowDataGateway
 {
 
+	
+
 	private ServerDataBehavior dataInterfaceBehavior;
 
 	/**
@@ -80,5 +82,50 @@ public class ServerRowDataGateway
 	{
 		return dataInterfaceBehavior.getPortNumber();
 	}
+
+	/**
+	 * @param mapName our new map file name
+	 */
+	public void setMapName(String mapName)
+	{
+		dataInterfaceBehavior.setMapName(mapName);
+		
+	}
+
+	/**
+	 * @param hostName our new host name
+	 */
+	public void setHostName(String hostName)
+	{
+		dataInterfaceBehavior.setHostName(hostName);
+	}
+
+	/**
+	 * @param portNumber our port number
+	 */
+	public void setPortNumber(int portNumber)
+	{
+		dataInterfaceBehavior.setPortNumber(portNumber);
+	}
+
+	/**
+	 * put our information into the DB
+	 * @throws DatabaseException if we have trouble talking with the DB
+	 */
+	public void persist() throws DatabaseException
+	{
+		dataInterfaceBehavior.persist();
+	}
+
+	/**
+	 * resets the data to a know configuration (for testing)
+	 */
+	public void resetData()
+	{
+		dataInterfaceBehavior.resetData();
+	}
+
+
+	
 
 }

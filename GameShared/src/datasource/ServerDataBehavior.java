@@ -45,4 +45,30 @@ public interface ServerDataBehavior
 	 */
 	int getPortNumber();
 
+	/**
+	 * @param mapName the new map name for this server
+	 */
+	void setMapName(String mapName);
+
+	/**
+	 * @param portNumber the new port number for this server
+	 */
+	void setPortNumber(int portNumber);
+
+	/**
+	 * @param hostName the new host name for this server
+	 */
+	void setHostName(String hostName);
+
+	/**
+	 * store the information into the data source
+	 * @throws DatabaseException
+	 */
+	void persist() throws DatabaseException;
+
+	/**
+	 * Initialize the data source to a known state (for testing)
+	 */
+	void resetData();
+
 }

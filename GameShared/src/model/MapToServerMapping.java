@@ -1,16 +1,8 @@
 package model;
 
-import java.sql.SQLException;
-
-import model.MapToServerMapping;
-
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.table.DatabaseTable;
-
-import communication.LocalPortMapper;
+import datasource.ServerDataBehaviorMock;
+import datasource.ServerDataBehaviorRDS;
+import datasource.ServerRowDataGateway;
 
 /**
  * Keeps track of which server/port number each map is being managed by
@@ -18,98 +10,46 @@ import communication.LocalPortMapper;
  * @author Merlin
  * 
  */
-@DatabaseTable(tableName = "Server")
 public final class MapToServerMapping
 {
 
-	@DatabaseField(id = true)
-	private String mapName;
 
-	@DatabaseField
-	private String hostName;
-
-	@DatabaseField
-	private int portNumber;
-
+	private ServerRowDataGateway dataGateway;
+	
 	/**
-	 * The no arg constructor required by ORMLite
 	 */
 	public MapToServerMapping()
 	{
-
+		if (OptionsManager.getSingleton().isTestMode())
+		{
+			this.dataGateway = new ServerRowDataGateway(new ServerDataBehaviorMock());
+		}
+		else
+		{
+			this.dataGateway = new ServerRowDataGateway(new ServerDataBehaviorRDS());
+		}
 	}
 
+	/**
+	 * reset data to a known configuration (for testing)
+	 */
+	public void resetData()
+	{
+		dataGateway.resetData();
+	}
 	/**
 	 * Get an object from the database
 	 * 
 	 * @param mapName
 	 *            the name of the map for which we need the server info
-	 * @return the filled out object with info from the db
-	 * @throws SQLException
+	 * @throws DatabaseException
 	 *             if there is a problem connecting to the db or the mapName is
 	 *             not unique in the db
 	 */
-	public static MapToServerMapping retrieveMapping(String mapName) throws SQLException
+	public  MapToServerMapping (String mapName) throws DatabaseException
 	{
-		if (OptionsManager.getSingleton().isTestMode())
-		{
-			LocalPortMapper mapper = new LocalPortMapper();
-			MapToServerMapping localOnly = new MapToServerMapping();
-			localOnly.mapName = mapName;
-			localOnly.hostName = "localhost";
-			localOnly.portNumber = mapper.getPortForMapName(mapName);
-			return localOnly;
-			
-		}
-		getServerDao();
-		MapToServerMapping mapping = serverDao.queryForId(mapName);
-		if(mapping == null) {
-			mapping = new MapToServerMapping();
-		}
-		return mapping;
-	}
-
-	private static JdbcConnectionSource connectionSource;
-
-	private static Dao<MapToServerMapping, String> serverDao;
-
-	/**
-	 * Get the DAO that we will use to interface to the DB
-	 * 
-	 * @return the appropriate DAO object
-	 * @throws SQLException
-	 *             if we cannot connect to the server
-	 */
-	public static Dao<MapToServerMapping, String> getServerDao() throws SQLException
-	{
-		if (serverDao == null)
-		{
-			setUpDAOObject();
-		}
-		return serverDao;
-	}
-
-	private static void setUpDAOObject() throws SQLException
-	{
-		String databaseUrl = "jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players";
-		connectionSource = new JdbcConnectionSource(databaseUrl, "program", "ShipSim");
-		serverDao = DaoManager.createDao(connectionSource, MapToServerMapping.class);
-	}
-
-	/**
-	 * Get the connection source ormlite will use (only for testing)
-	 * 
-	 * @return the connection source
-	 * @throws SQLException
-	 *             if we cannot connect to the database
-	 */
-	public static JdbcConnectionSource getConnectionSource() throws SQLException
-	{
-		if (connectionSource == null)
-		{
-			setUpDAOObject();
-		}
-		return connectionSource;
+		this();
+		dataGateway.find(mapName);
 	}
 
 	/**
@@ -120,7 +60,7 @@ public final class MapToServerMapping
 	 */
 	public void setMapName(String mapName)
 	{
-		this.mapName = mapName;
+		dataGateway.setMapName( mapName);
 	}
 
 	/**
@@ -131,7 +71,7 @@ public final class MapToServerMapping
 	 */
 	public void setPortNumber(int portNumber)
 	{
-		this.portNumber = portNumber;
+		dataGateway.setPortNumber(portNumber);
 	}
 
 	/**
@@ -142,7 +82,7 @@ public final class MapToServerMapping
 	 */
 	public void setHostName(String hostName)
 	{
-		this.hostName = hostName;
+		dataGateway.setHostName(hostName);
 	}
 
 	/**
@@ -151,7 +91,7 @@ public final class MapToServerMapping
 	 */
 	public String getHostName()
 	{
-		return hostName;
+		return dataGateway.getHostName();
 	}
 
 	/**
@@ -160,7 +100,7 @@ public final class MapToServerMapping
 	 */
 	public int getPortNumber()
 	{
-		return portNumber;
+		return dataGateway.getPortNumber();
 	}
 
 	/**
@@ -169,69 +109,24 @@ public final class MapToServerMapping
 	 */
 	public String getMapName()
 	{
-		return mapName;
+		return dataGateway.getMapName();
 	}
 
 	/**
 	 * Persist this object out to the db
-	 * @throws SQLException if updating the db failed
+	 * @throws DatabaseException if updating the db failed
 	 */
-	public void persist() throws SQLException
+	public void persist() throws DatabaseException
 	{
-		serverDao.createOrUpdate(this);
+		dataGateway.persist();
 	}
 
-	/**
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((hostName == null) ? 0 : hostName.hashCode());
-		result = prime * result + ((mapName == null) ? 0 : mapName.hashCode());
-		result = prime * result + portNumber;
-		return result;
-	}
-
-	/**
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		MapToServerMapping other = (MapToServerMapping) obj;
-		if (hostName == null)
-		{
-			if (other.hostName != null)
-				return false;
-		} else if (!hostName.equals(other.hostName))
-			return false;
-		if (mapName == null)
-		{
-			if (other.mapName != null)
-				return false;
-		} else if (!mapName.equals(other.mapName))
-			return false;
-		if (portNumber != other.portNumber)
-			return false;
-		return true;
-	}
 	
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString()
 	{
-		return this.mapName + " on " + this.hostName + ":" + this.portNumber;
+		return this.dataGateway.getHostName() + " on " + dataGateway.getHostName() + ":" + dataGateway.getPortNumber();
 	}
 }

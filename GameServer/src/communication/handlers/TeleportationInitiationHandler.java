@@ -41,7 +41,7 @@ public class TeleportationInitiationHandler extends MessageHandler
 			CommandPersistPlayer persistCommand = new CommandPersistPlayer(currentMsg.getPlayerId());
 			ModelFacade.getSingleton().queueCommand(persistCommand);
 			
-			MapToServerMapping mapping = MapToServerMapping.retrieveMapping(currentMsg
+			MapToServerMapping mapping = new MapToServerMapping(currentMsg
 					.getMapName());
 			int pin = PlayerManager.getSingleton().getNewPinFor(playerID);
 			TeleportationContinuationMessage response = new TeleportationContinuationMessage(
@@ -49,11 +49,6 @@ public class TeleportationInitiationHandler extends MessageHandler
 					playerID, pin);
 			System.err.println("[DEBUG] pin is " + response.getPin());
 			this.getStateAccumulator().queueMessage(response);
-		} catch (SQLException e)
-		{
-			System.out.println("Unable to retrieve server mapping for map file named:"
-					+ currentMsg.getMapName());
-			e.printStackTrace();
 		} catch (DatabaseException e)
 		{
 			System.out.println("Unable to set up the completion info for teleporting");

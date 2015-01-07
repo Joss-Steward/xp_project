@@ -1,16 +1,12 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.sql.SQLException;
-
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
-
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import datasource.ServersInDB;
+import datasource.ServersForTest;
 
 /**
  * 
@@ -19,20 +15,8 @@ import datasource.ServersInDB;
  */
 public class MapToServerMappingTest
 {
-	/**
-	 * Reset the database to have consistent data all of the time
-	 * OptionsManager should not be in test mode, because we want to hit the actual database
-	 * @throws SQLException shouldn't
-	 */
-	@Before
-	public void resetMappingInDB() throws SQLException
-	{
-		MapToServerMapping reset = new MapToServerMapping();
-		reset.setHostName(ServersInDB.FIRST_SERVER.getHostName());
-		reset.setMapName(ServersInDB.FIRST_SERVER.getMapName());
-		reset.setPortNumber(ServersInDB.FIRST_SERVER.getPortNumber());
-		MapToServerMapping.getServerDao().update(reset);
-	}
+
+	private MapToServerMapping map;
 
 	/**
 	 * Initialize the necessary singletons
@@ -41,18 +25,27 @@ public class MapToServerMappingTest
 	public void setup()
 	{
 		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton(true);
 	}
 
+	
+	/**
+	 * 
+	 */
+	@After
+	public void cleanup()
+	{
+		map.resetData();
+	}
 	/**
 	 * Can retrieve one
-	 * @throws SQLException  shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void retrieval() throws SQLException
+	public void retrieval() throws  DatabaseException
 	{
-		this.resetMappingInDB();
-		ServersInDB expected = ServersInDB.FIRST_SERVER;
-		MapToServerMapping map = MapToServerMapping.retrieveMapping(expected.getMapName());
+		ServersForTest expected = ServersForTest.FIRST_SERVER;
+		map = new MapToServerMapping(expected.getMapName());
 		assertEquals(expected.getMapName(), map.getMapName());
 		assertEquals(expected.getHostName(), map.getHostName());
 		assertEquals(expected.getPortNumber(), map.getPortNumber());
@@ -60,32 +53,20 @@ public class MapToServerMappingTest
 	
 	/**
 	 * Make sure we can change the hostname and port number and update the database appropriately
-	 * @throws SQLException shouldn't
+	 * @throws DatabaseException  shouldn't
 	 */
 	@Test
-	public void canPersistChanges() throws SQLException
+	public void canPersistChanges() throws DatabaseException
 	{
-		MapToServerMapping map = MapToServerMapping.retrieveMapping(ServersInDB.FIRST_SERVER.getMapName());
+		map = new MapToServerMapping(ServersForTest.FIRST_SERVER.getMapName());
 		map.setHostName("homehost");
 		map.setPortNumber(42);
 		map.persist();
 		
-		MapToServerMapping mapAfter = MapToServerMapping.retrieveMapping(ServersInDB.FIRST_SERVER.getMapName());
-		assertEquals(map,mapAfter);
-		
-		map.setHostName(ServersInDB.FIRST_SERVER.getHostName());
-		map.setPortNumber(ServersInDB.FIRST_SERVER.getPortNumber());
-		map.persist();
-		
+		MapToServerMapping mapAfter = new MapToServerMapping(ServersForTest.FIRST_SERVER.getMapName());
+		assertEquals(map.getHostName(),mapAfter.getHostName());
+		assertEquals(map.getPortNumber(),mapAfter.getPortNumber());
+		assertEquals(map.getMapName(), mapAfter.getMapName());
 	}
 	
-	
-	/**
-	 * Make sure the equals contract is obeyed
-	 */
-	@Test
-	public void equalsContract()
-	{
-		EqualsVerifier.forClass(MapToServerMapping.class).suppress(Warning.NONFINAL_FIELDS).verify();
-	}
 }

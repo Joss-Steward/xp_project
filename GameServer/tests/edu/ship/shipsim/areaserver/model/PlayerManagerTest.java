@@ -33,6 +33,8 @@ public class PlayerManagerTest
 	@Before
 	public void setUp()
 	{
+		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton(true);
 		QualifiedObservableConnector.resetSingleton();
 		PlayerManager.resetSingleton();
 		PlayerManager playerManager = PlayerManager.getSingleton();
@@ -151,8 +153,7 @@ public class PlayerManagerTest
 	@Test
 	public void testNpcsLoaded() throws DatabaseException, SQLException
 	{
-		OptionsManager.getSingleton().setTestMode();
-		OptionsManager.getSingleton().updateMapInformation("quiznasium.tmx", "local", 1337);
+		OptionsManager.getSingleton(true).updateMapInformation("quiznasium.tmx", "local", 1337);
 		PlayerManager.getSingleton().loadNpcs();
 		for(NpcsInDB npc: NpcsInDB.values())
 		{

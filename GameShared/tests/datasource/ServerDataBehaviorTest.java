@@ -2,6 +2,7 @@ package datasource;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
 import org.junit.Test;
 
 import model.DatabaseException;
@@ -15,8 +16,18 @@ import model.DatabaseTest;
 public abstract class ServerDataBehaviorTest extends DatabaseTest
 {
 
+	private ServerDataBehavior behavior;
+
 	abstract ServerDataBehavior createBehavior();
 
+	/**
+	 * Make sure any static information is cleaned up between tests
+	 */
+	@After
+	public void cleanup()
+	{
+		behavior.resetData();
+	}
 	/**
 	 * Try to create a row for a map file that is already in the database
 	 * 
@@ -26,8 +37,8 @@ public abstract class ServerDataBehaviorTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void createExisting() throws DatabaseException
 	{
-		ServerDataBehavior gateway = createBehavior();
-		gateway.create(ServersInDB.FIRST_SERVER.getMapName(), "noHostName", 1000);
+		behavior = createBehavior();
+		behavior.create(ServersForTest.FIRST_SERVER.getMapName(), "noHostName", 1000);
 	}
 
 	/**
@@ -40,8 +51,8 @@ public abstract class ServerDataBehaviorTest extends DatabaseTest
 	public void createNotExisting() throws DatabaseException
 	{
 		// Use one behavior to create it
-		ServerDataBehavior gateway = createBehavior();
-		gateway.create("stupid.tmx", "noHostName", 1000);
+		behavior = createBehavior();
+		behavior.create("stupid.tmx", "noHostName", 1000);
 		// Make sure another behavior can find it
 		ServerDataBehavior found = createBehavior();
 		found.find("stupid.tmx");
@@ -58,11 +69,11 @@ public abstract class ServerDataBehaviorTest extends DatabaseTest
 	@Test
 	public void findExisting() throws DatabaseException
 	{
-		ServersInDB data = ServersInDB.FIRST_SERVER;
-		ServerDataBehavior gateway = createBehavior();
-		gateway.find(data.getMapName());
-		assertEquals(data.getHostName(), gateway.getHostName());
-		assertEquals(data.getPortNumber(), gateway.getPortNumber());
+		ServersForTest data = ServersForTest.FIRST_SERVER;
+		behavior = createBehavior();
+		behavior.find(data.getMapName());
+		assertEquals(data.getHostName(), behavior.getHostName());
+		assertEquals(data.getPortNumber(), behavior.getPortNumber());
 	}
 
 	/**
@@ -75,8 +86,55 @@ public abstract class ServerDataBehaviorTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void findNotExisting() throws DatabaseException
 	{
-		ServerDataBehavior gateway = createBehavior();
-		gateway.find("noFile");
+		 behavior = createBehavior();
+		behavior.find("noFile");
 	}
 
+	/**
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void editMapName() throws DatabaseException
+	{
+		behavior = createBehavior();
+		behavior.find(ServersForTest.FIRST_SERVER.getMapName());
+		behavior.setMapName("Fred.tmx");
+		behavior.persist();
+		ServerDataBehavior after = createBehavior();
+		after.find("Fred.tmx");
+		assertEquals(ServersForTest.FIRST_SERVER.getPortNumber(), after.getPortNumber());
+		assertEquals(ServersForTest.FIRST_SERVER.getHostName(), after.getHostName());
+	}
+	/**
+	 * We should be able to change the host name
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void editHostName() throws DatabaseException
+	{
+		behavior = createBehavior();
+		behavior.find(ServersForTest.FIRST_SERVER.getMapName());
+		behavior.setHostName("h");
+		behavior.persist();
+		ServerDataBehavior after = createBehavior();
+		after.find(ServersForTest.FIRST_SERVER.getMapName());
+		assertEquals(ServersForTest.FIRST_SERVER.getPortNumber(), after.getPortNumber());
+		assertEquals("h", after.getHostName());
+	}
+	/**
+	 * We should be able to change the portNumber
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void editPortNumber() throws DatabaseException
+	{
+		behavior = createBehavior();
+		behavior.find(ServersForTest.FIRST_SERVER.getMapName());
+		behavior.setPortNumber(42);
+		behavior.persist();
+		ServerDataBehavior after = createBehavior();
+		after.find(ServersForTest.FIRST_SERVER.getMapName());
+		assertEquals(42, after.getPortNumber());
+		assertEquals(ServersForTest.FIRST_SERVER.getHostName(), after.getHostName());
+	}
 }

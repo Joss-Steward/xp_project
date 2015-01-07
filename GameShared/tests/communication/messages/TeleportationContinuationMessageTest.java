@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import datasource.ServersInDB;
+import datasource.ServersForTest;
 
 /**
  * Tests a login message
@@ -22,17 +22,17 @@ public class TeleportationContinuationMessageTest
 	public void testToStringAndGetters()
 	{
 		TeleportationContinuationMessage msg = new TeleportationContinuationMessage(
-				ServersInDB.FIRST_SERVER.getMapName(),
-				ServersInDB.FIRST_SERVER.getHostName(),
-				ServersInDB.FIRST_SERVER.getPortNumber(), 2, 4);
+				ServersForTest.FIRST_SERVER.getMapName(),
+				ServersForTest.FIRST_SERVER.getHostName(),
+				ServersForTest.FIRST_SERVER.getPortNumber(), 2, 4);
 		assertTrue(msg.toString().startsWith(
 				"TeleportationContinuationMessage: mapName = "
-						+ ServersInDB.FIRST_SERVER.getMapName() + " and hostName = "
-						+ ServersInDB.FIRST_SERVER.getHostName() + " and portNumber = "
-						+ ServersInDB.FIRST_SERVER.getPortNumber()));
-		assertEquals(ServersInDB.FIRST_SERVER.getMapName(), msg.getMapName());
-		assertEquals(ServersInDB.FIRST_SERVER.getHostName(), msg.getHostName());
-		assertEquals(ServersInDB.FIRST_SERVER.getPortNumber(), msg.getPortNumber());
+						+ ServersForTest.FIRST_SERVER.getMapName() + " and hostName = "
+						+ ServersForTest.FIRST_SERVER.getHostName() + " and portNumber = "
+						+ ServersForTest.FIRST_SERVER.getPortNumber()));
+		assertEquals(ServersForTest.FIRST_SERVER.getMapName(), msg.getMapName());
+		assertEquals(ServersForTest.FIRST_SERVER.getHostName(), msg.getHostName());
+		assertEquals(ServersForTest.FIRST_SERVER.getPortNumber(), msg.getPortNumber());
 		assertEquals(2, msg.getPlayerID());
 		assertEquals(4, msg.getPin());
 	}

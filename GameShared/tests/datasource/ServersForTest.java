@@ -6,7 +6,7 @@ package datasource;
  * @author Merlin
  *
  */
-public enum ServersInDB
+public enum ServersForTest
 {
 	/**
 	 * 
@@ -15,15 +15,26 @@ public enum ServersInDB
 	/**
 	 * 
 	 */
-	SECOND_SERVER("map2.tmx", "host2.com", 1872);
-
+	SECOND_SERVER("map2.tmx", "host2.com", 1872),
+	/**
+	 *
+	 */
+	CURRENT("current.tmx", "localhost", 1872),
+	/**
+	 * 
+	 */
+	QUIZNASIUM("quiznasium.tmx", "localhost", 1873),
+	/**
+	 * 
+	 */
+	HOMEWORK("homework.tmx", "localhost", 1874);
 	private String mapName;
 
 	private String hostName;
 
 	private int portNumber;
 
-	ServersInDB(String mapName, String hostName, int portNumber)
+	ServersForTest(String mapName, String hostName, int portNumber)
 	{
 		this.mapName = mapName;
 		this.hostName = hostName;

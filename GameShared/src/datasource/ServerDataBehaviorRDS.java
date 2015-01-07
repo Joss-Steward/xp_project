@@ -26,6 +26,8 @@ public class ServerDataBehaviorRDS implements ServerDataBehavior
 
 	private Connection connection;
 
+	private String originalMapName;
+
 	/**
 	 * Create a new mapping in the DB
 	 * 
@@ -72,6 +74,7 @@ public class ServerDataBehaviorRDS implements ServerDataBehavior
 	public void find(String mapName) throws DatabaseException
 	{
 		this.mapName = mapName;
+		this.originalMapName = mapName;
 		this.connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
@@ -119,6 +122,79 @@ public class ServerDataBehaviorRDS implements ServerDataBehavior
 	public int getPortNumber()
 	{
 		return portNumber;
+	}
+
+	/**
+	 * @see datasource.ServerDataBehavior#setMapName(java.lang.String)
+	 */
+	@Override
+	public void setMapName(String mapName)
+	{
+		this.mapName = mapName;
+	}
+
+	/**
+	 * @see datasource.ServerDataBehavior#setPortNumber(int)
+	 */
+	@Override
+	public void setPortNumber(int portNumber)
+	{
+		this.portNumber = portNumber;
+	}
+
+	/**
+	 * @see datasource.ServerDataBehavior#setHostName(java.lang.String)
+	 */
+	@Override
+	public void setHostName(String hostName)
+	{
+		this.hostName = hostName;
+	}
+
+	/**
+	 * @see datasource.ServerDataBehavior#persist()
+	 */
+	@Override
+	public void persist() throws DatabaseException
+	{
+		this.connection = DatabaseManager.getSingleton().getConnection();
+		if (!originalMapName.equals(mapName))
+		{
+			PreparedStatement stmt;
+			try
+			{
+				stmt = connection
+						.prepareStatement("DELETE from Server WHERE mapName = ?");
+				stmt.setString(1, originalMapName);
+				stmt.executeUpdate();
+			} catch (SQLException e)
+			{
+				throw new DatabaseException("Error trying to change mapName from "
+						+ originalMapName + " to " + mapName, e);
+			}
+			create(mapName, hostName, portNumber);
+		}
+		try
+		{
+			PreparedStatement stmt = connection
+					.prepareStatement("UPDATE Server SET portNumber = ?, hostName = ? WHERE mapName = ?");
+			stmt.setString(2, hostName);
+			stmt.setInt(1, portNumber);
+			stmt.setString(3, mapName);
+			stmt.executeUpdate();
+		} catch (SQLException e)
+		{
+			throw new DatabaseException(
+					"Couldn't find a server for map named " + mapName, e);
+		}
+	}
+
+	/**
+	 * @see datasource.ServerDataBehavior#resetData()
+	 */
+	@Override
+	public void resetData()
+	{
 	}
 
 }
