@@ -1,12 +1,12 @@
 package communication.handlers;
 
-import java.sql.SQLException;
-
 import model.DatabaseException;
 import model.MapToServerMapping;
-import communication.messages.TeleportationInitiationMessage;
-import communication.messages.TeleportationContinuationMessage;
+
 import communication.messages.Message;
+import communication.messages.TeleportationContinuationMessage;
+import communication.messages.TeleportationInitiationMessage;
+
 import edu.ship.shipsim.areaserver.model.CommandMovePlayerSilently;
 import edu.ship.shipsim.areaserver.model.CommandPersistPlayer;
 import edu.ship.shipsim.areaserver.model.ModelFacade;

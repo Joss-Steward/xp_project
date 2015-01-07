@@ -307,7 +307,7 @@ public class PlayerManager extends QualifiedObservable
 	/**
 	 * Remove a player from this server's player manager and inform all connected clients of the
 	 * disconnection
-	 * @param playerID
+	 * @param playerID the ID of the player we should remove
 	 */
 	public void removePlayer(int playerID) {
 		Player p = this.players.remove(playerID);
