@@ -7,7 +7,6 @@ import communication.ConnectionManager;
 import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
-
 /**
  * A daemon that resides on the server listening to the gigabuds and to client
  * requests
@@ -87,7 +86,7 @@ public class LoginServer implements Runnable
 			String[] splitArg = arg.split("=");
 			if(splitArg[0].equals("--localhost"))
 			{
-				OptionsManager.getSingleton().setTestMode();
+				OptionsManager.getSingleton(true);
 			}
 		}
 		LoginServer S = new LoginServer();

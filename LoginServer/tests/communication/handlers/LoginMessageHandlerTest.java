@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import model.OptionsManager;
 import model.PlayerManager;
 import model.PlayersInDB;
 
@@ -29,6 +30,8 @@ public class LoginMessageHandlerTest
 	@Before
 	public void setup()
 	{
+		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton(true);
 		PlayerManager.resetSingleton();
 	}
 
@@ -61,7 +64,7 @@ public class LoginMessageHandlerTest
 		ArrayList<Message> x = accum.getPendingMsgs();
 		LoginSuccessfulMessage response = (LoginSuccessfulMessage) x.get(0);
 		assertEquals(PlayersInDB.MERLIN.getPlayerID(), response.getPlayerID());
-		assertEquals("isabella", response.getHostName());
+		assertEquals("localhost", response.getHostName());
 		assertEquals(1872, response.getPortNumber());
 		//Can't really check the pin since it is randomly generated
 //		assertEquals(?, response.getPin(), 0.000001);

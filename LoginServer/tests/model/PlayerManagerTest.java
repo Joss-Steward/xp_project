@@ -21,6 +21,8 @@ public class PlayerManagerTest
 	@Before
 	public void setUp()
 	{
+		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton(true);
 		PlayerManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 	}
@@ -47,7 +49,7 @@ public class PlayerManagerTest
 	public void respondsOnSuccessfulLogin() throws LoginFailedException
 	{
 		PlayerManager pm = PlayerManager.getSingleton();
-		LoginSuccessfulReport expected = new LoginSuccessfulReport(PlayersInDB.MERLIN.getPlayerID(), "isabella", 1872,
+		LoginSuccessfulReport expected = new LoginSuccessfulReport(PlayersInDB.MERLIN.getPlayerID(), "localhost", 1872,
 				0);
 		
 		LoginSuccessfulReport actual = pm.login(PlayersInDB.MERLIN.getPlayerName(),

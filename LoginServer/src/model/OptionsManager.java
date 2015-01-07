@@ -14,23 +14,53 @@ public class OptionsManager
 
 	/**
 	 * I'm a singleton
-	 */
-	private OptionsManager()
-	{
-	}
-	
-	/**
 	 * 
-	 * @return The instance of OptionsManager
+	 * @param testMode
+	 *            true if we are running tests false for live system
 	 */
-	public static OptionsManager getSingleton() 
+	private OptionsManager(boolean testMode2)
 	{
-		if(singleton == null) 
+		testMode = testMode2;
+	}
+	/**
+	 * Used to get an existing singleton (it must have already been created). If
+	 * it hasn't been created, you must use the getSingleton where you specify
+	 * the testing mode
+	 * 
+	 * @return the existing singleton
+	 */
+	public static OptionsManager getSingleton()
+	{
+		if (singleton == null)
 		{
-			singleton = new OptionsManager();
+			throw new IllegalArgumentException(
+					"No existing singleton - you must specify test mode");
 		}
 		return singleton;
 	}
+
+	/**
+	 * 
+	 * @param testMode
+	 *            true if we are running tests and false for live system
+	 * @return The instance of OptionsManager
+	 */
+	public static OptionsManager getSingleton(boolean testMode)
+	{
+		if (singleton == null)
+		{
+			singleton = new OptionsManager(testMode);
+		} else
+		{
+			if (singleton.isTestMode() != testMode)
+			{
+				throw new IllegalArgumentException(
+						"Can't change the test mode after the singleton is created");
+			}
+		}
+		return singleton;
+	}
+
 	
 	/**
 	 * Reset our instance

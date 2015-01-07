@@ -1,10 +1,7 @@
 package model;
 
-import java.sql.SQLException;
-
-import communication.LocalPortMapper;
-
 import model.reports.LoginSuccessfulReport;
+import communication.LocalPortMapper;
 
 /**
  * @author Merlin
@@ -68,8 +65,7 @@ public class PlayerManager extends QualifiedObservable
 			int port;
 			if (!OptionsManager.getSingleton().isTestMode())
 			{
-				MapToServerMapping mapping = MapToServerMapping
-						.retrieveMapping(DEFAULT_MAP);
+				MapToServerMapping mapping = new MapToServerMapping(DEFAULT_MAP);
 				server = mapping.getHostName();
 				port = mapping.getPortNumber();
 			} else
@@ -82,7 +78,7 @@ public class PlayerManager extends QualifiedObservable
 			LoginSuccessfulReport report = new LoginSuccessfulReport(
 					pl.getPlayerID(), server, port, pp.generatePin());
 			return report;
-		} catch (DatabaseException | SQLException e)
+		} catch (DatabaseException e)
 		{
 			throw new LoginFailedException();
 		}
