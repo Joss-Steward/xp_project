@@ -13,24 +13,28 @@ public interface PlayerLoginRowDataGateway
 
 	/**
 	 * Create a new record from the parameters
+	 * @param playerName the name of the player
+	 * @param password the player's password
+	 * @return the player's unique id
 	 * @throws DatabaseException shouldn't
 	 */
 	int create(String playerName, String password) throws DatabaseException;
 
 	/**
 	 * Find the data associated with a given map file
+	 * @param playerName the name of the player we are looking for
 	 * @throws DatabaseException if the map file name is not found
 	 */
 	void find(String playerName) throws DatabaseException;
 
 	/**
 	 * 
-	 * @return
+	 * @return the player's password
 	 */
 	String getPassword();
 
 	/**
-	 * @param mapName the new map name for this server
+	 * @param password the player's new password
 	 */
 	void setPassword(String password);
 
@@ -45,8 +49,14 @@ public interface PlayerLoginRowDataGateway
 	 */
 	void resetData();
 
+	/**
+	 * @return the player's name
+	 */
 	String getPlayerName();
 
+	/**
+	 * @return the player's unique ID
+	 */
 	int getPlayerID();
 
 }
