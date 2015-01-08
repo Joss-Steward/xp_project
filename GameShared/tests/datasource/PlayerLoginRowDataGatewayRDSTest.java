@@ -1,6 +1,11 @@
 package datasource;
 
 
+/**
+ * Tests the RDS gateway
+ * @author Merlin
+ *
+ */
 public class PlayerLoginRowDataGatewayRDSTest extends PlayerLoginRowDataGatewayTest
 {
 

@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import model.DatabaseException;
 import model.DatabaseManager;
 import model.OptionsManager;
-import datasource.ServerDataBehaviorRDS;
+import datasource.ServerRowDataGatewayRDS;
 import datasource.ServersForTest;
 
 /**
@@ -40,7 +40,7 @@ public class BuildTestDBServers
 		stmt.executeUpdate();
 		for (ServersForTest p : ServersForTest.values())
 		{
-			ServerDataBehaviorRDS behavior = new ServerDataBehaviorRDS();
+			ServerRowDataGatewayRDS behavior = new ServerRowDataGatewayRDS();
 			behavior.create(p.getMapName(),p.getHostName(),p.getPortNumber());
 		}
 

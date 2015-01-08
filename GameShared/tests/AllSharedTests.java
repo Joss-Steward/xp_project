@@ -31,9 +31,9 @@ import data.PositionTest;
 import datasource.PlayerLoginRowDataGatewayMockTest;
 import datasource.PlayerLoginRowDataGatewayRDSTest;
 import datasource.PlayerLoginDataMapperTest;
-import datasource.ServerDataBehaviorMockTest;
-import datasource.ServerDataBehaviorRDSTest;
-import datasource.ServerRowDataGatewayTest;
+import datasource.ServerRowDataGatewayMockTest;
+import datasource.ServerRowDataGatewayRDSTest;
+import datasource.ServerDataMapperTest;
 
 /**
  * All of the tests for the shared code. Notice that the packages, and classes
@@ -90,10 +90,10 @@ import datasource.ServerRowDataGatewayTest;
 		//PlayerLoginDataBehaviorTest.class,
 		PlayerLoginDataMapperTest.class,
 		//PlayersForTest
-		ServerDataBehaviorMockTest.class,
-		ServerDataBehaviorRDSTest.class,
+		ServerRowDataGatewayMockTest.class,
+		ServerRowDataGatewayRDSTest.class,
 		//ServerDataBehaviorTest,
-		ServerRowDataGatewayTest.class,
+		ServerDataMapperTest.class,
 		//ServersInDB,
 
 		// model

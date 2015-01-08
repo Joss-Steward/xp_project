@@ -15,7 +15,7 @@ import model.DatabaseManager;
  * @author Merlin
  * 
  */
-public class ServerDataBehaviorRDS implements ServerDataBehavior
+public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 {
 
 	private String mapName;
@@ -125,7 +125,7 @@ public class ServerDataBehaviorRDS implements ServerDataBehavior
 	}
 
 	/**
-	 * @see datasource.ServerDataBehavior#setMapName(java.lang.String)
+	 * @see datasource.ServerRowDataGateway#setMapName(java.lang.String)
 	 */
 	@Override
 	public void setMapName(String mapName)
@@ -134,7 +134,7 @@ public class ServerDataBehaviorRDS implements ServerDataBehavior
 	}
 
 	/**
-	 * @see datasource.ServerDataBehavior#setPortNumber(int)
+	 * @see datasource.ServerRowDataGateway#setPortNumber(int)
 	 */
 	@Override
 	public void setPortNumber(int portNumber)
@@ -143,7 +143,7 @@ public class ServerDataBehaviorRDS implements ServerDataBehavior
 	}
 
 	/**
-	 * @see datasource.ServerDataBehavior#setHostName(java.lang.String)
+	 * @see datasource.ServerRowDataGateway#setHostName(java.lang.String)
 	 */
 	@Override
 	public void setHostName(String hostName)
@@ -152,7 +152,7 @@ public class ServerDataBehaviorRDS implements ServerDataBehavior
 	}
 
 	/**
-	 * @see datasource.ServerDataBehavior#persist()
+	 * @see datasource.ServerRowDataGateway#persist()
 	 */
 	@Override
 	public void persist() throws DatabaseException
@@ -190,7 +190,7 @@ public class ServerDataBehaviorRDS implements ServerDataBehavior
 	}
 
 	/**
-	 * @see datasource.ServerDataBehavior#resetData()
+	 * @see datasource.ServerRowDataGateway#resetData()
 	 */
 	@Override
 	public void resetData()

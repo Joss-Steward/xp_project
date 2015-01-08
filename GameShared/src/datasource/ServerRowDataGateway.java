@@ -3,129 +3,72 @@ package datasource;
 import model.DatabaseException;
 
 /**
- * A row table gateway for the Servers table in the database. That table
- * contains the information about each area server. It is given a behavior that
- * defines where it gets the data from
- *
+ * Defines the behavior required for interfacing with a data source that has information about
+ * which servers are managing which map files
  * @author Merlin
  *
  */
-public class ServerRowDataGateway
+public interface ServerRowDataGateway
 {
 
-	
-
-	private ServerDataBehavior dataInterfaceBehavior;
-
 	/**
-	 * @param behavior
-	 *            the behavior for finding the data
+	 * Create a new record from the parameters
+	 * @param mapName the name of the map file being managed
+	 * @param hostName the name of the host managing the map
+	 * @param portNumber the port number associated with the map
+	 * @throws DatabaseException shouldn't
 	 */
-	public ServerRowDataGateway(ServerDataBehavior behavior)
-	{
-		this.dataInterfaceBehavior = behavior;
-	}
+	void create(String mapName, String hostName, int portNumber) throws DatabaseException;
 
 	/**
-	 * Create a new record with information about the server that manages a
-	 * given map file
+	 * Find the data associated with a given map file
+	 * @param mapFileName the name of the map file we are interested in
+	 * @throws DatabaseException if the map file name is not found
+	 */
+	void find(String mapFileName) throws DatabaseException;
+
+	/**
 	 * 
-	 * @param mapName
-	 *            the name of the map file
-	 * @param hostName
-	 *            the name of the host that manages that file
-	 * @param portNumber
-	 *            the name of the port number associated with that file
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @return the name of the host that is managing the map file
 	 */
-	public void create(String mapName, String hostName, int portNumber)
-			throws DatabaseException
-	{
-		dataInterfaceBehavior.create(mapName, hostName, portNumber);
-	}
+	String getHostName();
 
 	/**
-	 * Fill this object with the information the data source associates with a
-	 * given map file name
 	 * 
-	 * @param mapFileName
-	 *            the map file we are interested in
+	 * @return the name of the map file we are interested in
+	 */
+	String getMapName();
+
+	/**
+	 * 
+	 * @return the port number associated with the map file
+	 */
+	int getPortNumber();
+
+	/**
+	 * @param mapName the new map name for this server
+	 */
+	void setMapName(String mapName);
+
+	/**
+	 * @param portNumber the new port number for this server
+	 */
+	void setPortNumber(int portNumber);
+
+	/**
+	 * @param hostName the new host name for this server
+	 */
+	void setHostName(String hostName);
+
+	/**
+	 * store the information into the data source
 	 * @throws DatabaseException
-	 *             shouldn't unless that map file isn't in the data source
 	 */
-	public void find(String mapFileName) throws DatabaseException
-	{
-		dataInterfaceBehavior.find(mapFileName);
-	}
+	void persist() throws DatabaseException;
 
 	/**
-	 * @return the host name in the row
+	 * Initialize the data source to a known state (for testing)
 	 */
-	public String getHostName()
-	{
-		return dataInterfaceBehavior.getHostName();
-	}
-
-	/**
-	 * @return the map file in the row
-	 */
-	public String getMapName()
-	{
-		return dataInterfaceBehavior.getMapName();
-	}
-
-	/**
-	 * @return the port number in the row
-	 */
-	public int getPortNumber()
-	{
-		return dataInterfaceBehavior.getPortNumber();
-	}
-
-	/**
-	 * @param mapName our new map file name
-	 */
-	public void setMapName(String mapName)
-	{
-		dataInterfaceBehavior.setMapName(mapName);
-		
-	}
-
-	/**
-	 * @param hostName our new host name
-	 */
-	public void setHostName(String hostName)
-	{
-		dataInterfaceBehavior.setHostName(hostName);
-	}
-
-	/**
-	 * @param portNumber our port number
-	 */
-	public void setPortNumber(int portNumber)
-	{
-		dataInterfaceBehavior.setPortNumber(portNumber);
-	}
-
-	/**
-	 * put our information into the DB
-	 * @throws DatabaseException if we have trouble talking with the DB
-	 */
-	public void persist() throws DatabaseException
-	{
-		dataInterfaceBehavior.persist();
-	}
-
-	/**
-	 * resets the data to a know configuration (for testing)
-	 */
-	public void resetData()
-	{
-		dataInterfaceBehavior.resetData();
-	}
-
-
-	
+	void resetData();
 
 }

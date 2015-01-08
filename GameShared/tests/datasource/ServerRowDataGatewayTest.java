@@ -1,132 +1,149 @@
 package datasource;
 
-import static org.junit.Assert.*;
-import model.DatabaseException;
+import static org.junit.Assert.assertEquals;
 
-import org.easymock.EasyMock;
+import org.junit.After;
 import org.junit.Test;
 
+import model.DatabaseException;
+import model.DatabaseTest;
+
 /**
- * Test to make sure that ServerRowDataGateway uses its data source behavior correctly
- * @author Carol
+ * Tests the behaviors associated with Server data sources
+ * 
+ * @author Merlin
  *
  */
-public class ServerRowDataGatewayTest
+public abstract class ServerRowDataGatewayTest extends DatabaseTest
 {
 
-	
-	/**
-	 * Persisting the row should defer to the data behavior
-	 * @throws DatabaseException shouldn't
-	 */
-	@Test
-	public void persistDefers() throws DatabaseException
-	{
-		ServerDataBehavior behavior = EasyMock.createNiceMock(ServerDataBehavior.class);
-		behavior.persist();
-		EasyMock.replay(behavior);
-		
-		ServerRowDataGateway gateway = new ServerRowDataGateway(behavior);
-		gateway.persist();
-		EasyMock.verify(behavior);
-	}
-	/**
-	 * Creating a new row should defer to the data behavior
-	 * @throws DatabaseException shouldn't
-	 */
-	@Test
-	public void createDefers() throws DatabaseException
-	{
-		ServerDataBehavior behavior = EasyMock.createNiceMock(ServerDataBehavior.class);
-		behavior.create(ServersForTest.FIRST_SERVER.getMapName(),
-				ServersForTest.FIRST_SERVER.getHostName(),
-				ServersForTest.FIRST_SERVER.getPortNumber());
-		EasyMock.replay(behavior);
+	private ServerRowDataGateway gateway;
 
-		ServerRowDataGateway gateway = new ServerRowDataGateway(behavior);
-		gateway.create(ServersForTest.FIRST_SERVER.getMapName(),
-				ServersForTest.FIRST_SERVER.getHostName(),
-				ServersForTest.FIRST_SERVER.getPortNumber());
-		EasyMock.verify(behavior);
-	}
+	abstract ServerRowDataGateway createGateway();
 
 	/**
-	 * Finding a row should defer to the data behavior
-	 * @throws DatabaseException shouldn't
+	 * Make sure any static information is cleaned up between tests
 	 */
-	@Test
-	public void findDefers() throws DatabaseException
+	@After
+	public void cleanup()
 	{
-		ServerDataBehavior behavior = EasyMock.createNiceMock(ServerDataBehavior.class);
-		behavior.find(ServersForTest.FIRST_SERVER.getMapName());
-		EasyMock.replay(behavior);
-
-		ServerRowDataGateway gateway = new ServerRowDataGateway(behavior);
-		gateway.find(ServersForTest.FIRST_SERVER.getMapName());
-		EasyMock.verify(behavior);
-	}
-
-	/**
-	 * resetting the data behavior should defer to the data behavior
-	 * @throws DatabaseException shouldn't
-	 */
-	@Test
-	public void resetDefers() throws DatabaseException
-	{
-		ServerDataBehavior behavior = EasyMock.createNiceMock(ServerDataBehavior.class);
-		behavior.resetData();
-		EasyMock.replay(behavior);
-
-		ServerRowDataGateway gateway = new ServerRowDataGateway(behavior);
 		gateway.resetData();
-		EasyMock.verify(behavior);
 	}
 
 	/**
-	 * All of our getters should defer to the data behavior
-	 * @throws DatabaseException shouldn't
+	 * Try to create a row for a map file that is already in the database
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
-	@Test
-	public void gettersDefer() throws DatabaseException
+	@Test(expected = DatabaseException.class)
+	public void createExisting() throws DatabaseException
 	{
-		ServerDataBehavior behavior = EasyMock.createNiceMock(ServerDataBehavior.class);
-		behavior.find(ServersForTest.FIRST_SERVER.getMapName());
-		EasyMock.expect(behavior.getMapName()).andReturn(
-				ServersForTest.FIRST_SERVER.getMapName());
-		EasyMock.expect(behavior.getHostName()).andReturn(
-				ServersForTest.FIRST_SERVER.getHostName());
-		EasyMock.expect(behavior.getPortNumber()).andReturn(
-				ServersForTest.FIRST_SERVER.getPortNumber());
-		EasyMock.replay(behavior);
-
-		ServerRowDataGateway gateway = new ServerRowDataGateway(behavior);
-		gateway.find(ServersForTest.FIRST_SERVER.getMapName());
-		assertEquals(ServersForTest.FIRST_SERVER.getMapName(), gateway.getMapName());
-		assertEquals(ServersForTest.FIRST_SERVER.getHostName(), gateway.getHostName());
-		assertEquals(ServersForTest.FIRST_SERVER.getPortNumber(), gateway.getPortNumber());
-		EasyMock.verify(behavior);
+		gateway = createGateway();
+		gateway.create(ServersForTest.FIRST_SERVER.getMapName(), "noHostName", 1000);
 	}
-	
+
 	/**
-	 * All setters should defer to the data behavior
-	 * @throws DatabaseException shouldnt
+	 * Create a new row in the database
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
-	public void settersDefer() throws DatabaseException
+	public void createNotExisting() throws DatabaseException
 	{
-		ServerDataBehavior behavior = EasyMock.createNiceMock(ServerDataBehavior.class);
-		behavior.find(ServersForTest.FIRST_SERVER.getMapName());
-		behavior.setMapName("x");
-		behavior.setHostName("l");
-		behavior.setPortNumber(3);
-		EasyMock.replay(behavior);
-
-		ServerRowDataGateway gateway = new ServerRowDataGateway(behavior);
-		gateway.find(ServersForTest.FIRST_SERVER.getMapName());
-		gateway.setMapName("x");
-		gateway.setHostName("l");
-		gateway.setPortNumber(3);
-		EasyMock.verify(behavior);
+		// Use one behavior to create it
+		gateway = createGateway();
+		gateway.create("stupid.tmx", "noHostName", 1000);
+		// Make sure another behavior can find it
+		ServerRowDataGateway found = createGateway();
+		found.find("stupid.tmx");
+		assertEquals("noHostName", found.getHostName());
+		assertEquals(1000, found.getPortNumber());
 	}
 
+	/**
+	 * Get a gateway for a row that we know is in the database
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	@Test
+	public void findExisting() throws DatabaseException
+	{
+		ServersForTest data = ServersForTest.FIRST_SERVER;
+		gateway = createGateway();
+		gateway.find(data.getMapName());
+		assertEquals(data.getHostName(), gateway.getHostName());
+		assertEquals(data.getPortNumber(), gateway.getPortNumber());
+	}
+
+	/**
+	 * If we ask for a gateway for a row that isn't in the database, we should
+	 * get an exception
+	 * 
+	 * @throws DatabaseException
+	 *             should
+	 */
+	@Test(expected = DatabaseException.class)
+	public void findNotExisting() throws DatabaseException
+	{
+		gateway = createGateway();
+		gateway.find("noFile");
+	}
+
+	/**
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	@Test
+	public void editMapName() throws DatabaseException
+	{
+		gateway = createGateway();
+		gateway.find(ServersForTest.FIRST_SERVER.getMapName());
+		gateway.setMapName("Fred.tmx");
+		gateway.persist();
+		ServerRowDataGateway after = createGateway();
+		after.find("Fred.tmx");
+		assertEquals(ServersForTest.FIRST_SERVER.getPortNumber(), after.getPortNumber());
+		assertEquals(ServersForTest.FIRST_SERVER.getHostName(), after.getHostName());
+	}
+
+	/**
+	 * We should be able to change the host name
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	@Test
+	public void editHostName() throws DatabaseException
+	{
+		gateway = createGateway();
+		gateway.find(ServersForTest.FIRST_SERVER.getMapName());
+		gateway.setHostName("h");
+		gateway.persist();
+		ServerRowDataGateway after = createGateway();
+		after.find(ServersForTest.FIRST_SERVER.getMapName());
+		assertEquals(ServersForTest.FIRST_SERVER.getPortNumber(), after.getPortNumber());
+		assertEquals("h", after.getHostName());
+	}
+
+	/**
+	 * We should be able to change the portNumber
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	@Test
+	public void editPortNumber() throws DatabaseException
+	{
+		gateway = createGateway();
+		gateway.find(ServersForTest.FIRST_SERVER.getMapName());
+		gateway.setPortNumber(42);
+		gateway.persist();
+		ServerRowDataGateway after = createGateway();
+		after.find(ServersForTest.FIRST_SERVER.getMapName());
+		assertEquals(42, after.getPortNumber());
+		assertEquals(ServersForTest.FIRST_SERVER.getHostName(), after.getHostName());
+	}
 }

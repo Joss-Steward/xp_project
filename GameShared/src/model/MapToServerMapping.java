@@ -1,8 +1,8 @@
 package model;
 
-import datasource.ServerDataBehaviorMock;
-import datasource.ServerDataBehaviorRDS;
-import datasource.ServerRowDataGateway;
+import datasource.ServerRowDataGatewayMock;
+import datasource.ServerRowDataGatewayRDS;
+import datasource.ServerDataMapper;
 
 /**
  * Keeps track of which server/port number each map is being managed by
@@ -14,7 +14,7 @@ public final class MapToServerMapping
 {
 
 
-	private ServerRowDataGateway dataGateway;
+	private ServerDataMapper dataGateway;
 	
 	/**
 	 */
@@ -22,11 +22,11 @@ public final class MapToServerMapping
 	{
 		if (OptionsManager.getSingleton().isTestMode())
 		{
-			this.dataGateway = new ServerRowDataGateway(new ServerDataBehaviorMock());
+			this.dataGateway = new ServerDataMapper(new ServerRowDataGatewayMock());
 		}
 		else
 		{
-			this.dataGateway = new ServerRowDataGateway(new ServerDataBehaviorRDS());
+			this.dataGateway = new ServerDataMapper(new ServerRowDataGatewayRDS());
 		}
 	}
 

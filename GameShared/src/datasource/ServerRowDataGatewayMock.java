@@ -10,7 +10,7 @@ import model.DatabaseException;
  * @author Carol
  *
  */
-public class ServerDataBehaviorMock implements ServerDataBehavior
+public class ServerRowDataGatewayMock implements ServerRowDataGateway
 {
 
 	private class Server
@@ -54,7 +54,7 @@ public class ServerDataBehaviorMock implements ServerDataBehavior
 	/**
 	 * 
 	 */
-	public ServerDataBehaviorMock()
+	public ServerRowDataGatewayMock()
 	{
 		if (servers == null)
 		{
@@ -63,7 +63,7 @@ public class ServerDataBehaviorMock implements ServerDataBehavior
 	}
 
 	/**
-	 * @see datasource.ServerDataBehavior#create(java.lang.String, java.lang.String, int)
+	 * @see datasource.ServerRowDataGateway#create(java.lang.String, java.lang.String, int)
 	 */
 	@Override
 	public void create(String mapName, String hostName, int portNumber)
@@ -78,7 +78,7 @@ public class ServerDataBehaviorMock implements ServerDataBehavior
 	}
 
 	/**
-	 * @see datasource.ServerDataBehavior#find(java.lang.String)
+	 * @see datasource.ServerRowDataGateway#find(java.lang.String)
 	 */
 	@Override
 	public void find(String mapName) throws DatabaseException
@@ -96,7 +96,7 @@ public class ServerDataBehaviorMock implements ServerDataBehavior
 	}
 
 	/**
-	 * @see datasource.ServerDataBehavior#getHostName()
+	 * @see datasource.ServerRowDataGateway#getHostName()
 	 */
 	@Override
 	public String getHostName()
@@ -105,7 +105,7 @@ public class ServerDataBehaviorMock implements ServerDataBehavior
 	}
 
 	/**
-	 * @see datasource.ServerDataBehavior#getMapName()
+	 * @see datasource.ServerRowDataGateway#getMapName()
 	 */
 	@Override
 	public String getMapName()
@@ -114,7 +114,7 @@ public class ServerDataBehaviorMock implements ServerDataBehavior
 	}
 
 	/**
-	 * @see datasource.ServerDataBehavior#getPortNumber()
+	 * @see datasource.ServerRowDataGateway#getPortNumber()
 	 */
 	@Override
 	public int getPortNumber()
@@ -123,7 +123,7 @@ public class ServerDataBehaviorMock implements ServerDataBehavior
 	}
 
 	/**
-	 * @see datasource.ServerDataBehavior#setMapName(java.lang.String)
+	 * @see datasource.ServerRowDataGateway#setMapName(java.lang.String)
 	 */
 	@Override
 	public void setMapName(String mapName)
@@ -133,7 +133,7 @@ public class ServerDataBehaviorMock implements ServerDataBehavior
 	}
 
 	/**
-	 * @see datasource.ServerDataBehavior#setPortNumber(int)
+	 * @see datasource.ServerRowDataGateway#setPortNumber(int)
 	 */
 	@Override
 	public void setPortNumber(int portNumber)
@@ -142,7 +142,7 @@ public class ServerDataBehaviorMock implements ServerDataBehavior
 	}
 
 	/**
-	 * @see datasource.ServerDataBehavior#setHostName(java.lang.String)
+	 * @see datasource.ServerRowDataGateway#setHostName(java.lang.String)
 	 */
 	@Override
 	public void setHostName(String hostName)
@@ -151,7 +151,7 @@ public class ServerDataBehaviorMock implements ServerDataBehavior
 	}
 
 	/**
-	 * @see datasource.ServerDataBehavior#persist()
+	 * @see datasource.ServerRowDataGateway#persist()
 	 */
 	@Override
 	public void persist()
@@ -161,7 +161,7 @@ public class ServerDataBehaviorMock implements ServerDataBehavior
 	}
 
 	/**
-	 * @see datasource.ServerDataBehavior#resetData()
+	 * @see datasource.ServerRowDataGateway#resetData()
 	 */
 	public void resetData()
 	{

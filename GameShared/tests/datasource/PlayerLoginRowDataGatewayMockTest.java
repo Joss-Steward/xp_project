@@ -1,6 +1,11 @@
 package datasource;
 
 
+/**
+ * Tests our mock gateway
+ * @author Merlin
+ *
+ */
 public class PlayerLoginRowDataGatewayMockTest extends PlayerLoginRowDataGatewayTest
 {
 
