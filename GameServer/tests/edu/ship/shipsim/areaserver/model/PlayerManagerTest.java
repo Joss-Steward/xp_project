@@ -7,7 +7,6 @@ import java.util.Observer;
 
 import model.DatabaseException;
 import model.OptionsManager;
-import model.PlayersInDB;
 import model.QualifiedObservableConnector;
 
 import org.easymock.EasyMock;
@@ -15,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import data.Position;
+import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.PlayerNotFoundException;
@@ -135,13 +135,13 @@ public class PlayerManagerTest
 	@Test
 	public void playerIsSaved()
 	{
-		Player player = PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID());
+		Player player = PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
 		player.setPlayerPosition(new Position(100, 100));
 		assertTrue(PlayerManager.getSingleton().persistPlayer(player.getID()));
 		
 		PlayerManager.resetSingleton();
 		
-		Player fetched = PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID());
+		Player fetched = PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
 		assertEquals(new Position(100, 100), fetched.getPlayerPosition());
 	}
 	

@@ -2,12 +2,12 @@ package edu.ship.shipsim.areaserver.model.reports;
 
 import static org.junit.Assert.*;
 import model.DatabaseException;
-import model.PlayersInDB;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
@@ -40,9 +40,9 @@ public class PlayerConnectionReportTest
 		Player john = PlayerManager.getSingleton().addPlayer(1);
 		PlayerConnectionReport report = new PlayerConnectionReport(john);
 		assertEquals(1, report.getPlayerID());
-		assertEquals(PlayersInDB.JOHN.getPlayerName(), report.getPlayerName());
-		assertEquals(PlayersInDB.JOHN.getAppearanceType(), report.getAppearanceType());
-		assertEquals(PlayersInDB.JOHN.getPosition(), report.getPosition());
+		assertEquals(PlayersForTest.JOHN.getPlayerName(), report.getPlayerName());
+		assertEquals(PlayersForTest.JOHN.getAppearanceType(), report.getAppearanceType());
+		assertEquals(PlayersForTest.JOHN.getPosition(), report.getPosition());
 	}
 
 	/**

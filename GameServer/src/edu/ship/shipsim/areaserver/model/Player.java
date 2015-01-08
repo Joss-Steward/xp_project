@@ -26,7 +26,6 @@ public class Player extends QualifiedObservable
 	@DatabaseField(id = true)
 	private int id;
 
-	@DatabaseField(foreign = true)
 	private PlayerLogin playerLogin;
 
 	@DatabaseField

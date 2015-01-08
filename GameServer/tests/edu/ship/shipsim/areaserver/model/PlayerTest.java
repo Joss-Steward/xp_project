@@ -9,7 +9,6 @@ import java.util.GregorianCalendar;
 import model.DatabaseException;
 import model.DatabaseTest;
 import model.PlayerConnection;
-import model.PlayersInDB;
 import model.QualifiedObservableConnector;
 
 import org.junit.After;
@@ -17,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import data.Position;
+import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
@@ -68,7 +68,7 @@ public class PlayerTest extends DatabaseTest
 	public void canGetAppearanceType()
 	{
 		Player p = playerManager.addPlayer(1);
-		assertEquals(PlayersInDB.JOHN.getAppearanceType(), p.getAppearanceType());
+		assertEquals(PlayersForTest.JOHN.getAppearanceType(), p.getAppearanceType());
 	}
 
 	/**

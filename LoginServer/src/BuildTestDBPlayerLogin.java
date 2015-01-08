@@ -2,9 +2,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import datasource.PlayersForTest;
 import model.DatabaseException;
 import model.DatabaseManager;
-import model.PlayersInDB;
 
 /**
  * Builds the login portion of the database
@@ -50,7 +50,7 @@ public class BuildTestDBPlayerLogin
 		stmt.executeUpdate("ALTER TABLE PlayerConnection ENGINE = INNODB");
 		stmt.executeUpdate("ALTER TABLE PlayerConnection ADD UNIQUE (PlayerID)");
 		
-		for (PlayersInDB p : PlayersInDB.values())
+		for (PlayersForTest p : PlayersForTest.values())
 		{
 			String sqlUpdateString = "INSERT INTO PlayerConnection (PlayerID, Pin, MapName) VALUES ('"
 					+ p.getPlayerID() + "', '" + 111111111 + "','" + p.getMapName() + "');";
@@ -65,9 +65,9 @@ public class BuildTestDBPlayerLogin
 
 		stmt.executeUpdate("DROP TABLE PlayerLogins");
 		StringBuffer sql = new StringBuffer("CREATE TABLE PlayerLogins(");
-		sql.append("PlayerID int NOT NULL AUTO_INCREMENT, ");
-		sql.append("PlayerName VARCHAR(30) NOT NULL,");
-		sql.append("Password VARCHAR(30) NOT NULL,");
+		sql.append("playerID int NOT NULL AUTO_INCREMENT, ");
+		sql.append("playerName VARCHAR(30) NOT NULL,");
+		sql.append("password VARCHAR(30) NOT NULL,");
 
 		sql.append("PRIMARY KEY (PlayerID));");
 		System.out.println(sql);
@@ -76,7 +76,7 @@ public class BuildTestDBPlayerLogin
 		stmt.executeUpdate("ALTER TABLE PlayerLogins ADD UNIQUE (PlayerName)");
 		stmt.executeUpdate("ALTER TABLE PlayerLogins ADD UNIQUE (PlayerID)");
 		
-		for (PlayersInDB p : PlayersInDB.values())
+		for (PlayersForTest p : PlayersForTest.values())
 		{
 			stmt.executeUpdate("INSERT INTO PlayerLogins (PlayerName, Password) VALUES ('"
 					+ p.getPlayerName() + "', '" + p.getPlayerPassword() + "');");

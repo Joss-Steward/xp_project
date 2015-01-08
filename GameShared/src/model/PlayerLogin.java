@@ -1,32 +1,34 @@
 package model;
 
-import java.sql.SQLException;
-import java.util.List;
-
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.table.DatabaseTable;
+import datasource.PlayerLoginDataMapper;
+import datasource.PlayerLoginRowDataGatewayMock;
+import datasource.PlayerLoginRowDataGatewayRDS;
 
 /**
  * 
  * @author Merlin
  * 
  */
-@DatabaseTable(tableName = "PlayerLogins")
 public class PlayerLogin
 {
 
-	private static final String PLAYERNAME_FIELD_NAME = "PlayerName";
-	@DatabaseField
-	private int playerID;
-	@DatabaseField(id = true, columnName = PLAYERNAME_FIELD_NAME)
-	private String playerName;
-	@DatabaseField
-	private String password;
-	private static JdbcConnectionSource connectionSource;
-	private static Dao<PlayerLogin, ?> playerLoginDao;
+	private PlayerLoginDataMapper dataMapper;
+
+	/**
+	 * 
+	 */
+	public PlayerLogin()
+	{
+		if (OptionsManager.getSingleton().isTestMode())
+		{
+			this.dataMapper = new PlayerLoginDataMapper(
+					new PlayerLoginRowDataGatewayMock());
+		} else
+		{
+			this.dataMapper = new PlayerLoginDataMapper(
+					new PlayerLoginRowDataGatewayRDS());
+		}
+	}
 
 	/**
 	 * Create a new record in the database
@@ -35,124 +37,67 @@ public class PlayerLogin
 	 *            the player's name
 	 * @param password
 	 *            the player's password
-	 * @param id The id of the player
+	 * @param id
+	 *            The id of the player
+	 * @return the ID of the player we created
+	 * @throws DatabaseException
+	 *             if the gateway fails
 	 */
-	public static void createNewPlayerLogin(String name, String password, int id)
+	public static int createNewPlayerLogin(String name, String password, int id)
+			throws DatabaseException
 	{
-		try
-		{
-			setUpORMLite();
-			PlayerLogin pl = new PlayerLogin();
-			try 
-			{
-				PlayerLogin.readPlayerLogin(name);
-			}
-			catch(DatabaseException e)
-			{
-				// do nothing because we'll create it
-			}
-			pl.playerName = name;
-			pl.playerID = id;
-			pl.password = password;
-			playerLoginDao.createOrUpdate(pl);
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
+		PlayerLoginDataMapper dataMapper = new PlayerLoginDataMapper(
+				new PlayerLoginRowDataGatewayRDS());
+		return dataMapper.create(name, password);
+
 	}
 
 	/**
 	 * Create an object if the name and password are found in the db
 	 * 
-	 * @param name
+	 * @param playerName
 	 *            the player's name
 	 * @param password
 	 *            the player's password
-	 * @return a player login from the given information only if the password is
-	 *         correct
 	 * @throws DatabaseException
 	 *             if the name/password combination isn't found in the db
 	 */
-	public static PlayerLogin readAndVerifyPlayerLogin(String name, String password)
-			throws DatabaseException
+	public PlayerLogin(String playerName, String password) throws DatabaseException
 	{
+		this(playerName);
 		try
 		{
-			setUpORMLite();
-
-			List<PlayerLogin> list;
-
-			list = playerLoginDao.queryBuilder().where()
-					.eq(PlayerLogin.PLAYERNAME_FIELD_NAME, name).query();
-			if (list.size() == 1)
-			{
-				PlayerLogin pl = list.get(0);
-				if (pl.password.equals(password))
-				{
-					return pl;
-				}
-			} else if (list.size() == 0)
-			{
-				throw new DatabaseException("no login information for " + name);
-			} else
-			{
-				throw new DatabaseException("more than one login record for " + name);
-			}
-		} catch (SQLException e)
+			dataMapper.find(playerName);
+		} catch (DatabaseException e)
 		{
-			throw new DatabaseException("Error retrieving login information for " + name);
+			throw new DatabaseException("no login information for " + playerName);
 		}
 
-		throw new DatabaseException("incorrect password");
+		if (!dataMapper.getPassword().equals(password))
+		{
+			throw new DatabaseException("incorrect password");
+		}
+
 	}
 
 	/**
 	 * Get a player's login information without checking his password
-	 * @param name the player's player name
-	 * @return the player's login information
-	 * @throws DatabaseException if the player doesn't exist, or has two records
+	 * 
+	 * @param playerName
+	 *            the player's player name
+	 * @throws DatabaseException
+	 *             if the player doesn't exist
 	 */
-	public static PlayerLogin readPlayerLogin(String name) throws DatabaseException
+	public PlayerLogin (String playerName) throws DatabaseException
 	{
+		this();
 		try
 		{
-			setUpORMLite();
-
-			List<PlayerLogin> list;
-
-			list = playerLoginDao.queryBuilder().where()
-					.eq(PlayerLogin.PLAYERNAME_FIELD_NAME, name).query();
-			if (list.size() == 1)
-			{
-				return list.get(0);
-			} else if (list.size() == 0)
-			{
-				throw new DatabaseException("no login information for " + name);
-			} else
-			{
-				throw new DatabaseException("more than one login record for " + name);
-			}
-		} catch (SQLException e)
+			dataMapper.find(playerName);
+		} catch (DatabaseException e)
 		{
-			throw new DatabaseException("Error retrieving login information for " + name);
+			throw new DatabaseException("no login information for " + playerName);
 		}
-	}
-
-	private static void setUpORMLite() throws SQLException
-	{
-		if (connectionSource == null)
-		{
-			String databaseUrl = "jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players";
-			connectionSource = new JdbcConnectionSource(databaseUrl, "program", "ShipSim");
-			playerLoginDao = DaoManager.createDao(connectionSource, PlayerLogin.class);
-		}
-	}
-
-	/**
-	 * No arg constructor for ORMLite
-	 */
-	public PlayerLogin()
-	{
 	}
 
 	/**
@@ -162,16 +107,17 @@ public class PlayerLogin
 	 */
 	public int getPlayerID()
 	{
-		return playerID;
+		return dataMapper.getPlayerID();
 	}
 
 	/**
 	 * Get the player's playername
+	 * 
 	 * @return the playername
 	 */
 	public String getPlayerName()
 	{
-		return playerName;
+		return dataMapper.getPlayerName();
 	}
 
 }

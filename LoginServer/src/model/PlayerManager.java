@@ -48,16 +48,17 @@ public class PlayerManager extends QualifiedObservable
 	 *            the player's name
 	 * @param password
 	 *            the password
-	 * @return a report giving the instructions for how the client should connect to an area server
-	 * @throws LoginFailedException for database errors or invalid credentials
+	 * @return a report giving the instructions for how the client should
+	 *         connect to an area server
+	 * @throws LoginFailedException
+	 *             for database errors or invalid credentials
 	 */
 	public LoginSuccessfulReport login(String playerName, String password)
 			throws LoginFailedException
 	{
 		try
 		{
-			PlayerLogin pl = PlayerLogin.readAndVerifyPlayerLogin(playerName,
-					password);
+			PlayerLogin pl = new PlayerLogin(playerName, password);
 			numberOfPlayers++;
 			PlayerConnection pp = new PlayerConnection(pl.getPlayerID());
 
@@ -75,8 +76,8 @@ public class PlayerManager extends QualifiedObservable
 				port = mapping.getPortForMapName(DEFAULT_MAP);
 			}
 
-			LoginSuccessfulReport report = new LoginSuccessfulReport(
-					pl.getPlayerID(), server, port, pp.generatePin());
+			LoginSuccessfulReport report = new LoginSuccessfulReport(pl.getPlayerID(),
+					server, port, pp.generatePin());
 			return report;
 		} catch (DatabaseException e)
 		{
@@ -91,7 +92,7 @@ public class PlayerManager extends QualifiedObservable
 	@Override
 	public boolean notifiesOn(Class<?> reportType)
 	{
-		
+
 		return false;
 	}
 

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import model.OptionsManager;
 import model.PlayerManager;
-import model.PlayersInDB;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +15,7 @@ import communication.messages.LoginFailedMessage;
 import communication.messages.LoginMessage;
 import communication.messages.LoginSuccessfulMessage;
 import communication.messages.Message;
+import datasource.PlayersForTest;
 
 /**
  * @author Merlin
@@ -44,8 +44,8 @@ public class LoginMessageHandlerTest
 		LoginMessageHandler handler = new LoginMessageHandler();
 		StateAccumulator accum = new StateAccumulator(null);
 		handler.setAccumulator(accum);
-		handler.process(new LoginMessage(PlayersInDB.MERLIN.getPlayerName(),
-				PlayersInDB.MERLIN.getPlayerPassword()));
+		handler.process(new LoginMessage(PlayersForTest.MERLIN.getPlayerName(),
+				PlayersForTest.MERLIN.getPlayerPassword()));
 		assertEquals(1, PlayerManager.getSingleton().getNumberOfPlayers());
 	}
 	
@@ -58,12 +58,12 @@ public class LoginMessageHandlerTest
 		LoginMessageHandler handler = new LoginMessageHandler();
 		StateAccumulator accum = new StateAccumulator(null);
 		handler.setAccumulator(accum);
-		handler.process(new LoginMessage(PlayersInDB.MERLIN.getPlayerName(),
-				PlayersInDB.MERLIN.getPlayerPassword()));
+		handler.process(new LoginMessage(PlayersForTest.MERLIN.getPlayerName(),
+				PlayersForTest.MERLIN.getPlayerPassword()));
 		
 		ArrayList<Message> x = accum.getPendingMsgs();
 		LoginSuccessfulMessage response = (LoginSuccessfulMessage) x.get(0);
-		assertEquals(PlayersInDB.MERLIN.getPlayerID(), response.getPlayerID());
+		assertEquals(PlayersForTest.MERLIN.getPlayerID(), response.getPlayerID());
 		assertEquals("localhost", response.getHostName());
 		assertEquals(1872, response.getPortNumber());
 		//Can't really check the pin since it is randomly generated
@@ -79,8 +79,8 @@ public class LoginMessageHandlerTest
 		LoginMessageHandler handler = new LoginMessageHandler();
 		StateAccumulator accum = new StateAccumulator(null);
 		handler.setAccumulator(accum);
-		handler.process(new LoginMessage(PlayersInDB.MERLIN.getPlayerName(),
-				PlayersInDB.MERLIN.getPlayerPassword() + 'Z'));
+		handler.process(new LoginMessage(PlayersForTest.MERLIN.getPlayerName(),
+				PlayersForTest.MERLIN.getPlayerPassword() + 'Z'));
 		
 		ArrayList<Message> x = accum.getPendingMsgs();
 		assertEquals(LoginFailedMessage.class, x.get(0).getClass());

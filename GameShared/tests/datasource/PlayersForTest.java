@@ -1,4 +1,4 @@
-package model;
+package datasource;
 
 import data.Position;
 
@@ -8,7 +8,7 @@ import data.Position;
  * @author Merlin
  * 
  */
-public enum PlayersInDB
+public enum PlayersForTest
 {
 	/**
 	 * 
@@ -65,7 +65,7 @@ public enum PlayersInDB
 	
 	private String mapName;
 
-	PlayersInDB(int id, String playerName, String type, int row, int col, String password, String mapName)
+	PlayersForTest(int id, String playerName, String type, int row, int col, String password, String mapName)
 	{
 		this.playerID = id;
 		this.playerName = playerName;

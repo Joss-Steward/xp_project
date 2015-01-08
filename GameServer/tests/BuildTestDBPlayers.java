@@ -1,14 +1,15 @@
+
 import java.sql.SQLException;
 
 import model.DatabaseException;
 import model.PlayerLogin;
-import model.PlayersInDB;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import data.Position;
+import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.model.CharacterIDGenerator;
 import edu.ship.shipsim.areaserver.model.Npc;
 import edu.ship.shipsim.areaserver.model.NpcsInDB;
@@ -61,13 +62,13 @@ public class BuildTestDBPlayers
 		TableUtils.dropTable(connectionSource, Player.class, true);
 		TableUtils.createTableIfNotExists(connectionSource, Player.class);
 
-		for (PlayersInDB p : PlayersInDB.values())
+		for (PlayersForTest p : PlayersForTest.values())
 		{
 			Position pos = p.getPosition();
 			Player player = new Player();
 			player.setId(CharacterIDGenerator.getNextId());
 			PlayerLogin.createNewPlayerLogin(p.getPlayerName(), p.getPlayerPassword(), player.getID());
-			PlayerLogin pl = PlayerLogin.readPlayerLogin(p.getPlayerName());
+			PlayerLogin pl = new PlayerLogin(p.getPlayerName());
 			player.setPlayerLogin(pl);
 			player.setPlayerPosition(pos);
 			player.setAppearanceType(p.getAppearanceType());
