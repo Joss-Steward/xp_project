@@ -1,6 +1,7 @@
 package model;
 
 import datasource.PlayerLoginDataMapper;
+import datasource.PlayerLoginRowDataGateway;
 import datasource.PlayerLoginRowDataGatewayMock;
 import datasource.PlayerLoginRowDataGatewayRDS;
 
@@ -12,7 +13,7 @@ import datasource.PlayerLoginRowDataGatewayRDS;
 public class PlayerLogin
 {
 
-	private PlayerLoginDataMapper dataMapper;
+	private PlayerLoginRowDataGateway gateway;
 
 	/**
 	 * 
@@ -21,12 +22,11 @@ public class PlayerLogin
 	{
 		if (OptionsManager.getSingleton().isTestMode())
 		{
-			this.dataMapper = new PlayerLoginDataMapper(
-					new PlayerLoginRowDataGatewayMock());
+			this.gateway =
+					new PlayerLoginRowDataGatewayMock();
 		} else
 		{
-			this.dataMapper = new PlayerLoginDataMapper(
-					new PlayerLoginRowDataGatewayRDS());
+			this.gateway = new PlayerLoginRowDataGatewayRDS();
 		}
 	}
 
@@ -67,13 +67,13 @@ public class PlayerLogin
 		this(playerName);
 		try
 		{
-			dataMapper.find(playerName);
+			gateway.find(playerName);
 		} catch (DatabaseException e)
 		{
 			throw new DatabaseException("no login information for " + playerName);
 		}
 
-		if (!dataMapper.getPassword().equals(password))
+		if (!gateway.getPassword().equals(password))
 		{
 			throw new DatabaseException("incorrect password");
 		}
@@ -93,7 +93,7 @@ public class PlayerLogin
 		this();
 		try
 		{
-			dataMapper.find(playerName);
+			gateway.find(playerName);
 		} catch (DatabaseException e)
 		{
 			throw new DatabaseException("no login information for " + playerName);
@@ -107,7 +107,7 @@ public class PlayerLogin
 	 */
 	public int getPlayerID()
 	{
-		return dataMapper.getPlayerID();
+		return gateway.getPlayerID();
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class PlayerLogin
 	 */
 	public String getPlayerName()
 	{
-		return dataMapper.getPlayerName();
+		return gateway.getPlayerName();
 	}
 
 }

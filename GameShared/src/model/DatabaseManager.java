@@ -133,6 +133,18 @@ public class DatabaseManager
 	 */
 	public static void reset()
 	{
+		try
+		{
+			if (singleton != null)
+			{
+				singleton.rollBack();
+				singleton.connection.close();
+			}
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		singleton = null;
 	}
 

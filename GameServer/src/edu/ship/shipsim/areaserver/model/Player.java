@@ -1,5 +1,6 @@
 package edu.ship.shipsim.areaserver.model;
 
+import model.DatabaseException;
 import model.PlayerConnection;
 import model.PlayerLogin;
 import model.QualifiedObservable;
@@ -51,9 +52,10 @@ public class Player extends QualifiedObservable
 	 * @param pinToCheck
 	 *            the pin we gave the player to connect to this area server
 	 * @return true or false with pin validity
+	 * @throws DatabaseException if the data source had an exception
 	 */
 
-	public boolean isPinValid(double pinToCheck)
+	public boolean isPinValid(double pinToCheck) throws DatabaseException
 	{
 		PlayerConnection pl = new PlayerConnection(id);
 		PinFailedReport report = null;

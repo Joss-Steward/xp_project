@@ -13,43 +13,43 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	JOHN(1, "John", "male_a", 0, 8, "pw", "quiznasium.tmx"),
+	JOHN(1, "John", "male_a", 0, 8, "pw", "quiznasium.tmx", 1111, null, "current.tmx"),
 	/**
 	 * 
 	 */
-	MERLIN(2, "Merlin", "merlin", 4, 13, "pw", null),
+	MERLIN(2, "Merlin", "merlin", 4, 13, "pw", null, 1111, null, "current.tmx"),
 	/**
 	 * 
 	 */
-	NICK(3, "Nick", "magi", 4, 13, "pw", null),
+	NICK(3, "Nick", "magi", 4, 13, "pw", null, 1111, null, "current.tmx"),
 	/**
 	 * 
 	 */
-	JOSH(4, "Josh", "ninja", 4, 13, "pw", null),
+	JOSH(4, "Josh", "ninja", 4, 13, "pw", null, 1111, null, "current.tmx"),
 	/**
 	 * 
 	 */
-	MATT(5, "Matt", "male_b", 4, 13, "pw", null),
+	MATT(5, "Matt", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx"),
 	/**
 	 * 
 	 */
-	STEVE(6, "Steve", "knight_with_straw_hat", 4, 13, "pw", null),
+	STEVE(6, "Steve", "knight_with_straw_hat", 4, 13, "pw", null, 1111, null, "current.tmx"),
 	/**
 	 * 
 	 */
-	FRANK(7, "Frank", "male_b", 4, 13, "pw", null),
+	FRANK(7, "Frank", "male_b", 4, 13, "pw", null, 1441, null, "current.tmx"),
 	/**
 	 * 
 	 */
-	GA(8, "Ga", "male_b", 4, 13, "pw", null),
+	GA(8, "Ga", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx"),
 	/**
 	 * 
 	 */
-	ANDY(9, "Andy", "male_b", 4, 13, "pw", null),
+	ANDY(9, "Andy", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx"),
 	/**
 	 * 
 	 */
-	DAVE(10, "Dave", "male_b", 4, 13, "pw", null);
+	DAVE(10, "Dave", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx");
 
 	private int playerID;
 
@@ -64,8 +64,38 @@ public enum PlayersForTest
 	private String password;
 	
 	private String mapName;
+	
+	private int pin;
+	
+	private String changedOn;
+	
+	/**
+	 * @return the pin for the current connection
+	 */
+	public int getPin()
+	{
+		return pin;
+	}
 
-	PlayersForTest(int id, String playerName, String type, int row, int col, String password, String mapName)
+	/**
+	 * @return the time when the pin for the current connection was set
+	 */
+	public String getChangedOn()
+	{
+		return changedOn;
+	}
+
+	/**
+	 * @return the map name the pin for the current connection is good for
+	 */
+	public String getMapNameForPin()
+	{
+		return mapNameForPin;
+	}
+
+	private String mapNameForPin;
+
+	PlayersForTest(int id, String playerName, String type, int row, int col, String password, String mapName, int pin, String changedOn, String mapNameForPin)
 	{
 		this.playerID = id;
 		this.playerName = playerName;
@@ -74,6 +104,9 @@ public enum PlayersForTest
 		this.col = col;
 		this.password = password;
 		this.mapName = mapName;
+		this.pin = pin;
+		this.changedOn = changedOn;
+		this.mapNameForPin = mapNameForPin;
 	}
 
 	/**

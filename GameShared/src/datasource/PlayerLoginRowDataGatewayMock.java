@@ -37,7 +37,7 @@ public class PlayerLoginRowDataGatewayMock implements PlayerLoginRowDataGateway
 	}
 
 	/**
-	 * Map user name to password
+	 * Map player ID to player information
 	 */
 	private static HashMap<Integer, PlayerInfo> playerLogins;
 	private static int nextKey = 1;

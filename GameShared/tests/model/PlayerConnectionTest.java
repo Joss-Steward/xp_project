@@ -1,14 +1,15 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -21,6 +22,25 @@ import org.junit.Test;
 public class PlayerConnectionTest extends DatabaseTest
 {
 
+	private static PlayerConnection pc;
+
+	/**
+	 * make sure we are testing
+	 */
+	@Before
+	public void setup2()
+	{
+		OptionsManager.getSingleton(true);
+	}
+	
+	/**
+	 * set the data back
+	 */
+	@After
+	public void cleanup()
+	{
+		pc.resetData();
+	}
 	/**
 	 * Generate default pins for all users
 	 * 
@@ -29,10 +49,11 @@ public class PlayerConnectionTest extends DatabaseTest
 	 */
 	public static void defaultAllPins() throws DatabaseException
 	{
+		OptionsManager.getSingleton(true);
 		for (int userID = 1; userID < 3; userID++)
 		{
-			PlayerConnection pp = new PlayerConnection(userID);
-			pp.generateTestPin();
+			pc = new PlayerConnection(userID);
+			pc.generateTestPin();
 		}
 	}
 
@@ -44,20 +65,10 @@ public class PlayerConnectionTest extends DatabaseTest
 	@Test
 	public void storesMapName() throws DatabaseException, SQLException
 	{
-		PlayerConnection pc = new PlayerConnection(2);
+		pc = new PlayerConnection(2);
 		pc.setMapName("thisMap.tmx");
-		Connection connection = DatabaseManager.getSingleton().getConnection();
-		String sql = "SELECT MapName FROM PlayerConnection WHERE PlayerID = ?";
-		System.err.println("[DEBUG] " + sql + ": " + 2);
-		PreparedStatement stmt = connection.prepareStatement(sql);
-		stmt.setInt(1, 2);
-		ResultSet resultSet = stmt.executeQuery();
-		resultSet.first();
-		String actual  = resultSet.getString(1);
-		resultSet.close();
-		stmt.close();
-		assertEquals( "thisMap.tmx", actual);
-		assertEquals( actual, pc.getMapName());
+		PlayerConnection after = new PlayerConnection(2);
+		assertEquals( "thisMap.tmx", after.getMapName());
 	}
 	/**
 	 * When we generate a PIN for a player, it should be stored into the db
@@ -70,45 +81,10 @@ public class PlayerConnectionTest extends DatabaseTest
 	@Test
 	public void generatesAndStoresPin() throws DatabaseException, SQLException
 	{
-		PlayerConnection playerPin = new PlayerConnection(2);
-		double pin = playerPin.generatePin();
-		Connection connection = DatabaseManager.getSingleton().getConnection();
-		String sql = "SELECT pin FROM PlayerConnection WHERE PlayerID = ?";
-		PreparedStatement stmt = connection.prepareStatement(sql);
-		stmt.setInt(1, 2);
-		ResultSet resultSet = stmt.executeQuery();
-		resultSet.first();
-		double storedPin = resultSet.getDouble(1);
-		resultSet.close();
-		stmt.close();
-		assertEquals(pin, storedPin, 0.00001);
-	}
-
-	/**
-	 * If we generate a PIN twice, there should only be one entry in the db and
-	 * it should be the most recent one we generated
-	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
-	 * @throws SQLException
-	 *             shouldn't
-	 */
-	@Test
-	public void cantHaveTwoPins() throws DatabaseException, SQLException
-	{
-		PlayerConnection playerPin = new PlayerConnection(2);
-		playerPin.generatePin();
-		double pin2 = playerPin.generatePin();
-		String sql = "SELECT pin FROM PlayerConnection WHERE PlayerID = ?";
-		Connection connection = DatabaseManager.getSingleton().getConnection();
-		PreparedStatement stmt = connection.prepareStatement(sql);
-		stmt.setInt(1, 2);
-		ResultSet resultSet = stmt.executeQuery();
-		resultSet.first();
-		double storedPin = resultSet.getDouble(1);
-		assertFalse(resultSet.next());
-		resultSet.close();
-		assertEquals(pin2, storedPin, 0.00001);
+		pc = new PlayerConnection(2);
+		double pin = pc.generatePin();
+		PlayerConnection after = new PlayerConnection(2);
+		assertEquals(pin, after.getPin(), 0.00001);
 	}
 
 	/**
@@ -121,8 +97,8 @@ public class PlayerConnectionTest extends DatabaseTest
 	@Test
 	public void canParseTime() throws DatabaseException
 	{
-		PlayerConnection playerPin = new PlayerConnection(2);
-		GregorianCalendar cal = playerPin.parseTimeString("2013-10-07 13:24:23");
+		pc = new PlayerConnection(2);
+		GregorianCalendar cal = pc.parseTimeString("2013-10-07 13:24:23");
 		assertEquals(2013, cal.get(Calendar.YEAR));
 		assertEquals(9, cal.get(Calendar.MONTH));
 		assertEquals(7, cal.get(Calendar.DAY_OF_MONTH));
@@ -144,10 +120,10 @@ public class PlayerConnectionTest extends DatabaseTest
 	@Test
 	public void testIsExpiredWithoutAPin() throws DatabaseException, SQLException
 	{
-		PlayerConnection playerPin = new PlayerConnection(2);
-		playerPin.generatePin();
-		playerPin.deletePlayerPin();
-		assertTrue(playerPin.isExpired());
+		pc = new PlayerConnection(7);
+		pc.generatePin();
+		pc.deletePlayerPin();
+		assertTrue(pc.isExpired());
 	}
 
 	/**
@@ -160,9 +136,9 @@ public class PlayerConnectionTest extends DatabaseTest
 	@Test
 	public void testNewPinIsNotExpired() throws DatabaseException
 	{
-		PlayerConnection playerPin = new PlayerConnection(2);
-		playerPin.generatePin();
-		assertFalse(playerPin.isExpired());
+		pc = new PlayerConnection(7);
+		pc.generatePin();
+		assertFalse(pc.isExpired());
 	}
 
 	/**
@@ -174,9 +150,9 @@ public class PlayerConnectionTest extends DatabaseTest
 	@Test
 	public void isPinValid() throws DatabaseException
 	{
-		PlayerConnection playerPin = new PlayerConnection(2);
-		double pin = playerPin.generatePin();
-		assertTrue(playerPin.isPinValid(pin));
-		assertFalse(playerPin.isPinValid(pin+1));
+		pc = new PlayerConnection(7);
+		double pin = pc.generatePin();
+		assertTrue(pc.isPinValid(pin));
+		assertFalse(pc.isPinValid(pin+1));
 	}
 }

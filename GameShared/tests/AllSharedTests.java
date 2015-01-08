@@ -28,12 +28,12 @@ import communication.messages.MovementMessageTest;
 import communication.messages.PlayerJoinedMessageTest;
 import communication.packers.MessagePackerSetTest;
 import data.PositionTest;
+import datasource.PlayerConnectionRowDataGatewayMockTest;
+import datasource.PlayerConnectionRowDataGatewayRDSTest;
 import datasource.PlayerLoginRowDataGatewayMockTest;
 import datasource.PlayerLoginRowDataGatewayRDSTest;
-import datasource.PlayerLoginDataMapperTest;
 import datasource.ServerRowDataGatewayMockTest;
 import datasource.ServerRowDataGatewayRDSTest;
-import datasource.ServerDataMapperTest;
 
 /**
  * All of the tests for the shared code. Notice that the packages, and classes
@@ -85,15 +85,16 @@ import datasource.ServerDataMapperTest;
 		PositionTest.class,
 		
 		//datasource
+		PlayerConnectionRowDataGatewayMockTest.class,
+		PlayerConnectionRowDataGatewayRDSTest.class,
+		//PlayerConnectionRowDataGateway,
 		PlayerLoginRowDataGatewayMockTest.class,
 		PlayerLoginRowDataGatewayRDSTest.class,
 		//PlayerLoginDataBehaviorTest.class,
-		PlayerLoginDataMapperTest.class,
 		//PlayersForTest
 		ServerRowDataGatewayMockTest.class,
 		ServerRowDataGatewayRDSTest.class,
 		//ServerDataBehaviorTest,
-		ServerDataMapperTest.class,
 		//ServersInDB,
 
 		// model

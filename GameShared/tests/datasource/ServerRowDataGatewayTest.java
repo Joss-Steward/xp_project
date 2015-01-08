@@ -27,7 +27,10 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 	@After
 	public void cleanup()
 	{
-		gateway.resetData();
+		if (gateway != null)
+		{
+			gateway.resetData();
+		}
 	}
 
 	/**
