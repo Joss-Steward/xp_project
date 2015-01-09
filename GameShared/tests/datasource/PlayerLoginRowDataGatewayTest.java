@@ -8,13 +8,42 @@ import org.junit.After;
 import org.junit.Test;
 
 /**
- * @author Carol Tests for all of the Player Login row data gateways
+ * @author Carol
+ *
+ */
+/**
+ * @author Merlin Tests for all of the Player Login row data gateways
  */
 public abstract class PlayerLoginRowDataGatewayTest extends DatabaseTest
 {
-	abstract PlayerLoginRowDataGateway createRowDataGateway();
+	/**
+	 * Create the row data gateway for a test based on existing data in the data
+	 * source
+	 * 
+	 * @param playerName
+	 *            the name of the player we are looking for
+	 * @return the gateway for that player's row in the data source
+	 * @throws DatabaseException
+	 *             if the gateway can't find the player
+	 */
+	abstract PlayerLoginRowDataGateway findRowDataGateway(String playerName)
+			throws DatabaseException;
 
-	PlayerLoginRowDataGateway gateway;
+	/**
+	 * Create a gateway that manages a new row being added to the data source
+	 * 
+	 * @param playerName
+	 *            the name of the player
+	 * @param password
+	 *            the player's password
+	 * @return the gateway we will test
+	 * @throws DatabaseException
+	 *             if the gateway can't create the row
+	 */
+	abstract PlayerLoginRowDataGateway createRowDataGateway(String playerName,
+			String password) throws DatabaseException;
+
+	private PlayerLoginRowDataGateway gateway;
 
 	/**
 	 * Make sure any static information is cleaned up between tests
@@ -22,7 +51,10 @@ public abstract class PlayerLoginRowDataGatewayTest extends DatabaseTest
 	@After
 	public void cleanup()
 	{
-		gateway.resetData();
+		if (gateway != null)
+		{
+			gateway.resetData();
+		}
 	}
 
 	/**
@@ -34,11 +66,9 @@ public abstract class PlayerLoginRowDataGatewayTest extends DatabaseTest
 	@Test
 	public void creation() throws DatabaseException
 	{
-		gateway = createRowDataGateway();
-		gateway.create("sillyUser", "secret");
+		gateway = createRowDataGateway("sillyUser", "secret");
 
-		PlayerLoginRowDataGateway after = createRowDataGateway();
-		after.find("sillyUser");
+		PlayerLoginRowDataGateway after = findRowDataGateway("sillyUser");
 		assertEquals("secret", after.getPassword());
 	}
 
@@ -51,10 +81,8 @@ public abstract class PlayerLoginRowDataGatewayTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void createExisting() throws DatabaseException
 	{
-		gateway = createRowDataGateway();
-		gateway.create(PlayersForTest.MERLIN.getPlayerName(),
+		gateway = createRowDataGateway(PlayersForTest.MERLIN.getPlayerName(),
 				PlayersForTest.MERLIN.getPlayerPassword());
-
 	}
 
 	/**
@@ -66,8 +94,7 @@ public abstract class PlayerLoginRowDataGatewayTest extends DatabaseTest
 	@Test
 	public void findExisting() throws DatabaseException
 	{
-		gateway = createRowDataGateway();
-		gateway.find(PlayersForTest.MERLIN.getPlayerName());
+		gateway = findRowDataGateway(PlayersForTest.MERLIN.getPlayerName());
 		assertEquals(2, gateway.getPlayerID());
 		assertEquals(PlayersForTest.MERLIN.getPlayerName(), gateway.getPlayerName());
 		assertEquals(PlayersForTest.MERLIN.getPlayerPassword(), gateway.getPassword());
@@ -83,8 +110,7 @@ public abstract class PlayerLoginRowDataGatewayTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void findNotExisting() throws DatabaseException
 	{
-		gateway = createRowDataGateway();
-		gateway.find("no one");
+		gateway = findRowDataGateway("no one");
 	}
 
 	/**
@@ -94,12 +120,11 @@ public abstract class PlayerLoginRowDataGatewayTest extends DatabaseTest
 	@Test
 	public void changePassword() throws DatabaseException
 	{
-		gateway = createRowDataGateway();
-		gateway.find(PlayersForTest.MERLIN.getPlayerName());
+		gateway = findRowDataGateway(PlayersForTest.MERLIN.getPlayerName());
 		gateway.setPassword("not secret");
 		gateway.persist();
-		PlayerLoginRowDataGateway after = createRowDataGateway();
-		after.find(PlayersForTest.MERLIN.getPlayerName());
+		PlayerLoginRowDataGateway after = findRowDataGateway(PlayersForTest.MERLIN
+				.getPlayerName());
 		assertEquals("not secret", after.getPassword());
 	}
 }

@@ -1,6 +1,5 @@
 package model;
 
-import datasource.PlayerLoginDataMapper;
 import datasource.PlayerLoginRowDataGateway;
 import datasource.PlayerLoginRowDataGatewayMock;
 import datasource.PlayerLoginRowDataGatewayRDS;
@@ -16,21 +15,6 @@ public class PlayerLogin
 	private PlayerLoginRowDataGateway gateway;
 
 	/**
-	 * 
-	 */
-	public PlayerLogin()
-	{
-		if (OptionsManager.getSingleton().isTestMode())
-		{
-			this.gateway =
-					new PlayerLoginRowDataGatewayMock();
-		} else
-		{
-			this.gateway = new PlayerLoginRowDataGatewayRDS();
-		}
-	}
-
-	/**
 	 * Create a new record in the database
 	 * 
 	 * @param name
@@ -38,17 +22,27 @@ public class PlayerLogin
 	 * @param password
 	 *            the player's password
 	 * @param id
-	 *            The id of the player
-	 * @return the ID of the player we created
+	 *            The id of the player TODO this table is set up incorrectly -
+	 *            should autogenerate ID and store that in Player table - no
+	 *            need for player name here
 	 * @throws DatabaseException
 	 *             if the gateway fails
 	 */
-	public static int createNewPlayerLogin(String name, String password, int id)
-			throws DatabaseException
+	public PlayerLogin(String name, String password, int id) throws DatabaseException
 	{
-		PlayerLoginDataMapper dataMapper = new PlayerLoginDataMapper(
-				new PlayerLoginRowDataGatewayRDS());
-		return dataMapper.create(name, password);
+		try
+		{
+			if (OptionsManager.getSingleton().isTestMode())
+			{
+				this.gateway = new PlayerLoginRowDataGatewayMock(name, password);
+			} else
+			{
+				this.gateway = new PlayerLoginRowDataGatewayRDS(name, password);
+			}
+		} catch (DatabaseException e)
+		{
+			throw new DatabaseException("no login information for " + name);
+		}
 
 	}
 
@@ -64,10 +58,15 @@ public class PlayerLogin
 	 */
 	public PlayerLogin(String playerName, String password) throws DatabaseException
 	{
-		this(playerName);
 		try
 		{
-			gateway.find(playerName);
+			if (OptionsManager.getSingleton().isTestMode())
+			{
+				this.gateway = new PlayerLoginRowDataGatewayMock(playerName);
+			} else
+			{
+				this.gateway = new PlayerLoginRowDataGatewayRDS(playerName);
+			}
 		} catch (DatabaseException e)
 		{
 			throw new DatabaseException("no login information for " + playerName);
@@ -88,12 +87,18 @@ public class PlayerLogin
 	 * @throws DatabaseException
 	 *             if the player doesn't exist
 	 */
-	public PlayerLogin (String playerName) throws DatabaseException
+	public PlayerLogin(String playerName) throws DatabaseException
 	{
-		this();
 		try
 		{
-			gateway.find(playerName);
+
+			if (OptionsManager.getSingleton().isTestMode())
+			{
+				this.gateway = new PlayerLoginRowDataGatewayMock(playerName);
+			} else
+			{
+				this.gateway = new PlayerLoginRowDataGatewayRDS(playerName);
+			}
 		} catch (DatabaseException e)
 		{
 			throw new DatabaseException("no login information for " + playerName);

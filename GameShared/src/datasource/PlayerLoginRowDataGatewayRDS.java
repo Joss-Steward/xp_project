@@ -23,39 +23,11 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 	private Connection connection;
 
 	/**
-	 * @see datasource.PlayerLoginRowDataGateway#create(java.lang.String, java.lang.String)
+	 * Finder constructor: will initialize itself by finding the appropriate row in the table
+	 * @param playerName the player we are responsible for
+	 * @throws DatabaseException if we cannot find the given player in the table
 	 */
-	@Override
-	public int create(String playerName, String password) throws DatabaseException
-	{
-		Connection connection = DatabaseManager.getSingleton().getConnection();
-		try
-		{
-			PreparedStatement stmt = connection.prepareStatement(
-					"Insert INTO PlayerLogins SET playerName = ?, password = ?",
-					Statement.RETURN_GENERATED_KEYS);
-			stmt.setString(1, playerName);
-			stmt.setString(2, password);
-			stmt.executeUpdate();
-			ResultSet rs = stmt.getGeneratedKeys();
-			if (rs.next())
-			{
-				playerID = rs.getInt(1);
-			}
-
-		} catch (SQLException e)
-		{
-			throw new DatabaseException(
-					"Couldn't create a s player record for player named " + playerName, e);
-		}
-		return playerID;
-	}
-
-	/**
-	 * @see datasource.PlayerLoginRowDataGateway#find(java.lang.String)
-	 */
-	@Override
-	public void find(String playerName) throws DatabaseException
+	public PlayerLoginRowDataGatewayRDS(String playerName) throws DatabaseException
 	{
 		this.connection = DatabaseManager.getSingleton().getConnection();
 		this.playerName = playerName;
@@ -76,6 +48,36 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 	}
 
 	/**
+	 * Create constructor:  will create a new row in the table with the given information
+	 * @param playerName the player's name
+	 * @param password the player's password
+	 * @throws DatabaseException if we can't create the player (can't connect or duplicate name)
+	 */
+	public PlayerLoginRowDataGatewayRDS(String playerName, String password) throws DatabaseException
+	{
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
+		{
+			PreparedStatement stmt = connection.prepareStatement(
+					"Insert INTO PlayerLogins SET playerName = ?, password = ?",
+					Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, playerName);
+			stmt.setString(2, password);
+			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next())
+			{
+				playerID = rs.getInt(1);
+			}
+
+		} catch (SQLException e)
+		{
+			throw new DatabaseException(
+					"Couldn't create a player record for player named " + playerName, e);
+		}
+	}
+
+	/**
 	 * @see datasource.PlayerLoginRowDataGateway#getPassword()
 	 */
 	@Override
@@ -85,13 +87,21 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 	}
 
 	/**
-	 * @see datasource.PlayerLoginRowDataGateway#setPassword(java.lang.String)
+	 * @see datasource.PlayerLoginRowDataGateway#getPlayerID()
 	 */
 	@Override
-	public void setPassword(String password)
+	public int getPlayerID()
 	{
-		this.password = password;
+		return playerID;
+	}
 
+	/**
+	 * @see datasource.PlayerLoginRowDataGateway#getPlayerName()
+	 */
+	@Override
+	public String getPlayerName()
+	{
+		return playerName;
 	}
 
 	/**
@@ -125,21 +135,13 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 	}
 
 	/**
-	 * @see datasource.PlayerLoginRowDataGateway#getPlayerName()
+	 * @see datasource.PlayerLoginRowDataGateway#setPassword(java.lang.String)
 	 */
 	@Override
-	public String getPlayerName()
+	public void setPassword(String password)
 	{
-		return playerName;
-	}
+		this.password = password;
 
-	/**
-	 * @see datasource.PlayerLoginRowDataGateway#getPlayerID()
-	 */
-	@Override
-	public int getPlayerID()
-	{
-		return playerID;
 	}
 
 }

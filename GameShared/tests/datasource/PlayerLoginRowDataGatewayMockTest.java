@@ -1,5 +1,7 @@
 package datasource;
 
+import model.DatabaseException;
+
 
 /**
  * Tests our mock gateway
@@ -9,10 +11,24 @@ package datasource;
 public class PlayerLoginRowDataGatewayMockTest extends PlayerLoginRowDataGatewayTest
 {
 
-	PlayerLoginRowDataGateway createRowDataGateway()
+	/**
+	 * @see datasource.PlayerLoginRowDataGatewayTest#findRowDataGateway(java.lang.String)
+	 */
+	@Override
+	PlayerLoginRowDataGateway findRowDataGateway(String playerName)
+			throws DatabaseException
 	{
-		PlayerLoginRowDataGateway x = new PlayerLoginRowDataGatewayMock();
-		return x;
+		return new PlayerLoginRowDataGatewayMock(playerName);
+	}
+
+	/**
+	 * @see datasource.PlayerLoginRowDataGatewayTest#createRowDataGateway(java.lang.String, java.lang.String)
+	 */
+	@Override
+	PlayerLoginRowDataGateway createRowDataGateway(String playerName, String password)
+			throws DatabaseException
+	{
+		return new PlayerLoginRowDataGatewayMock(playerName, password);
 	}
 
 }

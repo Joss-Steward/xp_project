@@ -5,8 +5,9 @@ import java.util.HashMap;
 import model.DatabaseException;
 
 /**
- * This is a mock data gateway that returns data without looking at the database.  Its initial
- * data comes from PlayersForTest
+ * This is a mock data gateway that returns data without looking at the
+ * database. Its initial data comes from PlayersForTest
+ * 
  * @see PlayersForTest
  * @author Merlin
  *
@@ -44,23 +45,51 @@ public class PlayerLoginRowDataGatewayMock implements PlayerLoginRowDataGateway
 	private int playerID;
 	private PlayerInfo playerInfo;
 
-	
 	/**
-	 * 
+	 * Finder Constructor: will initialize itself from the data in the data source
+	 * @param playerName the name of the player
+	 * @throws DatabaseException if we can't find that player
 	 */
-	public PlayerLoginRowDataGatewayMock()
+	public PlayerLoginRowDataGatewayMock(String playerName) throws DatabaseException
 	{
 		if (playerLogins == null)
 		{
 			resetData();
 		}
+		boolean found = false;
+		for (Integer key : playerLogins.keySet())
+		{
+			PlayerInfo info = playerLogins.get(key);
+			if (info.getPlayerName().equals(playerName))
+			{
+				playerID = key;
+				playerInfo = info;
+				found = true;
+			}
+		}
+		if (!found)
+		{
+			throw new DatabaseException("Couldn't find player named " + playerName);
+		}
 	}
+
 	/**
-	 * @see datasource.PlayerLoginRowDataGateway#create(java.lang.String, java.lang.String)
+	 * Create constructor: will add the data to the data source
+	 * 
+	 * @param playerName
+	 *            the name of the player
+	 * @param password
+	 *            the player's password
+	 * @throws DatabaseException
+	 *             duplicate player name
 	 */
-	@Override
-	public int create(String playerName, String password) throws DatabaseException
+	public PlayerLoginRowDataGatewayMock(String playerName, String password)
+			throws DatabaseException
 	{
+		if (playerLogins == null)
+		{
+			resetData();
+		}
 		playerID = nextKey;
 		nextKey++;
 		for (PlayerInfo info : playerLogins.values())
@@ -72,26 +101,6 @@ public class PlayerLoginRowDataGatewayMock implements PlayerLoginRowDataGateway
 			}
 		}
 		playerLogins.put(nextKey, new PlayerInfo(playerName, password));
-		return playerID;
-	}
-
-	/**
-	 * @see datasource.PlayerLoginRowDataGateway#find(java.lang.String)
-	 */
-	@Override
-	public void find(String playerName) throws DatabaseException
-	{
-		for (Integer key:playerLogins.keySet())
-		{
-			PlayerInfo info =playerLogins.get(key);
-			if (info.getPlayerName().equals(playerName))
-			{
-				playerID = key; 
-				playerInfo = info;
-				return;
-			}
-		}
-		throw new DatabaseException("Couldn't find player named " + playerName);
 	}
 
 	/**
@@ -104,21 +113,21 @@ public class PlayerLoginRowDataGatewayMock implements PlayerLoginRowDataGateway
 	}
 
 	/**
-	 * @see datasource.PlayerLoginRowDataGateway#getPlayerName()
-	 */
-	@Override
-	public String getPlayerName()
-	{
-		return playerInfo.getPlayerName();
-	}
-
-	/**
 	 * @see datasource.PlayerLoginRowDataGateway#getPlayerID()
 	 */
 	@Override
 	public int getPlayerID()
 	{
 		return playerID;
+	}
+
+	/**
+	 * @see datasource.PlayerLoginRowDataGateway#getPlayerName()
+	 */
+	@Override
+	public String getPlayerName()
+	{
+		return playerInfo.getPlayerName();
 	}
 
 	/**
@@ -129,6 +138,7 @@ public class PlayerLoginRowDataGatewayMock implements PlayerLoginRowDataGateway
 	{
 		playerLogins.put(playerID, playerInfo);
 	}
+
 	/**
 	 * @see datasource.PlayerLoginRowDataGateway#resetData()
 	 */
@@ -136,13 +146,15 @@ public class PlayerLoginRowDataGatewayMock implements PlayerLoginRowDataGateway
 	public void resetData()
 	{
 		playerLogins = new HashMap<Integer, PlayerInfo>();
-		nextKey = 1; 
+		nextKey = 1;
 		for (PlayersForTest p : PlayersForTest.values())
 		{
-			playerLogins.put(nextKey, new PlayerInfo(p.getPlayerName(), p.getPlayerPassword()));
+			playerLogins.put(nextKey,
+					new PlayerInfo(p.getPlayerName(), p.getPlayerPassword()));
 			nextKey++;
 		}
 	}
+
 	/**
 	 * @see datasource.PlayerLoginRowDataGateway#setPassword(java.lang.String)
 	 */
