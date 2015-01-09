@@ -10,6 +10,7 @@ import model.DatabaseManager;
 
 /**
  * AN RDS Implementation of PlayerConnectionRowDataGateway
+ * 
  * @author Merlin
  *
  */
@@ -22,10 +23,14 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 	private String mapName;
 
 	/**
-	 * @see datasource.PlayerConnectionRowDataGateway#findPlayer(int)
+	 * Finder constructor
+	 * 
+	 * @param playerID
+	 *            the player we are interested in
+	 * @throws DatabaseException
+	 *             if we cannot find that player in the db
 	 */
-	@Override
-	public void findPlayer(int playerID) throws DatabaseException
+	public PlayerConnectionRowDataGatewayRDS(int playerID) throws DatabaseException
 	{
 		this.playerID = playerID;
 		try
@@ -48,53 +53,39 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 	}
 
 	/**
-	 * @see datasource.PlayerConnectionRowDataGateway#storePin(int)
+	 * Creation constructor: will store the given information in the db
+	 * 
+	 * @param playerID
+	 *            the player's unique id
+	 * @param pin
+	 *            the pin the player must send to connect
+	 * @param mapName
+	 *            the map of the area the player will connect to
+	 * @throws DatabaseException
+	 *             Either we can't connect to the db or the player ID is already
+	 *             in the db
 	 */
-	@Override
-	public void storePin(int pin) throws DatabaseException
+	public PlayerConnectionRowDataGatewayRDS(int playerID, int pin, String mapName)
+			throws DatabaseException
 	{
-		Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
+		this.playerID = playerID;
+		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			String sql;
-			PreparedStatement stmt;
-			deleteRow();
-
-			sql = "INSERT INTO PlayerConnection (PlayerID, Pin) VALUES (?, ?)";
-			stmt = connectionStatus.prepareStatement(sql);
+			PreparedStatement stmt = connection
+					.prepareStatement("Insert INTO PlayerConnection SET PlayerID = ?, Pin = ?, changed_on = ?, mapName = ?");
 			stmt.setInt(1, playerID);
 			stmt.setInt(2, pin);
+			stmt.setString(3, changedOn);
+			stmt.setString(4, mapName);
 			stmt.executeUpdate();
+
 		} catch (SQLException e)
 		{
-			new DatabaseException("Unable to generate pin for player id # " + playerID, e);
+			throw new DatabaseException(
+					"Couldn't create a player connection record for player id "
+							+ playerID, e);
 		}
-	}
-
-	/**
-	 * @see datasource.PlayerConnectionRowDataGateway#getPin()
-	 */
-	@Override
-	public int getPin()
-	{
-		return pin;
-	}
-
-	/**
-	 * @see datasource.PlayerConnectionRowDataGateway#resetData()
-	 */
-	@Override
-	public void resetData()
-	{
-	}
-
-	/**
-	 * @see datasource.PlayerConnectionRowDataGateway#getChangedOn()
-	 */
-	@Override
-	public String getChangedOn() throws DatabaseException
-	{
-		return changedOn;
 	}
 
 	/**
@@ -120,29 +111,12 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 	}
 
 	/**
-	 * @see datasource.PlayerConnectionRowDataGateway#create(int, int, java.lang.String)
+	 * @see datasource.PlayerConnectionRowDataGateway#getChangedOn()
 	 */
 	@Override
-	public void create(int playerID, int pin, String mapName) throws DatabaseException
+	public String getChangedOn() throws DatabaseException
 	{
-		this.playerID = playerID;
-		Connection connection = DatabaseManager.getSingleton().getConnection();
-		try
-		{
-			PreparedStatement stmt = connection
-					.prepareStatement("Insert INTO PlayerConnection SET PlayerID = ?, Pin = ?, changed_on = ?, mapName = ?");
-			stmt.setInt(1, playerID);
-			stmt.setInt(2, pin);
-			stmt.setString(3, changedOn);
-			stmt.setString(4, mapName);
-			stmt.executeUpdate();
-
-		} catch (SQLException e)
-		{
-			throw new DatabaseException(
-					"Couldn't create a player connection record for player id "
-							+ playerID, e);
-		}
+		return changedOn;
 	}
 
 	/**
@@ -152,6 +126,47 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 	public String getMapName()
 	{
 		return mapName;
+	}
+
+	/**
+	 * @see datasource.PlayerConnectionRowDataGateway#getPin()
+	 */
+	@Override
+	public int getPin()
+	{
+		return pin;
+	}
+
+	/**
+	 * @see datasource.PlayerConnectionRowDataGateway#resetData()
+	 */
+	@Override
+	public void resetData()
+	{
+	}
+
+	/**
+	 * @see datasource.PlayerConnectionRowDataGateway#setChangedOn(java.lang.String)
+	 */
+	@Override
+	public void setChangedOn(String newTime) throws DatabaseException
+	{
+		Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
+		try
+		{
+			String sql;
+			PreparedStatement stmt;
+
+			sql = "UPDATE PlayerConnection SET changed_On=? WHERE PlayerID = ?";
+			stmt = connectionStatus.prepareStatement(sql);
+			stmt.setString(1, newTime);
+			stmt.setInt(2, playerID);
+			stmt.executeUpdate();
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Unable to generate pin for player id # "
+					+ playerID, e);
+		}
 	}
 
 	/**
@@ -180,26 +195,26 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 	}
 
 	/**
-	 * @see datasource.PlayerConnectionRowDataGateway#setChangedOn(java.lang.String)
+	 * @see datasource.PlayerConnectionRowDataGateway#storePin(int)
 	 */
 	@Override
-	public void setChangedOn(String newTime) throws DatabaseException
+	public void storePin(int pin) throws DatabaseException
 	{
 		Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
 		try
 		{
 			String sql;
 			PreparedStatement stmt;
+			deleteRow();
 
-			sql = "UPDATE PlayerConnection SET changed_On=? WHERE PlayerID = ?";
+			sql = "INSERT INTO PlayerConnection (PlayerID, Pin) VALUES (?, ?)";
 			stmt = connectionStatus.prepareStatement(sql);
-			stmt.setString(1, newTime);
-			stmt.setInt(2, playerID);
+			stmt.setInt(1, playerID);
+			stmt.setInt(2, pin);
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Unable to generate pin for player id # "
-					+ playerID, e);
+			new DatabaseException("Unable to generate pin for player id # " + playerID, e);
 		}
 	}
 

@@ -3,7 +3,9 @@ package datasource;
 import model.DatabaseException;
 
 /**
- * Required functionality for all row data gateways into the PlayerConnection information
+ * Required functionality for all row data gateways into the PlayerConnection
+ * information
+ * 
  * @author Merlin
  *
  */
@@ -11,18 +13,24 @@ public interface PlayerConnectionRowDataGateway
 {
 
 	/**
-	 * Make the gateway have the information for a given playerID
-	 * @param playerID the player we are interested in
+	 * delete the row in the table for the current player id
+	 * 
 	 * @throws DatabaseException
+	 *             if the data source has an exception
 	 */
-	void findPlayer(int playerID) throws DatabaseException;
+	void deleteRow() throws DatabaseException;
 
 	/**
-	 * Store a new pin for our player
-	 * @param pin the new PIN
+	 * @return the time when the row was last updated
 	 * @throws DatabaseException
+	 *             if the data source has an exception
 	 */
-	void storePin(int pin) throws DatabaseException;
+	String getChangedOn() throws DatabaseException;
+
+	/**
+	 * @return the name of the map associated with this connection
+	 */
+	String getMapName();
 
 	/**
 	 * @return this player's pin
@@ -35,43 +43,31 @@ public interface PlayerConnectionRowDataGateway
 	void resetData();
 
 	/**
-	 * @return the time when the row was last updated
-	 * @throws DatabaseException if the data source has an exception
+	 * Used only for testing!
+	 * 
+	 * @param newTime
+	 *            the timestamp
+	 * @throws DatabaseException if the data source can't store the new time
 	 */
-	String getChangedOn() throws DatabaseException;
-
-	/**
-	 * delete the row in the table for the current player id
-	 * @throws DatabaseException if the data source has an exception
-	 */
-	void deleteRow() throws DatabaseException;
-
-	/**
-	 * Create a new row in the table
-	 * @param playerID the player ID
-	 * @param pin the player's pin
-	 * @param mapName the map name that the pin is valid for
-	 * @throws DatabaseException if the data source has an exception
-	 */
-	void create(int playerID, int pin, String mapName) throws DatabaseException;
-
-	/**
-	 * @return the name of the map associated with this connection
-	 */
-	String getMapName();
+	void setChangedOn(String newTime) throws DatabaseException;
 
 	/**
 	 * change the name of the map associated with this connection
-	 * @param string new map name
-	 * @throws DatabaseException if the data source has an exception
+	 * 
+	 * @param string
+	 *            new map name
+	 * @throws DatabaseException
+	 *             if the data source has an exception
 	 */
 	void storeMapName(String string) throws DatabaseException;
-	
+
 	/**
-	 * Used only for testing!
-	 * @param newTime the timestamp
-	 * @throws DatabaseException 
+	 * Store a new pin for our player
+	 * 
+	 * @param pin
+	 *            the new PIN
+	 * @throws DatabaseException  if the data source cannot store the pin
 	 */
-	void setChangedOn(String newTime) throws DatabaseException;
-	
+	void storePin(int pin) throws DatabaseException;
+
 }

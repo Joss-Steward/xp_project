@@ -7,10 +7,12 @@ import org.junit.Test;
 public abstract class PlayerRowDataGatewayTest
 {
 
+	abstract PlayerRowDataGateway createGateway();
+	
 	@Test
-	public void test()
+	public void finder()
 	{
-		fail("Not yet implemented");
+		PlayerRowDataGateway getway = createGateway();
 	}
 
 }

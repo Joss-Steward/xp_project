@@ -57,14 +57,19 @@ public class PlayerConnection
 		this.playerID = playerID;
 		if (OptionsManager.getSingleton().isTestMode())
 		{
-			gateway = new PlayerConnectionRowDataGatewayMock();
+			gateway = new PlayerConnectionRowDataGatewayMock(this.playerID);
 		} else
 		{
-			gateway = new PlayerConnectionRowDataGatewayRDS();
+			gateway = new PlayerConnectionRowDataGatewayRDS(this.playerID);
 		}
-		gateway.findPlayer(this.playerID);
 	}
 
+	/**
+	 * delete the PIN for this player
+	 * 
+	 * @throws DatabaseException
+	 *             if the data source can't perform the deletion
+	 */
 	protected void deletePlayerPin() throws DatabaseException
 	{
 		gateway.deleteRow();
@@ -148,6 +153,13 @@ public class PlayerConnection
 		return pin == gateway.getPin();
 	}
 
+	/**
+	 * Convert the time string from the data source into a Gregorian calendar.
+	 * 
+	 * @param timeString
+	 *            The format of that time string must be "yyyy-MM-dd HH:mm:ss"
+	 * @return the appropriate Gregorian Calendar
+	 */
 	protected GregorianCalendar parseTimeString(String timeString)
 	{
 		GregorianCalendar result = new GregorianCalendar();

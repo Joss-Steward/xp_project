@@ -41,6 +41,9 @@ public abstract class QualifiedObservableTestInherited extends TypeDetector
 
 	}
 
+	/**
+	 * @return the observerable we should be testing
+	 */
 	protected abstract QualifiedObservable getObservableBeingTested();
 
 }

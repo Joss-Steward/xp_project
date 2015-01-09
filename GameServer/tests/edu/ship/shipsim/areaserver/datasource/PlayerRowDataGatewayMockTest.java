@@ -1,16 +1,16 @@
 package edu.ship.shipsim.areaserver.datasource;
 
-import static org.junit.Assert.*;
 
-import org.junit.Test;
-
-public class PlayerRowDataGatewayMockTest
+public class PlayerRowDataGatewayMockTest extends PlayerRowDataGatewayTest
 {
 
-	@Test
-	public void test()
+	@Override
+	PlayerRowDataGateway createGateway()
 	{
-		fail("Not yet implemented");
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	
 
 }
