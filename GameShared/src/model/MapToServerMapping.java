@@ -20,14 +20,7 @@ public final class MapToServerMapping
 	 */
 	public MapToServerMapping()
 	{
-		if (OptionsManager.getSingleton().isTestMode())
-		{
-			this.dataGateway = new ServerRowDataGatewayMock();
-		}
-		else
-		{
-			this.dataGateway =new ServerRowDataGatewayRDS();
-		}
+		
 	}
 
 	/**
@@ -48,8 +41,14 @@ public final class MapToServerMapping
 	 */
 	public  MapToServerMapping (String mapName) throws DatabaseException
 	{
-		this();
-		dataGateway.find(mapName);
+		if (OptionsManager.getSingleton().isTestMode())
+		{
+			this.dataGateway = new ServerRowDataGatewayMock(mapName);
+		}
+		else
+		{
+			this.dataGateway =new ServerRowDataGatewayRDS(mapName);
+		}
 	}
 
 	/**

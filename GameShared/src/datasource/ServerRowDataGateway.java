@@ -12,22 +12,6 @@ public interface ServerRowDataGateway
 {
 
 	/**
-	 * Create a new record from the parameters
-	 * @param mapName the name of the map file being managed
-	 * @param hostName the name of the host managing the map
-	 * @param portNumber the port number associated with the map
-	 * @throws DatabaseException shouldn't
-	 */
-	void create(String mapName, String hostName, int portNumber) throws DatabaseException;
-
-	/**
-	 * Find the data associated with a given map file
-	 * @param mapFileName the name of the map file we are interested in
-	 * @throws DatabaseException if the map file name is not found
-	 */
-	void find(String mapFileName) throws DatabaseException;
-
-	/**
 	 * 
 	 * @return the name of the host that is managing the map file
 	 */
@@ -62,7 +46,7 @@ public interface ServerRowDataGateway
 
 	/**
 	 * store the information into the data source
-	 * @throws DatabaseException
+	 * @throws DatabaseException if we are unable to persist the data
 	 */
 	void persist() throws DatabaseException;
 

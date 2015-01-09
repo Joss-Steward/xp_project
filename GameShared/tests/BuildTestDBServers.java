@@ -40,8 +40,7 @@ public class BuildTestDBServers
 		stmt.executeUpdate();
 		for (ServersForTest p : ServersForTest.values())
 		{
-			ServerRowDataGatewayRDS behavior = new ServerRowDataGatewayRDS();
-			behavior.create(p.getMapName(),p.getHostName(),p.getPortNumber());
+			new ServerRowDataGatewayRDS(p.getMapName(),p.getHostName(),p.getPortNumber());
 		}
 
 	}

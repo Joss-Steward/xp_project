@@ -41,7 +41,17 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 	 *             Either can't talk to DB or a mapping for that map file
 	 *             already exists
 	 */
-	public void create(String mapName, String hostName, int portNumber)
+	public ServerRowDataGatewayRDS(String mapName, String hostName, int portNumber)
+			throws DatabaseException
+	{
+		insertNewRow(mapName, hostName, portNumber);
+		this.mapName = mapName;
+		this.hostName = hostName;
+		this.portNumber = portNumber;
+
+	}
+
+	private void insertNewRow(String mapName, String hostName, int portNumber)
 			throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
@@ -59,7 +69,6 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 			throw new DatabaseException("Couldn't create a server for map named "
 					+ mapName, e);
 		}
-
 	}
 
 	/**
@@ -71,7 +80,7 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 	 * @throws DatabaseException
 	 *             if there is no row with the given map file name
 	 */
-	public void find(String mapName) throws DatabaseException
+	public ServerRowDataGatewayRDS(String mapName) throws DatabaseException
 	{
 		this.mapName = mapName;
 		this.originalMapName = mapName;
@@ -172,7 +181,7 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 				throw new DatabaseException("Error trying to change mapName from "
 						+ originalMapName + " to " + mapName, e);
 			}
-			create(mapName, hostName, portNumber);
+			insertNewRow(mapName, hostName, portNumber);
 		}
 		try
 		{

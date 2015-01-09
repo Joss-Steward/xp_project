@@ -19,7 +19,15 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 
 	private ServerRowDataGateway gateway;
 
-	abstract ServerRowDataGateway createGateway();
+	/**
+	 * Create a gateway that inserts a new row into the table
+	 * @param mapName the name of the map
+	 * @param hostName the host serving the map
+	 * @param port the port associated with the map
+	 * @return the gateway for the new row
+	 * @throws DatabaseException if the data source failed to create the row
+	 */
+	abstract ServerRowDataGateway createGateway(String mapName, String hostName, int port) throws DatabaseException;
 
 	/**
 	 * Make sure any static information is cleaned up between tests
@@ -42,8 +50,7 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void createExisting() throws DatabaseException
 	{
-		gateway = createGateway();
-		gateway.create(ServersForTest.FIRST_SERVER.getMapName(), "noHostName", 1000);
+		gateway = createGateway(ServersForTest.FIRST_SERVER.getMapName(), "noHostName", 1000);
 	}
 
 	/**
@@ -56,15 +63,21 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 	public void createNotExisting() throws DatabaseException
 	{
 		// Use one behavior to create it
-		gateway = createGateway();
-		gateway.create("stupid.tmx", "noHostName", 1000);
+		gateway = createGateway("stupid.tmx", "noHostName", 1000);
 		// Make sure another behavior can find it
-		ServerRowDataGateway found = createGateway();
-		found.find("stupid.tmx");
+		ServerRowDataGateway found = findGateway("stupid.tmx");
 		assertEquals("noHostName", found.getHostName());
 		assertEquals(1000, found.getPortNumber());
 	}
 
+	/**
+	 * get a gateway for an existing row of the table
+	 * @param mapName the name of the map in the row we are testing
+	 * @return the gateway
+	 * @throws DatabaseException if the data source is unable to find the row
+	 */
+	abstract ServerRowDataGateway findGateway(String mapName) throws DatabaseException;
+	
 	/**
 	 * Get a gateway for a row that we know is in the database
 	 * 
@@ -75,8 +88,7 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 	public void findExisting() throws DatabaseException
 	{
 		ServersForTest data = ServersForTest.FIRST_SERVER;
-		gateway = createGateway();
-		gateway.find(data.getMapName());
+		gateway = findGateway(data.getMapName());
 		assertEquals(data.getHostName(), gateway.getHostName());
 		assertEquals(data.getPortNumber(), gateway.getPortNumber());
 	}
@@ -91,8 +103,7 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void findNotExisting() throws DatabaseException
 	{
-		gateway = createGateway();
-		gateway.find("noFile");
+		gateway = findGateway("noFile");
 	}
 
 	/**
@@ -102,12 +113,10 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 	@Test
 	public void editMapName() throws DatabaseException
 	{
-		gateway = createGateway();
-		gateway.find(ServersForTest.FIRST_SERVER.getMapName());
+		gateway = findGateway(ServersForTest.FIRST_SERVER.getMapName());
 		gateway.setMapName("Fred.tmx");
 		gateway.persist();
-		ServerRowDataGateway after = createGateway();
-		after.find("Fred.tmx");
+		ServerRowDataGateway after = findGateway("Fred.tmx");
 		assertEquals(ServersForTest.FIRST_SERVER.getPortNumber(), after.getPortNumber());
 		assertEquals(ServersForTest.FIRST_SERVER.getHostName(), after.getHostName());
 	}
@@ -121,12 +130,10 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 	@Test
 	public void editHostName() throws DatabaseException
 	{
-		gateway = createGateway();
-		gateway.find(ServersForTest.FIRST_SERVER.getMapName());
+		gateway = findGateway(ServersForTest.FIRST_SERVER.getMapName());
 		gateway.setHostName("h");
 		gateway.persist();
-		ServerRowDataGateway after = createGateway();
-		after.find(ServersForTest.FIRST_SERVER.getMapName());
+		ServerRowDataGateway after = findGateway(ServersForTest.FIRST_SERVER.getMapName());
 		assertEquals(ServersForTest.FIRST_SERVER.getPortNumber(), after.getPortNumber());
 		assertEquals("h", after.getHostName());
 	}
@@ -140,12 +147,10 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 	@Test
 	public void editPortNumber() throws DatabaseException
 	{
-		gateway = createGateway();
-		gateway.find(ServersForTest.FIRST_SERVER.getMapName());
+		gateway = findGateway(ServersForTest.FIRST_SERVER.getMapName());
 		gateway.setPortNumber(42);
 		gateway.persist();
-		ServerRowDataGateway after = createGateway();
-		after.find(ServersForTest.FIRST_SERVER.getMapName());
+		ServerRowDataGateway after = findGateway(ServersForTest.FIRST_SERVER.getMapName());
 		assertEquals(42, after.getPortNumber());
 		assertEquals(ServersForTest.FIRST_SERVER.getHostName(), after.getHostName());
 	}

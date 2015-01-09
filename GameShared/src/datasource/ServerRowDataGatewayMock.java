@@ -19,12 +19,6 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 
 		private int portNumber;
 
-		public Server(String hostName, int portNumber)
-		{
-			this.hostName = hostName;
-			this.portNumber = portNumber;
-		}
-
 		/**
 		 * Copy Constructor
 		 * @param server the one we want to copy
@@ -33,6 +27,12 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 		{
 			this.hostName = server.hostName;
 			this.portNumber = server.portNumber;
+		}
+
+		public Server(String hostName, int portNumber)
+		{
+			this.hostName = hostName;
+			this.portNumber = portNumber;
 		}
 
 		public String getHostName()
@@ -63,26 +63,13 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 	}
 
 	/**
-	 * @see datasource.ServerRowDataGateway#create(java.lang.String, java.lang.String, int)
+	 * Find Constructor:  initializes itself with data in the data source
+	 * @param mapName the map we are interested in
+	 * @throws DatabaseException if we can't find data for the given map name
 	 */
-	@Override
-	public void create(String mapName, String hostName, int portNumber)
-			throws DatabaseException
+	public ServerRowDataGatewayMock(String mapName) throws DatabaseException
 	{
-		if (servers.containsKey(mapName))
-		{
-			throw new DatabaseException("Couldn't create a server for map named "
-					+ mapName);
-		}
-		servers.put(mapName, new Server(hostName, portNumber));
-	}
-
-	/**
-	 * @see datasource.ServerRowDataGateway#find(java.lang.String)
-	 */
-	@Override
-	public void find(String mapName) throws DatabaseException
-	{
+		this();
 		originalMapName = mapName;
 
 		this.mapName = mapName;
@@ -93,6 +80,25 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 		}
 		this.server = new Server(servers.get(mapName));
 
+	}
+
+	/**
+	 * Create constructor - data will be added as a new row in the data source
+	 * @param mapName the name of the map
+	 * @param hostName the host name serving that map
+	 * @param portNumber the port number associated with that map
+	 * @throws DatabaseException if an entry for this map already exists
+	 */
+	public ServerRowDataGatewayMock(String mapName, String hostName, int portNumber)
+			throws DatabaseException
+	{
+		this();
+		if (servers.containsKey(mapName))
+		{
+			throw new DatabaseException("Couldn't create a server for map named "
+					+ mapName);
+		}
+		servers.put(mapName, new Server(hostName, portNumber));
 	}
 
 	/**
@@ -123,34 +129,6 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 	}
 
 	/**
-	 * @see datasource.ServerRowDataGateway#setMapName(java.lang.String)
-	 */
-	@Override
-	public void setMapName(String mapName)
-	{
-		this.mapName = mapName;
-	
-	}
-
-	/**
-	 * @see datasource.ServerRowDataGateway#setPortNumber(int)
-	 */
-	@Override
-	public void setPortNumber(int portNumber)
-	{
-		server.portNumber = portNumber;
-	}
-
-	/**
-	 * @see datasource.ServerRowDataGateway#setHostName(java.lang.String)
-	 */
-	@Override
-	public void setHostName(String hostName)
-	{
-		server.hostName = hostName;
-	}
-
-	/**
 	 * @see datasource.ServerRowDataGateway#persist()
 	 */
 	@Override
@@ -171,5 +149,33 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 			servers.put(s.getMapName(),
 					new Server(s.getHostName(), s.getPortNumber()));
 		}
+	}
+
+	/**
+	 * @see datasource.ServerRowDataGateway#setHostName(java.lang.String)
+	 */
+	@Override
+	public void setHostName(String hostName)
+	{
+		server.hostName = hostName;
+	}
+
+	/**
+	 * @see datasource.ServerRowDataGateway#setMapName(java.lang.String)
+	 */
+	@Override
+	public void setMapName(String mapName)
+	{
+		this.mapName = mapName;
+	
+	}
+
+	/**
+	 * @see datasource.ServerRowDataGateway#setPortNumber(int)
+	 */
+	@Override
+	public void setPortNumber(int portNumber)
+	{
+		server.portNumber = portNumber;
 	}
 }
