@@ -67,8 +67,7 @@ public class BuildTestDBPlayers
 			Position pos = p.getPosition();
 			Player player = new Player();
 			player.setId(CharacterIDGenerator.getNextId());
-			PlayerLogin.createNewPlayerLogin(p.getPlayerName(), p.getPlayerPassword(), player.getID());
-			PlayerLogin pl = new PlayerLogin(p.getPlayerName());
+			PlayerLogin pl = new PlayerLogin(p.getPlayerName(), p.getPlayerPassword(), player.getID());
 			player.setPlayerLogin(pl);
 			player.setPlayerPosition(pos);
 			player.setAppearanceType(p.getAppearanceType());

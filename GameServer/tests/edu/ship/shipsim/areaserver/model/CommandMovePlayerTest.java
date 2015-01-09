@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Observer;
 
+import model.OptionsManager;
 import model.QualifiedObservableConnector;
 
 import org.easymock.EasyMock;
@@ -33,6 +34,8 @@ public class CommandMovePlayerTest
 	{
 		PlayerManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
+
+		OptionsManager.getSingleton(true);
 	}
 
 	/**

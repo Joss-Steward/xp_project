@@ -2,6 +2,7 @@ package communication.packers;
 
 import static org.junit.Assert.*;
 import model.DatabaseException;
+import model.OptionsManager;
 import model.PlayerConnection;
 
 import org.junit.Before;
@@ -27,6 +28,7 @@ public class PlayerJoinedMessagePackerTest
 	public void setUp()
 	{
 		PlayerManager.resetSingleton();
+		OptionsManager.getSingleton(true);
 	}
 
 	/**

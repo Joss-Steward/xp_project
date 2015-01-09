@@ -14,6 +14,7 @@ import edu.ship.shipsim.areaserver.model.reports.PlayerLeaveReport;
 import model.DatabaseException;
 import model.OptionsManager;
 import model.PlayerConnection;
+import model.PlayerLogin;
 import model.QualifiedObservable;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
@@ -190,6 +191,7 @@ public class PlayerManager extends QualifiedObservable
 		try
 		{
 			Player player = playerDao.queryForId(playerID);
+			player.setPlayerLogin(new PlayerLogin(player.getPlayerName()));
 			players.put(playerID, player);
 
 			this.notifyObservers(new PlayerConnectionReport(player));

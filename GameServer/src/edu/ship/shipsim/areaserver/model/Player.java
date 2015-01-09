@@ -27,6 +27,9 @@ public class Player extends QualifiedObservable
 	@DatabaseField(id = true)
 	private int id;
 
+	@DatabaseField
+	private String playerLogin_id;
+	
 	private PlayerLogin playerLogin;
 
 	@DatabaseField
@@ -103,7 +106,7 @@ public class Player extends QualifiedObservable
 	 */
 	public String getPlayerName()
 	{
-		return playerLogin.getPlayerName();
+		return playerLogin_id;
 	}
 
 	/**
