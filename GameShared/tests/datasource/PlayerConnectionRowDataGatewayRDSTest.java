@@ -21,11 +21,12 @@ public class PlayerConnectionRowDataGatewayRDSTest extends PlayerConnectionRowDa
 		return new PlayerConnectionRowDataGatewayRDS(playerID, pin, mapFileName);
 	}
 
+	
 	/**
 	 * @see datasource.PlayerConnectionRowDataGatewayTest#findRowDataGateway(int)
 	 */
 	@Override
-	public PlayerConnectionRowDataGateway findRowDataGateway(int playerID) throws DatabaseException
+	PlayerConnectionRowDataGateway findRowDataGateway(int playerID) throws DatabaseException
 	{
 		return new PlayerConnectionRowDataGatewayRDS(playerID);
 	}
