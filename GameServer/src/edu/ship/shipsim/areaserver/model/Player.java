@@ -1,15 +1,14 @@
 package edu.ship.shipsim.areaserver.model;
 
 import model.DatabaseException;
+import model.OptionsManager;
 import model.PlayerConnection;
 import model.PlayerLogin;
 import model.QualifiedObservable;
-
-import com.j256.ormlite.field.DataType;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
-
 import data.Position;
+import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway;
+import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayMock;
+import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayRDS;
 import edu.ship.shipsim.areaserver.model.reports.PinFailedReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
 import edu.ship.shipsim.areaserver.model.reports.QuestScreenReport;
@@ -20,61 +19,77 @@ import edu.ship.shipsim.areaserver.model.reports.QuestScreenReport;
  * @author Merlin
  * 
  */
-@DatabaseTable(tableName = "Player")
 public class Player extends QualifiedObservable
 {
 
-	@DatabaseField(id = true)
-	private int id;
+	private PlayerRowDataGateway gateway;
 
-	@DatabaseField
-	private String playerLogin_id;
-	
 	private PlayerLogin playerLogin;
 
-	@DatabaseField
-	private String appearanceType;
-
-	@DatabaseField(dataType = DataType.SERIALIZABLE)
-	private Position playerPosition;
-	
-	@DatabaseField
 	private int quizScore;
 
-	/**
-	 * No arg constructor for ORMLite
-	 */
-	public Player()
+	Player()
 	{
 		registerOurReportTypes();
 	}
 
 	/**
-	 * Check the pin to make sure it is correct with regards to contents and expiration
+	 * Finder constructor
+	 * 
+	 * @param playerID
+	 *            the player's unique ID
+	 * @throws DatabaseException
+	 *             if we can't find the player
+	 */
+	public Player(int playerID) throws DatabaseException
+	{
+		this();
+
+		try
+		{
+			if (OptionsManager.getSingleton().isTestMode())
+			{
+				this.gateway = new PlayerRowDataGatewayMock(playerID);
+			} else
+			{
+				this.gateway = new PlayerRowDataGatewayRDS(playerID);
+			}
+		} catch (DatabaseException e)
+		{
+			throw new DatabaseException("no login information for player with id "
+					+ playerID);
+		}
+		this.playerLogin = new PlayerLogin(playerID);
+	}
+
+	/**
+	 * Check the pin to make sure it is correct with regards to contents and
+	 * expiration
 	 * 
 	 * @param pinToCheck
 	 *            the pin we gave the player to connect to this area server
 	 * @return true or false with pin validity
-	 * @throws DatabaseException if the data source had an exception
+	 * @throws DatabaseException
+	 *             if the data source had an exception
 	 */
 
 	public boolean isPinValid(double pinToCheck) throws DatabaseException
 	{
-		PlayerConnection pl = new PlayerConnection(id);
+		PlayerConnection pl = new PlayerConnection(gateway.getPlayerID());
 		PinFailedReport report = null;
-		
-		if(!pl.isPinValid(pinToCheck))
+
+		if (!pl.isPinValid(pinToCheck))
 		{
 			report = new PinFailedReport(PlayerConnection.ERROR_PIN_NOT_EXIST);
-		}
-		else if (pl.isExpired())
+		} else if (pl.isExpired())
 		{
 			report = new PinFailedReport(PlayerConnection.ERROR_PIN_EXPIRED);
 		}
-		
-		if(report != null)
+
+		if (report != null)
 		{
-			System.err.println("Pin is not valid for " + id + " because " + report.toString());
+			System.err.println("Pin is not valid for " + gateway.getPlayerID()
+					+ " because " + report.toString());
 			this.notifyObservers(report);
 			return false;
 		}
@@ -88,7 +103,7 @@ public class Player extends QualifiedObservable
 	 */
 	public String getAppearanceType()
 	{
-		return appearanceType;
+		return gateway.getAppearanceType();
 	}
 
 	/**
@@ -96,7 +111,7 @@ public class Player extends QualifiedObservable
 	 */
 	public int getID()
 	{
-		return id;
+		return gateway.getPlayerID();
 	}
 
 	/**
@@ -106,7 +121,7 @@ public class Player extends QualifiedObservable
 	 */
 	public String getPlayerName()
 	{
-		return playerLogin_id;
+		return playerLogin.getPlayerName();
 	}
 
 	/**
@@ -117,7 +132,7 @@ public class Player extends QualifiedObservable
 	 */
 	public Position getPlayerPosition()
 	{
-		return this.playerPosition;
+		return gateway.getPosition();
 	}
 
 	private void registerOurReportTypes()
@@ -137,7 +152,7 @@ public class Player extends QualifiedObservable
 	 */
 	public void setAppearanceType(String appearanceType)
 	{
-		this.appearanceType = appearanceType;
+		gateway.setAppearanceType(appearanceType);
 	}
 
 	/**
@@ -150,14 +165,16 @@ public class Player extends QualifiedObservable
 	public void setPlayerPosition(Position playerPosition)
 	{
 		setPlayerPositionWithoutNotifying(playerPosition);
-		PlayerMovedReport report = new PlayerMovedReport(this.id, this.getPlayerName(),
-				playerPosition);
+		PlayerMovedReport report = new PlayerMovedReport(gateway.getPlayerID(),
+				this.getPlayerName(), playerPosition);
 		this.notifyObservers(report);
 	}
 
 	/**
 	 * Tell this player what his login information is
-	 * @param pl his login information
+	 * 
+	 * @param pl
+	 *            his login information
 	 */
 	public void setPlayerLogin(PlayerLogin pl)
 	{
@@ -165,48 +182,53 @@ public class Player extends QualifiedObservable
 	}
 
 	/**
-	 * Move a player without notifying the other players (used when moving from one map to another
-	 * @param newPosition the position the player should move to
+	 * Move a player without notifying the other players (used when moving from
+	 * one map to another
+	 * 
+	 * @param newPosition
+	 *            the position the player should move to
 	 */
 	public void setPlayerPositionWithoutNotifying(Position newPosition)
 	{
-		this.playerPosition = newPosition;
+		gateway.setPosition(newPosition);
 	}
 
 	/**
-	 * Set the id
-	 * @param id the new id
-	 */
-	public void setId(int id) 
-	{
-		this.id = id;
-	}
-	
-	/**
 	 * Get the quizScore
-	 * @return
-	 * 			the quiz score
+	 * 
+	 * @return the quiz score
 	 */
 	public int getQuizScore()
 	{
 		return this.quizScore;
 	}
-	
+
 	/**
 	 * Set the quizScore
+	 * 
 	 * @param score
-	 * 			the new quiz score
+	 *            the new quiz score
 	 */
 	public void setQuizScore(int score)
 	{
 		this.quizScore = score;
 	}
-	
+
 	/**
 	 * Increment quiz score;
 	 */
 	public void incrementQuizScore()
 	{
 		this.quizScore++;
+	}
+
+	/**
+	 * store the information into the data source
+	 * 
+	 * @throws DatabaseException if the data source fails to complete the persistance
+	 */
+	public void persist() throws DatabaseException
+	{
+		gateway.persist();
 	}
 }

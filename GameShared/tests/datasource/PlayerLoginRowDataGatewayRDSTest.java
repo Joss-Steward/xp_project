@@ -18,7 +18,6 @@ public class PlayerLoginRowDataGatewayRDSTest extends PlayerLoginRowDataGatewayT
 	PlayerLoginRowDataGateway findRowDataGateway(String playerName)
 			throws DatabaseException
 	{
-		// TODO Auto-generated method stub
 		return new PlayerLoginRowDataGatewayRDS(playerName);
 	}
 
@@ -29,7 +28,16 @@ public class PlayerLoginRowDataGatewayRDSTest extends PlayerLoginRowDataGatewayT
 	PlayerLoginRowDataGateway createRowDataGateway(String playerName, String password)
 			throws DatabaseException
 	{
-		// TODO Auto-generated method stub
 		return new PlayerLoginRowDataGatewayRDS(playerName, password);
+	}
+
+	/**
+	 * 
+	 * @see datasource.PlayerLoginRowDataGatewayTest#findRowDataGateway(int)
+	 */
+	@Override
+	PlayerLoginRowDataGateway findRowDataGateway(int playerID) throws DatabaseException
+	{
+		return new PlayerLoginRowDataGatewayRDS(playerID);
 	}
 }

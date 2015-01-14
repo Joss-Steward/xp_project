@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import datasource.PlayersForTest;
+import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayMock;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
@@ -26,6 +27,7 @@ public class PlayerConnectionReportTest
 	public void setUp()
 	{
 		PlayerManager.resetSingleton();
+		new PlayerRowDataGatewayMock().resetData();
 	}
 
 	/**

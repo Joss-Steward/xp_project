@@ -2,7 +2,7 @@
 import java.sql.SQLException;
 
 import model.DatabaseException;
-import model.PlayerLogin;
+import model.OptionsManager;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
@@ -10,10 +10,10 @@ import com.j256.ormlite.table.TableUtils;
 
 import data.Position;
 import datasource.PlayersForTest;
+import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayRDS;
 import edu.ship.shipsim.areaserver.model.CharacterIDGenerator;
 import edu.ship.shipsim.areaserver.model.Npc;
 import edu.ship.shipsim.areaserver.model.NpcsInDB;
-import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.QuizBotBehavior;
 
@@ -27,7 +27,6 @@ public class BuildTestDBPlayers
 {
 
 	private static JdbcConnectionSource connectionSource;
-	private static Dao<Player, Integer> playerDAO;
 	private static Dao<Npc, Integer> npcDAO;
 
 	/**
@@ -41,6 +40,7 @@ public class BuildTestDBPlayers
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
+		OptionsManager.getSingleton(false);
 		createCharacterIDTable();
 		createPlayerTable();
 		createNpcTable();
@@ -58,20 +58,11 @@ public class BuildTestDBPlayers
 	{
 		PlayerManager pm = PlayerManager.getSingleton();
 		connectionSource = pm.getConnectionSource();
-		playerDAO = pm.getPlayerDao();
-		TableUtils.dropTable(connectionSource, Player.class, true);
-		TableUtils.createTableIfNotExists(connectionSource, Player.class);
+		PlayerRowDataGatewayRDS.createTable();
 
 		for (PlayersForTest p : PlayersForTest.values())
 		{
-			Position pos = p.getPosition();
-			Player player = new Player();
-			player.setId(CharacterIDGenerator.getNextId());
-			PlayerLogin pl = new PlayerLogin(p.getPlayerName(), p.getPlayerPassword(), player.getID());
-			player.setPlayerLogin(pl);
-			player.setPlayerPosition(pos);
-			player.setAppearanceType(p.getAppearanceType());
-			playerDAO.create(player);
+			new PlayerRowDataGatewayRDS(p.getMapName(),p.getPosition(), p.getAppearanceType());
 		}
 
 	}
@@ -88,7 +79,7 @@ public class BuildTestDBPlayers
 		{
 			Position pos = p.getPosition();
 			Npc player = new Npc();
-			player.setId(CharacterIDGenerator.getNextId());
+//			player.setId(CharacterIDGenerator.getNextId());
 			player.setName(p.getPlayerName());
 			player.setPlayerPosition(pos);
 			player.setAppearanceType(p.getAppearanceType());

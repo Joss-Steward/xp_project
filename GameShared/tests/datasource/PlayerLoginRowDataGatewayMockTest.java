@@ -31,4 +31,10 @@ public class PlayerLoginRowDataGatewayMockTest extends PlayerLoginRowDataGateway
 		return new PlayerLoginRowDataGatewayMock(playerName, password);
 	}
 
+	@Override
+	PlayerLoginRowDataGateway findRowDataGateway(int playerID) throws DatabaseException
+	{
+		return new PlayerLoginRowDataGatewayMock(playerID);
+	}
+
 }

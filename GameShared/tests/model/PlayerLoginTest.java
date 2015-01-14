@@ -25,6 +25,7 @@ public class PlayerLoginTest extends DatabaseTest
 		OptionsManager.getSingleton(true);
 	}
 
+	
 	/**
 	 * If the name and password are in the db, we should be able to determine
 	 * the player's unique ID

@@ -1,6 +1,7 @@
 package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
+import model.DatabaseException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,9 +30,10 @@ public class CommandPersistPlayerTest
 
 	/**
 	 * Test that persistence happens
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void testPersists()
+	public void testPersists() throws DatabaseException
 	{
 		Player player = PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
 		player.setPlayerPositionWithoutNotifying(new Position(101, 101));

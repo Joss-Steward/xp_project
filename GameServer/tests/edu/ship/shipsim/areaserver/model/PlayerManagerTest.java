@@ -131,9 +131,10 @@ public class PlayerManagerTest
 
 	/**
 	 * Test that a player can be persisted by saving an attribute and fetching the player again
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void playerIsSaved()
+	public void playerIsSaved() throws DatabaseException
 	{
 		Player player = PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
 		player.setPlayerPosition(new Position(100, 100));

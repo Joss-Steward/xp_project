@@ -65,6 +65,7 @@ public class TeleportationInitiationHandlerTest
 		PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
 		TeleportationInitiationHandler handler = new TeleportationInitiationHandler();
 		StateAccumulator accum = new StateAccumulator(null);
+		accum.setPlayerId(PlayersForTest.MERLIN.getPlayerID());
 		handler.setAccumulator(accum);
 		TeleportationInitiationMessage msg = new TeleportationInitiationMessage(
 				PlayersForTest.MERLIN.getPlayerID(), ServersForTest.FIRST_SERVER.getMapName(), new Position(5, 6));

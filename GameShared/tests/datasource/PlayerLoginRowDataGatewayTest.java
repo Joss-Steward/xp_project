@@ -28,6 +28,19 @@ public abstract class PlayerLoginRowDataGatewayTest extends DatabaseTest
 	 */
 	abstract PlayerLoginRowDataGateway findRowDataGateway(String playerName)
 			throws DatabaseException;
+	
+	/**
+	 * Create the row data gateway for a test based on existing data in the data
+	 * source
+	 * 
+	 * @param playerID
+	 *            the unique ID of the player we are looking for
+	 * @return the gateway for that player's row in the data source
+	 * @throws DatabaseException
+	 *             if the gateway can't find the player
+	 */
+	abstract PlayerLoginRowDataGateway findRowDataGateway(int playerID)
+			throws DatabaseException;
 
 	/**
 	 * Create a gateway that manages a new row being added to the data source
@@ -95,6 +108,21 @@ public abstract class PlayerLoginRowDataGatewayTest extends DatabaseTest
 	public void findExisting() throws DatabaseException
 	{
 		gateway = findRowDataGateway(PlayersForTest.MERLIN.getPlayerName());
+		assertEquals(2, gateway.getPlayerID());
+		assertEquals(PlayersForTest.MERLIN.getPlayerName(), gateway.getPlayerName());
+		assertEquals(PlayersForTest.MERLIN.getPlayerPassword(), gateway.getPassword());
+	}
+	
+	/**
+	 * Make sure we can retrieve an existing player
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	@Test
+	public void findExistingFromPlayerID() throws DatabaseException
+	{
+		gateway = findRowDataGateway(PlayersForTest.MERLIN.getPlayerID());
 		assertEquals(2, gateway.getPlayerID());
 		assertEquals(PlayersForTest.MERLIN.getPlayerName(), gateway.getPlayerName());
 		assertEquals(PlayersForTest.MERLIN.getPlayerPassword(), gateway.getPassword());

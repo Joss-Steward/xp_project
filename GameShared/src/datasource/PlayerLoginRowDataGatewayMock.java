@@ -100,7 +100,29 @@ public class PlayerLoginRowDataGatewayMock implements PlayerLoginRowDataGateway
 						+ playerName);
 			}
 		}
-		playerLogins.put(nextKey, new PlayerInfo(playerName, password));
+		playerLogins.put(playerID, new PlayerInfo(playerName, password));
+	}
+
+	/**
+	 * Finder constructor
+	 * @param playerID the player's unique ID
+	 * @throws DatabaseException if we can't find the player
+	 */
+	public PlayerLoginRowDataGatewayMock(int playerID) throws DatabaseException
+	{
+		if (playerLogins == null)
+		{
+			resetData();
+		}
+		if (playerLogins.containsKey(playerID))
+		{
+			this.playerID = playerID;
+			this.playerInfo = playerLogins.get(playerID);
+		}
+		else
+		{
+			throw new DatabaseException("Couldn't find player with ID " + playerID);
+		}
 	}
 
 	/**

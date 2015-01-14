@@ -42,8 +42,8 @@ public class MapFileMessagePackerTest
 	@Test
 	public void ifThePlayerIsNotOnThisConnection() throws DatabaseException
 	{
-		PlayerManager.getSingleton().addPlayer(1, PlayerConnection.DEFAULT_PIN);
-		PlayerManager.getSingleton().addPlayer(2, PlayerConnection.DEFAULT_PIN);
+		PlayerManager.getSingleton().addPlayer(1);
+		PlayerManager.getSingleton().addPlayer(2);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
 

@@ -78,6 +78,31 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 	}
 
 	/**
+	 * Finder constructor
+	 * @param playerID the player's unique ID
+	 * @throws DatabaseException if the player isn't in the database or we can't execute the query
+	 */
+	public PlayerLoginRowDataGatewayRDS(int playerID) throws DatabaseException
+	{
+		this.connection = DatabaseManager.getSingleton().getConnection();
+		this.playerID = playerID;
+		try
+		{
+			PreparedStatement stmt = connection
+					.prepareStatement("SELECT * FROM PlayerLogins WHERE playerID = ?");
+			stmt.setInt(1, playerID);
+			ResultSet result = stmt.executeQuery();
+			result.next();
+			password = result.getString("password");
+			playerName = result.getString("playerName");
+
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Couldn't find a player with ID " + playerID, e);
+		}
+	}
+
+	/**
 	 * @see datasource.PlayerLoginRowDataGateway#getPassword()
 	 */
 	@Override

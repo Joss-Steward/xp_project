@@ -22,9 +22,7 @@ public class PlayerLogin
 	 * @param password
 	 *            the player's password
 	 * @param id
-	 *            The id of the player TODO this table is set up incorrectly -
-	 *            should autogenerate ID and store that in Player table - no
-	 *            need for player name here
+	 *            The id of the player 
 	 * @throws DatabaseException
 	 *             if the gateway fails
 	 */
@@ -82,6 +80,31 @@ public class PlayerLogin
 	/**
 	 * Get a player's login information without checking his password
 	 * 
+	 * @param playerID
+	 *            the player's unique ID
+	 * @throws DatabaseException
+	 *             if the player doesn't exist
+	 */
+	public PlayerLogin(int playerID) throws DatabaseException
+	{
+		try
+		{
+
+			if (OptionsManager.getSingleton().isTestMode())
+			{
+				this.gateway = new PlayerLoginRowDataGatewayMock(playerID);
+			} else
+			{
+				this.gateway = new PlayerLoginRowDataGatewayRDS(playerID);
+			}
+		} catch (DatabaseException e)
+		{
+			throw new DatabaseException("no login information for player with ID " + playerID);
+		}
+	}
+	/**
+	 * Get a player's login information without checking his password
+	 * 
 	 * @param playerName
 	 *            the player's player name
 	 * @throws DatabaseException
@@ -104,6 +127,7 @@ public class PlayerLogin
 			throw new DatabaseException("no login information for " + playerName);
 		}
 	}
+
 
 	/**
 	 * Return this player's unique ID

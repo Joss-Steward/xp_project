@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 
 import model.DatabaseException;
 import model.DatabaseTest;
+import model.OptionsManager;
 import model.PlayerConnection;
 import model.QualifiedObservableConnector;
 
@@ -43,6 +44,7 @@ public class PlayerTest extends DatabaseTest
 	public void setUp() throws DatabaseException
 	{
 		super.setUp();
+		OptionsManager.getSingleton(true);
 		QualifiedObservableConnector.resetSingleton();
 		PlayerManager.resetSingleton();
 		playerManager = PlayerManager.getSingleton();

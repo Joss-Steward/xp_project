@@ -5,24 +5,24 @@ import model.DatabaseException;
 
 
 /**
- * Tests for the mock version of the gateway
+ * Tests for the RDS version of the gateway
  * @author Merlin
  *
  */
-public class PlayerRowDataGatewayMockTest extends PlayerRowDataGatewayTest
+public class PlayerRowDataGatewayRDSTest extends PlayerRowDataGatewayTest
 {
 
 	@Override
 	PlayerRowDataGateway findGateway(int playerID) throws DatabaseException
 	{
-		return new PlayerRowDataGatewayMock(playerID);
+		return new PlayerRowDataGatewayRDS(playerID);
 	}
 
 	@Override
 	PlayerRowDataGateway createGateway(String mapName, Position position,
 			String appearanceType) throws DatabaseException
 	{
-		return new PlayerRowDataGatewayMock(mapName, position, appearanceType);
+		return new PlayerRowDataGatewayRDS(mapName, position, appearanceType);
 	}
 
 	
