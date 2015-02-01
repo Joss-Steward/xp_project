@@ -1,11 +1,10 @@
 import java.sql.SQLException;
 
-import model.DatabaseException;
-
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.model.NPCQuestion;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.QuestionsInDB;

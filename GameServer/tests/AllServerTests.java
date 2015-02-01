@@ -25,6 +25,7 @@ import edu.ship.shipsim.areaserver.model.CommandAddPlayerTest;
 import edu.ship.shipsim.areaserver.model.CommandMovePlayerSilentlyTest;
 import edu.ship.shipsim.areaserver.model.CommandMovePlayerTest;
 import edu.ship.shipsim.areaserver.model.PlayerManagerTest;
+import edu.ship.shipsim.areaserver.model.PlayerMapperTest;
 import edu.ship.shipsim.areaserver.model.PlayerTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReportTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReportTest;
@@ -66,6 +67,7 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		CommandMovePlayerTest.class, 
 		CommandMovePlayerSilentlyTest.class,
 		PlayerManagerTest.class,
+		PlayerMapperTest.class,
 		PlayerTest.class,
 		ChatManagerTest.class,
 		ChatMessageReceivedCommandTest.class,

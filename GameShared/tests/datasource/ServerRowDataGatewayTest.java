@@ -5,9 +5,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.After;
 import org.junit.Test;
 
-import model.DatabaseException;
-import model.DatabaseTest;
-
 /**
  * Tests the behaviors associated with Server data sources
  * 

@@ -1,13 +1,13 @@
 package edu.ship.shipsim.areaserver.datasource;
 
 import static org.junit.Assert.*;
-import model.DatabaseException;
-import model.DatabaseTest;
 
 import org.junit.After;
 import org.junit.Test;
 
 import data.Position;
+import datasource.DatabaseException;
+import datasource.DatabaseTest;
 import datasource.PlayersForTest;
 
 /**
@@ -62,6 +62,7 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 		assertEquals("mapName", after.getMapName());
 		assertEquals(new Position(3,2), after.getPosition());
 		assertEquals("Warrior", after.getAppearanceType());
+		assertEquals(0,after.getQuizScore());
 	}
 
 	abstract PlayerRowDataGateway createGateway(String mapName, Position position,
@@ -108,6 +109,21 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 		PlayerRowDataGateway after = findGateway(PlayersForTest.MERLIN
 				.getPlayerID());
 		assertEquals(new Position(42,32), after.getPosition());
+	}
+	
+	/**
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	@Test
+	public void changeQuizScore() throws DatabaseException
+	{
+		gateway = findGateway(PlayersForTest.MERLIN.getPlayerID());
+		gateway.setQuizScore(666);
+		gateway.persist();
+		PlayerRowDataGateway after = findGateway(PlayersForTest.MERLIN
+				.getPlayerID());
+		assertEquals(666, after.getQuizScore());
 	}
 	
 	/**

@@ -3,8 +3,9 @@ package model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
 import java.sql.Statement;
+
+import datasource.DatabaseException;
 
 /**
  * @author Merlin
@@ -50,6 +51,9 @@ public class DatabaseManager
 			{
 				connection.commit();
 				connection.setSavepoint();
+			} else
+			{
+				connection.rollback();
 			}
 		} catch (SQLException e)
 		{
@@ -142,7 +146,6 @@ public class DatabaseManager
 			}
 		} catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		singleton = null;

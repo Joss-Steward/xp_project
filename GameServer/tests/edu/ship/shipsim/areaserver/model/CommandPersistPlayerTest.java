@@ -1,12 +1,12 @@
 package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
-import model.DatabaseException;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import data.Position;
+import datasource.DatabaseException;
 import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;

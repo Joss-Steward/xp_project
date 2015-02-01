@@ -1,6 +1,7 @@
 package model;
 
 import communication.LocalPortMapper;
+import datasource.DatabaseException;
 
 /**
  * Contain information about this server's mapping so it can be used easily in

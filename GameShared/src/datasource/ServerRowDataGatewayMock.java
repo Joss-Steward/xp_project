@@ -2,8 +2,6 @@ package datasource;
 
 import java.util.HashMap;
 
-import model.DatabaseException;
-
 /**
  * A mock data source that returns test data.  It is initialized with the data in ServersInDB
  * @see ServersForTest

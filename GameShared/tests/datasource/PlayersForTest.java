@@ -13,53 +13,53 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	JOHN(1, "John", "male_a", 0, 8, "pw", "quiznasium.tmx", 1111, null, "current.tmx"),
+	JOHN(1, "John", "male_a", 0, 8, "pw", "quiznasium.tmx", 1111, null, "current.tmx", 0),
 	/**
 	 * 
 	 */
-	MERLIN(2, "Merlin", "merlin", 4, 13, "pw", null, 1111, null, "current.tmx"),
+	MERLIN(2, "Merlin", "merlin", 4, 13, "pw", null, 1111, null, "current.tmx", 42),
 	/**
 	 * 
 	 */
-	NICK(3, "Nick", "magi", 4, 13, "pw", null, 1111, null, "current.tmx"),
+	NICK(3, "Nick", "magi", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
 	/**
 	 * 
 	 */
-	JOSH(4, "Josh", "ninja", 4, 13, "pw", null, 1111, null, "current.tmx"),
+	JOSH(4, "Josh", "ninja", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
 	/**
 	 * 
 	 */
-	MATT(5, "Matt", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx"),
+	MATT(5, "Matt", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
 	/**
 	 * 
 	 */
-	STEVE(6, "Steve", "knight_with_straw_hat", 4, 13, "pw", null, 1111, null, "current.tmx"),
+	STEVE(6, "Steve", "knight_with_straw_hat", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
 	/**
 	 * 
 	 */
-	FRANK(7, "Frank", "male_b", 4, 13, "pw", null, 1441, null, "current.tmx"),
+	FRANK(7, "Frank", "male_b", 4, 13, "pw", null, 1441, null, "current.tmx", 0),
 	/**
 	 * 
 	 */
-	GA(8, "Ga", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx"),
+	GA(8, "Ga", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
 	/**
 	 * 
 	 */
-	ANDY(9, "Andy", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx"),
+	ANDY(9, "Andy", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
 	/**
 	 * 
 	 */
-	DAVE(10, "Dave", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx"),
+	DAVE(10, "Dave", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
 	
 	/**
 	 * 
 	 */
-	MOCK_NPC(11, "NPC1","magi", 4, 13, "", null, 1111, null, "current.tmx"),
+	MOCK_NPC(11, "NPC1","magi", 4, 13, "", "current.tmx", 1111, null, "current.tmx", 0),
 	
 	/**
 	 * 
 	 */
-	MOCK_NPC2(12, "NPC1","magi", 4, 13, "", null, 1111, null, "current.tmx");
+	MOCK_NPC2(12, "NPC1","magi", 4, 13, "", "current.tmx", 1111, null, "current.tmx", 0);
 	
 	private int playerID;
 
@@ -78,6 +78,8 @@ public enum PlayersForTest
 	private int pin;
 	
 	private String changedOn;
+	
+	private int quizScore;
 	
 	/**
 	 * @return the pin for the current connection
@@ -105,7 +107,7 @@ public enum PlayersForTest
 
 	private String mapNameForPin;
 
-	PlayersForTest(int id, String playerName, String type, int row, int col, String password, String mapName, int pin, String changedOn, String mapNameForPin)
+	PlayersForTest(int id, String playerName, String type, int row, int col, String password, String mapName, int pin, String changedOn, String mapNameForPin, int quizScore)
 	{
 		this.playerID = id;
 		this.playerName = playerName;
@@ -176,6 +178,16 @@ public enum PlayersForTest
 	public Position getPosition()
 	{
 		return new Position(row, col);
+	}
+
+	/**
+	 * get this player's current quiz score
+	 * 
+	 * @return this player's score
+	 */
+	public int getQuizScore()
+	{
+		return quizScore;
 	}
 
 }

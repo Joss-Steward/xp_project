@@ -1,12 +1,12 @@
 package edu.ship.shipsim.areaserver.model.reports;
 
 import static org.junit.Assert.*;
-import model.DatabaseException;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import datasource.DatabaseException;
 import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayMock;
 import edu.ship.shipsim.areaserver.model.Player;

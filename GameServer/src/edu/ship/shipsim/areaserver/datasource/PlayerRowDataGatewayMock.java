@@ -2,8 +2,8 @@ package edu.ship.shipsim.areaserver.datasource;
 
 import java.util.HashMap;
 
-import model.DatabaseException;
 import data.Position;
+import datasource.DatabaseException;
 import datasource.PlayersForTest;
 
 /**
@@ -20,9 +20,10 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		private String mapName;
 		private Position position;
 		private String appearanceType;
+		private int quizScore;
 
 		public PlayerInfo(String mapName, Position position,
-				String appearanceType)
+				String appearanceType, int quizScore)
 		{
 			this.mapName = mapName;
 			this.position = position;
@@ -85,9 +86,10 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	 * @param mapName the name of the map the player is playing
 	 * @param position the position of the player on the map
 	 * @param appearanceType the appearance type of the player
+	 * @param quizScore this player's current quiz score
 	 */
 	public PlayerRowDataGatewayMock(String mapName, Position position,
-			String appearanceType) 
+			String appearanceType, int quizScore) 
 	{
 		if (playerInfo == null)
 		{
@@ -97,7 +99,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		nextKey++;
 		
 		playerInfo.put(playerID, new PlayerInfo(mapName, position,
-				appearanceType));
+				appearanceType, quizScore));
 	}
 
 	/**
@@ -120,7 +122,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 			playerInfo.put(
 					nextKey,
 					new PlayerInfo(p.getMapName(), p.getPosition(), p
-							.getAppearanceType()));
+							.getAppearanceType(), p.getQuizScore()));
 			nextKey++;
 		}
 	}
@@ -195,6 +197,25 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	public void setAppearanceType(String appearanceType)
 	{
 		info.appearanceType = appearanceType;
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#getQuizScore()
+	 */
+	@Override
+	public int getQuizScore()
+	{
+		return info.quizScore;
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#setQuizScore(int)
+	 */
+	@Override
+	public void setQuizScore(int quizScore)
+	{
+		info.quizScore = quizScore;
+		
 	}
 
 }

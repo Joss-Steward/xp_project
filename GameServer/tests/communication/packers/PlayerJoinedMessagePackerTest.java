@@ -1,7 +1,6 @@
 package communication.packers;
 
 import static org.junit.Assert.assertEquals;
-import model.DatabaseException;
 import model.OptionsManager;
 
 import org.junit.Before;
@@ -9,7 +8,7 @@ import org.junit.Test;
 
 import communication.StateAccumulator;
 import communication.messages.PlayerJoinedMessage;
-
+import datasource.DatabaseException;
 import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayMock;
 import edu.ship.shipsim.areaserver.model.PlayerManager;

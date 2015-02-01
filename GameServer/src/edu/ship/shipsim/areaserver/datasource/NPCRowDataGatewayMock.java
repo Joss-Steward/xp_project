@@ -2,7 +2,7 @@ package edu.ship.shipsim.areaserver.datasource;
 
 import java.util.HashMap;
 
-import model.DatabaseException;
+import datasource.DatabaseException;
 
 /**
  * A mock implementation for PlayerRowDataGateway

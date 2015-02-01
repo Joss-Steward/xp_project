@@ -5,10 +5,9 @@ import static org.junit.Assert.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.DatabaseTest;
-
 import org.junit.Test;
 
+import datasource.DatabaseTest;
 import edu.ship.shipsim.areaserver.model.NPCQuestion;
 
 /**

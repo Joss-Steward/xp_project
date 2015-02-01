@@ -1,12 +1,12 @@
 package edu.ship.shipsim.client.model;
 
 import static org.junit.Assert.*;
-import model.DatabaseException;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
 import data.Position;
+import datasource.DatabaseException;
 import edu.ship.shipsim.client.model.Player;
 
 /**

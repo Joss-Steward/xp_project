@@ -1,6 +1,6 @@
 package edu.ship.shipsim.areaserver.model;
 
-import model.DatabaseException;
+import datasource.DatabaseException;
 
 
 /**

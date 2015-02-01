@@ -2,8 +2,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import datasource.DatabaseException;
 import datasource.PlayersForTest;
-import model.DatabaseException;
 import model.DatabaseManager;
 
 /**

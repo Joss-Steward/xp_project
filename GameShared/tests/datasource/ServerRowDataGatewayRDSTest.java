@@ -1,6 +1,5 @@
 package datasource;
 
-import model.DatabaseException;
 
 
 /**

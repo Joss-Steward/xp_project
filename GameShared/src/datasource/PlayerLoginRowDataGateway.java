@@ -1,6 +1,5 @@
 package datasource;
 
-import model.DatabaseException;
 
 /**
  * Defines the behavior required for interfacing with a data source that has

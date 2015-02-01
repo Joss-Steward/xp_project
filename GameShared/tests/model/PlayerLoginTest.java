@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import datasource.DatabaseException;
+import datasource.DatabaseTest;
 import datasource.PlayersForTest;
 
 /**
@@ -17,7 +19,7 @@ public class PlayerLoginTest extends DatabaseTest
 {
 
 	/**
-	 * @see model.DatabaseTest#setUp()
+	 * @see datasource.DatabaseTest#setUp()
 	 */
 	@Before
 	public void setUp()

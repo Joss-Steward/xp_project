@@ -1,8 +1,6 @@
 package datasource;
 
 import static org.junit.Assert.*;
-import model.DatabaseException;
-import model.DatabaseTest;
 
 import org.junit.After;
 import org.junit.Test;

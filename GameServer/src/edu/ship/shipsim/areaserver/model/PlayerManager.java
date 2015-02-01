@@ -5,19 +5,20 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-
-import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
-import edu.ship.shipsim.areaserver.model.reports.PlayerLeaveReport;
-import model.DatabaseException;
 import model.OptionsManager;
 import model.PlayerConnection;
 import model.PlayerLogin;
 import model.QualifiedObservable;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
+
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+
+import datasource.DatabaseException;
+import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
+import edu.ship.shipsim.areaserver.model.reports.PlayerLeaveReport;
 
 /**
  * @author Merlin
@@ -108,7 +109,8 @@ public class PlayerManager extends QualifiedObservable
 	{
 		try
 		{
-			Player player = new Player(playerID);
+			PlayerMapper mapper = new PlayerMapper(playerID);
+			Player player = mapper.getPlayer();
 			player.setPlayerLogin(new PlayerLogin(playerID));
 			players.put(playerID, player);
 
@@ -135,7 +137,8 @@ public class PlayerManager extends QualifiedObservable
 	public Player addPlayer(int playerID, double pin) throws DatabaseException
 	{
 
-		Player player = new Player(playerID);
+		PlayerMapper pm = new PlayerMapper(playerID);
+		Player player = pm.getPlayer();
 		if (player.isPinValid(pin))
 		{
 			players.put(playerID, player);

@@ -1,6 +1,5 @@
 package datasource;
 
-import model.DatabaseException;
 
 /**
  * Test our mock behavior

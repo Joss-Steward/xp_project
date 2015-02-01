@@ -1,7 +1,7 @@
 package edu.ship.shipsim.areaserver.datasource;
 
 import data.Position;
-import model.DatabaseException;
+import datasource.DatabaseException;
 
 
 /**
@@ -22,7 +22,7 @@ public class PlayerRowDataGatewayMockTest extends PlayerRowDataGatewayTest
 	PlayerRowDataGateway createGateway(String mapName, Position position,
 			String appearanceType) throws DatabaseException
 	{
-		return new PlayerRowDataGatewayMock(mapName, position, appearanceType);
+		return new PlayerRowDataGatewayMock(mapName, position, appearanceType, 0);
 	}
 
 	

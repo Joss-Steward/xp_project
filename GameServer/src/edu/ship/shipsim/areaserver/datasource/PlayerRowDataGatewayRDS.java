@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import model.DatabaseException;
 import model.DatabaseManager;
 import data.Position;
+import datasource.DatabaseException;
 
 /**
  * The RDS version of the gateway
@@ -18,10 +18,33 @@ import data.Position;
 public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 {
 
+	/**
+	 * Drop the table if it exists and re-create it empty
+	 * @throws DatabaseException shouldn't
+	 */
+	public static void createTable() throws DatabaseException
+	{
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
+		{
+			PreparedStatement stmt = connection
+					.prepareStatement("DROP TABLE IF EXISTS Players");
+			stmt.executeUpdate();
+
+			stmt = connection
+					.prepareStatement("Create TABLE Players (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, mapName VARCHAR(80), row INTEGER, col INTEGER, appearanceType VARCHAR(255), quizScore INTEGER)");
+			stmt.executeUpdate();
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Unable to create the player table", e);
+		}
+	}
 	private int playerID;
 	private String mapName;
 	private Position position;
 	private String appearanceType;
+	private int quizScore;
+
 	private Connection connection;
 
 	/**
@@ -44,32 +67,11 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 			this.mapName = result.getString("mapName");
 			this.position = (Position) new Position(result.getInt("row"), result.getInt("col"));
 			this.appearanceType = result.getString("appearanceType");
+			this.quizScore = result.getInt("quizScore");
 
 		} catch (SQLException e)
 		{
 			throw new DatabaseException("Couldn't find a player with ID " + playerID, e);
-		}
-	}
-
-	/**
-	 * Drop the table if it exists and re-create it empty
-	 * @throws DatabaseException shouldn't
-	 */
-	public static void createTable() throws DatabaseException
-	{
-		Connection connection = DatabaseManager.getSingleton().getConnection();
-		try
-		{
-			PreparedStatement stmt = connection
-					.prepareStatement("DROP TABLE IF EXISTS Players");
-			stmt.executeUpdate();
-
-			stmt = connection
-					.prepareStatement("Create TABLE Players (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, mapName VARCHAR(80), row INTEGER, col INTEGER, appearanceType VARCHAR(255))");
-			stmt.executeUpdate();
-		} catch (SQLException e)
-		{
-			throw new DatabaseException("Unable to create the player table", e);
 		}
 	}
 
@@ -89,7 +91,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 		{
 			PreparedStatement stmt = connection
 					.prepareStatement(
-							"Insert INTO Players SET mapName = ?, row = ?, col = ?, appearanceType = ?",
+							"Insert INTO Players SET mapName = ?, row = ?, col = ?, appearanceType = ?, quizScore = 0",
 							Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, mapName);
 			stmt.setInt(2, position.getRow());
@@ -107,6 +109,15 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 			throw new DatabaseException(
 					"Couldn't create a player record for player with ID " + playerID, e);
 		}
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#getAppearanceType()
+	 */
+	@Override
+	public String getAppearanceType()
+	{
+		return appearanceType;
 	}
 
 	/**
@@ -137,29 +148,12 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	}
 
 	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#getAppearanceType()
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#getQuizScore()
 	 */
 	@Override
-	public String getAppearanceType()
+	public int getQuizScore()
 	{
-		return appearanceType;
-	}
-
-	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#resetData()
-	 */
-	@Override
-	public void resetData()
-	{
-	}
-
-	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#setMapName(java.lang.String)
-	 */
-	@Override
-	public void setMapName(String mapName)
-	{
-		this.mapName = mapName;
+		return quizScore;
 	}
 
 	/**
@@ -173,12 +167,13 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 		try
 		{
 			PreparedStatement stmt = connection
-					.prepareStatement("UPDATE Players SET mapName = ?, row = ?, col = ?, appearanceType = ? WHERE playerID = ?");
+					.prepareStatement("UPDATE Players SET mapName = ?, row = ?, col = ?, appearanceType = ?, quizScore = ? WHERE playerID = ?");
 			stmt.setString(1, mapName);
 			stmt.setInt(2, position.getRow());
 			stmt.setInt(3, position.getColumn());
 			stmt.setString(4, appearanceType);
-			stmt.setInt(5, playerID);
+			stmt.setInt(5, quizScore);
+			stmt.setInt(6, playerID);
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -186,6 +181,32 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 			throw new DatabaseException("Couldn't persist info for player with ID "
 					+ playerID, e);
 		}
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#resetData()
+	 */
+	@Override
+	public void resetData()
+	{
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#setAppearanceType(java.lang.String)
+	 */
+	@Override
+	public void setAppearanceType(String appearanceType)
+	{
+		this.appearanceType = appearanceType;
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#setMapName(java.lang.String)
+	 */
+	@Override
+	public void setMapName(String mapName)
+	{
+		this.mapName = mapName;
 	}
 
 	/**
@@ -198,12 +219,12 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	}
 
 	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#setAppearanceType(java.lang.String)
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#setQuizScore(int)
 	 */
 	@Override
-	public void setAppearanceType(String appearanceType)
+	public void setQuizScore(int quizScore)
 	{
-		this.appearanceType = appearanceType;
+		this.quizScore = quizScore;
 	}
 
 }

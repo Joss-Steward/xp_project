@@ -2,6 +2,7 @@ package model;
 
 import model.reports.LoginSuccessfulReport;
 import communication.LocalPortMapper;
+import datasource.DatabaseException;
 
 /**
  * @author Merlin

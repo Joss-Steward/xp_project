@@ -1,12 +1,12 @@
 
 import java.sql.SQLException;
 
-import model.DatabaseException;
 import model.OptionsManager;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import datasource.DatabaseException;
 import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayRDS;
 import edu.ship.shipsim.areaserver.datasource.NPCsForTest;

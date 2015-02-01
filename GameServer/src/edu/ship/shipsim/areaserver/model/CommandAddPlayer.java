@@ -1,6 +1,6 @@
 package edu.ship.shipsim.areaserver.model;
 
-import model.DatabaseException;
+import datasource.DatabaseException;
 
 /**
  * Command used to add a new player to this area server's part of the game

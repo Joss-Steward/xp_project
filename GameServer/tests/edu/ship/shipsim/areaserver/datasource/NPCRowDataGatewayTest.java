@@ -1,11 +1,12 @@
 package edu.ship.shipsim.areaserver.datasource;
 
 import static org.junit.Assert.*;
-import model.DatabaseException;
-import model.DatabaseTest;
 
 import org.junit.After;
 import org.junit.Test;
+
+import datasource.DatabaseException;
+import datasource.DatabaseTest;
 
 
 /**

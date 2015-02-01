@@ -1,9 +1,13 @@
-package model;
+package datasource;
 
 import java.sql.SQLException;
 
+import model.DatabaseManager;
+
 import org.junit.After;
 import org.junit.Before;
+
+import datasource.DatabaseException;
 
 /**
  * Defines set up and tear down methods that set up the DB for testing and roll

@@ -1,13 +1,13 @@
 package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
-import model.DatabaseException;
 import model.MapToServerMapping;
 import model.OptionsManager;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import datasource.DatabaseException;
 import datasource.ServersForTest;
 
 /**

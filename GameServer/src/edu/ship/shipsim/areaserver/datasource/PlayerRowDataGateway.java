@@ -1,7 +1,7 @@
 package edu.ship.shipsim.areaserver.datasource;
 
-import model.DatabaseException;
 import data.Position;
+import datasource.DatabaseException;
 
 /**
  * 
@@ -30,6 +30,11 @@ public interface PlayerRowDataGateway
 	 * @return the appearance type that this player should be animated with
 	 */
 	String getAppearanceType();
+	
+	/**
+	 * @return this player's quiz score
+	 */
+	int getQuizScore();
 
 	/**
 	 * For testing purposes
@@ -56,4 +61,9 @@ public interface PlayerRowDataGateway
 	 * @param appearanceType the name of the animation this player should use
 	 */
 	void setAppearanceType(String appearanceType);
+
+	/**
+	 * @param quizScore this player's new score
+	 */
+	void setQuizScore(int quizScore);
 }

@@ -12,6 +12,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import datasource.DatabaseException;
+import datasource.DatabaseTest;
+
 /**
  * Tests the functionality associated with the PINs that the login server gives
  * a client when they are connecting to an area server

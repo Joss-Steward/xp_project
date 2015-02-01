@@ -2,8 +2,6 @@ package datasource;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import model.DatabaseException;
-import model.DatabaseTest;
 
 import org.junit.After;
 import org.junit.Test;

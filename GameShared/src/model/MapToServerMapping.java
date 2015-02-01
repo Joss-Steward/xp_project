@@ -1,5 +1,6 @@
 package model;
 
+import datasource.DatabaseException;
 import datasource.ServerRowDataGateway;
 import datasource.ServerRowDataGatewayMock;
 import datasource.ServerRowDataGatewayRDS;

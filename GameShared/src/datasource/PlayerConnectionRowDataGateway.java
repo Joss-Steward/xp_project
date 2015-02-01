@@ -1,6 +1,5 @@
 package datasource;
 
-import model.DatabaseException;
 
 /**
  * Required functionality for all row data gateways into the PlayerConnection

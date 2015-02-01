@@ -4,8 +4,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
-import model.DatabaseException;
-
 /**
  * A mock version of a PlayerConnectionRowDataGateway built from the data in
  * PlayersForTest

@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.sql.SQLException;
 import java.util.Observer;
 
-import model.DatabaseException;
 import model.OptionsManager;
 import model.QualifiedObservableConnector;
 
@@ -14,8 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import data.Position;
+import datasource.DatabaseException;
 import datasource.PlayersForTest;
-import edu.ship.shipsim.areaserver.datasource.NPCsForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.PlayerNotFoundException;
@@ -155,11 +154,11 @@ public class PlayerManagerTest
 	@Test
 	public void testNpcsLoaded() throws DatabaseException, SQLException
 	{
-		OptionsManager.getSingleton(true).updateMapInformation("quiznasium.tmx", "local", 1337);
+		
+		OptionsManager.getSingleton(true).updateMapInformation(PlayersForTest.MOCK_NPC.getMapName(), "localhost", 1874);
 		PlayerManager.getSingleton().loadNpcs();
-		for(NPCsForTest npc: NPCsForTest.values())
-		{
-			assertNotNull(PlayerManager.getSingleton().getPlayerFromID(npc.getPlayerID()));
-		}
+		
+			assertNotNull(PlayerManager.getSingleton().getPlayerFromID(PlayersForTest.MOCK_NPC.getPlayerID()));
+		
 	}
 }

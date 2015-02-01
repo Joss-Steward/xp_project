@@ -2,9 +2,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import model.DatabaseException;
 import model.DatabaseManager;
 import model.OptionsManager;
+import datasource.DatabaseException;
 import datasource.ServerRowDataGatewayRDS;
 import datasource.ServersForTest;
 
