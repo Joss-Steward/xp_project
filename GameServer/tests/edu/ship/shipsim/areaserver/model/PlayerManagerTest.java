@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import data.Position;
 import datasource.PlayersForTest;
+import edu.ship.shipsim.areaserver.datasource.NPCsForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.PlayerNotFoundException;
@@ -156,7 +157,7 @@ public class PlayerManagerTest
 	{
 		OptionsManager.getSingleton(true).updateMapInformation("quiznasium.tmx", "local", 1337);
 		PlayerManager.getSingleton().loadNpcs();
-		for(NpcsInDB npc: NpcsInDB.values())
+		for(NPCsForTest npc: NPCsForTest.values())
 		{
 			assertNotNull(PlayerManager.getSingleton().getPlayerFromID(npc.getPlayerID()));
 		}

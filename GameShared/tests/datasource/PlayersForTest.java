@@ -49,8 +49,18 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	DAVE(10, "Dave", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx");
-
+	DAVE(10, "Dave", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx"),
+	
+	/**
+	 * 
+	 */
+	MOCK_NPC(11, "NPC1","magi", 4, 13, "", null, 1111, null, "current.tmx"),
+	
+	/**
+	 * 
+	 */
+	MOCK_NPC2(12, "NPC1","magi", 4, 13, "", null, 1111, null, "current.tmx");
+	
 	private int playerID;
 
 	private String appearanceType;

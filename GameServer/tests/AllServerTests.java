@@ -14,6 +14,10 @@ import communication.handlers.TeleportationInitiationHandlerTest;
 import communication.packers.MapFileMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.PlayerJoinedMessagePackerTest;
+import edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayMockTest;
+import edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayRDSTest;
+import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayMockTest;
+import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.model.CharacterIDGeneratorTest;
 import edu.ship.shipsim.areaserver.model.ChatManagerTest;
 import edu.ship.shipsim.areaserver.model.ChatMessageReceivedCommandTest;
@@ -50,6 +54,12 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		MapFileMessagePackerTest.class,
 		MovementMessagePackerTest.class, 
 		PlayerJoinedMessagePackerTest.class,
+		
+		//dataSource
+		NPCRowDataGatewayMockTest.class,
+		NPCRowDataGatewayRDSTest.class,
+		PlayerRowDataGatewayMockTest.class,
+		PlayerRowDataGatewayRDSTest.class,
 
 		// model
 		CommandAddPlayerTest.class, 

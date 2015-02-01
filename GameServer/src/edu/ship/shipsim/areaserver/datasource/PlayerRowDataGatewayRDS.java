@@ -179,7 +179,6 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 			stmt.setInt(3, position.getColumn());
 			stmt.setString(4, appearanceType);
 			stmt.setInt(5, playerID);
-			System.out.println(stmt.toString());
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
