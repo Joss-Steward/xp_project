@@ -130,6 +130,12 @@ public class NPCRowDataGatewayRDS implements NPCRowDataGateway
 	{
 	}
 
+	/**
+	 * Get gateways for all of the NPCs that are managed by a server managing a given map
+	 * @param mapName the map we are interested in
+	 * @return the NPCs
+	 * @throws DatabaseException if we have trouble talking to the database
+	 */
 	public static ArrayList<NPCRowDataGateway> getNPCsForMap(String mapName)
 			throws DatabaseException
 	{

@@ -19,6 +19,9 @@ public class NPCRowDataGatewayRDSTest extends NPCRowDataGatewayTest
 		return new NPCRowDataGatewayRDS(playerID);
 	}
 
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayTest#getAllForMap(java.lang.String)
+	 */
 	@Override
 	public ArrayList<NPCRowDataGateway> getAllForMap(String mapName)
 			throws DatabaseException

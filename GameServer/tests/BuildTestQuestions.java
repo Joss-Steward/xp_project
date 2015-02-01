@@ -6,7 +6,6 @@ import com.j256.ormlite.table.TableUtils;
 
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.model.NPCQuestion;
-import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.QuestionsInDB;
 
 /**

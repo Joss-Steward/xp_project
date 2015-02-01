@@ -19,6 +19,9 @@ public class NPCRowDataGatewayMockTest extends NPCRowDataGatewayTest
 		return new NPCRowDataGatewayMock(playerID);
 	}
 
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayTest#getAllForMap(java.lang.String)
+	 */
 	@Override
 	public ArrayList<NPCRowDataGateway> getAllForMap(String mapName) throws DatabaseException
 	{

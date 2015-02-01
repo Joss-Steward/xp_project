@@ -100,6 +100,12 @@ public class NPCRowDataGatewayMock implements NPCRowDataGateway
 		return playerID;
 	}
 
+	/**
+	 * Get all of the NPCS in the mock data for a given map name
+	 * @param mapName the name of the map
+	 * @return the NPCs that are managed by the server managing the given map
+	 * @throws DatabaseException shouldn't
+	 */
 	public static ArrayList<NPCRowDataGateway> getNPCsForMap(String mapName) throws DatabaseException
 	{
 		if (npcInfo == null)

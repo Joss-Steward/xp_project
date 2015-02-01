@@ -1,6 +1,5 @@
 package edu.ship.shipsim.areaserver.model;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,11 +11,6 @@ import model.PlayerLogin;
 import model.QualifiedObservable;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
-
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerLeaveReport;
@@ -197,24 +191,26 @@ public class PlayerManager extends QualifiedObservable
 	 */
 	public void loadNpcs() throws DatabaseException
 	{
-//		stopNpcs();
-//		HashMap<String, Object> queryParams = new HashMap<String, Object>();
-//		queryParams.put("mapName", OptionsManager.getSingleton().getMapName());
-//		try
-//		{
-//			npcs = this.getNpcDao().queryForFieldValues(queryParams);
-//			for (NPC npc : npcs)
-//			{
-//				npc.initializeFromDatabase();
-//				players.put(npc.getID(), npc);
-//				npc.start();
-//			}
-//		} catch (SQLException e)
-//		{
-//			throw new DatabaseException("Unable to load npcs");
-//		}
-		ArrayList<NPCMapper> pendingNPCs = NPCMapper.findNPCsOnMap(OptionsManager.getSingleton().getMapName());
-		for (NPCMapper m:pendingNPCs)
+		// stopNpcs();
+		// HashMap<String, Object> queryParams = new HashMap<String, Object>();
+		// queryParams.put("mapName",
+		// OptionsManager.getSingleton().getMapName());
+		// try
+		// {
+		// npcs = this.getNpcDao().queryForFieldValues(queryParams);
+		// for (NPC npc : npcs)
+		// {
+		// npc.initializeFromDatabase();
+		// players.put(npc.getID(), npc);
+		// npc.start();
+		// }
+		// } catch (SQLException e)
+		// {
+		// throw new DatabaseException("Unable to load npcs");
+		// }
+		ArrayList<NPCMapper> pendingNPCs = NPCMapper.findNPCsOnMap(OptionsManager
+				.getSingleton().getMapName());
+		for (NPCMapper m : pendingNPCs)
 		{
 			NPC nextNPC = (NPC) m.getPlayer();
 			players.put(nextNPC.getID(), nextNPC);

@@ -1,7 +1,6 @@
 package model;
 
 import model.reports.LoginSuccessfulReport;
-import communication.LocalPortMapper;
 import datasource.DatabaseException;
 
 /**
@@ -65,17 +64,12 @@ public class PlayerManager extends QualifiedObservable
 
 			String server;
 			int port;
-			if (!OptionsManager.getSingleton().isTestMode())
-			{
-				MapToServerMapping mapping = new MapToServerMapping(DEFAULT_MAP);
-				server = mapping.getHostName();
-				port = mapping.getPortNumber();
-			} else
-			{
-				LocalPortMapper mapping = new LocalPortMapper();
-				server = "localhost";
-				port = mapping.getPortForMapName(DEFAULT_MAP);
-			}
+
+			MapToServerMapping mapping = new MapToServerMapping(DEFAULT_MAP);
+			server = mapping.getHostName();
+			port = mapping.getPortNumber();
+			// TODO remember that you removed testing stuff here in case logins
+			// fail
 
 			LoginSuccessfulReport report = new LoginSuccessfulReport(pl.getPlayerID(),
 					server, port, pp.generatePin());

@@ -29,7 +29,7 @@ public class NpcTest
 		
 		npc.stop();
 		
-		assertEquals(3, mb.count);
+		assertEquals(3, mb.getCount());
 	}
 	
 	/**
@@ -50,7 +50,7 @@ public class NpcTest
 		
 		npc.stop();
 		
-		assertEquals(0, mb.count);
+		assertEquals(0, mb.getCount());
 	}
 	
 	
