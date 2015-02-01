@@ -1,6 +1,7 @@
 package edu.ship.shipsim.areaserver.model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +44,7 @@ public class PlayerManager extends QualifiedObservable
 		}
 		return singleton;
 	}
+
 	/**
 	 * reset the singleton for testing purposes.
 	 */
@@ -55,42 +57,20 @@ public class PlayerManager extends QualifiedObservable
 				QualifiedObservableConnector.getSingleton()
 						.unregisterQualifiedObservable(singleton, reportType);
 			}
-			try
-			{
-				singleton.connectionSource.close();
-				singleton.stopNpcs();
-			} catch (SQLException e)
-			{
-				e.printStackTrace();
-			}
+
+			singleton.stopNpcs();
 			singleton = null;
 		}
 	}
 
-	/**
-	 * String for jdbc connection to database
-	 */
-	public static String DATABASE_URL = "jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players";
-
 	private static PlayerManager singleton;
 
 	private HashMap<Integer, Player> players;
-	private List<Npc> npcs;
-	private JdbcConnectionSource connectionSource;
-
-	private Dao<Npc, Integer> npcDao;
+	private List<NPC> npcs;
 
 	private PlayerManager() throws DatabaseException
 	{
-		try
-		{
-			connectionSource = new JdbcConnectionSource(DATABASE_URL, "program",
-					"ShipSim");
-			npcDao = DaoManager.createDao(connectionSource, Npc.class);
-		} catch (SQLException e)
-		{
-			throw new DatabaseException("Unable to set up DAO");
-		}
+
 		players = new HashMap<Integer, Player>();
 		reportTypes.add(PlayerConnectionReport.class);
 
@@ -119,7 +99,7 @@ public class PlayerManager extends QualifiedObservable
 		} catch (DatabaseException e)
 		{
 			e.printStackTrace();
-		} 
+		}
 		return null;
 	}
 
@@ -162,16 +142,6 @@ public class PlayerManager extends QualifiedObservable
 	}
 
 	/**
-	 * Get the connection source ormlite will use (only for testing)
-	 * 
-	 * @return the connection source
-	 */
-	public JdbcConnectionSource getConnectionSource()
-	{
-		return connectionSource;
-	}
-
-	/**
 	 * Get a new PIN for a player so they can connect to a different area server
 	 * 
 	 * @param playerID
@@ -184,16 +154,6 @@ public class PlayerManager extends QualifiedObservable
 	{
 		PlayerConnection pin = new PlayerConnection(playerID);
 		return pin.generatePin();
-	}
-
-	/**
-	 * Get the npc Data Access Object
-	 * 
-	 * @return the DAO from orm lite
-	 */
-	public Dao<Npc, Integer> getNpcDao()
-	{
-		return npcDao;
 	}
 
 	/**
@@ -237,21 +197,28 @@ public class PlayerManager extends QualifiedObservable
 	 */
 	public void loadNpcs() throws DatabaseException
 	{
-		stopNpcs();
-		HashMap<String, Object> queryParams = new HashMap<String, Object>();
-		queryParams.put("mapName", OptionsManager.getSingleton().getMapName());
-		try
+//		stopNpcs();
+//		HashMap<String, Object> queryParams = new HashMap<String, Object>();
+//		queryParams.put("mapName", OptionsManager.getSingleton().getMapName());
+//		try
+//		{
+//			npcs = this.getNpcDao().queryForFieldValues(queryParams);
+//			for (NPC npc : npcs)
+//			{
+//				npc.initializeFromDatabase();
+//				players.put(npc.getID(), npc);
+//				npc.start();
+//			}
+//		} catch (SQLException e)
+//		{
+//			throw new DatabaseException("Unable to load npcs");
+//		}
+		ArrayList<NPCMapper> pendingNPCs = NPCMapper.findNPCsOnMap(OptionsManager.getSingleton().getMapName());
+		for (NPCMapper m:pendingNPCs)
 		{
-			npcs = this.getNpcDao().queryForFieldValues(queryParams);
-			for (Npc npc : npcs)
-			{
-				npc.initializeFromDatabase();
-				players.put(npc.getID(), npc);
-				npc.start();
-			}
-		} catch (SQLException e)
-		{
-			throw new DatabaseException("Unable to load npcs");
+			NPC nextNPC = (NPC) m.getPlayer();
+			players.put(nextNPC.getID(), nextNPC);
+			nextNPC.start();
 		}
 	}
 
@@ -269,15 +236,16 @@ public class PlayerManager extends QualifiedObservable
 	 * @param playerID
 	 *            The player id of the player to persist
 	 * @return Success status of persistence
-	 * @throws DatabaseException IF we have trouble persisting to the data source
+	 * @throws DatabaseException
+	 *             IF we have trouble persisting to the data source
 	 */
 	public boolean persistPlayer(int playerID) throws DatabaseException
 	{
-		
-			Player player = this.getPlayerFromID(playerID);
-			player.persist();
-			return true;
-		
+
+		Player player = this.getPlayerFromID(playerID);
+		player.persist();
+		return true;
+
 	}
 
 	/**
@@ -291,7 +259,7 @@ public class PlayerManager extends QualifiedObservable
 	{
 		Player p = this.players.remove(playerID);
 		if (p != null)
-		{	
+		{
 			// unregister this player from all observers
 			QualifiedObservableConnector qoc = QualifiedObservableConnector
 					.getSingleton();
@@ -315,7 +283,7 @@ public class PlayerManager extends QualifiedObservable
 	{
 		if (npcs != null)
 		{
-			for (Npc npc : npcs)
+			for (NPC npc : npcs)
 			{
 				npc.stop();
 			}

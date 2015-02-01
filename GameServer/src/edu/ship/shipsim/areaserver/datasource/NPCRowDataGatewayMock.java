@@ -1,5 +1,6 @@
 package edu.ship.shipsim.areaserver.datasource;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import datasource.DatabaseException;
@@ -97,6 +98,24 @@ public class NPCRowDataGatewayMock implements NPCRowDataGateway
 	public int getPlayerID()
 	{
 		return playerID;
+	}
+
+	public static ArrayList<NPCRowDataGateway> getNPCsForMap(String mapName) throws DatabaseException
+	{
+		if (npcInfo == null)
+		{
+			new NPCRowDataGatewayMock(NPCsForTest.NPC1.getPlayerID()).resetData();
+		}
+		ArrayList<NPCRowDataGateway> result = new ArrayList<NPCRowDataGateway>();
+		for (Integer npcID:npcInfo.keySet())
+		{
+			PlayerRowDataGatewayMock playerGateway = new PlayerRowDataGatewayMock(npcID);
+			if (playerGateway.getMapName().equals(mapName))
+			{
+				result.add(new NPCRowDataGatewayMock(npcID));
+			}
+		}
+		return result;
 	}
 
 }

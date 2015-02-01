@@ -54,12 +54,17 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	MOCK_NPC(11, "NPC1","magi", 4, 13, "", "current.tmx", 1111, null, "current.tmx", 0),
+	MOCK_NPC(11, "NPC1","magi", 4, 13, "", "silly.tmx", 1111, null, "current.tmx", 0),
 	
 	/**
 	 * 
 	 */
-	MOCK_NPC2(12, "NPC1","magi", 4, 13, "", "current.tmx", 1111, null, "current.tmx", 0);
+	MOCK_NPC2(12, "NPC1","magi", 4, 13, "", "current.tmx", 1111, null, "current.tmx", 0),
+	
+	/**
+	 * 
+	 */
+	MOCK_NPC3(13, "NPC3","magi", 4, 13, "", "current.tmx", 1111, null, "current.tmx", 0);
 	
 	private int playerID;
 

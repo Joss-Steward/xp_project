@@ -41,7 +41,8 @@ public class BuildTestQuestions
 	 */
 	private static void createQuestionTable() throws SQLException, DatabaseException
 	{
-		connectionSource = PlayerManager.getSingleton().getConnectionSource();
+		//TODO still have to remove ORM Lite from questions
+//		connectionSource = PlayerManager.getSingleton().getConnectionSource();
 		Dao<NPCQuestion, Integer> questionDao = NPCQuestion.getDao();
 		TableUtils.dropTable(connectionSource, NPCQuestion.class, true);
 		TableUtils.createTableIfNotExists(connectionSource, NPCQuestion.class);

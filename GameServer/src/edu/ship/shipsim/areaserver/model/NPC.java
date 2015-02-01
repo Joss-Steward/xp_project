@@ -3,9 +3,6 @@ package edu.ship.shipsim.areaserver.model;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
-
 /**
  * NPC extends Player to be compatible with the player manager and simplify many
  * messages that can go to the client.
@@ -13,21 +10,38 @@ import com.j256.ormlite.table.DatabaseTable;
  * @author Steve
  *
  */
-@DatabaseTable(tableName = "Npc")
-public class Npc extends Player
+public class NPC extends Player
 {
-	@DatabaseField
-	private String behaviorClassName;
+	private String behaviorClass;
 	
+	public String getBehaviorClass()
+	{
+		return behaviorClass;
+	}
+
+	public void setBehaviorClass(String behaviorClass)
+	{
+		this.behaviorClass = behaviorClass;
+		if(behaviorClass != null)
+		{
+			try
+			{
+				System.out.println("Creating behavior for " + behaviorClass);
+				behavior = (NPCBehavior) Class.forName(behaviorClass).newInstance();
+			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) 
+			{
+				behavior = null;
+				e.printStackTrace();
+			}
+		}
+	}
+
 	private NPCBehavior behavior;
 	
-	@DatabaseField(canBeNull = false)
 	private String mapName;
-	
-	@DatabaseField(canBeNull = false)
-	private String name;
 
 	private NpcTimerTask timedEvent;
+	
 	private Timer timer;
 	
 	/**
@@ -38,29 +52,9 @@ public class Npc extends Player
 	/**
 	 * Instantiate the NPC
 	 */
-	public Npc()
+	public NPC()
 	{
 		timer = new Timer();
-	}
-	
-	/**
-	 * Use the behavior class name stored in the database to create a Behavior instance
-	 * if available
-	 */
-	public void initializeFromDatabase()
-	{
-		if(behaviorClassName != null)
-		{
-			try
-			{
-				System.out.println("Creating behavior for " + behaviorClassName);
-				behavior = (NPCBehavior) Class.forName(behaviorClassName).newInstance();
-			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) 
-			{
-				behavior = null;
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	/**
@@ -70,25 +64,6 @@ public class Npc extends Player
 	public void setMap(String name) 
 	{
 		mapName = name;
-	}
-	
-	/**
-	 * 
-	 * @param behavior The new behavior
-	 */
-	public void setBehavior(NPCBehavior behavior)
-	{
-		this.behavior = behavior;
-		this.behaviorClassName = behavior.getClass().getName();
-	}
-	
-	/**
-	 * 
-	 * @return the npc's name
-	 */
-	public String getPlayerName()
-	{
-		return name;
 	}
 	
 	/**
@@ -140,12 +115,8 @@ public class Npc extends Player
 		}
 	}
 
-	/**
-	 * 
-	 * @param name the new name
-	 */
-	public void setName(String name) 
+	public void setBehavior(NPCBehavior mb)
 	{
-		this.name = name;
+		this.behavior = mb;
 	}
 }

@@ -2,6 +2,8 @@ package edu.ship.shipsim.areaserver.datasource;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.Test;
 
@@ -20,6 +22,7 @@ public abstract class NPCRowDataGatewayTest extends DatabaseTest
 	private NPCRowDataGateway gateway;
 
 	abstract NPCRowDataGateway findGateway(int playerID) throws DatabaseException;
+	
 	
 	/**
 	 * Make sure any static information is cleaned up between tests
@@ -57,5 +60,18 @@ public abstract class NPCRowDataGatewayTest extends DatabaseTest
 		gateway = findGateway(11111);
 	}
 	
+	public abstract ArrayList<NPCRowDataGateway> getAllForMap(String mapName) throws DatabaseException;
 	
+	@Test
+	public void findsAllForMap() throws DatabaseException
+	{
+		// just make sure the data set is clean using a known playerID
+		findGateway(NPCsForTest.NPC1.getPlayerID()).resetData();
+		ArrayList<NPCRowDataGateway> gateways = getAllForMap("current.tmx");
+		assertEquals(2, gateways.size());
+		assertTrue((NPCsForTest.NPC2.getPlayerID() == gateways.get(0).getPlayerID() ||
+				NPCsForTest.NPC2.getPlayerID() == gateways.get(1).getPlayerID()));
+		assertTrue((NPCsForTest.NPC3.getPlayerID() == gateways.get(0).getPlayerID() ||
+				NPCsForTest.NPC3.getPlayerID() == gateways.get(1).getPlayerID()));
+	}
 }

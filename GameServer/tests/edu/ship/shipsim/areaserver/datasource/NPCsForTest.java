@@ -1,6 +1,7 @@
 package edu.ship.shipsim.areaserver.datasource;
 
 import datasource.PlayersForTest;
+
 /**
  * The players that are in the test database
  * 
@@ -9,20 +10,25 @@ import datasource.PlayersForTest;
  */
 public enum NPCsForTest
 {
-	
+
 	/**
 	 * 
 	 */
-	NPC1(PlayersForTest.MOCK_NPC.getPlayerID(),"edu.ship.shipsim.areaserver.model.NPCMockBehavior"),
+	NPC1(PlayersForTest.MOCK_NPC.getPlayerID(),
+			"edu.ship.shipsim.areaserver.model.NPCMockBehavior"),
 	/**
 	 * 
 	 */
-	NPC2(PlayersForTest.MOCK_NPC2.getPlayerID(),"edu.ship.shipsim.areaserver.model.QuizBotBehavior");
+	NPC2(PlayersForTest.MOCK_NPC2.getPlayerID(),
+			"edu.ship.shipsim.areaserver.model.QuizBotBehavior"),
+	/**
+	 * 
+	 */
+	NPC3(PlayersForTest.MOCK_NPC3.getPlayerID(),
+			"edu.ship.shipsim.areaserver.model.NPCMockBehavior");
 
 	private String behaviorClass;
 	private int playerID;
-
-	
 
 	NPCsForTest(int playerID, String behaviorClass)
 	{

@@ -1,5 +1,7 @@
 package edu.ship.shipsim.areaserver.datasource;
 
+import java.util.ArrayList;
+
 import datasource.DatabaseException;
 
 
@@ -15,5 +17,11 @@ public class NPCRowDataGatewayMockTest extends NPCRowDataGatewayTest
 	NPCRowDataGateway findGateway(int playerID) throws DatabaseException
 	{
 		return new NPCRowDataGatewayMock(playerID);
+	}
+
+	@Override
+	public ArrayList<NPCRowDataGateway> getAllForMap(String mapName) throws DatabaseException
+	{
+		return NPCRowDataGatewayMock.getNPCsForMap(mapName);
 	}
 }

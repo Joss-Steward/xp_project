@@ -65,14 +65,11 @@ public class OptionsManagerTest
 		manager.updateMapInformation(ServersForTest.FIRST_SERVER.getMapName(),
 				"ourhost.com", 1337);
 
-		MapToServerMapping expected = new MapToServerMapping();
-		expected.setHostName("ourhost.com");
-		expected.setMapName(ServersForTest.FIRST_SERVER.getMapName());
-		expected.setPortNumber(1337);
-
 		MapToServerMapping actual = new MapToServerMapping(
 				ServersForTest.FIRST_SERVER.getMapName());
-		assertEquals(expected, actual);
+		assertEquals(actual.getHostName(), "ourhost.com");
+		assertEquals(actual.getMapName(), ServersForTest.FIRST_SERVER.getMapName());
+		assertEquals(actual.getPortNumber(), 1337);
 	}
 
 	/**

@@ -20,7 +20,7 @@ public class PlayerMapper
 {
 
 	private PlayerRowDataGateway playerGateway;
-	private Player player;
+	protected Player player;
 
 	/**
 	 * Create one for this player
@@ -37,7 +37,7 @@ public class PlayerMapper
 		{
 			this.playerGateway = new PlayerRowDataGatewayRDS(playerID);
 		}
-		this.player = new Player();
+		this.player = createPlayerObject();
 		player.setAppearanceType(playerGateway.getAppearanceType());
 		player.setPlayerPositionWithoutNotifying(playerGateway.getPosition());
 		player.setQuizScore(playerGateway.getQuizScore());
@@ -46,6 +46,15 @@ public class PlayerMapper
 		player.setMapName(playerGateway.getMapName());
 		player.setDataMapper(this);
 	}
+
+
+
+	protected Player createPlayerObject()
+	{
+		return new Player();
+	}
+	
+	
 
 	/**
 	 * Get the player that this Mapper is responsible for

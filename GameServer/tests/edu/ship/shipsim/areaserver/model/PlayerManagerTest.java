@@ -130,35 +130,44 @@ public class PlayerManagerTest
 	}
 
 	/**
-	 * Test that a player can be persisted by saving an attribute and fetching the player again
-	 * @throws DatabaseException shouldn't
+	 * Test that a player can be persisted by saving an attribute and fetching
+	 * the player again
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
 	public void playerIsSaved() throws DatabaseException
 	{
-		Player player = PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
+		Player player = PlayerManager.getSingleton().addPlayer(
+				PlayersForTest.MERLIN.getPlayerID());
 		player.setPlayerPosition(new Position(100, 100));
 		assertTrue(PlayerManager.getSingleton().persistPlayer(player.getID()));
-		
+
 		PlayerManager.resetSingleton();
-		
-		Player fetched = PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
+
+		Player fetched = PlayerManager.getSingleton().addPlayer(
+				PlayersForTest.MERLIN.getPlayerID());
 		assertEquals(new Position(100, 100), fetched.getPlayerPosition());
 	}
-	
+
 	/**
 	 * Test that the known npcs will be in the database
-	 * @throws DatabaseException shouldn't
-	 * @throws SQLException shouldn't
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
+	 * @throws SQLException
+	 *             shouldn't
 	 */
 	@Test
 	public void testNpcsLoaded() throws DatabaseException, SQLException
 	{
-		
-		OptionsManager.getSingleton(true).updateMapInformation(PlayersForTest.MOCK_NPC.getMapName(), "localhost", 1874);
+		OptionsManager.getSingleton(true).updateMapInformation(
+				PlayersForTest.MOCK_NPC2.getMapName(), "localhost", 1874);
 		PlayerManager.getSingleton().loadNpcs();
-		
-			assertNotNull(PlayerManager.getSingleton().getPlayerFromID(PlayersForTest.MOCK_NPC.getPlayerID()));
-		
+
+		assertNotNull(PlayerManager.getSingleton().getPlayerFromID(
+				PlayersForTest.MOCK_NPC2.getPlayerID()));
+
 	}
 }

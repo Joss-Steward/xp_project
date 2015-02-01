@@ -29,6 +29,7 @@ public class PlayerMapperTest extends DatabaseTest
 		new PlayerRowDataGatewayMock().resetData();
 	}
 	
+	
 	/**
 	 * make sure the mapper retrieves all of the necessary information for the player it is finding
 	 * @throws DatabaseException shouldn't
@@ -36,13 +37,24 @@ public class PlayerMapperTest extends DatabaseTest
 	@Test
 	public void canFindExisting() throws DatabaseException
 	{
-		PlayerMapper pm = new PlayerMapper(PlayersForTest.MERLIN.getPlayerID());
+		PlayerMapper pm = getMapper();
 		Player p = pm.getPlayer();
-		assertEquals(PlayersForTest.MERLIN.getAppearanceType(),p.getAppearanceType());
-		assertEquals(PlayersForTest.MERLIN.getPlayerName(),p.getPlayerName());
-		assertEquals(PlayersForTest.MERLIN.getPosition(), p.getPlayerPosition());
-		assertEquals(PlayersForTest.MERLIN.getQuizScore(), p.getQuizScore());
-		assertEquals(PlayersForTest.MERLIN.getMapName(), p.getMapName());
+		PlayersForTest testPlayer = getPlayerWeAreTesting();
+		assertEquals(testPlayer.getAppearanceType(),p.getAppearanceType());
+		assertEquals(testPlayer.getPlayerName(),p.getPlayerName());
+		assertEquals(testPlayer.getPosition(), p.getPlayerPosition());
+		assertEquals(testPlayer.getQuizScore(), p.getQuizScore());
+		assertEquals(testPlayer.getMapName(), p.getMapName());
+	}
+
+	protected PlayersForTest getPlayerWeAreTesting()
+	{
+		return PlayersForTest.MERLIN;
+	}
+
+	protected PlayerMapper getMapper() throws DatabaseException
+	{
+		return new PlayerMapper(getPlayerWeAreTesting().getPlayerID());
 	}
 	
 	/**
@@ -62,7 +74,7 @@ public class PlayerMapperTest extends DatabaseTest
 	@Test
 	public void persists() throws DatabaseException
 	{
-		PlayerMapper pm = new PlayerMapper(PlayersForTest.MERLIN.getPlayerID());
+		PlayerMapper pm = getMapper();
 		Player p = pm.getPlayer();
 		p.setAppearanceType("silly");
 		p.setPlayerPositionWithoutNotifying(new Position(42,24));
@@ -70,7 +82,7 @@ public class PlayerMapperTest extends DatabaseTest
 		p.setMapName("sillyMap");
 		p.persist();
 		
-		PlayerMapper pm2 = new PlayerMapper(PlayersForTest.MERLIN.getPlayerID());
+		PlayerMapper pm2 = getMapper();
 		Player p2 = pm2.getPlayer();
 		assertEquals(p.getAppearanceType(),p2.getAppearanceType());
 		assertEquals(p.getPlayerPosition(),p2.getPlayerPosition());

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import datasource.DatabaseException;
 import model.DatabaseManager;
@@ -50,9 +51,13 @@ public class NPCRowDataGatewayRDS implements NPCRowDataGateway
 
 	/**
 	 * Create Constructor
-	 * @param playerID the NPC's playerID
-	 * @param behaviorClass the name of the class encoding the behavior for the NPC
-	 * @throws DatabaseException if we can't add the info to the database
+	 * 
+	 * @param playerID
+	 *            the NPC's playerID
+	 * @param behaviorClass
+	 *            the name of the class encoding the behavior for the NPC
+	 * @throws DatabaseException
+	 *             if we can't add the info to the database
 	 */
 	public NPCRowDataGatewayRDS(int playerID, String behaviorClass)
 			throws DatabaseException
@@ -123,6 +128,33 @@ public class NPCRowDataGatewayRDS implements NPCRowDataGateway
 	@Override
 	public void resetData()
 	{
+	}
+
+	public static ArrayList<NPCRowDataGateway> getNPCsForMap(String mapName)
+			throws DatabaseException
+	{
+		ArrayList<NPCRowDataGateway> gateways = new ArrayList<NPCRowDataGateway>();
+
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
+		{
+			PreparedStatement stmt = connection
+					.prepareStatement("SELECT * FROM Players INNER JOIN NPCs ON NPCs.playerID = Players.PlayerID");
+			ResultSet result = stmt.executeQuery();
+			while (result.next())
+			{
+				if (result.getString("mapName").equals(mapName))
+				{
+					gateways.add(new NPCRowDataGatewayRDS(result.getInt("NPCs.playerID")));
+				}
+			}
+
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Unable to retrieve NPCs for map named "
+					+ mapName, e);
+		}
+		return gateways;
 	}
 
 }

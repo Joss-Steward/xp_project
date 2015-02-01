@@ -13,16 +13,7 @@ import datasource.ServerRowDataGatewayRDS;
  */
 public final class MapToServerMapping
 {
-
-
 	private ServerRowDataGateway dataGateway;
-	
-	/**
-	 */
-	public MapToServerMapping()
-	{
-		
-	}
 
 	/**
 	 * reset data to a known configuration (for testing)

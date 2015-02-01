@@ -1,6 +1,5 @@
 package model;
 
-import communication.LocalPortMapper;
 import datasource.DatabaseException;
 
 /**
@@ -94,22 +93,12 @@ public class OptionsManager
 		this.mapName = mapName;
 		this.hostName = hostName;
 		this.portNumber = port;
-		if (!testMode)
-		{
-			mapping = new MapToServerMapping(mapName);
-			mapping.setHostName(hostName);
-			mapping.setMapName(mapName);
-			mapping.setPortNumber(port);
-			mapping.persist();
-		} else
-		{
-			mapping = new MapToServerMapping(mapName);
-			mapping.setHostName("localhost");
-			this.hostName = "localhost";
-			mapping.setMapName(mapName);
-			mapping.setPortNumber(new LocalPortMapper().getPortForMapName(mapName));
-			mapping.persist();
-		}
+
+		mapping = new MapToServerMapping(mapName);
+		mapping.setHostName(hostName);
+		mapping.setMapName(mapName);
+		mapping.setPortNumber(port);
+		mapping.persist();
 	}
 
 	/**
@@ -138,7 +127,6 @@ public class OptionsManager
 	{
 		return portNumber;
 	}
-
 
 	/**
 	 * returns true if this server is running in localhost mode for testing

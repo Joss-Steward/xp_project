@@ -1,16 +1,8 @@
 package edu.ship.shipsim.areaserver.model;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.Observable;
-
-import model.QualifiedObservableReport;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-
-import edu.ship.shipsim.areaserver.model.NPCBehavior;
-import edu.ship.shipsim.areaserver.model.Npc;
 
 /**
  * Tests the Npc Class
@@ -27,8 +19,8 @@ public class NpcTest
 	@Test
 	public void testBehaviorFires() throws InterruptedException 
 	{
-		MockBehavior mb = new MockBehavior();
-		Npc npc = new Npc();
+		NPCMockBehavior mb = new NPCMockBehavior();
+		NPC npc = new NPC();
 		npc.setBehavior(mb);
 		npc.start();
 		
@@ -47,9 +39,9 @@ public class NpcTest
 	@Test
 	public void testBehaviorPollingIsOptional() throws InterruptedException 
 	{
-		MockBehavior mb = new MockBehavior();
+		NPCMockBehavior mb = new NPCMockBehavior();
 		mb.pollingInterval = 0;
-		Npc npc = new Npc();
+		NPC npc = new NPC();
 		npc.setBehavior(mb);
 		npc.start();
 		
@@ -61,30 +53,5 @@ public class NpcTest
 		assertEquals(0, mb.count);
 	}
 	
-	/**
-	 */
-	private class MockBehavior extends NPCBehavior
-	{
-		private static final long serialVersionUID = -1879830711372276973L;
-		
-		public MockBehavior()
-		{
-			pollingInterval = 50;
-		}
-		
-		public int count = 0;
-		public void doTimedEvent() 
-		{	
-			this.count++;
-		}
-
-		@Override
-		public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypes() {
-			return null;
-		}
-
-		@Override
-		public void update(Observable o, Object arg) {
-		}		
-	}
+	
 }
