@@ -163,11 +163,11 @@ public class PlayerManagerTest
 	public void testNpcsLoaded() throws DatabaseException, SQLException
 	{
 		OptionsManager.getSingleton(true).updateMapInformation(
-				PlayersForTest.MOCK_NPC2.getMapName(), "localhost", 1874);
+				PlayersForTest.QUIZBOT.getMapName(), "localhost", 1874);
 		PlayerManager.getSingleton().loadNpcs();
 
 		assertNotNull(PlayerManager.getSingleton().getPlayerFromID(
-				PlayersForTest.MOCK_NPC2.getPlayerID()));
+				PlayersForTest.QUIZBOT.getPlayerID()));
 
 	}
 }

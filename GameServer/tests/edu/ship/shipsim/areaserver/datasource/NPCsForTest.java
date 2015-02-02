@@ -19,7 +19,7 @@ public enum NPCsForTest
 	/**
 	 * 
 	 */
-	NPC2(PlayersForTest.MOCK_NPC2.getPlayerID(),
+	NPC2(PlayersForTest.QUIZBOT.getPlayerID(),
 			"edu.ship.shipsim.areaserver.model.QuizBotBehavior"),
 	/**
 	 * 

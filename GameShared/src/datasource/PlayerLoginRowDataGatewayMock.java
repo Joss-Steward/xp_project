@@ -58,7 +58,7 @@ public class PlayerLoginRowDataGatewayMock implements PlayerLoginRowDataGateway
 		for (Integer key : playerLogins.keySet())
 		{
 			PlayerInfo info = playerLogins.get(key);
-			if (info.getPlayerName().equals(playerName))
+			if (info.getPlayerName().equalsIgnoreCase(playerName))
 			{
 				playerID = key;
 				playerInfo = info;

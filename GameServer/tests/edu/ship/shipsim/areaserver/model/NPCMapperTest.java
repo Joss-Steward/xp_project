@@ -27,7 +27,7 @@ public class NPCMapperTest extends PlayerMapperTest
 	@Override
 	protected PlayersForTest getPlayerWeAreTesting()
 	{
-		return PlayersForTest.MOCK_NPC2;
+		return PlayersForTest.QUIZBOT;
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class NPCMapperTest extends PlayerMapperTest
 	{
 		ArrayList<NPCMapper> npcs = NPCMapper.findNPCsOnMap("current.tmx");
 		assertEquals(2, npcs.size());
-		assertEquals(PlayersForTest.MOCK_NPC2.getPlayerID(), npcs.get(0).getPlayer()
+		assertEquals(PlayersForTest.QUIZBOT.getPlayerID(), npcs.get(0).getPlayer()
 				.getID());
 		assertEquals(PlayersForTest.MOCK_NPC3.getPlayerID(), npcs.get(1).getPlayer()
 				.getID());
