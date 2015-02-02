@@ -59,7 +59,7 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	QUIZBOT(12, "NPC1","magi", 4, 13, "", "quiznasium.tmx", 1111, null, "quiznasium.tmx", 0),
+	QUIZBOT(12, "QuizBot","magi", 4, 13, "", "quiznasium.tmx", 1111, null, "quiznasium.tmx", 0),
 	
 	/**
 	 * 

@@ -86,7 +86,7 @@ public class LoginServer implements Runnable
 			String[] splitArg = arg.split("=");
 			if(splitArg[0].equals("--localhost"))
 			{
-				OptionsManager.getSingleton(true);
+				OptionsManager.getSingleton(false);
 			}
 		}
 		LoginServer S = new LoginServer();

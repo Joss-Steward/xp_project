@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import model.DatabaseManager;
 
@@ -21,6 +22,36 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 	private String changedOn;
 	private String mapName;
 
+	/**
+	 * Drop and reinitialize the table this gateway manages
+	 * @throws DatabaseException if we can't talk to the RDS
+	 */
+	public static void createPlayerConnectionTable() throws DatabaseException
+	{
+
+		try
+		{
+			Connection connection = DatabaseManager.getSingleton().getConnection();
+			Statement stmt = connection.createStatement();
+			stmt.executeUpdate("DROP TABLE IF EXISTS PlayerConnection");
+			StringBuffer sql = new StringBuffer("CREATE TABLE PlayerConnection(");
+			sql.append("PlayerID int NOT NULL, ");
+			sql.append("Pin double NOT NULL,");
+			sql.append("changed_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,");
+			sql.append("MapName VARCHAR(30),");
+
+			sql.append("PRIMARY KEY (PlayerID));");
+			System.out.println(sql);
+			stmt.executeUpdate(new String(sql));
+			stmt.executeUpdate("ALTER TABLE PlayerConnection ENGINE = INNODB");
+			stmt.executeUpdate("ALTER TABLE PlayerConnection ADD UNIQUE (PlayerID)");
+			stmt.close();
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Unable to create the PlayerConnection Table",e);
+		}
+		
+	}
 	/**
 	 * Finder constructor
 	 * 
@@ -47,7 +78,7 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 		} catch (SQLException e)
 		{
 			throw new DatabaseException("Unable to get the data for a connection for "
-					+ playerID);
+					+ playerID,e);
 		}
 	}
 

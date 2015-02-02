@@ -45,7 +45,6 @@ public class TeleportationInitiationHandler extends MessageHandler
 			TeleportationContinuationMessage response = new TeleportationContinuationMessage(
 					mapping.getMapName(), mapping.getHostName(), mapping.getPortNumber(),
 					playerID, pin);
-			System.err.println("[DEBUG] pin is " + response.getPin());
 			this.getStateAccumulator().queueMessage(response);
 		} catch (DatabaseException e)
 		{
