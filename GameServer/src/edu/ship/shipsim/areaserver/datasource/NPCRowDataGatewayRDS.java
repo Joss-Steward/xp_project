@@ -96,7 +96,7 @@ public class NPCRowDataGatewayRDS implements NPCRowDataGateway
 			stmt.executeUpdate();
 
 			stmt = connection
-					.prepareStatement("Create TABLE NPCs (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, behaviorClass VARCHAR(80))");
+					.prepareStatement("Create TABLE NPCs (questionID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, behaviorClass VARCHAR(80))");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 
+import model.OptionsManager;
 import model.QualifiedObservableConnector;
 
 import org.junit.Before;
@@ -35,9 +36,11 @@ public class QuizBotBehaviorTest {
 	@Before
 	public void setUp() throws SQLException
 	{
+		OptionsManager.getSingleton(true);
 		behavior = new QuizBotBehavior();
 		question = behavior.getQuestion();
 		QualifiedObservableConnector.resetSingleton();
+		ChatManager.resetSingleton();
 	}
 	
 	/**

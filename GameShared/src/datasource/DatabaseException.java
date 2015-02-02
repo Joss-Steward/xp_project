@@ -52,5 +52,13 @@ public class DatabaseException extends Exception
 	{
 		return simpleDescription;
 	}
+	
+	/**
+	 * @see java.lang.Throwable#toString()
+	 */
+	public String toString()
+	{
+		return simpleDescription + ":" + rootCause;
+	}
 
 }
