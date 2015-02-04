@@ -1,5 +1,7 @@
 package edu.ship.shipsim.client.model;
 
+import data.Position;
+import edu.ship.shipsim.client.model.reports.AreaCollisionReport;
 import edu.ship.shipsim.client.model.reports.QuestScreenReport;
 import Quest.QuestManager;
 
@@ -19,7 +21,7 @@ public class ThisClientsPlayer extends Player
 
 		this.questManager = new QuestManager();
 		reportTypes.add(QuestScreenReport.class);
-
+		reportTypes.add(AreaCollisionReport.class);
 		this.registerReportTypesWeNotify();
 	}
 
@@ -43,5 +45,22 @@ public class ThisClientsPlayer extends Player
 	public QuestManager getQuestManager()
 	{
 		return questManager;
+	}
+	
+	/**
+	 * Moves this player and report if they have entered into any regions
+	 * @param pos 
+	 * 		the location to move to
+	 */
+	public void move(Position pos)
+	{
+		super.move(pos);
+		
+		//check if entering a region
+		String region = MapManager.getSingleton().getIsInRegion(pos);
+		if (region != null)
+		{
+			this.notifyObservers(new AreaCollisionReport(this.id, region));
+		}
 	}
 }
