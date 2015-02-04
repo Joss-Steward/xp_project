@@ -12,14 +12,17 @@ public class CommandMovePlayerSilently extends Command
 
 	private Position newPosition;
 	private int playerId;
+	private String mapName;
 
 	/**
 	 * 
+	 * @param mapName the name of the map the player should be on
 	 * @param playerId the player who is moving
 	 * @param position the position they should be moving to
 	 */
-	public CommandMovePlayerSilently(int playerId, Position position)
+	public CommandMovePlayerSilently(String mapName, int playerId, Position position)
 	{
+		this.mapName = mapName;
 		this.newPosition = position;
 		this.playerId = playerId;
 	}
@@ -34,6 +37,7 @@ public class CommandMovePlayerSilently extends Command
 		if (player != null)
 		{
 			player.setPlayerPositionWithoutNotifying(newPosition);
+			player.setMapName(mapName);
 			return true;
 		} else
 		{

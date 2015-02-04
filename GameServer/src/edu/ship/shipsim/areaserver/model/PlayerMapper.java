@@ -23,8 +23,8 @@ public class PlayerMapper
 	protected Player player;
 
 	/**
-	 * Create one for this player
-	 * 
+	 * Finder constructor
+	 *  
 	 * @param playerID the player's unique ID
 	 * @throws DatabaseException if we can't find the given player
 	 */
@@ -67,13 +67,15 @@ public class PlayerMapper
 
 	/**
 	 * Persist the current state of the player into the data source
+	 * @throws DatabaseException if we can't complete the write
 	 */
-	public void persist()
+	public void persist() throws DatabaseException
 	{
 		playerGateway.setAppearanceType(player.getAppearanceType());
 		playerGateway.setMapName(player.getMapName());
 		playerGateway.setPosition(player.getPlayerPosition());
 		playerGateway.setQuizScore(player.getQuizScore());
+		playerGateway.persist();
 	}
 
 }

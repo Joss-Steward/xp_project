@@ -33,7 +33,7 @@ public class TeleportationInitiationHandler extends MessageHandler
 		try
 		{
 			CommandMovePlayerSilently command = new CommandMovePlayerSilently(
-					currentMsg.getPlayerId(), currentMsg.getPosition());
+					currentMsg.getMapName(), currentMsg.getPlayerId(), currentMsg.getPosition());
 			ModelFacade.getSingleton().queueCommand(command);
 
 			CommandPersistPlayer persistCommand = new CommandPersistPlayer(currentMsg.getPlayerId());

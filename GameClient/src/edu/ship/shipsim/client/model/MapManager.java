@@ -257,6 +257,7 @@ public class MapManager extends QualifiedObservable
 	 */
 	public TeleportHotSpot getTeleportHotSpot(Position thePosition) 
 	{
-		return teleportMap.get(thePosition);
+		TeleportHotSpot teleportHotSpot = teleportMap.get(thePosition);
+		return teleportHotSpot;
 	}
 }
