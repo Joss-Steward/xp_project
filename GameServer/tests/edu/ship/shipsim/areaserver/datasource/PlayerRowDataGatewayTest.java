@@ -39,12 +39,12 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 	@Test
 	public void finder() throws DatabaseException
 	{
-		PlayersForTest merlin = PlayersForTest.MERLIN;
-		gateway = findGateway(merlin.getPlayerID());
-		assertEquals(merlin.getMapName(), gateway.getMapName());
-		assertEquals(merlin.getPlayerID(), gateway.getPlayerID());
-		assertEquals(merlin.getPosition(), gateway.getPosition());
-		assertEquals(merlin.getAppearanceType(), gateway.getAppearanceType());
+		PlayersForTest john = PlayersForTest.JOHN;
+		gateway = findGateway(john.getPlayerID());
+		assertEquals(john.getMapName(), gateway.getMapName());
+		assertEquals(john.getPlayerID(), gateway.getPlayerID());
+		assertEquals(john.getPosition(), gateway.getPosition());
+		assertEquals(john.getAppearanceType(), gateway.getAppearanceType());
 	}
 
 	/**
