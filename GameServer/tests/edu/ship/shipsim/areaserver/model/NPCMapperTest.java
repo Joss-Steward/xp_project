@@ -55,9 +55,9 @@ public class NPCMapperTest extends PlayerMapperTest
 	@Test
 	public void findsForMap() throws DatabaseException
 	{
-		ArrayList<NPCMapper> npcs = NPCMapper.findNPCsOnMap("current.tmx");
+		ArrayList<NPCMapper> npcs = NPCMapper.findNPCsOnMap("silly.tmx");
 		assertEquals(2, npcs.size());
-		assertEquals(PlayersForTest.QUIZBOT.getPlayerID(), npcs.get(0).getPlayer()
+		assertEquals(PlayersForTest.MOCK_NPC.getPlayerID(), npcs.get(0).getPlayer()
 				.getID());
 		assertEquals(PlayersForTest.MOCK_NPC3.getPlayerID(), npcs.get(1).getPlayer()
 				.getID());

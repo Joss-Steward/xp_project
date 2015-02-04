@@ -84,9 +84,9 @@ public abstract class NPCRowDataGatewayTest extends DatabaseTest
 	{
 		// just make sure the data set is clean using a known playerID
 		findGateway(NPCsForTest.NPC1.getPlayerID()).resetData();
-		ArrayList<NPCRowDataGateway> gateways = getAllForMap("current.tmx");
+		ArrayList<NPCRowDataGateway> gateways = getAllForMap("silly.tmx");
 		assertEquals(2, gateways.size());
-		assertTrue((NPCsForTest.NPC2.getPlayerID() == gateways.get(0).getPlayerID() || NPCsForTest.NPC2
+		assertTrue((NPCsForTest.NPC1.getPlayerID() == gateways.get(0).getPlayerID() || NPCsForTest.NPC1
 				.getPlayerID() == gateways.get(1).getPlayerID()));
 		assertTrue((NPCsForTest.NPC3.getPlayerID() == gateways.get(0).getPlayerID() || NPCsForTest.NPC3
 				.getPlayerID() == gateways.get(1).getPlayerID()));
