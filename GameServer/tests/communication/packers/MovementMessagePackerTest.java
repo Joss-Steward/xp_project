@@ -1,6 +1,7 @@
 package communication.packers;
 
 import static org.junit.Assert.*;
+import model.OptionsManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,11 +29,14 @@ public class MovementMessagePackerTest
 	@Before
 	public void setUp()
 	{
+		OptionsManager.getSingleton(true);
 		PlayerManager.resetSingleton();
 
 		PlayerManager.getSingleton().addPlayer(1);
 		stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
+		
+		
 	}
 
 	/**

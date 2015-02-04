@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 
-import model.DatabaseException;
 import model.OptionsManager;
 import model.PlayerConnection;
 
@@ -13,6 +12,7 @@ import org.junit.Test;
 
 import communication.StateAccumulator;
 import communication.messages.MapFileMessage;
+import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 
@@ -42,8 +42,8 @@ public class MapFileMessagePackerTest
 	@Test
 	public void ifThePlayerIsNotOnThisConnection() throws DatabaseException
 	{
-		PlayerManager.getSingleton().addPlayer(1, PlayerConnection.DEFAULT_PIN);
-		PlayerManager.getSingleton().addPlayer(2, PlayerConnection.DEFAULT_PIN);
+		PlayerManager.getSingleton().addPlayer(1);
+		PlayerManager.getSingleton().addPlayer(2);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
 
@@ -66,6 +66,7 @@ public class MapFileMessagePackerTest
 	@Test
 	public void ifThePlayerIsOnThisConnection() throws DatabaseException, SQLException
 	{
+		OptionsManager.getSingleton(true);
 		PlayerManager.getSingleton().addPlayer(1, PlayerConnection.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
@@ -74,7 +75,6 @@ public class MapFileMessagePackerTest
 				.getSingleton().getPlayerFromID(1));
 		MapFileMessagePacker packer = new MapFileMessagePacker();
 		packer.setAccumulator(stateAccumulator);
-		OptionsManager.getSingleton().setTestMode();
 		OptionsManager.getSingleton().updateMapInformation("current.tmx", "", 1);
 		MapFileMessage msg = (MapFileMessage) packer.pack(report);
 		assertEquals(MapFileMessagePacker.DIRECTORY_PREFIX + "current.tmx", msg.getMapFileName());

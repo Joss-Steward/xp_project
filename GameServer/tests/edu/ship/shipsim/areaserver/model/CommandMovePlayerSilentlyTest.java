@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Observer;
 
+import model.OptionsManager;
 import model.QualifiedObservableConnector;
 
 import org.easymock.EasyMock;
@@ -34,6 +35,8 @@ public class CommandMovePlayerSilentlyTest
 	{
 		PlayerManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
+
+		OptionsManager.getSingleton(true);
 	}
 
 	/**
@@ -54,10 +57,11 @@ public class CommandMovePlayerSilentlyTest
 
 		assertEquals(startPosition, p.getPlayerPosition());
 		
-		CommandMovePlayerSilently cmd = new CommandMovePlayerSilently(1, newPosition);
+		CommandMovePlayerSilently cmd = new CommandMovePlayerSilently("newMap", 1, newPosition);
 		cmd.execute();
 
 		assertEquals(newPosition, p.getPlayerPosition());
+		assertEquals("newMap", p.getMapName());
 	}
 
 	/**
@@ -71,7 +75,7 @@ public class CommandMovePlayerSilentlyTest
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerMovedReport.class);
 		EasyMock.replay(obs);
 		
-		CommandMovePlayerSilently cmd = new CommandMovePlayerSilently(1, new Position(4,3));
+		CommandMovePlayerSilently cmd = new CommandMovePlayerSilently("newMap", 1, new Position(4,3));
 		cmd.execute();
 		
 		EasyMock.verify(obs);

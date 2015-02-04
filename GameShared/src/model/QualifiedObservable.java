@@ -19,6 +19,10 @@ public abstract class QualifiedObservable extends Observable
 {
 
 	private HashMap<Class<? extends QualifiedObservableReport>, ArrayList<Observer>> observers = new HashMap<Class<? extends QualifiedObservableReport>, ArrayList<Observer>>();
+	/**
+	 * The report types this observable wants to listen to. Is protected so that
+	 * it can be seen by mock observers in the tests
+	 */
 	protected ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
 
 	/**
@@ -118,6 +122,10 @@ public abstract class QualifiedObservable extends Observable
 		return reportTypes;
 	}
 
+	/**
+	 * Take the report types in our instance variable and ask the connector to
+	 * hook us up appropriately
+	 */
 	protected void registerReportTypesWeNotify()
 	{
 		for (Class<? extends QualifiedObservableReport> reportType : reportTypes)
@@ -127,12 +135,15 @@ public abstract class QualifiedObservable extends Observable
 		}
 	}
 
+	/**
+	 * Tell the connector that we no longer want to get reports of any type
+	 */
 	protected void unregisterReportTypesWeNotify()
 	{
 		for (Class<? extends QualifiedObservableReport> reportType : reportTypes)
 		{
-			QualifiedObservableConnector.getSingleton().unregisterQualifiedObservable(this,
-					reportType);
+			QualifiedObservableConnector.getSingleton().unregisterQualifiedObservable(
+					this, reportType);
 		}
 	}
 }

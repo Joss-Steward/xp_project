@@ -1,14 +1,8 @@
 import java.sql.SQLException;
 
-import model.DatabaseException;
-
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.table.TableUtils;
-
-import edu.ship.shipsim.areaserver.model.NPCQuestion;
-import edu.ship.shipsim.areaserver.model.PlayerManager;
-import edu.ship.shipsim.areaserver.model.QuestionsInDB;
+import datasource.DatabaseException;
+import edu.ship.shipsim.areaserver.datasource.NPCQuestionRowDataGatewayRDS;
+import edu.ship.shipsim.areaserver.datasource.NPCQuestionsForTest;
 
 /**
  * Builds the Player portion of the database
@@ -18,8 +12,6 @@ import edu.ship.shipsim.areaserver.model.QuestionsInDB;
  */
 public class BuildTestQuestions
 {
-
-	private static JdbcConnectionSource connectionSource;
 
 	/**
 	 * 
@@ -42,15 +34,10 @@ public class BuildTestQuestions
 	 */
 	private static void createQuestionTable() throws SQLException, DatabaseException
 	{
-		connectionSource = PlayerManager.getSingleton().getConnectionSource();
-		Dao<NPCQuestion, Integer> questionDao = NPCQuestion.getDao();
-		TableUtils.dropTable(connectionSource, NPCQuestion.class, true);
-		TableUtils.createTableIfNotExists(connectionSource, NPCQuestion.class);
-
-		for (QuestionsInDB question : QuestionsInDB.values())
+		NPCQuestionRowDataGatewayRDS.createTable();
+		for (NPCQuestionsForTest question : NPCQuestionsForTest.values())
 		{
-			NPCQuestion q = new NPCQuestion(question.getQ(),question.getA());
-			questionDao.create(q);
+			new NPCQuestionRowDataGatewayRDS(question.getQuestionID(),question.getQ(),question.getA());
 		}
 	}
 }

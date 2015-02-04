@@ -1,8 +1,8 @@
 package edu.ship.shipsim.areaserver.model.reports;
 
 import data.Position;
+import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.model.Player;
-import model.DatabaseException;
 import model.QualifiedObservableReport;
 
 /**

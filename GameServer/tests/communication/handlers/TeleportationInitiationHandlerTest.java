@@ -14,13 +14,14 @@ import communication.messages.TeleportationInitiationMessage;
 import communication.messages.TeleportationContinuationMessage;
 import communication.messages.Message;
 import data.Position;
+import datasource.PlayersForTest;
+import datasource.ServersForTest;
 import edu.ship.shipsim.areaserver.model.ModelFacade;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
-import model.PlayersInDB;
+import model.OptionsManager;
 import model.QualifiedObservableConnector;
-import model.ServersInDB;
 
 /**
  * Test the handler for GetServerInfoMessages
@@ -36,6 +37,8 @@ public class TeleportationInitiationHandlerTest
 	@Before
 	public void reset()
 	{
+		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton(true);
 		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
 	}
@@ -59,12 +62,13 @@ public class TeleportationInitiationHandlerTest
 	@Test
 	public void generatesCorrectResponse() throws InterruptedException
 	{
-		PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID());
+		PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
 		TeleportationInitiationHandler handler = new TeleportationInitiationHandler();
 		StateAccumulator accum = new StateAccumulator(null);
+		accum.setPlayerId(PlayersForTest.MERLIN.getPlayerID());
 		handler.setAccumulator(accum);
 		TeleportationInitiationMessage msg = new TeleportationInitiationMessage(
-				PlayersInDB.MERLIN.getPlayerID(), ServersInDB.FIRST_SERVER.getMapName(), new Position(5, 6));
+				PlayersForTest.MERLIN.getPlayerID(), ServersForTest.FIRST_SERVER.getMapName(), new Position(5, 6));
 		// set up an observer who would be notified if the movement wasn't handled silently
 		Observer obs = EasyMock.createMock(Observer.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerMovedReport.class);
@@ -77,10 +81,10 @@ public class TeleportationInitiationHandlerTest
 		}
 		// Reset the singleton and re-add the player to make sure that the player is refreshed from the DB
 		PlayerManager.resetSingleton();
-		PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID());
+		PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
 
 		// make sure we moved the player without notifying observers
-		Player p = PlayerManager.getSingleton().getPlayerFromID(PlayersInDB.MERLIN.getPlayerID());
+		Player p = PlayerManager.getSingleton().getPlayerFromID(PlayersForTest.MERLIN.getPlayerID());
 		assertEquals(new Position(5, 6), p.getPlayerPosition());
 		EasyMock.verify(obs);
 		
@@ -89,9 +93,9 @@ public class TeleportationInitiationHandlerTest
 		assertEquals(1, queue.size());
 		TeleportationContinuationMessage response = (TeleportationContinuationMessage) queue
 				.get(0);
-		assertEquals(ServersInDB.FIRST_SERVER.getMapName(), response.getMapName());
-		assertEquals(ServersInDB.FIRST_SERVER.getHostName(), response.getHostName());
-		assertEquals(ServersInDB.FIRST_SERVER.getPortNumber(), response.getPortNumber());
+		assertEquals(ServersForTest.FIRST_SERVER.getMapName(), response.getMapName());
+		assertEquals(ServersForTest.FIRST_SERVER.getHostName(), response.getHostName());
+		assertEquals(ServersForTest.FIRST_SERVER.getPortNumber(), response.getPortNumber());
 	}
 
 }

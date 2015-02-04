@@ -1,10 +1,7 @@
 package model;
 
-import java.sql.SQLException;
-
-import communication.LocalPortMapper;
-
 import model.reports.LoginSuccessfulReport;
+import datasource.DatabaseException;
 
 /**
  * @author Merlin
@@ -51,38 +48,33 @@ public class PlayerManager extends QualifiedObservable
 	 *            the player's name
 	 * @param password
 	 *            the password
-	 * @return a report giving the instructions for how the client should connect to an area server
-	 * @throws LoginFailedException for database errors or invalid credentials
+	 * @return a report giving the instructions for how the client should
+	 *         connect to an area server
+	 * @throws LoginFailedException
+	 *             for database errors or invalid credentials
 	 */
 	public LoginSuccessfulReport login(String playerName, String password)
 			throws LoginFailedException
 	{
 		try
 		{
-			PlayerLogin pl = PlayerLogin.readAndVerifyPlayerLogin(playerName,
-					password);
+			PlayerLogin pl = new PlayerLogin(playerName, password);
 			numberOfPlayers++;
 			PlayerConnection pp = new PlayerConnection(pl.getPlayerID());
 
 			String server;
 			int port;
-			if (!OptionsManager.getSingleton().isTestMode())
-			{
-				MapToServerMapping mapping = MapToServerMapping
-						.retrieveMapping(DEFAULT_MAP);
-				server = mapping.getHostName();
-				port = mapping.getPortNumber();
-			} else
-			{
-				LocalPortMapper mapping = new LocalPortMapper();
-				server = "localhost";
-				port = mapping.getPortForMapName(DEFAULT_MAP);
-			}
 
-			LoginSuccessfulReport report = new LoginSuccessfulReport(
-					pl.getPlayerID(), server, port, pp.generatePin());
+			MapToServerMapping mapping = new MapToServerMapping(DEFAULT_MAP);
+			server = mapping.getHostName();
+			port = mapping.getPortNumber();
+			// TODO remember that you removed testing stuff here in case logins
+			// fail
+
+			LoginSuccessfulReport report = new LoginSuccessfulReport(pl.getPlayerID(),
+					server, port, pp.generatePin());
 			return report;
-		} catch (DatabaseException | SQLException e)
+		} catch (DatabaseException e)
 		{
 			throw new LoginFailedException();
 		}
@@ -95,7 +87,7 @@ public class PlayerManager extends QualifiedObservable
 	@Override
 	public boolean notifiesOn(Class<?> reportType)
 	{
-		
+
 		return false;
 	}
 

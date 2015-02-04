@@ -1,32 +1,19 @@
 package model;
 
-import java.sql.SQLException;
-import java.util.List;
-
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.table.DatabaseTable;
+import datasource.DatabaseException;
+import datasource.PlayerLoginRowDataGateway;
+import datasource.PlayerLoginRowDataGatewayMock;
+import datasource.PlayerLoginRowDataGatewayRDS;
 
 /**
  * 
  * @author Merlin
  * 
  */
-@DatabaseTable(tableName = "PlayerLogins")
 public class PlayerLogin
 {
 
-	private static final String PLAYERNAME_FIELD_NAME = "PlayerName";
-	@DatabaseField
-	private int playerID;
-	@DatabaseField(id = true, columnName = PLAYERNAME_FIELD_NAME)
-	private String playerName;
-	@DatabaseField
-	private String password;
-	private static JdbcConnectionSource connectionSource;
-	private static Dao<PlayerLogin, ?> playerLoginDao;
+	private PlayerLoginRowDataGateway gateway;
 
 	/**
 	 * Create a new record in the database
@@ -35,125 +22,113 @@ public class PlayerLogin
 	 *            the player's name
 	 * @param password
 	 *            the player's password
-	 * @param id The id of the player
+	 * @param id
+	 *            The id of the player 
+	 * @throws DatabaseException
+	 *             if the gateway fails
 	 */
-	public static void createNewPlayerLogin(String name, String password, int id)
+	public PlayerLogin(String name, String password, int id) throws DatabaseException
 	{
 		try
 		{
-			setUpORMLite();
-			PlayerLogin pl = new PlayerLogin();
-			try 
+			if (OptionsManager.getSingleton().isTestMode())
 			{
-				PlayerLogin.readPlayerLogin(name);
-			}
-			catch(DatabaseException e)
+				this.gateway = new PlayerLoginRowDataGatewayMock(name, password);
+			} else
 			{
-				// do nothing because we'll create it
+				this.gateway = new PlayerLoginRowDataGatewayRDS(name, password);
 			}
-			pl.playerName = name;
-			pl.playerID = id;
-			pl.password = password;
-			playerLoginDao.createOrUpdate(pl);
-		} catch (SQLException e)
+		} catch (DatabaseException e)
 		{
-			e.printStackTrace();
+			throw new DatabaseException("no login information for " + name);
 		}
+
 	}
 
 	/**
 	 * Create an object if the name and password are found in the db
 	 * 
-	 * @param name
+	 * @param playerName
 	 *            the player's name
 	 * @param password
 	 *            the player's password
-	 * @return a player login from the given information only if the password is
-	 *         correct
 	 * @throws DatabaseException
 	 *             if the name/password combination isn't found in the db
 	 */
-	public static PlayerLogin readAndVerifyPlayerLogin(String name, String password)
-			throws DatabaseException
+	public PlayerLogin(String playerName, String password) throws DatabaseException
 	{
 		try
 		{
-			setUpORMLite();
-
-			List<PlayerLogin> list;
-
-			list = playerLoginDao.queryBuilder().where()
-					.eq(PlayerLogin.PLAYERNAME_FIELD_NAME, name).query();
-			if (list.size() == 1)
+			if (OptionsManager.getSingleton().isTestMode())
 			{
-				PlayerLogin pl = list.get(0);
-				if (pl.password.equals(password))
-				{
-					return pl;
-				}
-			} else if (list.size() == 0)
-			{
-				throw new DatabaseException("no login information for " + name);
+				this.gateway = new PlayerLoginRowDataGatewayMock(playerName);
 			} else
 			{
-				throw new DatabaseException("more than one login record for " + name);
+				this.gateway = new PlayerLoginRowDataGatewayRDS(playerName);
 			}
-		} catch (SQLException e)
+		} catch (DatabaseException e)
 		{
-			throw new DatabaseException("Error retrieving login information for " + name);
+			throw new DatabaseException("no login information for " + playerName);
 		}
 
-		throw new DatabaseException("incorrect password");
+		if (!gateway.getPassword().equals(password))
+		{
+			throw new DatabaseException("incorrect password");
+		}
+
 	}
 
 	/**
 	 * Get a player's login information without checking his password
-	 * @param name the player's player name
-	 * @return the player's login information
-	 * @throws DatabaseException if the player doesn't exist, or has two records
+	 * 
+	 * @param playerID
+	 *            the player's unique ID
+	 * @throws DatabaseException
+	 *             if the player doesn't exist
 	 */
-	public static PlayerLogin readPlayerLogin(String name) throws DatabaseException
+	public PlayerLogin(int playerID) throws DatabaseException
 	{
 		try
 		{
-			setUpORMLite();
 
-			List<PlayerLogin> list;
-
-			list = playerLoginDao.queryBuilder().where()
-					.eq(PlayerLogin.PLAYERNAME_FIELD_NAME, name).query();
-			if (list.size() == 1)
+			if (OptionsManager.getSingleton().isTestMode())
 			{
-				return list.get(0);
-			} else if (list.size() == 0)
-			{
-				throw new DatabaseException("no login information for " + name);
+				this.gateway = new PlayerLoginRowDataGatewayMock(playerID);
 			} else
 			{
-				throw new DatabaseException("more than one login record for " + name);
+				this.gateway = new PlayerLoginRowDataGatewayRDS(playerID);
 			}
-		} catch (SQLException e)
+		} catch (DatabaseException e)
 		{
-			throw new DatabaseException("Error retrieving login information for " + name);
+			throw new DatabaseException("no login information for player with ID " + playerID);
 		}
 	}
-
-	private static void setUpORMLite() throws SQLException
-	{
-		if (connectionSource == null)
-		{
-			String databaseUrl = "jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players";
-			connectionSource = new JdbcConnectionSource(databaseUrl, "program", "ShipSim");
-			playerLoginDao = DaoManager.createDao(connectionSource, PlayerLogin.class);
-		}
-	}
-
 	/**
-	 * No arg constructor for ORMLite
+	 * Get a player's login information without checking his password
+	 * 
+	 * @param playerName
+	 *            the player's player name
+	 * @throws DatabaseException
+	 *             if the player doesn't exist
 	 */
-	public PlayerLogin()
+	public PlayerLogin(String playerName) throws DatabaseException
 	{
+		try
+		{
+
+			if (OptionsManager.getSingleton().isTestMode())
+			{
+				this.gateway = new PlayerLoginRowDataGatewayMock(playerName);
+			} else
+			{
+				this.gateway = new PlayerLoginRowDataGatewayRDS(playerName);
+			}
+		} catch (DatabaseException e)
+		{
+			throw new DatabaseException("no login information for " + playerName);
+		}
 	}
+
 
 	/**
 	 * Return this player's unique ID
@@ -162,16 +137,17 @@ public class PlayerLogin
 	 */
 	public int getPlayerID()
 	{
-		return playerID;
+		return gateway.getPlayerID();
 	}
 
 	/**
 	 * Get the player's playername
+	 * 
 	 * @return the playername
 	 */
 	public String getPlayerName()
 	{
-		return playerName;
+		return gateway.getPlayerName();
 	}
 
 }

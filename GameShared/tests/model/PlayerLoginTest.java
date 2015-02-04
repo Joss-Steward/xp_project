@@ -2,7 +2,12 @@ package model;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Test;
+
+import datasource.DatabaseException;
+import datasource.DatabaseTest;
+import datasource.PlayersForTest;
 
 /**
  * Tests the functionality required during a login
@@ -13,7 +18,16 @@ import org.junit.Test;
 public class PlayerLoginTest extends DatabaseTest
 {
 
+	/**
+	 * @see datasource.DatabaseTest#setUp()
+	 */
+	@Before
+	public void setUp()
+	{
+		OptionsManager.getSingleton(true);
+	}
 
+	
 	/**
 	 * If the name and password are in the db, we should be able to determine
 	 * the player's unique ID
@@ -24,8 +38,8 @@ public class PlayerLoginTest extends DatabaseTest
 	@Test
 	public void simpleRead() throws DatabaseException
 	{
-		PlayerLogin pl = PlayerLogin.readAndVerifyPlayerLogin(PlayersInDB.JOHN.getPlayerName(),
-				PlayersInDB.JOHN.getPlayerPassword());
+		PlayerLogin pl = new PlayerLogin(PlayersForTest.JOHN.getPlayerName(),
+				PlayersForTest.JOHN.getPlayerPassword());
 		assertEquals(1, pl.getPlayerID());
 	}
 
@@ -38,7 +52,7 @@ public class PlayerLoginTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void notThere() throws DatabaseException
 	{
-		PlayerLogin.readAndVerifyPlayerLogin(PlayersInDB.JOHN.getPlayerName() + "z", PlayersInDB.JOHN.getPlayerPassword());
+		new PlayerLogin(PlayersForTest.JOHN.getPlayerName() + "z", PlayersForTest.JOHN.getPlayerPassword());
 	}
 
 	/**
@@ -50,7 +64,7 @@ public class PlayerLoginTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void wrongPassword() throws DatabaseException
 	{
-		PlayerLogin.readAndVerifyPlayerLogin(PlayersInDB.JOHN.getPlayerName(), PlayersInDB.JOHN.getPlayerPassword() + 'Z');
+		new PlayerLogin(PlayersForTest.JOHN.getPlayerName(), PlayersForTest.JOHN.getPlayerPassword() + 'Z');
 	}
 
 }

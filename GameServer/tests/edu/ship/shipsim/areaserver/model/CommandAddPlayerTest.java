@@ -1,6 +1,7 @@
 package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
+import model.OptionsManager;
 import model.PlayerConnection;
 
 import org.junit.Before;
@@ -25,6 +26,7 @@ public class CommandAddPlayerTest
 	public void setup()
 	{
 		PlayerManager.resetSingleton();
+		OptionsManager.getSingleton(true);
 	}
 
 	/**

@@ -1,14 +1,15 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
+
+import datasource.DatabaseException;
+import datasource.PlayerConnectionRowDataGateway;
+import datasource.PlayerConnectionRowDataGatewayMock;
+import datasource.PlayerConnectionRowDataGatewayRDS;
 
 /**
  * The behaviors associated with the PINs that are given to players when the are
@@ -24,7 +25,7 @@ public class PlayerConnection
 	 * The units in which we measure expiration time of a pin
 	 */
 	public static final int EXPIRATION_TIME_UNITS = Calendar.HOUR;
-	
+
 	/**
 	 * The number of expiration time units before a pin should expire
 	 */
@@ -44,13 +45,35 @@ public class PlayerConnection
 	public static final int DEFAULT_PIN = 1;
 	private int playerID;
 
+	private PlayerConnectionRowDataGateway gateway;
+
 	/**
 	 * @param playerID
 	 *            the player whose information we are using
+	 * @throws DatabaseException
+	 *             if the data source has an exception
 	 */
-	public PlayerConnection(int playerID)
+	public PlayerConnection(int playerID) throws DatabaseException
 	{
 		this.playerID = playerID;
+		if (OptionsManager.getSingleton().isTestMode())
+		{
+			gateway = new PlayerConnectionRowDataGatewayMock(this.playerID);
+		} else
+		{
+			gateway = new PlayerConnectionRowDataGatewayRDS(this.playerID);
+		}
+	}
+
+	/**
+	 * delete the PIN for this player
+	 * 
+	 * @throws DatabaseException
+	 *             if the data source can't perform the deletion
+	 */
+	protected void deletePlayerPin() throws DatabaseException
+	{
+		gateway.deleteRow();
 	}
 
 	/**
@@ -64,121 +87,80 @@ public class PlayerConnection
 	public int generatePin() throws DatabaseException
 	{
 		int pin = (int) (Math.random() * Integer.MAX_VALUE);
-		setPin(pin);
+		storePin(pin);
 		return pin;
 	}
 
-	private void setPin(int pin) throws DatabaseException
+	/**
+	 * Generates the default PIN for testing purposes only!
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	public void generateTestPin() throws DatabaseException
 	{
-		Connection connectionStatus = DatabaseManager.getSingleton()
-				.getConnection();
-		try
-		{
-			String sql;
-			PreparedStatement stmt;
-			deletePlayerPin();
-
-			sql = "INSERT INTO PlayerConnection (PlayerID, Pin) VALUES (?, ?)";
-			System.err.println("[DEBUG] " + sql + " " + playerID + " " + pin);
-			stmt = connectionStatus.prepareStatement(sql);
-			stmt.setInt(1, playerID);
-			stmt.setInt(2, pin);
-			stmt.executeUpdate();
-		} catch (SQLException e)
-		{
-			new DatabaseException("Unable to generate pin for player id # "
-					+ playerID, e);
-		}
+		this.storePin(DEFAULT_PIN);
 	}
 
 	/**
-	 * Used only for testing!!!!! Used to set the timestamp on the player's PIN
+	 * Get the name of the map the player was most recently on
 	 * 
-	 * @param newTime
-	 *            the time we want
-	 * @throws DatabaseException if we cant set the time whan a player's connection info was changes
+	 * @return the name of the tmx file
 	 */
-	public void setChangedOn(String newTime) throws DatabaseException
+	public String getMapName()
 	{
-		Connection connectionStatus = DatabaseManager.getSingleton()
-				.getConnection();
-		try
-		{
-			String sql;
-			PreparedStatement stmt;
-
-			sql = "UPDATE PlayerConnection SET changed_On=? WHERE PlayerID = ?";
-			stmt = connectionStatus.prepareStatement(sql);
-			stmt.setString(1, newTime);
-			stmt.setInt(2, playerID);
-			stmt.executeUpdate();
-		} catch (SQLException e)
-		{
-			throw new DatabaseException(
-					"Unable to generate pin for player id # " + playerID, e);
-		}
+		return gateway.getMapName();
 	}
 
-	protected void deletePlayerPin() throws DatabaseException
+	/**
+	 * @return this player's current pin
+	 */
+	public double getPin()
 	{
-		Connection connectionStatus = DatabaseManager.getSingleton()
-				.getConnection();
-
-		String sql = "DELETE from PlayerConnection WHERE PlayerID = ?";
-		PreparedStatement stmt;
-		try
-		{
-			stmt = connectionStatus.prepareStatement(sql);
-			stmt.setInt(1, playerID);
-			stmt.executeUpdate();
-		} catch (SQLException e)
-		{
-			throw new DatabaseException(
-					"Unable to delete the pin for player id # " + playerID, e);
-		}
-
+		return gateway.getPin();
 	}
 
 	/**
 	 * Get the time when this player's pin expires in GMT
 	 * 
 	 * @return the expiration time
+	 * @throws DatabaseException
+	 *             if the data source has an exception
 	 */
-	public boolean isExpired()
+	public boolean isExpired() throws DatabaseException
 	{
 		GregorianCalendar now = new GregorianCalendar();
 		now.setTimeZone(TimeZone.getTimeZone("GMT"));
-		GregorianCalendar expirationTime = null;
-		boolean expired = true;
+		GregorianCalendar expirationTime;
 		try
 		{
-			Connection connection = DatabaseManager.getSingleton()
-					.getConnection();
-			String sql = "SELECT changed_on FROM PlayerConnection WHERE PlayerID = ?";
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, playerID);
-			ResultSet resultSet = stmt.executeQuery();
-			if (resultSet.next())
-			{
-				String timeString = resultSet.getString(1);
-				expirationTime = parseTimeString(timeString);
-				expirationTime.add(EXPIRATION_TIME_UNITS,
-						EXPIRATION_TIME_QUANTITY);
-				if (expirationTime.after(now))
-				{
-					expired = false;
-				}
-			}
-
-			resultSet.close();
-		} catch (SQLException | DatabaseException e)
+			expirationTime = parseTimeString(gateway.getChangedOn());
+		} catch (DatabaseException e)
 		{
-			e.printStackTrace();
+			return true;
 		}
-
-		return expired;
+		return !expirationTime.after(now);
 	}
 
+	/**
+	 * check if a pin is valid for a given player
+	 * 
+	 * @param pin
+	 *            The pin to check against
+	 * @return true or false for whether the given pin is valid or not
+	 */
+	public boolean isPinValid(double pin)
+	{
+		return pin == gateway.getPin();
+	}
+
+	/**
+	 * Convert the time string from the data source into a Gregorian calendar.
+	 * 
+	 * @param timeString
+	 *            The format of that time string must be "yyyy-MM-dd HH:mm:ss"
+	 * @return the appropriate Gregorian Calendar
+	 */
 	protected GregorianCalendar parseTimeString(String timeString)
 	{
 		GregorianCalendar result = new GregorianCalendar();
@@ -194,77 +176,25 @@ public class PlayerConnection
 	}
 
 	/**
-	 * Generates the default PIN for testing purposes only!
+	 * reset the data to a known state for testing purposes
+	 */
+	public void resetData()
+	{
+		gateway.resetData();
+	}
+
+	/**
+	 * Used only for testing!!!!! Used to set the timestamp on the player's PIN
 	 * 
+	 * @param newTime
+	 *            the time we want
 	 * @throws DatabaseException
-	 *             shouldn't
+	 *             if we cant set the time whan a player's connection info was
+	 *             changes
 	 */
-	public void generateTestPin() throws DatabaseException
+	public void setChangedOn(String newTime) throws DatabaseException
 	{
-		this.setPin(DEFAULT_PIN);
-	}
-
-	/**
-	 * check if a pin is valid for a given player
-	 * 
-	 * @param pin
-	 *            The pin to check against
-	 * @return true or false for whether the given pin is valid or not
-	 */
-	public boolean isPinValid(double pin)
-	{
-		boolean found = false;
-		try
-		{
-			Connection connection = DatabaseManager.getSingleton()
-					.getConnection();
-			String sql = "SELECT * FROM PlayerConnection WHERE PlayerID = ? AND Pin = ?";
-			System.err.println("[DEBUG] " + sql + ": " + playerID + " " + pin);
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, playerID);
-			stmt.setDouble(2, pin);
-			ResultSet resultSet = stmt.executeQuery();
-			if (resultSet.next())
-			{
-				found = true;
-			}
-			resultSet.close();
-		} catch (SQLException | DatabaseException e)
-		{
-			e.printStackTrace();
-		}
-
-		return found;
-	}
-
-	/**
-	 * Get the name of the map the player was most recently on
-	 * 
-	 * @return the name of the tmx file
-	 */
-	public String getMapName()
-	{
-		String mapName = null;
-		try
-		{
-			Connection connection = DatabaseManager.getSingleton()
-					.getConnection();
-			String sql = "SELECT MapName FROM PlayerConnection WHERE PlayerID = ?";
-			System.err.println("[DEBUG] " + sql + ": " + playerID);
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, playerID);
-			ResultSet resultSet = stmt.executeQuery();
-			resultSet.first();
-			mapName = resultSet.getString(1);
-
-			resultSet.close();
-			stmt.close();
-		} catch (SQLException | DatabaseException e)
-		{
-			e.printStackTrace();
-		}
-
-		return mapName;
+		gateway.setChangedOn(newTime);
 	}
 
 	/**
@@ -277,24 +207,11 @@ public class PlayerConnection
 	 */
 	public void setMapName(String mapFileTitle) throws DatabaseException
 	{
-		try
-		{
-			Connection connectionStatus = DatabaseManager.getSingleton()
-					.getConnection();
+		gateway.storeMapName(mapFileTitle);
+	}
 
-			String sql;
-			PreparedStatement stmt;
-
-			sql = "UPDATE PlayerConnection SET mapName=? WHERE PlayerID = ?";
-			stmt = connectionStatus.prepareStatement(sql);
-			stmt.setString(1, mapFileTitle);
-			stmt.setInt(2, playerID);
-			stmt.executeUpdate();
-		} catch (SQLException e)
-		{
-			throw new DatabaseException(
-					"Unable to store map information for player id # "
-							+ playerID, e);
-		}
+	private void storePin(int pin) throws DatabaseException
+	{
+		gateway.storePin(pin);
 	}
 }

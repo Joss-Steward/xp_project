@@ -1,10 +1,7 @@
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import model.DatabaseException;
-import model.DatabaseManager;
-import model.PlayersInDB;
+import datasource.DatabaseException;
+import datasource.PlayerConnectionRowDataGatewayRDS;
+import datasource.PlayerLoginRowDataGatewayRDS;
+import datasource.PlayersForTest;
 
 /**
  * Builds the login portion of the database
@@ -15,72 +12,40 @@ import model.PlayersInDB;
 public class BuildTestDBPlayerLogin
 {
 
-	private static Connection connection;
-
 	/**
 	 * 
 	 * @param args
 	 *            unused
 	 * @throws DatabaseException
 	 *             shouldn't
-	 * @throws SQLException
-	 *             shouldn't
 	 */
-	public static void main(String[] args) throws DatabaseException, SQLException
+	public static void main(String[] args) throws DatabaseException
 	{
-		connection = DatabaseManager.getSingleton().getConnection();
-		createPlayerTable();
-		createPinTable();
+		createPlayerLoginTable();
+		createPlayerConnectionTable();
 	}
 
-	private static void createPinTable() throws SQLException
+	private static void createPlayerLoginTable() throws DatabaseException
 	{
-		Statement stmt = connection.createStatement();
-
-		stmt.executeUpdate("DROP TABLE PlayerConnection");
-		StringBuffer sql = new StringBuffer("CREATE TABLE PlayerConnection(");
-		sql.append("PlayerID int NOT NULL, ");
-		sql.append("Pin double NOT NULL,");
-		sql.append("changed_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,");
-		sql.append("MapName VARCHAR(30),");
-
-		sql.append("PRIMARY KEY (PlayerID));");
-		System.out.println(sql);
-		stmt.executeUpdate(new String(sql));
-		stmt.executeUpdate("ALTER TABLE PlayerConnection ENGINE = INNODB");
-		stmt.executeUpdate("ALTER TABLE PlayerConnection ADD UNIQUE (PlayerID)");
+		PlayerLoginRowDataGatewayRDS.createPlayerLoginTable();
 		
-		for (PlayersInDB p : PlayersInDB.values())
+		for (PlayersForTest p : PlayersForTest.values())
 		{
-			String sqlUpdateString = "INSERT INTO PlayerConnection (PlayerID, Pin, MapName) VALUES ('"
-					+ p.getPlayerID() + "', '" + 111111111 + "','" + p.getMapName() + "');";
-			stmt.executeUpdate(sqlUpdateString);
+			new PlayerLoginRowDataGatewayRDS( p.getPlayerName() , p.getPlayerPassword() );
 		}
-		stmt.close();
-	}
-
-	private static void createPlayerTable() throws SQLException
-	{
-		Statement stmt = connection.createStatement();
-
-		stmt.executeUpdate("DROP TABLE PlayerLogins");
-		StringBuffer sql = new StringBuffer("CREATE TABLE PlayerLogins(");
-		sql.append("PlayerID int NOT NULL AUTO_INCREMENT, ");
-		sql.append("PlayerName VARCHAR(30) NOT NULL,");
-		sql.append("Password VARCHAR(30) NOT NULL,");
-
-		sql.append("PRIMARY KEY (PlayerID));");
-		System.out.println(sql);
-		stmt.executeUpdate(new String(sql));
-		stmt.executeUpdate("ALTER TABLE PlayerLogins ENGINE = INNODB");
-		stmt.executeUpdate("ALTER TABLE PlayerLogins ADD UNIQUE (PlayerName)");
-		stmt.executeUpdate("ALTER TABLE PlayerLogins ADD UNIQUE (PlayerID)");
 		
-		for (PlayersInDB p : PlayersInDB.values())
-		{
-			stmt.executeUpdate("INSERT INTO PlayerLogins (PlayerName, Password) VALUES ('"
-					+ p.getPlayerName() + "', '" + p.getPlayerPassword() + "');");
-		}
-
 	}
+
+	private static void createPlayerConnectionTable() throws DatabaseException
+	{
+		PlayerConnectionRowDataGatewayRDS.createPlayerConnectionTable();
+		
+		for (PlayersForTest p : PlayersForTest.values())
+		{
+			new PlayerConnectionRowDataGatewayRDS(p.getPlayerID(), p.getPin(), p.getMapNameForPin());
+			
+		}
+	}
+
+	
 }

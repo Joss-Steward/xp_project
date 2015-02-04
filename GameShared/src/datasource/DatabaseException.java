@@ -1,4 +1,4 @@
-package model;
+package datasource;
 
 /**
  * @author Merlin
@@ -51,6 +51,14 @@ public class DatabaseException extends Exception
 	public String getSimpleDescription()
 	{
 		return simpleDescription;
+	}
+	
+	/**
+	 * @see java.lang.Throwable#toString()
+	 */
+	public String toString()
+	{
+		return simpleDescription + ":" + rootCause;
 	}
 
 }

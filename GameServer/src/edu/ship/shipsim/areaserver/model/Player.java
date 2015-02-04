@@ -3,12 +3,8 @@ package edu.ship.shipsim.areaserver.model;
 import model.PlayerConnection;
 import model.PlayerLogin;
 import model.QualifiedObservable;
-
-import com.j256.ormlite.field.DataType;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
-
 import data.Position;
+import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.model.reports.PinFailedReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
 import edu.ship.shipsim.areaserver.model.reports.QuestScreenReport;
@@ -19,62 +15,26 @@ import edu.ship.shipsim.areaserver.model.reports.QuestScreenReport;
  * @author Merlin
  * 
  */
-@DatabaseTable(tableName = "Player")
 public class Player extends QualifiedObservable
 {
 
-	@DatabaseField(id = true)
-	private int id;
-
-	@DatabaseField(foreign = true)
 	private PlayerLogin playerLogin;
 
-	@DatabaseField
-	private String appearanceType;
-
-	@DatabaseField(dataType = DataType.SERIALIZABLE)
-	private Position playerPosition;
-	
-	@DatabaseField
 	private int quizScore;
 
-	/**
-	 * No arg constructor for ORMLite
-	 */
-	public Player()
+	private PlayerMapper playerMapper;
+
+	private String appearanceType;
+
+	private int playerID;
+
+	private Position playerPosition;
+
+	private String mapName;
+
+	Player()
 	{
 		registerOurReportTypes();
-	}
-
-	/**
-	 * Check the pin to make sure it is correct with regards to contents and expiration
-	 * 
-	 * @param pinToCheck
-	 *            the pin we gave the player to connect to this area server
-	 * @return true or false with pin validity
-	 */
-
-	public boolean isPinValid(double pinToCheck)
-	{
-		PlayerConnection pl = new PlayerConnection(id);
-		PinFailedReport report = null;
-		
-		if(!pl.isPinValid(pinToCheck))
-		{
-			report = new PinFailedReport(PlayerConnection.ERROR_PIN_NOT_EXIST);
-		}
-		else if (pl.isExpired())
-		{
-			report = new PinFailedReport(PlayerConnection.ERROR_PIN_EXPIRED);
-		}
-		
-		if(report != null)
-		{
-			System.err.println("Pin is not valid for " + id + " because " + report.toString());
-			this.notifyObservers(report);
-			return false;
-		}
-		return true;
 	}
 
 	/**
@@ -92,7 +52,15 @@ public class Player extends QualifiedObservable
 	 */
 	public int getID()
 	{
-		return id;
+		return playerID;
+	}
+
+	/**
+	 * @return the name of the map this player is on
+	 */
+	public String getMapName()
+	{
+		return mapName;
 	}
 
 	/**
@@ -113,16 +81,69 @@ public class Player extends QualifiedObservable
 	 */
 	public Position getPlayerPosition()
 	{
-		return this.playerPosition;
+		return playerPosition;
 	}
 
-	private void registerOurReportTypes()
+	/**
+	 * Get the quizScore
+	 * 
+	 * @return the quiz score
+	 */
+	public int getQuizScore()
 	{
-		reportTypes.add(PlayerMovedReport.class);
-		reportTypes.add(QuestScreenReport.class);
-		reportTypes.add(PinFailedReport.class);
+		return this.quizScore;
+	}
 
-		this.registerReportTypesWeNotify();
+	/**
+	 * Increment quiz score;
+	 */
+	public void incrementQuizScore()
+	{
+		this.quizScore++;
+	}
+
+	/**
+	 * Check the pin to make sure it is correct with regards to contents and
+	 * expiration
+	 * 
+	 * @param pinToCheck
+	 *            the pin we gave the player to connect to this area server
+	 * @return true or false with pin validity
+	 * @throws DatabaseException
+	 *             if the data source had an exception
+	 */
+
+	public boolean isPinValid(double pinToCheck) throws DatabaseException
+	{
+		PlayerConnection pl = new PlayerConnection(playerID);
+		PinFailedReport report = null;
+
+		if (!pl.isPinValid(pinToCheck))
+		{
+			report = new PinFailedReport(PlayerConnection.ERROR_PIN_NOT_EXIST);
+		} else if (pl.isExpired())
+		{
+			report = new PinFailedReport(PlayerConnection.ERROR_PIN_EXPIRED);
+		}
+
+		if (report != null)
+		{
+			System.err.println("Pin is not valid for " + playerID
+					+ " because " + report.toString());
+			this.notifyObservers(report);
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * store the information into the data source
+	 * 
+	 * @throws DatabaseException if the data source fails to complete the persistance
+	 */
+	public void persist() throws DatabaseException
+	{
+		playerMapper.persist();
 	}
 
 	/**
@@ -137,6 +158,41 @@ public class Player extends QualifiedObservable
 	}
 
 	/**
+	 * @param playerMapper the mapper that will be used to persist this player
+	 */
+	public void setDataMapper(PlayerMapper playerMapper)
+	{
+		this.playerMapper = playerMapper;
+	}
+
+	/**
+	 * @param mapName the name of the map this player should be on
+	 */
+	public void setMapName(String mapName)
+	{
+		this.mapName = mapName;
+	}
+
+	/**
+	 * @param playerID this player's unique ID
+	 */
+	public void setPlayerID(int playerID)
+	{
+		this.playerID = playerID;
+	}
+
+	/**
+	 * Tell this player what his login information is
+	 * 
+	 * @param pl
+	 *            his login information
+	 */
+	public void setPlayerLogin(PlayerLogin pl)
+	{
+		this.playerLogin = pl;
+	}
+
+	/**
 	 * Set the player's position
 	 * 
 	 * @param playerPosition
@@ -146,23 +202,17 @@ public class Player extends QualifiedObservable
 	public void setPlayerPosition(Position playerPosition)
 	{
 		setPlayerPositionWithoutNotifying(playerPosition);
-		PlayerMovedReport report = new PlayerMovedReport(this.id, this.getPlayerName(),
-				playerPosition);
+		PlayerMovedReport report = new PlayerMovedReport(playerID,
+				this.getPlayerName(), playerPosition);
 		this.notifyObservers(report);
 	}
 
 	/**
-	 * Tell this player what his login information is
-	 * @param pl his login information
-	 */
-	public void setPlayerLogin(PlayerLogin pl)
-	{
-		this.playerLogin = pl;
-	}
-
-	/**
-	 * Move a player without notifying the other players (used when moving from one map to another
-	 * @param newPosition the position the player should move to
+	 * Move a player without notifying the other players (used when moving from
+	 * one map to another
+	 * 
+	 * @param newPosition
+	 *            the position the player should move to
 	 */
 	public void setPlayerPositionWithoutNotifying(Position newPosition)
 	{
@@ -170,39 +220,22 @@ public class Player extends QualifiedObservable
 	}
 
 	/**
-	 * Set the id
-	 * @param id the new id
-	 */
-	public void setId(int id) 
-	{
-		this.id = id;
-	}
-	
-	/**
-	 * Get the quizScore
-	 * @return
-	 * 			the quiz score
-	 */
-	public int getQuizScore()
-	{
-		return this.quizScore;
-	}
-	
-	/**
 	 * Set the quizScore
+	 * 
 	 * @param score
-	 * 			the new quiz score
+	 *            the new quiz score
 	 */
 	public void setQuizScore(int score)
 	{
 		this.quizScore = score;
 	}
-	
-	/**
-	 * Increment quiz score;
-	 */
-	public void incrementQuizScore()
+
+	private void registerOurReportTypes()
 	{
-		this.quizScore++;
+		reportTypes.add(PlayerMovedReport.class);
+		reportTypes.add(QuestScreenReport.class);
+		reportTypes.add(PinFailedReport.class);
+
+		this.registerReportTypesWeNotify();
 	}
 }

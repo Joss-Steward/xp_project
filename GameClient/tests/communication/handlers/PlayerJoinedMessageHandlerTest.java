@@ -1,12 +1,12 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
-import model.PlayersInDB;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.PlayerJoinedMessage;
+import datasource.PlayersForTest;
 import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
@@ -37,8 +37,8 @@ public class PlayerJoinedMessageHandlerTest
 	@Test
 	public void test() throws InterruptedException
 	{
-		PlayerJoinedMessage msg = new PlayerJoinedMessage(2, PlayersInDB.MERLIN.name(),
-				PlayersInDB.MERLIN.getAppearanceType(), PlayersInDB.MERLIN.getPosition());
+		PlayerJoinedMessage msg = new PlayerJoinedMessage(2, PlayersForTest.MERLIN.name(),
+				PlayersForTest.MERLIN.getAppearanceType(), PlayersForTest.MERLIN.getPosition());
 		PlayerJoinedMessageHandler handler = new PlayerJoinedMessageHandler();
 		handler.process(msg);
 		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());

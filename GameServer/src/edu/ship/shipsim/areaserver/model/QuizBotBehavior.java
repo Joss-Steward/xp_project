@@ -1,12 +1,12 @@
 package edu.ship.shipsim.areaserver.model;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Observable;
 
 import model.QualifiedObservableReport;
 import data.ChatType;
 import data.Position;
+import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReport;
 
 /**
@@ -14,13 +14,13 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReport;
  * 
  * @author Frank and Dave
  */
-public class QuizBotBehavior extends NPCBehavior 
+public class QuizBotBehavior extends NPCBehavior
 {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1511084096181049717L;
-	
+
 	private NPCQuestion question;
 
 	/**
@@ -32,50 +32,58 @@ public class QuizBotBehavior extends NPCBehavior
 		pullNewQuestion();
 		setUpListening();
 	}
-	
+
 	/**
-	 * Watches SendChatMessageReports for a correct answer.
-	 * On correct answer, announce the correct answer, pull a new random question, and ask that question.
+	 * Watches SendChatMessageReports for a correct answer. On correct answer,
+	 * announce the correct answer, pull a new random question, and ask that
+	 * question.
 	 */
 	@Override
-	public void update(Observable o, Object message) 
+	public void update(Observable o, Object message)
 	{
-		
-		if(message instanceof SendChatMessageReport)
+
+		if (message instanceof SendChatMessageReport)
 		{
 			String answer = question.getAnswer().toLowerCase().replaceAll(" ", "");
-			SendChatMessageReport report = (SendChatMessageReport)message;
+			SendChatMessageReport report = (SendChatMessageReport) message;
 			String userAnswer = report.getMessage().toLowerCase().replaceAll(" ", "");
-			System.out.println("[DEBUG] Answer is '" + answer + "' user answered '" + userAnswer + "'");
+			System.out.println("[DEBUG] Answer is '" + answer + "' user answered '"
+					+ userAnswer + "'");
 			if (answer.equals(userAnswer))
-			{				
-				try 
+			{
+				try
 				{
-					int playerID = PlayerManager.getSingleton().getPlayerIDFromPlayerName(report.getSenderName());
-					Player player = PlayerManager.getSingleton().getPlayerFromID(playerID);
-					
-					ChatManager.getSingleton().sendChatToClients(player.getPlayerName() +" answered correctly.  The answer was " +question.getAnswer(),
-							"Quiz Bot", new Position(0,0), ChatType.Zone);
+					int playerID = PlayerManager.getSingleton()
+							.getPlayerIDFromPlayerName(report.getSenderName());
+					Player player = PlayerManager.getSingleton()
+							.getPlayerFromID(playerID);
+
+					ChatManager.getSingleton().sendChatToClients(
+							player.getPlayerName()
+									+ " answered correctly.  The answer was "
+									+ question.getAnswer(), "Quiz Bot",
+							new Position(0, 0), ChatType.Zone);
 					player.incrementQuizScore();
-					ChatManager.getSingleton().sendChatToClients(player.getPlayerName() +" score is now " + player.getQuizScore(),
-							"Quiz Bot", new Position(0,0), ChatType.Zone);
-				} 
-				catch (PlayerNotFoundException e) 
+					ChatManager.getSingleton().sendChatToClients(
+							player.getPlayerName() + " score is now "
+									+ player.getQuizScore(), "Quiz Bot",
+							new Position(0, 0), ChatType.Zone);
+				} catch (PlayerNotFoundException e)
 				{
 					e.printStackTrace();
 				}
-				
+
 				pullNewQuestion();
 				askQuestion();
 			}
 		}
 	}
-	
+
 	/**
 	 * Asks the question at 30 second intervals.
 	 */
 	@Override
-	public void doTimedEvent() 
+	public void doTimedEvent()
 	{
 		askQuestion();
 	}
@@ -83,25 +91,26 @@ public class QuizBotBehavior extends NPCBehavior
 	/**
 	 * Asks the question.
 	 */
-	private void askQuestion() 
+	private void askQuestion()
 	{
-		String questionString = question.getQuestion();
-		
+		String questionString = question.getQuestionStatement();
+
 		ChatManager.getSingleton().sendChatToClients(questionString, "Quiz Bot",
-				new Position(0,0), ChatType.Zone);	
+				new Position(0, 0), ChatType.Zone);
 	}
 
 	/**
 	 * Gets a new random question from the database.
+	 * @throws DatabaseException 
 	 */
-	private void pullNewQuestion() 
+	private void pullNewQuestion()
 	{
-		try 
+		try
 		{
 			question = NPCQuestion.getRandomQuestion();
-		} 
-		catch (SQLException e) 
+		} catch (DatabaseException e)
 		{
+			System.out.println("Unable to retrieve a random question for the quiz bot");
 			e.printStackTrace();
 		}
 	}
@@ -113,12 +122,12 @@ public class QuizBotBehavior extends NPCBehavior
 	{
 		return this.question;
 	}
-	
+
 	/**
 	 * Get report types that this class watches for.
 	 */
 	@Override
-	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypes() 
+	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypes()
 	{
 		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
 		reportTypes.add(SendChatMessageReport.class);

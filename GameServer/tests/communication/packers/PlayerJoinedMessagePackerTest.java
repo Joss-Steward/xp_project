@@ -1,15 +1,16 @@
 package communication.packers;
 
-import static org.junit.Assert.*;
-import model.DatabaseException;
-import model.PlayerConnection;
-import model.PlayersInDB;
+import static org.junit.Assert.assertEquals;
+import model.OptionsManager;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.StateAccumulator;
 import communication.messages.PlayerJoinedMessage;
+import datasource.DatabaseException;
+import datasource.PlayersForTest;
+import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayMock;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 
@@ -27,6 +28,8 @@ public class PlayerJoinedMessagePackerTest
 	public void setUp()
 	{
 		PlayerManager.resetSingleton();
+		OptionsManager.getSingleton(true);
+		new PlayerRowDataGatewayMock().resetData();
 	}
 
 	/**
@@ -39,20 +42,20 @@ public class PlayerJoinedMessagePackerTest
 	@Test
 	public void ifThePlayerIsNotOnThisConnection() throws DatabaseException
 	{
-		PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID(), PlayerConnection.DEFAULT_PIN);
+		PlayerManager playerManager = PlayerManager.getSingleton();
+		playerManager.addPlayer(PlayersForTest.MERLIN.getPlayerID());
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
-		stateAccumulator.setPlayerId(PlayersInDB.MERLIN.getPlayerID());
-		PlayerManager.getSingleton().addPlayer(PlayersInDB.JOHN.getPlayerID(), PlayerConnection.DEFAULT_PIN);
+		stateAccumulator.setPlayerId(PlayersForTest.MERLIN.getPlayerID());
+		playerManager.addPlayer(PlayersForTest.JOHN.getPlayerID());
 
-		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager
-				.getSingleton().getPlayerFromID(PlayersInDB.JOHN.getPlayerID()));
+		PlayerConnectionReport report = new PlayerConnectionReport(playerManager.getPlayerFromID(PlayersForTest.JOHN.getPlayerID()));
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);
-		assertEquals(PlayersInDB.JOHN.getPlayerName(), msg.getPlayerName());
-		assertEquals(PlayersInDB.JOHN.getAppearanceType(), msg.getAppearanceType());
-		assertEquals(PlayersInDB.JOHN.getPlayerID(), msg.getPlayerID());
-		assertEquals(PlayersInDB.JOHN.getPosition(), msg.getPosition());
+		assertEquals(PlayersForTest.JOHN.getPlayerName(), msg.getPlayerName());
+		assertEquals(PlayersForTest.JOHN.getAppearanceType(), msg.getAppearanceType());
+		assertEquals(PlayersForTest.JOHN.getPlayerID(), msg.getPlayerID());
+		assertEquals(PlayersForTest.JOHN.getPosition(), msg.getPosition());
 	}
 
 }

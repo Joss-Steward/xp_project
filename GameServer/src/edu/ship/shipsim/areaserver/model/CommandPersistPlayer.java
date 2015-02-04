@@ -1,5 +1,7 @@
 package edu.ship.shipsim.areaserver.model;
 
+import datasource.DatabaseException;
+
 
 /**
  * Persist a player through a command
@@ -26,7 +28,13 @@ public class CommandPersistPlayer extends Command
 	@Override
 	protected boolean execute() 
 	{
-		return PlayerManager.getSingleton().persistPlayer(playerID);
+		try
+		{
+			return PlayerManager.getSingleton().persistPlayer(playerID);
+		} catch (DatabaseException e)
+		{
+			return false;
+		}
 	}
 
 }

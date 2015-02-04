@@ -1,12 +1,13 @@
 package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
-import model.PlayersInDB;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import data.Position;
+import datasource.DatabaseException;
+import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 
@@ -29,18 +30,19 @@ public class CommandPersistPlayerTest
 
 	/**
 	 * Test that persistence happens
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void testPersists()
+	public void testPersists() throws DatabaseException
 	{
-		Player player = PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID());
+		Player player = PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
 		player.setPlayerPositionWithoutNotifying(new Position(101, 101));
 		player.setAppearanceType("appearance");
 		PlayerManager.getSingleton().persistPlayer(player.getID());
 		
 		PlayerManager.resetSingleton();
 		
-		Player fetched = PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID());
+		Player fetched = PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
 		assertEquals(player.getPlayerPosition(), fetched.getPlayerPosition());
 		assertEquals(player.getAppearanceType(), fetched.getAppearanceType());
 	}

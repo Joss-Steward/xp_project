@@ -12,7 +12,6 @@ import org.junit.runners.Suite;
 import tmxfiles.TMXMapReaderTest;
 import communication.ConnectionIncomingTest;
 import communication.ConnectionManagerTest;
-import communication.LocalPortMapperTest;
 import communication.StateAccumulatorTest;
 import communication.handlers.MessageHandlerSetTest;
 import communication.messages.ChatMessageTest;
@@ -28,6 +27,12 @@ import communication.messages.MovementMessageTest;
 import communication.messages.PlayerJoinedMessageTest;
 import communication.packers.MessagePackerSetTest;
 import data.PositionTest;
+import datasource.PlayerConnectionRowDataGatewayMockTest;
+import datasource.PlayerConnectionRowDataGatewayRDSTest;
+import datasource.PlayerLoginRowDataGatewayMockTest;
+import datasource.PlayerLoginRowDataGatewayRDSTest;
+import datasource.ServerRowDataGatewayMockTest;
+import datasource.ServerRowDataGatewayRDSTest;
 
 /**
  * All of the tests for the shared code. Notice that the packages, and classes
@@ -45,8 +50,7 @@ import data.PositionTest;
 		ConnectionIncomingTest.class,
 		ConnectionManagerTest.class,
 		StateAccumulatorTest.class,
-		LocalPortMapperTest.class,
-
+		
 		// communication.handlers
 		MessageHandlerSetTest.class,
 		// StubMessageHandler1.class,
@@ -77,6 +81,19 @@ import data.PositionTest;
 
 		// data
 		PositionTest.class,
+		
+		//datasource
+		PlayerConnectionRowDataGatewayMockTest.class,
+		PlayerConnectionRowDataGatewayRDSTest.class,
+		//PlayerConnectionRowDataGateway,
+		PlayerLoginRowDataGatewayMockTest.class,
+		PlayerLoginRowDataGatewayRDSTest.class,
+		//PlayerLoginDataBehaviorTest.class,
+		//PlayersForTest
+		ServerRowDataGatewayMockTest.class,
+		ServerRowDataGatewayRDSTest.class,
+		//ServerDataBehaviorTest,
+		//ServersInDB,
 
 		// model
 		// DatabaseTest.class

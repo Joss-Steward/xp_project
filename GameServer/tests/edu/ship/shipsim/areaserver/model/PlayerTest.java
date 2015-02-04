@@ -6,10 +6,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
-import model.DatabaseException;
-import model.DatabaseTest;
+import model.OptionsManager;
 import model.PlayerConnection;
-import model.PlayersInDB;
 import model.QualifiedObservableConnector;
 
 import org.junit.After;
@@ -17,6 +15,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import data.Position;
+import datasource.DatabaseException;
+import datasource.DatabaseTest;
+import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
@@ -37,12 +38,13 @@ public class PlayerTest extends DatabaseTest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
-	 * @see model.DatabaseTest#setUp()
+	 * @see datasource.DatabaseTest#setUp()
 	 */
 	@Before
 	public void setUp() throws DatabaseException
 	{
 		super.setUp();
+		OptionsManager.getSingleton(true);
 		QualifiedObservableConnector.resetSingleton();
 		PlayerManager.resetSingleton();
 		playerManager = PlayerManager.getSingleton();
@@ -52,7 +54,7 @@ public class PlayerTest extends DatabaseTest
 
 	/**
 	 * cleanup the singletons we played with
-	 * @see model.DatabaseTest#tearDown()
+	 * @see datasource.DatabaseTest#tearDown()
 	 */
 	@After
 	public void tearDown() throws DatabaseException, SQLException
@@ -68,7 +70,7 @@ public class PlayerTest extends DatabaseTest
 	public void canGetAppearanceType()
 	{
 		Player p = playerManager.addPlayer(1);
-		assertEquals(PlayersInDB.JOHN.getAppearanceType(), p.getAppearanceType());
+		assertEquals(PlayersForTest.JOHN.getAppearanceType(), p.getAppearanceType());
 	}
 
 	/**

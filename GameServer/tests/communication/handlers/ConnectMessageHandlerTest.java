@@ -1,6 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
+import model.OptionsManager;
 import model.PlayerConnection;
 
 import org.junit.Before;
@@ -25,6 +26,8 @@ public class ConnectMessageHandlerTest
 	@Before
 	public void reset()
 	{
+		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton(true);
 		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
 	}

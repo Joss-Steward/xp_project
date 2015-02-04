@@ -8,6 +8,8 @@ import model.reports.LoginSuccessfulReport;
 import org.junit.Before;
 import org.junit.Test;
 
+import datasource.PlayersForTest;
+
 /**
  * @author Merlin
  * 
@@ -21,6 +23,8 @@ public class PlayerManagerTest
 	@Before
 	public void setUp()
 	{
+		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton(true);
 		PlayerManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 	}
@@ -47,11 +51,11 @@ public class PlayerManagerTest
 	public void respondsOnSuccessfulLogin() throws LoginFailedException
 	{
 		PlayerManager pm = PlayerManager.getSingleton();
-		LoginSuccessfulReport expected = new LoginSuccessfulReport(PlayersInDB.MERLIN.getPlayerID(), "isabella", 1872,
+		LoginSuccessfulReport expected = new LoginSuccessfulReport(PlayersForTest.MERLIN.getPlayerID(), "localhost", 1872,
 				0);
 		
-		LoginSuccessfulReport actual = pm.login(PlayersInDB.MERLIN.getPlayerName(),
-				PlayersInDB.MERLIN.getPlayerPassword());
+		LoginSuccessfulReport actual = pm.login(PlayersForTest.MERLIN.getPlayerName(),
+				PlayersForTest.MERLIN.getPlayerPassword());
 		assertEquals(expected, actual);
 	}
 
@@ -63,8 +67,8 @@ public class PlayerManagerTest
 	public void notifiesOnFailedLogin() throws LoginFailedException
 	{
 		PlayerManager pm = PlayerManager.getSingleton();
-		pm.login(PlayersInDB.MERLIN.getPlayerName(),
-				PlayersInDB.MERLIN.getPlayerPassword() + "Z");
+		pm.login(PlayersForTest.MERLIN.getPlayerName(),
+				PlayersForTest.MERLIN.getPlayerPassword() + "Z");
 	}
 
 }

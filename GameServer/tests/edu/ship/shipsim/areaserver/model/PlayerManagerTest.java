@@ -5,9 +5,7 @@ import static org.junit.Assert.*;
 import java.sql.SQLException;
 import java.util.Observer;
 
-import model.DatabaseException;
 import model.OptionsManager;
-import model.PlayersInDB;
 import model.QualifiedObservableConnector;
 
 import org.easymock.EasyMock;
@@ -15,6 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import data.Position;
+import datasource.DatabaseException;
+import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.PlayerNotFoundException;
@@ -33,6 +33,8 @@ public class PlayerManagerTest
 	@Before
 	public void setUp()
 	{
+		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton(true);
 		QualifiedObservableConnector.resetSingleton();
 		PlayerManager.resetSingleton();
 		PlayerManager playerManager = PlayerManager.getSingleton();
@@ -128,35 +130,44 @@ public class PlayerManagerTest
 	}
 
 	/**
-	 * Test that a player can be persisted by saving an attribute and fetching the player again
+	 * Test that a player can be persisted by saving an attribute and fetching
+	 * the player again
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
-	public void playerIsSaved()
+	public void playerIsSaved() throws DatabaseException
 	{
-		Player player = PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID());
+		Player player = PlayerManager.getSingleton().addPlayer(
+				PlayersForTest.MERLIN.getPlayerID());
 		player.setPlayerPosition(new Position(100, 100));
 		assertTrue(PlayerManager.getSingleton().persistPlayer(player.getID()));
-		
+
 		PlayerManager.resetSingleton();
-		
-		Player fetched = PlayerManager.getSingleton().addPlayer(PlayersInDB.MERLIN.getPlayerID());
+
+		Player fetched = PlayerManager.getSingleton().addPlayer(
+				PlayersForTest.MERLIN.getPlayerID());
 		assertEquals(new Position(100, 100), fetched.getPlayerPosition());
 	}
-	
+
 	/**
 	 * Test that the known npcs will be in the database
-	 * @throws DatabaseException shouldn't
-	 * @throws SQLException shouldn't
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
+	 * @throws SQLException
+	 *             shouldn't
 	 */
 	@Test
 	public void testNpcsLoaded() throws DatabaseException, SQLException
 	{
-		OptionsManager.getSingleton().setTestMode();
-		OptionsManager.getSingleton().updateMapInformation("quiznasium.tmx", "local", 1337);
+		OptionsManager.getSingleton(true).updateMapInformation(
+				PlayersForTest.QUIZBOT.getMapName(), "localhost", 1874);
 		PlayerManager.getSingleton().loadNpcs();
-		for(NpcsInDB npc: NpcsInDB.values())
-		{
-			assertNotNull(PlayerManager.getSingleton().getPlayerFromID(npc.getPlayerID()));
-		}
+
+		assertNotNull(PlayerManager.getSingleton().getPlayerFromID(
+				PlayersForTest.QUIZBOT.getPlayerID()));
+
 	}
 }
