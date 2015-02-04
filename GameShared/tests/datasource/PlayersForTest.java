@@ -21,27 +21,27 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	NICK(3, "Nick", "magi", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
+	NICK(3, "Nick", "magi", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0),
 	/**
 	 * 
 	 */
-	JOSH(4, "Josh", "ninja", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
+	JOSH(4, "Josh", "ninja", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0),
 	/**
 	 * 
 	 */
-	MATT(5, "Matt", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
+	MATT(5, "Matt", "male_b", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0),
 	/**
 	 * 
 	 */
-	STEVE(6, "Steve", "knight_with_straw_hat", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
+	STEVE(6, "Steve", "knight_with_straw_hat", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0),
 	/**
 	 * 
 	 */
-	FRANK(7, "Frank", "male_b", 4, 13, "pw", null, 1441, null, "current.tmx", 0),
+	FRANK(7, "Frank", "male_b", 4, 13, "pw", "current.tmx", 1441, null, "current.tmx", 0),
 	/**
 	 * 
 	 */
-	GA(8, "Ga", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
+	GA(8, "Ga", "male_b", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0),
 	/**
 	 * 
 	 */
