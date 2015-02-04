@@ -1,7 +1,6 @@
 package edu.ship.shipsim.client.model.reports;
 
 import model.QualifiedObservableReport;
-import communication.messages.AreaCollisionMessage;
 
 /**
  * 
@@ -34,7 +33,6 @@ public class AreaCollisionReport implements QualifiedObservableReport {
 	}
 
 	/**
-	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -42,13 +40,12 @@ public class AreaCollisionReport implements QualifiedObservableReport {
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + playerID;
 		result = prime * result + ((areaName == null) ? 0 : areaName.hashCode());
+		result = prime * result + playerID;
 		return result;
 	}
 
 	/**
-	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -58,21 +55,18 @@ public class AreaCollisionReport implements QualifiedObservableReport {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof AreaCollisionMessage))
+		if (!(obj instanceof AreaCollisionReport))
 			return false;
-		
 		AreaCollisionReport other = (AreaCollisionReport) obj;
-		
-		boolean equals = true;
-		
-		if(this.getAreaName() == null) {
-			equals = equals && other.getAreaName() == null;
-		} else {
-			equals = equals && this.getAreaName().equals(other.getAreaName());
-		}
-		equals = equals && playerID == other.playerID;
-		
-		return equals;
+		if (areaName == null)
+		{
+			if (other.areaName != null)
+				return false;
+		} else if (!areaName.equals(other.areaName))
+			return false;
+		if (playerID != other.playerID)
+			return false;
+		return true;
 	}
 
 	/**
