@@ -17,11 +17,7 @@ public enum Screens
 	/**
 	 * 
 	 */
-	MAP_SCREEN(new ScreenMap(), new ScreenMapListener()),
-	/**
-	 * 
-	 */
-	QUEST_SCREEN(new ScreenQuest(), new ScreenQuestListener());
+	MAP_SCREEN(new ScreenMap(), new ScreenMapListener());
 
 	private ScreenBasic screen;
 
