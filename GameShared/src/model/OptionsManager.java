@@ -12,6 +12,7 @@ import datasource.DatabaseException;
 public class OptionsManager
 {
 	private static OptionsManager singleton;
+	private static boolean runningLocal;
 	private boolean testMode;
 	private String mapName;
 	private String hostName;
@@ -95,10 +96,20 @@ public class OptionsManager
 		this.portNumber = port;
 
 		mapping = new MapToServerMapping(mapName);
-		mapping.setHostName(hostName);
-		mapping.setMapName(mapName);
-		mapping.setPortNumber(port);
-		mapping.persist();
+		if (!runningLocal)
+		{
+			mapping.setHostName(hostName);
+			mapping.setMapName(mapName);
+			mapping.setPortNumber(port);
+			mapping.persist();
+		} else
+		{
+			mapping.setHostName("localhost");
+			mapping.setMapName(mapName);
+			mapping.setPortNumber(port);
+		}
+			
+		
 	}
 
 	/**
@@ -137,5 +148,10 @@ public class OptionsManager
 	public boolean isTestMode()
 	{
 		return testMode;
+	}
+
+	public static void setRunningLocal(boolean b)
+	{
+		runningLocal = b;
 	}
 }
