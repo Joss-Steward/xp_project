@@ -49,7 +49,7 @@ public class ScreenLogin extends ScreenBasic
 	 */
 	private void initializeScreen()
 	{
-		Viewport v = new ExtendViewport(800, 800);
+		Viewport v = new ExtendViewport(Screens.DEFAULT_RES[0], Screens.DEFAULT_RES[1]);
 		stage = new Stage(v);
 
 		final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
@@ -213,7 +213,7 @@ public class ScreenLogin extends ScreenBasic
 	@Override
 	public void resize(int width, int height)
 	{
-		stage.getViewport().update(width, height);
+		stage.getViewport().update(width, height, true);
 		stage.act();
 	}
 
