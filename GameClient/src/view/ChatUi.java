@@ -5,9 +5,11 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -19,6 +21,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.FocusListener;
+import com.badlogic.gdx.scenes.scene2d.utils.FocusListener.FocusEvent;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 import com.badlogic.gdx.utils.viewport.*;
@@ -33,7 +37,7 @@ import static view.Screens.DEFAULT_RES;
  * @author nhydock
  *
  */
-public class ChatUi
+public class ChatUi extends Group
 {
 	/**
 	 * Expected height of the chat ui
@@ -50,8 +54,6 @@ public class ChatUi
 	ScrollPane listPane;
 	Table chatHistoryView;
 	TextField messageBox;
-	
-	private Stage stage;
 	
 	private Skin skin;
 	
@@ -77,9 +79,6 @@ public class ChatUi
 	{
 		skin = new Skin(Gdx.files.internal("data/ui/chat.json"));
 		
-		Viewport v = new ExtendViewport(DEFAULT_RES[0], DEFAULT_RES[1]);
-		stage = new Stage(v);
-		
 		Table grid = new Table();
 		grid.setWidth(800f);
 		
@@ -96,7 +95,6 @@ public class ChatUi
 			public void changed(ChangeEvent event, Actor actor)
 			{
 				sendMessage();
-				System.out.println("button clicked");
 			}
 			
 		});
@@ -167,58 +165,38 @@ public class ChatUi
 		
 		grid.bottom();
 		
-		//add message box focusing to the stage
-		stage.addListener(new InputListener(){
-			@Override
-			public boolean keyDown(InputEvent event, int keycode)
-			{
-				if (keycode == Keys.ENTER)
-				{
-					if (stage.getKeyboardFocus() == null)
-					{
-						stage.setKeyboardFocus(messageBox);
-						return true;
-					}
-					else if (stage.getKeyboardFocus() == messageBox)
-					{
-						sendMessage();
-						stage.setKeyboardFocus(null);
-						return true;
-					}
-				}
-				return false;
-			}
-		});
-		
 		//add the ui to the stage
-		stage.addActor(grid);
+		addActor(grid);
 		
 		newLabels = new ObjectFloatMap<Label>();
+		
+		messageBox.addListener(new InputListener(){
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				if (keycode == Keys.ENTER)
+				{
+					sendMessage();
+					return true;
+				}
+				return super.keyDown(event, keycode);
+			}
+		});
 	}
 	
 	/**
-	 * Rescale the ui for different resolutions
-	 * @param width
-	 * 	viewport width
-	 * @param height
-	 *  viewport height
-	 */
-	public void resize(int width, int height)
-	{
-		stage.getViewport().update(width, height);
-	}
-	
-	/**
-	 * Updates and draws the ui
-	 * @param deltaTime
+	 * Updates the ui
+	 * @param delta
 	 * 	timer resolution between draw cycles
 	 */
-	public void draw(float deltaTime)
+	@Override
+	public void act(float delta)
 	{
+		super.act(delta);
+		
 		for (Label label : newLabels.keys())
 		{
 			float fade = newLabels.get(label, 0f);
-			fade += deltaTime;
+			fade += delta;
 			Color c = label.getColor();
 			c.a = fade/FadeRate;
 			newLabels.put(label, fade);
@@ -228,19 +206,6 @@ public class ChatUi
 				newLabels.remove(label, 0f);
 			}
 		}
-		
-		stage.act(deltaTime);
-		stage.draw();
-	}
-	
-	/**
-	 * Appends this ui's input processor to an input multiplexer
-	 * @param input
-	 * 	input multiplexer to add to
-	 */
-	public void addToInput(InputMultiplexer input)
-	{
-		input.addProcessor(stage);
 	}
 	
 	/**
@@ -299,6 +264,7 @@ public class ChatUi
 		
 		Label l = new Label(message, style);
 		l.getColor().a = 0;
+		l.addAction(Actions.fadeIn(.3f));
 		l.setWrap(true);
 		this.newLabels.put(l, 0f);
 		chatHistoryView.top().add(l).expandX().fillX();

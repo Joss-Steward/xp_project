@@ -5,14 +5,15 @@ package view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.Input.Keys;
 //import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.MapLayer;
@@ -21,14 +22,18 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Sort;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 import data.ChatType;
 import data.Position;
@@ -47,6 +52,7 @@ public class ScreenMap extends ScreenBasic
 	PlayerSprite mySprite;
 	
 	PlayerSpriteFactory playerFactory;
+	Stage worldStage;
 	IntMap<PlayerSprite> characters;
 
 	//holds characters that need to be added until the map is loaded
@@ -55,7 +61,6 @@ public class ScreenMap extends ScreenBasic
 	IntArray characterDequeue;
 
 	private OrthographicCamera camera;
-	private SpriteBatch batch;
 	private final float unitScale;
 	private ScreenMapInput mapInput;
 	private ChatUi chatArea;
@@ -64,8 +69,6 @@ public class ScreenMap extends ScreenBasic
 	private Vector2 tileSize;
 	private Vector2 mapPixelSize;
 	private Vector2 mapSize;
-	
-	private BitmapFont loadingFont;
 	
 	private int[] bgLayers, fgLayers;
 	private Color clearColor;
@@ -83,6 +86,8 @@ public class ScreenMap extends ScreenBasic
 	private boolean bufferSet;
 	//batch specifically used for post shader effects
 	private SpriteBatch blurBatch;
+	private Group loadingLayer;
+	private OrthographicCamera worldCamera;
 	
 	/**
 	 * 
@@ -141,7 +146,6 @@ public class ScreenMap extends ScreenBasic
 		
 		camera.update();
 		stage.act();
-		stage.draw();
 
 		if (!loading)
 		{
@@ -156,13 +160,14 @@ public class ScreenMap extends ScreenBasic
 			{
 				int id = ids.next();
 				Position pos = this.characterQueue.remove(id);
-				Vector2 where = this.positionToScale(pos);
+				float[] where = this.positionToScale(pos);
 				PlayerSprite sprite = this.characters.get(id);
-				sprite.setPosition(where.x, where.y);
+				sprite.setPosition(where[0], where[1]);
 				if (sprite == this.mySprite)
 				{
-					camera.position.set(where.x, where.y, 0);
+					worldCamera.position.set(where[0], where[1], 0);
 				}
+				worldStage.addActor(sprite);
 			}
 			this.characterQueue.clear();
 			
@@ -182,20 +187,13 @@ public class ScreenMap extends ScreenBasic
 				//remember to clear in here else the buffer will smear the map where the
 				// tiled map renderer doesn't draw
 				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-				mapRenderer.setView(camera);
+				mapRenderer.setView(worldCamera);
 				mapRenderer.render(bgLayers);
 				
-				batch.setProjectionMatrix(camera.combined);
-				batch.begin();
+				worldStage.act(delta);
+				Sort.instance().sort(worldStage.getActors());
+				worldStage.draw();
 				
-				Array<PlayerSprite> sprites = this.characters.values().toArray();
-				Sort.instance().sort(sprites);
-				for (PlayerSprite s : sprites)
-				{
-					s.update(delta);
-					s.draw(batch);
-				}
-				batch.end();
 				mapRenderer.render(fgLayers);
 			}
 			mapBuffer.end();
@@ -203,7 +201,7 @@ public class ScreenMap extends ScreenBasic
 			//render the ui buffer
 			uiBuffer.begin();
 			{
-				chatArea.draw(delta);
+				stage.draw();
 			}
 			uiBuffer.end();
 			
@@ -214,6 +212,7 @@ public class ScreenMap extends ScreenBasic
 			Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
 			
 			//draw the map/blur
+			blurBatch.setProjectionMatrix(camera.combined);
 			blurBatch.setShader(aeroGlass);
 			blurBatch.begin();
 			blurBatch.draw(mapTexture, 0f, 0f);
@@ -226,13 +225,14 @@ public class ScreenMap extends ScreenBasic
 			blurBatch.end();
 			
 			//have the camera follow the player when moving
-			camera.position.set(this.mySprite.getPosition(), 0);
+			worldCamera.position.set(this.mySprite.getX(), this.mySprite.getY(), 0);
 			
 			//insures players are removed at the end of the render cycle to prevent race conditions
 			for (int i = 0; i < characterDequeue.size; i++)
 			{
 				int id = characterDequeue.get(i);
-				this.characters.remove(id);
+				PlayerSprite s = this.characters.remove(id);
+				s.remove();
 			}
 			characterDequeue.clear();
 			
@@ -250,16 +250,16 @@ public class ScreenMap extends ScreenBasic
 			Gdx.input.setInputProcessor(null);
 			Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-			batch.setProjectionMatrix(camera.combined);
-			batch.begin();
-			loadingFont.draw(batch, "Loading...", Gdx.graphics.getWidth() - loadingFont.getBounds("Loading...").width - 10, 10 + loadingFont.getLineHeight());
-			batch.end();
+			loadingLayer.setVisible(true);
+			stage.act(delta);
+			stage.draw();
 			
 			if (mapRenderer != null && mySprite != null)
 			{
 				mapInput.initialize(); 
 				Gdx.input.setInputProcessor(multiplexer);
 				loading = false;
+				loadingLayer.setVisible(false);
 			}
 		}
 	}
@@ -270,18 +270,14 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void resize(int width, int height)
 	{
-		stage.getViewport().update(width, height);
-		camera.setToOrtho(false, width, height);
+		stage.getViewport().update(width, height, true);
+		worldStage.getViewport().update(width, height, true);
 		if (mapRenderer != null)
 		{
-			camera.position.set(this.mySprite.getPosition(), 0);
-			mapRenderer.setView(camera);
+			worldCamera.position.set(mySprite.getX(), mySprite.getY(), 0);
+			worldCamera.update();
 		}
-		camera.update();
-		chatArea.resize(width, height);
-		
-		defaultCamera.setToOrtho(true, width, height);
-		defaultCamera.update();
+		camera.setToOrtho(true, width, height);
 		blurBatch.setProjectionMatrix(defaultCamera.combined);
 		
 		//make sure buffers are resized
@@ -309,7 +305,6 @@ public class ScreenMap extends ScreenBasic
 		//clear things when changing maps
 		if (tiledMap == null)
 		{
-			camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			System.out.println("clearing tile map");
 			characters.clear();
 			this.mySprite = null;
@@ -372,29 +367,58 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void show()
 	{
-		batch = new SpriteBatch();
+		worldStage = new Stage();
 		blurBatch = new SpriteBatch();
 		
+		stage = new Stage(new ExtendViewport(DEFAULT_RES[0], DEFAULT_RES[1]));
+		defaultCamera = (OrthographicCamera)stage.getCamera();
+		worldStage = new Stage(new ExtendViewport(DEFAULT_RES[0], DEFAULT_RES[1]));
+		worldCamera = (OrthographicCamera)worldStage.getCamera();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.update();
-		defaultCamera = new OrthographicCamera();
-		defaultCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		defaultCamera.update();
-		
-		Viewport v = new ExtendViewport(DEFAULT_RES[0], DEFAULT_RES[1]);
-		v.setCamera(camera);
-		stage = new Stage(v);
 		
 		final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-		loadingFont = skin.getFont("default-font");
-	
+		
 		playerFactory = new PlayerSpriteFactory(
 				Gdx.files.internal("data/characters.pack"));
 		chatArea = new ChatUi();
+		stage.addListener(new InputListener(){
+			@Override
+			public boolean keyDown(InputEvent event, int keycode)
+			{
+				if (keycode == Keys.ENTER)
+				{
+					if (stage.getKeyboardFocus() == null)
+					{
+						stage.setKeyboardFocus(chatArea.messageBox);
+						return true;
+					}
+					else
+					{
+						stage.setKeyboardFocus(null);
+						return true;
+					}
+				}
+				return false;
+			}
+		});
+		stage.addActor(chatArea);
+		
+		loadingLayer = new Group();
+		loadingLayer.setSize(stage.getWidth(), stage.getHeight());
+		TextureRegion fillTex = new TextureRegion(new Texture(Gdx.files.internal("data/fill.png")));
+		Image fill = new Image(new TextureRegionDrawable(fillTex));
+		fill.setFillParent(true);
+		fill.setSize(stage.getWidth(), stage.getHeight());
+		loadingLayer.addActor(fill);
+		Label l = new Label("Loading...", skin, "default");
+		l.setPosition(10, 10);
+		loadingLayer.addActor(l);
+		loadingLayer.setVisible(false);
+		stage.addActor(loadingLayer);
+		
 		multiplexer.addProcessor(mapInput);
-		chatArea.addToInput(multiplexer);
-	
+		multiplexer.addProcessor(stage);
+		
 		//prepare the shader
 		//create the Blur Shader for our pretty ui
 		aeroGlass = new ShaderProgram(
@@ -432,6 +456,7 @@ public class ScreenMap extends ScreenBasic
 	public void addPlayer(int playerID, PlayerType type, Position pos,
 			boolean isThisClientsPlayer)
 	{
+		System.out.println("type is " + type.regionName);
 		PlayerSprite sprite = playerFactory.create(type);
 		characterQueue.put(playerID, pos);
 		characters.put(playerID, sprite);
@@ -456,8 +481,8 @@ public class ScreenMap extends ScreenBasic
 		PlayerSprite sprite = this.characters.get(id);
 		if (sprite != null)
 		{
-			Vector2 loc = positionToScale(pos);
-			sprite.move(loc.x, loc.y);
+			float[] loc = positionToScale(pos);
+			sprite.move(loc[0], loc[1]);
 		}
 	}
 
@@ -466,11 +491,11 @@ public class ScreenMap extends ScreenBasic
 	 * 
 	 * @param pos
 	 *            Position to scale into the proper ratio
-	 * @return the scaled position as a Vector
+	 * @return the scaled position as a float array
 	 */
-	private Vector2 positionToScale(Position pos)
+	private float[] positionToScale(Position pos)
 	{
-		Vector2 tmp = new Vector2(pos.getColumn()*tileSize.x, mapPixelSize.y - (pos.getRow()+1)*tileSize.y);
+		float[] tmp = {pos.getColumn()*tileSize.x, mapPixelSize.y - (pos.getRow()+1)*tileSize.y};
 		return tmp;
 	}
 	
