@@ -1,4 +1,11 @@
-package view;
+package view.screen;
+
+import view.screen.login.ScreenLogin;
+import view.screen.login.ScreenLoginListener;
+import view.screen.map.ScreenMap;
+import view.screen.map.ScreenMapListener;
+import view.screen.quest.ScreenQuest;
+import view.screen.quest.ScreenQuestListener;
 
 import com.badlogic.gdx.Game;
 

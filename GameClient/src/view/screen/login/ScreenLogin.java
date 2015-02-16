@@ -1,4 +1,7 @@
-package view;
+package view.screen.login;
+
+import view.screen.ScreenBasic;
+import view.screen.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;

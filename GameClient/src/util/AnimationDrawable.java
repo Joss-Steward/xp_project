@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 /**
  * A drawable class that wraps an animation's functionality,
@@ -13,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
  * @author nhydock
  *
  */
-public class AnimationDrawable implements Drawable {
+public class AnimationDrawable extends BaseDrawable {
 
 	Animation animation;
 	TextureRegion currentFrame;
@@ -61,72 +60,23 @@ public class AnimationDrawable implements Drawable {
 		batch.draw(currentFrame, x, y, width, height);
 	}
 
-	@Override
-	public float getLeftWidth() {
-		return 0;
-	}
-
-	@Override
-	public void setLeftWidth(float leftWidth) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public float getRightWidth() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setRightWidth(float rightWidth) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public float getTopHeight() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setTopHeight(float topHeight) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public float getBottomHeight() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setBottomHeight(float bottomHeight) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	/**
+	 * The minimum width of the animation drawable is determined by the region width
+	 * of the current frame of animation.
+	 * @return region width of the current frame of animation
+	 */
 	@Override
 	public float getMinWidth() {
 		return currentFrame.getRegionWidth();
 	}
 
-	@Override
-	public void setMinWidth(float minWidth) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	/**
+	 * The minimum height of the animation drawable is determined by the region width
+	 * of the current frame of animation.
+	 * @return region height of the current frame of animation
+	 */
 	@Override
 	public float getMinHeight() {
 		return currentFrame.getRegionHeight();
-	}
-
-	@Override
-	public void setMinHeight(float minHeight) {
-		// TODO Auto-generated method stub
-		
 	}
 }

@@ -1,8 +1,11 @@
-package view;
+package view.player;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import view.player.Direction;
+import view.player.PlayerSprite;
 
 /**
  * 

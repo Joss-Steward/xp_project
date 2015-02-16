@@ -1,4 +1,7 @@
-package view;
+package view.screen.map;
+
+import view.player.Direction;
+import view.player.PlayerSprite;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -8,7 +11,7 @@ import edu.ship.shipsim.client.model.CommandMovePlayer;
 import edu.ship.shipsim.client.model.ModelFacade;
 import edu.ship.shipsim.client.model.PlayerManager;
 import edu.ship.shipsim.client.model.ThisClientsPlayer;
-import static view.Direction.*;
+import static view.player.Direction.*;
 
 /**
  * Issues movement commands of the client player using keyboard input.

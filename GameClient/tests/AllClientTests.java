@@ -1,10 +1,10 @@
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import view.DirectionTest;
-import view.PlayerSpriteTest;
-import view.ScreenListenerTest;
-import view.ScreenMapInputTest;
+import view.player.DirectionTest;
+import view.player.PlayerSpriteTest;
+import view.screen.ScreenListenerTest;
+import view.screen.map.ScreenMapInputTest;
 import communication.handlers.ChatMessageHandlerTest;
 import communication.handlers.LoginFailedMessageHandlerTest;
 import communication.handlers.MapFileMessageHandlerTest;

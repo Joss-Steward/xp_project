@@ -1,4 +1,4 @@
-package view;
+package view.player;
 
 import com.badlogic.gdx.math.Vector2;
 

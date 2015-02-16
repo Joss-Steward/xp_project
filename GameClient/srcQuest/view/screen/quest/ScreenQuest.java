@@ -1,4 +1,4 @@
-package view;
+package view.screen.quest;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import edu.ship.shipsim.client.model.CommandQuestScreenClose;
 import edu.ship.shipsim.client.model.ModelFacade;
-import view.ScreenBasic;
+import view.screen.ScreenBasic;
 
 /**
  * QuestScreen Renders a table that holds the current quests and tasks with

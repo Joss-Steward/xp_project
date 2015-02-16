@@ -5,11 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import communication.messages.AreaCollisionMessage;
-import communication.messages.ChatMessage;
-import data.ChatType;
-import data.Position;
 import edu.ship.shipsim.client.model.reports.AreaCollisionReport;
-import edu.ship.shipsim.client.model.reports.ChatSentReport;
 
 /**
  * @author Dave

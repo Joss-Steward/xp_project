@@ -1,4 +1,4 @@
-package view;
+package view.screen;
 
 import static org.junit.Assert.*;
 
@@ -11,6 +11,8 @@ import model.reports.StubQualifiedObservableReport1;
 import model.reports.StubQualifiedObservableReport2;
 
 import org.junit.Test;
+
+import view.screen.ScreenListener;
 
 /**
  * Test the non-abstract stuff in ScreenListener

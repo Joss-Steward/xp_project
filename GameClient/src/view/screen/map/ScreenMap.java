@@ -1,7 +1,12 @@
-package view;
+package view.screen.map;
 
 //import model.CommandQuestScreenOpen;
 //import model.ModelFacade;
+
+import view.player.PlayerSprite;
+import view.player.PlayerSpriteFactory;
+import view.player.PlayerType;
+import view.screen.ScreenBasic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -37,7 +42,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import data.ChatType;
 import data.Position;
-import static view.Screens.DEFAULT_RES;
+import static view.screen.Screens.DEFAULT_RES;
 
 /**
  * A basic screen that, for now, just displays the map

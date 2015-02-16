@@ -1,4 +1,4 @@
-package view;
+package view.player;
 
 import util.AnimationDrawable;
 import util.SpriteSheet;
@@ -15,7 +15,11 @@ import com.badlogic.gdx.utils.ObjectMap;
  */
 public class PlayerSprite extends Image implements Comparable<PlayerSprite>
 {
-	static final float MOVESPEED = .5f;
+	/**
+	 * Global constant defining the speed in seconds at which a 
+	 *  sprite will move across the screen and animate.
+	 */
+	public static final float MOVESPEED = .5f;
 	
 	protected ObjectMap<Direction, AnimationDrawable> animation;
 	protected AnimationDrawable currentAnimation;
