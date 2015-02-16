@@ -1,6 +1,7 @@
 package datasource;
 
 import static org.junit.Assert.assertEquals;
+import model.OptionsManager;
 
 import org.junit.After;
 import org.junit.Test;
@@ -50,6 +51,18 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 		gateway = createGateway(ServersForTest.FIRST_SERVER.getMapName(), "noHostName", 1000);
 	}
 
+	@Test
+	public void localModeDoesntUpdateHostName() throws DatabaseException
+	{
+		OptionsManager.setRunningLocal(true);
+		ServerRowDataGateway existing = findGateway(ServersForTest.FIRST_SERVER.getMapName());
+		gateway = findGateway(ServersForTest.FIRST_SERVER.getMapName());
+		gateway.setHostName("h");
+		gateway.persist();
+		ServerRowDataGateway after = findGateway(ServersForTest.FIRST_SERVER.getMapName());
+		assertEquals(ServersForTest.FIRST_SERVER.getPortNumber(), after.getPortNumber());
+		assertEquals(existing, after.getHostName());
+	}
 	/**
 	 * Create a new row in the database
 	 * 

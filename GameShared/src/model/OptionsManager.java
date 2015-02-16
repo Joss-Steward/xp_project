@@ -150,6 +150,10 @@ public class OptionsManager
 		return testMode;
 	}
 
+	/**
+	 * sets whether this host is running in localhost mode
+	 * @param b true if we should assume everything is running on the local machine
+	 */
 	public static void setRunningLocal(boolean b)
 	{
 		runningLocal = b;
