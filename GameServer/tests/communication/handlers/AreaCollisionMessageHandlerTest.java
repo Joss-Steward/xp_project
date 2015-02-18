@@ -27,7 +27,7 @@ public class AreaCollisionMessageHandlerTest
 
 	@Test
 	public void testAreaHandleCollision() {
-		
+		//Add to all tests
 		reset();
 		
 		AreaCollisionMessageHandler handler = new AreaCollisionMessageHandler();
