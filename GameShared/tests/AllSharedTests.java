@@ -1,3 +1,4 @@
+import model.AdventureModelTest;
 import model.MapToServerMappingTest;
 import model.PlayerLoginTest;
 import model.PlayerConnectionTest;
@@ -96,6 +97,8 @@ import datasource.ServerRowDataGatewayRDSTest;
 		//ServersInDB,
 
 		// model
+		//Tests for Adventure and Quest Classes
+		AdventureModelTest.class,
 		// DatabaseTest.class
 		MapToServerMappingTest.class,
 		PlayerLoginTest.class, 

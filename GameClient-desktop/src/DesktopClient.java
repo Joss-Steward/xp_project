@@ -3,7 +3,7 @@ import runners.GameLibGDX;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 
 import edu.ship.shipsim.client.model.OptionsManager;
-import static view.Screens.DEFAULT_RES;
+import static view.screen.Screens.DEFAULT_RES;
 
 /**
  * 

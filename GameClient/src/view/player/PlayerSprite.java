@@ -1,31 +1,34 @@
-package view;
+package view.player;
 
+import util.AnimationDrawable;
 import util.SpriteSheet;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ObjectMap;
 
 /**
  * The renderable instance of a player on a map
  */
-public class PlayerSprite implements Comparable<PlayerSprite>
+public class PlayerSprite extends Image implements Comparable<PlayerSprite>
 {
-
-	protected SpriteSheet sourceImg;
-	protected Sprite sprite;
-	protected ObjectMap<Direction, Animation> animation;
-	protected Animation currentAnimation;
-	protected float animationTimer;
+	/**
+	 * Global constant defining the speed in seconds at which a 
+	 *  sprite will move across the screen and animate.
+	 */
+	public static final float MOVESPEED = .5f;
+	
+	protected ObjectMap<Direction, AnimationDrawable> animation;
+	protected AnimationDrawable currentAnimation;
 	protected float lastMoved;
 
 	// destination location of the movement
 	protected Vector2 dest;
-	protected Vector2 real;
 	protected Vector2 current;
+	protected Vector2 real;
 
 	protected Direction facing;
 
@@ -36,18 +39,19 @@ public class PlayerSprite implements Comparable<PlayerSprite>
 	 */
 	protected PlayerSprite(TextureRegion region)
 	{
-		sourceImg = new SpriteSheet(region, 4, 4);
-		sprite = new Sprite(sourceImg.getFrame(0, 0));
-		animationTimer = 0;
-		animation = new ObjectMap<Direction, Animation>();
+		SpriteSheet sourceImg = new SpriteSheet(region, 4, 4);
+		animation = new ObjectMap<Direction, AnimationDrawable>();
 		for (Direction dir : Direction.values())
 		{
-			Animation a = new Animation(.25f, sourceImg.getRow(dir.ordinal()));
+			TextureRegion[] row = sourceImg.getRow(dir.ordinal());
+			Animation a = new Animation(MOVESPEED/row.length, row);
 			a.setPlayMode(Animation.PlayMode.LOOP);
-			animation.put(dir, a);
+			AnimationDrawable ad = new AnimationDrawable(a);
+			animation.put(dir, ad);
 		}
 		currentAnimation = animation.get(Direction.South);
-
+		setDrawable(currentAnimation);
+		setSize(currentAnimation.getMinWidth(), currentAnimation.getMinHeight());
 		dest = new Vector2();
 		current = new Vector2();
 		real = new Vector2();
@@ -64,32 +68,25 @@ public class PlayerSprite implements Comparable<PlayerSprite>
 		real = new Vector2();
 		facing = Direction.South;
 
-		animationTimer = 0;
-		animation = new ObjectMap<Direction, Animation>();
+		animation = new ObjectMap<Direction, AnimationDrawable>();
 		for (Direction dir : Direction.values())
 		{
 			animation.put(dir, null);
 		}
 		currentAnimation = animation.get(Direction.South);
-
+		setDrawable(currentAnimation);
 	}
 
 	/**
-	 * Sets the location on screen that the sprite is be located without
-	 * animating
+	 * Forcably sets the location on screen of the sprite without animating it
 	 * 
-	 * @param x
-	 *            horizontal screen location of the sprite
-	 * @param y
-	 *            vertical screen location
 	 */
-	public void setPosition(float x, float y)
-	{
-		this.current.set(x, y);
-		this.dest.set(x, y);
-		this.real.set(x, y);
+	@Override
+	public void setPosition(float x, float y) {
+		super.setPosition(x, y);
+		current.set(x, y);
 	}
-
+	
 	/**
 	 * Sets the location on screen that the sprite is to move to with animation
 	 * 
@@ -98,28 +95,45 @@ public class PlayerSprite implements Comparable<PlayerSprite>
 	 * @param y
 	 *            vertical screen location
 	 */
-	public void move(float x, float y)
+	public void move(final float x, final float y)
 	{
-		// change destination so the player may tween to the location instead of
-		// just popping up
-		dest.set(x, y);
+		current.set(dest.x, dest.y);
+		clearActions();
+		addAction(
+			Actions.sequence(
+				Actions.moveTo(x, y, MOVESPEED),
+				Actions.run(new Runnable(){
 
+					@Override
+					public void run() {
+						current.set(x, y);
+						currentAnimation.setTime(0);
+					}
+		
+				})
+			)
+		);
+		dest.set(x, y);
 		// set the amount of time since the last movement
 		// this allows continuous animation while moving
 		lastMoved = 1f;
 
 		// change the facing direction so it shows the proper sprite strip to
 		// animate
-		facing = Direction.getFacing(current, dest);
-		currentAnimation = animation.get(facing);
+		setFacing(Direction.getFacing(current, dest));
 	}
-
+	
 	/**
-	 * @return the location of the player
+	 * Changes the facing direction of the player sprite
+	 * @param facing
 	 */
-	public Vector2 getPosition()
-	{
-		return real;
+	private void setFacing(Direction facing) {
+		this.facing = facing;
+		currentAnimation = animation.get(facing);
+		if (currentAnimation != null){
+			currentAnimation.setTime(0);
+		}
+		setDrawable(currentAnimation);
 	}
 
 	/**
@@ -128,51 +142,18 @@ public class PlayerSprite implements Comparable<PlayerSprite>
 	 * @param delta
 	 *            differences in time between update cycles of the application
 	 */
-	public void update(float delta)
+	public void act(float delta)
 	{
-		// update animation
-		lastMoved -= delta;
-		if (lastMoved > 0f)
-			animationTimer += delta;
-		else
-			animationTimer = 0f;
-
-		// tween to destination
-		if (!doneWalking())
-		{
-			real = current.lerp(dest, 1f - lastMoved);
+		super.act(delta);
+		real.x = getX();
+		real.y = getY();
+		
+		// update animation if moving
+		if (!doneWalking() && currentAnimation != null) {
+			currentAnimation.update(delta);
 		}
 	}
-
-	/**
-	 * Draws the sprite to screen
-	 * 
-	 * @param batch
-	 *            context in which we draw to the screen
-	 */
-	public void draw(SpriteBatch batch)
-	{
-		sprite.setPosition(real.x, real.y);
-		sprite.setRegion(currentAnimation.getKeyFrame(animationTimer));
-		sprite.draw(batch);
-	}
-
-	/**
-	 * @return x position of the sprite
-	 */
-	public float getX()
-	{
-		return real.x;
-	}
-
-	/**
-	 * @return y position of the sprite
-	 */
-	public float getY()
-	{
-		return real.y;
-	}
-
+	
 	/**
 	 * @return the current direction the sprite is facing
 	 */
@@ -182,11 +163,12 @@ public class PlayerSprite implements Comparable<PlayerSprite>
 	}
 	
 	/**
-	 * @return if the player's pixel position is that of their destination position
+	 * 
+	 * @return true if the player's movement is done
 	 */
 	public boolean doneWalking()
 	{
-		return real.epsilonEquals(dest, .05f);
+		return getActions().size == 0;
 	}
 
 	/**

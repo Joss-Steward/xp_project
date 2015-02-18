@@ -1,8 +1,11 @@
-package view;
+package view.player;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import view.player.Direction;
+import view.player.PlayerSprite;
 
 /**
  * 
@@ -43,9 +46,9 @@ public class PlayerSpriteTest
 		assertEquals(sprite.getY(), 0, .05);
 		assertEquals(sprite.getFacing(), Direction.East);
 
-		sprite.update(.5f);
-		assertEquals(sprite.getX(), 16, .05);
-		assertEquals(sprite.getY(), 16, .05);
-		assertEquals(sprite.getFacing(), Direction.East);
+		sprite.act(PlayerSprite.MOVESPEED / 2f);
+		assertEquals(16, sprite.getX(), .05);
+		assertEquals(16, sprite.getY(), .05);
+		assertEquals(Direction.East, sprite.getFacing());
 	}
 }

@@ -1,8 +1,10 @@
-package view;
+package view.screen.map;
 
 import java.util.ArrayList;
 import java.util.Observable;
 
+import view.player.PlayerType;
+import view.screen.ScreenListener;
 import data.Position;
 import edu.ship.shipsim.client.model.reports.*;
 import model.QualifiedObservableReport;
@@ -68,7 +70,7 @@ public class ScreenMapListener extends ScreenListener
 	}
 
 	/**
-	 * @see view.ScreenListener#getReportTypes()
+	 * @see view.screen.ScreenListener#getReportTypes()
 	 */
 	@Override
 	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypes()
