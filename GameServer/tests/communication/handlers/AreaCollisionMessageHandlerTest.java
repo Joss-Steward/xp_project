@@ -27,14 +27,13 @@ public class AreaCollisionMessageHandlerTest
 
 	@Test
 	public void testAreaHandleCollision() {
-		//Add to all tests
 		reset();
 		
 		AreaCollisionMessageHandler handler = new AreaCollisionMessageHandler();
 		AreaCollisionMessage msg = new AreaCollisionMessage(1, "");
 		handler.process(msg);
 		
-		assertEquals(1,ModelFacade.getSingleton().queueSize());
+		assertEquals(1, ModelFacade.getSingleton().queueSize());
 		
 		reset();
 	}

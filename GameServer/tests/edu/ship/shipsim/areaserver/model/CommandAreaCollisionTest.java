@@ -9,8 +9,6 @@ public class CommandAreaCollisionTest {
 	@Test
 	public void testCreateCommand() {
 		
-		//Add to all tests
-		
 		int playerID = 1;
 		String areaName = "test";
 		CommandAreaCollision cac = new CommandAreaCollision(playerID, areaName);
