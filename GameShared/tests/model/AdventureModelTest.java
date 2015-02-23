@@ -1,12 +1,18 @@
 package model;
-
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class AdventureModelTest {
+/**
+ * This class holds the tests for the Adventure class
+ * 
+ * @author Scott Lantz, LaVonne Diller
+ *
+ */
 
-	/*
+public class AdventureModelTest 
+{
+	/**
 	 * Initializes the Adventure class and ensures
 	 *  all fields hold appropriate values
 	 */
@@ -18,7 +24,7 @@ public class AdventureModelTest {
 		assertEquals("Hidden", a.getState());
 	}
 	
-	/*
+	/**
 	 *Tests to ensure setters function within the class
 	 */
 	@Test
@@ -31,15 +37,5 @@ public class AdventureModelTest {
 		
 		assertEquals("I am set", a.getDescription());
 		assertEquals("Available", a.getState());	
-	}
-	
-	/*
-	 *Tests to ensure toString function works as needed
-	 */
-	@Test
-	public void testToString()
-	{
-		Adventure a = new Adventure("Print Me.","Pending");
-		assertEquals("Description: Print Me. State: Pending",a.toString());
 	}
 }

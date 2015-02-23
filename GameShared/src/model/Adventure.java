@@ -55,15 +55,4 @@ public class Adventure
 	{
 		this.state = newState;
 	}
-	
-	/**
-	 * Returns the Adventures description and state
-	 */
-	@Override
-	public String toString()
-	{
-		String print;
-		print = "Description: " + description + " State: " + state;
-		return print;
-	}
 }
