@@ -11,15 +11,18 @@ import java.util.ArrayList;
 public class Quest 
 {
 	private String q_description;
-	ArrayList<Adventure> list_adventures;
-	
+	private ArrayList<Adventure> list_adventures;
+	private int q_id;
+
 	/**
 	 * Creates a Quest Object
+	 * @param id the id
 	 * @param desc the description
 	 * @param adventures the list of adventures
 	 */
-	public Quest(String desc, ArrayList<Adventure> adventures) 
+	public Quest(int id, String desc, ArrayList<Adventure> adventures) 
 	{
+		this.q_id = id;
 		this.q_description = desc;
 		this.list_adventures = adventures;
 	}
@@ -56,5 +59,22 @@ public class Quest
 	public void setAdventures(ArrayList<Adventure> adventures) 
 	{
 		this.list_adventures = adventures;
+	}
+
+	/**
+	 * @return q_id the quest id
+	 */
+	public int getQuestID() 
+	{
+		return this.q_id;
+	}
+
+	/**
+	 * Sets the quests id
+	 * @param newId the new id
+	 */
+	public void setQuestID(int newId) 
+	{
+		this.q_id = newId;	
 	}
 }

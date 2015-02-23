@@ -9,14 +9,16 @@ package model;
 public class Adventure 
 {
 	private String description;
+	private int adv_id;
 	
 	/**
 	 * The constructor for the Adventure
+	 * @param id   the id of the Adventure
 	 * @param desc the Adventures description
-	 * @param state the Adventures state
 	 */
-	public Adventure(String desc) 
+	public Adventure(int id, String desc) 
 	{
+		this.adv_id = id;
 		this.description = desc;
 	}
 
@@ -35,6 +37,23 @@ public class Adventure
 	public void setDescription(String newDesc) 
 	{
 		this.description = newDesc;
+	}
+	
+	/**
+	 * @return ID of the Adventure
+	 */
+	public int getID() 
+	{
+		return this.adv_id;
+	}
+
+	/**
+	 * Sets the Adventures ID
+	 * @param newID the new ID
+	 */
+	public void setID(int newID) 
+	{
+		this.adv_id = newID;
 	}
 
 }
