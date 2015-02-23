@@ -20,13 +20,12 @@ public class QuestModelTest {
 	public void testInitialize() 
 	{
 		ArrayList<Adventure> adventures = new ArrayList<Adventure>();
-		adventures.add(new Adventure("Merlin Zone", "Available"));
-		adventures.add(new Adventure("Library Quest", "Hidden"));
+		adventures.add(new Adventure("Merlin Zone"));
+		adventures.add(new Adventure("Library Quest"));
 		
-		Quest q = new Quest("I am a description","Hidden", adventures);
+		Quest q = new Quest("I am a description", adventures);
 		
 		assertEquals("I am a description", q.getDescription());
-		assertEquals("Hidden", q.getState());
 		assertNotNull(q.getAdventures().contains(adventures));
 	}
 
@@ -36,17 +35,15 @@ public class QuestModelTest {
 	@Test
 	public void testSetters()
 	{
-		Quest q = new Quest(null, null, null);
+		Quest q = new Quest(null, null);
 		ArrayList<Adventure> adventures = new ArrayList<Adventure>();
-		adventures.add(new Adventure("Merlin Zone", "Available"));
-		adventures.add(new Adventure("Library Quest", "Hidden"));
+		adventures.add(new Adventure("Merlin Zone"));
+		adventures.add(new Adventure("Library Quest"));
 		
 		q.setDescription("I am set");
-		q.setState("complete");
 		q.setAdventures(adventures);
 		
 		assertEquals("I am set", q.getDescription());
-		assertEquals("complete", q.getState());	
 		assertNotNull(q.getAdventures().contains(adventures));
 	}
 }
