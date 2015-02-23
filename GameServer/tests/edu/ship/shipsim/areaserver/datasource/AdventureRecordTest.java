@@ -4,8 +4,16 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * Tests a simple data transfer object that contains the information about one adventure
+ * @author merlin
+ *
+ */
 public class AdventureRecordTest
 {
+	/**
+	 * Just make sure it holds and returns everything
+	 */
 	@Test
 	public void constructAnAdventureRecord()
 	{

@@ -14,10 +14,9 @@ import communication.handlers.TeleportationInitiationHandlerTest;
 import communication.packers.MapFileMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.PlayerJoinedMessagePackerTest;
+
 import edu.ship.shipsim.areaserver.datasource.AdventureRecordTest;
-import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayMock;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayMockTest;
-import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayRDS;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.datasource.NPCQuestionRowDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.NPCQuestionRowDataGatewayRDSTest;

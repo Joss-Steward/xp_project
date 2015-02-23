@@ -6,11 +6,24 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import datasource.DatabaseException;
+
+/**
+ * An abstract class that tests the table data gateways into the Adventure table
+ * @author merlin
+ *
+ */
 public abstract class AdventureTableDataGatewayTest
 {
 
+	/**
+	 * @return the gateway we should test
+	 */
 	public abstract AdventureTableDataGateway getGateway();
 	
+	/**
+	 * 
+	 */
 	@Test
 	public void isASingleton()
 	{
@@ -20,8 +33,11 @@ public abstract class AdventureTableDataGatewayTest
 		assertNotNull(x);
 	}
 	
+	/**
+	 * @throws DatabaseException shouldn't
+	 */
 	@Test
-	public void retrieveAllAdventuresForQuest()
+	public void retrieveAllAdventuresForQuest() throws DatabaseException
 	{
 		AdventureTableDataGateway gateway = getGateway();
 		ArrayList<AdventureRecord> records = gateway.getAdventuresForQuest(1);
