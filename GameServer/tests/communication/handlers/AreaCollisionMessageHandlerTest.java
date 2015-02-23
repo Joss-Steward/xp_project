@@ -25,6 +25,10 @@ public class AreaCollisionMessageHandlerTest
 		ModelFacade.resetSingleton();
 	}
 
+	/**
+	 * Tests that a AreaCollisionMessageHandler creates a command when it 
+	 * receives a message.
+	 */
 	@Test
 	public void testAreaHandleCollision() {
 		reset();

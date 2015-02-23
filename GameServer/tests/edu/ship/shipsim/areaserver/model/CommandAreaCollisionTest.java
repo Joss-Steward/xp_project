@@ -4,8 +4,18 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * Tests that CommandAreaCollision triggers a quest on a player.
+ * 
+ * @author Ethan
+ *
+ */
 public class CommandAreaCollisionTest {
 
+	/**
+	 * Tests that a CommandAreaCollision when executed will 
+	 * trigger a quest that a player has.
+	 */
 	@Test
 	public void testCreateCommand() {
 		
