@@ -18,8 +18,9 @@ public class AdventureModelTest
 	 */
 	@Test
 	public void Initialize() {
-		Adventure a = new Adventure("I am a description");
+		Adventure a = new Adventure(1, "I am a description");
 		
+		assertEquals(1, a.getID());
 		assertEquals("I am a description", a.getDescription());
 	}
 	
@@ -29,10 +30,11 @@ public class AdventureModelTest
 	@Test
 	public void testSetters()
 	{
-		Adventure a = new Adventure(null);
-		
+		Adventure a = new Adventure(4,null);
+		a.setID(55);
 		a.setDescription("I am set");
 		
+		assertEquals(55,a.getID());
 		assertEquals("I am set", a.getDescription());	
 	}
 }
