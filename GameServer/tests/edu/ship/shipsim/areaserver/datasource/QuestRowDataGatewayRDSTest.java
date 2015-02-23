@@ -4,11 +4,11 @@ import datasource.DatabaseException;
 
 
 /**
- * Tests for the mock version of the gateway
+ * Tests for the RDS version of the gateway
  * @author Merlin
  *
  */
-public class QuestRowDataGatewayMockTest extends QuestRowDataGatewayTest
+public class QuestRowDataGatewayRDSTest extends QuestRowDataGatewayTest
 {
 
 	/**
@@ -16,10 +16,8 @@ public class QuestRowDataGatewayMockTest extends QuestRowDataGatewayTest
 	 * @see edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayTest#findGateway(int)
 	 */
 	@Override
-	QuestRowDataGateway findGateway(int questionID) throws DatabaseException
+	QuestRowDataGateway findGateway(int questID) throws DatabaseException
 	{
-		return new QuestRowDataGatewayMock(questionID);
+		return new QuestRowDataGatewayRDS(questID);
 	}
-
-	
 }

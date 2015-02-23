@@ -15,7 +15,6 @@ import communication.handlers.TeleportationInitiationHandlerTest;
 import communication.packers.MapFileMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.PlayerJoinedMessagePackerTest;
-
 import edu.ship.shipsim.areaserver.datasource.AdventureRecordTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayRDSTest;
@@ -25,6 +24,8 @@ import edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayRDSTest;
+import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayMockTest;
+import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.model.ChatManagerTest;
 import edu.ship.shipsim.areaserver.model.ChatMessageReceivedCommandTest;
 import edu.ship.shipsim.areaserver.model.CommandAddPlayerTest;
@@ -85,7 +86,11 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		//NPCsForTest.class,
 		PlayerRowDataGatewayMockTest.class,
 		PlayerRowDataGatewayRDSTest.class,
-		//PlayerRowDataGatewayTest.class
+		//PlayerRowDataGatewayTest.class,
+		QuestRowDataGatewayMockTest.class,
+		QuestRowDataGatewayRDSTest.class,
+		//QuestRowDataGatewayTest.class,
+		//QuestsForTest
 
 		// model
 		ChatManagerTest.class,
