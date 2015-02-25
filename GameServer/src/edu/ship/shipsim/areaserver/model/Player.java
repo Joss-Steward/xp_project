@@ -1,5 +1,7 @@
 package edu.ship.shipsim.areaserver.model;
 
+import java.util.ArrayList;
+
 import model.PlayerConnection;
 import model.PlayerLogin;
 import model.QualifiedObservable;
@@ -31,6 +33,8 @@ public class Player extends QualifiedObservable
 	private Position playerPosition;
 
 	private String mapName;
+	
+	private ArrayList<QuestState> questList = new ArrayList<QuestState>();
 
 	Player()
 	{
@@ -230,6 +234,41 @@ public class Player extends QualifiedObservable
 		this.quizScore = score;
 	}
 
+	/**
+	 * Add a quest to the player's questList
+	 * @param quest : the quest being added
+	 */
+	public void addQuest(QuestState quest) 
+	{
+		questList.add(quest);
+	}
+
+	/**
+	 * Go through the questList and get the state of the quest based on the id
+	 * @param id : the id of the quest
+	 * @return the state of the quest
+	 */
+	public String getQuestStateByID(int id) 
+	{
+		for(QuestState q : questList)
+		{
+			if(q.getID()==id)
+			{
+				return q.getState();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Return the size of the questList
+	 * @return questList size
+	 */
+	public int getSizeOfQuestList() 
+	{
+		return questList.size();
+	}
+	
 	private void registerOurReportTypes()
 	{
 		reportTypes.add(PlayerMovedReport.class);

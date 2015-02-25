@@ -153,4 +153,22 @@ public class PlayerTest extends DatabaseTest
 	{
 		playerManager.addPlayer(1, -1);
 	}
+	
+	/**
+	 * Test simple functionality of setting quests to a player. 
+	 */
+	@Test
+	public void testPlayerAddQuests()
+	{
+		Player p = playerManager.addPlayer(1);
+		
+		int id = 1;
+		String state = "hidden";
+		
+		QuestState quest = new QuestState(id, state);
+		p.addQuest(quest);
+		
+		assertEquals("hidden", p.getQuestStateByID(1));
+		assertEquals(1, p.getSizeOfQuestList());
+	}
 }
