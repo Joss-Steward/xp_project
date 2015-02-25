@@ -26,6 +26,7 @@ import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayRDSTest;
+import edu.ship.shipsim.areaserver.model.AdventureStateTest;
 import edu.ship.shipsim.areaserver.model.ChatManagerTest;
 import edu.ship.shipsim.areaserver.model.ChatMessageReceivedCommandTest;
 import edu.ship.shipsim.areaserver.model.CommandAddPlayerTest;
@@ -39,6 +40,7 @@ import edu.ship.shipsim.areaserver.model.OptionsManagerTest;
 import edu.ship.shipsim.areaserver.model.PlayerManagerTest;
 import edu.ship.shipsim.areaserver.model.PlayerMapperTest;
 import edu.ship.shipsim.areaserver.model.PlayerTest;
+import edu.ship.shipsim.areaserver.model.QuestStateTest;
 import edu.ship.shipsim.areaserver.model.QuizBotBehaviorTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReportTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReportTest;
@@ -93,6 +95,7 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		//QuestsForTest
 
 		// model
+		AdventureStateTest.class,
 		ChatManagerTest.class,
 		ChatMessageReceivedCommandTest.class,
 		CommandAddPlayerTest.class, 
@@ -106,6 +109,7 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		PlayerManagerTest.class,
 		PlayerMapperTest.class,
 		PlayerTest.class,
+		QuestStateTest.class,
 		//QuestionsInDB.class
 		QuizBotBehaviorTest.class,
 		
