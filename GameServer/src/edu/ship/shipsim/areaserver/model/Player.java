@@ -247,13 +247,13 @@ public class Player extends QualifiedObservable
 	 * @param id : the id of the quest
 	 * @return the state of the quest
 	 */
-	public String getQuestStateByID(int id) 
+	public QuestState getQuestStateByID(int id) 
 	{
 		for(QuestState q : questList)
 		{
 			if(q.getID()==id)
 			{
-				return q.getState();
+				return q;
 			}
 		}
 		return null;
