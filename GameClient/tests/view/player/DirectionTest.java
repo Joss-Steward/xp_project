@@ -1,10 +1,10 @@
-package view;
+package view.player;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import view.Direction;
+import view.player.Direction;
 
 import com.badlogic.gdx.math.Vector2;
 

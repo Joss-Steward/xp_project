@@ -1,10 +1,12 @@
-package view;
+package view.screen.map;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import view.screen.map.ScreenMapInput;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;

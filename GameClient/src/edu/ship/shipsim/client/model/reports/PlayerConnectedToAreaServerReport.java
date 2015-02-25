@@ -31,7 +31,7 @@ public class PlayerConnectedToAreaServerReport implements QualifiedObservableRep
 	 * @param isThisClientsPlayer
 	 *            statement saying if the player connected was the one
 	 *            controlled by the client
-	 * @see view.PlayerType
+	 * @see view.player.PlayerType
 	 */
 	public PlayerConnectedToAreaServerReport(int playerID, String playerName,
 			String appearanceType, Position position, boolean isThisClientsPlayer)

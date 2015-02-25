@@ -1,4 +1,4 @@
-package view;
+package view.player;
 
 /**
  * Identifies the player's appearance by the region name in the character atlas.

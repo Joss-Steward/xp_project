@@ -6,6 +6,7 @@ import org.junit.rules.ExternalResource;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import communication.handlers.AreaCollisionMessageHandlerTest;
 import communication.handlers.ChatMessageHandlerTest;
 import communication.handlers.ConnectMessageHandlerTest;
 import communication.handlers.DisconnectMessageHandlerTest;
@@ -14,15 +15,22 @@ import communication.handlers.TeleportationInitiationHandlerTest;
 import communication.packers.MapFileMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.PlayerJoinedMessagePackerTest;
+import edu.ship.shipsim.areaserver.datasource.AdventureRecordTest;
+import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayMockTest;
+import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.datasource.NPCQuestionRowDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.NPCQuestionRowDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayRDSTest;
+import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayMockTest;
+import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayRDSTest;
+import edu.ship.shipsim.areaserver.model.AdventureStateTest;
 import edu.ship.shipsim.areaserver.model.ChatManagerTest;
 import edu.ship.shipsim.areaserver.model.ChatMessageReceivedCommandTest;
 import edu.ship.shipsim.areaserver.model.CommandAddPlayerTest;
+import edu.ship.shipsim.areaserver.model.CommandAreaCollisionTest;
 import edu.ship.shipsim.areaserver.model.CommandMovePlayerSilentlyTest;
 import edu.ship.shipsim.areaserver.model.CommandMovePlayerTest;
 import edu.ship.shipsim.areaserver.model.CommandPersistPlayerTest;
@@ -32,6 +40,7 @@ import edu.ship.shipsim.areaserver.model.OptionsManagerTest;
 import edu.ship.shipsim.areaserver.model.PlayerManagerTest;
 import edu.ship.shipsim.areaserver.model.PlayerMapperTest;
 import edu.ship.shipsim.areaserver.model.PlayerTest;
+import edu.ship.shipsim.areaserver.model.QuestStateTest;
 import edu.ship.shipsim.areaserver.model.QuizBotBehaviorTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReportTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReportTest;
@@ -51,6 +60,7 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 @Suite.SuiteClasses(
 {
 		// communication.handlers
+		AreaCollisionMessageHandlerTest.class,
 		ConnectMessageHandlerTest.class,
 		DisconnectMessageHandlerTest.class,
 		MovementMessageHandlerTest.class,
@@ -63,6 +73,11 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		PlayerJoinedMessagePackerTest.class,
 		
 		//dataSource
+		AdventureRecordTest.class,
+		//AdventuresForTest.class,
+		AdventureTableDataGatewayMockTest.class,
+		AdventureTableDataGatewayRDSTest.class,
+		//AdventureTableDataGateway.class
 		NPCQuestionRowDataGatewayMockTest.class,
 		NPCQuestionRowDataGatewayRDSTest.class,
 		//NPCQuestionRowDataGatewayTest.class,
@@ -73,13 +88,19 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		//NPCsForTest.class,
 		PlayerRowDataGatewayMockTest.class,
 		PlayerRowDataGatewayRDSTest.class,
-		//PlayerRowDataGatewayTest.class
+		//PlayerRowDataGatewayTest.class,
+		QuestRowDataGatewayMockTest.class,
+		QuestRowDataGatewayRDSTest.class,
+		//QuestRowDataGatewayTest.class,
+		//QuestsForTest
 
 		// model
+		AdventureStateTest.class,
 		ChatManagerTest.class,
 		ChatMessageReceivedCommandTest.class,
 		CommandAddPlayerTest.class, 
 		CommandMovePlayerTest.class, 
+		CommandAreaCollisionTest.class,
 		CommandMovePlayerSilentlyTest.class,
 		CommandPersistPlayerTest.class,
 		NPCMapperTest.class,
@@ -88,6 +109,7 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		PlayerManagerTest.class,
 		PlayerMapperTest.class,
 		PlayerTest.class,
+		QuestStateTest.class,
 		//QuestionsInDB.class
 		QuizBotBehaviorTest.class,
 		

@@ -2,6 +2,7 @@ package edu.ship.shipsim.client.model;
 
 import data.Position;
 import edu.ship.shipsim.client.model.reports.AreaCollisionReport;
+
 /**
  * The player who is playing the game
  * 
@@ -17,7 +18,7 @@ public class ThisClientsPlayer extends Player
 		reportTypes.add(AreaCollisionReport.class);
 		this.registerReportTypesWeNotify();
 	}
-	
+
 	/**
 	 * Moves this player and report if they have entered into any regions
 	 * @param pos 

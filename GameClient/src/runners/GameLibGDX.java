@@ -3,8 +3,8 @@ package runners;
 import java.io.IOException;
 import java.net.Socket;
 
-import view.ScreenBasic;
-import view.Screens;
+import view.screen.ScreenBasic;
+import view.screen.Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

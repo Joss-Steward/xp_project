@@ -1,8 +1,10 @@
-package view;
+package view.screen.login;
 
 import java.util.ArrayList;
 import java.util.Observable;
 
+import view.screen.ScreenListener;
+import view.screen.Screens;
 import edu.ship.shipsim.client.model.reports.LoginFailedReport;
 import edu.ship.shipsim.client.model.reports.LoginInitiatedReport;
 import edu.ship.shipsim.client.model.reports.PinFailedReport;
@@ -58,7 +60,7 @@ public class ScreenLoginListener extends ScreenListener
 	}
 
 	/**
-	 * @see view.ScreenListener#getReportTypes()
+	 * @see view.screen.ScreenListener#getReportTypes()
 	 */
 	@Override
 	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypes()
