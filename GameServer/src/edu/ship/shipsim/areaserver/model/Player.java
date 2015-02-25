@@ -9,7 +9,6 @@ import data.Position;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.model.reports.PinFailedReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
-import edu.ship.shipsim.areaserver.model.reports.QuestScreenReport;
 
 /**
  * Very simple for now . . .
@@ -272,7 +271,6 @@ public class Player extends QualifiedObservable
 	private void registerOurReportTypes()
 	{
 		reportTypes.add(PlayerMovedReport.class);
-		reportTypes.add(QuestScreenReport.class);
 		reportTypes.add(PinFailedReport.class);
 
 		this.registerReportTypesWeNotify();
