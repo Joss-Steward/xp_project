@@ -1,5 +1,8 @@
 package edu.ship.shipsim.client.model;
 
+import java.util.ArrayList;
+
+import model.Quest;
 import data.Position;
 import edu.ship.shipsim.client.model.reports.AreaCollisionReport;
 
@@ -11,6 +14,8 @@ import edu.ship.shipsim.client.model.reports.AreaCollisionReport;
  */
 public class ThisClientsPlayer extends Player
 {
+	private ArrayList<Quest> questList = new ArrayList<Quest>();
+	
 	protected ThisClientsPlayer(int playerID)
 	{
 		super(playerID);
@@ -34,5 +39,23 @@ public class ThisClientsPlayer extends Player
 		{
 			this.notifyObservers(new AreaCollisionReport(this.id, region));
 		}
+	}
+
+	/**
+	 * Add quest to questList
+	 * @param q : quest that needs to be added to questList
+	 */
+	public void addQuest(Quest q) 
+	{
+		questList.add(q);
+	}
+
+	/**
+	 * Return the player's quest list
+	 * @return the questList
+	 */
+	public ArrayList<Quest> getQuests() 
+	{
+		return questList;
 	}
 }
