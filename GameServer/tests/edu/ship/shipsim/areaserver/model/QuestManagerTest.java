@@ -7,7 +7,13 @@ import model.Quest;
 import org.junit.Test;
 
 import datasource.DatabaseException;
+import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
 
+/**
+ * Test for the quest manager getting quests and adventures from database
+ * @author lavonnediller
+ *
+ */
 public class QuestManagerTest 
 {
 
@@ -40,7 +46,7 @@ public class QuestManagerTest
 	/**
 	 * Test getting a quest from the database and storing it into
 	 * our Quest Manager, using a Quest Row Data Gateway Mock
-	 * @throws DatabaseException
+	 * @throws DatabaseException throw an exception if the quest id isn't found
 	 */
 	@Test
 	public void testGettingOneQuest() throws DatabaseException
@@ -52,7 +58,7 @@ public class QuestManagerTest
 	
 	/**
 	 * Test getting two quests from the database
-	 * @throws DatabaseException 
+	 * @throws DatabaseException throw an exception if the quest id isn't found 
 	 */
 	@Test
 	public void testGettingTwoQuests() throws DatabaseException
@@ -68,7 +74,7 @@ public class QuestManagerTest
 	
 	/**
 	 * Test that we can get a specific quests adventures
-	 * @throws DatabaseException
+	 * @throws DatabaseException throw an exception if the quest id isn't found
 	 */
 	@Test
 	public void testGettingAQuestsAdventures() throws DatabaseException
@@ -79,9 +85,73 @@ public class QuestManagerTest
 		int i = 1;
 		for(Adventure a: quest.getAdventures())
 		{
-			assertEquals(i, a.getID());
-			assertEquals("Adventure Description " + i, a.getDescription());
+			if(i == 1)
+			{
+				assertEquals(AdventuresForTest.ONE.getAdventureID(), a.getID());
+				assertEquals(AdventuresForTest.ONE.getAdventureDescription(), a.getDescription());
+			}
+			if(i == 2)
+			{
+				assertEquals(AdventuresForTest.TWO.getAdventureID(), a.getID());
+				assertEquals(AdventuresForTest.TWO.getAdventureDescription(), a.getDescription());
+			}
 			i++;
 		}
+	}
+	
+	/**
+	 * Test getting two quests and their two adventures from the db
+	 * @throws DatabaseException throw an exception if the quest id isn't found
+	 */
+	@Test
+	public void testGettingTwoQuestsAndTheirAdventures() throws DatabaseException
+	{
+		QuestManager qm = QuestManager.getSingleton();
+		Quest quest1 = qm.getQuest(1);
+		Quest quest2 = qm.getQuest(2);
+
+		int i = 1;
+		for(Adventure a: quest1.getAdventures())
+		{
+			if(i == 1)
+			{
+				assertEquals(AdventuresForTest.ONE.getAdventureID(), a.getID());
+				assertEquals(AdventuresForTest.ONE.getAdventureDescription(), a.getDescription());
+			}
+			if(i == 2)
+			{
+				assertEquals(AdventuresForTest.TWO.getAdventureID(), a.getID());
+				assertEquals(AdventuresForTest.TWO.getAdventureDescription(), a.getDescription());
+			}
+			i++;
+		}
+		
+		i = 1;
+		for(Adventure a: quest2.getAdventures())
+		{
+			if(i == 1)
+			{
+				assertEquals(AdventuresForTest.THREE.getAdventureID(), a.getID());
+				assertEquals(AdventuresForTest.THREE.getAdventureDescription(), a.getDescription());
+			}
+			if(i == 2)
+			{
+				assertEquals(AdventuresForTest.FOUR.getAdventureID(), a.getID());
+				assertEquals(AdventuresForTest.FOUR.getAdventureDescription(), a.getDescription());
+			}
+			i++;
+		}
+	}
+	
+	/**
+	 * A Database Exception should be thrown if a quest id does not exist
+	 * @throws DatabaseException throw an exception if the quest id isn't found
+	 */
+	@SuppressWarnings("unused")
+	@Test(expected=DatabaseException.class)
+	public void testQuestDoesNotExits() throws DatabaseException
+	{
+		QuestManager qm = QuestManager.getSingleton();
+		Quest quest1 = qm.getQuest(5);
 	}
 }
