@@ -48,7 +48,7 @@ public class QuestManager
 	 * Gets a specific quest from the database. Creates a Quest and passes it on the player mapper?
 	 * @param questID the quest to retrieve
 	 * @return quest the retrieved request
-	 * @throws DatabaseException
+	 * @throws DatabaseException throw an exception if the quest id isn't found
 	 */
 	public Quest getQuest(int questID) throws DatabaseException {
 		
