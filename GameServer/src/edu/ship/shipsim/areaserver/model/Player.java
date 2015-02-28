@@ -35,6 +35,9 @@ public class Player extends QualifiedObservable
 	
 	private ArrayList<QuestState> questList = new ArrayList<QuestState>();
 
+	/**
+	 * 
+	 */
 	Player()
 	{
 		registerOurReportTypes();

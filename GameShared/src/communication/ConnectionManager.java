@@ -28,6 +28,9 @@ public class ConnectionManager
 	private Socket socket;
 	private MessagePackerSet messagePackerSet;
 	private MessageHandlerSet handlerSet;
+	/**
+	 * 
+	 */
 	StateAccumulator stateAccumulator;
 	private int playerID;
 
@@ -118,7 +121,7 @@ public class ConnectionManager
 	 */
 	public StateAccumulator getStateAccumulator()
 	{
-		return outgoing.stateAccumulator;
+		return outgoing.getStateAccumulator();
 	}
 
 	/**

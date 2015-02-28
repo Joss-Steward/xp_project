@@ -1,5 +1,6 @@
 package edu.ship.shipsim.areaserver.datasource;
 
+
 import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
@@ -60,5 +61,10 @@ public abstract class MapAreaRowDataGatewayTest extends DatabaseTest
 	}
 
 
+	/**
+	 * @param areaName the name of the area we are interested in
+	 * @return the gateway
+	 * @throws DatabaseException if we can't find an area of that name in the data source
+	 */
 	abstract MapAreaRowDataGateway findGateway(String areaName) throws DatabaseException;
 }

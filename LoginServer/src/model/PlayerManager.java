@@ -9,6 +9,9 @@ import datasource.DatabaseException;
  */
 public class PlayerManager extends QualifiedObservable
 {
+	/**
+	 * 
+	 */
 	final String DEFAULT_MAP = "current.tmx";
 
 	private static PlayerManager singleton;

@@ -51,6 +51,10 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 		gateway = createGateway(ServersForTest.FIRST_SERVER.getMapName(), "noHostName", 1000);
 	}
 
+	/**
+	 * If we are in local mode, we should NOT change the hostname stored in the gateway
+	 * @throws DatabaseException shouldn't
+	 */
 	@Test
 	public void localModeDoesntUpdateHostName() throws DatabaseException
 	{

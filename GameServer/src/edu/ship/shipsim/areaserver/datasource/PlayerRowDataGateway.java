@@ -48,7 +48,7 @@ public interface PlayerRowDataGateway
 
 	/**
 	 * Store this information into the data source
-	 * @throws DatabaseException 
+	 * @throws DatabaseException if we can't persist the data to the data source
 	 */
 	void persist() throws DatabaseException;
 

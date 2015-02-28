@@ -19,7 +19,9 @@ import communication.packers.MessagePackerSet;
 public class StateAccumulator implements Observer
 {
 
-	// need this to be visible to the tests
+	/**
+	 *  need this to be visible to the tests
+	 */
 	protected ArrayList<Message> pendingMsgs;
 	private MessagePackerSet packerSet;
 	private int playerID;

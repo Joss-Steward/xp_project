@@ -47,11 +47,18 @@ public class PlayerMapperTest extends DatabaseTest
 		assertEquals(testPlayer.getMapName(), p.getMapName());
 	}
 
+	/**
+	 * @return the player whose mapper we are testing
+	 */
 	protected PlayersForTest getPlayerWeAreTesting()
 	{
 		return PlayersForTest.MERLIN;
 	}
 
+	/**
+	 * @return the mapper we are testing
+	 * @throws DatabaseException if we can't create the mapper
+	 */
 	protected PlayerMapper getMapper() throws DatabaseException
 	{
 		return new PlayerMapper(getPlayerWeAreTesting().getPlayerID());

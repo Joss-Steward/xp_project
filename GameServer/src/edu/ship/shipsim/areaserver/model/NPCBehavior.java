@@ -17,7 +17,7 @@ public abstract class NPCBehavior implements Serializable, Observer
 {
 	private static final long serialVersionUID = -1535370359851281459L;
 	
-	/*
+	/**
 	 * Defaults to 1s
 	 */
 	protected int pollingInterval = 1000;

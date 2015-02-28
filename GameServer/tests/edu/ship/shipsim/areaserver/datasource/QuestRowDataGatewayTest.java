@@ -60,5 +60,11 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 	}
 
 
+	/**
+	 * Get a gateway for these tests to use
+	 * @param questID the ID of the quest the gateway should manage
+	 * @return the gateway
+	 * @throws DatabaseException if the gateway can't be created
+	 */
 	abstract QuestRowDataGateway findGateway(int questID) throws DatabaseException;
 }

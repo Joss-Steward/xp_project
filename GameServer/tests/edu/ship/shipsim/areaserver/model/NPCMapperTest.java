@@ -18,12 +18,18 @@ import edu.ship.shipsim.areaserver.datasource.NPCsForTest;
  */
 public class NPCMapperTest extends PlayerMapperTest
 {
+	/**
+	 * @see edu.ship.shipsim.areaserver.model.PlayerMapperTest#getMapper()
+	 */
 	@Override
 	protected PlayerMapper getMapper() throws DatabaseException
 	{
 		return new NPCMapper(getPlayerWeAreTesting().getPlayerID());
 	}
 
+	/**
+	 * @see edu.ship.shipsim.areaserver.model.PlayerMapperTest#getPlayerWeAreTesting()
+	 */
 	@Override
 	protected PlayersForTest getPlayerWeAreTesting()
 	{

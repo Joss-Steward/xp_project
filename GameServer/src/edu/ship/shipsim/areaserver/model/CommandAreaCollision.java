@@ -29,7 +29,6 @@ public class CommandAreaCollision extends Command{
 	
 	/**
 	 * Will trigger the quest for a player.
-	 * @throws DatabaseException 
 	 */
 	@Override
 	protected boolean execute() {

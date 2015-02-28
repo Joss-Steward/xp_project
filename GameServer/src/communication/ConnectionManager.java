@@ -32,6 +32,9 @@ public class ConnectionManager
 	private Socket socket;
 	private MessagePackerSet messagePackerSet;
 	private MessageHandlerSet handlerSet;
+	/**
+	 * 
+	 */
 	StateAccumulator stateAccumulator;
 	private int playerID;
 

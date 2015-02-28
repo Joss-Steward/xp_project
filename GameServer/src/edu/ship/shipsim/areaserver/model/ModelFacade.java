@@ -48,8 +48,11 @@ public class ModelFacade
 		timer.schedule(new ProcessCommandQueueTask(), 0, 250);
 	}
 
-	class ProcessCommandQueueTask extends java.util.TimerTask
+	private class ProcessCommandQueueTask extends java.util.TimerTask
 	{
+		/**
+		 * @see java.util.TimerTask#run()
+		 */
 		@Override
 		public void run()
 		{

@@ -20,6 +20,9 @@ public class PlayerMapper
 {
 
 	private PlayerRowDataGateway playerGateway;
+	/**
+	 * The player we are connecting to the gateways
+	 */
 	protected Player player;
 
 	/**
@@ -49,6 +52,9 @@ public class PlayerMapper
 
 
 
+	/**
+	 * @return a new object of the type this mapper is managing
+	 */
 	protected Player createPlayerObject()
 	{
 		return new Player();

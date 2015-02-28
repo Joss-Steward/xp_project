@@ -25,8 +25,8 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReport;
  */
 public class QuizBotBehaviorTest {
 	
-	QuizBotBehavior behavior;
-	NPCQuestion question;
+	private QuizBotBehavior behavior;
+	private NPCQuestion question;
 	
 
 	/**

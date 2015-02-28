@@ -11,6 +11,9 @@ import datasource.DatabaseException;
 public class MapAreaRowDataGatewayRDSTest extends MapAreaRowDataGatewayTest
 {
 
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.MapAreaRowDataGatewayTest#findGateway(java.lang.String)
+	 */
 	@Override
 	MapAreaRowDataGateway findGateway(String areaName) throws DatabaseException
 	{

@@ -63,6 +63,9 @@ public class LoginServer implements Runnable
 		}
 	}
 
+	/**
+	 * @see java.lang.Object#finalize()
+	 */
 	protected void finalize()
 	{
 		try

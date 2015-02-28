@@ -20,7 +20,10 @@ public class ConnectionOutgoing implements Runnable
 {
 
 	private ObjectOutputStream ostream;
-	StateAccumulator stateAccumulator;
+	/**
+	 * 
+	 */
+	private StateAccumulator stateAccumulator;
 
 	/**
 	 * @param socket
