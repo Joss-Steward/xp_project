@@ -2,6 +2,8 @@ package datasource;
 
 import java.util.HashMap;
 
+import model.OptionsManager;
+
 /**
  * A mock data source that returns test data.  It is initialized with the data in ServersInDB
  * @see ServersForTest
@@ -155,7 +157,10 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 	@Override
 	public void setHostName(String hostName)
 	{
-		server.hostName = hostName;
+		if (!OptionsManager.getSingleton().isRunningLocal())
+		{
+			server.hostName = hostName;
+		}
 	}
 
 	/**

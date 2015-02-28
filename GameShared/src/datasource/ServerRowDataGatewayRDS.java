@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.DatabaseManager;
+import model.OptionsManager;
 
 /**
  * A row table gateway for the Servers table in the database. That table
@@ -184,12 +185,22 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 		}
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("UPDATE Server SET portNumber = ?, hostName = ? WHERE mapName = ?");
-			stmt.setString(2, hostName);
-			stmt.setInt(1, portNumber);
-			stmt.setString(3, mapName);
-			stmt.executeUpdate();
+			if (OptionsManager.getSingleton().isRunningLocal())
+			{
+				PreparedStatement stmt = connection
+						.prepareStatement("UPDATE Server SET portNumber = ? WHERE mapName = ?");
+				stmt.setInt(1, portNumber);
+				stmt.setString(2, mapName);
+				stmt.executeUpdate();
+			} else
+			{
+				PreparedStatement stmt = connection
+						.prepareStatement("UPDATE Server SET portNumber = ?, hostName = ? WHERE mapName = ?");
+				stmt.setString(2, hostName);
+				stmt.setInt(1, portNumber);
+				stmt.setString(3, mapName);
+				stmt.executeUpdate();
+			}
 		} catch (SQLException e)
 		{
 			throw new DatabaseException(
