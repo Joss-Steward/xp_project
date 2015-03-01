@@ -5,7 +5,7 @@ package edu.ship.shipsim.areaserver.datasource;
  * @author Merlin
  *
  */
-public enum QuestState
+public enum QuestStateList
 {
 
 	/**

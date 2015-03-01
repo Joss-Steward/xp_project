@@ -11,19 +11,19 @@ public enum QuestStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST1(1, 1, QuestState.AVAILABLE),
+	PLAYER1_QUEST1(1, 1, QuestStateList.AVAILABLE),
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST2(1, 2, QuestState.FULFILLED),
+	PLAYER1_QUEST2(1, 2, QuestStateList.FULFILLED),
 	/**
 	 * 
 	 */
-	PLAYER2_Quest1(2, 1, QuestState.TRIGGERED);
+	PLAYER2_Quest1(2, 1, QuestStateList.TRIGGERED);
 
 	private int questID;
 	private int playerID;
-	private QuestState questState;
+	private QuestStateList questState;
 
 	/**
 	 * Constructor for Quest State Enum
@@ -35,7 +35,7 @@ public enum QuestStatesForTest
 	 * @param questState
 	 *            the state of the quest for the specified player
 	 */
-	QuestStatesForTest(int playerID, int questID, QuestState questState)
+	QuestStatesForTest(int playerID, int questID, QuestStateList questState)
 	{
 		this.questID = questID;
 		this.playerID = playerID;
@@ -53,7 +53,7 @@ public enum QuestStatesForTest
 	/**
 	 * @return the state of the quest for the given player
 	 */
-	public QuestState getQuestState()
+	public QuestStateList getQuestState()
 	{
 		return questState;
 	}

@@ -14,10 +14,10 @@ import datasource.DatabaseException;
 public class QuestStateRowDataGatewayMock implements QuestStateRowDataGateway
 {
 
-	private static HashMap<Key, QuestState> questStateInfo;
+	private static HashMap<Key, QuestStateList> questStateInfo;
 	private int playerID;
 	private int questID;
-	private QuestState state;
+	private QuestStateList state;
 
 	private class Key
 	{
@@ -93,7 +93,7 @@ public class QuestStateRowDataGatewayMock implements QuestStateRowDataGateway
 
 		} else
 		{
-			state = QuestState.HIDDEN;
+			state = QuestStateList.HIDDEN;
 		}
 	}
 
@@ -103,7 +103,7 @@ public class QuestStateRowDataGatewayMock implements QuestStateRowDataGateway
 	@Override
 	public void resetData()
 	{
-		questStateInfo = new HashMap<Key, QuestState>();
+		questStateInfo = new HashMap<Key, QuestStateList>();
 		for (QuestStatesForTest p : QuestStatesForTest.values())
 		{
 			questStateInfo.put(new Key(p.getPlayerID(), p.getQuestID()),
@@ -134,7 +134,7 @@ public class QuestStateRowDataGatewayMock implements QuestStateRowDataGateway
 	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateRowDataGateway#getQuestState()
 	 */
 	@Override
-	public QuestState getQuestState()
+	public QuestStateList getQuestState()
 	{
 		return state;
 	}

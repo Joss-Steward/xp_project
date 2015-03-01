@@ -57,7 +57,7 @@ public abstract class QuestStateRowDataGatewayTest extends DatabaseTest
 	public void findNotExisting() throws DatabaseException
 	{
 		gateway = findGateway(2,1);
-		assertEquals(QuestState.HIDDEN, gateway.getQuestState());
+		assertEquals(QuestStateList.HIDDEN, gateway.getQuestState());
 	}
 
 

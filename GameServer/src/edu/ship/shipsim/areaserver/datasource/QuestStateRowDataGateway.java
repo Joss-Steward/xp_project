@@ -29,6 +29,6 @@ public interface QuestStateRowDataGateway
 	 * 
 	 * @return The state of the given quest for the given player
 	 */
-	QuestState getQuestState();
+	QuestStateList getQuestState();
 
 }

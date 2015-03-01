@@ -16,6 +16,7 @@ import communication.packers.MapFileMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.PlayerJoinedMessagePackerTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureRecordTest;
+import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.datasource.MapAreaRowDataGatewayMockTest;
@@ -77,6 +78,9 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		//dataSource
 		AdventureRecordTest.class,
 		//AdventuresForTest.class,
+		//AdventureStatesForTest.class,
+		AdventureStateTableDataGatewayMockTest.class,
+		//AdventureStateTableDataGatewayTest.class,
 		AdventureTableDataGatewayMockTest.class,
 		AdventureTableDataGatewayRDSTest.class,
 		//AdventureTableDataGateway.class
