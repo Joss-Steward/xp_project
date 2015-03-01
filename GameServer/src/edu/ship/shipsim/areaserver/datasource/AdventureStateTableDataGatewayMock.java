@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
- * Mock version of the gateway to the table of adventures.
+ * Mock version of the gateway to the table of adventure states.
  * @author merlin
  *
  */
@@ -51,6 +51,9 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 		}
 	}
 	
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway#getAdventureStates(int, int)
+	 */
 	@Override
 	public ArrayList<AdventureStateRecord> getAdventureStates(int playerID, int questID)
 	{
