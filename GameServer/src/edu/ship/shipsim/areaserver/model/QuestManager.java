@@ -59,7 +59,7 @@ public class QuestManager
 			adventureList.add(new Adventure(ar.getAdventureID(), ar.getAdventureDescription()));
 		}
 		
-		Quest quest = new Quest(mock.getQuestID(), mock.getQuestDescription(), adventureList);
+		Quest quest = new Quest(mock.getQuestID(), mock.getQuestDescription(), null, null, adventureList);
 		return quest;
 	}
 }

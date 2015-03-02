@@ -9,11 +9,20 @@ package edu.ship.shipsim.areaserver.datasource;
 public enum AdventureStateList
 {
 	/**
-	 * 
+	 * This adventure isn't yet available to the players.
+	 * When this adventure's quest has yet to be triggered.
 	 */
-	TRIGGERED,
+	HIDDEN,
 	/**
-	 * 
+	 * Adventure is ready to be completed.
+	 */
+	PENDING,
+	/**
+	 * Adventure is completed, needs to notify player.
+	 */
+	NEED_NOTIFICATION,
+	/**
+	 * Player has been notified, nothing left to do.
 	 */
 	COMPLETED
 

@@ -11,6 +11,9 @@ public class AdventureStateTableDataGatewayRDSTest extends
 {
 
 	
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayTest#getGateway()
+	 */
 	@Override
 	public AdventureStateTableDataGateway getGateway()
 	{

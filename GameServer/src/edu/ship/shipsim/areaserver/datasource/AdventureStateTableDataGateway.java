@@ -17,7 +17,7 @@ public interface AdventureStateTableDataGateway
 	 * @param playerID the player
 	 * @param questID the quest
 	 * @return all of the adventure states
-	 * @throws DatabaseException 
+	 * @throws DatabaseException  if we can't get the info from the data source
 	 */
 	ArrayList<AdventureStateRecord> getAdventureStates(int playerID, int questID) throws DatabaseException;
 

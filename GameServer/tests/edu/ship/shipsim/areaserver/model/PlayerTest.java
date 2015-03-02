@@ -18,6 +18,8 @@ import data.Position;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayersForTest;
+import edu.ship.shipsim.areaserver.datasource.QuestStateList;
+import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
@@ -161,14 +163,11 @@ public class PlayerTest extends DatabaseTest
 	public void testPlayerAddQuests()
 	{
 		Player p = playerManager.addPlayer(1);
-		
-		int id = 1;
-		String state = "hidden";
-		
-		QuestState quest = new QuestState(id, state);
+
+		QuestState quest = new QuestState(QuestStatesForTest.PLAYER1_QUEST1.getQuestID(), QuestStatesForTest.PLAYER1_QUEST1.getQuestState());
 		p.addQuest(quest);
 		
-		assertEquals("hidden", p.getQuestStateByID(1).getState());
+		assertEquals(QuestStateList.HIDDEN, p.getQuestStateByID(1));
 		assertEquals(1, p.getSizeOfQuestList());
 	}
 }

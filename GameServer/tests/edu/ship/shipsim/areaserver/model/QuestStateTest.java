@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import edu.ship.shipsim.areaserver.datasource.AdventureStateList;
+import edu.ship.shipsim.areaserver.datasource.QuestStateList;
+
 /**
  * Test for the QuestState Class 
  * @author Ryan
@@ -20,10 +23,10 @@ public class QuestStateTest
 	@Test
 	public void testInitialize() 
 	{
-		QuestState qs = new QuestState(1, "available");
+		QuestState qs = new QuestState(1, QuestStateList.AVAILABLE);
 		
 		assertEquals(1, qs.getID());
-		assertEquals("available", qs.getState());
+		assertEquals(QuestStateList.AVAILABLE, qs.getState());
 	}
 	
 	/**
@@ -33,13 +36,13 @@ public class QuestStateTest
 	public void testAddAdventures()
 	{
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
-		AdventureState as1 = new AdventureState(1, "hidden");
-		AdventureState as2 = new AdventureState(2, "hidden");
+		AdventureState as1 = new AdventureState(1, AdventureStateList.HIDDEN);
+		AdventureState as2 = new AdventureState(2, AdventureStateList.HIDDEN);
 		
 		adventureList.add(as1);
 		adventureList.add(as2);
 		
-		QuestState qs = new QuestState(1, "hidden");
+		QuestState qs = new QuestState(1, QuestStateList.HIDDEN);
 		qs.addAdventures(adventureList);
 		
 		assertEquals(2, qs.getSizeOfAdventureList());
@@ -51,24 +54,21 @@ public class QuestStateTest
 	@Test
 	public void testTriggerQuest()
 	{
-		QuestState quest = new QuestState(1, "hidden");
+		QuestState quest = new QuestState(1, QuestStateList.HIDDEN);
 		quest.trigger();
-		assertEquals("available", quest.getState());
+		assertEquals(QuestStateList.AVAILABLE, quest.getState());
 	}
 
 	/**
-	 * Test to make sure you can't trigger completed quests
+	 * Test to make sure you can't trigger finished quests
 	 */
 	@Test
-	public void testTriggerCompletedQuest()
+	public void testTriggerFinishedQuest()
 	{
-		QuestState quest = new QuestState(1, "completed");
+		QuestState quest = new QuestState(1, QuestStateList.FINISHED);
 		quest.trigger();
-		assertEquals("completed", quest.getState());
+		assertEquals(QuestStateList.FINISHED, quest.getState());
 	}
-	
-	/*Need to add a test where a when a quest gets triggered, all of its 
-	adventures should get triggered as well*/
 	
 	/**
 	 * Test that when a quest is triggered, its adventures get triggered as well
@@ -76,12 +76,12 @@ public class QuestStateTest
 	@Test
 	public void testTriggerQuestsAdventures()
 	{
-		QuestState qs = new QuestState(1, "hidden");
+		QuestState qs = new QuestState(1, QuestStateList.HIDDEN);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
 		
-		AdventureState as1 = new AdventureState(1, "hidden");
-		AdventureState as2 = new AdventureState(2, "hidden");
-		AdventureState as3 = new AdventureState(3, "hidden");
+		AdventureState as1 = new AdventureState(1, AdventureStateList.HIDDEN);
+		AdventureState as2 = new AdventureState(2, AdventureStateList.HIDDEN);
+		AdventureState as3 = new AdventureState(3, AdventureStateList.HIDDEN);
 		
 		adList.add(as1);
 		adList.add(as2);
@@ -94,7 +94,7 @@ public class QuestStateTest
 		
 		for(AdventureState as : adList)
 		{
-			assertEquals("pending", as.getState());
+			assertEquals(AdventureStateList.PENDING, as.getState());
 		}
 		
 	}

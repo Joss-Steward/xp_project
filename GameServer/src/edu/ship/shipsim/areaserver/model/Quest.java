@@ -2,6 +2,8 @@ package edu.ship.shipsim.areaserver.model;
 
 import java.util.ArrayList;
 
+import data.Position;
+
 /**
  * The class that hold the functionality for Quest
  * 
@@ -13,17 +15,23 @@ public class Quest
 	private String q_description;
 	private ArrayList<Adventure> list_adventures;
 	private int q_id;
+	private String q_mapName;
+	private Position q_position;
 
 	/**
 	 * Creates a Quest Object
 	 * @param id the id
 	 * @param desc the description
+	 * @param pos2 
+	 * @param string 
 	 * @param adventures the list of adventures
 	 */
-	public Quest(int id, String desc, ArrayList<Adventure> adventures) 
+	public Quest(int id, String desc, String map, Position pos, ArrayList<Adventure> adventures) 
 	{
 		this.q_id = id;
 		this.q_description = desc;
+		this.q_mapName = map;
+		this.q_position = pos;
 		this.list_adventures = adventures;
 	}
 
@@ -77,4 +85,38 @@ public class Quest
 	{
 		this.q_id = newId;	
 	}
+
+	/**
+	 * Return the map name the quest is on
+	 * @return map name
+	 */
+	public String getMapName() {
+		return q_mapName;
+	}
+
+	/**
+	 * Set the quest's map name
+	 * @param mapName
+	 */
+	public void setMapName(String mapName) {
+		this.q_mapName = mapName;
+	}
+
+	/**
+	 * Return the position of the quest
+	 * @return position of quest
+	 */
+	public Position getPos() {
+		return q_position;
+	}
+
+	/**
+	 * Set the position of the quest
+	 * @param pos
+	 */
+	public void setPos(Position pos) {
+		this.q_position = pos;
+	}
+	
+	
 }
