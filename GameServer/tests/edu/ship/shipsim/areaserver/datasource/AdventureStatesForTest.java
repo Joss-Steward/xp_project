@@ -20,7 +20,16 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
+	PLAYER1_QUEST2_ADV1(1, 2, 1, AdventureStateList.COMPLETED),
+	/**
+	 * 
+	 */
+	PLAYER1_QUEST2_ADV2(1, 2, 2, AdventureStateList.PENDING),
+	/**
+	 * 
+	 */
 	PLAYER2_QUEST1_ADV1(2, 1, 1, AdventureStateList.PENDING),
+
 	/**
 	 * 
 	 */

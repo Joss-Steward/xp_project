@@ -2,6 +2,7 @@ package edu.ship.shipsim.areaserver.model;
 
 import java.util.ArrayList;
 
+import data.Position;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayMock;
@@ -61,5 +62,10 @@ public class QuestManager
 		
 		Quest quest = new Quest(mock.getQuestID(), mock.getQuestDescription(), null, null, adventureList);
 		return quest;
+	}
+
+	public ArrayList<Integer> getQuestsByPosition(Position pos, String mapName) {
+		
+		return null;
 	}
 }

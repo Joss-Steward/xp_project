@@ -2,10 +2,14 @@ package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
 
+//import java.util.ArrayList;
+
 import org.junit.Test;
 
+//import data.Position;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
+//import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
 
 /**
  * Test for the quest manager getting quests and adventures from database
@@ -152,4 +156,24 @@ public class QuestManagerTest
 		QuestManager qm = QuestManager.getSingleton();
 		Quest quest1 = qm.getQuest(5);
 	}
+	
+	/*
+	 * Test getting quests by a position and map name
+	 * @throws DatabaseException
+	 
+	@Test
+	public void testGetQuestsPosition() throws DatabaseException
+	{
+		QuestManager qm = QuestManager.getSingleton();
+		
+		Position pos = new Position(4,3);
+		ArrayList<Integer> questIDs = new ArrayList<Integer>();
+		questIDs.add(QuestsForTest.ONE_BIG_QUEST.getQuestID());
+		 
+		for(Integer i: qm.getQuestsByPosition(pos, QuestsForTest.ONE_BIG_QUEST.getMapName()))
+		{
+			assertEquals((int)i, QuestsForTest.ONE_BIG_QUEST.getQuestID());
+		}
+	}
+	*/
 }

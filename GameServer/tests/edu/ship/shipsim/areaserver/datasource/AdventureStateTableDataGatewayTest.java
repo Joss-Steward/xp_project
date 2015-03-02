@@ -40,12 +40,12 @@ public abstract class AdventureStateTableDataGatewayTest
 	public void retrieveAllAdventuresForQuest() throws DatabaseException
 	{
 		AdventureStateTableDataGateway gateway = getGateway();
-		ArrayList<AdventureStateRecord> records = gateway.getAdventureStates(2,1);
+		ArrayList<AdventureStateRecord> records = gateway.getAdventureStates(1,2);
 		assertEquals(2, records.size());
 		AdventureStateRecord record = records.get(0);
 		// the records could be in either order
-		AdventureStatesForTest first = AdventureStatesForTest.PLAYER2_QUEST1_ADV1;
-		AdventureStatesForTest other = AdventureStatesForTest.PLAYER2_QUEST1_ADV2;
+		AdventureStatesForTest first = AdventureStatesForTest.PLAYER1_QUEST2_ADV1;
+		AdventureStatesForTest other = AdventureStatesForTest.PLAYER1_QUEST2_ADV2;
 		if (record.getAdventureID() == first.getAdventureID())
 		{
 			assertEquals(first.getState(), record.getState());
