@@ -168,7 +168,7 @@ public class PlayerTest extends DatabaseTest
 		QuestState quest = new QuestState(id, state);
 		p.addQuest(quest);
 		
-		assertEquals("hidden", p.getQuestStateByID(1));
+		assertEquals("hidden", p.getQuestStateByID(1).getState());
 		assertEquals(1, p.getSizeOfQuestList());
 	}
 }

@@ -3,8 +3,6 @@ package edu.ship.shipsim.areaserver.model;
 import java.util.ArrayList;
 
 import datasource.DatabaseException;
-import model.Quest;
-import model.Adventure;
 import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayMock;
 import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayMock;

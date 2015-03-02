@@ -1,10 +1,8 @@
-import model.AdventureModelTest;
 import model.MapToServerMappingTest;
 import model.PlayerLoginTest;
 import model.PlayerConnectionTest;
 import model.QualifiedObservableTest;
 import model.QualifiedObserverConnectorTest;
-import model.QuestModelTest;
 
 import org.junit.ClassRule;
 import org.junit.rules.ExternalResource;
@@ -99,8 +97,6 @@ import datasource.ServerRowDataGatewayRDSTest;
 
 		// model
 		//Tests for Adventure and Quest Classes
-		AdventureModelTest.class,
-		QuestModelTest.class,
 		// DatabaseTest.class
 		MapToServerMappingTest.class,
 		PlayerLoginTest.class, 
