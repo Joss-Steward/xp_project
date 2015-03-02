@@ -12,7 +12,7 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST1_ADV1(1, 1, 1, AdventureStateList.TRIGGERED),
+	PLAYER1_QUEST1_ADV1(1, 1, 1, AdventureStateList.PENDING),
 	/**
 	 * 
 	 */
@@ -20,11 +20,11 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1_ADV1(2, 1, 1, AdventureStateList.TRIGGERED),
+	PLAYER2_QUEST1_ADV1(2, 1, 1, AdventureStateList.PENDING),
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1_ADV2(2, 1, 2, AdventureStateList.TRIGGERED);
+	PLAYER2_QUEST1_ADV2(2, 1, 2, AdventureStateList.PENDING);
 
 	
 	private int adventureID;

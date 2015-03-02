@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import edu.ship.shipsim.areaserver.datasource.AdventureStateList;
 import edu.ship.shipsim.areaserver.model.AdventureState;
 
 
@@ -19,10 +20,10 @@ public class AdventureStateTest {
 	@Test
 	public void testInitialization()
 	{
-		AdventureState adventure = new AdventureState(1, "hidden");
+		AdventureState adventure = new AdventureState(1, AdventureStateList.HIDDEN);
 		
 		assertEquals(1, adventure.getID());
-		assertEquals("hidden", adventure.getState());
+		assertEquals(AdventureStateList.HIDDEN, adventure.getState());
 		
 	}
 	
@@ -32,9 +33,9 @@ public class AdventureStateTest {
 	@Test
 	public void testTriggerAdventure() 
 	{
-		AdventureState adventure = new AdventureState(1, "hidden");
+		AdventureState adventure = new AdventureState(1, AdventureStateList.HIDDEN);
 		adventure.trigger();
-		assertEquals("pending", adventure.getState());
+		assertEquals(AdventureStateList.PENDING, adventure.getState());
 	}
 	
 	/**
@@ -43,8 +44,8 @@ public class AdventureStateTest {
 	@Test
 	public void testTriggerNonHiddenAdventure() 
 	{
-		AdventureState adventure = new AdventureState(1, "complete");
+		AdventureState adventure = new AdventureState(1, AdventureStateList.COMPLETED);
 		adventure.trigger();
-		assertEquals("complete", adventure.getState());
+		assertEquals(AdventureStateList.COMPLETED, adventure.getState());
 	}
 }
