@@ -18,8 +18,6 @@ import edu.ship.shipsim.areaserver.datasource.AdventureRecordTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayRDSTest;
-import edu.ship.shipsim.areaserver.datasource.MapAreaRowDataGatewayMockTest;
-import edu.ship.shipsim.areaserver.datasource.MapAreaRowDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.datasource.NPCQuestionRowDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.NPCQuestionRowDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayMockTest;
@@ -30,6 +28,7 @@ import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.datasource.QuestStateRowDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.QuestStateRowDataGatewayRDSTest;
+import edu.ship.shipsim.areaserver.model.AdventureModelTest;
 import edu.ship.shipsim.areaserver.model.AdventureStateTest;
 import edu.ship.shipsim.areaserver.model.ChatManagerTest;
 import edu.ship.shipsim.areaserver.model.ChatMessageReceivedCommandTest;
@@ -43,6 +42,8 @@ import edu.ship.shipsim.areaserver.model.OptionsManagerTest;
 import edu.ship.shipsim.areaserver.model.PlayerManagerTest;
 import edu.ship.shipsim.areaserver.model.PlayerMapperTest;
 import edu.ship.shipsim.areaserver.model.PlayerTest;
+import edu.ship.shipsim.areaserver.model.QuestManagerTest;
+import edu.ship.shipsim.areaserver.model.QuestModelTest;
 import edu.ship.shipsim.areaserver.model.QuestStateTest;
 import edu.ship.shipsim.areaserver.model.QuizBotBehaviorTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReportTest;
@@ -83,10 +84,6 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		AdventureTableDataGatewayMockTest.class,
 		AdventureTableDataGatewayRDSTest.class,
 		//AdventureTableDataGateway.class
-		MapAreaRowDataGatewayMockTest.class,
-		MapAreaRowDataGatewayRDSTest.class,
-		//MapAreaRowDataGatewayTest.class,
-		//MapAreasForTest.class,
 		NPCQuestionRowDataGatewayMockTest.class,
 		NPCQuestionRowDataGatewayRDSTest.class,
 		//NPCQuestionRowDataGatewayTest.class,
@@ -108,6 +105,7 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		//QuestStatesForTest.class
 
 		// model
+		AdventureModelTest.class,
 		AdventureStateTest.class,
 		ChatManagerTest.class,
 		ChatMessageReceivedCommandTest.class,
@@ -121,6 +119,8 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		PlayerManagerTest.class,
 		PlayerMapperTest.class,
 		PlayerTest.class,
+		QuestManagerTest.class,
+		QuestModelTest.class,
 		QuestStateTest.class,
 		//QuestionsInDB.class
 		QuizBotBehaviorTest.class,

@@ -44,6 +44,8 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 		gateway = findGateway(QuestsForTest.ONE_BIG_QUEST.ordinal() + 1);
 		assertEquals(quest.getQuestID(), gateway.getQuestID());
 		assertEquals(quest.getQuestDescription(), gateway.getQuestDescription());
+		assertEquals(quest.getMapName(), gateway.getTriggerMapName());
+		assertEquals(quest.getPosition(), gateway.getTriggerPosition());
 	}
 
 	/**

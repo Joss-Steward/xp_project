@@ -1,8 +1,6 @@
 package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
-import model.Adventure;
-import model.Quest;
 
 import org.junit.Test;
 

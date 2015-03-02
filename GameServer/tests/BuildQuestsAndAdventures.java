@@ -52,7 +52,7 @@ public class BuildQuestsAndAdventures
 		QuestRowDataGatewayRDS.createTable();
 		for (QuestsForTest quest : QuestsForTest.values())
 		{
-			new QuestRowDataGatewayRDS(quest.getQuestID(),quest.getQuestDescription());
+			new QuestRowDataGatewayRDS(quest.getQuestID(),quest.getQuestDescription(), quest.getMapName(), quest.getPosition());
 		}
 	}
 	/**
