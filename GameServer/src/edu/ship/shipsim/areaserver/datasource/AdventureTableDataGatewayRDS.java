@@ -49,7 +49,7 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 			stmt.executeUpdate();
 
 			stmt = connection
-					.prepareStatement("Create TABLE Adventures (adventureID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, adventureDescription VARCHAR(80), questID INT)");
+					.prepareStatement("Create TABLE Adventures (adventureID INT NOT NULL, adventureDescription VARCHAR(80), questID INT NOT NULL)");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
