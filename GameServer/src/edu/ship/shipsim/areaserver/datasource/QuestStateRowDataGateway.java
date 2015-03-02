@@ -1,5 +1,7 @@
 package edu.ship.shipsim.areaserver.datasource;
 
+import datasource.QuestStateList;
+
 /**
  * The behaviors requires for gateways into the quest state data source.  There is
  * one row in this data source for every quest ID/player ID pair.

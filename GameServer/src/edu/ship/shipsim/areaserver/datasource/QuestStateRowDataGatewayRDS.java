@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import model.DatabaseManager;
 import datasource.DatabaseException;
+import datasource.QuestStateList;
 
 /**
  * An RDS implementation of the QuestRowDataGateway interface

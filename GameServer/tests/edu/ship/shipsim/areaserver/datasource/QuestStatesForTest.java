@@ -1,5 +1,7 @@
 package edu.ship.shipsim.areaserver.datasource;
 
+import datasource.QuestStateList;
+
 /**
  * Creates adventures for the DB
  * 

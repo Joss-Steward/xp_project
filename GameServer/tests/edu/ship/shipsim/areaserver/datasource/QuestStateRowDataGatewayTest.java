@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
+import datasource.QuestStateList;
 
 /**
  * Tests required of all player gateways

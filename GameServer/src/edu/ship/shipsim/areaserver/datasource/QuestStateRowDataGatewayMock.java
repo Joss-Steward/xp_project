@@ -3,6 +3,7 @@ package edu.ship.shipsim.areaserver.datasource;
 import java.util.HashMap;
 
 import datasource.DatabaseException;
+import datasource.QuestStateList;
 
 /**
  * A Mock implementation of this data source that builds itself from

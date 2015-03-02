@@ -1,4 +1,4 @@
-package edu.ship.shipsim.areaserver.datasource;
+package datasource;
 
 /**
  * The legal states a quest can be in for a given player

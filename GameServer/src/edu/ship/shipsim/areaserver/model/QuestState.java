@@ -2,7 +2,7 @@ package edu.ship.shipsim.areaserver.model;
 
 import java.util.ArrayList;
 
-import edu.ship.shipsim.areaserver.datasource.QuestStateList;
+import datasource.QuestStateList;
 
 /**
  * Stores the states of all the quests for an individual player on the server
