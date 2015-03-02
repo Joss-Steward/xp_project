@@ -2,6 +2,8 @@ package edu.ship.shipsim.areaserver.datasource;
 
 import java.util.ArrayList;
 
+import datasource.DatabaseException;
+
 /**
  * Defines the operations required by a gateway into the states of adventures for each player
  * @author Merlin
@@ -15,7 +17,8 @@ public interface AdventureStateTableDataGateway
 	 * @param playerID the player
 	 * @param questID the quest
 	 * @return all of the adventure states
+	 * @throws DatabaseException 
 	 */
-	ArrayList<AdventureStateRecord> getAdventureStates(int playerID, int questID);
+	ArrayList<AdventureStateRecord> getAdventureStates(int playerID, int questID) throws DatabaseException;
 
 }
