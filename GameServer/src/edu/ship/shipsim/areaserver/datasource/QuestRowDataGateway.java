@@ -1,5 +1,7 @@
 package edu.ship.shipsim.areaserver.datasource;
 
+import data.Position;
+
 /**
  * A row data gateway for the quest table
  * @author merlin
@@ -22,5 +24,17 @@ public interface QuestRowDataGateway
 	 * @return the description for the quest this gateway is managing
 	 */
 	public String getQuestDescription();
+
+	/**
+	 * 
+	 * @return the name of the map that contains the trigger point for this quest
+	 */
+	public String getTriggerMapName();
+
+	/**
+	 * 
+	 * @return the position that should trigger this quest
+	 */
+	public Position getTriggerPosition();
 
 }

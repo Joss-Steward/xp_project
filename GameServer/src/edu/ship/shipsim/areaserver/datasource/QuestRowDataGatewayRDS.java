@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.DatabaseManager;
+import data.Position;
 import datasource.DatabaseException;
 
 /**
@@ -32,7 +33,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 			stmt.executeUpdate();
 
 			stmt = connection
-					.prepareStatement("Create TABLE Quests (questID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questDescription VARCHAR(80))");
+					.prepareStatement("Create TABLE Quests (questID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questDescription VARCHAR(80), triggerMapName VARCHAR(80)," +
+							" triggerRow INT, triggerColumn INT)");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -41,6 +43,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	}
 	private int questID;
 	private String questDescription;
+	private String triggerMapName;
+	private Position triggerPosition;
 	private Connection connection;
 	
 	/**
@@ -61,6 +65,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 			ResultSet result = stmt.executeQuery();
 			result.next();
 			this.questDescription = result.getString("questDescription");
+			this.triggerMapName = result.getString("triggerMapName");
+			this.triggerPosition = new Position(result.getInt("triggerRow"), result.getInt("triggerColumn"));
 		} catch (SQLException e)
 		{
 			throw new DatabaseException("Couldn't find a quest with ID "
@@ -72,18 +78,23 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	 * Create constructor
 	 * @param questID the quest's unique ID
 	 * @param questDescription the description of the quest
+	 * @param triggerMapName TODO
+	 * @param triggerPosition TODO
 	 * @throws DatabaseException if we can't talk to the RDS
 	 */
-	public QuestRowDataGatewayRDS(int questID, String questDescription) throws DatabaseException
+	public QuestRowDataGatewayRDS(int questID, String questDescription, String triggerMapName, Position triggerPosition) throws DatabaseException
 	{
 		this.questID = questID;
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
 			PreparedStatement stmt = connection
-					.prepareStatement("Insert INTO Quests SET questID = ?, questDescription = ?");
+					.prepareStatement("Insert INTO Quests SET questID = ?, questDescription = ?, triggerMapname = ?, triggerRow = ?, triggerColumn = ?");
 			stmt.setInt(1, questID);
 			stmt.setString(2, questDescription);
+			stmt.setString(3, triggerMapName);
+			stmt.setInt(4, triggerPosition.getRow());
+			stmt.setInt(5, triggerPosition.getColumn());
 			stmt.executeUpdate();
 
 			this.questDescription = questDescription;
@@ -121,6 +132,24 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	public String getQuestDescription()
 	{
 		return questDescription;
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestRowDataGateway#getTriggerMapName()
+	 */
+	@Override
+	public String getTriggerMapName()
+	{
+		return triggerMapName;
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestRowDataGateway#getTriggerPosition()
+	 */
+	@Override
+	public Position getTriggerPosition()
+	{
+		return triggerPosition;
 	}
 
 }
