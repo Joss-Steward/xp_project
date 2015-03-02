@@ -2,8 +2,6 @@ package communication.handlers;
 
 import communication.messages.AreaCollisionMessage;
 import communication.messages.Message;
-import edu.ship.shipsim.areaserver.model.CommandAreaCollision;
-import edu.ship.shipsim.areaserver.model.ModelFacade;
 
 /**
  * Handles Area Collision messages from the client and creates
@@ -21,15 +19,7 @@ public class AreaCollisionMessageHandler extends MessageHandler
 	 * @param msg the message from AreaCollisionMessage
 	 */
 	@Override
-	public void process(Message msg) {
-		if(msg.getClass().equals(AreaCollisionMessage.class)){
-			AreaCollisionMessage acMsg = (AreaCollisionMessage) msg;
-			
-			CommandAreaCollision cmd = 
-					new CommandAreaCollision(acMsg.getPlayerID(), acMsg.getAreaName());
-			
-			ModelFacade.getSingleton().queueCommand(cmd);
-		}		
+	public void process(Message msg) {	
 	}
 
 	/**

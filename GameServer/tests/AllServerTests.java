@@ -6,7 +6,6 @@ import org.junit.rules.ExternalResource;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import communication.handlers.AreaCollisionMessageHandlerTest;
 import communication.handlers.ChatMessageHandlerTest;
 import communication.handlers.ConnectMessageHandlerTest;
 import communication.handlers.DisconnectMessageHandlerTest;
@@ -35,7 +34,6 @@ import edu.ship.shipsim.areaserver.model.AdventureStateTest;
 import edu.ship.shipsim.areaserver.model.ChatManagerTest;
 import edu.ship.shipsim.areaserver.model.ChatMessageReceivedCommandTest;
 import edu.ship.shipsim.areaserver.model.CommandAddPlayerTest;
-import edu.ship.shipsim.areaserver.model.CommandAreaCollisionTest;
 import edu.ship.shipsim.areaserver.model.CommandMovePlayerSilentlyTest;
 import edu.ship.shipsim.areaserver.model.CommandMovePlayerTest;
 import edu.ship.shipsim.areaserver.model.CommandPersistPlayerTest;
@@ -65,7 +63,6 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 @Suite.SuiteClasses(
 {
 		// communication.handlers
-		AreaCollisionMessageHandlerTest.class,
 		ConnectMessageHandlerTest.class,
 		DisconnectMessageHandlerTest.class,
 		MovementMessageHandlerTest.class,
@@ -116,7 +113,6 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		ChatMessageReceivedCommandTest.class,
 		CommandAddPlayerTest.class, 
 		CommandMovePlayerTest.class, 
-		CommandAreaCollisionTest.class,
 		CommandMovePlayerSilentlyTest.class,
 		CommandPersistPlayerTest.class,
 		NPCMapperTest.class,
