@@ -10,11 +10,12 @@ import datasource.QuestStateList;
  * @author nk3668
  *
  */
-public class ClientPlayerQuest {
+public class ClientPlayerQuest 
+{
 	private int questID;
 	private String questDescription;
 	private QuestStateList state;
-	private ArrayList<ClientPlayerAdventure> adventures;
+	private ArrayList<ClientPlayerAdventure> adventures = new ArrayList<ClientPlayerAdventure>();
 	
 	/**
 	 * Constructor for client player quest
@@ -22,7 +23,8 @@ public class ClientPlayerQuest {
 	 * @param questDescription the quests description
 	 * @param state the quests state
 	 */
-	public ClientPlayerQuest(int questID, String questDescription, QuestStateList state){
+	public ClientPlayerQuest(int questID, String questDescription, QuestStateList state)
+	{
 		this.questID = questID;
 		this.questDescription = questDescription;
 		this.state = state;
@@ -32,7 +34,8 @@ public class ClientPlayerQuest {
 	 * Getter for quest id
 	 * @return the quests id
 	 */
-	public int getQuestID() {
+	public int getQuestID() 
+	{
 		return questID;
 	}
 
@@ -40,7 +43,8 @@ public class ClientPlayerQuest {
 	 * Getter for quest desc
 	 * @return the quest description
 	 */
-	public String getQuestDescription() {
+	public String getQuestDescription() 
+	{
 		return questDescription;
 	}
 
@@ -48,7 +52,8 @@ public class ClientPlayerQuest {
 	 * Getter for quest state
 	 * @return the quests state
 	 */
-	public QuestStateList getQuestState() {
+	public QuestStateList getQuestState() 
+	{
 		return state;
 	}
 
@@ -56,8 +61,27 @@ public class ClientPlayerQuest {
 	 * Getter for adventure list
 	 * @return the list of the quests adventures
 	 */
-	public Object getAdventureListSize() {
+	public int getAdventureListSize() 
+	{
 		return adventures.size();
+	}
+
+	/**
+	 * Add adventure to the list of ClientPlayerAdventures
+	 * @param a the adventure being added
+	 */
+	public void addAdventure(ClientPlayerAdventure a) 
+	{
+		adventures.add(a);
+	}
+
+	/**
+	 * Return the ClientPlayerAdventure array list
+	 * @return adventures
+	 */
+	public ArrayList<ClientPlayerAdventure> getAdventureList() 
+	{
+		return adventures;
 	}
 	
 }

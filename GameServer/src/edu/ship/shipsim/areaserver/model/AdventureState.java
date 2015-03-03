@@ -1,6 +1,6 @@
 package edu.ship.shipsim.areaserver.model;
 
-import edu.ship.shipsim.areaserver.datasource.AdventureStateList;
+import datasource.AdventureStateList;
 
 /**
  * Stores the states of all the adventures for an individual player on the server

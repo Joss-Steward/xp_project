@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import datasource.AdventureStateList;
 import datasource.QuestStateList;
-import edu.ship.shipsim.areaserver.datasource.AdventureStateList;
 
 /**
  * Test for the QuestState Class 

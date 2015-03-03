@@ -3,7 +3,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import edu.ship.shipsim.areaserver.datasource.AdventureStateList;
+import datasource.AdventureStateList;
 import edu.ship.shipsim.areaserver.model.AdventureState;
 
 

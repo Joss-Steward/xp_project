@@ -1,4 +1,4 @@
-package edu.ship.shipsim.areaserver.datasource;
+package datasource;
 
 /**
  * A list of the states an adventure can be in
