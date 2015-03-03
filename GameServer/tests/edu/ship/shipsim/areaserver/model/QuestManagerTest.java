@@ -2,14 +2,17 @@ package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
 
-//import java.util.ArrayList;
+import java.util.ArrayList;
 
+import model.OptionsManager;
+
+import org.junit.Before;
 import org.junit.Test;
 
-//import data.Position;
+import data.Position;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
-//import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
+import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
 
 /**
  * Test for the quest manager getting quests and adventures from database
@@ -18,6 +21,15 @@ import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
  */
 public class QuestManagerTest 
 {
+	
+	/**
+	 * Set up Options Manager, run in TestMode
+	 */
+	@Before
+	public void setUp()
+	{
+		OptionsManager.getSingleton(true);
+	}
 
 	/**
 	 * Test initializing a quest manager
@@ -157,10 +169,10 @@ public class QuestManagerTest
 		Quest quest1 = qm.getQuest(5);
 	}
 	
-	/*
+	/**
 	 * Test getting quests by a position and map name
-	 * @throws DatabaseException
-	 
+	 * @throws DatabaseException shouldn't
+	 */
 	@Test
 	public void testGetQuestsPosition() throws DatabaseException
 	{
@@ -169,11 +181,20 @@ public class QuestManagerTest
 		Position pos = new Position(4,3);
 		ArrayList<Integer> questIDs = new ArrayList<Integer>();
 		questIDs.add(QuestsForTest.ONE_BIG_QUEST.getQuestID());
-		 
+		
+		int index = 1;
 		for(Integer i: qm.getQuestsByPosition(pos, QuestsForTest.ONE_BIG_QUEST.getMapName()))
 		{
-			assertEquals((int)i, QuestsForTest.ONE_BIG_QUEST.getQuestID());
+			if(index == 1)
+			{
+				assertEquals((int)i, QuestsForTest.ONE_BIG_QUEST.getQuestID());
+			}
+			if(index == 3)
+			{
+				assertEquals((int)i, QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID());
+			}
+			index++;
 		}
 	}
-	*/
+	
 }

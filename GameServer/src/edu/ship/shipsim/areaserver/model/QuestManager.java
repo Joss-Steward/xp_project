@@ -2,11 +2,16 @@ package edu.ship.shipsim.areaserver.model;
 
 import java.util.ArrayList;
 
+import model.OptionsManager;
 import data.Position;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
+import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGateway;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayMock;
+import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayRDS;
+import edu.ship.shipsim.areaserver.datasource.QuestRowDataGateway;
 import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayMock;
+import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayRDS;
 
 /**
  * Retrieves the list of quest and adventures from the database
@@ -15,6 +20,10 @@ import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayMock;
  */
 public class QuestManager 
 {
+	
+	private QuestRowDataGateway questGateway;
+	private AdventureTableDataGateway adventureGateway;
+	
 
 	/**
 	 * The method returns a singleton of QuestManager
@@ -51,16 +60,24 @@ public class QuestManager
 	 */
 	public Quest getQuest(int questID) throws DatabaseException {
 		
-		QuestRowDataGatewayMock mock = new QuestRowDataGatewayMock(questID);
-		AdventureTableDataGatewayMock adventureMock = new AdventureTableDataGatewayMock();
+		if(OptionsManager.getSingleton().isTestMode())
+		{
+			this.questGateway = new QuestRowDataGatewayMock(questID);
+			this.adventureGateway = new AdventureTableDataGatewayMock();
+		} else
+		{
+			this.questGateway = new QuestRowDataGatewayRDS(questID);
+			this.adventureGateway = new AdventureTableDataGatewayRDS();
+		}
+		
 		ArrayList<Adventure> adventureList = new ArrayList<Adventure>();
 				
-		for(AdventureRecord ar : adventureMock.getAdventuresForQuest(questID))
+		for(AdventureRecord ar : adventureGateway.getAdventuresForQuest(questID))
 		{
 			adventureList.add(new Adventure(ar.getAdventureID(), ar.getAdventureDescription()));
 		}
 		
-		Quest quest = new Quest(mock.getQuestID(), mock.getQuestDescription(), null, null, adventureList);
+		Quest quest = new Quest(questGateway.getQuestID(), questGateway.getQuestDescription(), null, null, adventureList);
 		return quest;
 	}
 
@@ -69,9 +86,13 @@ public class QuestManager
 	 * @param pos the position of the quest
 	 * @param mapName the map that the quest is on
 	 * @return an array list of questIDs
+	 * @throws DatabaseException shouldn't
 	 */
-	public ArrayList<Integer> getQuestsByPosition(Position pos, String mapName) {
-		
+	public ArrayList<Integer> getQuestsByPosition(Position pos, String mapName) throws DatabaseException {
+		if(OptionsManager.getSingleton().isTestMode())
+		{
+			return QuestRowDataGatewayMock.getQuestsForMapLocation(mapName, pos);
+		} 
 		return null;
 	}
 }
