@@ -6,6 +6,9 @@ import model.PlayerLogin;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayMock;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayRDS;
+import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway;
+import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayMock;
+import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayRDS;
 
 /**
  * 
@@ -20,6 +23,7 @@ public class PlayerMapper
 {
 
 	private PlayerRowDataGateway playerGateway;
+	private QuestStateTableDataGateway questStateGateway;
 	/**
 	 * The player we are connecting to the gateways
 	 */
@@ -36,9 +40,11 @@ public class PlayerMapper
 		if (OptionsManager.getSingleton().isTestMode())
 		{
 			this.playerGateway = new PlayerRowDataGatewayMock(playerID);
+			this.questStateGateway = QuestStateTableDataGatewayMock.getSingleton();
 		} else
 		{
 			this.playerGateway = new PlayerRowDataGatewayRDS(playerID);
+			this.questStateGateway = QuestStateTableDataGatewayRDS.getSingleton();
 		}
 		this.player = createPlayerObject();
 		player.setAppearanceType(playerGateway.getAppearanceType());
@@ -48,6 +54,15 @@ public class PlayerMapper
 		player.setPlayerID(playerID);
 		player.setMapName(playerGateway.getMapName());
 		player.setDataMapper(this);
+		loadQuestStates();
+	}
+
+
+
+	private void loadQuestStates()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 

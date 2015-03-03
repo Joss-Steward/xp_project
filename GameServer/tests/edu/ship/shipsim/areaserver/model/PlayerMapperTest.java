@@ -11,6 +11,7 @@ import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayMock;
+import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
 
 /**
  * Tests the PlayerMapper class
@@ -45,9 +46,19 @@ public class PlayerMapperTest extends DatabaseTest
 		assertEquals(testPlayer.getPosition(), p.getPlayerPosition());
 		assertEquals(testPlayer.getQuizScore(), p.getQuizScore());
 		assertEquals(testPlayer.getMapName(), p.getMapName());
+		
+		for (QuestStatesForTest qs:QuestStatesForTest.values())
+		{
+			if (qs.getPlayerID() == testPlayer.getPlayerID())
+			{
+				assertEquals(qs.getState(), p.getQuestStateByID(qs.getQuestID()));
+			}
+		}
 	}
 
+
 	/**
+	 * This must be player 2 for the quest and adventure states to match up
 	 * @return the player whose mapper we are testing
 	 */
 	protected PlayersForTest getPlayerWeAreTesting()
