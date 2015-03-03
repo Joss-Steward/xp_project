@@ -22,8 +22,8 @@ public class Quest
 	 * Creates a Quest Object
 	 * @param id the id
 	 * @param desc the description
-	 * @param pos2 
-	 * @param string 
+	 * @param map the map that the quest is on
+	 * @param pos position of the quest
 	 * @param adventures the list of adventures
 	 */
 	public Quest(int id, String desc, String map, Position pos, ArrayList<Adventure> adventures) 
@@ -96,7 +96,7 @@ public class Quest
 
 	/**
 	 * Set the quest's map name
-	 * @param mapName
+	 * @param mapName the map that the quest is on
 	 */
 	public void setMapName(String mapName) {
 		this.q_mapName = mapName;
@@ -112,7 +112,7 @@ public class Quest
 
 	/**
 	 * Set the position of the quest
-	 * @param pos
+	 * @param pos position of the quest
 	 */
 	public void setPos(Position pos) {
 		this.q_position = pos;

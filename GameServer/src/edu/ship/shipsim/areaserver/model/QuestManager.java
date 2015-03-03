@@ -64,6 +64,12 @@ public class QuestManager
 		return quest;
 	}
 
+	/**
+	 * Return the quests that are associated with a certain map and position
+	 * @param pos the position of the quest
+	 * @param mapName the map that the quest is on
+	 * @return an array list of questIDs
+	 */
 	public ArrayList<Integer> getQuestsByPosition(Position pos, String mapName) {
 		
 		return null;
