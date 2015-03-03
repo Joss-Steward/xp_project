@@ -26,8 +26,6 @@ import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayRDSTest;
-import edu.ship.shipsim.areaserver.datasource.QuestStateRowDataGatewayMockTest;
-import edu.ship.shipsim.areaserver.datasource.QuestStateRowDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.model.AdventureModelTest;
@@ -101,9 +99,6 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		QuestRowDataGatewayRDSTest.class,
 		//QuestRowDataGatewayTest.class,
 		//QuestsForTest
-		QuestStateRowDataGatewayMockTest.class,
-		QuestStateRowDataGatewayRDSTest.class,
-		//QuestStateRowDataGatewayTest.class,
 		//QuestStatesForTest.class
 		QuestStateTableDataGatewayMockTest.class,
 		QuestStateTableDataGatewayRDSTest.class,

@@ -6,7 +6,7 @@ import edu.ship.shipsim.areaserver.datasource.AdventureStatesForTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayRDS;
 import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
 import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayRDS;
-import edu.ship.shipsim.areaserver.datasource.QuestStateRowDataGatewayRDS;
+import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayRDS;
 import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
 import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
 
@@ -38,10 +38,10 @@ public class BuildQuestsAndAdventures
 
 	private static void createQuestStateTable() throws DatabaseException
 	{
-		QuestStateRowDataGatewayRDS.createTable();
+		QuestStateTableDataGatewayRDS.createTable();
 		for (QuestStatesForTest quest : QuestStatesForTest.values())
 		{
-			new QuestStateRowDataGatewayRDS(quest.getPlayerID(), quest.getQuestID(),quest.getState());
+			QuestStateTableDataGatewayRDS.createRow(quest.getPlayerID(), quest.getQuestID(),quest.getState());
 		}
 	}
 	

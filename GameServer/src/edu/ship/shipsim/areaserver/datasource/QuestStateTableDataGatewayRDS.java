@@ -17,7 +17,49 @@ import datasource.QuestStateList;
  */
 public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 {
-	private static QuestStateTableDataGateway singleton;
+	public static void createRow(int playerID, int questID, QuestStateList state) throws DatabaseException
+	{
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
+		{
+			PreparedStatement stmt = connection
+					.prepareStatement("Insert INTO QuestStates SET playerID = ?, questID = ?, questState = ?");
+			stmt.setInt(1, playerID);
+			stmt.setInt(2, questID);
+			stmt.setInt(3, state.ordinal());
+			stmt.executeUpdate();
+
+		} catch (SQLException e)
+		{
+			throw new DatabaseException(
+					"Couldn't create a quest state record for player with ID " + playerID
+							+ " and quest with ID " + questID, e);
+		}
+	}
+
+	/**
+	 * Drop the table if it exists and re-create it empty
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	public static void createTable() throws DatabaseException
+	{
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
+		{
+			PreparedStatement stmt = connection
+					.prepareStatement("DROP TABLE IF EXISTS QuestStates");
+			stmt.executeUpdate();
+
+			stmt = connection
+					.prepareStatement("Create TABLE QuestStates (playerID INT NOT NULL, questID INT NOT NULL , questState INT NOT NULL)");
+			stmt.executeUpdate();
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Unable to create the Quest table", e);
+		}
+	}
 
 	/**
 	 * Retrieves the rds gateway singleton.
@@ -33,6 +75,13 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 		return singleton;
 	}
 
+	private static QuestStateTableDataGateway singleton;
+
+	private QuestStateList convertToState(int int1)
+	{
+		return QuestStateList.values()[int1];
+	}
+	
 	/**
 	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#getQuestStates(int)
 	 */
@@ -65,8 +114,4 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 		}
 	}
 
-	private QuestStateList convertToState(int int1)
-	{
-		return QuestStateList.values()[int1];
-	}
 }
