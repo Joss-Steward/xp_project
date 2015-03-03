@@ -108,7 +108,7 @@ public class QuestStateRowDataGatewayMock implements QuestStateRowDataGateway
 		for (QuestStatesForTest p : QuestStatesForTest.values())
 		{
 			questStateInfo.put(new Key(p.getPlayerID(), p.getQuestID()),
-					p.getQuestState());
+					p.getState());
 		}
 	}
 

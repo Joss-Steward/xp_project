@@ -41,7 +41,7 @@ public class BuildQuestsAndAdventures
 		QuestStateRowDataGatewayRDS.createTable();
 		for (QuestStatesForTest quest : QuestStatesForTest.values())
 		{
-			new QuestStateRowDataGatewayRDS(quest.getPlayerID(), quest.getQuestID(),quest.getQuestState());
+			new QuestStateRowDataGatewayRDS(quest.getPlayerID(), quest.getQuestID(),quest.getState());
 		}
 	}
 	

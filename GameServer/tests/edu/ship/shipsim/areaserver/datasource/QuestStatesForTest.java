@@ -55,7 +55,7 @@ public enum QuestStatesForTest
 	/**
 	 * @return the state of the quest for the given player
 	 */
-	public QuestStateList getQuestState()
+	public QuestStateList getState()
 	{
 		return questState;
 	}

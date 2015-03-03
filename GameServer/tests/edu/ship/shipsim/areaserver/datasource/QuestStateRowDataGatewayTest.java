@@ -45,7 +45,7 @@ public abstract class QuestStateRowDataGatewayTest extends DatabaseTest
 		gateway = findGateway(quest.getQuestID(),quest.getPlayerID());
 		assertEquals(quest.getQuestID(), gateway.getQuestID());
 		assertEquals(quest.getPlayerID(), gateway.getPlayerID());
-		assertEquals(quest.getQuestState(), gateway.getQuestState());
+		assertEquals(quest.getState(), gateway.getQuestState());
 	}
 
 	/**
