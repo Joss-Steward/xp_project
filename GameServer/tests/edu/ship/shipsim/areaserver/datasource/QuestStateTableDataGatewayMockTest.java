@@ -10,10 +10,10 @@ public class QuestStateTableDataGatewayMockTest extends QuestStateTableDataGatew
 {
 
 	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayTest#getGateway()
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayTest#getGatewaySingleton()
 	 */
 	@Override
-	public QuestStateTableDataGateway getGateway()
+	public QuestStateTableDataGateway getGatewaySingleton()
 	{
 		return QuestStateTableDataGatewayMock.getSingleton();
 	}

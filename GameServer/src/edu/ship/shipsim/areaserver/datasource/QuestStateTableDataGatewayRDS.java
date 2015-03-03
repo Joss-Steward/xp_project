@@ -17,9 +17,17 @@ import datasource.QuestStateList;
  */
 public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 {
-	public static void createRow(int playerID, int questID, QuestStateList state) throws DatabaseException
+	/**
+	 * Add a new row to the table
+	 * @param playerID the player
+	 * @param questID the quest
+	 * @param state the player's state in that quest
+	 * @throws DatabaseException if we can't talk to the RDS server
+	 */
+	public void createRow(int playerID, int questID, QuestStateList state) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
+		checkForDuplicateEntry(playerID, questID);
 		try
 		{
 			PreparedStatement stmt = connection
@@ -37,13 +45,36 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 		}
 	}
 
+	private void checkForDuplicateEntry(int playerID, int questID) throws DatabaseException
+	{
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
+		{
+			PreparedStatement stmt = connection
+					.prepareStatement("SELECT * FROM QuestStates WHERE playerID = ? and questID = ?");
+			stmt.setInt(1, playerID);
+			stmt.setInt(2, questID);
+			ResultSet result = stmt.executeQuery();
+
+			if (result.next())
+			{
+				throw new DatabaseException(
+						"Duplicate quest state for player ID " + playerID + " and quest id " + questID);
+			}
+		} catch (SQLException e)
+		{
+			throw new DatabaseException(
+					"Couldn't find quests for player ID " + playerID, e);
+		}
+	}
+
 	/**
 	 * Drop the table if it exists and re-create it empty
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
 	 */
-	public static void createTable() throws DatabaseException
+	public void createTable() throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try

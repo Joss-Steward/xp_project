@@ -3,6 +3,9 @@ package edu.ship.shipsim.areaserver.datasource;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import datasource.DatabaseException;
+import datasource.QuestStateList;
+
 /**
  * A mock implementation of the gateway
  * @author Merlin
@@ -32,21 +35,47 @@ private static QuestStateTableDataGateway singleton;
 	 */
 	private QuestStateTableDataGatewayMock()
 	{
+		resetData();
+	}
+
+	private void resetData()
+	{
 		data = new Hashtable<Integer, ArrayList<QuestStateRecord>>();
 		for(QuestStatesForTest a:QuestStatesForTest.values())
 		{
 			QuestStateRecord rec = new QuestStateRecord(a.getPlayerID(), a.getQuestID(), a.getState());
 			
-			if (data.containsKey(a.getPlayerID()))
+			try
 			{
-				ArrayList<QuestStateRecord> x = data.get(a.getPlayerID());
-				x.add(rec);
-			} else
+				insertRow(a.getPlayerID(), rec);
+			} catch (DatabaseException e)
 			{
-				ArrayList<QuestStateRecord> x = new ArrayList<QuestStateRecord>();
-				x.add(rec);
-				data.put(a.getPlayerID(), x);
+				// QuestStatesForTest should not contain duplicate entries and
+				// that is the only way we can get here
+				e.printStackTrace();
 			}
+		}
+	}
+
+	private void insertRow(int playerID, QuestStateRecord rec) throws DatabaseException
+	{
+		if (data.containsKey(playerID))
+		{
+			ArrayList<QuestStateRecord> x = data.get(playerID);
+			for (QuestStateRecord r:x)
+			{
+				if (r.getQuestID() == rec.getQuestID())
+				{
+					throw new DatabaseException("Duplicate quest state: player ID " +
+							playerID + " and quest id " + rec.getQuestID());
+				}
+			}
+			x.add(rec);
+		} else
+		{
+			ArrayList<QuestStateRecord> x = new ArrayList<QuestStateRecord>();
+			x.add(rec);
+			data.put(playerID, x);
 		}
 	}
 	
@@ -57,6 +86,26 @@ private static QuestStateTableDataGateway singleton;
 	public ArrayList<QuestStateRecord> getQuestStates(int playerID)
 	{
 		return data.get(playerID);
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#createTable()
+	 */
+	@Override
+	public void createTable() throws DatabaseException
+	{
+		resetData();
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#createRow(int, int, datasource.QuestStateList)
+	 */
+	@Override
+	public void createRow(int playerID, int questID, QuestStateList state)
+			throws DatabaseException
+	{
+		insertRow(playerID, new QuestStateRecord(playerID, questID, state));
+		
 	}
 	
 

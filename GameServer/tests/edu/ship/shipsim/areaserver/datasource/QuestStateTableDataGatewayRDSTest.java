@@ -10,10 +10,10 @@ public class QuestStateTableDataGatewayRDSTest extends QuestStateTableDataGatewa
 {
 
 	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayTest#getGateway()
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayTest#getGatewaySingleton()
 	 */
 	@Override
-	public QuestStateTableDataGateway getGateway()
+	public QuestStateTableDataGateway getGatewaySingleton()
 	{
 		return QuestStateTableDataGatewayRDS.getSingleton();
 	}

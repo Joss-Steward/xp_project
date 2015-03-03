@@ -11,9 +11,10 @@ public class QuestStateRecord
 {
 
 	private int playerID;
-	private int questID;
-	private QuestStateList state;
 
+	private int questID;
+
+	private QuestStateList state;
 	/**
 	 * @param playerID the player's unique ID
 	 * @param questID the quest's unique ID
@@ -25,6 +26,27 @@ public class QuestStateRecord
 		this.questID = questID;
 		this.state = state;
 	}
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		QuestStateRecord other = (QuestStateRecord) obj;
+		if (playerID != other.playerID)
+			return false;
+		if (questID != other.questID)
+			return false;
+		if (state != other.state)
+			return false;
+		return true;
+	}
 
 	/**
 	 * @return the player's ID
@@ -32,6 +54,14 @@ public class QuestStateRecord
 	public int getPlayerID()
 	{
 		return playerID;
+	}
+
+	/**
+	 * @return the quest ID
+	 */
+	public int getQuestID()
+	{
+		return questID;
 	}
 
 	/**
@@ -43,11 +73,17 @@ public class QuestStateRecord
 	}
 
 	/**
-	 * @return the quest ID
+	 * @see java.lang.Object#hashCode()
 	 */
-	public int getQuestID()
+	@Override
+	public int hashCode()
 	{
-		return questID;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + playerID;
+		result = prime * result + questID;
+		result = prime * result + ((state == null) ? 0 : state.hashCode());
+		return result;
 	}
 
 }
