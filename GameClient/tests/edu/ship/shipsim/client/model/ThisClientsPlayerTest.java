@@ -6,6 +6,8 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.util.Observer;
 
+import model.ClientPlayerAdventure;
+import model.ClientPlayerQuest;
 import model.QualifiedObservableConnector;
 
 import org.easymock.EasyMock;
@@ -13,6 +15,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import data.Position;
+import datasource.AdventureStateList;
+import datasource.QuestStateList;
 import edu.ship.shipsim.client.model.PlayerManager;
 import edu.ship.shipsim.client.model.ThisClientsPlayer;
 import edu.ship.shipsim.client.model.reports.PlayerMovedReport;
@@ -70,10 +74,9 @@ public class ThisClientsPlayerTest
 	 * Make sure that you can add a quest to ThisClientsPlayer
 	 */
 	@Test
-	public void testThisPlayerContainsAQuest() {
+	public void testThisPlayerContainsClientPlayerQuest() {
 		PlayerManager pm = PlayerManager.getSingleton();
 		pm.initiateLogin("john", "pw");
-		@SuppressWarnings("unused")
 		ThisClientsPlayer cp = null;
 		
 		try
@@ -85,13 +88,17 @@ public class ThisClientsPlayerTest
 			fail("Could not create this client's player from login");
 		}
 		
-		/*ArrayList<Adventure> adventureList = new ArrayList<Adventure>();
-		Adventure a = new Adventure(1, "Adventure 1");
-		adventureList.add(a);
-		Quest q = new Quest(1, "Quest 1", adventureList);
-		cp.addQuest(q);
+		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", AdventureStateList.HIDDEN);
+		assertEquals(1, adventureOne.getAdventureID());
+		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", AdventureStateList.HIDDEN);
+		assertEquals(2, adventureTwo.getAdventureID());
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateList.HIDDEN);
+		q.addAdventure(adventureOne);
+		q.addAdventure(adventureTwo);
+		assertEquals(2, q.getAdventureList().size());
 		
-		assertEquals("Adventure 1", cp.getQuests().get(0).getAdventures().get(0).getDescription());
-		assertEquals("Quest 1", cp.getQuests().get(0).getDescription());*/
+		cp.addQuest(q);
+		assertEquals(2, cp.getQuests().get(0).getAdventureList().get(1).getAdventureID());
+		assertEquals("Test Quest 1", cp.getQuests().get(0).getQuestDescription());
 	}
 }
