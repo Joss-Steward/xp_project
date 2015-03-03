@@ -1,5 +1,6 @@
 package edu.ship.shipsim.areaserver.datasource;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import data.Position;
@@ -14,44 +15,77 @@ import datasource.DatabaseException;
 public class QuestRowDataGatewayMock implements QuestRowDataGateway
 {
 
-	/**
-	 * Map quest ID to questDescription
-	 */
-	private static HashMap<Integer, QuestData> questInfo;
-	private int questID;
-	private String questDescription;
-	private String triggerMapName;
-	private Position triggerPosition;
-
 	private class QuestData
 	{
 		private String questDescription;
+
+		private String mapName;
+
+		private Position position;
+
+		private int questID;
+
+		public QuestData(int questID, String questDescription, String mapName,
+				Position position)
+		{
+			this.questDescription = questDescription;
+			this.mapName = mapName;
+			this.position = position;
+			this.questID = questID;
+		}
+		public String getMapName()
+		{
+			return mapName;
+		}
+		public Position getPosition()
+		{
+			return position;
+		}
 
 		public String getQuestDescription()
 		{
 			return questDescription;
 		}
 
-		public String getMapName()
+		public int getQuestID()
 		{
-			return mapName;
-		}
-
-		public Position getPosition()
-		{
-			return position;
-		}
-
-		private String mapName;
-		private Position position;
-
-		public QuestData(String questDescription, String mapName, Position position)
-		{
-			this.questDescription = questDescription;
-			this.mapName = mapName;
-			this.position = position;
+			return questID;
 		}
 	}
+	/**
+	 * Get the IDs of the quests that are supposed to trigger at a specified map location
+	 * @param mapName the name of the map
+	 * @param position the position on the map
+	 * @return the quest IDs
+	 * @throws DatabaseException shouldn't
+	 */
+	public static ArrayList<Integer> getQuestsForMapLocation(String mapName,
+			Position position) throws DatabaseException
+	{
+		if (questInfo == null)
+		{
+			new QuestRowDataGatewayMock(1).resetData();
+		}
+		ArrayList<Integer> results = new ArrayList<Integer>();
+		for (QuestData q:questInfo.values())
+		{
+			if ((q.getMapName().equals(mapName)) && (q.getPosition().equals(position)))
+			{
+				results.add(q.getQuestID());
+			}
+		}
+		return results;
+	}
+	/**
+	 * Map quest ID to questDescription
+	 */
+	private static HashMap<Integer, QuestData> questInfo;
+	private int questID;
+	private String questDescription;
+
+	private String triggerMapName;
+
+	private Position triggerPosition;
 
 	/**
 	 * Get the row data gateway object for an existing quest
@@ -81,19 +115,12 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 	}
 
 	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.QuestRowDataGateway#resetData()
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestRowDataGateway#getQuestDescription()
 	 */
 	@Override
-	public void resetData()
+	public String getQuestDescription()
 	{
-		questInfo = new HashMap<Integer, QuestData>();
-		for (QuestsForTest p : QuestsForTest.values())
-		{
-			questInfo.put(
-					p.getQuestID(),
-					new QuestData(p.getQuestDescription(), p.getMapName(), p
-							.getPosition()));
-		}
+		return questDescription;
 	}
 
 	/**
@@ -103,15 +130,6 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 	public int getQuestID()
 	{
 		return questID;
-	}
-
-	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.QuestRowDataGateway#getQuestDescription()
-	 */
-	@Override
-	public String getQuestDescription()
-	{
-		return questDescription;
 	}
 
 	/**
@@ -130,6 +148,21 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 	public Position getTriggerPosition()
 	{
 		return triggerPosition;
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestRowDataGateway#resetData()
+	 */
+	@Override
+	public void resetData()
+	{
+		questInfo = new HashMap<Integer, QuestData>();
+		for (QuestsForTest p : QuestsForTest.values())
+		{
+			questInfo.put(p.getQuestID(),
+					new QuestData(p.getQuestID(), p.getQuestDescription(),
+							p.getMapName(), p.getPosition()));
+		}
 	}
 
 }

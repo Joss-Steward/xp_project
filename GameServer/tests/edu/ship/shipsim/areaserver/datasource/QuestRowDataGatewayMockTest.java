@@ -1,5 +1,8 @@
 package edu.ship.shipsim.areaserver.datasource;
 
+import java.util.ArrayList;
+
+import data.Position;
 import datasource.DatabaseException;
 
 
@@ -19,6 +22,15 @@ public class QuestRowDataGatewayMockTest extends QuestRowDataGatewayTest
 	QuestRowDataGateway findGateway(int questionID) throws DatabaseException
 	{
 		return new QuestRowDataGatewayMock(questionID);
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayTest#findQuestsForMapLocation(java.lang.String, data.Position)
+	 */
+	@Override
+	ArrayList<Integer> findQuestsForMapLocation(String mapName, Position position) throws DatabaseException
+	{
+		return QuestRowDataGatewayMock.getQuestsForMapLocation(mapName, position);
 	}
 
 	

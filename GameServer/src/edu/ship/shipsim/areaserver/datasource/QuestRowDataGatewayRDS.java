@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import model.DatabaseManager;
 import data.Position;
@@ -150,6 +151,40 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	public Position getTriggerPosition()
 	{
 		return triggerPosition;
+	}
+
+	/**
+	 * Get the IDs of the quests that are supposed to trigger at a specified map location
+	 * @param mapName the name of the map
+	 * @param position the position on the map
+	 * @return the quest IDs
+	 * @throws DatabaseException if we can't talk to the RDS data source
+	 */
+	public static ArrayList<Integer> findQuestsForMapLocation(String mapName,
+			Position position) throws DatabaseException
+	{
+		try
+		{
+			Connection connection = DatabaseManager.getSingleton().getConnection();
+			
+			PreparedStatement stmt = connection
+					.prepareStatement("SELECT questID FROM Quests WHERE triggerMapName = ? and triggerRow = ? and triggerColumn = ?");
+			stmt.setString(1, mapName);
+			stmt.setInt(2, position.getRow());
+			stmt.setInt(3, position.getColumn());
+			ResultSet result = stmt.executeQuery();
+			
+			ArrayList<Integer> results = new ArrayList<Integer>();
+			while(result.next())
+			{
+				results.add(result.getInt("questID"));
+			}
+			return results;
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Couldn't find a quests for map named "
+					+ mapName + " and position " + position, e);
+		}
 	}
 
 }

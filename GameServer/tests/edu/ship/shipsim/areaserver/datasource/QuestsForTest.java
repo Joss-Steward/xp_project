@@ -16,7 +16,11 @@ public enum QuestsForTest
 	/**
 	 * 
 	 */
-	THE_OTHER_QUEST(2, "The Other Quest","sillymap.tmx", new Position(42,2));
+	THE_OTHER_QUEST(2, "The Other Quest","sillymap.tmx", new Position(42,2)),
+	/**
+	 * 
+	 */
+	ONE_SAME_LOCATION_QUEST(3, "Another Quest","current.tmx", new Position(4,3));
 	
 	private int questID;
 	private String questDescription;
