@@ -19,13 +19,12 @@ import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayersForTest;
 import datasource.QuestStateList;
-import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 
 /**
- * Test the Player classs
+ * Test the Player class
  * 
  * @author Merlin
  * 
