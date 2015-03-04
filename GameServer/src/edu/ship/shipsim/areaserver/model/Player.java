@@ -240,7 +240,7 @@ public class Player extends QualifiedObservable
 	 * Add a quest to the player's questList
 	 * @param quest : the quest being added
 	 */
-	public void addQuest(QuestState quest) 
+	public void addQuestState(QuestState quest) 
 	{
 		questList.add(quest);
 	}

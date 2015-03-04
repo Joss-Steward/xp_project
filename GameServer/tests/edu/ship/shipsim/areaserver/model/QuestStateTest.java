@@ -26,7 +26,7 @@ public class QuestStateTest
 		QuestState qs = new QuestState(1, QuestStateList.AVAILABLE);
 		
 		assertEquals(1, qs.getID());
-		assertEquals(QuestStateList.AVAILABLE, qs.getState());
+		assertEquals(QuestStateList.AVAILABLE, qs.getStateValue());
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class QuestStateTest
 	{
 		QuestState quest = new QuestState(1, QuestStateList.HIDDEN);
 		quest.trigger();
-		assertEquals(QuestStateList.AVAILABLE, quest.getState());
+		assertEquals(QuestStateList.AVAILABLE, quest.getStateValue());
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class QuestStateTest
 	{
 		QuestState quest = new QuestState(1, QuestStateList.FINISHED);
 		quest.trigger();
-		assertEquals(QuestStateList.FINISHED, quest.getState());
+		assertEquals(QuestStateList.FINISHED, quest.getStateValue());
 	}
 	
 	/**

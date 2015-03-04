@@ -1,6 +1,10 @@
 package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+
 import model.OptionsManager;
 
 import org.junit.Before;
@@ -10,6 +14,7 @@ import data.Position;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayersForTest;
+import edu.ship.shipsim.areaserver.datasource.AdventureStatesForTest;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayMock;
 import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
 
@@ -51,7 +56,18 @@ public class PlayerMapperTest extends DatabaseTest
 		{
 			if (qs.getPlayerID() == testPlayer.getPlayerID())
 			{
-				assertEquals(qs.getState(), p.getQuestStateByID(qs.getQuestID()));
+				QuestState playerQuestState = p.getQuestStateByID(qs.getQuestID());
+				assertEquals(qs.getState(), playerQuestState.getStateValue());
+				for (AdventureStatesForTest as:AdventureStatesForTest.values())
+				{
+					ArrayList<AdventureState> adventureList = playerQuestState.getAdventureList();
+					if ((as.getPlayerID() == testPlayer.getPlayerID()) && 
+							(as.getQuestID() == playerQuestState.getID()))
+					{
+						AdventureState expected = new AdventureState(as.getAdventureID(), as.getState());
+						assertTrue(adventureList.contains(expected));
+					}
+				}
 			}
 		}
 	}

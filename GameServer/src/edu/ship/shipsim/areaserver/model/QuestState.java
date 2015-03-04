@@ -39,7 +39,7 @@ public class QuestState
 	 * Returns the quest's state
 	 * @return questState the state of the quest for a player
 	 */
-	public QuestStateList getState()
+	public QuestStateList getStateValue()
 	{
 		return questState;
 	}
@@ -72,7 +72,7 @@ public class QuestState
 	 */
 	public void trigger()
 	{
-		if(this.getState().equals(QuestStateList.HIDDEN))
+		if(this.getStateValue().equals(QuestStateList.HIDDEN))
 		{
 			this.questState = QuestStateList.AVAILABLE;
 			for(AdventureState state: adventureList)
