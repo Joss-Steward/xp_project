@@ -34,8 +34,8 @@ public enum QuestsForTest
 	 */
 	QuestsForTest(int questID, String adventureDescription, String mapName, Position position)
 	{
-		this.questDescription = adventureDescription;
 		this.questID = questID;
+		this.questDescription = adventureDescription;
 		this.mapName = mapName;
 		this.position = position;
 	}

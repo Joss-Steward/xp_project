@@ -60,7 +60,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	{
 		gateway = getGatewaySingleton();
 		ArrayList<QuestStateRecord> records = gateway.getQuestStates(1);
-		assertEquals(2, records.size());
+		assertEquals(3, records.size());
 		QuestStateRecord record = records.get(0);
 		// the records could be in either order
 		QuestStatesForTest first = QuestStatesForTest.PLAYER1_QUEST1;
@@ -91,13 +91,13 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	public void canInsertARecord() throws DatabaseException
 	{
 		gateway = getGatewaySingleton();
-		gateway.createRow(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID(), 3,
+		gateway.createRow(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID(), 4,
 				QuestStateEnum.TRIGGERED);
 		ArrayList<QuestStateRecord> actual = gateway
 				.getQuestStates(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID());
-		assertEquals(3, actual.size());
+		assertEquals(4, actual.size());
 		assertTrue(actual.contains(new QuestStateRecord(QuestStatesForTest.PLAYER1_QUEST1
-				.getPlayerID(), 3, QuestStateEnum.TRIGGERED)));
+				.getPlayerID(), 4, QuestStateEnum.TRIGGERED)));
 
 	}
 

@@ -19,6 +19,7 @@ import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
+import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
@@ -168,5 +169,35 @@ public class PlayerTest extends DatabaseTest
 		
 		assertEquals(QuestStateEnum.AVAILABLE, p.getQuestStateByID(1).getStateValue());
 		assertEquals(originalNumberOfQuests + 1, p.getSizeOfQuestList());
+	}
+	
+	/**
+	 * Make sure quest is triggered within player
+	 */
+	@Test
+	public void testPlayerTriggersQuest() 
+	{
+		Player p = playerManager.addPlayer(1);
+		assertEquals(QuestStateEnum.AVAILABLE, p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
+		p.triggerQuest(QuestStatesForTest.PLAYER1_QUEST1.getQuestID());
+		assertEquals(QuestStateEnum.TRIGGERED, p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
+	}
+	
+	/**
+	 * Make sure quest is triggered if it walks onto a location that has a quest
+	 * @throws DatabaseException QuestManager works with DB
+	 */
+	@Test
+	public void testPlayerTriggerOnMovement() throws DatabaseException
+	{	
+		Position pos1 = new Position(1,1);
+		Position pos2 = new Position(4,3);
+		Player p = playerManager.addPlayer(1);
+		p.setMapName("current.tmx");
+		p.setPlayerPosition(pos1);
+		assertEquals(QuestStateEnum.AVAILABLE, p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
+		p.setPlayerPosition(pos2);
+		assertEquals(QuestStateEnum.TRIGGERED, p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
+		p.setPlayerPosition(new Position(0,8));
 	}
 }

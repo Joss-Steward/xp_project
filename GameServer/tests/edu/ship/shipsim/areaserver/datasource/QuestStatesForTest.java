@@ -21,10 +21,14 @@ public enum QuestStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER2_Quest1(2, 1, QuestStateEnum.TRIGGERED);
-
-	private int questID;
+	PLAYER2_QUEST1(2, 1, QuestStateEnum.TRIGGERED),
+	/**
+	 * 
+	 */
+	PLAYER1_QUEST3(1, 3, QuestStateEnum.FULFILLED);
+	
 	private int playerID;
+	private int questID;
 	private QuestStateEnum questState;
 
 	/**
@@ -39,8 +43,8 @@ public enum QuestStatesForTest
 	 */
 	QuestStatesForTest(int playerID, int questID, QuestStateEnum questState)
 	{
-		this.questID = questID;
 		this.playerID = playerID;
+		this.questID = questID;
 		this.questState = questState;
 	}
 

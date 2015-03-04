@@ -210,6 +210,22 @@ public class Player extends QualifiedObservable
 		setPlayerPositionWithoutNotifying(playerPosition);
 		PlayerMovedReport report = new PlayerMovedReport(playerID,
 				this.getPlayerName(), playerPosition);
+		try
+		{
+			QuestManager qm = QuestManager.getSingleton();
+			ArrayList<Integer> questIDs = new ArrayList<Integer>();
+			questIDs = qm.getQuestsByPosition(playerPosition, this.mapName);
+			
+			for(Integer q : questIDs)
+			{
+				this.triggerQuest(q);
+			}
+		} 
+		catch (DatabaseException e) 
+		{
+			e.printStackTrace();
+		}
+		
 		this.notifyObservers(report);
 	}
 
@@ -286,5 +302,15 @@ public class Player extends QualifiedObservable
 		reportTypes.add(PinFailedReport.class);
 
 		this.registerReportTypesWeNotify();
+	}
+
+	/**
+	 * Triggers the state of a given quest by its ID
+	 * @param id a quests ID
+	 */
+	public void triggerQuest(int id) 
+	{
+		QuestState state = getQuestStateByID(id);
+		state.trigger();
 	}
 }
