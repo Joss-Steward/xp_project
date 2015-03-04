@@ -26,7 +26,7 @@ public class NewMapReportTest
 		// NewMapReport report = new NewMapReport(new
 		// TmxMapLoader().load("testMaps/simle.tmx"));
 		// assertNotNull(report.getTiledMap());
-		// TODO we cant really be sure it is built correctly until we can run
+		// we cant really be sure it is built correctly until we can run
 		// libgdx headless
 	}
 

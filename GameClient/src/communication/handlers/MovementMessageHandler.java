@@ -16,7 +16,7 @@ import edu.ship.shipsim.client.model.ModelFacade;
 public class MovementMessageHandler extends MessageHandler
 {
 	/**
-	 * TODO: Want to pass movement message to command.
+	 * 
 	 * 
 	 * @see MessageHandler#process(Message)
 	 */

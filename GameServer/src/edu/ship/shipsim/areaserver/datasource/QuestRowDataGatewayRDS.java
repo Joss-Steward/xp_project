@@ -79,8 +79,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	 * Create constructor
 	 * @param questID the quest's unique ID
 	 * @param questDescription the description of the quest
-	 * @param triggerMapName TODO
-	 * @param triggerPosition TODO
+	 * @param triggerMapName the name of the map that contains the trigger location for this quest
+	 * @param triggerPosition  the coordinates of the trigger location for this quest
 	 * @throws DatabaseException if we can't talk to the RDS
 	 */
 	public QuestRowDataGatewayRDS(int questID, String questDescription, String triggerMapName, Position triggerPosition) throws DatabaseException
