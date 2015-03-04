@@ -159,8 +159,13 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 			stmt.setInt(1, newState.ordinal());
 			stmt.setInt(2, playerID);
 			stmt.setInt(3, questID);
-			stmt.executeUpdate();
-
+			int count = stmt.executeUpdate();
+			if ( count == 0)
+			{
+				throw new DatabaseException(
+						"Couldn't update a quest state record (maybe row doesn't exist) for player with ID " + playerID
+								+ " and quest with ID " + questID);
+			}
 		} catch (SQLException e)
 		{
 			throw new DatabaseException(

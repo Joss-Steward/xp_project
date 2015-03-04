@@ -118,18 +118,29 @@ private static QuestStateTableDataGateway singleton;
 	}
 
 	/**
+	 * @throws DatabaseException if you try to update the state of a quest for which we have to state
 	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#udpateState(int, int, datasource.QuestStateEnum)
 	 */
 	@Override
-	public void udpateState(int playerID, int questID, QuestStateEnum newState)
+	public void udpateState(int playerID, int questID, QuestStateEnum newState) throws DatabaseException
 	{
+		boolean updated = false;
 		ArrayList<QuestStateRecord> quests = data.get(playerID);
+		if (quests == null)
+		{
+			quests = new ArrayList<QuestStateRecord>();
+		}
 		for (QuestStateRecord qsRec: quests)
 		{
 			if (qsRec.getQuestID() == questID)
 			{
+				updated = true;
 				qsRec.setState(newState);
 			}
+		}
+		if (!updated)
+		{
+			throw new DatabaseException("Tried to update existing quest that doesn't exist: playerID " + playerID + " questID " + questID);
 		}
 		
 	}

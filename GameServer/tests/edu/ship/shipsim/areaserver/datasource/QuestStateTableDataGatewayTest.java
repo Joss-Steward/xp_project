@@ -146,4 +146,14 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 			}
 		}
 	}
+	
+	@Test(expected = DatabaseException.class)
+	public void updatingNonExistentQuestException() throws DatabaseException
+	{
+		gateway = getGatewaySingleton();
+		int playerID = 10;
+		int questID = QuestStatesForTest.PLAYER1_QUEST1.getQuestID();
+		gateway.udpateState(playerID, questID, QuestStateEnum.FINISHED);
+		
+	}
 }
