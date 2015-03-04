@@ -250,7 +250,7 @@ public class Player extends QualifiedObservable
 	 * @param id : the id of the quest
 	 * @return the state of the quest
 	 */
-	public QuestState getQuestStateByID(int id) 
+	QuestState getQuestStateByID(int id) 
 	{
 		for(QuestState q : questList)
 		{
@@ -266,9 +266,18 @@ public class Player extends QualifiedObservable
 	 * Return the size of the questList
 	 * @return questList size
 	 */
-	public int getSizeOfQuestList() 
+	int getSizeOfQuestList() 
 	{
 		return questList.size();
+	}
+	
+	/**
+	 * Getter for quest list
+	 * @return the quest list
+	 */
+	public ArrayList<QuestState> getQuestList()
+	{
+		return questList;
 	}
 	
 	private void registerOurReportTypes()
