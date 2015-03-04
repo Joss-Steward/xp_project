@@ -85,7 +85,13 @@ private static QuestStateTableDataGateway singleton;
 	@Override
 	public ArrayList<QuestStateRecord> getQuestStates(int playerID)
 	{
-		return data.get(playerID);
+		if (data.containsKey(playerID))
+		{
+			return data.get(playerID);
+		} else
+		{
+			return new ArrayList<QuestStateRecord>();
+		}
 	}
 
 	/**

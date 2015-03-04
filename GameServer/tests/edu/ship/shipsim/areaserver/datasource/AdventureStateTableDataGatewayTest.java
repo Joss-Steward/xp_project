@@ -64,5 +64,16 @@ public abstract class AdventureStateTableDataGatewayTest
 		}
 	}
 	
+	/**
+	 * If a quest has no quests, we should return an empty list
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void returnsEmptyListIfNone() throws DatabaseException
+	{
+		AdventureStateTableDataGateway gateway = getGateway();
+		ArrayList<AdventureStateRecord> actual = gateway.getAdventureStates(109, 1);
+		assertEquals(0, actual.size());
+	}
 
 }

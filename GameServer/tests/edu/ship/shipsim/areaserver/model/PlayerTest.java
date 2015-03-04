@@ -163,11 +163,11 @@ public class PlayerTest extends DatabaseTest
 	public void testPlayerAddQuests()
 	{
 		Player p = playerManager.addPlayer(1);
-
-		QuestState quest = new QuestState(QuestStatesForTest.PLAYER1_QUEST1.getQuestID(), QuestStatesForTest.PLAYER1_QUEST1.getState());
+		int originalNumberOfQuests = p.getSizeOfQuestList();
+		QuestState quest = new QuestState(15, QuestStateList.AVAILABLE);
 		p.addQuestState(quest);
 		
 		assertEquals(QuestStateList.AVAILABLE, p.getQuestStateByID(1).getStateValue());
-		assertEquals(1, p.getSizeOfQuestList());
+		assertEquals(originalNumberOfQuests + 1, p.getSizeOfQuestList());
 	}
 }

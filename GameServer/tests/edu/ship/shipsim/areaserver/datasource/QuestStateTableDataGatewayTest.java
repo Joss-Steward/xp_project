@@ -99,5 +99,17 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 		gateway.createRow(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID(),
 				QuestStatesForTest.PLAYER1_QUEST1.getQuestID(), QuestStateList.TRIGGERED);
 	}
+	
+	/**
+	 * If a player has no quests, we should return an empty list
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void returnsEmptyListIfNone() throws DatabaseException
+	{
+		QuestStateTableDataGateway gateway = getGatewaySingleton();
+		ArrayList<QuestStateRecord> actual = gateway.getQuestStates(10);
+		assertEquals(0, actual.size());
+	}
 
 }

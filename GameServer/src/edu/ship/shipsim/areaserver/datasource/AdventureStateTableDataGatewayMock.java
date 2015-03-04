@@ -57,7 +57,14 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 	@Override
 	public ArrayList<AdventureStateRecord> getAdventureStates(int playerID, int questID)
 	{
-		return data.get(new Key(playerID, questID));
+		if (data.containsKey(new Key(playerID, questID)))
+		{
+			return data.get(new Key(playerID, questID));
+		}
+		else
+		{
+			return new ArrayList<AdventureStateRecord>();
+		}
 	}
 	
 	private class Key
