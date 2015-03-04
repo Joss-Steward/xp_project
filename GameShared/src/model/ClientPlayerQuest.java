@@ -83,5 +83,14 @@ public class ClientPlayerQuest
 	{
 		return adventures;
 	}
+
+	/**
+	 * Set the Client Player Adventure array list to the given array list
+	 * @param adventureList ClientPlayerAdventure ArrayList
+	 */
+	public void setAdventures(ArrayList<ClientPlayerAdventure> adventureList) 
+	{
+		this.adventures = adventureList;
+	}
 	
 }
