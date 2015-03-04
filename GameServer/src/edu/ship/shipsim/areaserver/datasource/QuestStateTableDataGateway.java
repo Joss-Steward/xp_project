@@ -36,4 +36,18 @@ public interface QuestStateTableDataGateway
 	 */
 	void createRow(int playerID, int questID, QuestStateEnum state) throws DatabaseException;
 
+	/**
+	 * Change the state of a given quest for a given player
+	 * @param playerID the player
+	 * @param questID the ID of the quest
+	 * @param newState the new state of the quest for this player
+	 * @throws DatabaseException if the data source cannot make the change
+	 */
+	void udpateState(int playerID, int questID, QuestStateEnum newState) throws DatabaseException;
+
+	/**
+	 * Put data back to its original state - only useful in mock gateways for testing purposes
+	 */
+	void resetData();
+
 }

@@ -38,7 +38,10 @@ private static QuestStateTableDataGateway singleton;
 		resetData();
 	}
 
-	private void resetData()
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#resetData()
+	 */
+	public void resetData()
 	{
 		data = new Hashtable<Integer, ArrayList<QuestStateRecord>>();
 		for(QuestStatesForTest a:QuestStatesForTest.values())
@@ -111,6 +114,23 @@ private static QuestStateTableDataGateway singleton;
 			throws DatabaseException
 	{
 		insertRow(playerID, new QuestStateRecord(playerID, questID, state));
+		
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#udpateState(int, int, datasource.QuestStateEnum)
+	 */
+	@Override
+	public void udpateState(int playerID, int questID, QuestStateEnum newState)
+	{
+		ArrayList<QuestStateRecord> quests = data.get(playerID);
+		for (QuestStateRecord qsRec: quests)
+		{
+			if (qsRec.getQuestID() == questID)
+			{
+				qsRec.setState(newState);
+			}
+		}
 		
 	}
 	

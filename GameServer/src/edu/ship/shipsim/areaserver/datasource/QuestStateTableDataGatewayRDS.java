@@ -145,4 +145,37 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 		}
 	}
 
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#udpateState(int, int, datasource.QuestStateEnum)
+	 */
+	@Override
+	public void udpateState(int playerID, int questID, QuestStateEnum newState) throws DatabaseException
+	{
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
+		{
+			PreparedStatement stmt = connection
+					.prepareStatement("UPDATE QuestStates SET questState = ? WHERE  playerID = ? and questID = ?");
+			stmt.setInt(1, newState.ordinal());
+			stmt.setInt(2, playerID);
+			stmt.setInt(3, questID);
+			stmt.executeUpdate();
+
+		} catch (SQLException e)
+		{
+			throw new DatabaseException(
+					"Couldn't update a quest state record for player with ID " + playerID
+							+ " and quest with ID " + questID, e);
+		}
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#resetData()
+	 */
+	@Override
+	public void resetData()
+	{
+		// Nothing required
+	}
+
 }

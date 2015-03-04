@@ -27,6 +27,13 @@ public class QuestStateRecord
 		this.state = state;
 	}
 	/**
+	 * @param state the new state
+	 */
+	public void setState(QuestStateEnum state)
+	{
+		this.state = state;
+	}
+	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

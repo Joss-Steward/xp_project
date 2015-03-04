@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import org.junit.After;
 import org.junit.Test;
 
 import datasource.DatabaseException;
@@ -19,6 +20,18 @@ import datasource.QuestStateEnum;
 public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 {
 
+	private QuestStateTableDataGateway gateway;
+	/**
+	 * Make sure any static information is cleaned up between tests
+	 */
+	@After
+	public void cleanup()
+	{
+		if (gateway != null)
+		{
+			gateway.resetData();
+		}
+	}
 	/**
 	 * @return the gateway we should test
 	 */
@@ -43,7 +56,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	@Test
 	public void retrieveAllAdventuresForQuest() throws DatabaseException
 	{
-		QuestStateTableDataGateway gateway = getGatewaySingleton();
+		gateway = getGatewaySingleton();
 		ArrayList<QuestStateRecord> records = gateway.getQuestStates(1);
 		assertEquals(2, records.size());
 		QuestStateRecord record = records.get(0);
@@ -75,7 +88,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	@Test
 	public void canInsertARecord() throws DatabaseException
 	{
-		QuestStateTableDataGateway gateway = getGatewaySingleton();
+		gateway = getGatewaySingleton();
 		gateway.createRow(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID(), 3,
 				QuestStateEnum.TRIGGERED);
 		ArrayList<QuestStateRecord> actual = gateway
@@ -95,7 +108,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void cannotInsertDuplicateData() throws DatabaseException
 	{
-		QuestStateTableDataGateway gateway = getGatewaySingleton();
+		gateway = getGatewaySingleton();
 		gateway.createRow(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID(),
 				QuestStatesForTest.PLAYER1_QUEST1.getQuestID(), QuestStateEnum.TRIGGERED);
 	}
@@ -107,18 +120,30 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	@Test
 	public void returnsEmptyListIfNone() throws DatabaseException
 	{
-		QuestStateTableDataGateway gateway = getGatewaySingleton();
+		gateway = getGatewaySingleton();
 		ArrayList<QuestStateRecord> actual = gateway.getQuestStates(10);
 		assertEquals(0, actual.size());
 	}
 
 	/**
+	 * @throws DatabaseException shouldn't
 	 * 
 	 */
 	@Test
-	public void canChangeExistingState()
+	public void canChangeExistingState() throws DatabaseException
 	{
-//		QuestStateTableDataGateway gateway = getGatewaySingleton();
-		fail("Need to build this test");
+		gateway = getGatewaySingleton();
+		int playerID = QuestStatesForTest.PLAYER1_QUEST1.getPlayerID();
+		int questID = QuestStatesForTest.PLAYER1_QUEST1.getQuestID();
+		gateway.udpateState(playerID, questID, QuestStateEnum.FINISHED);
+		
+		ArrayList<QuestStateRecord> actual = gateway.getQuestStates(playerID);
+		for (QuestStateRecord qsRec: actual)
+		{
+			if ((qsRec.getPlayerID() == playerID) && (qsRec.getQuestID() == questID) )
+			{
+				assertEquals(QuestStateEnum.FINISHED, qsRec.getState());
+			}
+		}
 	}
 }
