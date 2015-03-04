@@ -1,6 +1,6 @@
 package edu.ship.shipsim.areaserver.datasource;
 
-import datasource.AdventureStateList;
+import datasource.AdventureStateEnum;
 
 /**
  * A data transfer record that contains the state of one adventure for one player
@@ -13,7 +13,7 @@ public class AdventureStateRecord
 	private int playerID;
 	private int questID;
 	private int adventureID;
-	private AdventureStateList state;
+	private AdventureStateEnum state;
 
 	/**
 	 * @param playerID the player
@@ -22,7 +22,7 @@ public class AdventureStateRecord
 	 * @param state the player's state for that adventure
 	 */
 	public AdventureStateRecord(int playerID, int questID, int adventureID,
-			AdventureStateList state)
+			AdventureStateEnum state)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
@@ -57,7 +57,7 @@ public class AdventureStateRecord
 	/**
 	 * @return the state
 	 */
-	public AdventureStateList getState()
+	public AdventureStateEnum getState()
 	{
 		return state;
 	}

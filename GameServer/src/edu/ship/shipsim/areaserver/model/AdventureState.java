@@ -1,6 +1,6 @@
 package edu.ship.shipsim.areaserver.model;
 
-import datasource.AdventureStateList;
+import datasource.AdventureStateEnum;
 
 /**
  * Stores the states of all the adventures for an individual player on the
@@ -14,7 +14,7 @@ public class AdventureState
 
 	private int adventureID;
 
-	private AdventureStateList adventureState;
+	private AdventureStateEnum adventureState;
 
 	/**
 	 * Constructor for the instance variables.
@@ -24,7 +24,7 @@ public class AdventureState
 	 * @param state
 	 *            : state of adventure
 	 */
-	public AdventureState(int id, AdventureStateList state)
+	public AdventureState(int id, AdventureStateEnum state)
 	{
 		this.adventureID = id;
 		this.adventureState = state;
@@ -65,7 +65,7 @@ public class AdventureState
 	 * 
 	 * @return the state
 	 */
-	public AdventureStateList getState()
+	public AdventureStateEnum getState()
 	{
 		return adventureState;
 	}
@@ -89,9 +89,9 @@ public class AdventureState
 	 */
 	public void trigger()
 	{
-		if (this.adventureState.equals(AdventureStateList.HIDDEN))
+		if (this.adventureState.equals(AdventureStateEnum.HIDDEN))
 		{
-			this.adventureState = AdventureStateList.PENDING;
+			this.adventureState = AdventureStateEnum.PENDING;
 		}
 	}
 

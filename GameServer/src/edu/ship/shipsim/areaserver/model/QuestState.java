@@ -2,7 +2,7 @@ package edu.ship.shipsim.areaserver.model;
 
 import java.util.ArrayList;
 
-import datasource.QuestStateList;
+import datasource.QuestStateEnum;
 
 /**
  * Stores the states of all the quests for an individual player on the server
@@ -12,7 +12,7 @@ import datasource.QuestStateList;
 public class QuestState 
 {
 	private int questID;
-	private QuestStateList questState;
+	private QuestStateEnum questState;
 	private ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
 	
 	/**
@@ -20,7 +20,7 @@ public class QuestState
 	 * @param id unique ID for the quest in the system
 	 * @param questStateList the quest's state for the player, can be either hidden, available, triggered, fulfilled, completed
 	 */
-	public QuestState(int id, QuestStateList questStateList)
+	public QuestState(int id, QuestStateEnum questStateList)
 	{
 		this.questID = id;
 		this.questState = questStateList;
@@ -39,7 +39,7 @@ public class QuestState
 	 * Returns the quest's state
 	 * @return questState the state of the quest for a player
 	 */
-	public QuestStateList getStateValue()
+	public QuestStateEnum getStateValue()
 	{
 		return questState;
 	}
@@ -72,9 +72,9 @@ public class QuestState
 	 */
 	public void trigger()
 	{
-		if(this.getStateValue().equals(QuestStateList.HIDDEN))
+		if(this.getStateValue().equals(QuestStateEnum.HIDDEN))
 		{
-			this.questState = QuestStateList.AVAILABLE;
+			this.questState = QuestStateEnum.AVAILABLE;
 			for(AdventureState state: adventureList)
 			{
 				state.trigger();

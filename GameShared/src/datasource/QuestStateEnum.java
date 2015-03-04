@@ -5,7 +5,7 @@ package datasource;
  * @author Merlin
  *
  */
-public enum QuestStateList
+public enum QuestStateEnum
 {
 
 	/**

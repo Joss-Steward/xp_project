@@ -6,7 +6,7 @@ package datasource;
  * @author Merlin
  *
  */
-public enum AdventureStateList
+public enum AdventureStateEnum
 {
 	/**
 	 * This adventure isn't yet available to the players.

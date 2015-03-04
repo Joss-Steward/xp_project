@@ -1,6 +1,6 @@
 package edu.ship.shipsim.areaserver.datasource;
 
-import datasource.QuestStateList;
+import datasource.QuestStateEnum;
 
 /**
  * A data transfer object that contains the state of a quest for a player
@@ -14,13 +14,13 @@ public class QuestStateRecord
 
 	private int questID;
 
-	private QuestStateList state;
+	private QuestStateEnum state;
 	/**
 	 * @param playerID the player's unique ID
 	 * @param questID the quest's unique ID
 	 * @param state this player's state for the given quest
 	 */
-	public QuestStateRecord(int playerID, int questID, QuestStateList state)
+	public QuestStateRecord(int playerID, int questID, QuestStateEnum state)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
@@ -67,7 +67,7 @@ public class QuestStateRecord
 	/**
 	 * @return the player's state for this quest
 	 */
-	public QuestStateList getState()
+	public QuestStateEnum getState()
 	{
 		return state;
 	}

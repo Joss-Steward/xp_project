@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-import datasource.QuestStateList;
+import datasource.QuestStateEnum;
 
 /**
  * Player has a quest that will contain a description
@@ -14,7 +14,7 @@ public class ClientPlayerQuest
 {
 	private int questID;
 	private String questDescription;
-	private QuestStateList state;
+	private QuestStateEnum state;
 	private ArrayList<ClientPlayerAdventure> adventures = new ArrayList<ClientPlayerAdventure>();
 	
 	/**
@@ -23,7 +23,7 @@ public class ClientPlayerQuest
 	 * @param questDescription the quests description
 	 * @param state the quests state
 	 */
-	public ClientPlayerQuest(int questID, String questDescription, QuestStateList state)
+	public ClientPlayerQuest(int questID, String questDescription, QuestStateEnum state)
 	{
 		this.questID = questID;
 		this.questDescription = questDescription;
@@ -52,7 +52,7 @@ public class ClientPlayerQuest
 	 * Getter for quest state
 	 * @return the quests state
 	 */
-	public QuestStateList getQuestState() 
+	public QuestStateEnum getQuestState() 
 	{
 		return state;
 	}

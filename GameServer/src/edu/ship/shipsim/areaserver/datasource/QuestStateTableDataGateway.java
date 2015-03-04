@@ -3,7 +3,7 @@ package edu.ship.shipsim.areaserver.datasource;
 import java.util.ArrayList;
 
 import datasource.DatabaseException;
-import datasource.QuestStateList;
+import datasource.QuestStateEnum;
 
 /**
  * Requirements for all implementations of the table gateway into the quest state data source
@@ -34,6 +34,6 @@ public interface QuestStateTableDataGateway
 	 * @param state the player's state for that quest
 	 * @throws DatabaseException if we can't talk to the data source
 	 */
-	void createRow(int playerID, int questID, QuestStateList state) throws DatabaseException;
+	void createRow(int playerID, int questID, QuestStateEnum state) throws DatabaseException;
 
 }

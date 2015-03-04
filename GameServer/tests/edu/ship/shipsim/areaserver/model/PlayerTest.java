@@ -18,7 +18,7 @@ import data.Position;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayersForTest;
-import datasource.QuestStateList;
+import datasource.QuestStateEnum;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
@@ -163,10 +163,10 @@ public class PlayerTest extends DatabaseTest
 	{
 		Player p = playerManager.addPlayer(1);
 		int originalNumberOfQuests = p.getSizeOfQuestList();
-		QuestState quest = new QuestState(15, QuestStateList.AVAILABLE);
+		QuestState quest = new QuestState(15, QuestStateEnum.AVAILABLE);
 		p.addQuestState(quest);
 		
-		assertEquals(QuestStateList.AVAILABLE, p.getQuestStateByID(1).getStateValue());
+		assertEquals(QuestStateEnum.AVAILABLE, p.getQuestStateByID(1).getStateValue());
 		assertEquals(originalNumberOfQuests + 1, p.getSizeOfQuestList());
 	}
 }

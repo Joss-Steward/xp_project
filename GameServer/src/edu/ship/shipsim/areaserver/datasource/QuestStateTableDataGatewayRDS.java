@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import model.DatabaseManager;
 import datasource.DatabaseException;
-import datasource.QuestStateList;
+import datasource.QuestStateEnum;
 
 /**
  * The RDS implementation of the gateway
@@ -24,7 +24,7 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 	 * @param state the player's state in that quest
 	 * @throws DatabaseException if we can't talk to the RDS server
 	 */
-	public void createRow(int playerID, int questID, QuestStateList state) throws DatabaseException
+	public void createRow(int playerID, int questID, QuestStateEnum state) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		checkForDuplicateEntry(playerID, questID);
@@ -108,9 +108,9 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 
 	private static QuestStateTableDataGateway singleton;
 
-	private QuestStateList convertToState(int int1)
+	private QuestStateEnum convertToState(int int1)
 	{
-		return QuestStateList.values()[int1];
+		return QuestStateEnum.values()[int1];
 	}
 	
 	/**

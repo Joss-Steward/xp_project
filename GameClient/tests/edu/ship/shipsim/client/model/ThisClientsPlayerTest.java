@@ -15,8 +15,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import data.Position;
-import datasource.AdventureStateList;
-import datasource.QuestStateList;
+import datasource.AdventureStateEnum;
+import datasource.QuestStateEnum;
 import edu.ship.shipsim.client.model.PlayerManager;
 import edu.ship.shipsim.client.model.ThisClientsPlayer;
 import edu.ship.shipsim.client.model.reports.PlayerMovedReport;
@@ -88,11 +88,11 @@ public class ThisClientsPlayerTest
 			fail("Could not create this client's player from login");
 		}
 		
-		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", AdventureStateList.HIDDEN);
+		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", AdventureStateEnum.HIDDEN);
 		assertEquals(1, adventureOne.getAdventureID());
-		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", AdventureStateList.HIDDEN);
+		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", AdventureStateEnum.HIDDEN);
 		assertEquals(2, adventureTwo.getAdventureID());
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateList.HIDDEN);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.HIDDEN);
 		q.addAdventure(adventureOne);
 		q.addAdventure(adventureTwo);
 		assertEquals(2, q.getAdventureList().size());

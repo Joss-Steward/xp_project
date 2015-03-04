@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.DatabaseManager;
-import datasource.AdventureStateList;
+import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
 
 /**
@@ -93,9 +93,9 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 		}
 	}
 
-	private AdventureStateList convertToState(int int1)
+	private AdventureStateEnum convertToState(int int1)
 	{
-		return AdventureStateList.values()[int1];
+		return AdventureStateEnum.values()[int1];
 	}
 	/**
 	 * Create a new row in the table
@@ -105,7 +105,7 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 	 * @param adventureState the state of this adventure for this player
 	 * @throws DatabaseException if we can't talk to the RDS 
 	 */
-	public static void createRow(int questID, int adventureID, int playerID, AdventureStateList adventureState) throws DatabaseException
+	public static void createRow(int questID, int adventureID, int playerID, AdventureStateEnum adventureState) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try

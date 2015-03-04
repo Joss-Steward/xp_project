@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
-import datasource.QuestStateList;
+import datasource.QuestStateEnum;
 
 /**
  * An abstract class that tests the table data gateways into the Adventure table
@@ -77,12 +77,12 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	{
 		QuestStateTableDataGateway gateway = getGatewaySingleton();
 		gateway.createRow(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID(), 3,
-				QuestStateList.TRIGGERED);
+				QuestStateEnum.TRIGGERED);
 		ArrayList<QuestStateRecord> actual = gateway
 				.getQuestStates(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID());
 		assertEquals(3, actual.size());
 		assertTrue(actual.contains(new QuestStateRecord(QuestStatesForTest.PLAYER1_QUEST1
-				.getPlayerID(), 3, QuestStateList.TRIGGERED)));
+				.getPlayerID(), 3, QuestStateEnum.TRIGGERED)));
 
 	}
 
@@ -97,7 +97,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	{
 		QuestStateTableDataGateway gateway = getGatewaySingleton();
 		gateway.createRow(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID(),
-				QuestStatesForTest.PLAYER1_QUEST1.getQuestID(), QuestStateList.TRIGGERED);
+				QuestStatesForTest.PLAYER1_QUEST1.getQuestID(), QuestStateEnum.TRIGGERED);
 	}
 	
 	/**
@@ -112,4 +112,13 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 		assertEquals(0, actual.size());
 	}
 
+	/**
+	 * 
+	 */
+	@Test
+	public void canChangeExistingState()
+	{
+//		QuestStateTableDataGateway gateway = getGatewaySingleton();
+		fail("Need to build this test");
+	}
 }

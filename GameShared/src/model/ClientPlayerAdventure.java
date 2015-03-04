@@ -1,6 +1,6 @@
 package model;
 
-import datasource.AdventureStateList;
+import datasource.AdventureStateEnum;
 
 /**
  * Stores the adventure for the GameClient which encapsulates the 
@@ -12,7 +12,7 @@ public class ClientPlayerAdventure
 {
 	private int adventureID;
 	private String adventureDescription;
-	private AdventureStateList adventureState;
+	private AdventureStateEnum adventureState;
 	
 	/**
 	 * Basic constructor for ClientPlayerAdventure
@@ -20,7 +20,7 @@ public class ClientPlayerAdventure
 	 * @param adventureDescription ; description of the adventure
 	 * @param adventureState ; current state of this adventure using the AdventureStateList enum
 	 */
-	public ClientPlayerAdventure(int adventureID, String adventureDescription, AdventureStateList adventureState) 
+	public ClientPlayerAdventure(int adventureID, String adventureDescription, AdventureStateEnum adventureState) 
 	{
 		this.adventureID = adventureID;
 		this.adventureDescription = adventureDescription;
@@ -49,7 +49,7 @@ public class ClientPlayerAdventure
 	 * Retrieve the adventure's state 
 	 * @return adventureState ; The current state of the adventure. Uses the enum AdventureStateList
 	 */
-	public AdventureStateList getAdventuretState() 
+	public AdventureStateEnum getAdventuretState() 
 	{
 		return adventureState;
 	}
@@ -57,14 +57,14 @@ public class ClientPlayerAdventure
 	/**
 	 * @return the adventureState
 	 */
-	public AdventureStateList getAdventureState() {
+	public AdventureStateEnum getAdventureState() {
 		return adventureState;
 	}
 
 	/**
 	 * @param adventureState the adventureState to set
 	 */
-	public void setAdventureState(AdventureStateList adventureState) {
+	public void setAdventureState(AdventureStateEnum adventureState) {
 		this.adventureState = adventureState;
 	}
 

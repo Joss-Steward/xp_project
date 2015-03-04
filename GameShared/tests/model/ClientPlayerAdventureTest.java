@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import datasource.AdventureStateList;
+import datasource.AdventureStateEnum;
 
 /**
  * Tests the basic ClientPlayerAdventure class and its functionality. 
@@ -19,9 +19,9 @@ public class ClientPlayerAdventureTest
 	@Test
 	public void testClientPlayerAdventureInitializaiton() 
 	{
-		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure", AdventureStateList.HIDDEN);
+		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure", AdventureStateEnum.HIDDEN);
 		assertEquals(1, a.getAdventureID());
 		assertEquals("Test Adventure", a.getAdventureDescription());
-		assertEquals(AdventureStateList.HIDDEN, a.getAdventuretState());
+		assertEquals(AdventureStateEnum.HIDDEN, a.getAdventuretState());
 	}
 }

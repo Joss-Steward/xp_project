@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import datasource.DatabaseException;
-import datasource.QuestStateList;
+import datasource.QuestStateEnum;
 
 /**
  * A mock implementation of the gateway
@@ -104,10 +104,10 @@ private static QuestStateTableDataGateway singleton;
 	}
 
 	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#createRow(int, int, datasource.QuestStateList)
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#createRow(int, int, datasource.QuestStateEnum)
 	 */
 	@Override
-	public void createRow(int playerID, int questID, QuestStateList state)
+	public void createRow(int playerID, int questID, QuestStateEnum state)
 			throws DatabaseException
 	{
 		insertRow(playerID, new QuestStateRecord(playerID, questID, state));

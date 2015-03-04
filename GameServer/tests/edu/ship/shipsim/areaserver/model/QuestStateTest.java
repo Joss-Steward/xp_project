@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import datasource.AdventureStateList;
-import datasource.QuestStateList;
+import datasource.AdventureStateEnum;
+import datasource.QuestStateEnum;
 
 /**
  * Test for the QuestState Class 
@@ -23,10 +23,10 @@ public class QuestStateTest
 	@Test
 	public void testInitialize() 
 	{
-		QuestState qs = new QuestState(1, QuestStateList.AVAILABLE);
+		QuestState qs = new QuestState(1, QuestStateEnum.AVAILABLE);
 		
 		assertEquals(1, qs.getID());
-		assertEquals(QuestStateList.AVAILABLE, qs.getStateValue());
+		assertEquals(QuestStateEnum.AVAILABLE, qs.getStateValue());
 	}
 	
 	/**
@@ -36,13 +36,13 @@ public class QuestStateTest
 	public void testAddAdventures()
 	{
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
-		AdventureState as1 = new AdventureState(1, AdventureStateList.HIDDEN);
-		AdventureState as2 = new AdventureState(2, AdventureStateList.HIDDEN);
+		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN);
+		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN);
 		
 		adventureList.add(as1);
 		adventureList.add(as2);
 		
-		QuestState qs = new QuestState(1, QuestStateList.HIDDEN);
+		QuestState qs = new QuestState(1, QuestStateEnum.HIDDEN);
 		qs.addAdventures(adventureList);
 		
 		assertEquals(2, qs.getSizeOfAdventureList());
@@ -54,9 +54,9 @@ public class QuestStateTest
 	@Test
 	public void testTriggerQuest()
 	{
-		QuestState quest = new QuestState(1, QuestStateList.HIDDEN);
+		QuestState quest = new QuestState(1, QuestStateEnum.HIDDEN);
 		quest.trigger();
-		assertEquals(QuestStateList.AVAILABLE, quest.getStateValue());
+		assertEquals(QuestStateEnum.AVAILABLE, quest.getStateValue());
 	}
 
 	/**
@@ -65,9 +65,9 @@ public class QuestStateTest
 	@Test
 	public void testTriggerFinishedQuest()
 	{
-		QuestState quest = new QuestState(1, QuestStateList.FINISHED);
+		QuestState quest = new QuestState(1, QuestStateEnum.FINISHED);
 		quest.trigger();
-		assertEquals(QuestStateList.FINISHED, quest.getStateValue());
+		assertEquals(QuestStateEnum.FINISHED, quest.getStateValue());
 	}
 	
 	/**
@@ -76,12 +76,12 @@ public class QuestStateTest
 	@Test
 	public void testTriggerQuestsAdventures()
 	{
-		QuestState qs = new QuestState(1, QuestStateList.HIDDEN);
+		QuestState qs = new QuestState(1, QuestStateEnum.HIDDEN);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
 		
-		AdventureState as1 = new AdventureState(1, AdventureStateList.HIDDEN);
-		AdventureState as2 = new AdventureState(2, AdventureStateList.HIDDEN);
-		AdventureState as3 = new AdventureState(3, AdventureStateList.HIDDEN);
+		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN);
+		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN);
+		AdventureState as3 = new AdventureState(3, AdventureStateEnum.HIDDEN);
 		
 		adList.add(as1);
 		adList.add(as2);
@@ -94,7 +94,7 @@ public class QuestStateTest
 		
 		for(AdventureState as : adList)
 		{
-			assertEquals(AdventureStateList.PENDING, as.getState());
+			assertEquals(AdventureStateEnum.PENDING, as.getState());
 		}
 		
 	}

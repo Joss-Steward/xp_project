@@ -1,6 +1,6 @@
 package edu.ship.shipsim.areaserver.datasource;
 
-import datasource.QuestStateList;
+import datasource.QuestStateEnum;
 
 /**
  * Creates adventures for the DB
@@ -13,19 +13,19 @@ public enum QuestStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST1(1, 1, QuestStateList.AVAILABLE),
+	PLAYER1_QUEST1(1, 1, QuestStateEnum.AVAILABLE),
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST2(1, 2, QuestStateList.FULFILLED),
+	PLAYER1_QUEST2(1, 2, QuestStateEnum.FULFILLED),
 	/**
 	 * 
 	 */
-	PLAYER2_Quest1(2, 1, QuestStateList.TRIGGERED);
+	PLAYER2_Quest1(2, 1, QuestStateEnum.TRIGGERED);
 
 	private int questID;
 	private int playerID;
-	private QuestStateList questState;
+	private QuestStateEnum questState;
 
 	/**
 	 * Constructor for Quest State Enum
@@ -37,7 +37,7 @@ public enum QuestStatesForTest
 	 * @param questState
 	 *            the state of the quest for the specified player
 	 */
-	QuestStatesForTest(int playerID, int questID, QuestStateList questState)
+	QuestStatesForTest(int playerID, int questID, QuestStateEnum questState)
 	{
 		this.questID = questID;
 		this.playerID = playerID;
@@ -55,7 +55,7 @@ public enum QuestStatesForTest
 	/**
 	 * @return the state of the quest for the given player
 	 */
-	public QuestStateList getState()
+	public QuestStateEnum getState()
 	{
 		return questState;
 	}
