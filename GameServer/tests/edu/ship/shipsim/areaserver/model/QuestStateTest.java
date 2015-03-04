@@ -54,9 +54,9 @@ public class QuestStateTest
 	@Test
 	public void testTriggerQuest()
 	{
-		QuestState quest = new QuestState(1, QuestStateEnum.HIDDEN);
+		QuestState quest = new QuestState(1, QuestStateEnum.AVAILABLE);
 		quest.trigger();
-		assertEquals(QuestStateEnum.AVAILABLE, quest.getStateValue());
+		assertEquals(QuestStateEnum.TRIGGERED, quest.getStateValue());
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class QuestStateTest
 	@Test
 	public void testTriggerQuestsAdventures()
 	{
-		QuestState qs = new QuestState(1, QuestStateEnum.HIDDEN);
+		QuestState qs = new QuestState(1, QuestStateEnum.AVAILABLE);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
 		
 		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN);

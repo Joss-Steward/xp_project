@@ -72,9 +72,9 @@ public class QuestState
 	 */
 	public void trigger()
 	{
-		if(this.getStateValue().equals(QuestStateEnum.HIDDEN))
+		if(this.getStateValue().equals(QuestStateEnum.AVAILABLE))
 		{
-			this.questState = QuestStateEnum.AVAILABLE;
+			this.questState = QuestStateEnum.TRIGGERED;
 			for(AdventureState state: adventureList)
 			{
 				state.trigger();
