@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import datasource.DatabaseException;
 import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
+import model.QualifiedObservableReport;
 import edu.ship.shipsim.areaserver.model.AdventureState;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.Quest;
@@ -16,7 +17,7 @@ import edu.ship.shipsim.areaserver.model.QuestState;
  * @author Ryan
  *
  */
-public class CurrentQuestStateReport 
+public class CurrentQuestStateReport implements QualifiedObservableReport
 {
 
 	private ArrayList<ClientPlayerQuest> clientPlayerQuestList = new ArrayList<ClientPlayerQuest>();

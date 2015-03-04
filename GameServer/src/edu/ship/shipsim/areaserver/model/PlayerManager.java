@@ -12,7 +12,6 @@ import model.QualifiedObservable;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import datasource.DatabaseException;
-import edu.ship.shipsim.areaserver.model.reports.CurrentQuestStateReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerLeaveReport;
 
@@ -120,7 +119,7 @@ public class PlayerManager extends QualifiedObservable
 
 			this.notifyObservers(new PlayerConnectionReport(player));
 			
-			this.notifyObservers(new CurrentQuestStateReport(player));
+			//this.notifyObservers(new CurrentQuestStateReport(player));
 			
 			return player;
 		} else
