@@ -21,6 +21,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 {
 
 	private QuestStateTableDataGateway gateway;
+
 	/**
 	 * Make sure any static information is cleaned up between tests
 	 */
@@ -32,6 +33,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 			gateway.resetData();
 		}
 	}
+
 	/**
 	 * @return the gateway we should test
 	 */
@@ -103,7 +105,8 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	 * The combination of player ID and quest ID should be unique in the table.
 	 * If we try to add a duplicate, we should get a database exception
 	 * 
-	 * @throws DatabaseException should!
+	 * @throws DatabaseException
+	 *             should!
 	 */
 	@Test(expected = DatabaseException.class)
 	public void cannotInsertDuplicateData() throws DatabaseException
@@ -112,10 +115,12 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 		gateway.createRow(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID(),
 				QuestStatesForTest.PLAYER1_QUEST1.getQuestID(), QuestStateEnum.TRIGGERED);
 	}
-	
+
 	/**
 	 * If a player has no quests, we should return an empty list
-	 * @throws DatabaseException shouldn't
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
 	public void returnsEmptyListIfNone() throws DatabaseException
@@ -126,7 +131,8 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	}
 
 	/**
-	 * @throws DatabaseException shouldn't
+	 * @throws DatabaseException
+	 *             shouldn't
 	 * 
 	 */
 	@Test
@@ -136,17 +142,24 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 		int playerID = QuestStatesForTest.PLAYER1_QUEST1.getPlayerID();
 		int questID = QuestStatesForTest.PLAYER1_QUEST1.getQuestID();
 		gateway.udpateState(playerID, questID, QuestStateEnum.FINISHED);
-		
+
 		ArrayList<QuestStateRecord> actual = gateway.getQuestStates(playerID);
-		for (QuestStateRecord qsRec: actual)
+		for (QuestStateRecord qsRec : actual)
 		{
-			if ((qsRec.getPlayerID() == playerID) && (qsRec.getQuestID() == questID) )
+			if ((qsRec.getPlayerID() == playerID) && (qsRec.getQuestID() == questID))
 			{
 				assertEquals(QuestStateEnum.FINISHED, qsRec.getState());
 			}
 		}
 	}
-	
+
+	/**
+	 * If we try to update a quest state that doesn't exist, we should throw an
+	 * exception
+	 * 
+	 * @throws DatabaseException
+	 *             should
+	 */
 	@Test(expected = DatabaseException.class)
 	public void updatingNonExistentQuestException() throws DatabaseException
 	{
@@ -154,6 +167,6 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 		int playerID = 10;
 		int questID = QuestStatesForTest.PLAYER1_QUEST1.getQuestID();
 		gateway.udpateState(playerID, questID, QuestStateEnum.FINISHED);
-		
+
 	}
 }
