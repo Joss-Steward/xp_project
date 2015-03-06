@@ -62,4 +62,12 @@ public class AdventureStateRecord
 		return state;
 	}
 
+	/**
+	 * @param newState the state this adventure should have
+	 */
+	public void setState(AdventureStateEnum newState)
+	{
+		this.state = newState;
+	}
+
 }

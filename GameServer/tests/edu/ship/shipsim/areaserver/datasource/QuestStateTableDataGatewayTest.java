@@ -154,19 +154,26 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	}
 
 	/**
-	 * If we try to update a quest state that doesn't exist, we should throw an
-	 * exception
+	 * If we try to update a quest state that doesn't exist, it should be added
 	 * 
 	 * @throws DatabaseException
 	 *             should
 	 */
-	@Test(expected = DatabaseException.class)
+	@Test
 	public void updatingNonExistentQuestException() throws DatabaseException
 	{
 		gateway = getGatewaySingleton();
 		int playerID = 10;
 		int questID = QuestStatesForTest.PLAYER1_QUEST1.getQuestID();
 		gateway.udpateState(playerID, questID, QuestStateEnum.FINISHED);
-
+		ArrayList<QuestStateRecord> actual = gateway.getQuestStates(playerID);
+		assertEquals(1, actual.size());
+		for (QuestStateRecord qsRec : actual)
+		{
+			if ((qsRec.getPlayerID() == playerID) && (qsRec.getQuestID() == questID))
+			{
+				assertEquals(QuestStateEnum.FINISHED, qsRec.getState());
+			}
+		}
 	}
 }

@@ -118,7 +118,7 @@ private static QuestStateTableDataGateway singleton;
 	}
 
 	/**
-	 * @throws DatabaseException if you try to update the state of a quest for which we have to state
+	 * @throws DatabaseException shouldn't
 	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#udpateState(int, int, datasource.QuestStateEnum)
 	 */
 	@Override
@@ -140,7 +140,7 @@ private static QuestStateTableDataGateway singleton;
 		}
 		if (!updated)
 		{
-			throw new DatabaseException("Tried to update existing quest that doesn't exist: playerID " + playerID + " questID " + questID);
+			createRow(playerID, questID, newState);
 		}
 		
 	}

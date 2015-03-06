@@ -30,12 +30,17 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1_ADV1(2, 1, 1, AdventureStateEnum.PENDING),
+	PLAYER2_QUEST1_ADV1(2, 1, 1, AdventureStateEnum.HIDDEN),
 
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1_ADV2(2, 1, 2, AdventureStateEnum.PENDING);
+	PLAYER2_QUEST1_ADV2(2, 1, 2, AdventureStateEnum.PENDING),
+	
+	/**
+	 * 
+	 */
+	PLAYER2_QUEST1_ADV3(2, 1, 3, AdventureStateEnum.NEED_NOTIFICATION);
 
 	
 	private int adventureID;

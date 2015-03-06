@@ -3,22 +3,27 @@ package edu.ship.shipsim.areaserver.datasource;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import datasource.AdventureStateEnum;
+import datasource.DatabaseException;
+
 /**
  * Mock version of the gateway to the table of adventure states.
+ * 
  * @author merlin
  *
  */
 public class AdventureStateTableDataGatewayMock implements AdventureStateTableDataGateway
 {
 	private static AdventureStateTableDataGateway singleton;
-	
+
 	/**
 	 * Retrieves the mock gateway singleton.
+	 * 
 	 * @return singleton
 	 */
 	public static synchronized AdventureStateTableDataGateway getSingleton()
 	{
-		if(singleton == null)
+		if (singleton == null)
 		{
 			singleton = new AdventureStateTableDataGatewayMock();
 		}
@@ -26,18 +31,27 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 	}
 
 	private Hashtable<Key, ArrayList<AdventureStateRecord>> data;
-	
+
 	/**
 	 * build the mock data from AdventuresForTest
 	 */
 	private AdventureStateTableDataGatewayMock()
 	{
+		resetData();
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway#resetData()
+	 */
+	public void resetData()
+	{
 		data = new Hashtable<Key, ArrayList<AdventureStateRecord>>();
-		for(AdventureStatesForTest a:AdventureStatesForTest.values())
+		for (AdventureStatesForTest a : AdventureStatesForTest.values())
 		{
-			AdventureStateRecord rec = new AdventureStateRecord(a.getPlayerID(), a.getQuestID(), a.getAdventureID(), a.getState());
-			
-			Key key = new Key (a.getPlayerID(), a.getQuestID());
+			AdventureStateRecord rec = new AdventureStateRecord(a.getPlayerID(),
+					a.getQuestID(), a.getAdventureID(), a.getState());
+
+			Key key = new Key(a.getPlayerID(), a.getQuestID());
 			if (data.containsKey(key))
 			{
 				ArrayList<AdventureStateRecord> x = data.get(key);
@@ -50,9 +64,10 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 			}
 		}
 	}
-	
+
 	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway#getAdventureStates(int, int)
+	 * @see edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway#getAdventureStates(int,
+	 *      int)
 	 */
 	@Override
 	public ArrayList<AdventureStateRecord> getAdventureStates(int playerID, int questID)
@@ -60,19 +75,18 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 		if (data.containsKey(new Key(playerID, questID)))
 		{
 			return data.get(new Key(playerID, questID));
-		}
-		else
+		} else
 		{
 			return new ArrayList<AdventureStateRecord>();
 		}
 	}
-	
+
 	private class Key
 	{
 		private int playerID;
 		private int questID;
-		
-		public Key (int playerID, int questID)
+
+		public Key(int playerID, int questID)
 		{
 			this.playerID = playerID;
 			this.questID = questID;
@@ -100,7 +114,8 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 				return false;
 			Key other = (Key) obj;
 			if (!getOuterType().equals(other.getOuterType()))
-				return false;;
+				return false;
+			;
 			if (playerID != other.playerID)
 				return false;
 			if (questID != other.questID)
@@ -113,5 +128,53 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 			return AdventureStateTableDataGatewayMock.this;
 		}
 	}
-	
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway#updateState(int,
+	 *      int, int, datasource.AdventureStateEnum)
+	 */
+	@Override
+	public void updateState(int playerID, int questID, int adventureID,
+			AdventureStateEnum newState) throws DatabaseException
+	{
+		if (data.containsKey(new Key(playerID, questID)))
+		{
+			ArrayList<AdventureStateRecord> advStates = data.get(new Key(playerID,
+					questID));
+			for (AdventureStateRecord asRec : advStates)
+			{
+				if ((asRec.getQuestID() == questID)
+						&& (asRec.getAdventureID() == adventureID))
+				{
+					asRec.setState(newState);
+				}
+			}
+		} else
+		{
+			ArrayList<AdventureStateRecord> list = new ArrayList<AdventureStateRecord>();
+			list.add(new AdventureStateRecord(playerID, questID, adventureID, newState));
+			data.put(new Key(playerID, questID), list);
+		}
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway#createTable()
+	 */
+	@Override
+	public void createTable() throws DatabaseException
+	{
+		resetData();
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway#createRow(int,
+	 *      int, int, datasource.AdventureStateEnum)
+	 */
+	@Override
+	public void createRow(int playerID, int questID, int adventureID,
+			AdventureStateEnum state) throws DatabaseException
+	{
+		updateState(playerID, questID, adventureID, state);
+	}
+
 }

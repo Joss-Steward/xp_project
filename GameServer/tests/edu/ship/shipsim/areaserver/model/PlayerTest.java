@@ -19,6 +19,7 @@ import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
+import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayMock;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
@@ -51,6 +52,7 @@ public class PlayerTest extends DatabaseTest
 		playerManager = PlayerManager.getSingleton();
 		assertEquals(0, playerManager.countObservers());
 		assertEquals(0, playerManager.countObservers(PlayerConnectionReport.class));
+		QuestStateTableDataGatewayMock.getSingleton().resetData();
 	}
 
 	/**
@@ -166,7 +168,7 @@ public class PlayerTest extends DatabaseTest
 		QuestState quest = new QuestState(15, QuestStateEnum.AVAILABLE);
 		p.addQuestState(quest);
 		
-		assertEquals(QuestStateEnum.AVAILABLE, p.getQuestStateByID(1).getStateValue());
+		assertEquals(QuestStateEnum.AVAILABLE, p.getQuestStateByID(15).getStateValue());
 		assertEquals(originalNumberOfQuests + 1, p.getSizeOfQuestList());
 	}
 }

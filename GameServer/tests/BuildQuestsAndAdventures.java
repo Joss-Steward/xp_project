@@ -47,10 +47,10 @@ public class BuildQuestsAndAdventures
 	
 	private static void createAdventureStateTable() throws DatabaseException
 	{
-		AdventureStateTableDataGatewayRDS.createTable();
+		AdventureStateTableDataGatewayRDS.getSingleton().createTable();
 		for (AdventureStatesForTest adventure : AdventureStatesForTest.values())
 		{
-			AdventureStateTableDataGatewayRDS.createRow(adventure.getQuestID(),adventure.getAdventureID(), adventure.getPlayerID(), adventure.getState());
+			AdventureStateTableDataGatewayRDS.getSingleton().createRow(adventure.getPlayerID(),adventure.getQuestID(), adventure.getAdventureID(), adventure.getState());
 		}
 	}
 

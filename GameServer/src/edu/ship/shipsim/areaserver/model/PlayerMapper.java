@@ -119,6 +119,14 @@ public class PlayerMapper
 		playerGateway.setPosition(player.getPlayerPosition());
 		playerGateway.setQuizScore(player.getQuizScore());
 		playerGateway.persist();
+		for (QuestState quest:player.getQuestList())
+		{
+			questStateGateway.udpateState(player.getID(), quest.getID(), quest.getStateValue());
+			for (AdventureStateRecord a:adventureStateGateway.getAdventureStates(player.getID(), quest.getID()))
+			{
+				//TODO need to persist adventure states, but the gateway doesn't do that yet
+			}
+		}
 	}
 
 }

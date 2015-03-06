@@ -40,7 +40,7 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 	 * @throws DatabaseException
 	 *             shouldn't
 	 */
-	public static void createTable() throws DatabaseException
+	public void createTable() throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
@@ -99,13 +99,13 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 	}
 	/**
 	 * Create a new row in the table
+	 * @param playerID the player ID
 	 * @param questID the quest that contains the adventure
 	 * @param adventureID the unique ID of the adventure
-	 * @param playerID the player ID
 	 * @param adventureState the state of this adventure for this player
 	 * @throws DatabaseException if we can't talk to the RDS 
 	 */
-	public static void createRow(int questID, int adventureID, int playerID, AdventureStateEnum adventureState) throws DatabaseException
+	public void createRow(int playerID, int questID, int adventureID, AdventureStateEnum adventureState) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
@@ -124,5 +124,44 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 					"Couldn't create a adventure state record for adventure with ID "
 							+ adventureID, e);
 		}
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway#updateState(int, int, int, datasource.AdventureStateEnum)
+	 */
+	@Override
+	public void updateState(int playerID, int questID, int adventureID,
+			AdventureStateEnum newState) throws DatabaseException
+	{
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
+		{
+			PreparedStatement stmt = connection
+					.prepareStatement("UPDATE AdventureStates SET adventureState = ? WHERE  playerID = ? and questID = ? and adventureID = ?");
+			stmt.setInt(1, newState.ordinal());
+			stmt.setInt(2, playerID);
+			stmt.setInt(3, questID);
+			stmt.setInt(4, adventureID);
+			int count = stmt.executeUpdate();
+			if ( count == 0)
+			{
+				this.createRow(playerID, questID, adventureID, newState);
+			}
+		} catch (SQLException e)
+		{
+			throw new DatabaseException(
+					"Couldn't update an adventure state record for player with ID " + playerID
+							+ " and quest with ID " + questID, e);
+		}
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway#resetData()
+	 */
+	@Override
+	public void resetData()
+	{
+		// nothing necessary
+		
 	}
 }

@@ -6,14 +6,16 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
+import datasource.DatabaseTest;
 
 /**
  * An abstract class that tests the table data gateways into the Adventure table
  * @author merlin
  *
  */
-public abstract class AdventureStateTableDataGatewayTest
+public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 {
 
 	/**
@@ -76,4 +78,48 @@ public abstract class AdventureStateTableDataGatewayTest
 		assertEquals(0, actual.size());
 	}
 
+	/**
+	 * Should be able to change the state of an existing record
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void canChangeExisting() throws DatabaseException
+	{
+		AdventureStateTableDataGateway gateway = getGateway();
+		AdventureStatesForTest adv = AdventureStatesForTest.PLAYER2_QUEST1_ADV3;
+		gateway.updateState(adv.getPlayerID(), adv.getQuestID(), adv.getAdventureID(),
+				AdventureStateEnum.COMPLETED);
+		
+		ArrayList<AdventureStateRecord> actual = gateway.getAdventureStates(adv.getPlayerID(), adv.getQuestID());
+		int count = 0;
+		for(AdventureStateRecord asRec:actual)
+		{
+			if (asRec.getQuestID() == adv.getQuestID() && asRec.getAdventureID() == adv.getAdventureID())
+			{
+				count = count + 1;
+				assertEquals(AdventureStateEnum.COMPLETED, asRec.getState());
+			}
+		}
+		assertEquals(1, count);
+	}
+	
+	/**
+	 * Updating a non-existing record adds it to the data source
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void canAddNew() throws DatabaseException
+	{
+		AdventureStateTableDataGateway gateway = getGateway();
+		gateway.updateState(13, 22, 11,
+				AdventureStateEnum.PENDING);
+		ArrayList<AdventureStateRecord> actual = gateway.getAdventureStates(13, 22);
+		assertEquals(1, actual.size());
+		AdventureStateRecord asRec = actual.get(0);
+		assertEquals(13, asRec.getPlayerID());
+		assertEquals(22, asRec.getQuestID());
+		assertEquals(11, asRec.getAdventureID());
+		assertEquals(AdventureStateEnum.PENDING, asRec.getState());
+		
+	}
 }
