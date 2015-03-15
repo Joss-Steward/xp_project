@@ -59,7 +59,7 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 	 * @return the quest IDs
 	 * @throws DatabaseException shouldn't
 	 */
-	public static ArrayList<Integer> getQuestsForMapLocation(String mapName,
+	public static ArrayList<Integer> findQuestsForMapLocation(String mapName,
 			Position position) throws DatabaseException
 	{
 		if (questInfo == null)

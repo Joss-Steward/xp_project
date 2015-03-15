@@ -30,7 +30,7 @@ public class QuestRowDataGatewayMockTest extends QuestRowDataGatewayTest
 	@Override
 	ArrayList<Integer> findQuestsForMapLocation(String mapName, Position position) throws DatabaseException
 	{
-		return QuestRowDataGatewayMock.getQuestsForMapLocation(mapName, position);
+		return QuestRowDataGatewayMock.findQuestsForMapLocation(mapName, position);
 	}
 
 	

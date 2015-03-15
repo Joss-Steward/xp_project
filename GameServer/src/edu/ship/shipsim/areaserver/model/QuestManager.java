@@ -91,8 +91,10 @@ public class QuestManager
 	public ArrayList<Integer> getQuestsByPosition(Position pos, String mapName) throws DatabaseException {
 		if(OptionsManager.getSingleton().isTestMode())
 		{
-			return QuestRowDataGatewayMock.getQuestsForMapLocation(mapName, pos);
-		} 
-		return null;
+			return QuestRowDataGatewayMock.findQuestsForMapLocation(mapName, pos);
+		} else
+		{
+			return QuestRowDataGatewayRDS.findQuestsForMapLocation(mapName, pos);
+		}
 	}
 }
