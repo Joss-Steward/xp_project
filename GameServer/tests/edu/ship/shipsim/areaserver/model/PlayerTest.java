@@ -180,7 +180,7 @@ public class PlayerTest extends DatabaseTest
 	public void testPlayerTriggersQuest() 
 	{
 		Player p = playerManager.addPlayer(1);
-		assertEquals(QuestStateEnum.AVAILABLE, p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
+		assertEquals(QuestStatesForTest.PLAYER1_QUEST1.getState(), p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
 		p.triggerQuest(QuestStatesForTest.PLAYER1_QUEST1.getQuestID());
 		assertEquals(QuestStateEnum.TRIGGERED, p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
 	}
@@ -197,7 +197,7 @@ public class PlayerTest extends DatabaseTest
 		Player p = playerManager.addPlayer(1);
 		p.setMapName("current.tmx");
 		p.setPlayerPosition(pos1);
-		assertEquals(QuestStateEnum.AVAILABLE, p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
+		assertEquals(QuestStatesForTest.PLAYER1_QUEST1.getState(), p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
 		p.setPlayerPosition(pos2);
 		assertEquals(QuestStateEnum.TRIGGERED, p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
 		p.setPlayerPosition(new Position(0,8));

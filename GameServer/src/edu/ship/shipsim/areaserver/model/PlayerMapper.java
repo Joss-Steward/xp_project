@@ -122,9 +122,10 @@ public class PlayerMapper
 		for (QuestState quest:player.getQuestList())
 		{
 			questStateGateway.udpateState(player.getID(), quest.getID(), quest.getStateValue());
-			for (AdventureStateRecord a:adventureStateGateway.getAdventureStates(player.getID(), quest.getID()))
+			for (AdventureState a: quest.getAdventureList())
 			{
 				//TODO need to persist adventure states, but the gateway doesn't do that yet
+				adventureStateGateway.updateState(player.getID(), quest.getID(), a.getID(), a.getState());
 			}
 		}
 	}
