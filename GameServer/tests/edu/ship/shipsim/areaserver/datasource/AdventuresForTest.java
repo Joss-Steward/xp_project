@@ -22,7 +22,11 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	FOUR(2, "Another Adventure Description 2", 2);
+	FOUR(2, "Another Adventure Description 2", 2),
+	/**
+	 * 
+	 */
+	FIVE(1, "Adventure for Quest 3", 3);
 	
 	private int adventureID;
 	private String adventureDescription;

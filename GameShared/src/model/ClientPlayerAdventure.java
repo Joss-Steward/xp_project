@@ -55,13 +55,6 @@ public class ClientPlayerAdventure
 	}
 
 	/**
-	 * @return the adventureState
-	 */
-	public AdventureStateEnum getAdventureState() {
-		return adventureState;
-	}
-
-	/**
 	 * @param adventureState the adventureState to set
 	 */
 	public void setAdventureState(AdventureStateEnum adventureState) {

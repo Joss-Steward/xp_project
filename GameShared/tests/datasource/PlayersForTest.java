@@ -11,7 +11,7 @@ import data.Position;
 public enum PlayersForTest
 {
 	/**
-	 * 
+	 * John must be player 1 for the current quest state report tests to pass
 	 */
 	JOHN(1, "John", "male_a", 0, 8, "pw", "quiznasium.tmx", 1111, null, "current.tmx", 0),
 	/**

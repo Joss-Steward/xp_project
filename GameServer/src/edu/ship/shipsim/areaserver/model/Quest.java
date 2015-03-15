@@ -118,5 +118,23 @@ public class Quest
 		this.q_position = pos;
 	}
 	
+	/**
+	 * Get adventure description by specific adventure id
+	 * @param adventureID id of the adventure
+	 * @return adventure description
+	 */
+	public String getAdventureDescription(int adventureID)
+	{
+		for(Adventure a: list_adventures)
+		{
+			if(a.getID() == adventureID)
+			{
+				return a.getDescription();
+			}
+		}
+		
+		return null;
+		
+	}
 	
 }

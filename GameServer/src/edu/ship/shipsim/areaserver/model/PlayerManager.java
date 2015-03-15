@@ -118,6 +118,9 @@ public class PlayerManager extends QualifiedObservable
 			players.put(playerID, player);
 
 			this.notifyObservers(new PlayerConnectionReport(player));
+			
+			//this.notifyObservers(new CurrentQuestStateReport(player));
+			
 			return player;
 		} else
 		{
