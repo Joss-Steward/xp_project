@@ -21,7 +21,6 @@ public class CurrentQuestStateReport implements QualifiedObservableReport
 {
 
 	private ArrayList<ClientPlayerQuest> clientPlayerQuestList = new ArrayList<ClientPlayerQuest>();
-	private ArrayList<QuestState> questStateList = new ArrayList<QuestState>();
 	
 	/**
 	 * Combine the player's quest state and quest descriptions
@@ -30,8 +29,7 @@ public class CurrentQuestStateReport implements QualifiedObservableReport
 	 */
 	public CurrentQuestStateReport(Player player) throws DatabaseException 
 	{
-		this.questStateList = player.getQuestList();
-		combineQuest();
+		combineQuest(player.getQuestList());
 	}
 	
 	/**
@@ -39,7 +37,7 @@ public class CurrentQuestStateReport implements QualifiedObservableReport
 	 * adds them to clientPlayerQuestList
 	 * @throws DatabaseException
 	 */
-	private void combineQuest() throws DatabaseException 
+	private void combineQuest(ArrayList<QuestState> questStateList) throws DatabaseException 
 	{
 		for(QuestState qs: questStateList)
 		{
@@ -65,14 +63,6 @@ public class CurrentQuestStateReport implements QualifiedObservableReport
 		return ca;
 	}
 
-	/**
-	 * Return the player's quest state list
-	 * @return questStateList
-	 */
-	public ArrayList<QuestState> getQuestStateList()
-	{
-		return questStateList;
-	}
 
 	/**
 	 * Return ArrayList of Client Player Quests

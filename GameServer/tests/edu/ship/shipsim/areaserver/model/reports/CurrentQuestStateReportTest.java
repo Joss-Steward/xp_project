@@ -37,18 +37,7 @@ public class CurrentQuestStateReportTest {
 		QuestManager.resetSingleton();
 	}
 	
-	/**
-	 * Test initializing the report
-	 * @throws DatabaseException shouldn't
-	 */
-	@Test
-	public void testInit() throws DatabaseException 
-	{
-		Player john = PlayerManager.getSingleton().addPlayer(1);
-		CurrentQuestStateReport report = new CurrentQuestStateReport(john);
-		
-		assertEquals(john.getQuestList(), report.getQuestStateList());
-	}
+
 	
 	/**
 	 * Tests that we can combine a quest description and state
