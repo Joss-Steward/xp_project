@@ -213,4 +213,9 @@ public class ModelFacade
 		return commandQueue.getQueueSize();
 	}
 
+	public Command getNextCommand() throws InterruptedException
+	{
+		return (Command) commandQueue.getInfoPacket();
+	}
+
 }
