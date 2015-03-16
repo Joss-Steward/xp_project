@@ -19,7 +19,7 @@ public class CommandOverwriteQuestState extends Command
 
 	/**
 	 * Initializes clientPlayerQuestList
-	 * @param msg 
+	 * @param msg message that contains new clientPlayerQuestList
 	 */
 	public CommandOverwriteQuestState(CurrentQuestStateMessage msg)
 	{
