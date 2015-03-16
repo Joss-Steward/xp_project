@@ -10,7 +10,7 @@ import org.junit.Test;
  * @author Steve
  *
  */
-public class NpcTest 
+public class NPCTest 
 {
 	/**
 	 * Test that the npc hits the behavior like it should
