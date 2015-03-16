@@ -9,17 +9,12 @@ import model.OptionsManager;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
 import communication.StateAccumulator;
 import communication.messages.CurrentQuestStateMessage;
-import communication.messages.MovementMessage;
-import data.Position;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.reports.CurrentQuestStateReport;
-import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
 
 /**
  * 
