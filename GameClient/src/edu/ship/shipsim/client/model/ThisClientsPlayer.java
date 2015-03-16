@@ -57,6 +57,10 @@ public class ThisClientsPlayer extends Player
 		questList.add(q);
 	}
 
+	/**
+	 * Overwrite ThisClientPlayer's quest list
+	 * @param qList current quest list
+	 */
 	public void overwriteQuestList(ArrayList<ClientPlayerQuest> qList)
 	{
 		questList = qList;

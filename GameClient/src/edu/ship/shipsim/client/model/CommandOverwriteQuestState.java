@@ -33,6 +33,9 @@ public class CommandOverwriteQuestState extends Command
 		return true;
 	}
 
+	/**
+	 * @return the clientPlayerQuestList
+	 */
 	public ArrayList<ClientPlayerQuest> getClientPlayerQuestList()
 	{
 		return clientPlayerQuestList;

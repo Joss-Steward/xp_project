@@ -15,8 +15,16 @@ import communication.messages.CurrentQuestStateMessage;
 import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
 
+/**
+ * Test the Command to overwrite this client player quest list
+ * @author Ryan
+ *
+ */
 public class CommandOverwriteQuestStateTest
 {
+	/**
+	 * Test the constructor of CommandOverwriteQuestState
+	 */
 	@Test
 	public void constructor()
 	{
@@ -28,12 +36,18 @@ public class CommandOverwriteQuestStateTest
 		assertEquals(expected, x.getClientPlayerQuestList());
 	}
 	
+	/**
+	 * Test the execute of the command and make sure that this client
+	 * player quest list is overwritten
+	 */
 	@Test
 	public void testExecutes()
 	{
 		PlayerManager pm = PlayerManager.getSingleton();
 		PlayersForTest john = PlayersForTest.JOHN;
 		pm.initiateLogin(john.getPlayerName(), john.getPlayerPassword());
+		
+		@SuppressWarnings("unused")
 		ThisClientsPlayer cp = null;
 		
 		try

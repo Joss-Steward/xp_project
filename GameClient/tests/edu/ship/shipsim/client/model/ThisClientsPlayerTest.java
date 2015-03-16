@@ -105,6 +105,9 @@ public class ThisClientsPlayerTest
 		return q;
 	}
 	
+	/**
+	 * Test that we can overwrite ("whomp") this client player quest list
+	 */
 	@Test
 	public void canWhompOnQuestList()
 	{
@@ -114,6 +117,9 @@ public class ThisClientsPlayerTest
 		
 		ClientPlayerAdventure a = new ClientPlayerAdventure(42, "Test Adventure ow2", AdventureStateEnum.HIDDEN);
 		ClientPlayerQuest qow = new ClientPlayerQuest(41, "Test Quest ow1", QuestStateEnum.HIDDEN);
+		
+		qow.addAdventure(a);
+		
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
 		qList.add(qow);
 		cp.overwriteQuestList(qList);

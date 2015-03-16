@@ -10,13 +10,9 @@ import model.ClientPlayerQuest;
 import org.junit.Before;
 import org.junit.Test;
 
-import communication.messages.ChatMessage;
 import communication.messages.CurrentQuestStateMessage;
-import data.ChatType;
-import data.Position;
 import datasource.AdventureStateEnum;
 import datasource.QuestStateEnum;
-import edu.ship.shipsim.client.model.Command;
 import edu.ship.shipsim.client.model.ModelFacade;
 import edu.ship.shipsim.client.model.CommandOverwriteQuestState;
 
@@ -37,12 +33,16 @@ public class CurrentQuestStateMessageHandlerTest
 		ModelFacade.getSingleton(true, false);
 	}
 	
+	/**
+	 * Test the type of Message that we expect
+	 */
 	@Test
 	public void typeWeHandle()
 	{
 		CurrentQuestStateMessageHandler h = new CurrentQuestStateMessageHandler();
 		assertEquals(CurrentQuestStateMessage.class, h.getMessageTypeWeHandle());
 	}
+	
 	/**
 	 * We should add a command to the ModelFacade command queue
 	 * 
