@@ -6,11 +6,21 @@ import communication.messages.CurrentQuestStateMessage;
 
 import model.ClientPlayerQuest;
 
+/**
+ * Command to overwrite ThisClientsPlayers quest list
+ * 
+ * @author Merlin
+ *
+ */
 public class CommandOverwriteQuestState extends Command
 {
 
 	private ArrayList<ClientPlayerQuest> clientPlayerQuestList;
 
+	/**
+	 * Initializes clientPlayerQuestList
+	 * @param msg 
+	 */
 	public CommandOverwriteQuestState(CurrentQuestStateMessage msg)
 	{
 		this.clientPlayerQuestList = msg.getClientPlayerQuestList();
