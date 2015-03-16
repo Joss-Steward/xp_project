@@ -58,7 +58,7 @@ public class CommandMovePlayerTest
 	{
 		Position pos = new Position(1, 2);
 		PlayerManager.getSingleton().initiateLogin("1", "1");
-		PlayerManager.getSingleton().setThisClientsPlayer(1);
+		PlayerManager.getSingleton().finishLogin(1);
 		PlayerManager.getSingleton().getThisClientsPlayer().setPosition(pos);
 		assertEquals(new Position(1, 2), PlayerManager.getSingleton().getThisClientsPlayer().getPosition());
 
@@ -80,7 +80,7 @@ public class CommandMovePlayerTest
 		Player someGuy = PlayerManager.getSingleton().initializePlayer(2, "1",
 				"1", pos);
 		PlayerManager.getSingleton().initiateLogin("1", "1");
-		PlayerManager.getSingleton().setThisClientsPlayer(1);
+		PlayerManager.getSingleton().finishLogin(1);
 		assertEquals(new Position(1, 2), someGuy.getPosition());
 
 		CommandMovePlayer cm = new CommandMovePlayer(someGuy.getID(),
@@ -103,7 +103,7 @@ public class CommandMovePlayerTest
 		Player me = PlayerManager.getSingleton().initializePlayer(1, "1", "1",
 				pos);
 		PlayerManager.getSingleton().initiateLogin("1", "1");
-		PlayerManager.getSingleton().setThisClientsPlayer(1);
+		PlayerManager.getSingleton().finishLogin(1);
 		assertEquals(new Position(1, 2), me.getPosition());
 
 		CommandMovePlayer cm = new CommandMovePlayer(me.getID(), new Position(

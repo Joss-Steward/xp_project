@@ -57,4 +57,10 @@ public class ThisClientsPlayer extends Player
 		questList.add(q);
 	}
 
+	public void overwriteQuestList(ArrayList<ClientPlayerQuest> qList)
+	{
+		questList = qList;
+		
+	}
+
 }

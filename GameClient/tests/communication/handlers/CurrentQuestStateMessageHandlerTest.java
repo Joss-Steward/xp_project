@@ -18,7 +18,7 @@ import datasource.AdventureStateEnum;
 import datasource.QuestStateEnum;
 import edu.ship.shipsim.client.model.Command;
 import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.OverwriteQuestStateCommand;
+import edu.ship.shipsim.client.model.CommandOverwriteQuestState;
 
 /**
  * @author Frank Schmidt
@@ -37,6 +37,12 @@ public class CurrentQuestStateMessageHandlerTest
 		ModelFacade.getSingleton(true, false);
 	}
 	
+	@Test
+	public void typeWeHandle()
+	{
+		CurrentQuestStateMessageHandler h = new CurrentQuestStateMessageHandler();
+		assertEquals(CurrentQuestStateMessage.class, h.getMessageTypeWeHandle());
+	}
 	/**
 	 * We should add a command to the ModelFacade command queue
 	 * 
@@ -54,7 +60,7 @@ public class CurrentQuestStateMessageHandlerTest
 		CurrentQuestStateMessage msg = new CurrentQuestStateMessage(qList);
 		handler.process(msg);
 		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
-		OverwriteQuestStateCommand cmd = (OverwriteQuestStateCommand) ModelFacade.getSingleton().getNextCommand();
+		CommandOverwriteQuestState cmd = (CommandOverwriteQuestState) ModelFacade.getSingleton().getNextCommand();
 		ArrayList<ClientPlayerQuest> actual = cmd.getClientPlayerQuestList();
 		assertEquals(qList, actual);
 	}

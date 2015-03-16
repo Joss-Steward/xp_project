@@ -6,6 +6,7 @@ import view.player.PlayerSpriteTest;
 import view.screen.ScreenListenerTest;
 import view.screen.map.ScreenMapInputTest;
 import communication.handlers.ChatMessageHandlerTest;
+import communication.handlers.CurrentQuestStateMessageHandlerTest;
 import communication.handlers.LoginFailedMessageHandlerTest;
 import communication.handlers.MapFileMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
@@ -18,16 +19,22 @@ import communication.packers.TeleportationInitiationMessagePackerTest;
 import edu.ship.shipsim.client.model.ChatManagerTest;
 import edu.ship.shipsim.client.model.CommandChatMessageReceivedTest;
 import edu.ship.shipsim.client.model.CommandChatMessageSentTest;
+import edu.ship.shipsim.client.model.CommandClearModelStateTest;
 import edu.ship.shipsim.client.model.CommandInitializePlayerTest;
 import edu.ship.shipsim.client.model.CommandLoginFailedTest;
 import edu.ship.shipsim.client.model.CommandLoginTest;
+import edu.ship.shipsim.client.model.CommandMovePlayerTest;
 import edu.ship.shipsim.client.model.CommandNewMapTest;
+import edu.ship.shipsim.client.model.CommandOverwriteQuestStateTest;
+import edu.ship.shipsim.client.model.CommandRemovePlayerTest;
 import edu.ship.shipsim.client.model.MapManagerTest;
 import edu.ship.shipsim.client.model.ModelFacadeTest;
 import edu.ship.shipsim.client.model.PlayerManagerTest;
 import edu.ship.shipsim.client.model.PlayerTest;
 import edu.ship.shipsim.client.model.ThisClientsPlayerTest;
 import edu.ship.shipsim.client.model.reports.AreaCollisionReportTest;
+import edu.ship.shipsim.client.model.reports.ChangeMapReportTest;
+import edu.ship.shipsim.client.model.reports.ChatSentReportTest;
 import edu.ship.shipsim.client.model.reports.LoginFailedReportTest;
 import edu.ship.shipsim.client.model.reports.LoginInitiatedReportTest;
 import edu.ship.shipsim.client.model.reports.NewMapReportTest;
@@ -46,11 +53,13 @@ import edu.ship.shipsim.client.model.reports.PlayerMovedReportTest;
 @Suite.SuiteClasses(
 {
 		// communication.handlers
-		MapFileMessageHandlerTest.class,
-		PlayerJoinedMessageHandlerTest.class,
-		MovementMessageHandlerTest.class,
-		ChatMessageHandlerTest.class,
-		LoginFailedMessageHandlerTest.class,
+	ChatMessageHandlerTest.class,
+	CurrentQuestStateMessageHandlerTest.class,
+	LoginFailedMessageHandlerTest.class,
+	MapFileMessageHandlerTest.class,
+	MovementMessageHandlerTest.class,
+	PlayerJoinedMessageHandlerTest.class,
+		
 
 		// communication.packers
 		AreaCollisionMessagePackerTest.class,
@@ -60,27 +69,43 @@ import edu.ship.shipsim.client.model.reports.PlayerMovedReportTest;
 		TeleportationInitiationMessagePackerTest.class,
 
 		// model
-		CommandInitializePlayerTest.class, CommandLoginTest.class,
-		CommandNewMapTest.class, MapManagerTest.class, ModelFacadeTest.class,
-		PlayerManagerTest.class, PlayerTest.class,
-		ThisClientsPlayerTest.class,
 		ChatManagerTest.class,
 		CommandChatMessageReceivedTest.class,
 		CommandChatMessageSentTest.class,
+		CommandClearModelStateTest.class,
+		CommandInitializePlayerTest.class, 
 		CommandLoginFailedTest.class,
-
+		CommandLoginTest.class,
+		CommandMovePlayerTest.class,
+		CommandNewMapTest.class, 
+		CommandOverwriteQuestStateTest.class,
+		CommandRemovePlayerTest.class,
+		MapManagerTest.class, 
+		ModelFacadeTest.class,
+		PlayerManagerTest.class, 
+		PlayerTest.class,
+		ThisClientsPlayerTest.class,
+		
 		// model.reports
 		AreaCollisionReportTest.class,
+		ChangeMapReportTest.class,
+		ChatSentReportTest.class,
+		LoginFailedReportTest.class,
 		LoginInitiatedReportTest.class, 
 		NewMapReportTest.class,
 		PlayerMovedReportTest.class,
-		LoginFailedReportTest.class,
 
-		// view
-		ScreenListenerTest.class, 
-		ScreenMapInputTest.class, 
-		PlayerSpriteTest.class,
+		// view.player
 		DirectionTest.class,
+		PlayerSpriteTest.class,
+		
+		// view.screen
+		ScreenListenerTest.class, 
+		
+		//view.screen.map
+		ScreenMapInputTest.class, 
+		
+		
 
 })
 /**

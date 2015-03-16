@@ -100,7 +100,7 @@ public class PlayerManager extends QualifiedObservable
 	 *             when the player has not yet been set because login has not be
 	 *             called
 	 */
-	public ThisClientsPlayer setThisClientsPlayer(int playerID)
+	public ThisClientsPlayer finishLogin(int playerID)
 			throws AlreadyBoundException, NotBoundException
 	{
 		if (this.loginInProgress)

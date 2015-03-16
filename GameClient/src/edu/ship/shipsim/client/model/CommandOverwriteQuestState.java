@@ -6,12 +6,12 @@ import communication.messages.CurrentQuestStateMessage;
 
 import model.ClientPlayerQuest;
 
-public class OverwriteQuestStateCommand extends Command
+public class CommandOverwriteQuestState extends Command
 {
 
 	private ArrayList<ClientPlayerQuest> clientPlayerQuestList;
 
-	public OverwriteQuestStateCommand(CurrentQuestStateMessage msg)
+	public CommandOverwriteQuestState(CurrentQuestStateMessage msg)
 	{
 		this.clientPlayerQuestList = msg.getClientPlayerQuestList();
 	}
@@ -19,8 +19,8 @@ public class OverwriteQuestStateCommand extends Command
 	@Override
 	protected boolean execute()
 	{
-		// TODO Auto-generated method stub
-		return false;
+		PlayerManager.getSingleton().getThisClientsPlayer().overwriteQuestList(clientPlayerQuestList);
+		return true;
 	}
 
 	public ArrayList<ClientPlayerQuest> getClientPlayerQuestList()

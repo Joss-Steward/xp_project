@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
+import java.util.ArrayList;
 import java.util.Observer;
 
 import model.ClientPlayerAdventure;
@@ -16,6 +17,7 @@ import org.junit.Test;
 
 import data.Position;
 import datasource.AdventureStateEnum;
+import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
 import edu.ship.shipsim.client.model.PlayerManager;
 import edu.ship.shipsim.client.model.ThisClientsPlayer;
@@ -52,17 +54,7 @@ public class ThisClientsPlayerTest
 		obs.update(EasyMock.anyObject(ThisClientsPlayer.class), EasyMock.eq(report));
 		EasyMock.replay(obs);
 
-		PlayerManager pm = PlayerManager.getSingleton();
-		pm.initiateLogin("john", "pw");
-		ThisClientsPlayer cp = null;
-		try
-		{
-			cp = pm.setThisClientsPlayer(1);
-		} catch (AlreadyBoundException | NotBoundException e)
-		{
-			e.printStackTrace();
-			fail("Could not create this client's player from login");
-		}
+		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
 		cp.addObserver(obs, PlayerMovedReport.class);
 		cp.move(new Position(3, 4));
 
@@ -75,30 +67,58 @@ public class ThisClientsPlayerTest
 	 */
 	@Test
 	public void testThisPlayerContainsClientPlayerQuest() {
+		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		
+		ClientPlayerQuest q = createOneQuestWithTwoAdventures();
+		
+		cp.addQuest(q);
+		assertEquals(2, cp.getQuests().get(0).getAdventureList().get(1).getAdventureID());
+		assertEquals("Test Quest 1", cp.getQuests().get(0).getQuestDescription());
+	}
+
+	private ThisClientsPlayer setUpThisClientsPlayerAsNumberOne()
+	{
 		PlayerManager pm = PlayerManager.getSingleton();
-		pm.initiateLogin("john", "pw");
+		PlayersForTest john = PlayersForTest.JOHN;
+		pm.initiateLogin(john.getPlayerName(), john.getPlayerPassword());
 		ThisClientsPlayer cp = null;
 		
 		try
 		{
-			cp = pm.setThisClientsPlayer(1);
+			cp = pm.finishLogin(john.getPlayerID());
 		} catch (AlreadyBoundException | NotBoundException e)
 		{
 			e.printStackTrace();
 			fail("Could not create this client's player from login");
 		}
-		
+		return cp;
+	}
+
+	private ClientPlayerQuest createOneQuestWithTwoAdventures()
+	{
 		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", AdventureStateEnum.HIDDEN);
-		assertEquals(1, adventureOne.getAdventureID());
 		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", AdventureStateEnum.HIDDEN);
-		assertEquals(2, adventureTwo.getAdventureID());
 		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.HIDDEN);
 		q.addAdventure(adventureOne);
 		q.addAdventure(adventureTwo);
 		assertEquals(2, q.getAdventureList().size());
-		
+		return q;
+	}
+	
+	@Test
+	public void canWhompOnQuestList()
+	{
+		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ClientPlayerQuest q = createOneQuestWithTwoAdventures();
 		cp.addQuest(q);
-		assertEquals(2, cp.getQuests().get(0).getAdventureList().get(1).getAdventureID());
-		assertEquals("Test Quest 1", cp.getQuests().get(0).getQuestDescription());
+		
+		ClientPlayerAdventure a = new ClientPlayerAdventure(42, "Test Adventure ow2", AdventureStateEnum.HIDDEN);
+		ClientPlayerQuest qow = new ClientPlayerQuest(41, "Test Quest ow1", QuestStateEnum.HIDDEN);
+		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
+		qList.add(qow);
+		cp.overwriteQuestList(qList);
+		
+		assertEquals(1,cp.getQuests().size());
+		assertEquals(qow, cp.getQuests().get(0));
 	}
 }

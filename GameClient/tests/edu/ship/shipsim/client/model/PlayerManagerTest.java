@@ -115,7 +115,7 @@ public class PlayerManagerTest
 		// test setting player without having tried logging in
 		try
 		{
-			pm.setThisClientsPlayer(1);
+			pm.finishLogin(1);
 		} catch (AlreadyBoundException | NotBoundException e)
 		{
 			assertTrue(e instanceof NotBoundException);
@@ -125,7 +125,7 @@ public class PlayerManagerTest
 		try
 		{
 			pm.initiateLogin("bilbo", "baggins");
-			pm.setThisClientsPlayer(1);
+			pm.finishLogin(1);
 		} catch (AlreadyBoundException | NotBoundException e)
 		{
 			fail("Login should have been processed, and setting should work");
@@ -135,7 +135,7 @@ public class PlayerManagerTest
 		// first logging out
 		try
 		{
-			pm.setThisClientsPlayer(2);
+			pm.finishLogin(2);
 			fail("Login should have already occured and it should not allow a new player to be set");
 		} catch (AlreadyBoundException | NotBoundException e)
 		{

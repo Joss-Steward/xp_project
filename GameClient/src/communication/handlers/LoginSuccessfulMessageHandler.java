@@ -39,7 +39,7 @@ public class LoginSuccessfulMessageHandler extends MessageHandler
 						rMsg.getPlayerID(), rMsg.getPin());
 				try
 				{
-					PlayerManager.getSingleton().setThisClientsPlayer(rMsg.getPlayerID());
+					PlayerManager.getSingleton().finishLogin(rMsg.getPlayerID());
 				} catch (AlreadyBoundException | NotBoundException e)
 				{
 					e.printStackTrace();

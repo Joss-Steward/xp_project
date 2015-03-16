@@ -65,7 +65,7 @@ public class ScreenMapInputTest
 		pm.initiateLogin("john", "pw");
 		try
 		{
-			pm.setThisClientsPlayer(1);
+			pm.finishLogin(1);
 		} catch (AlreadyBoundException | NotBoundException e)
 		{
 			e.printStackTrace();
