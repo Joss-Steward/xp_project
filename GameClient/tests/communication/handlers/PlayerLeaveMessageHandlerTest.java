@@ -28,6 +28,16 @@ public class PlayerLeaveMessageHandlerTest
 	}
 
 	/**
+	 * Test the type of Message that we expect
+	 */
+	@Test
+	public void typeWeHandle()
+	{
+		PlayerLeaveMessageHandler h = new PlayerLeaveMessageHandler();
+		assertEquals(PlayerLeaveMessage.class, h.getMessageTypeWeHandle());
+	}
+	
+	/**
 	 * We should add the player to the player manager
 	 * 
 	 * @throws InterruptedException

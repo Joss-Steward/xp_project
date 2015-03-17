@@ -11,6 +11,7 @@ import communication.handlers.LoginFailedMessageHandlerTest;
 import communication.handlers.MapFileMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.PlayerJoinedMessageHandlerTest;
+import communication.handlers.PlayerLeaveMessageHandlerTest;
 import communication.packers.AreaCollisionMessagePackerTest;
 import communication.packers.ChatMessagePackerTest;
 import communication.packers.LoginMessagePackerTest;
@@ -53,12 +54,13 @@ import edu.ship.shipsim.client.model.reports.PlayerMovedReportTest;
 @Suite.SuiteClasses(
 {
 		// communication.handlers
-	ChatMessageHandlerTest.class,
-	CurrentQuestStateMessageHandlerTest.class,
-	LoginFailedMessageHandlerTest.class,
-	MapFileMessageHandlerTest.class,
-	MovementMessageHandlerTest.class,
-	PlayerJoinedMessageHandlerTest.class,
+		ChatMessageHandlerTest.class,
+		CurrentQuestStateMessageHandlerTest.class,
+		LoginFailedMessageHandlerTest.class,
+		MapFileMessageHandlerTest.class,
+		MovementMessageHandlerTest.class,
+		PlayerJoinedMessageHandlerTest.class,
+		PlayerLeaveMessageHandlerTest.class,
 		
 
 		// communication.packers
