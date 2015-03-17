@@ -28,6 +28,16 @@ public class MovementMessageHandlerTest
 		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
 	}
+	
+	/**
+	 * Tests that getTypeWeHandle method returns correct type.
+	 */
+	@Test
+	public void testTypeWeHandle()
+	{
+		MovementMessageHandler h = new MovementMessageHandler();
+		assertEquals(MovementMessage.class, h.getMessageTypeWeHandle());
+	}
 
 	/**
 	 * Start with a player in a position, send that player through a movement

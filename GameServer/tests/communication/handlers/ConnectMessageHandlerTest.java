@@ -33,6 +33,16 @@ public class ConnectMessageHandlerTest
 	}
 
 	/**
+	 * Tests that getTypeWeHandle method returns correct type.
+	 */
+	@Test
+	public void testTypeWeHandle()
+	{
+		ConnectMessageHandler h = new ConnectMessageHandler();
+		assertEquals(ConnectMessage.class, h.getMessageTypeWeHandle());
+	}
+	
+	/**
 	 * The incoming message should cause creation of the player in the model and
 	 * notification of the player's playerID to the state accumulator
 	 * 

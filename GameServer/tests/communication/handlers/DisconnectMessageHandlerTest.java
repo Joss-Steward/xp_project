@@ -28,6 +28,16 @@ public class DisconnectMessageHandlerTest
 	}
 	
 	/**
+	 * Tests that getTypeWeHandle method returns correct type.
+	 */
+	@Test
+	public void testTypeWeHandle()
+	{
+		DisconnectMessageHandler h = new DisconnectMessageHandler();
+		assertEquals(DisconnectMessage.class, h.getMessageTypeWeHandle());
+	}
+	
+	/**
 	 * The incoming message should cause the deletion of the player in the model and
 	 * notification of the player's player ID to the state accumulator
 	 * 
