@@ -5,21 +5,39 @@ import java.util.ArrayList;
 import model.ClientPlayerQuest;
 import model.QualifiedObservableReport;
 
+/**
+ * The report that handles sending a QuestStateReport
+ * 
+ * @author Merlin
+ *
+ */
 public class QuestStateReport implements QualifiedObservableReport
 {
 
 	private ArrayList<ClientPlayerQuest> data;
 
+	/**
+	 * Creates a QuestStateReport
+	 * @param data ClientPlayerQuest list to send
+	 */
 	public QuestStateReport(ArrayList<ClientPlayerQuest> data)
 	{
 		this.data = data;
 	}
 
+	/**
+	 * Returns data an array list of ClientPlayerQuests
+	 * @return data 
+	 */
 	public ArrayList<ClientPlayerQuest> getClientPlayerQuestList()
 	{
 		return data;
 	}
 
+	/**
+	 * Auto-generated
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode()
 	{
@@ -29,6 +47,10 @@ public class QuestStateReport implements QualifiedObservableReport
 		return result;
 	}
 
+	/**
+	 * Auto-generated
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{

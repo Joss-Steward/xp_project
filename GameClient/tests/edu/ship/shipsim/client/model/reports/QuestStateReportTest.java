@@ -10,9 +10,17 @@ import org.junit.Test;
 
 import datasource.QuestStateEnum;
 
+/**
+ * Test the QuestStateReport
+ * @author Merlin
+ *
+ */
 public class QuestStateReportTest
 {
 
+	/**
+	 * Test that a QuestStateReport is initialized correctly
+	 */
 	@Test
 	public void test()
 	{

@@ -69,6 +69,10 @@ public class ThisClientsPlayer extends Player
 		
 	}
 
+	/**
+	 * Sends questList to QuestStateReport
+	 * and notifies the Observers
+	 */
 	public void sendCurrentQuestStateReport()
 	{
 		QuestStateReport r = new QuestStateReport(questList);

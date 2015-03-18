@@ -64,6 +64,9 @@ public class ThisClientsPlayerTest
 
 	}
 	
+	/**
+	 * Test that the client player notifies on quest request
+	 */
 	@Test
 	public void notifiesOnQuestRequest()
 	{
