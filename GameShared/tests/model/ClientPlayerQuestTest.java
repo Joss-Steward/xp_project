@@ -27,6 +27,10 @@ public class ClientPlayerQuestTest
 		assertEquals(QuestStateEnum.HIDDEN, q.getQuestState());
 	}
 
+	/**
+	 * Create a new ClientPlayerQuest with two ClientPlayerAdventures
+	 * @return the ClientPlayerQuest
+	 */
 	public static ClientPlayerQuest createOneQuestWithTwoAdventures()
 	{
 		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", AdventureStateEnum.HIDDEN);
