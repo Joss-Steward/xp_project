@@ -28,6 +28,7 @@ import edu.ship.shipsim.client.model.CommandMovePlayerTest;
 import edu.ship.shipsim.client.model.CommandNewMapTest;
 import edu.ship.shipsim.client.model.CommandOverwriteQuestStateTest;
 import edu.ship.shipsim.client.model.CommandRemovePlayerTest;
+import edu.ship.shipsim.client.model.CommandSendQuestStateTest;
 import edu.ship.shipsim.client.model.MapManagerTest;
 import edu.ship.shipsim.client.model.ModelFacadeTest;
 import edu.ship.shipsim.client.model.PlayerManagerTest;
@@ -40,6 +41,7 @@ import edu.ship.shipsim.client.model.reports.LoginFailedReportTest;
 import edu.ship.shipsim.client.model.reports.LoginInitiatedReportTest;
 import edu.ship.shipsim.client.model.reports.NewMapReportTest;
 import edu.ship.shipsim.client.model.reports.PlayerMovedReportTest;
+import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 
 /**
  * All of the tests for the client code. Notice that the packages, and classes
@@ -82,6 +84,7 @@ import edu.ship.shipsim.client.model.reports.PlayerMovedReportTest;
 		CommandNewMapTest.class, 
 		CommandOverwriteQuestStateTest.class,
 		CommandRemovePlayerTest.class,
+		CommandSendQuestStateTest.class,
 		MapManagerTest.class, 
 		ModelFacadeTest.class,
 		PlayerManagerTest.class, 
@@ -96,6 +99,7 @@ import edu.ship.shipsim.client.model.reports.PlayerMovedReportTest;
 		LoginInitiatedReportTest.class, 
 		NewMapReportTest.class,
 		PlayerMovedReportTest.class,
+		QuestStateReportTest.class,
 
 		// view.player
 		DirectionTest.class,

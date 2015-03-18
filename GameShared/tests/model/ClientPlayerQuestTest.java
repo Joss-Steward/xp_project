@@ -27,6 +27,16 @@ public class ClientPlayerQuestTest
 		assertEquals(QuestStateEnum.HIDDEN, q.getQuestState());
 	}
 
+	public static ClientPlayerQuest createOneQuestWithTwoAdventures()
+	{
+		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", AdventureStateEnum.HIDDEN);
+		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", AdventureStateEnum.HIDDEN);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.HIDDEN);
+		q.addAdventure(adventureOne);
+		q.addAdventure(adventureTwo);
+		assertEquals(2, q.getAdventureList().size());
+		return q;
+	}
 	
 	/**
 	 * Tests the ability to add an adventure to the quest

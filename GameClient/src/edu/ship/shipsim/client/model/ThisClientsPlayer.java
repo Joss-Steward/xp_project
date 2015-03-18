@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import model.ClientPlayerQuest;
 import data.Position;
 import edu.ship.shipsim.client.model.reports.AreaCollisionReport;
+import edu.ship.shipsim.client.model.reports.QuestStateReport;
 
 /**
  * The player who is playing the game
@@ -21,6 +22,7 @@ public class ThisClientsPlayer extends Player
 		super(playerID);
 
 		reportTypes.add(AreaCollisionReport.class);
+		reportTypes.add(QuestStateReport.class);
 		this.registerReportTypesWeNotify();
 	}
 
@@ -65,6 +67,12 @@ public class ThisClientsPlayer extends Player
 	{
 		questList = qList;
 		
+	}
+
+	public void sendCurrentQuestStateReport()
+	{
+		QuestStateReport r = new QuestStateReport(questList);
+		this.notifyObservers(r);
 	}
 
 }

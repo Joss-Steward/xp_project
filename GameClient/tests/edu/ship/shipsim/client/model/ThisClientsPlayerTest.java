@@ -9,6 +9,7 @@ import java.util.Observer;
 
 import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
+import model.ClientPlayerQuestTest;
 import model.QualifiedObservableConnector;
 
 import org.easymock.EasyMock;
@@ -22,6 +23,7 @@ import datasource.QuestStateEnum;
 import edu.ship.shipsim.client.model.PlayerManager;
 import edu.ship.shipsim.client.model.ThisClientsPlayer;
 import edu.ship.shipsim.client.model.reports.PlayerMovedReport;
+import edu.ship.shipsim.client.model.reports.QuestStateReport;
 
 /**
  * Tests behaviors that are unique to the player playing on this client
@@ -62,6 +64,27 @@ public class ThisClientsPlayerTest
 
 	}
 	
+	@Test
+	public void notifiesOnQuestRequest()
+	{
+		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
+		cp.addQuest(q);
+		ArrayList<ClientPlayerQuest> expected = new ArrayList<ClientPlayerQuest>() ;
+		expected.add(q);
+		
+		Observer obs = EasyMock.createMock(Observer.class);
+		QuestStateReport report = new QuestStateReport(expected);
+		obs.update(EasyMock.anyObject(ThisClientsPlayer.class), EasyMock.eq(report));
+		EasyMock.replay(obs);
+
+		cp.addObserver(obs, QuestStateReport.class);
+		cp.sendCurrentQuestStateReport();
+
+		EasyMock.verify(obs);
+
+	}
+	
 	/**
 	 * Make sure that you can add a quest to ThisClientsPlayer
 	 */
@@ -69,14 +92,14 @@ public class ThisClientsPlayerTest
 	public void testThisPlayerContainsClientPlayerQuest() {
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
 		
-		ClientPlayerQuest q = createOneQuestWithTwoAdventures();
+		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
 		
 		cp.addQuest(q);
 		assertEquals(2, cp.getQuests().get(0).getAdventureList().get(1).getAdventureID());
 		assertEquals("Test Quest 1", cp.getQuests().get(0).getQuestDescription());
 	}
 
-	private ThisClientsPlayer setUpThisClientsPlayerAsNumberOne()
+	static ThisClientsPlayer setUpThisClientsPlayerAsNumberOne()
 	{
 		PlayerManager pm = PlayerManager.getSingleton();
 		PlayersForTest john = PlayersForTest.JOHN;
@@ -94,16 +117,7 @@ public class ThisClientsPlayerTest
 		return cp;
 	}
 
-	private ClientPlayerQuest createOneQuestWithTwoAdventures()
-	{
-		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", AdventureStateEnum.HIDDEN);
-		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", AdventureStateEnum.HIDDEN);
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.HIDDEN);
-		q.addAdventure(adventureOne);
-		q.addAdventure(adventureTwo);
-		assertEquals(2, q.getAdventureList().size());
-		return q;
-	}
+	
 	
 	/**
 	 * Test that we can overwrite ("whomp") this client player quest list
@@ -112,7 +126,7 @@ public class ThisClientsPlayerTest
 	public void canWhompOnQuestList()
 	{
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
-		ClientPlayerQuest q = createOneQuestWithTwoAdventures();
+		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
 		cp.addQuest(q);
 		
 		ClientPlayerAdventure a = new ClientPlayerAdventure(42, "Test Adventure ow2", AdventureStateEnum.HIDDEN);
