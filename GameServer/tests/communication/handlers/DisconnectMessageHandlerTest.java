@@ -1,6 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
+import model.OptionsManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +26,11 @@ public class DisconnectMessageHandlerTest
 	{
 		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
+		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton(true);
 	}
+	
+	//PUT SET UP HERE FOR OPTIONS MANAGER
 	
 	/**
 	 * Tests that getTypeWeHandle method returns correct type.

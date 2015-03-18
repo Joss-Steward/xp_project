@@ -1,6 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
+import model.OptionsManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +28,8 @@ public class MovementMessageHandlerTest
 	{
 		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
+		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton(true);
 	}
 	
 	/**
