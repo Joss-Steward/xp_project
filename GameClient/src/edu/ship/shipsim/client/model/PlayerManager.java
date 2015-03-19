@@ -13,7 +13,6 @@ import edu.ship.shipsim.client.model.reports.PinFailedReport;
 import edu.ship.shipsim.client.model.reports.PlayerConnectedToAreaServerReport;
 import edu.ship.shipsim.client.model.reports.PlayerDisconnectedFromAreaServerReport;
 import model.QualifiedObservableConnector;
-import model.QualifiedObservableReport;
 
 /**
  * Maintains the active set of players on the area server to which this client
