@@ -52,12 +52,12 @@ public class ThisClientsPlayerTest
 	public void notifiesOnMove()
 	{
 		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerMovedReport.class);
 		PlayerMovedReport report = new PlayerMovedReport(1, new Position(3, 4));
 		obs.update(EasyMock.anyObject(ThisClientsPlayer.class), EasyMock.eq(report));
 		EasyMock.replay(obs);
 
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
-		cp.addObserver(obs, PlayerMovedReport.class);
 		cp.move(new Position(3, 4));
 
 		EasyMock.verify(obs);
@@ -77,11 +77,11 @@ public class ThisClientsPlayerTest
 		expected.add(q);
 		
 		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestStateReport.class);
 		QuestStateReport report = new QuestStateReport(expected);
 		obs.update(EasyMock.anyObject(ThisClientsPlayer.class), EasyMock.eq(report));
 		EasyMock.replay(obs);
 
-		cp.addObserver(obs, QuestStateReport.class);
 		cp.sendCurrentQuestStateReport();
 
 		EasyMock.verify(obs);

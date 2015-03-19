@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import model.ClientPlayerQuest;
 import model.ClientPlayerQuestTest;
+import model.QualifiedObservableConnector;
 
 import org.easymock.EasyMock;
 import org.junit.Test;
@@ -33,11 +34,11 @@ public class CommandSendQuestStateTest
 		expected.add(q);
 		
 		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestStateReport.class);
 		QuestStateReport report = new QuestStateReport(expected);
 		obs.update(EasyMock.anyObject(ThisClientsPlayer.class), EasyMock.eq(report));
 		EasyMock.replay(obs);
 	
-		cp.addObserver(obs, QuestStateReport.class);
 		CommandSendQuestState cmd = new CommandSendQuestState();
 		cmd.execute();
 	

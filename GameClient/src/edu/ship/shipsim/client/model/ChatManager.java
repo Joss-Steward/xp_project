@@ -1,6 +1,8 @@
 package edu.ship.shipsim.client.model;
 
-import model.QualifiedObservable;
+import java.util.Observable;
+
+import model.QualifiedObservableConnector;
 import data.ChatType;
 import data.Position;
 import edu.ship.shipsim.client.model.reports.ChatReceivedReport;
@@ -12,7 +14,7 @@ import edu.ship.shipsim.client.model.reports.ChatSentReport;
  * @author Steve
  * 
  */
-public class ChatManager extends QualifiedObservable 
+public class ChatManager extends Observable 
 {
 	/**
 	 * The square radius that local chat can reach from a position
@@ -26,9 +28,7 @@ public class ChatManager extends QualifiedObservable
 	 */
 	private ChatManager() 
 	{
-		reportTypes.add(ChatReceivedReport.class);
-		reportTypes.add(ChatSentReport.class);
-		registerReportTypesWeNotify();
+	
 	}
 
 	/**
@@ -65,12 +65,12 @@ public class ChatManager extends QualifiedObservable
 
 		if (type.equals(ChatType.Zone)) 
 		{
-			this.notifyObservers(report);
+			QualifiedObservableConnector.getSingleton().sendReport(this, report);
 		} else if (type.equals(ChatType.Local)) 
 		{
 			if (this.canReceiveLocalMessage(position)) 
 			{
-				this.notifyObservers(report);
+				QualifiedObservableConnector.getSingleton().sendReport(this, report);
 			}
 		}
 	}
@@ -87,7 +87,7 @@ public class ChatManager extends QualifiedObservable
 		Player thisPlayer = PlayerManager.getSingleton().getThisClientsPlayer();
 		ChatSentReport report = new ChatSentReport(message,
 				thisPlayer.getName(), thisPlayer.getPosition(), type);
-		this.notifyObservers(report);
+		QualifiedObservableConnector.getSingleton().sendReport(this, report);
 	}
 
 	/**

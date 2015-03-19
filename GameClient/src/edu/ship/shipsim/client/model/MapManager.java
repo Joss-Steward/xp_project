@@ -1,8 +1,9 @@
 package edu.ship.shipsim.client.model;
 
 import java.util.Iterator;
+import java.util.Observable;
 
-import model.QualifiedObservable;
+import model.QualifiedObservableConnector;
 
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
@@ -24,7 +25,7 @@ import edu.ship.shipsim.client.model.reports.NewMapReport;
  * @author Merlin
  * 
  */
-public class MapManager extends QualifiedObservable
+public class MapManager extends Observable
 {
 
 	private static MapManager singleton;
@@ -44,9 +45,6 @@ public class MapManager extends QualifiedObservable
 	 */
 	private MapManager()
 	{
-		reportTypes.add(NewMapReport.class);
-
-		registerReportTypesWeNotify();
 	}
 
 	/**
@@ -82,7 +80,7 @@ public class MapManager extends QualifiedObservable
 		{
 			this.noCollisionLayer = true;
 		}
-		this.notifyObservers(new NewMapReport(tiledMap));
+		QualifiedObservableConnector.getSingleton().sendReport(this, new NewMapReport(tiledMap));
 	}
 
 	/**
@@ -140,7 +138,6 @@ public class MapManager extends QualifiedObservable
 
 			for (int row = 0; row < height; row++)
 			{
-				//System.out.println((collisionLayer.getHeight()-row-1)+ ": ");
 				for (int col = 0; col < width; col++)
 				{
 
@@ -148,15 +145,13 @@ public class MapManager extends QualifiedObservable
 					if (cell == null)
 					{
 						passabilityMap[height - row - 1][col] = true;
-						//System.out.print("t");
+						
 					} else
 					{
 						this.passabilityMap[height - row - 1][col] = false;
-						//System.out.print("f");
 					}
 
 				}
-				//System.out.println();
 			}
 
 		} else
@@ -231,8 +226,6 @@ public class MapManager extends QualifiedObservable
 		{
 			return false;
 		}
-		//System.out.println("passability at " + p.getRow() + " " + p.getColumn() + " is "
-		//		+ passabilityMap[p.getRow()][p.getColumn()]);
 		// check against the passability map for capable movement
 		return this.passabilityMap[p.getRow()][p.getColumn()];
 	}

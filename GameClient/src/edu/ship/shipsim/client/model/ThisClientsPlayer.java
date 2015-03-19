@@ -3,6 +3,7 @@ package edu.ship.shipsim.client.model;
 import java.util.ArrayList;
 
 import model.ClientPlayerQuest;
+import model.QualifiedObservableConnector;
 import data.Position;
 import edu.ship.shipsim.client.model.reports.AreaCollisionReport;
 import edu.ship.shipsim.client.model.reports.QuestStateReport;
@@ -20,10 +21,6 @@ public class ThisClientsPlayer extends Player
 	protected ThisClientsPlayer(int playerID)
 	{
 		super(playerID);
-
-		reportTypes.add(AreaCollisionReport.class);
-		reportTypes.add(QuestStateReport.class);
-		this.registerReportTypesWeNotify();
 	}
 
 	/**
@@ -39,7 +36,7 @@ public class ThisClientsPlayer extends Player
 		String region = MapManager.getSingleton().getIsInRegion(pos);
 		if (region != null)
 		{
-			this.notifyObservers(new AreaCollisionReport(this.id, region));
+			QualifiedObservableConnector.getSingleton().sendReport(this, new AreaCollisionReport(this.id, region));
 		}
 	}
 
@@ -76,7 +73,7 @@ public class ThisClientsPlayer extends Player
 	public void sendCurrentQuestStateReport()
 	{
 		QuestStateReport r = new QuestStateReport(questList);
-		this.notifyObservers(r);
+		QualifiedObservableConnector.getSingleton().sendReport(this, r);
 	}
 
 }

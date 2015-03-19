@@ -154,10 +154,10 @@ public class PlayerManagerTest
 		Observer obs = EasyMock.createMock(Observer.class);
 		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(
 				1, "Player 1", "Player 1 Type", pos, false);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerConnectedToAreaServerReport.class);
 		obs.update(EasyMock.anyObject(PlayerManager.class), EasyMock.eq(report));
 		EasyMock.replay(obs);
 
-		pm.addObserver(obs, PlayerConnectedToAreaServerReport.class);
 		pm.initializePlayer(1, "Player 1", "Player 1 Type", pos);
 
 		EasyMock.verify(obs);
