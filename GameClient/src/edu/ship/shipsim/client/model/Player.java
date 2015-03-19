@@ -125,8 +125,7 @@ public class Player extends Observable
 	public void move(Position playerPosition)
 	{
 		this.position = playerPosition;
-		QualifiedObservableConnector.getSingleton().sendReport(this,
-				new PlayerMovedReport(this.id, playerPosition));
+		QualifiedObservableConnector.getSingleton().sendReport(new PlayerMovedReport(this.id, playerPosition));
 	}
 
 	/**
@@ -162,7 +161,6 @@ public class Player extends Observable
 		TeleportHotSpot hotSpot = MapManager.getSingleton().getTeleportHotSpot(
 				thePosition);
 		QualifiedObservableConnector.getSingleton().sendReport(
-				this,
 				new ChangeMapReport(id, hotSpot.getTeleportPosition(), hotSpot
 						.getMapName()));
 	}

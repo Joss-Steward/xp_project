@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import model.PlayerConnection;
 import model.PlayerLogin;
-import model.QualifiedObservable;
+import model.QualifiedObservableConnector;
 import data.Position;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.model.reports.PinFailedReport;
@@ -16,7 +16,7 @@ import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
  * @author Merlin
  * 
  */
-public class Player extends QualifiedObservable
+public class Player
 {
 
 	private PlayerLogin playerLogin;
@@ -34,14 +34,6 @@ public class Player extends QualifiedObservable
 	private String mapName;
 	
 	private ArrayList<QuestState> questList = new ArrayList<QuestState>();
-
-	/**
-	 * 
-	 */
-	Player()
-	{
-		registerOurReportTypes();
-	}
 
 	/**
 	 * Get the appearance type for how this player should be drawn
@@ -136,7 +128,7 @@ public class Player extends QualifiedObservable
 		{
 			System.err.println("Pin is not valid for " + playerID
 					+ " because " + report.toString());
-			this.notifyObservers(report);
+			QualifiedObservableConnector.getSingleton().sendReport(report);
 			return false;
 		}
 		return true;
@@ -226,7 +218,7 @@ public class Player extends QualifiedObservable
 			e.printStackTrace();
 		}
 		
-		this.notifyObservers(report);
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 
 	/**
@@ -294,14 +286,6 @@ public class Player extends QualifiedObservable
 	public ArrayList<QuestState> getQuestList()
 	{
 		return questList;
-	}
-	
-	private void registerOurReportTypes()
-	{
-		reportTypes.add(PlayerMovedReport.class);
-		reportTypes.add(PinFailedReport.class);
-
-		this.registerReportTypesWeNotify();
 	}
 
 	/**

@@ -80,7 +80,7 @@ public class MapManager extends Observable
 		{
 			this.noCollisionLayer = true;
 		}
-		QualifiedObservableConnector.getSingleton().sendReport(this, new NewMapReport(tiledMap));
+		QualifiedObservableConnector.getSingleton().sendReport(new NewMapReport(tiledMap));
 	}
 
 	/**

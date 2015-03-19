@@ -23,7 +23,6 @@ import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayMock;
 import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
-import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 
 /**
  * Test the Player class
@@ -51,8 +50,6 @@ public class PlayerTest extends DatabaseTest
 		QualifiedObservableConnector.resetSingleton();
 		PlayerManager.resetSingleton();
 		playerManager = PlayerManager.getSingleton();
-		assertEquals(0, playerManager.countObservers());
-		assertEquals(0, playerManager.countObservers(PlayerConnectionReport.class));
 		QuestStateTableDataGatewayMock.getSingleton().resetData();
 	}
 

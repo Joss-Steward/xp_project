@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Observable;
+
 import model.reports.LoginSuccessfulReport;
 import datasource.DatabaseException;
 
@@ -7,7 +9,7 @@ import datasource.DatabaseException;
  * @author Merlin
  * 
  */
-public class PlayerManager extends QualifiedObservable
+public class PlayerManager extends Observable
 {
 	/**
 	 * 
@@ -82,16 +84,6 @@ public class PlayerManager extends QualifiedObservable
 			throw new LoginFailedException();
 		}
 
-	}
-
-	/**
-	 * @see model.QualifiedObservable#notifiesOn(java.lang.Class)
-	 */
-	@Override
-	public boolean notifiesOn(Class<?> reportType)
-	{
-
-		return false;
 	}
 
 	/**

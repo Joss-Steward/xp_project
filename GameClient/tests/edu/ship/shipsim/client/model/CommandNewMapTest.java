@@ -4,10 +4,9 @@ import static org.junit.Assert.fail;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
-import java.util.Observable;
-import java.util.Observer;
 
 import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -41,8 +40,8 @@ public class CommandNewMapTest
 	@Test
 	public void testExecution()
 	{
-		Observer obs = EasyMock.createMock(Observer.class);
-		obs.update(EasyMock.isA(Observable.class), EasyMock.isA(NewMapReport.class));
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		obs.receiveReport(EasyMock.isA(NewMapReport.class));
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				NewMapReport.class);
 		EasyMock.replay(obs);

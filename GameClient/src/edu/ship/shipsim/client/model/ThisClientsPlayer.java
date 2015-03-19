@@ -36,7 +36,7 @@ public class ThisClientsPlayer extends Player
 		String region = MapManager.getSingleton().getIsInRegion(pos);
 		if (region != null)
 		{
-			QualifiedObservableConnector.getSingleton().sendReport(this, new AreaCollisionReport(this.id, region));
+			QualifiedObservableConnector.getSingleton().sendReport(new AreaCollisionReport(this.id, region));
 		}
 	}
 
@@ -73,7 +73,7 @@ public class ThisClientsPlayer extends Player
 	public void sendCurrentQuestStateReport()
 	{
 		QuestStateReport r = new QuestStateReport(questList);
-		QualifiedObservableConnector.getSingleton().sendReport(this, r);
+		QualifiedObservableConnector.getSingleton().sendReport(r);
 	}
 
 }

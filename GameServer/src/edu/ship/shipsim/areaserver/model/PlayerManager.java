@@ -8,9 +8,7 @@ import java.util.List;
 import model.OptionsManager;
 import model.PlayerConnection;
 import model.PlayerLogin;
-import model.QualifiedObservable;
 import model.QualifiedObservableConnector;
-import model.QualifiedObservableReport;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.model.reports.CurrentQuestStateReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
@@ -20,7 +18,7 @@ import edu.ship.shipsim.areaserver.model.reports.PlayerLeaveReport;
  * @author Merlin
  * 
  */
-public class PlayerManager extends QualifiedObservable
+public class PlayerManager 
 {
 	/**
 	 * @return the only PlayerManger in the system
@@ -47,12 +45,6 @@ public class PlayerManager extends QualifiedObservable
 	{
 		if (singleton != null)
 		{
-			for (Class<? extends QualifiedObservableReport> reportType : singleton.reportTypes)
-			{
-				QualifiedObservableConnector.getSingleton()
-						.unregisterQualifiedObservable(singleton, reportType);
-			}
-
 			singleton.stopNpcs();
 			singleton = null;
 		}
@@ -65,11 +57,7 @@ public class PlayerManager extends QualifiedObservable
 
 	private PlayerManager() throws DatabaseException
 	{
-
 		players = new HashMap<Integer, Player>();
-		reportTypes.add(PlayerConnectionReport.class);
-
-		this.registerReportTypesWeNotify();
 	}
 
 	/**
@@ -89,7 +77,7 @@ public class PlayerManager extends QualifiedObservable
 			player.setPlayerLogin(new PlayerLogin(playerID));
 			players.put(playerID, player);
 
-			this.notifyObservers(new PlayerConnectionReport(player));
+			QualifiedObservableConnector.getSingleton().sendReport(new PlayerConnectionReport(player));
 			return player;
 		} catch (DatabaseException e)
 		{
@@ -118,9 +106,9 @@ public class PlayerManager extends QualifiedObservable
 		{
 			players.put(playerID, player);
 
-			this.notifyObservers(new PlayerConnectionReport(player));
+			QualifiedObservableConnector.getSingleton().sendReport(new PlayerConnectionReport(player));
 			
-			this.notifyObservers(new CurrentQuestStateReport(player));
+			QualifiedObservableConnector.getSingleton().sendReport(new CurrentQuestStateReport(player));
 			
 			return player;
 		} else
@@ -260,18 +248,11 @@ public class PlayerManager extends QualifiedObservable
 		Player p = this.players.remove(playerID);
 		if (p != null)
 		{
-			// unregister this player from all observers
-			QualifiedObservableConnector qoc = QualifiedObservableConnector
-					.getSingleton();
-			for (Class<? extends QualifiedObservableReport> type : p
-					.getReportTypesWeSend())
-			{
-				qoc.unregisterQualifiedObservable(p, type);
-			}
+			
 			System.out.println("Player " + p.getPlayerName() + " has left");
 			// send the disconnect message to clients
 			PlayerLeaveReport report = new PlayerLeaveReport(playerID);
-			this.notifyObservers(report);
+			QualifiedObservableConnector.getSingleton().sendReport(report);
 		}
 	}
 

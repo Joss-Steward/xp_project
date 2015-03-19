@@ -3,9 +3,9 @@ package edu.ship.shipsim.client.model;
 import static org.junit.Assert.*;
 
 import java.util.Observable;
-import java.util.Observer;
 
 import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -58,10 +58,10 @@ public class MapManagerTest
 	@Test
 	public void updatesOnNewMap()
 	{
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
 		cm.registerObserver(obs, NewMapReport.class);
-		obs.update(EasyMock.isA(MapManager.class), EasyMock.isA(NewMapReport.class));
+		obs.receiveReport(EasyMock.isA(NewMapReport.class));
 		EasyMock.replay(obs);
 
 		MapManager map = MapManager.getSingleton();

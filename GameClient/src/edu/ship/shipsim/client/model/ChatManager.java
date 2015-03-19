@@ -65,12 +65,12 @@ public class ChatManager extends Observable
 
 		if (type.equals(ChatType.Zone)) 
 		{
-			QualifiedObservableConnector.getSingleton().sendReport(this, report);
+			QualifiedObservableConnector.getSingleton().sendReport(report);
 		} else if (type.equals(ChatType.Local)) 
 		{
 			if (this.canReceiveLocalMessage(position)) 
 			{
-				QualifiedObservableConnector.getSingleton().sendReport(this, report);
+				QualifiedObservableConnector.getSingleton().sendReport(report);
 			}
 		}
 	}
@@ -87,7 +87,7 @@ public class ChatManager extends Observable
 		Player thisPlayer = PlayerManager.getSingleton().getThisClientsPlayer();
 		ChatSentReport report = new ChatSentReport(message,
 				thisPlayer.getName(), thisPlayer.getPosition(), type);
-		QualifiedObservableConnector.getSingleton().sendReport(this, report);
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 
 	/**

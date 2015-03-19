@@ -1,7 +1,6 @@
 package view.screen.map;
 
 import java.util.ArrayList;
-import java.util.Observable;
 
 import view.player.PlayerType;
 import view.screen.ScreenListener;
@@ -26,10 +25,10 @@ public class ScreenMapListener extends ScreenListener
 	}
 
 	/**
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
 	 */
 	@Override
-	public void update(Observable o, Object arg)
+	public void receiveReport(QualifiedObservableReport arg)
 	{
 		ScreenMap map = (ScreenMap) this.screen;
 

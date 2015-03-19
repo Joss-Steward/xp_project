@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 
-import model.QualifiedObservable;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.reports.StubQualifiedObservableReport1;
@@ -105,11 +104,8 @@ public class MessagePackerSetTest
 
 		// Set up observable and observer that are interested in the report our
 		// mock packer is packing
-		QualifiedObservable obs = new MockQualifiedObservable();
-		QualifiedObservableConnector.getSingleton().registerQualifiedObservable(obs,
-				TestReport1.class);
 		StateAccumulator observer = EasyMock.createMock(StateAccumulator.class);
-		observer.update(EasyMock.eq(obs), EasyMock.isA(TestReport1.class));
+		observer.receiveReport(EasyMock.isA(TestReport1.class));
 		EasyMock.replay(observer);
 
 		// register the packer, hook up the observers, then our notify should
@@ -117,24 +113,13 @@ public class MessagePackerSetTest
 		set.registerPacker(packer);
 		set.hookUpObservationFor(observer);
 		assertEquals(observer, packer.getAccumulator());
-		obs.notifyObservers(new TestReport1());
+		QualifiedObservableConnector.getSingleton().sendReport(new TestReport1());
 
 		EasyMock.verify(observer);
 	}
 
 	private class TestReport1 implements QualifiedObservableReport
 	{
-
-	}
-
-	private class MockQualifiedObservable extends QualifiedObservable
-	{
-
-		public MockQualifiedObservable()
-		{
-			reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
-			reportTypes.add(TestReport1.class);
-		}
 
 	}
 

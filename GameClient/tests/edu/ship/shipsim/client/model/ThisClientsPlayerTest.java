@@ -5,12 +5,12 @@ import static org.junit.Assert.*;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.util.ArrayList;
-import java.util.Observer;
 
 import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
 import model.ClientPlayerQuestTest;
 import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -51,10 +51,10 @@ public class ThisClientsPlayerTest
 	@Test
 	public void notifiesOnMove()
 	{
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerMovedReport.class);
 		PlayerMovedReport report = new PlayerMovedReport(1, new Position(3, 4));
-		obs.update(EasyMock.anyObject(ThisClientsPlayer.class), EasyMock.eq(report));
+		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
@@ -76,10 +76,10 @@ public class ThisClientsPlayerTest
 		ArrayList<ClientPlayerQuest> expected = new ArrayList<ClientPlayerQuest>() ;
 		expected.add(q);
 		
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestStateReport.class);
 		QuestStateReport report = new QuestStateReport(expected);
-		obs.update(EasyMock.anyObject(ThisClientsPlayer.class), EasyMock.eq(report));
+		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
 		cp.sendCurrentQuestStateReport();

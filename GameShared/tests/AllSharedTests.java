@@ -1,7 +1,6 @@
 import model.MapToServerMappingTest;
 import model.PlayerLoginTest;
 import model.PlayerConnectionTest;
-import model.QualifiedObservableTest;
 import model.QualifiedObserverConnectorTest;
 
 import org.junit.ClassRule;
@@ -102,7 +101,6 @@ import datasource.ServerRowDataGatewayRDSTest;
 		PlayerLoginTest.class, 
 		PlayerConnectionTest.class, 
 		// PlayersInDB
-		QualifiedObservableTest.class,
 		// QualifiedObservableTestInherited,
 		QualifiedObserverConnectorTest.class,
 		// ServersInDB

@@ -2,10 +2,10 @@ package edu.ship.shipsim.areaserver.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Observer;
 
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
+import model.QualifiedObserver;
 
 /**
  * Contains the logic for what an NPC should do
@@ -13,7 +13,7 @@ import model.QualifiedObservableReport;
  * @author Steve
  *
  */
-public abstract class NPCBehavior implements Serializable, Observer
+public abstract class NPCBehavior implements Serializable, QualifiedObserver
 {
 	private static final long serialVersionUID = -1535370359851281459L;
 	

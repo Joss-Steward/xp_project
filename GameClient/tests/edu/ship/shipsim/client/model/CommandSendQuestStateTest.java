@@ -1,11 +1,11 @@
 package edu.ship.shipsim.client.model;
 
 import java.util.ArrayList;
-import java.util.Observer;
 
 import model.ClientPlayerQuest;
 import model.ClientPlayerQuestTest;
 import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
 
 import org.easymock.EasyMock;
 import org.junit.Test;
@@ -33,10 +33,10 @@ public class CommandSendQuestStateTest
 		ArrayList<ClientPlayerQuest> expected = new ArrayList<ClientPlayerQuest>() ;
 		expected.add(q);
 		
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestStateReport.class);
 		QuestStateReport report = new QuestStateReport(expected);
-		obs.update(EasyMock.anyObject(ThisClientsPlayer.class), EasyMock.eq(report));
+		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 	
 		CommandSendQuestState cmd = new CommandSendQuestState();

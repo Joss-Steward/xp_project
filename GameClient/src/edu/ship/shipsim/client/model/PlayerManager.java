@@ -141,7 +141,7 @@ public class PlayerManager extends Observable
 	public void initiateLogin(String name, String password)
 	{
 		loginInProgress = true;
-		QualifiedObservableConnector.getSingleton().sendReport(this, new LoginInitiatedReport(name, password));
+		QualifiedObservableConnector.getSingleton().sendReport(new LoginInitiatedReport(name, password));
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class PlayerManager extends Observable
 		}
 		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(
 				playerID, playerName, appearanceType, position, isThisClientsPlayer);
-		QualifiedObservableConnector.getSingleton().sendReport(this, report);
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 
 		player.setName(playerName);
 		player.setAppearanceType(appearanceType);
@@ -194,7 +194,7 @@ public class PlayerManager extends Observable
 		if (player != null)
 		{	
 			PlayerDisconnectedFromAreaServerReport report = new PlayerDisconnectedFromAreaServerReport(playerID);
-			QualifiedObservableConnector.getSingleton().sendReport(this, report);
+			QualifiedObservableConnector.getSingleton().sendReport(report);
 		}
 	}
 	
@@ -205,7 +205,7 @@ public class PlayerManager extends Observable
 	{
 		LoginFailedReport report = new LoginFailedReport("Invalid Login - Incorrect Username/Password");
 		loginInProgress = false;
-		QualifiedObservableConnector.getSingleton().sendReport(this, report);
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 
 	/**
@@ -216,6 +216,6 @@ public class PlayerManager extends Observable
 	{
 		PinFailedReport report = new PinFailedReport(err);
 		loginInProgress = false;
-		QualifiedObservableConnector.getSingleton().sendReport(this, report);
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 }

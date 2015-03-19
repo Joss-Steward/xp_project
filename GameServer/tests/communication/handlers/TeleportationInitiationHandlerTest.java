@@ -3,7 +3,6 @@ package communication.handlers;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Observer;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -22,6 +21,7 @@ import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
 import model.OptionsManager;
 import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
 
 /**
  * Test the handler for GetServerInfoMessages
@@ -70,7 +70,7 @@ public class TeleportationInitiationHandlerTest
 		TeleportationInitiationMessage msg = new TeleportationInitiationMessage(
 				PlayersForTest.MERLIN.getPlayerID(), ServersForTest.FIRST_SERVER.getMapName(), new Position(5, 6));
 		// set up an observer who would be notified if the movement wasn't handled silently
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerMovedReport.class);
 		EasyMock.replay(obs);
 		
