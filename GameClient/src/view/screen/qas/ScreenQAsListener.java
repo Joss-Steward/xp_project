@@ -1,4 +1,4 @@
-package view;
+package view.screen.qas;
 
 import java.util.ArrayList;
 import java.util.Observable;

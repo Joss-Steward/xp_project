@@ -1,7 +1,7 @@
 package view.screen;
 
-import view.ScreenQAs;
-import view.ScreenQAsListener;
+import view.screen.qas.ScreenQAs;
+import view.screen.qas.ScreenQAsListener;
 import view.screen.login.ScreenLogin;
 import view.screen.login.ScreenLoginListener;
 import view.screen.map.ScreenMap;

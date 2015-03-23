@@ -21,7 +21,7 @@ import static view.player.Direction.*;
 public class ScreenMapInput implements InputProcessor
 {
 	PlayerSprite sprite;
-	boolean up, down, left, right;
+	boolean up, down, left, right, Q;
 	float delay;
 	
 	/**
@@ -64,6 +64,11 @@ public class ScreenMapInput implements InputProcessor
 				cm = new CommandMovePlayer(cp.getID(), to);
 				right = true;
 				break;
+				
+			case Keys.Q:
+				System.out.println("Q was pressed");
+				Q = true;
+				break;
 		}
 
 		if (cm != null && sprite.doneWalking()) 
@@ -96,6 +101,10 @@ public class ScreenMapInput implements InputProcessor
 	
 			case Keys.RIGHT:
 				right = false;
+				break;
+				
+			case Keys.Q:
+				Q = false;
 				break;
 		}
 		return false;
@@ -219,5 +228,6 @@ public class ScreenMapInput implements InputProcessor
 		down = false;
 		left = false;
 		right = false;
+		Q = false;
 	}
 }
