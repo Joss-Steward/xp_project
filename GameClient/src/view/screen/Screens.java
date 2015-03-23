@@ -1,5 +1,7 @@
 package view.screen;
 
+import view.screen.qas.ScreenQAs;
+import view.screen.qas.ScreenQAsListener;
 import view.screen.login.ScreenLogin;
 import view.screen.login.ScreenLoginListener;
 import view.screen.map.ScreenMap;
@@ -22,7 +24,11 @@ public enum Screens
 	/**
 	 * 
 	 */
-	MAP_SCREEN(new ScreenMap(), new ScreenMapListener());
+	MAP_SCREEN(new ScreenMap(), new ScreenMapListener()),
+	/**
+	 * 
+	 */
+	QAS_SCREEN(new ScreenQAs(), new ScreenQAsListener());
 
 	private ScreenBasic screen;
 
