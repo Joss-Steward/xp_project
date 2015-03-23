@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import datasource.QuestStateEnum;
@@ -10,8 +11,12 @@ import datasource.QuestStateEnum;
  * @author nk3668
  *
  */
-public class ClientPlayerQuest 
+public class ClientPlayerQuest implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int questID;
 	private String questDescription;
 	private QuestStateEnum state;
