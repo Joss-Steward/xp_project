@@ -59,6 +59,12 @@ public class GameLibGDX extends Game
 		ScreenBasic screen = Screens.LOGIN_SCREEN.getScreen();
 		this.setScreen(screen);
 		Gdx.input.setInputProcessor(screen.getStage());
+		
+		// start QAs screen
+		ScreenBasic qa = Screens.QAS_SCREEN.getScreen();
+		this.setScreen(qa);
+		Gdx.input.setInputProcessor(qa.getStage());
+		
 	}
 
 	/**
