@@ -97,6 +97,10 @@ public class ConnectionIncoming implements Runnable
 		System.out.println("Incoming thread finished");
 	}
 
+	/**
+	 * process a given request
+	 * @param request the request
+	 */
 	protected void processRequest(Message request)
 	{
 		try

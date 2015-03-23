@@ -86,7 +86,7 @@ public class CommandInitializePlayerTest
 				"Apperance", pos);
 		PlayerManager pm = PlayerManager.getSingleton();
 		pm.initiateLogin("not", "needed");
-		Player p = pm.setThisClientsPlayer(4);
+		Player p = pm.finishLogin(4);
 		assertNotNull(pm.getPlayerFromID(4));
 		assertTrue(cmd.execute());
 		p = pm.getPlayerFromID(4);

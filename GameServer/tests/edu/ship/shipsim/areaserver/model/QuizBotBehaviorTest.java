@@ -2,8 +2,6 @@ package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
 
-import java.sql.SQLException;
-
 import model.OptionsManager;
 import model.QualifiedObservableConnector;
 
@@ -12,6 +10,8 @@ import org.junit.Test;
 
 import data.ChatType;
 import data.Position;
+import datasource.DatabaseException;
+import datasource.DatabaseTest;
 import edu.ship.shipsim.areaserver.model.NPCQuestion;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
@@ -23,19 +23,21 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReport;
  *
  * Make sure that the QuizBotBehavior acts as expected
  */
-public class QuizBotBehaviorTest {
+public class QuizBotBehaviorTest  extends DatabaseTest
+{
 	
-	QuizBotBehavior behavior;
-	NPCQuestion question;
+	private QuizBotBehavior behavior;
+	private NPCQuestion question;
 	
 
 	/**
-	 * @throws SQLException
+	 * @throws DatabaseException  shouldn't
 	 * Set up the behavior and a question for each test
 	 */
 	@Before
-	public void setUp() throws SQLException
+	public void setUp() throws DatabaseException
 	{
+		super.setUp();
 		OptionsManager.getSingleton(true);
 		behavior = new QuizBotBehavior();
 		question = behavior.getQuestion();
@@ -55,14 +57,11 @@ public class QuizBotBehaviorTest {
 		String playerName = p.getPlayerName();
 		
 		// check that spaces don't matter
-		SendChatMessageReport message = new SendChatMessageReport("    " + answer + " ", playerName, new Position(0,0), ChatType.Zone);
-		
+		SendChatMessageReport report = new SendChatMessageReport("    " + answer + " ", playerName, new Position(0,0), ChatType.Zone);
 		int score = p.getQuizScore();
 		
-		behavior.update(p, message);
-		
+		behavior.receiveReport(report);
 		assertEquals(score+1, p.getQuizScore());
-		
 		p.setQuizScore(score);
 	}
 	
@@ -73,11 +72,11 @@ public class QuizBotBehaviorTest {
 	public void testIncorrectAnswer()
 	{
 		Player p = PlayerManager.getSingleton().addPlayer(1);
-		SendChatMessageReport message = new SendChatMessageReport("incorrect", p.getPlayerName(), new Position(0,0), ChatType.Zone);
+		SendChatMessageReport report = new SendChatMessageReport("incorrect", p.getPlayerName(), new Position(0,0), ChatType.Zone);
 		
 		int score = p.getQuizScore();
 		
-		behavior.update(p, message);
+		behavior.receiveReport(report);
 		
 		assertEquals(score, p.getQuizScore());
 	}

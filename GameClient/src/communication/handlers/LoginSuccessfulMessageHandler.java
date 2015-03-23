@@ -34,12 +34,12 @@ public class LoginSuccessfulMessageHandler extends MessageHandler
 			LoginSuccessfulMessage rMsg = (LoginSuccessfulMessage) msg;
 			try
 			{
-				connectionManager.moveToNewSocket(
+				getConnectionManager().moveToNewSocket(
 						new Socket(rMsg.getHostName(), rMsg.getPortNumber()),
 						rMsg.getPlayerID(), rMsg.getPin());
 				try
 				{
-					PlayerManager.getSingleton().setThisClientsPlayer(rMsg.getPlayerID());
+					PlayerManager.getSingleton().finishLogin(rMsg.getPlayerID());
 				} catch (AlreadyBoundException | NotBoundException e)
 				{
 					e.printStackTrace();

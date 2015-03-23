@@ -1,11 +1,9 @@
 package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
-
-import java.util.Observer;
-
 import model.OptionsManager;
 import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -69,9 +67,9 @@ public class CommandMovePlayerTest
 	public void notifyObservers()
 	{
 		PlayerManager.getSingleton().addPlayer(1);
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerMovedReport.class);
-		obs.update(EasyMock.anyObject(Player.class), EasyMock.anyObject(PlayerMovedReport.class));
+		obs.receiveReport(EasyMock.anyObject(PlayerMovedReport.class));
 		EasyMock.replay(obs);
 		
 		CommandMovePlayer cmd = new CommandMovePlayer(1, new Position(4,3));

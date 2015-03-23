@@ -3,10 +3,10 @@ package edu.ship.shipsim.areaserver.model;
 import static org.junit.Assert.*;
 
 import java.sql.SQLException;
-import java.util.Observer;
 
 import model.OptionsManager;
 import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -37,10 +37,6 @@ public class PlayerManagerTest
 		OptionsManager.getSingleton(true);
 		QualifiedObservableConnector.resetSingleton();
 		PlayerManager.resetSingleton();
-		PlayerManager playerManager = PlayerManager.getSingleton();
-		assertEquals(0, playerManager.countObservers());
-		assertEquals(0, playerManager.countObservers(PlayerConnectionReport.class));
-
 	}
 
 	/**
@@ -75,16 +71,13 @@ public class PlayerManagerTest
 	@Test
 	public void notifiesOnAddPlayer()
 	{
-		System.out.println("starting . . . . .");
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				PlayerConnectionReport.class);
-		obs.update(EasyMock.eq(PlayerManager.getSingleton()),
-				EasyMock.isA(PlayerConnectionReport.class));
+		obs.receiveReport(EasyMock.isA(PlayerConnectionReport.class));
 		EasyMock.replay(obs);
 
-		assertEquals(1,
-				PlayerManager.getSingleton().countObservers(PlayerConnectionReport.class));
+		
 		PlayerManager.getSingleton().addPlayer(2);
 		EasyMock.verify(obs);
 	}

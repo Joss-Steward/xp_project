@@ -26,6 +26,16 @@ public class MapFileMessageHandlerTest
 		ModelFacade.resetSingleton();
 		ModelFacade.getSingleton(true, false);
 	}
+	
+	/**
+	 * Test the type of Message that we expect
+	 */
+	@Test
+	public void typeWeHandle()
+	{
+		MapFileMessageHandler h = new MapFileMessageHandler();
+		assertEquals(MapFileMessage.class, h.getMessageTypeWeHandle());
+	}
 
 	/**
 	 * The handler should tell the model that the new file is there. We will

@@ -105,45 +105,42 @@ public class ModelFacade
 		this.mockMode = mockMode;
 		setHeadless(headless);
 		commandQueue = new InformationQueue();
-		if (!mockMode)
+		if (!headless && !mockMode)
 		{
-			if (!headless)
+			com.badlogic.gdx.utils.Timer.schedule(new Task()
 			{
-				com.badlogic.gdx.utils.Timer.schedule(new Task()
+
+				@Override
+				public void run()
 				{
-
-					@Override
-					public void run()
+					while (commandQueue.getQueueSize() > 0)
 					{
-						while (commandQueue.getQueueSize() > 0)
+						Command cmd;
+						try
 						{
-							Command cmd;
-							try
+							cmd = (Command) commandQueue.getInfoPacket();
+							cmd.execute();
+							if (cmd.doDump())
 							{
-								cmd = (Command) commandQueue.getInfoPacket();
-								cmd.execute();
-								if (cmd.doDump())
+								//let it clear
+								while (commandQueue.getQueueSize() > 0) 
 								{
-									//let it clear
-									while (commandQueue.getQueueSize() > 0) 
-									{
-										commandQueue.getInfoPacket();
-									}
+									commandQueue.getInfoPacket();
 								}
-							} catch (InterruptedException e)
-							{
-								e.printStackTrace();
 							}
-
+						} catch (InterruptedException e)
+						{
+							e.printStackTrace();
 						}
-					}
 
-				}, (float) 0.25, (float) 0.25);
-			} else
-			{
-				java.util.Timer timer = new java.util.Timer();
-				timer.schedule(new ProcessCommandQueueTask(), 0, 250);
-			}
+					}
+				}
+
+			}, (float) 0.25, (float) 0.25);
+		} else
+		{
+			java.util.Timer timer = new java.util.Timer();
+			timer.schedule(new ProcessCommandQueueTask(), 0, 250);
 		}
 	}
 
@@ -211,6 +208,15 @@ public class ModelFacade
 	public int queueSize()
 	{
 		return commandQueue.getQueueSize();
+	}
+
+	/**
+	 * @return the next command in the queue
+	 * @throws InterruptedException shouldn't
+	 */
+	public Command getNextCommand() throws InterruptedException
+	{
+		return (Command) commandQueue.getInfoPacket();
 	}
 
 }

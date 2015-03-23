@@ -3,7 +3,6 @@ package communication;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Observable;
 
 import model.reports.StubQualifiedObservableReport1;
 
@@ -68,11 +67,10 @@ public class StateAccumulatorTest
 	@Test
 	public void queuesOnUpdate()
 	{
-		MockObservable obs = new MockObservable();
 		MessagePackerSet packerSet = new MessagePackerSet();
 
 		StateAccumulator accum = new StateAccumulator(packerSet);
-		accum.update(obs, new StubQualifiedObservableReport1());
+		accum.receiveReport(new StubQualifiedObservableReport1());
 		ArrayList<Message> pending = accum.pendingMsgs;
 		assertEquals(1, pending.size());
 	}
@@ -90,7 +88,4 @@ public class StateAccumulatorTest
 		assertEquals(m, accum.pendingMsgs.get(0));
 	}
 
-	private class MockObservable extends Observable
-	{
-	}
 }

@@ -1,11 +1,21 @@
 package edu.ship.shipsim.areaserver.model;
 
+import java.util.ArrayList;
+
 import datasource.DatabaseException;
 import model.OptionsManager;
 import model.PlayerLogin;
+import edu.ship.shipsim.areaserver.datasource.AdventureStateRecord;
+import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway;
+import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayMock;
+import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayRDS;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayMock;
 import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayRDS;
+import edu.ship.shipsim.areaserver.datasource.QuestStateRecord;
+import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway;
+import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayMock;
+import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayRDS;
 
 /**
  * 
@@ -20,6 +30,11 @@ public class PlayerMapper
 {
 
 	private PlayerRowDataGateway playerGateway;
+	private QuestStateTableDataGateway questStateGateway;
+	private AdventureStateTableDataGateway adventureStateGateway;
+	/**
+	 * The player we are connecting to the gateways
+	 */
 	protected Player player;
 
 	/**
@@ -33,9 +48,13 @@ public class PlayerMapper
 		if (OptionsManager.getSingleton().isTestMode())
 		{
 			this.playerGateway = new PlayerRowDataGatewayMock(playerID);
+			this.questStateGateway = QuestStateTableDataGatewayMock.getSingleton();
+			this.adventureStateGateway = AdventureStateTableDataGatewayMock.getSingleton();
 		} else
 		{
 			this.playerGateway = new PlayerRowDataGatewayRDS(playerID);
+			this.questStateGateway = QuestStateTableDataGatewayRDS.getSingleton();
+			this.adventureStateGateway = AdventureStateTableDataGatewayRDS.getSingleton();
 		}
 		this.player = createPlayerObject();
 		player.setAppearanceType(playerGateway.getAppearanceType());
@@ -45,10 +64,34 @@ public class PlayerMapper
 		player.setPlayerID(playerID);
 		player.setMapName(playerGateway.getMapName());
 		player.setDataMapper(this);
+		loadQuestStates();
 	}
 
 
 
+	private void loadQuestStates() throws DatabaseException
+	{
+		ArrayList<QuestStateRecord> questStateRecords = questStateGateway.getQuestStates(player.getID());
+		for (QuestStateRecord qsRec: questStateRecords)
+		{
+			QuestState questState = new QuestState(qsRec.getQuestID(), qsRec.getState());
+			ArrayList<AdventureStateRecord> adventureStateRecords = adventureStateGateway.getAdventureStates(player.getID(), qsRec.getQuestID());
+			ArrayList<AdventureState> adventureStates = new ArrayList<AdventureState>();
+			for (AdventureStateRecord asRec:adventureStateRecords)
+			{
+				adventureStates.add(new AdventureState(asRec.getAdventureID(), asRec.getState()));
+			}
+			questState.addAdventures(adventureStates);
+			player.addQuestState(questState);
+		}
+		
+	}
+
+
+
+	/**
+	 * @return a new object of the type this mapper is managing
+	 */
 	protected Player createPlayerObject()
 	{
 		return new Player();
@@ -76,6 +119,14 @@ public class PlayerMapper
 		playerGateway.setPosition(player.getPlayerPosition());
 		playerGateway.setQuizScore(player.getQuizScore());
 		playerGateway.persist();
+		for (QuestState quest:player.getQuestList())
+		{
+			questStateGateway.udpateState(player.getID(), quest.getID(), quest.getStateValue());
+			for (AdventureState a: quest.getAdventureList())
+			{
+				adventureStateGateway.updateState(player.getID(), quest.getID(), a.getID(), a.getState());
+			}
+		}
 	}
 
 }

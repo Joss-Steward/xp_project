@@ -28,6 +28,16 @@ public class ChatMessageHandlerTest {
 	}
 	
 	/**
+	 * Tests that getTypeWeHandle method returns correct type.
+	 */
+	@Test
+	public void testTypeWeHandle()
+	{
+		ChatMessageHandler h = new ChatMessageHandler();
+		assertEquals(ChatMessage.class, h.getMessageTypeWeHandle());
+	}
+	
+	/**
 	 * Testing to see if a command is queued after receiving a message
 	 */
 	@Test

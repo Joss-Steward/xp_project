@@ -3,8 +3,8 @@ package runners;
 import java.io.IOException;
 import java.net.Socket;
 
-import view.ScreenBasic;
-import view.Screens;
+import view.screen.ScreenBasic;
+import view.screen.Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -60,10 +60,10 @@ public class GameLibGDX extends Game
 		this.setScreen(screen);
 		Gdx.input.setInputProcessor(screen.getStage());
 		
-		// start QAs screen
-		ScreenBasic qa = Screens.QAS_SCREEN.getScreen();
-		this.setScreen(qa);
-		Gdx.input.setInputProcessor(qa.getStage());
+//		// start QAs screen
+//		ScreenBasic qa = Screens.QAS_SCREEN.getScreen();
+//		this.setScreen(qa);
+//		Gdx.input.setInputProcessor(qa.getStage());
 		
 	}
 

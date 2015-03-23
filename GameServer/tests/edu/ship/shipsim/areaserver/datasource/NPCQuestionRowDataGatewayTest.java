@@ -81,5 +81,11 @@ public abstract class NPCQuestionRowDataGatewayTest extends DatabaseTest
 		assertNotNull(gateway);
 	}
 
-	abstract NPCQuestionRowDataGateway findGateway(int playerID) throws DatabaseException;
+	/**
+	 * get a gateway for a given question
+	 * @param questionID the unique ID of the question we are interested in
+	 * @return the gateway
+	 * @throws DatabaseException if we couldn't find the ID in the data source
+	 */
+	abstract NPCQuestionRowDataGateway findGateway(int questionID) throws DatabaseException;
 }

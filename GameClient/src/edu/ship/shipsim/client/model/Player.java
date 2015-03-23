@@ -1,6 +1,8 @@
 package edu.ship.shipsim.client.model;
 
-import model.QualifiedObservable;
+import java.util.Observable;
+
+import model.QualifiedObservableConnector;
 import data.Position;
 import edu.ship.shipsim.client.model.reports.ChangeMapReport;
 import edu.ship.shipsim.client.model.reports.PlayerMovedReport;
@@ -11,7 +13,7 @@ import edu.ship.shipsim.client.model.reports.PlayerMovedReport;
  * @author merlin
  * 
  */
-public class Player extends QualifiedObservable
+public class Player extends Observable
 {
 
 	protected final int id;
@@ -29,10 +31,6 @@ public class Player extends QualifiedObservable
 	{
 		this.id = playerID;
 		this.position = new Position(0, 0);
-
-		this.reportTypes.add(PlayerMovedReport.class);
-		this.reportTypes.add(ChangeMapReport.class);
-		this.registerReportTypesWeNotify();
 	}
 
 	/**
@@ -127,8 +125,7 @@ public class Player extends QualifiedObservable
 	public void move(Position playerPosition)
 	{
 		this.position = playerPosition;
-		System.out.println("Moving to " + this.countObservers(PlayerMovedReport.class) + " observers");
-		this.notifyObservers(new PlayerMovedReport(this.id, playerPosition));
+		QualifiedObservableConnector.getSingleton().sendReport(new PlayerMovedReport(this.id, playerPosition));
 	}
 
 	/**
@@ -155,13 +152,17 @@ public class Player extends QualifiedObservable
 	}
 
 	/**
-	 * @param thePosition is the position of the hotspot
-	 * Creates a ChangeMapReport with the Map and location the player will teleport to.
+	 * @param thePosition
+	 *            is the position of the hotspot Creates a ChangeMapReport with
+	 *            the Map and location the player will teleport to.
 	 */
-	public void teleport(Position thePosition) 
+	public void teleport(Position thePosition)
 	{
-		TeleportHotSpot hotSpot = MapManager.getSingleton().getTeleportHotSpot(thePosition);
-		this.notifyObservers(new ChangeMapReport(id, hotSpot.getTeleportPosition(), hotSpot.getMapName()));
+		TeleportHotSpot hotSpot = MapManager.getSingleton().getTeleportHotSpot(
+				thePosition);
+		QualifiedObservableConnector.getSingleton().sendReport(
+				new ChangeMapReport(id, hotSpot.getTeleportPosition(), hotSpot
+						.getMapName()));
 	}
 
 }

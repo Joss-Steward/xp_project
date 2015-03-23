@@ -20,19 +20,24 @@ public class ConnectionOutgoing implements Runnable
 {
 
 	private ObjectOutputStream ostream;
-	StateAccumulator stateAccumulator;
+	/**
+	 * 
+	 */
+	private StateAccumulator stateAccumulator;
 
 	/**
 	 * @param socket
 	 *            Socket being used - will be null for JUnit tests
-	 * @param stateAccumulator TODO
+	 * @param stateAccumulator
+	 *            the accumulator that is gathering events that should be sent
+	 *            to the other side
 	 * @param messagePackerSet
 	 *            the set of messagepackers the outgoing connection should use
 	 * @throws IOException
 	 *             Exception thrown for invalid input or output
 	 */
-	public ConnectionOutgoing(Socket socket, StateAccumulator stateAccumulator, MessagePackerSet messagePackerSet)
-			throws IOException
+	public ConnectionOutgoing(Socket socket, StateAccumulator stateAccumulator,
+			MessagePackerSet messagePackerSet) throws IOException
 	{
 		if (socket != null)
 		{
@@ -104,7 +109,7 @@ public class ConnectionOutgoing implements Runnable
 	{
 		return stateAccumulator;
 	}
-	
+
 	/**
 	 * @return the output stream we are writing to
 	 */

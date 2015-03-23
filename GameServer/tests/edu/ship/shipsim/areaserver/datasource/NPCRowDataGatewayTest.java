@@ -21,6 +21,15 @@ public abstract class NPCRowDataGatewayTest extends DatabaseTest
 
 	private NPCRowDataGateway gateway;
 
+	/**
+	 * Find a gateway for a given player ID. Allows these tests to be subclassed
+	 * for each type of gateway ensuring they all work the same.
+	 * 
+	 * @param playerID
+	 *            the player's unique ID
+	 * @return the gateway
+	 * @throws DatabaseException if the playerID can't be found int the datasource
+	 */
 	abstract NPCRowDataGateway findGateway(int playerID) throws DatabaseException;
 
 	/**

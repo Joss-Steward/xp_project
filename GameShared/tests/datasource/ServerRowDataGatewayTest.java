@@ -1,8 +1,10 @@
 package datasource;
 
 import static org.junit.Assert.assertEquals;
+import model.OptionsManager;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -18,13 +20,31 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 
 	/**
 	 * Create a gateway that inserts a new row into the table
-	 * @param mapName the name of the map
-	 * @param hostName the host serving the map
-	 * @param port the port associated with the map
+	 * 
+	 * @param mapName
+	 *            the name of the map
+	 * @param hostName
+	 *            the host serving the map
+	 * @param port
+	 *            the port associated with the map
 	 * @return the gateway for the new row
-	 * @throws DatabaseException if the data source failed to create the row
+	 * @throws DatabaseException
+	 *             if the data source failed to create the row
 	 */
-	abstract ServerRowDataGateway createGateway(String mapName, String hostName, int port) throws DatabaseException;
+	abstract ServerRowDataGateway createGateway(String mapName, String hostName, int port)
+			throws DatabaseException;
+
+	/**
+	 * @throws DatabaseException shouldn't
+	 * @see datasource.DatabaseTest#setUp()
+	 */
+	@Before
+	public void setUp() throws DatabaseException
+	{
+		super.setUp();
+		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton(true);
+	}
 
 	/**
 	 * Make sure any static information is cleaned up between tests
@@ -47,7 +67,29 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 	@Test(expected = DatabaseException.class)
 	public void createExisting() throws DatabaseException
 	{
-		gateway = createGateway(ServersForTest.FIRST_SERVER.getMapName(), "noHostName", 1000);
+		gateway = createGateway(ServersForTest.FIRST_SERVER.getMapName(), "noHostName",
+				1000);
+	}
+
+	/**
+	 * If we are in local mode, we should NOT change the hostname stored in the
+	 * gateway
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	@Test
+	public void localModeDoesntUpdateHostName() throws DatabaseException
+	{
+		OptionsManager.setRunningLocal(true);
+		ServerRowDataGateway existing = findGateway(ServersForTest.FIRST_SERVER
+				.getMapName());
+		gateway = findGateway(ServersForTest.FIRST_SERVER.getMapName());
+		gateway.setHostName("h");
+		gateway.persist();
+		ServerRowDataGateway after = findGateway(ServersForTest.FIRST_SERVER.getMapName());
+		assertEquals(ServersForTest.FIRST_SERVER.getPortNumber(), after.getPortNumber());
+		assertEquals(existing.getHostName(), after.getHostName());
 	}
 
 	/**
@@ -69,12 +111,15 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 
 	/**
 	 * get a gateway for an existing row of the table
-	 * @param mapName the name of the map in the row we are testing
+	 * 
+	 * @param mapName
+	 *            the name of the map in the row we are testing
 	 * @return the gateway
-	 * @throws DatabaseException if the data source is unable to find the row
+	 * @throws DatabaseException
+	 *             if the data source is unable to find the row
 	 */
 	abstract ServerRowDataGateway findGateway(String mapName) throws DatabaseException;
-	
+
 	/**
 	 * Get a gateway for a row that we know is in the database
 	 * 

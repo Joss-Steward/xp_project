@@ -25,6 +25,16 @@ public class MovementMessageHandlerTest
 		ModelFacade.resetSingleton();
 		ModelFacade.getSingleton(true, true);
 	}
+	
+	/**
+	 * Test the type of Message that we expect
+	 */
+	@Test
+	public void typeWeHandle()
+	{
+		MovementMessageHandler h = new MovementMessageHandler();
+		assertEquals(MovementMessage.class, h.getMessageTypeWeHandle());
+	}
 
 	/**
 	 * Tests to see if the command is built correctly, and added to the Facade.

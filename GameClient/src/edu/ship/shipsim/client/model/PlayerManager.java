@@ -2,6 +2,7 @@ package edu.ship.shipsim.client.model;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
+import java.util.Observable;
 
 import com.badlogic.gdx.utils.IntMap;
 
@@ -11,9 +12,7 @@ import edu.ship.shipsim.client.model.reports.LoginInitiatedReport;
 import edu.ship.shipsim.client.model.reports.PinFailedReport;
 import edu.ship.shipsim.client.model.reports.PlayerConnectedToAreaServerReport;
 import edu.ship.shipsim.client.model.reports.PlayerDisconnectedFromAreaServerReport;
-import model.QualifiedObservable;
 import model.QualifiedObservableConnector;
-import model.QualifiedObservableReport;
 
 /**
  * Maintains the active set of players on the area server to which this client
@@ -22,7 +21,7 @@ import model.QualifiedObservableReport;
  * @author merlin
  * 
  */
-public class PlayerManager extends QualifiedObservable
+public class PlayerManager extends Observable
 {
 
 	private static PlayerManager singleton;
@@ -34,12 +33,7 @@ public class PlayerManager extends QualifiedObservable
 	{
 		thisClientsPlayer = null;
 		playerList = new IntMap<Player>();
-		reportTypes.add(LoginInitiatedReport.class);
-		reportTypes.add(LoginFailedReport.class);
-		reportTypes.add(PlayerConnectedToAreaServerReport.class);
-		reportTypes.add(PlayerDisconnectedFromAreaServerReport.class);
-		reportTypes.add(PinFailedReport.class);
-		registerReportTypesWeNotify();
+		
 	}
 
 	/**
@@ -100,7 +94,7 @@ public class PlayerManager extends QualifiedObservable
 	 *             when the player has not yet been set because login has not be
 	 *             called
 	 */
-	public ThisClientsPlayer setThisClientsPlayer(int playerID)
+	public ThisClientsPlayer finishLogin(int playerID)
 			throws AlreadyBoundException, NotBoundException
 	{
 		if (this.loginInProgress)
@@ -146,7 +140,7 @@ public class PlayerManager extends QualifiedObservable
 	public void initiateLogin(String name, String password)
 	{
 		loginInProgress = true;
-		notifyObservers(new LoginInitiatedReport(name, password));
+		QualifiedObservableConnector.getSingleton().sendReport(new LoginInitiatedReport(name, password));
 	}
 
 	/**
@@ -179,7 +173,7 @@ public class PlayerManager extends QualifiedObservable
 		}
 		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(
 				playerID, playerName, appearanceType, position, isThisClientsPlayer);
-		this.notifyObservers(report);
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 
 		player.setName(playerName);
 		player.setAppearanceType(appearanceType);
@@ -197,16 +191,9 @@ public class PlayerManager extends QualifiedObservable
 	{
 		Player player = this.playerList.remove(playerID);
 		if (player != null)
-		{
-			//unregister this player
-			QualifiedObservableConnector qoc = QualifiedObservableConnector.getSingleton();
-			for (Class<? extends QualifiedObservableReport> r : player.getReportTypesWeSend())
-			{
-				qoc.unregisterQualifiedObservable(player, r);
-			}
-			
+		{	
 			PlayerDisconnectedFromAreaServerReport report = new PlayerDisconnectedFromAreaServerReport(playerID);
-			this.notifyObservers(report);
+			QualifiedObservableConnector.getSingleton().sendReport(report);
 		}
 	}
 	
@@ -217,7 +204,7 @@ public class PlayerManager extends QualifiedObservable
 	{
 		LoginFailedReport report = new LoginFailedReport("Invalid Login - Incorrect Username/Password");
 		loginInProgress = false;
-		this.notifyObservers(report);
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 
 	/**
@@ -228,6 +215,6 @@ public class PlayerManager extends QualifiedObservable
 	{
 		PinFailedReport report = new PinFailedReport(err);
 		loginInProgress = false;
-		this.notifyObservers(report);
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 }

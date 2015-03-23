@@ -2,11 +2,10 @@ package edu.ship.shipsim.client.model;
 
 import static org.junit.Assert.*;
 
-import java.util.Observer;
+import java.util.Observable;
 
-import model.QualifiedObservable;
 import model.QualifiedObservableConnector;
-import model.QualifiedObservableTestInherited;
+import model.QualifiedObserver;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -27,7 +26,7 @@ import edu.ship.shipsim.client.model.reports.NewMapReport;
  * @author Merlin
  * 
  */
-public class MapManagerTest extends QualifiedObservableTestInherited
+public class MapManagerTest 
 {
 	/**
 	 * reset the singleton
@@ -46,8 +45,8 @@ public class MapManagerTest extends QualifiedObservableTestInherited
 	@Test
 	public void isResetableSingleton()
 	{
-		QualifiedObservable facade1 = MapManager.getSingleton();
-		QualifiedObservable facade2 = MapManager.getSingleton();
+		Observable facade1 = MapManager.getSingleton();
+		Observable facade2 = MapManager.getSingleton();
 		assertSame(facade1, facade2);
 		MapManager.resetSingleton();
 		assertNotSame(facade1, MapManager.getSingleton());
@@ -59,10 +58,10 @@ public class MapManagerTest extends QualifiedObservableTestInherited
 	@Test
 	public void updatesOnNewMap()
 	{
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
 		cm.registerObserver(obs, NewMapReport.class);
-		obs.update(EasyMock.isA(MapManager.class), EasyMock.isA(NewMapReport.class));
+		obs.receiveReport(EasyMock.isA(NewMapReport.class));
 		EasyMock.replay(obs);
 
 		MapManager map = MapManager.getSingleton();
@@ -143,8 +142,5 @@ public class MapManagerTest extends QualifiedObservableTestInherited
 		assertFalse(map.getIsTileTeleport(new Position(0, 0)));
 	}
 
-	protected QualifiedObservable getObservableBeingTested()
-	{
-		return MapManager.getSingleton();
-	}
+	
 }

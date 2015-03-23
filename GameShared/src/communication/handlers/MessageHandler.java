@@ -14,7 +14,10 @@ import communication.messages.Message;
  */
 public abstract class MessageHandler
 {
-	protected ConnectionManager connectionManager;
+	/**
+	 * The connection manager from which the message we are handling came
+	 */
+	private ConnectionManager connectionManager;
 	private StateAccumulator stateAccumulator;
 
 	/**
@@ -41,11 +44,18 @@ public abstract class MessageHandler
 		this.connectionManager = connectionManager;
 	}
 
+	/**
+	 * @return the connection manager from which the message came
+	 */
 	protected ConnectionManager getConnectionManager()
 	{
 		return connectionManager;
 	}
 
+	/**
+	 * tell this object what accumulator it should use for messages it generates
+	 * @param stateAccumulator the accumulator
+	 */
 	protected void setAccumulator(StateAccumulator stateAccumulator)
 	{
 		this.stateAccumulator = stateAccumulator;

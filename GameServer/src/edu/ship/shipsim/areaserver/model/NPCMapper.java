@@ -71,6 +71,9 @@ public class NPCMapper extends PlayerMapper
 		thisPlayer.setBehaviorClass(NPCGateway.getBehaviorClass());
 	}
 
+	/**
+	 * @see edu.ship.shipsim.areaserver.model.PlayerMapper#createPlayerObject()
+	 */
 	@Override
 	protected Player createPlayerObject()
 	{

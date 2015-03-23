@@ -20,6 +20,12 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 
 	private PlayerRowDataGateway gateway;
 
+	/**
+	 * Find the gateway for a given player
+	 * @param playerID the ID of the player we are testing
+	 * @return the gateway
+	 * @throws DatabaseException if the playerID can't be found in the data source
+	 */
 	abstract PlayerRowDataGateway findGateway(int playerID) throws DatabaseException;
 	
 	/**
@@ -65,6 +71,14 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 		assertEquals(0,after.getQuizScore());
 	}
 
+	/**
+	 * Get a gateway that creates a row in the data source with the given information
+	 * @param mapName the name of the map
+	 * @param position the position on the map
+	 * @param appearanceType the appearance type of the player
+	 * @return the gateway
+	 * @throws DatabaseException if we fail to create the row
+	 */
 	abstract PlayerRowDataGateway createGateway(String mapName, Position position,
 			String appearanceType) throws DatabaseException;
 	

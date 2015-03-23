@@ -67,6 +67,9 @@ public class Server implements Runnable
 		}
 	}
 
+	/**
+	 * @see java.lang.Object#finalize()
+	 */
 	protected void finalize()
 	{
 		try

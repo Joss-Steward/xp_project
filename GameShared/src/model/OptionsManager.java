@@ -12,7 +12,15 @@ import datasource.DatabaseException;
 public class OptionsManager
 {
 	private static OptionsManager singleton;
-	private static boolean runningLocal;
+	private boolean runningLocal;
+	/**
+	 * @return true if we are running the actual game, but on local host
+	 */
+	public boolean isRunningLocal()
+	{
+		return runningLocal;
+	}
+
 	private boolean testMode;
 	private String mapName;
 	private String hostName;
@@ -150,8 +158,12 @@ public class OptionsManager
 		return testMode;
 	}
 
+	/**
+	 * sets whether this host is running in localhost mode
+	 * @param b true if we should assume everything is running on the local machine
+	 */
 	public static void setRunningLocal(boolean b)
 	{
-		runningLocal = b;
+		singleton.runningLocal = b;
 	}
 }

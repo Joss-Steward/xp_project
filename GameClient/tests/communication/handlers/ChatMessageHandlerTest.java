@@ -28,6 +28,16 @@ public class ChatMessageHandlerTest
 	}
 	
 	/**
+	 * Test the type of Message that we expect
+	 */
+	@Test
+	public void typeWeHandle()
+	{
+		ChatMessageHandler h = new ChatMessageHandler();
+		assertEquals(ChatMessage.class, h.getMessageTypeWeHandle());
+	}
+	
+	/**
 	 * We should add a command to the ModelFacade command queue
 	 * 
 	 * @throws InterruptedException

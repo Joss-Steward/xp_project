@@ -39,7 +39,6 @@ public class CommandAddPlayer extends Command
 			PlayerManager.getSingleton().addPlayer(playerID, pin);
 		} catch (DatabaseException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return true;

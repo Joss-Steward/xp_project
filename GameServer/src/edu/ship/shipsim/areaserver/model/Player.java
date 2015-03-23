@@ -1,13 +1,14 @@
 package edu.ship.shipsim.areaserver.model;
 
+import java.util.ArrayList;
+
 import model.PlayerConnection;
 import model.PlayerLogin;
-import model.QualifiedObservable;
+import model.QualifiedObservableConnector;
 import data.Position;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.model.reports.PinFailedReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
-import edu.ship.shipsim.areaserver.model.reports.QuestScreenReport;
 
 /**
  * Very simple for now . . .
@@ -15,7 +16,7 @@ import edu.ship.shipsim.areaserver.model.reports.QuestScreenReport;
  * @author Merlin
  * 
  */
-public class Player extends QualifiedObservable
+public class Player
 {
 
 	private PlayerLogin playerLogin;
@@ -31,11 +32,8 @@ public class Player extends QualifiedObservable
 	private Position playerPosition;
 
 	private String mapName;
-
-	Player()
-	{
-		registerOurReportTypes();
-	}
+	
+	private ArrayList<QuestState> questList = new ArrayList<QuestState>();
 
 	/**
 	 * Get the appearance type for how this player should be drawn
@@ -130,7 +128,7 @@ public class Player extends QualifiedObservable
 		{
 			System.err.println("Pin is not valid for " + playerID
 					+ " because " + report.toString());
-			this.notifyObservers(report);
+			QualifiedObservableConnector.getSingleton().sendReport(report);
 			return false;
 		}
 		return true;
@@ -204,7 +202,23 @@ public class Player extends QualifiedObservable
 		setPlayerPositionWithoutNotifying(playerPosition);
 		PlayerMovedReport report = new PlayerMovedReport(playerID,
 				this.getPlayerName(), playerPosition);
-		this.notifyObservers(report);
+		try
+		{
+			QuestManager qm = QuestManager.getSingleton();
+			ArrayList<Integer> questIDs = new ArrayList<Integer>();
+			questIDs = qm.getQuestsByPosition(playerPosition, this.mapName);
+			
+			for(Integer q : questIDs)
+			{
+				this.triggerQuest(q);
+			}
+		} 
+		catch (DatabaseException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 
 	/**
@@ -230,12 +244,57 @@ public class Player extends QualifiedObservable
 		this.quizScore = score;
 	}
 
-	private void registerOurReportTypes()
+	/**
+	 * Add a quest to the player's questList
+	 * @param quest : the quest being added
+	 */
+	public void addQuestState(QuestState quest) 
 	{
-		reportTypes.add(PlayerMovedReport.class);
-		reportTypes.add(QuestScreenReport.class);
-		reportTypes.add(PinFailedReport.class);
+		questList.add(quest);
+	}
 
-		this.registerReportTypesWeNotify();
+	/**
+	 * Go through the questList and get the state of the quest based on the id
+	 * @param id : the id of the quest
+	 * @return the state of the quest
+	 */
+	QuestState getQuestStateByID(int id) 
+	{
+		for(QuestState q : questList)
+		{
+			if(q.getID()==id)
+			{
+				return q;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Return the size of the questList
+	 * @return questList size
+	 */
+	int getSizeOfQuestList() 
+	{
+		return questList.size();
+	}
+	
+	/**
+	 * Getter for quest list
+	 * @return the quest list
+	 */
+	public ArrayList<QuestState> getQuestList()
+	{
+		return questList;
+	}
+
+	/**
+	 * Triggers the state of a given quest by its ID
+	 * @param id a quests ID
+	 */
+	public void triggerQuest(int id) 
+	{
+		QuestState state = getQuestStateByID(id);
+		state.trigger();
 	}
 }

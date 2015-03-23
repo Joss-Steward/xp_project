@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
-import java.util.Observer;
 
 import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -91,11 +91,11 @@ public class PlayerManagerTest
 	@Test
 	public void notifiesOnLoginInitiation()
 	{
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		LoginInitiatedReport report = new LoginInitiatedReport("Fred", "daddy");
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				LoginInitiatedReport.class);
-		obs.update(EasyMock.eq(PlayerManager.getSingleton()), EasyMock.eq(report));
+		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
 		PlayerManager.getSingleton().initiateLogin("Fred", "daddy");
@@ -115,7 +115,7 @@ public class PlayerManagerTest
 		// test setting player without having tried logging in
 		try
 		{
-			pm.setThisClientsPlayer(1);
+			pm.finishLogin(1);
 		} catch (AlreadyBoundException | NotBoundException e)
 		{
 			assertTrue(e instanceof NotBoundException);
@@ -125,7 +125,7 @@ public class PlayerManagerTest
 		try
 		{
 			pm.initiateLogin("bilbo", "baggins");
-			pm.setThisClientsPlayer(1);
+			pm.finishLogin(1);
 		} catch (AlreadyBoundException | NotBoundException e)
 		{
 			fail("Login should have been processed, and setting should work");
@@ -135,7 +135,7 @@ public class PlayerManagerTest
 		// first logging out
 		try
 		{
-			pm.setThisClientsPlayer(2);
+			pm.finishLogin(2);
 			fail("Login should have already occured and it should not allow a new player to be set");
 		} catch (AlreadyBoundException | NotBoundException e)
 		{
@@ -151,13 +151,13 @@ public class PlayerManagerTest
 	{
 		PlayerManager pm = PlayerManager.getSingleton();
 		Position pos = new Position(1, 2);
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(
 				1, "Player 1", "Player 1 Type", pos, false);
-		obs.update(EasyMock.anyObject(PlayerManager.class), EasyMock.eq(report));
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerConnectedToAreaServerReport.class);
+		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
-		pm.addObserver(obs, PlayerConnectedToAreaServerReport.class);
 		pm.initializePlayer(1, "Player 1", "Player 1 Type", pos);
 
 		EasyMock.verify(obs);

@@ -11,11 +11,12 @@ import data.Position;
 public enum PlayersForTest
 {
 	/**
-	 * 
+	 * John must be player 1 for the current quest state report tests to pass
 	 */
 	JOHN(1, "John", "male_a", 0, 8, "pw", "quiznasium.tmx", 1111, null, "current.tmx", 0),
 	/**
-	 * 
+	 *  Merlin must be player 2 for the player mapper tests to pass.  That number maps to player 2
+	 *  in the quest and adventure states in QuestStatesForTest and AdventureStatesForTest
 	 */
 	MERLIN(2, "Merlin", "merlin", 4, 13, "pw", null, 1111, null, "current.tmx", 42),
 	/**
