@@ -29,7 +29,6 @@ public class ScreenQAs extends ScreenBasic
 	private Table questTable;
 	private Table adventureTable;
 	
-	private Texture available;
 	private Texture triggered;
 	private Texture checkmark;
 	private Texture complete;
@@ -76,103 +75,76 @@ public class ScreenQAs extends ScreenBasic
 
 	} 
 
-	private void initializeAdventureTableContents(Skin skin) 
+	private void buildAdvRow(Texture state, String desc,Skin row_skin)
 	{
-		
-		Label thing = new Label("Adventures", skin);
-		Label desc = new Label("Get stuck in the bookshelf",skin);
-		
-		adventureTable = new Table(); 
-		//Table Setup
-		adventureTable.center().top();
-		adventureTable.setFillParent(true);
-		//Table Layout
-		adventureTable.add(thing).colspan(2).center();
-		adventureTable.row();
-		
-		//Fill the table
-		adventureTable.add(new Image(triggered));
-		adventureTable.add(new Label("lksjladkgjso", skin));
-		adventureTable.row();
-		adventureTable.add(new Image(triggered));
-		adventureTable.add(desc);
-		adventureTable.row();
-		adventureTable.add(new Image(complete));
-		adventureTable.add(new Label("Lskjdg", skin));
-		adventureTable.row();
-		
-		
+		adventureTable.add(new Image(state));
+		adventureTable.add(new Label(desc,row_skin));
+		adventureTable.row();	
 	}
 
-	private void initializeQuestTableContents(Skin skin)
+	private void buildQuestRow(Texture state, String desc,Skin row_skin)
 	{
-		
-		available = new Texture("img/available.png");
-		triggered = new Texture("img/triggered.png");
-		checkmark = new Texture("img/check.png");
-		complete = new Texture("img/complete.png");
-		Texture legend = new Texture("img/legend.png");	
-		Label quest = new Label("Quests",skin);
-		
-		TextButton quest1 = new TextButton("Quest 1", skin);
-		TextButton quest2 = new TextButton("Quest 2", skin);
-		TextButton quest3 = new TextButton("Quest 3", skin);
-		TextButton quest4 = new TextButton("Quest 4", skin);
-		TextButton quest5 = new TextButton("Quest 5", skin);
-		TextButton quest6 = new TextButton("Quest 6", skin);
-		
-		quest6.addListener(new ClickListener() {
+		questTable.add(new Image(state));
+		TextButton button = new TextButton(desc,row_skin);
+		questTable.add(button);
+		button.addListener(new ClickListener(){
 			public void click() {
 				//TODO - NEED TO ADD THE DATA FOR EACH ADVENTURE
 			}
 		});
-		Label quest7 = new Label("?????", skin);
-		Label quest8 = new Label("?????", skin);
-		Image legendImage = new Image(legend);
-		questTable = new Table();
-		
+		questTable.row();
+	}
+	
+	private void initializeAdventureTableContents(Skin skin) 
+	{
+
 		//Table Setup
+		Label header = new Label("Adventures", skin);		
+		adventureTable = new Table(); 
+		adventureTable.center().top();
+		adventureTable.setFillParent(true);
+		
+		//Table Layout
+		adventureTable.add(header).colspan(2).center();
+		adventureTable.row();
+		
+		//Fill the table
+		buildAdvRow(triggered,"Adventure 1 description",skin);
+		buildAdvRow(triggered,"Adventure 2 description",skin);
+		buildAdvRow(complete,"Adventure 3 description",skin);
+		
+	}
+	
+	
+	private void initializeQuestTableContents(Skin skin)
+	{
+		triggered = new Texture("img/triggered.png");
+		checkmark = new Texture("img/check.png");
+		complete = new Texture("img/complete.png");
+		Texture legend = new Texture("img/legend.png");	
+		Label q_header = new Label("Quests",skin);		
+		int num_Avail = 0;
+		//Table Setup
+		questTable = new Table();
 		questTable.setFillParent(true);	
 		questTable.top().left();
-		
+		questTable.add(q_header).colspan(2).center();
+		questTable.row();
+//////////////////////////////////////////////////////////////////
 		//Table Layout / mock data for Q/As
-		questTable.add(quest).colspan(2).center();
-		questTable.row();
-		
-		questTable.add(new Image(triggered));
-		questTable.add(quest1);
-		questTable.row();
-		
-		questTable.add(new Image(triggered));
-		questTable.add(quest2);
-		questTable.row();
-		
-		questTable.add(new Image(triggered));
-		questTable.add(quest3);	
-		questTable.row();
-		
-		questTable.add(new Image(checkmark));
-		questTable.add(quest4);	
-		questTable.row();
-		
-		questTable.add(new Image(checkmark));
-		questTable.add(quest5);	
-		questTable.row();
-		
-		questTable.add(new Image(complete));
-		questTable.add(quest6);	
-		questTable.row();
-		
-		questTable.add(new Image(available));
-		questTable.add(quest7);	
-		questTable.row();
-		
-		questTable.add(new Image(available));
-		questTable.add(quest8);			
-		
+		buildQuestRow(triggered,"Quest1",skin);
+		buildQuestRow(triggered,"Quest2",skin);
+		buildQuestRow(triggered,"Quest3",skin);
+		buildQuestRow(checkmark,"Quest4",skin);
+		buildQuestRow(checkmark,"Quest5",skin);
+		buildQuestRow(complete,"Quest6",skin);
+//////////////////////////////////////////////////////////////////
+		//Show how many quests are available to be found
+		questTable.add(new Label(""+num_Avail,skin));
+		questTable.add(new Label("?????", skin));	
 		//Set the Legend at the bottom of the Quests Table
 		questTable.row();
-		questTable.add(legendImage).colspan(2).center();
+		questTable.add(new Image(legend)).colspan(2).center();
 	}
 
 
