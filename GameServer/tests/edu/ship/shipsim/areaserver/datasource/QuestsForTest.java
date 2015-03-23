@@ -12,7 +12,7 @@ public enum QuestsForTest
 	/**
 	 * 
 	 */
-	ONE_BIG_QUEST(1, "A Big Quest","current.tmx", new Position(4,3)),
+	ONE_BIG_QUEST(1, "A Big Quest","current.tmx", new Position(4,14)),
 	/**
 	 * 
 	 */
