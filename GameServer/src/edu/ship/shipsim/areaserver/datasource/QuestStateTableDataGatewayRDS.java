@@ -1,12 +1,12 @@
 package edu.ship.shipsim.areaserver.datasource;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.DatabaseManager;
+import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
 import datasource.QuestStateEnum;
 
@@ -30,8 +30,8 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 		checkForDuplicateEntry(playerID, questID);
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("Insert INTO QuestStates SET playerID = ?, questID = ?, questState = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"Insert INTO QuestStates SET playerID = ?, questID = ?, questState = ?");
 			stmt.setInt(1, playerID);
 			stmt.setInt(2, questID);
 			stmt.setInt(3, state.ordinal());
@@ -50,8 +50,8 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("SELECT * FROM QuestStates WHERE playerID = ? and questID = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT * FROM QuestStates WHERE playerID = ? and questID = ?");
 			stmt.setInt(1, playerID);
 			stmt.setInt(2, questID);
 			ResultSet result = stmt.executeQuery();
@@ -79,12 +79,13 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("DROP TABLE IF EXISTS QuestStates");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"DROP TABLE IF EXISTS QuestStates");
 			stmt.executeUpdate();
-
-			stmt = connection
-					.prepareStatement("Create TABLE QuestStates (playerID INT NOT NULL, questID INT NOT NULL , questState INT NOT NULL)");
+			stmt.close();
+			
+			stmt = new ClosingPreparedStatement(connection,
+					"Create TABLE QuestStates (playerID INT NOT NULL, questID INT NOT NULL , questState INT NOT NULL)");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -122,8 +123,8 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("SELECT * FROM QuestStates WHERE playerID = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT * FROM QuestStates WHERE playerID = ?");
 			stmt.setInt(1, playerID);
 			ResultSet result = stmt.executeQuery();
 
@@ -154,8 +155,8 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("UPDATE QuestStates SET questState = ? WHERE  playerID = ? and questID = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"UPDATE QuestStates SET questState = ? WHERE  playerID = ? and questID = ?");
 			stmt.setInt(1, newState.ordinal());
 			stmt.setInt(2, playerID);
 			stmt.setInt(3, questID);

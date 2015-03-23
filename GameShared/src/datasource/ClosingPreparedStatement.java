@@ -1,4 +1,4 @@
-package edu.ship.shipsim.areaserver.datasource;
+package datasource;
 
 import java.io.InputStream;
 import java.io.Reader;

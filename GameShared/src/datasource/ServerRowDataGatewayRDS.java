@@ -1,7 +1,6 @@
 package datasource;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -57,8 +56,8 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("Insert INTO Server SET hostName = ?, portNumber = ?, mapName = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"Insert INTO Server SET hostName = ?, portNumber = ?, mapName = ?");
 			stmt.setString(1, hostName);
 			stmt.setInt(2, portNumber);
 			stmt.setString(3, mapName);
@@ -87,8 +86,8 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 		this.connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("SELECT * FROM Server WHERE mapName = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT * FROM Server WHERE mapName = ?");
 			stmt.setString(1, mapName);
 			ResultSet result = stmt.executeQuery();
 			result.next();
@@ -169,11 +168,11 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 		this.connection = DatabaseManager.getSingleton().getConnection();
 		if (!originalMapName.equals(mapName))
 		{
-			PreparedStatement stmt;
+			ClosingPreparedStatement stmt;
 			try
 			{
-				stmt = connection
-						.prepareStatement("DELETE from Server WHERE mapName = ?");
+				stmt = new ClosingPreparedStatement(connection,
+						"DELETE from Server WHERE mapName = ?");
 				stmt.setString(1, originalMapName);
 				stmt.executeUpdate();
 			} catch (SQLException e)
@@ -187,15 +186,15 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 		{
 			if (OptionsManager.getSingleton().isRunningLocal())
 			{
-				PreparedStatement stmt = connection
-						.prepareStatement("UPDATE Server SET portNumber = ? WHERE mapName = ?");
+				ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+						"UPDATE Server SET portNumber = ? WHERE mapName = ?");
 				stmt.setInt(1, portNumber);
 				stmt.setString(2, mapName);
 				stmt.executeUpdate();
 			} else
 			{
-				PreparedStatement stmt = connection
-						.prepareStatement("UPDATE Server SET portNumber = ?, hostName = ? WHERE mapName = ?");
+				ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+						"UPDATE Server SET portNumber = ?, hostName = ? WHERE mapName = ?");
 				stmt.setString(2, hostName);
 				stmt.setInt(1, portNumber);
 				stmt.setString(3, mapName);

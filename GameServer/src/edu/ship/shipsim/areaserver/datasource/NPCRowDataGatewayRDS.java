@@ -1,11 +1,11 @@
 package edu.ship.shipsim.areaserver.datasource;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
 import model.DatabaseManager;
 
@@ -36,8 +36,8 @@ public class NPCRowDataGatewayRDS implements NPCRowDataGateway
 		this.connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("SELECT * FROM NPCs WHERE playerID = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT * FROM NPCs WHERE playerID = ?");
 			stmt.setInt(1, playerID);
 			ResultSet result = stmt.executeQuery();
 			result.next();
@@ -65,8 +65,8 @@ public class NPCRowDataGatewayRDS implements NPCRowDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("Insert INTO NPCs SET playerID = ?, behaviorClass = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"Insert INTO NPCs SET playerID = ?, behaviorClass = ?");
 			stmt.setInt(1, playerID);
 			stmt.setString(2, behaviorClass);
 			stmt.executeUpdate();
@@ -91,12 +91,13 @@ public class NPCRowDataGatewayRDS implements NPCRowDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("DROP TABLE IF EXISTS NPCs");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"DROP TABLE IF EXISTS NPCs");
 			stmt.executeUpdate();
-
-			stmt = connection
-					.prepareStatement("Create TABLE NPCs (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, behaviorClass VARCHAR(80))");
+			stmt.close();
+			
+			stmt = new ClosingPreparedStatement(connection,
+					"Create TABLE NPCs (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, behaviorClass VARCHAR(80))");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -144,8 +145,8 @@ public class NPCRowDataGatewayRDS implements NPCRowDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("SELECT * FROM Players INNER JOIN NPCs ON NPCs.playerID = Players.PlayerID");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT * FROM Players INNER JOIN NPCs ON NPCs.playerID = Players.PlayerID");
 			ResultSet result = stmt.executeQuery();
 			while (result.next())
 			{
