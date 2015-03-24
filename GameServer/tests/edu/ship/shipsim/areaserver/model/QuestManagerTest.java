@@ -11,7 +11,10 @@ import org.junit.Test;
 
 import data.Position;
 import datasource.DatabaseException;
+import datasource.QuestStateEnum;
 import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
+import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayMock;
+import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
 import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
 
 /**
@@ -30,6 +33,11 @@ public class QuestManagerTest
 	public void setUp()
 	{
 		OptionsManager.getSingleton(true);
+		PlayerManager.resetSingleton();
+		playerManager = PlayerManager.getSingleton();
+		QuestStateTableDataGatewayMock.getSingleton().resetData();
+		QuestManager.resetSingleton();
+		QuestManager.getSingleton();
 	}
 
 	/**
@@ -215,6 +223,8 @@ public class QuestManagerTest
 		}
 	}
 
+	private PlayerManager playerManager;
+
 	/**
 	 * If there are no quests, we should get an empty arraylist - not null
 	 * @throws DatabaseException shouldn't
@@ -228,6 +238,30 @@ public class QuestManagerTest
 		ArrayList<Integer> actual = qm.getQuestsByPosition(pos,
 				QuestsForTest.ONE_BIG_QUEST.getMapName());
 		assertEquals(0, actual.size());
+	}
+	
+	/**
+	 * Make sure quest is triggered within player
+	 */
+	@Test
+	public void testPlayerTriggersQuest() 
+	{
+		Player p = playerManager.addPlayer(1);
+		assertEquals(QuestStatesForTest.PLAYER1_QUEST1.getState(), p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
+		
+		QuestManager.getSingleton().triggerQuest(1, QuestStatesForTest.PLAYER1_QUEST1.getQuestID());
+		assertEquals(QuestStateEnum.TRIGGERED, p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
+	}
+	
+	/**
+	 * When a player moves to the right place, we should trigger the quest
+	 */
+	@Test
+	public void triggersOnPlayerMovement()
+	{
+		Player p = playerManager.addPlayer(1);
+		p.setPlayerPosition(QuestsForTest.ONE_BIG_QUEST.getPosition());
+		assertEquals(QuestStateEnum.TRIGGERED,p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
 	}
 
 }

@@ -201,22 +201,7 @@ public class Player
 	{
 		setPlayerPositionWithoutNotifying(playerPosition);
 		PlayerMovedReport report = new PlayerMovedReport(playerID,
-				this.getPlayerName(), playerPosition);
-		try
-		{
-			QuestManager qm = QuestManager.getSingleton();
-			ArrayList<Integer> questIDs = new ArrayList<Integer>();
-			questIDs = qm.getQuestsByPosition(playerPosition, this.mapName);
-			
-			for(Integer q : questIDs)
-			{
-				this.triggerQuest(q);
-			}
-		} 
-		catch (DatabaseException e) 
-		{
-			e.printStackTrace();
-		}
+				this.getPlayerName(), playerPosition, this.mapName);
 		
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}

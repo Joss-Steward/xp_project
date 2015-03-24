@@ -170,17 +170,7 @@ public class PlayerTest extends DatabaseTest
 		assertEquals(originalNumberOfQuests + 1, p.getSizeOfQuestList());
 	}
 	
-	/**
-	 * Make sure quest is triggered within player
-	 */
-	@Test
-	public void testPlayerTriggersQuest() 
-	{
-		Player p = playerManager.addPlayer(1);
-		assertEquals(QuestStatesForTest.PLAYER1_QUEST1.getState(), p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
-		p.triggerQuest(QuestStatesForTest.PLAYER1_QUEST1.getQuestID());
-		assertEquals(QuestStateEnum.TRIGGERED, p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
-	}
+	
 	
 	/**
 	 * Make sure quest is triggered if it walks onto a location that has a quest

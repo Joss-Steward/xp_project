@@ -21,9 +21,11 @@ public class PlayerMovedReportTest
 	@Test
 	public void creation()
 	{
-		PlayerMovedReport report = new PlayerMovedReport(33, "fred", new Position(3, 4));
+		PlayerMovedReport report = new PlayerMovedReport(33, "fred", new Position(3, 4), "x");
 		assertEquals(33, report.getPlayerID());
+		assertEquals("fred", report.getPlayerName());
 		assertEquals(new Position(3, 4), report.getNewPosition());
+		assertEquals("x", report.getMapName());
 	}
 
 	/**
