@@ -30,6 +30,7 @@ import edu.ship.shipsim.client.model.PlayerManager;
  * @author ck4124
  *
  */
+@SuppressWarnings("javadoc")
 public class ScreenQAs extends ScreenBasic
 {
 
@@ -43,7 +44,7 @@ public class ScreenQAs extends ScreenBasic
 	//Call Quest object to retrieve quests
 	ArrayList <Label> questList;
 
-	@SuppressWarnings("javadoc")
+	
 	public void render(float delta) 
 	{
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -55,7 +56,6 @@ public class ScreenQAs extends ScreenBasic
 
 	}
 
-	@SuppressWarnings("javadoc")
 	@Override
 	public void resize(int width, int height)
 	{
@@ -63,7 +63,6 @@ public class ScreenQAs extends ScreenBasic
 		stage.act();
 	}
 
-	@SuppressWarnings("javadoc")
 	@Override
 	public void show()
 	{
@@ -116,7 +115,7 @@ public class ScreenQAs extends ScreenBasic
 			@Override 
 			public void clicked(InputEvent event, float x, float y) 
 			{
-				clearAdventureTable();
+				clearAdventureTable(row_skin);
 				for(ClientPlayerAdventure a : quest.getAdventureList()) 
 				{
 					if(a.getAdventuretState().equals(AdventureStateEnum.PENDING))
@@ -134,31 +133,24 @@ public class ScreenQAs extends ScreenBasic
 		questTable.row();
 	}
 	
-	private void initializeAdventureTableContents(final Skin skin) 
+	private void clearAdventureTable(Skin skin) 
 	{
-
-		//Table Setup
-		Label header = new Label("Adventures", skin);		
-		adventureTable = new Table(); 
-		adventureTable.center().top();
-		adventureTable.setFillParent(true);
-		
-		//Table Layout
+		Label header = new Label("Adventures", skin);	
+		adventureTable.clearChildren();
+		//Set Header
 		adventureTable.add(header).colspan(2).center();
 		adventureTable.row();
-		
-//		//Fill the table
-//		buildAdvRow(triggered,"Adventure 1 description",skin);
-//		buildAdvRow(triggered,"Adventure 2 description",skin);
-//		buildAdvRow(complete,"Adventure 3 description",skin);
-		
 	}
 	
-	private void clearAdventureTable() 
+	private void initializeAdventureTableContents(final Skin skin) 
 	{
-		adventureTable.clearChildren();
+		//Table Setup
+		adventureTable = new Table(); 
+		adventureTable.center().top();
+		adventureTable.setFillParent(true);	
+		clearAdventureTable(skin);
 	}
-	
+		
 	private void initializeQuestTableContents(Skin skin)
 	{
 		// Place Holder
@@ -183,17 +175,12 @@ public class ScreenQAs extends ScreenBasic
 			{
 				buildQuestRow(q, skin);
 			}
+			else
+			{
+				//Increment the number of quests available to find
+				num_Avail++;
+			}
 		}		
-		
-//////////////////////////////////////////////////////////////////
-//		Table Layout / mock data for Q/As
-//		buildQuestRow(triggered,"Quest1",skin);
-//		buildQuestRow(triggered,"Quest2",skin);
-//		buildQuestRow(triggered,"Quest3",skin);
-//		buildQuestRow(checkmark,"Quest4",skin);
-//		buildQuestRow(checkmark,"Quest5",skin);
-//		buildQuestRow(complete,"Quest6",skin);
-//////////////////////////////////////////////////////////////////
 		
 		//Show how many quests are available to be found
 		questTable.add(new Label(""+num_Avail,skin));
@@ -204,7 +191,6 @@ public class ScreenQAs extends ScreenBasic
 	}
 
 
-	@SuppressWarnings("javadoc")
 	@Override
 	public void hide() 
 	{
@@ -212,7 +198,6 @@ public class ScreenQAs extends ScreenBasic
 
 	}
 
-	@SuppressWarnings("javadoc")
 	@Override
 	public void pause() 
 	{
@@ -220,7 +205,6 @@ public class ScreenQAs extends ScreenBasic
 
 	}
 
-	@SuppressWarnings("javadoc")
 	@Override
 	public void resume() 
 	{
@@ -228,7 +212,6 @@ public class ScreenQAs extends ScreenBasic
 
 	}
 
-	@SuppressWarnings("javadoc")
 	@Override
 	public void dispose() 
 	{
