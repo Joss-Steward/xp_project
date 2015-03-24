@@ -242,14 +242,17 @@ public class PlayerManager
 	 * 
 	 * @param playerID
 	 *            the ID of the player we should remove
+	 * @throws DatabaseException if we can't persist the player to the data source
 	 */
-	public void removePlayer(int playerID)
+	public void removePlayer(int playerID) throws DatabaseException
 	{
+		persistPlayer(playerID);
 		Player p = this.players.remove(playerID);
 		if (p != null)
 		{
 			
 			System.out.println("Player " + p.getPlayerName() + " has left");
+			
 			// send the disconnect message to clients
 			PlayerLeaveReport report = new PlayerLeaveReport(playerID);
 			QualifiedObservableConnector.getSingleton().sendReport(report);
