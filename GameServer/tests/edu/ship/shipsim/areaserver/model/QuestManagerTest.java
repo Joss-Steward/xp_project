@@ -227,7 +227,9 @@ public class QuestManagerTest
 
 	/**
 	 * If there are no quests, we should get an empty arraylist - not null
-	 * @throws DatabaseException shouldn't
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
 	public void notNullIfThereAreNoQuestsAtAPosition() throws DatabaseException
@@ -239,20 +241,80 @@ public class QuestManagerTest
 				QuestsForTest.ONE_BIG_QUEST.getMapName());
 		assertEquals(0, actual.size());
 	}
-	
+
+	/**
+	 * Test simple functionality of setting quests to a player.
+	 */
+	@Test
+	public void testAddQuests()
+	{
+		Player p = playerManager.addPlayer(1);
+		QuestState quest = new QuestState(15, QuestStateEnum.AVAILABLE);
+		QuestManager.getSingleton().addQuestState(p.getPlayerID(), quest);
+
+		assertEquals(QuestStateEnum.AVAILABLE, QuestManager.getSingleton()
+				.getQuestStateByID(1, 15).getStateValue());
+
+	}
+
+	/**
+	 * Make sure quest is triggered if it walks onto a location that has a quest
+	 * 
+	 * @throws DatabaseException
+	 *             QuestManager works with DB
+	 */
+	@Test
+	public void testPlayerTriggerOnMovement() throws DatabaseException
+	{
+		Position pos1 = new Position(1, 1);
+		Position pos2 = new Position(4, 3);
+		Player p = playerManager.addPlayer(1);
+		p.setMapName("current.tmx");
+		p.setPlayerPosition(pos1);
+		assertEquals(
+				QuestStatesForTest.PLAYER1_QUEST1.getState(),
+				QuestManager
+						.getSingleton()
+						.getQuestStateByID(p.getPlayerID(),
+								QuestStatesForTest.PLAYER1_QUEST1.getQuestID())
+						.getStateValue());
+		p.setPlayerPosition(pos2);
+		assertEquals(
+				QuestStateEnum.TRIGGERED,
+				QuestManager
+						.getSingleton()
+						.getQuestStateByID(p.getPlayerID(),
+								QuestStatesForTest.PLAYER1_QUEST1.getQuestID())
+						.getStateValue());
+		p.setPlayerPosition(new Position(0, 8));
+	}
+
 	/**
 	 * Make sure quest is triggered within player
 	 */
 	@Test
-	public void testPlayerTriggersQuest() 
+	public void testPlayerTriggersQuest()
 	{
 		Player p = playerManager.addPlayer(1);
-		assertEquals(QuestStatesForTest.PLAYER1_QUEST1.getState(), p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
-		
-		QuestManager.getSingleton().triggerQuest(1, QuestStatesForTest.PLAYER1_QUEST1.getQuestID());
-		assertEquals(QuestStateEnum.TRIGGERED, p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
+		assertEquals(
+				QuestStatesForTest.PLAYER1_QUEST1.getState(),
+				QuestManager
+						.getSingleton()
+						.getQuestStateByID(p.getPlayerID(),
+								QuestStatesForTest.PLAYER1_QUEST1.getQuestID())
+						.getStateValue());
+
+		QuestManager.getSingleton().triggerQuest(1,
+				QuestStatesForTest.PLAYER1_QUEST1.getQuestID());
+		assertEquals(
+				QuestStateEnum.TRIGGERED,
+				QuestManager
+						.getSingleton()
+						.getQuestStateByID(p.getPlayerID(),
+								QuestStatesForTest.PLAYER1_QUEST1.getQuestID())
+						.getStateValue());
 	}
-	
+
 	/**
 	 * When a player moves to the right place, we should trigger the quest
 	 */
@@ -261,7 +323,13 @@ public class QuestManagerTest
 	{
 		Player p = playerManager.addPlayer(1);
 		p.setPlayerPosition(QuestsForTest.ONE_BIG_QUEST.getPosition());
-		assertEquals(QuestStateEnum.TRIGGERED,p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
+		assertEquals(
+				QuestStateEnum.TRIGGERED,
+				QuestManager
+						.getSingleton()
+						.getQuestStateByID(p.getPlayerID(),
+								QuestStatesForTest.PLAYER1_QUEST1.getQuestID())
+						.getStateValue());
 	}
 
 }

@@ -64,8 +64,8 @@ public class NPCMapperTest extends PlayerMapperTest
 		ArrayList<NPCMapper> npcs = NPCMapper.findNPCsOnMap("silly.tmx");
 		assertEquals(2, npcs.size());
 		assertEquals(PlayersForTest.MOCK_NPC.getPlayerID(), npcs.get(0).getPlayer()
-				.getID());
+				.getPlayerID());
 		assertEquals(PlayersForTest.MOCK_NPC3.getPlayerID(), npcs.get(1).getPlayer()
-				.getID());
+				.getPlayerID());
 	}
 }

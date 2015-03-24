@@ -18,9 +18,7 @@ import data.Position;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayersForTest;
-import datasource.QuestStateEnum;
 import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayMock;
-import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 
@@ -155,38 +153,5 @@ public class PlayerTest extends DatabaseTest
 		playerManager.addPlayer(1, -1);
 	}
 	
-	/**
-	 * Test simple functionality of setting quests to a player. 
-	 */
-	@Test
-	public void testPlayerAddQuests()
-	{
-		Player p = playerManager.addPlayer(1);
-		int originalNumberOfQuests = p.getSizeOfQuestList();
-		QuestState quest = new QuestState(15, QuestStateEnum.AVAILABLE);
-		p.addQuestState(quest);
-		
-		assertEquals(QuestStateEnum.AVAILABLE, p.getQuestStateByID(15).getStateValue());
-		assertEquals(originalNumberOfQuests + 1, p.getSizeOfQuestList());
-	}
 	
-	
-	
-	/**
-	 * Make sure quest is triggered if it walks onto a location that has a quest
-	 * @throws DatabaseException QuestManager works with DB
-	 */
-	@Test
-	public void testPlayerTriggerOnMovement() throws DatabaseException
-	{	
-		Position pos1 = new Position(1,1);
-		Position pos2 = new Position(4,3);
-		Player p = playerManager.addPlayer(1);
-		p.setMapName("current.tmx");
-		p.setPlayerPosition(pos1);
-		assertEquals(QuestStatesForTest.PLAYER1_QUEST1.getState(), p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
-		p.setPlayerPosition(pos2);
-		assertEquals(QuestStateEnum.TRIGGERED, p.getQuestStateByID(QuestStatesForTest.PLAYER1_QUEST1.getQuestID()).getStateValue());
-		p.setPlayerPosition(new Position(0,8));
-	}
 }

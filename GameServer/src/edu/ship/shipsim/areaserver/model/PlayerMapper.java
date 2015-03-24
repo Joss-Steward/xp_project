@@ -39,9 +39,11 @@ public class PlayerMapper
 
 	/**
 	 * Finder constructor
-	 *  
-	 * @param playerID the player's unique ID
-	 * @throws DatabaseException if we can't find the given player
+	 * 
+	 * @param playerID
+	 *            the player's unique ID
+	 * @throws DatabaseException
+	 *             if we can't find the given player
 	 */
 	public PlayerMapper(int playerID) throws DatabaseException
 	{
@@ -49,7 +51,8 @@ public class PlayerMapper
 		{
 			this.playerGateway = new PlayerRowDataGatewayMock(playerID);
 			this.questStateGateway = QuestStateTableDataGatewayMock.getSingleton();
-			this.adventureStateGateway = AdventureStateTableDataGatewayMock.getSingleton();
+			this.adventureStateGateway = AdventureStateTableDataGatewayMock
+					.getSingleton();
 		} else
 		{
 			this.playerGateway = new PlayerRowDataGatewayRDS(playerID);
@@ -67,27 +70,26 @@ public class PlayerMapper
 		loadQuestStates();
 	}
 
-
-
 	private void loadQuestStates() throws DatabaseException
 	{
-		ArrayList<QuestStateRecord> questStateRecords = questStateGateway.getQuestStates(player.getID());
-		for (QuestStateRecord qsRec: questStateRecords)
+		ArrayList<QuestStateRecord> questStateRecords = questStateGateway
+				.getQuestStates(player.getPlayerID());
+		for (QuestStateRecord qsRec : questStateRecords)
 		{
 			QuestState questState = new QuestState(qsRec.getQuestID(), qsRec.getState());
-			ArrayList<AdventureStateRecord> adventureStateRecords = adventureStateGateway.getAdventureStates(player.getID(), qsRec.getQuestID());
+			ArrayList<AdventureStateRecord> adventureStateRecords = adventureStateGateway
+					.getAdventureStates(player.getPlayerID(), qsRec.getQuestID());
 			ArrayList<AdventureState> adventureStates = new ArrayList<AdventureState>();
-			for (AdventureStateRecord asRec:adventureStateRecords)
+			for (AdventureStateRecord asRec : adventureStateRecords)
 			{
-				adventureStates.add(new AdventureState(asRec.getAdventureID(), asRec.getState()));
+				adventureStates.add(new AdventureState(asRec.getAdventureID(), asRec
+						.getState()));
 			}
 			questState.addAdventures(adventureStates);
-			player.addQuestState(questState);
+			QuestManager.getSingleton().addQuestState(player.getPlayerID(), questState);
 		}
-		
+
 	}
-
-
 
 	/**
 	 * @return a new object of the type this mapper is managing
@@ -96,11 +98,10 @@ public class PlayerMapper
 	{
 		return new Player();
 	}
-	
-	
 
 	/**
 	 * Get the player that this Mapper is responsible for
+	 * 
 	 * @return the player this mapper manages
 	 */
 	public Player getPlayer()
@@ -110,7 +111,9 @@ public class PlayerMapper
 
 	/**
 	 * Persist the current state of the player into the data source
-	 * @throws DatabaseException if we can't complete the write
+	 * 
+	 * @throws DatabaseException
+	 *             if we can't complete the write
 	 */
 	public void persist() throws DatabaseException
 	{
@@ -119,12 +122,19 @@ public class PlayerMapper
 		playerGateway.setPosition(player.getPlayerPosition());
 		playerGateway.setQuizScore(player.getQuizScore());
 		playerGateway.persist();
-		for (QuestState quest:player.getQuestList())
+		ArrayList<QuestState> questList = QuestManager.getSingleton().getQuestList(
+				player.getPlayerID());
+		if (questList != null)
 		{
-			questStateGateway.udpateState(player.getID(), quest.getID(), quest.getStateValue());
-			for (AdventureState a: quest.getAdventureList())
+			for (QuestState quest : questList)
 			{
-				adventureStateGateway.updateState(player.getID(), quest.getID(), a.getID(), a.getState());
+				questStateGateway.udpateState(player.getPlayerID(), quest.getID(),
+						quest.getStateValue());
+				for (AdventureState a : quest.getAdventureList())
+				{
+					adventureStateGateway.updateState(player.getPlayerID(),
+							quest.getID(), a.getID(), a.getState());
+				}
 			}
 		}
 	}

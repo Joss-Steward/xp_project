@@ -49,7 +49,7 @@ public class CurrentQuestStateReportTest {
 		Player john = PlayerManager.getSingleton().addPlayer(1);
 		CurrentQuestStateReport report = new CurrentQuestStateReport(john);
 		
-		assertEquals(john.getQuestList().size(), report.getClientPlayerQuestList().size());
+		assertEquals(QuestManager.getSingleton().getQuestList(john.getPlayerID()).size(), report.getClientPlayerQuestList().size());
 		
 		int i = 1;
 		for(ClientPlayerQuest q: report.getClientPlayerQuestList())

@@ -1,7 +1,5 @@
 package edu.ship.shipsim.areaserver.model;
 
-import java.util.ArrayList;
-
 import model.PlayerConnection;
 import model.PlayerLogin;
 import model.QualifiedObservableConnector;
@@ -33,7 +31,6 @@ public class Player
 
 	private String mapName;
 	
-	private ArrayList<QuestState> questList = new ArrayList<QuestState>();
 
 	/**
 	 * Get the appearance type for how this player should be drawn
@@ -48,7 +45,7 @@ public class Player
 	/**
 	 * @return the id of this player
 	 */
-	public int getID()
+	public int getPlayerID()
 	{
 		return playerID;
 	}
@@ -229,57 +226,5 @@ public class Player
 		this.quizScore = score;
 	}
 
-	/**
-	 * Add a quest to the player's questList
-	 * @param quest : the quest being added
-	 */
-	public void addQuestState(QuestState quest) 
-	{
-		questList.add(quest);
-	}
-
-	/**
-	 * Go through the questList and get the state of the quest based on the id
-	 * @param id : the id of the quest
-	 * @return the state of the quest
-	 */
-	QuestState getQuestStateByID(int id) 
-	{
-		for(QuestState q : questList)
-		{
-			if(q.getID()==id)
-			{
-				return q;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Return the size of the questList
-	 * @return questList size
-	 */
-	int getSizeOfQuestList() 
-	{
-		return questList.size();
-	}
 	
-	/**
-	 * Getter for quest list
-	 * @return the quest list
-	 */
-	public ArrayList<QuestState> getQuestList()
-	{
-		return questList;
-	}
-
-	/**
-	 * Triggers the state of a given quest by its ID
-	 * @param id a quests ID
-	 */
-	public void triggerQuest(int id) 
-	{
-		QuestState state = getQuestStateByID(id);
-		state.trigger();
-	}
 }

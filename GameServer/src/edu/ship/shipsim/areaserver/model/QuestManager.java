@@ -1,6 +1,7 @@
 package edu.ship.shipsim.areaserver.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.OptionsManager;
 import model.QualifiedObservableConnector;
@@ -27,6 +28,7 @@ public class QuestManager implements QualifiedObserver
 	
 	private QuestRowDataGateway questGateway;
 	private AdventureTableDataGateway adventureGateway;
+	private HashMap<Integer,ArrayList<QuestState>> questStates;
 	
 
 	/**
@@ -46,6 +48,7 @@ public class QuestManager implements QualifiedObserver
 	private QuestManager()
 	{
 		QualifiedObservableConnector.getSingleton().registerObserver(this, PlayerMovedReport.class);
+		questStates = new HashMap<Integer, ArrayList<QuestState>>();
 	}
 	/**
 	 * Reset the singleton to null
@@ -113,8 +116,7 @@ public class QuestManager implements QualifiedObserver
 	 */
 	public void triggerQuest(int playerID, int questID)
 	{
-		Player p = PlayerManager.getSingleton().getPlayerFromID(playerID);
-		QuestState qs = p.getQuestStateByID(questID);
+		QuestState qs = getQuestStateByID(playerID, questID);
 		qs.trigger();
 	}
 
@@ -140,5 +142,54 @@ public class QuestManager implements QualifiedObserver
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Add a quest to the player's questList
+	 * @param playerID the player we are adding the quest id
+	 * @param quest the quest being added
+	 */
+	public void addQuestState(int playerID, QuestState quest) 
+	{
+		ArrayList<QuestState> questStateList;
+		if (!questStates.containsKey(playerID))
+		{
+			questStateList = new ArrayList<QuestState>();
+			questStates.put(playerID, questStateList);
+		}
+		else
+		{
+			questStateList = questStates.get(playerID);
+		}
+		questStateList.add(quest);
+	}
+
+	/**
+	 * Go through the questList and get the state of the quest based on the id
+	 * @param playerID the id of the player
+	 * @param questID the id of the quest we are interested in
+	 * @return the state of the quest
+	 */
+	QuestState getQuestStateByID(int playerID, int questID) 
+	{
+		ArrayList<QuestState> questStateList = questStates.get(playerID);
+		for(QuestState q : questStateList)
+		{
+			if(q.getID()==questID)
+			{
+				return q;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Get a list of all of the current quest states for a given player
+	 * @param playerID the player's id
+	 * @return the states
+	 */
+	public ArrayList<QuestState> getQuestList(int playerID)
+	{
+		return questStates.get(playerID);
 	}
 }
