@@ -17,6 +17,8 @@ public class CommandSendQuestState extends Command
 	protected boolean execute()
 	{
 		PlayerManager.getSingleton().getThisClientsPlayer().sendCurrentQuestStateReport();
+		
+		System.out.println("Got to cmd execute");
 		return true;
 	}
 

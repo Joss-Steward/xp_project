@@ -43,6 +43,8 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import data.ChatType;
 import data.Position;
+import edu.ship.shipsim.client.model.CommandSendQuestState;
+import edu.ship.shipsim.client.model.ModelFacade;
 import static view.screen.Screens.DEFAULT_RES;
 
 /**
@@ -413,7 +415,11 @@ public class ScreenMap extends ScreenBasic
 				if(keycode == Keys.Q)
 				{
 					qaScreen.toggleVisible();
-					System.out.println("Toggle quest view " + ((qaScreen.isVisible())?"on":"off"));
+					
+					CommandSendQuestState cmd = new CommandSendQuestState();
+					
+					ModelFacade.getSingleton().queueCommand(cmd);
+					
 					return true;
 				}
 				return false;
