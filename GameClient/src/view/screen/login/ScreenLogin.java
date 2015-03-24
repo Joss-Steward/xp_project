@@ -248,4 +248,5 @@ public class ScreenLogin extends ScreenBasic
 	{
 		this.flagMsg = msg;
 	}
+
 }

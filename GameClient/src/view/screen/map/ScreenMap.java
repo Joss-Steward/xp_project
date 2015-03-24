@@ -7,6 +7,7 @@ import view.player.PlayerSprite;
 import view.player.PlayerSpriteFactory;
 import view.player.PlayerType;
 import view.screen.ScreenBasic;
+import view.screen.qas.ScreenQAs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -69,6 +70,8 @@ public class ScreenMap extends ScreenBasic
 	private final float unitScale;
 	private ScreenMapInput mapInput;
 	private ChatUi chatArea;
+	
+	private ScreenQAs qaScreen;
 	
 	//tile size that we will be moving in according to the collision masking tileset
 	private Vector2 tileSize;
@@ -206,6 +209,8 @@ public class ScreenMap extends ScreenBasic
 			//render the ui buffer
 			uiBuffer.begin();
 			{
+				Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, 0);
+				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 				stage.draw();
 			}
 			uiBuffer.end();
@@ -372,6 +377,8 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void show()
 	{
+		qaScreen = new ScreenQAs();
+		
 		worldStage = new Stage();
 		blurBatch = new SpriteBatch();
 		
@@ -403,10 +410,17 @@ public class ScreenMap extends ScreenBasic
 						return true;
 					}
 				}
+				if(keycode == Keys.Q)
+				{
+					qaScreen.toggleVisible();
+					System.out.println("Toggle quest view " + ((qaScreen.isVisible())?"on":"off"));
+					return true;
+				}
 				return false;
 			}
 		});
 		stage.addActor(chatArea);
+		stage.addActor(qaScreen);
 		
 		loadingLayer = new Group();
 		loadingLayer.setSize(stage.getWidth(), stage.getHeight());
@@ -524,4 +538,5 @@ public class ScreenMap extends ScreenBasic
 	public void removePlayer(int playerID) {
 		characterDequeue.add(playerID);
 	}
+
 }
