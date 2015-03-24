@@ -1,12 +1,12 @@
 package edu.ship.shipsim.areaserver.datasource;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.DatabaseManager;
+import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
 
 /**
@@ -44,12 +44,13 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("DROP TABLE IF EXISTS Adventures");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"DROP TABLE IF EXISTS Adventures");
 			stmt.executeUpdate();
+			stmt.close();
 
-			stmt = connection
-					.prepareStatement("Create TABLE Adventures (adventureID INT NOT NULL, adventureDescription VARCHAR(80), questID INT NOT NULL)");
+			stmt = new ClosingPreparedStatement(connection,
+					"Create TABLE Adventures (adventureID INT NOT NULL, adventureDescription VARCHAR(80), questID INT NOT NULL)");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -68,8 +69,8 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("SELECT * FROM Adventures WHERE questID = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT * FROM Adventures WHERE questID = ?");
 			stmt.setInt(1, questID);
 			ResultSet result = stmt.executeQuery();
 
@@ -103,8 +104,8 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("Insert INTO Adventures SET adventureID = ?, adventureDescription = ?, questID = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"Insert INTO Adventures SET adventureID = ?, adventureDescription = ?, questID = ?");
 			stmt.setInt(1, adventureID);
 			stmt.setString(2, adventureDescription);
 			stmt.setInt(3, questID);

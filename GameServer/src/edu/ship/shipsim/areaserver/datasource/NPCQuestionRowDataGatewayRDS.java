@@ -1,11 +1,11 @@
 package edu.ship.shipsim.areaserver.datasource;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.DatabaseManager;
+import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
 
 /**
@@ -28,12 +28,13 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("DROP TABLE IF EXISTS NPCQuestions");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"DROP TABLE IF EXISTS NPCQuestions");
 			stmt.executeUpdate();
+			stmt.close();
 
-			stmt = connection
-					.prepareStatement("Create TABLE NPCQuestions (questionID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questionStatement VARCHAR(80), answer VARCHAR(80))");
+			stmt = new ClosingPreparedStatement(connection,
+					"Create TABLE NPCQuestions (questionID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questionStatement VARCHAR(80), answer VARCHAR(80))");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -52,8 +53,8 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("SELECT * FROM NPCQuestions ORDER BY RAND() LIMIT 1");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT * FROM NPCQuestions ORDER BY RAND() LIMIT 1");
 			ResultSet result = stmt.executeQuery();
 			result.next();
 			NPCQuestionRowDataGatewayRDS gateway = new NPCQuestionRowDataGatewayRDS();
@@ -84,8 +85,8 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 		this.connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("SELECT * FROM NPCQuestions WHERE questionID = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT * FROM NPCQuestions WHERE questionID = ?");
 			stmt.setInt(1, questionID);
 			ResultSet result = stmt.executeQuery();
 			result.next();
@@ -117,8 +118,8 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("Insert INTO NPCQuestions SET questionID = ?, questionStatement = ?, answer = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"Insert INTO NPCQuestions SET questionID = ?, questionStatement = ?, answer = ?");
 			stmt.setInt(1, questionID);
 			stmt.setString(2, questionStatement);
 			stmt.setString(3, answer);

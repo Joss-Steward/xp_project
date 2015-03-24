@@ -168,7 +168,7 @@ public class PlayerManager
 			Player p = i.next();
 			if (p.getPlayerName().equals(playerName))
 			{
-				return p.getID();
+				return p.getPlayerID();
 			}
 		}
 		throw new PlayerNotFoundException();
@@ -205,7 +205,7 @@ public class PlayerManager
 		for (NPCMapper m : pendingNPCs)
 		{
 			NPC nextNPC = (NPC) m.getPlayer();
-			players.put(nextNPC.getID(), nextNPC);
+			players.put(nextNPC.getPlayerID(), nextNPC);
 			nextNPC.start();
 		}
 	}

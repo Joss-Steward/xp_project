@@ -1,8 +1,12 @@
 package edu.ship.shipsim.areaserver.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.OptionsManager;
+import model.QualifiedObservableConnector;
+import model.QualifiedObservableReport;
+import model.QualifiedObserver;
 import data.Position;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
@@ -12,17 +16,19 @@ import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayRDS;
 import edu.ship.shipsim.areaserver.datasource.QuestRowDataGateway;
 import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayMock;
 import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayRDS;
+import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
 
 /**
  * Retrieves the list of quest and adventures from the database
  * and sends them to the PlayerManager?
  * @author lavonne
  */
-public class QuestManager 
+public class QuestManager implements QualifiedObserver
 {
 	
 	private QuestRowDataGateway questGateway;
 	private AdventureTableDataGateway adventureGateway;
+	private HashMap<Integer,ArrayList<QuestState>> questStates;
 	
 
 	/**
@@ -39,6 +45,11 @@ public class QuestManager
 		return singleton;
 	}
 	
+	private QuestManager()
+	{
+		QualifiedObservableConnector.getSingleton().registerObserver(this, PlayerMovedReport.class);
+		questStates = new HashMap<Integer, ArrayList<QuestState>>();
+	}
 	/**
 	 * Reset the singleton to null
 	 */
@@ -96,5 +107,89 @@ public class QuestManager
 		{
 			return QuestRowDataGatewayRDS.findQuestsForMapLocation(mapName, pos);
 		}
+	}
+
+	/**
+	 * Trigger a quest for a given player
+	 * @param playerID the player
+	 * @param questID the quest to be triggered
+	 */
+	public void triggerQuest(int playerID, int questID)
+	{
+		QuestState qs = getQuestStateByID(playerID, questID);
+		qs.trigger();
+	}
+
+	/**
+	 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
+	 */
+	@Override
+	public void receiveReport(QualifiedObservableReport report)
+	{
+		PlayerMovedReport myReport = (PlayerMovedReport)report;
+		try
+		{
+			QuestManager qm = QuestManager.getSingleton();
+			ArrayList<Integer> questIDs = new ArrayList<Integer>();
+			questIDs = qm.getQuestsByPosition(myReport.getNewPosition(), myReport.getMapName());
+			
+			for(Integer q : questIDs)
+			{
+				this.triggerQuest(myReport.getPlayerID(), q);
+			}
+		} 
+		catch (DatabaseException e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Add a quest to the player's questList
+	 * @param playerID the player we are adding the quest id
+	 * @param quest the quest being added
+	 */
+	public void addQuestState(int playerID, QuestState quest) 
+	{
+		ArrayList<QuestState> questStateList;
+		if (!questStates.containsKey(playerID))
+		{
+			questStateList = new ArrayList<QuestState>();
+			questStates.put(playerID, questStateList);
+		}
+		else
+		{
+			questStateList = questStates.get(playerID);
+		}
+		questStateList.add(quest);
+	}
+
+	/**
+	 * Go through the questList and get the state of the quest based on the id
+	 * @param playerID the id of the player
+	 * @param questID the id of the quest we are interested in
+	 * @return the state of the quest
+	 */
+	QuestState getQuestStateByID(int playerID, int questID) 
+	{
+		ArrayList<QuestState> questStateList = questStates.get(playerID);
+		for(QuestState q : questStateList)
+		{
+			if(q.getID()==questID)
+			{
+				return q;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Get a list of all of the current quest states for a given player
+	 * @param playerID the player's id
+	 * @return the states
+	 */
+	public ArrayList<QuestState> getQuestList(int playerID)
+	{
+		return questStates.get(playerID);
 	}
 }

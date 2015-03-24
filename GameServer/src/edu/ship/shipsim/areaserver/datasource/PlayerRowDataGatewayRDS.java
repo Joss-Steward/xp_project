@@ -1,17 +1,18 @@
 package edu.ship.shipsim.areaserver.datasource;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import model.DatabaseManager;
 import data.Position;
+import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
 
 /**
  * The RDS version of the gateway
+ * 
  * @author Merlin
  *
  */
@@ -20,25 +21,30 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 
 	/**
 	 * Drop the table if it exists and re-create it empty
-	 * @throws DatabaseException shouldn't
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	public static void createTable() throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("DROP TABLE IF EXISTS Players");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"DROP TABLE IF EXISTS Players");
 			stmt.executeUpdate();
+			stmt.close();
 
-			stmt = connection
-					.prepareStatement("Create TABLE Players (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, mapName VARCHAR(80), row INTEGER, col INTEGER, appearanceType VARCHAR(255), quizScore INTEGER)");
+			stmt = new ClosingPreparedStatement(
+					connection,
+					"Create TABLE Players (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, mapName VARCHAR(80), row INTEGER, col INTEGER, appearanceType VARCHAR(255), quizScore INTEGER)");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
 			throw new DatabaseException("Unable to create the player table", e);
 		}
 	}
+
 	private int playerID;
 	private String mapName;
 	private Position position;
@@ -50,8 +56,10 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	/**
 	 * finder constructor
 	 * 
-	 * @param playerID the unique ID of the player we are working with
-	 * @throws DatabaseException if we cannot find that player in the database
+	 * @param playerID
+	 *            the unique ID of the player we are working with
+	 * @throws DatabaseException
+	 *             if we cannot find that player in the database
 	 */
 	public PlayerRowDataGatewayRDS(int playerID) throws DatabaseException
 	{
@@ -59,13 +67,14 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 		this.connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("SELECT * FROM Players WHERE playerID = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT * FROM Players WHERE playerID = ?");
 			stmt.setInt(1, playerID);
 			ResultSet result = stmt.executeQuery();
 			result.next();
 			this.mapName = result.getString("mapName");
-			this.position = (Position) new Position(result.getInt("row"), result.getInt("col"));
+			this.position = (Position) new Position(result.getInt("row"),
+					result.getInt("col"));
 			this.appearanceType = result.getString("appearanceType");
 			this.quizScore = result.getInt("quizScore");
 
@@ -78,10 +87,14 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	/**
 	 * create constructor
 	 * 
-	 * @param mapName the name of the map this player is on
-	 * @param position the row/column of the position the player is in
-	 * @param appearanceType the appearance type this player should be rendered with
-	 * @throws DatabaseException shouldn't
+	 * @param mapName
+	 *            the name of the map this player is on
+	 * @param position
+	 *            the row/column of the position the player is in
+	 * @param appearanceType
+	 *            the appearance type this player should be rendered with
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	public PlayerRowDataGatewayRDS(String mapName, Position position,
 			String appearanceType) throws DatabaseException
@@ -89,10 +102,10 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement(
-							"Insert INTO Players SET mapName = ?, row = ?, col = ?, appearanceType = ?, quizScore = 0",
-							Statement.RETURN_GENERATED_KEYS);
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
+					connection,
+					"Insert INTO Players SET mapName = ?, row = ?, col = ?, appearanceType = ?, quizScore = 0",
+					Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, mapName);
 			stmt.setInt(2, position.getRow());
 			stmt.setInt(3, position.getColumn());
@@ -166,8 +179,8 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("UPDATE Players SET mapName = ?, row = ?, col = ?, appearanceType = ?, quizScore = ? WHERE playerID = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"UPDATE Players SET mapName = ?, row = ?, col = ?, appearanceType = ?, quizScore = ? WHERE playerID = ?");
 			stmt.setString(1, mapName);
 			stmt.setInt(2, position.getRow());
 			stmt.setInt(3, position.getColumn());
@@ -177,7 +190,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
-			
+
 			throw new DatabaseException("Couldn't persist info for player with ID "
 					+ playerID, e);
 		}

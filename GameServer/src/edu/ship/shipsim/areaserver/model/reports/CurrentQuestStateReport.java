@@ -29,7 +29,7 @@ public class CurrentQuestStateReport implements QualifiedObservableReport
 	 */
 	public CurrentQuestStateReport(Player player) throws DatabaseException 
 	{
-		combineQuest(player.getQuestList());
+		combineQuest(QuestManager.getSingleton().getQuestList(player.getPlayerID()));
 	}
 	
 	/**

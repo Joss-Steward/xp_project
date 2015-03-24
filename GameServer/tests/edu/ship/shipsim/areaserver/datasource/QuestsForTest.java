@@ -20,7 +20,7 @@ public enum QuestsForTest
 	/**
 	 * 
 	 */
-	ONE_SAME_LOCATION_QUEST(3, "Another Quest","current.tmx", new Position(4,3));
+	ONE_SAME_LOCATION_QUEST(3, "Another Quest","current.tmx", new Position(4,14));
 	
 	private int questID;
 	private String questDescription;

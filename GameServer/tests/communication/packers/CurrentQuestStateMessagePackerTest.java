@@ -9,11 +9,13 @@ import model.OptionsManager;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import communication.StateAccumulator;
 import communication.messages.CurrentQuestStateMessage;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
+import edu.ship.shipsim.areaserver.model.QuestManager;
 import edu.ship.shipsim.areaserver.model.reports.CurrentQuestStateReport;
 
 /**
@@ -35,6 +37,7 @@ public class CurrentQuestStateMessagePackerTest
 	{
 		OptionsManager.getSingleton(true);
 		PlayerManager.resetSingleton();
+		QuestManager.resetSingleton();
 
 		PlayerManager.getSingleton().addPlayer(1);
 		stateAccumulator = new StateAccumulator(null);

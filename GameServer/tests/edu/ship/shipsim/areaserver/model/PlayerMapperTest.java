@@ -39,6 +39,7 @@ public class PlayerMapperTest extends DatabaseTest
 		new PlayerRowDataGatewayMock().resetData();
 		QuestStateTableDataGatewayMock.getSingleton().resetData();
 		AdventureStateTableDataGatewayMock.getSingleton().resetData();
+		QuestManager.resetSingleton();
 	}
 
 	/**
@@ -64,7 +65,8 @@ public class PlayerMapperTest extends DatabaseTest
 		{
 			if (qs.getPlayerID() == testPlayer.getPlayerID())
 			{
-				QuestState playerQuestState = p.getQuestStateByID(qs.getQuestID());
+				QuestState playerQuestState = QuestManager.getSingleton()
+						.getQuestStateByID(testPlayer.getPlayerID(), qs.getQuestID());
 				assertEquals(qs.getState(), playerQuestState.getStateValue());
 				for (AdventureStatesForTest as : AdventureStatesForTest.values())
 				{
@@ -75,7 +77,10 @@ public class PlayerMapperTest extends DatabaseTest
 					{
 						AdventureState expected = new AdventureState(as.getAdventureID(),
 								as.getState());
-						assertTrue("questID " + qs.getQuestID() + " adventureID " + as.getAdventureID() + " state " + as.getState(),adventureList.contains(expected));
+						assertTrue(
+								"questID " + qs.getQuestID() + " adventureID "
+										+ as.getAdventureID() + " state " + as.getState(),
+								adventureList.contains(expected));
 					}
 				}
 			}
@@ -134,8 +139,8 @@ public class PlayerMapperTest extends DatabaseTest
 		QuestState questState = null;
 		if (p.getClass() == Player.class)
 		{
-			questState = p.getQuestStateByID(QuestStatesForTest.PLAYER2_QUEST1
-					.getQuestID());
+			questState = QuestManager.getSingleton().getQuestStateByID(p.getPlayerID(),
+					QuestStatesForTest.PLAYER2_QUEST1.getQuestID());
 			questState.trigger();
 		}
 		p.persist();
@@ -148,10 +153,11 @@ public class PlayerMapperTest extends DatabaseTest
 		assertEquals(p.getMapName(), p2.getMapName());
 		if (p.getClass() == Player.class)
 		{
-			QuestState retrievedQuestState = p2
-					.getQuestStateByID(QuestStatesForTest.PLAYER2_QUEST1.getQuestID());
+			QuestState retrievedQuestState = QuestManager.getSingleton()
+					.getQuestStateByID(p2.getPlayerID(),
+							QuestStatesForTest.PLAYER2_QUEST1.getQuestID());
 			assertEquals(questState.getStateValue(), retrievedQuestState.getStateValue());
-			for (AdventureState a:retrievedQuestState.getAdventureList())
+			for (AdventureState a : retrievedQuestState.getAdventureList())
 			{
 				assertEquals(AdventureStateEnum.PENDING, a.getState());
 			}
