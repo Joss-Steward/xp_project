@@ -44,7 +44,8 @@ public class ThisClientsPlayer extends Player
 	 * Returns the list of quests contained by the local player.
 	 * @return the quest list
 	 */
-	public ArrayList<ClientPlayerQuest> getQuests() {
+	public ArrayList<ClientPlayerQuest> getQuests() 
+	{
 		return questList;
 	}
 
@@ -52,7 +53,8 @@ public class ThisClientsPlayer extends Player
 	 * Adds a quest to the local players quest list
 	 * @param q the quest being added
 	 */
-	public void addQuest(ClientPlayerQuest q) {
+	public void addQuest(ClientPlayerQuest q) 
+	{
 		questList.add(q);
 	}
 
@@ -62,6 +64,7 @@ public class ThisClientsPlayer extends Player
 	 */
 	public void overwriteQuestList(ArrayList<ClientPlayerQuest> qList)
 	{
+		questList.clear();
 		questList = qList;
 		
 	}

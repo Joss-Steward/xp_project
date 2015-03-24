@@ -21,7 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import datasource.AdventureStateEnum;
 import datasource.QuestStateEnum;
-import edu.ship.shipsim.client.model.PlayerManager;
 import edu.ship.shipsim.client.model.ThisClientsPlayer;
 
 /**
@@ -37,8 +36,11 @@ public class ScreenQAs extends Group
 	private Texture triggered;
 	private Texture checkmark;
 	private Texture complete;
+	private Texture legend;
 	
-	private Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+	private Label q_header;
+	
+	private final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 	
 	SpriteBatch batch;
 	ThisClientsPlayer myPlayer;
@@ -79,8 +81,8 @@ public class ScreenQAs extends Group
 	{	
 		this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
-		initializeQuestTableContents(skin);
-		initializeAdventureTableContents(skin);
+		initializeQuestTableContents();
+		initializeAdventureTableContents();
 
 		adventureTable.setFillParent(true);
 		this.addActor(questTable);
@@ -89,28 +91,65 @@ public class ScreenQAs extends Group
 		toggleVisible();
 	} 
 
-	private void initializeAdventureTableContents(Skin skin) 
+	private void initializeAdventureTableContents() 
 	{
 		//Table Setup
 		adventureTable = new Table(); 
 		adventureTable.center().top();
 		adventureTable.setFillParent(true);	
-		clearAdventureTable(skin);
+		clearAdventureTable();
 	}
 
-	private void initializeQuestTableContents(Skin skin)
+
+	/**
+	 * TODO right comment
+	 * @param quests the list of ClientPlayerQuests quest from ThisClientPlayer
+	 */
+	public void updateTable(ArrayList<ClientPlayerQuest> quests) 
 	{
-		// Place Holder
-		//ArrayList<ClientPlayerQuest> quests = new ArrayList<ClientPlayerQuest>(PlayerManager.getSingleton().getThisClientsPlayer().getQuests());
+		questTable.clearChildren();
+		questTable.add(q_header).colspan(2).center();
+		questTable.row();
+		
+		int numAvailable = 0;
+		
+		for(ClientPlayerQuest q : quests) 
+		{
+			if(q.getQuestState().equals(QuestStateEnum.TRIGGERED))
+			{
+				buildQuestRow(q);
+				numAvailable--;
+			}
+			else if(!q.getQuestState().equals(QuestStateEnum.AVAILABLE))
+			{
+				buildQuestRow(q);
+			}
+			else
+			{
+				//Increment the number of quests available to find
+				numAvailable++;
+			}
+		}		
+		
+		//Show how many quests are available to be found
+		questTable.add(new Label(""+numAvailable,skin));
+		questTable.add(new Label("?????", skin));	
+		//Set the Legend at the bottom of the Quests Table
+		questTable.row();
+		questTable.add(new Image(legend)).colspan(2).center();
+	}
+	
+	private void initializeQuestTableContents()
+	{
 		
 		//available = new Texture("img/available.png");
 		triggered = new Texture("img/triggered.png");
 		checkmark = new Texture("img/check.png");
 		complete = new Texture("img/complete.png");
-		Texture legend = new Texture("img/legend.png");	
-		Label q_header = new Label("Quests",skin);		
-		int num_Avail = 0;
+		legend = new Texture("img/legend.png");	
+		q_header = new Label("Quests",skin);		
 		
+		int numAvailable = 0;
 		//Table Setup
 		questTable = new Table();
 		questTable.setFillParent(true);	
@@ -133,21 +172,23 @@ public class ScreenQAs extends Group
 		*/
 		
 		//Show how many quests are available to be found
-		questTable.add(new Label(""+num_Avail,skin));
+		questTable.add(new Label(""+numAvailable,skin));
 		questTable.add(new Label("?????", skin));	
 		//Set the Legend at the bottom of the Quests Table
 		questTable.row();
 		questTable.add(new Image(legend)).colspan(2).center();
+		
+		clearQuestTable();
 	}
 
-	private void buildAdvRow(Texture state, String desc, final Skin row_skin)
+	private void buildAdvRow(Texture state, String desc)
 	{
 		adventureTable.add(new Image(state));
-		adventureTable.add(new Label(desc,row_skin));
+		adventureTable.add(new Label(desc,skin));
 		adventureTable.row();	
 	}
 
-	private void buildQuestRow(final ClientPlayerQuest quest, final Skin row_skin)
+	private void buildQuestRow(final ClientPlayerQuest quest)
 	{
 		QuestStateEnum state = quest.getQuestState();
 		
@@ -167,24 +208,24 @@ public class ScreenQAs extends Group
 				break;
 		}
 		
-		TextButton button = new TextButton(quest.getQuestDescription(),row_skin);
+		TextButton button = new TextButton(quest.getQuestDescription(),skin);
 		questTable.add(button);
 		
 		button.addListener(new ClickListener(){
 			@Override 
 			public void clicked(InputEvent event, float x, float y) 
 			{
-				clearAdventureTable(row_skin);
+				clearAdventureTable();
 				for(ClientPlayerAdventure a : quest.getAdventureList()) 
 				{
 					if(a.getAdventuretState().equals(AdventureStateEnum.PENDING))
 					{
-						buildAdvRow(triggered, a.getAdventureDescription(), row_skin);
+						buildAdvRow(triggered, a.getAdventureDescription());
 					}
 
 					else
 					{
-						buildAdvRow(complete, a.getAdventureDescription(), row_skin);
+						buildAdvRow(complete, a.getAdventureDescription());
 					}
 				}
 			}
@@ -193,12 +234,21 @@ public class ScreenQAs extends Group
 		questTable.row();
 	}
 	
-	private void clearAdventureTable(Skin skin) 
+	private void clearAdventureTable() 
 	{
 		Label header = new Label("Adventures", skin);	
 		adventureTable.clearChildren();
 		//Set Header
 		adventureTable.add(header).colspan(2).center();
 		adventureTable.row();
+	}
+	
+	private void clearQuestTable() 
+	{
+		Label header = new Label("Quests", skin);	
+		questTable.clearChildren();
+		//Set Header
+		questTable.add(header).colspan(2).center();
+		questTable.row();
 	}
 }

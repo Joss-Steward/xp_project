@@ -1,5 +1,6 @@
 package view.screen.login;
 
+import model.QualifiedObservableReport;
 import view.screen.ScreenBasic;
 import view.screen.Screens;
 
@@ -247,6 +248,15 @@ public class ScreenLogin extends ScreenBasic
 	public void showFlagMessage(String msg)
 	{
 		this.flagMsg = msg;
+	}
+
+	/**
+	 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
+	 */
+	@Override
+	public void receiveReport(QualifiedObservableReport report) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

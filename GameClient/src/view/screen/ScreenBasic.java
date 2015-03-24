@@ -1,7 +1,12 @@
 package view.screen;
 
+import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
+
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+
+import edu.ship.shipsim.client.model.reports.QuestStateReport;
 
 /**
  * Everything a basic screen needs
@@ -9,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
  * @author Merlin
  * 
  */
-public abstract class ScreenBasic implements Screen
+public abstract class ScreenBasic implements Screen, QualifiedObserver
 {
 	protected Stage stage;
 
@@ -23,4 +28,12 @@ public abstract class ScreenBasic implements Screen
 		return stage;
 	}
 
+	/**
+	 * Called in the constructor of subclasses to set up Qualified Observer
+	 */
+	public void setUpListening()
+	{
+		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
+		cm.registerObserver(this, QuestStateReport.class);
+	}
 }
