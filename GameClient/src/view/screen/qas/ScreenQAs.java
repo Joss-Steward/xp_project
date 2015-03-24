@@ -101,7 +101,7 @@ public class ScreenQAs extends Group
 	private void initializeQuestTableContents(Skin skin)
 	{
 		// Place Holder
-		ArrayList<ClientPlayerQuest> quests = new ArrayList<ClientPlayerQuest>(PlayerManager.getSingleton().getThisClientsPlayer().getQuests());
+		//ArrayList<ClientPlayerQuest> quests = new ArrayList<ClientPlayerQuest>(PlayerManager.getSingleton().getThisClientsPlayer().getQuests());
 		
 		//available = new Texture("img/available.png");
 		triggered = new Texture("img/triggered.png");
@@ -118,7 +118,7 @@ public class ScreenQAs extends Group
 		questTable.add(q_header).colspan(2).center();
 		questTable.row();
 		
-		for(ClientPlayerQuest q : quests) 
+		/*for(ClientPlayerQuest q : quests) 
 		{
 			if(!q.getQuestState().equals(QuestStateEnum.AVAILABLE))
 			{
@@ -130,6 +130,7 @@ public class ScreenQAs extends Group
 				num_Avail++;
 			}
 		}		
+		*/
 		
 		//Show how many quests are available to be found
 		questTable.add(new Label(""+num_Avail,skin));
