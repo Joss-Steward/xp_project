@@ -2,12 +2,15 @@ package view.screen.qas;
 
 import java.util.ArrayList;
 
+import model.ClientPlayerAdventure;
+import model.ClientPlayerQuest;
 import view.screen.ScreenBasic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -17,6 +20,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import datasource.AdventureStateEnum;
+import datasource.QuestStateEnum;
+import edu.ship.shipsim.client.model.PlayerManager;
 
 /**
  * A basic screen that displays the quests and adventure states.
@@ -75,27 +82,59 @@ public class ScreenQAs extends ScreenBasic
 
 	} 
 
-	private void buildAdvRow(Texture state, String desc,Skin row_skin)
+	private void buildAdvRow(Texture state, String desc, final Skin row_skin)
 	{
 		adventureTable.add(new Image(state));
 		adventureTable.add(new Label(desc,row_skin));
 		adventureTable.row();	
 	}
 
-	private void buildQuestRow(Texture state, String desc,Skin row_skin)
+	private void buildQuestRow(final ClientPlayerQuest quest, final Skin row_skin)
 	{
-		questTable.add(new Image(state));
-		TextButton button = new TextButton(desc,row_skin);
+		QuestStateEnum state = quest.getQuestState();
+		
+		switch(state) {
+			case TRIGGERED:
+				questTable.add(new Image(triggered));
+				break;
+			case FULFILLED:
+				questTable.add(new Image(checkmark));
+				break;
+			case FINISHED:
+				questTable.add(new Image(complete));
+				break;
+			default:
+				// Available quests don't have an image in this column. 
+				// Hidden quests aren't available for the client to see.
+				break;
+		}
+		
+		TextButton button = new TextButton(quest.getQuestDescription(),row_skin);
 		questTable.add(button);
+		
 		button.addListener(new ClickListener(){
-			public void click() {
-				//TODO - NEED TO ADD THE DATA FOR EACH ADVENTURE
+			@Override 
+			public void clicked(InputEvent event, float x, float y) 
+			{
+				clearAdventureTable();
+				for(ClientPlayerAdventure a : quest.getAdventureList()) 
+				{
+					if(a.getAdventuretState().equals(AdventureStateEnum.PENDING))
+					{
+						buildAdvRow(triggered, a.getAdventureDescription(), row_skin);
+					}
+					else
+					{
+						buildAdvRow(complete, a.getAdventureDescription(), row_skin);
+					}
+				}
 			}
 		});
+		
 		questTable.row();
 	}
 	
-	private void initializeAdventureTableContents(Skin skin) 
+	private void initializeAdventureTableContents(final Skin skin) 
 	{
 
 		//Table Setup
@@ -108,16 +147,23 @@ public class ScreenQAs extends ScreenBasic
 		adventureTable.add(header).colspan(2).center();
 		adventureTable.row();
 		
-		//Fill the table
-		buildAdvRow(triggered,"Adventure 1 description",skin);
-		buildAdvRow(triggered,"Adventure 2 description",skin);
-		buildAdvRow(complete,"Adventure 3 description",skin);
+//		//Fill the table
+//		buildAdvRow(triggered,"Adventure 1 description",skin);
+//		buildAdvRow(triggered,"Adventure 2 description",skin);
+//		buildAdvRow(complete,"Adventure 3 description",skin);
 		
 	}
 	
+	private void clearAdventureTable() 
+	{
+		adventureTable.clearChildren();
+	}
 	
 	private void initializeQuestTableContents(Skin skin)
 	{
+		// Place Holder
+		ArrayList<ClientPlayerQuest> quests = new ArrayList<ClientPlayerQuest>(PlayerManager.getSingleton().getThisClientsPlayer().getQuests());
+		
 		triggered = new Texture("img/triggered.png");
 		checkmark = new Texture("img/check.png");
 		complete = new Texture("img/complete.png");
@@ -130,15 +176,22 @@ public class ScreenQAs extends ScreenBasic
 		questTable.top().left();
 		questTable.add(q_header).colspan(2).center();
 		questTable.row();
+		
+		for(ClientPlayerQuest q : quests) 
+		{
+			buildQuestRow(q, skin);
+		}		
+		
 //////////////////////////////////////////////////////////////////
-		//Table Layout / mock data for Q/As
-		buildQuestRow(triggered,"Quest1",skin);
-		buildQuestRow(triggered,"Quest2",skin);
-		buildQuestRow(triggered,"Quest3",skin);
-		buildQuestRow(checkmark,"Quest4",skin);
-		buildQuestRow(checkmark,"Quest5",skin);
-		buildQuestRow(complete,"Quest6",skin);
+//		Table Layout / mock data for Q/As
+//		buildQuestRow(triggered,"Quest1",skin);
+//		buildQuestRow(triggered,"Quest2",skin);
+//		buildQuestRow(triggered,"Quest3",skin);
+//		buildQuestRow(checkmark,"Quest4",skin);
+//		buildQuestRow(checkmark,"Quest5",skin);
+//		buildQuestRow(complete,"Quest6",skin);
 //////////////////////////////////////////////////////////////////
+		
 		//Show how many quests are available to be found
 		questTable.add(new Label(""+num_Avail,skin));
 		questTable.add(new Label("?????", skin));	
