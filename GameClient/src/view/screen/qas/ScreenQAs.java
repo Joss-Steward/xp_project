@@ -179,7 +179,10 @@ public class ScreenQAs extends ScreenBasic
 		
 		for(ClientPlayerQuest q : quests) 
 		{
-			buildQuestRow(q, skin);
+			if(!q.getQuestState().equals(QuestStateEnum.AVAILABLE))
+			{
+				buildQuestRow(q, skin);
+			}
 		}		
 		
 //////////////////////////////////////////////////////////////////
