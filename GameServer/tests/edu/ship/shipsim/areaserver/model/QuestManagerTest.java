@@ -332,4 +332,14 @@ public class QuestManagerTest
 						.getStateValue());
 	}
 
+	/**
+	 * We should be able to clear out all of the quest states for a given player
+	 */
+	@Test
+	public void canRemoveAPlayersQuestStates()
+	{
+		QuestManager.getSingleton().addQuestState(4, new QuestState(1,QuestStateEnum.AVAILABLE));
+		QuestManager.getSingleton().removeQuestStatesForPlayer(4);
+		assertNull(QuestManager.getSingleton().getQuestList(4));
+	}
 }

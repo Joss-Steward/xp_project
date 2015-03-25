@@ -192,4 +192,13 @@ public class QuestManager implements QualifiedObserver
 	{
 		return questStates.get(playerID);
 	}
+
+	/**
+	 * Remove all of the quest states for a given player
+	 * @param playerID the player we are removing
+	 */
+	public void removeQuestStatesForPlayer(int playerID)
+	{
+		questStates.remove(playerID);
+	}
 }

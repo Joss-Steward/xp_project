@@ -30,6 +30,7 @@ public class CommandRemovePlayer extends Command
 	protected boolean execute()
 	{
 		PlayerManager.getSingleton().removePlayer(playerID);
+		QuestManager.getSingleton().removeQuestStatesForPlayer(playerID);
 		return true;
 	}
 
