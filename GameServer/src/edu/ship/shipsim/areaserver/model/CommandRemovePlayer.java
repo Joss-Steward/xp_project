@@ -1,5 +1,6 @@
 package edu.ship.shipsim.areaserver.model;
 
+import datasource.DatabaseException;
 
 /**
  * Command used to remove a player from this area server's part of the game
@@ -29,7 +30,15 @@ public class CommandRemovePlayer extends Command
 	@Override
 	protected boolean execute()
 	{
-		PlayerManager.getSingleton().removePlayer(playerID);
+
+		try
+		{
+			PlayerManager.getSingleton().removePlayer(playerID);
+		} catch (DatabaseException e)
+		{
+			System.out.println("Had trouble disconnecting player " + playerID);
+			e.printStackTrace();
+		}
 		QuestManager.getSingleton().removeQuestStatesForPlayer(playerID);
 		return true;
 	}

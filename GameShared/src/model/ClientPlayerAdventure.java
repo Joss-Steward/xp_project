@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 import datasource.AdventureStateEnum;
 
 /**
@@ -8,8 +10,12 @@ import datasource.AdventureStateEnum;
  * @author Nathaniel
  *
  */
-public class ClientPlayerAdventure 
+public class ClientPlayerAdventure implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int adventureID;
 	private String adventureDescription;
 	private AdventureStateEnum adventureState;

@@ -3,7 +3,6 @@ package edu.ship.shipsim.client.model;
 import java.util.ArrayList;
 
 import communication.messages.CurrentQuestStateMessage;
-
 import model.ClientPlayerQuest;
 
 /**
@@ -23,6 +22,7 @@ public class CommandOverwriteQuestState extends Command
 	 */
 	public CommandOverwriteQuestState(CurrentQuestStateMessage msg)
 	{
+		
 		this.clientPlayerQuestList = msg.getClientPlayerQuestList();
 	}
 

@@ -141,7 +141,7 @@ public class ThisClientsPlayerTest
 		qList.add(qow);
 		cp.overwriteQuestList(qList);
 		
-		assertEquals(1,cp.getQuests().size());
+		
 		assertEquals(qow, cp.getQuests().get(0));
 	}
 }
