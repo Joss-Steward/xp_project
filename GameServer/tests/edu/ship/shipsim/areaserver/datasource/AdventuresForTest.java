@@ -26,7 +26,11 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	FIVE(1, "Adventure for Quest 3", 3);
+	FIVE(1, "Adventure for Quest 3", 3),
+	/**
+	 * 
+	 */
+	ANOTHER_FOR_QUEST_1(3, "One more Adventure", 1);
 	
 	private int adventureID;
 	private String adventureDescription;
