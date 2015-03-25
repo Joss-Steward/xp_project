@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
+import model.QualifiedObservableConnector;
+import model.QualifiedObservableReport;
+import model.QualifiedObserver;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,14 +24,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import datasource.AdventureStateEnum;
 import datasource.QuestStateEnum;
+import edu.ship.shipsim.client.model.CommandSendQuestState;
+import edu.ship.shipsim.client.model.ModelFacade;
 import edu.ship.shipsim.client.model.ThisClientsPlayer;
+import edu.ship.shipsim.client.model.reports.QuestStateReport;
 
 /**
  * A basic screen that displays the quests and adventure states.
  * @author ck4124
  *
  */
-public class ScreenQAs extends Group
+public class ScreenQAs extends Group implements QualifiedObserver
 {
 	private Table questTable;
 	private Table adventureTable;
@@ -47,12 +53,24 @@ public class ScreenQAs extends Group
 	
 	boolean showing = true;
 	
+	private ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
+	
 	/**
 	 * Basic constructor. will call show() to initialize all the data in the tables.
 	 */
 	public ScreenQAs()
 	{
 		this.show();
+		setUpListening();
+	}
+	
+	/**
+	 * Sets up the QualifiedObserver for QuestStateReport
+	 */
+	public void setUpListening()
+	{
+		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
+		cm.registerObserver(this, QuestStateReport.class);
 	}
 	
 	/**
@@ -73,10 +91,16 @@ public class ScreenQAs extends Group
 		} else {
 			showing = true;
 			this.addAction(Actions.moveTo(0, 0, .3f));
+			
+			CommandSendQuestState cmd = new CommandSendQuestState();
+			
+			ModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 
-	@SuppressWarnings("javadoc")
+	/**
+	 * 
+	 */
 	public void show()
 	{	
 		this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -118,7 +142,6 @@ public class ScreenQAs extends Group
 			if(q.getQuestState().equals(QuestStateEnum.TRIGGERED))
 			{
 				buildQuestRow(q);
-				numAvailable--;
 			}
 			else if(!q.getQuestState().equals(QuestStateEnum.AVAILABLE))
 			{
@@ -250,5 +273,20 @@ public class ScreenQAs extends Group
 		//Set Header
 		questTable.add(header).colspan(2).center();
 		questTable.row();
+	}
+
+	/**
+	 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
+	 */
+	@Override
+	public void receiveReport(QualifiedObservableReport report) 
+	{
+		if(report.getClass().equals(QuestStateReport.class))
+		{
+			QuestStateReport r = (QuestStateReport) report;
+			questList = r.getClientPlayerQuestList();
+			updateTable(questList);
+		}
+		
 	}
 }

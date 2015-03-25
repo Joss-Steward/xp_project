@@ -3,10 +3,6 @@ package view.screen.map;
 //import model.CommandQuestScreenOpen;
 //import model.ModelFacade;
 
-import java.util.ArrayList;
-
-import model.ClientPlayerQuest;
-import model.QualifiedObservableReport;
 import view.player.PlayerSprite;
 import view.player.PlayerSpriteFactory;
 import view.player.PlayerType;
@@ -46,9 +42,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import data.ChatType;
 import data.Position;
-import edu.ship.shipsim.client.model.CommandSendQuestState;
-import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.reports.QuestStateReport;
 import static view.screen.Screens.DEFAULT_RES;
 
 /**
@@ -103,14 +96,13 @@ public class ScreenMap extends ScreenBasic
 	private Group loadingLayer;
 	private OrthographicCamera worldCamera;
 	
-	private ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
 	/**
 	 * 
 	 */
 	public ScreenMap()
 	{
 		
-		super.setUpListening();
+		//super.setUpListening();
 		
 		// unitScale = 1 / 32f;
 		unitScale = 1f;
@@ -424,19 +416,6 @@ public class ScreenMap extends ScreenBasic
 				{
 					qaScreen.toggleVisible();
 					
-					CommandSendQuestState cmd = new CommandSendQuestState();
-				
-					ModelFacade.getSingleton().queueCommand(cmd);
-					
-					qaScreen.updateTable(questList);									
-					
-					for(ClientPlayerQuest q : questList)
-					{
-						System.out.println(q.getQuestID());
-						System.out.println(q.getQuestDescription());
-						System.out.println(q.getQuestState());
-						System.out.println();
-					}
 					return true;
 				}
 				return false;
@@ -563,16 +542,4 @@ public class ScreenMap extends ScreenBasic
 		characterDequeue.add(playerID);
 	}
 
-	/**
-	 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
-	 */
-	@Override
-	public void receiveReport(QualifiedObservableReport report) 
-	{
-		if(report.getClass().equals(QuestStateReport.class))
-		{
-			QuestStateReport r = (QuestStateReport) report;
-			questList = r.getClientPlayerQuestList();
-		}
-	}
 }
