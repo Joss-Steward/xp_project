@@ -99,7 +99,8 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	}
 
 	/**
-	 * 
+	 * initializes table contents and displays the quests and 
+	 * adventures table
 	 */
 	public void show()
 	{	

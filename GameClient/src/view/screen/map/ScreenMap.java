@@ -68,9 +68,11 @@ public class ScreenMap extends ScreenBasic
 	private OrthographicCamera camera;
 	private final float unitScale;
 	private ScreenMapInput mapInput;
-	private ChatUi chatArea;
 	
+	//GUIs that get displayed on the map
 	private ScreenQAs qaScreen;
+	private ExperienceDisplay expDisplay;
+	private ChatUi chatArea;
 	
 	//tile size that we will be moving in according to the collision masking tileset
 	private Vector2 tileSize;
@@ -379,6 +381,7 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void show()
 	{
+		expDisplay = new ExperienceDisplay();
 		qaScreen = new ScreenQAs();
 		
 		worldStage = new Stage();
@@ -430,6 +433,7 @@ public class ScreenMap extends ScreenBasic
 		});
 		stage.addActor(chatArea);
 		stage.addActor(qaScreen);
+		stage.addActor(expDisplay);
 		
 		loadingLayer = new Group();
 		loadingLayer.setSize(stage.getWidth(), stage.getHeight());
