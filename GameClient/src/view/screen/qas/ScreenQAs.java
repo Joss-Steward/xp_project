@@ -289,4 +289,13 @@ public class ScreenQAs extends Group implements QualifiedObserver
 		}
 		
 	}
+
+	/**
+	 * Set the visibility of the QAScreen to the given boolean
+	 * @param statement boolean given for showing
+	 */
+	public void setVisibility(boolean statement)
+	{
+		showing = statement;
+	}
 }

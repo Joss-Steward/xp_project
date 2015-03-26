@@ -414,7 +414,14 @@ public class ScreenMap extends ScreenBasic
 				}
 				if(keycode == Keys.Q)
 				{
-					qaScreen.toggleVisible();
+					if (!(stage.getKeyboardFocus() == null))
+					{
+						qaScreen.setVisibility(false);
+					}
+					else
+					{
+						qaScreen.toggleVisible();
+					}
 					
 					return true;
 				}
