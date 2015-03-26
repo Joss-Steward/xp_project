@@ -153,5 +153,20 @@ public class PlayerTest extends DatabaseTest
 		playerManager.addPlayer(1, -1);
 	}
 	
+	/**
+	 * Test that we can set Player's expiernce points and add to it
+	 */
+	@Test
+	public void testPlayerExpPoints()
+	{
+		Player p = playerManager.addPlayer(1);
+		
+		p.setExperiencePoints(34);
+		assertEquals(34, p.getExperiencePoints());
+		
+		p.addExperiencePoints(3);
+		assertEquals(37, p.getExperiencePoints());
+	}
+	
 	
 }

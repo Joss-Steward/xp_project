@@ -144,4 +144,23 @@ public class ThisClientsPlayerTest
 		
 		assertEquals(qow, cp.getQuests().get(0));
 	}
+	
+	/**
+	 * Test that we can set the values of ThisClientPlayer's experience info,
+	 * level description, and # points required for this player to level up 
+	 * for this level
+	 */
+	@Test
+	public void testAllExperienceInfo()
+	{
+		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		
+		cp.setExperiencePoints(10);
+		cp.setLevelDescription("The bookshelf");
+		cp.setNumPointsLvlRequires(100);
+		
+		assertEquals(10, cp.getExperiencePoints());
+		assertEquals("The bookshelf", cp.getLevelDescription());
+		assertEquals(100, cp.getNumPointsLvlRequires());
+	}
 }
