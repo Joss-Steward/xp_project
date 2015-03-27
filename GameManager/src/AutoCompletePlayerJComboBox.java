@@ -1,7 +1,6 @@
 import java.awt.Component;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +11,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
+
+import model.PlayerID;
 
 /**
  * 
@@ -24,27 +25,27 @@ import javax.swing.text.JTextComponent;
  * 
  *
  */
-public class AutoCompleteJComboBox extends JComboBox<String>
+public class AutoCompletePlayerJComboBox extends JComboBox<PlayerID>
 {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Searchable<String, String> searchable;
+	private Searchable<PlayerID, String> searchable;
 
 	/**
 	 * 
 	 * Constructs a new object based upon the parameter searchable
 	 * 
-	 * @param s
+	 * @param playerNames
 	 *            the searchable list the box should display
 	 */
-	public AutoCompleteJComboBox(Searchable<String, String> s)
+	public AutoCompletePlayerJComboBox(SearchablePlayerIDList playerNames)
 	{
 		super();
 
-		this.searchable = s;
+		this.searchable = playerNames;
 		setEditable(true);
 		Component c = getEditor().getEditorComponent();
 		if (c instanceof JTextComponent)
@@ -89,13 +90,13 @@ public class AutoCompleteJComboBox extends JComboBox<String>
 						public void run()
 						{
 							String text = tc.getText();
-							List<String> founds = new ArrayList<String>(searchable
-									.search(text));
+							System.out.println("Search for " + text);
+							List<PlayerID> founds = searchable.search(text);
 							Set<String> foundSet = new HashSet<String>();
-							for (String s : founds)
+							for (PlayerID s : founds)
 							{
 
-								foundSet.add(s.toLowerCase());
+								foundSet.add(s.getPlayerName().toLowerCase());
 
 							}
 
@@ -107,10 +108,10 @@ public class AutoCompleteJComboBox extends JComboBox<String>
 							// once.
 							if (!foundSet.contains(text.toLowerCase()))
 							{
-								addItem(text);
+								addItem(new PlayerID(-1,text));
 							}
 
-							for (String s : founds)
+							for (PlayerID s : founds)
 							{
 								addItem(s);
 							}

@@ -2,11 +2,11 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.List;
 
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
+import model.PlayerID;
 import datasource.DatabaseException;
-import datasource.PlayerLoginRowDataGatewayRDS;
+import datasource.PlayerLoginTableDataGatewayRDS;
 
 /**
  * A stand alone app that manages data in the database
@@ -18,6 +18,7 @@ public class AdventureStateManager
 {
 
 	private JFrame window;
+	private PlayerID lastSelectedPlayerID;
 
 	/**
 	 * 
@@ -29,28 +30,37 @@ public class AdventureStateManager
 		window = new JFrame("Adventure Manager");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		AutoCompleteJComboBox studentCombo = buildNameComboBox();
+		AutoCompletePlayerJComboBox studentCombo = buildNameComboBox();
 		window.add(studentCombo);
 		window.pack();
 		window.setVisible(true);
 
 	}
 
-	private AutoCompleteJComboBox buildNameComboBox() throws DatabaseException
+	private AutoCompletePlayerJComboBox buildNameComboBox() throws DatabaseException
 	{
-		List<String> names = PlayerLoginRowDataGatewayRDS.getAllPlayerNames();
+		List<PlayerID> names = PlayerLoginTableDataGatewayRDS.getPlayerIDList();
 
-		SearchableString playerNames = new SearchableString(names);
+		SearchablePlayerIDList playerNames = new SearchablePlayerIDList(names);
 
-		AutoCompleteJComboBox studentCombo = new AutoCompleteJComboBox(playerNames);
+		AutoCompletePlayerJComboBox studentCombo = new AutoCompletePlayerJComboBox(playerNames);
 		studentCombo.addItemListener(new ItemListener()
 		{
+			
+
 			public void itemStateChanged(ItemEvent arg0)
 			{
 				if (arg0.getStateChange() == ItemEvent.SELECTED)
 				{
-					String playerName = arg0.getItem().toString();
-					System.out.println("Selected " + playerName);
+					if (!arg0.getItem().equals(lastSelectedPlayerID))
+					{
+						lastSelectedPlayerID = (PlayerID) arg0.getItem();
+						if (lastSelectedPlayerID.getPlayerID()>0)
+						{
+							System.out.println("Selected "  + lastSelectedPlayerID.getPlayerID() + " " + lastSelectedPlayerID.getPlayerName() );
+							
+						}
+					}
 				}
 			}
 		});

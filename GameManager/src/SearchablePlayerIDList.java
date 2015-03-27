@@ -1,6 +1,7 @@
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+
+import model.PlayerID;
 
 /**
  * 
@@ -15,10 +16,10 @@ import java.util.List;
  *
  */
 
-public class SearchableString implements Searchable<String, String>
+public class SearchablePlayerIDList implements Searchable<PlayerID, String>
 {
 
-	private List<String> terms = new ArrayList<String>();
+	private List<PlayerID> terms = new ArrayList<PlayerID>();
 
 	/**
 	 * 
@@ -27,26 +28,27 @@ public class SearchableString implements Searchable<String, String>
 	 * @param terms
 	 *            The inventory of terms to search.
 	 */
-	public SearchableString(List<String> terms)
+	public SearchablePlayerIDList(List<PlayerID> terms)
 	{
 		this.terms.addAll(terms);
 	}
 
+	
 	/**
 	 * @see Searchable#search(java.lang.Object)
 	 */
 	@Override
-	public Collection<String> search(String value)
+	public List<PlayerID> search(String value)
 	{
-		List<String> founds = new ArrayList<String>();
-		for (String s : terms)
+		ArrayList<PlayerID> matching = new ArrayList<PlayerID>();
+		for (PlayerID pid:terms)
 		{
-			if (s.toLowerCase().indexOf(value.toLowerCase()) == 0)
+			if (pid.getPlayerName().toLowerCase().startsWith(value.toLowerCase()))
 			{
-				founds.add(s);
+				matching.add(pid);
 			}
 		}
-		return founds;
+		return matching;
 	}
 
 }

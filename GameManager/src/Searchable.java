@@ -1,4 +1,6 @@
-import java.util.Collection;
+import java.util.List;
+
+import model.PlayerID;
 
 /**
  * Interface to search an underlying inventory of items and return a collection
@@ -22,5 +24,5 @@ public interface Searchable<E, V>
 	 *            A searchable value of type V
 	 * @return A Collection of items of type E.
 	 */
-	public Collection<E> search(V value);
+	public List<PlayerID> search(V value);
 }
