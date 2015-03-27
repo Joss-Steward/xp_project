@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.DatabaseManager;
 
@@ -21,6 +23,31 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 	private String password;
 	private Connection connection;
 
+	
+	/**
+	 * @return a list of all of the names of the players in the database
+	 * @throws DatabaseException if we fail at retrieval
+	 */
+	public static List<String> getAllPlayerNames() throws DatabaseException
+	{
+		List<String> list = new ArrayList<String>();
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
+		{
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT playerName FROM PlayerLogins");
+			ResultSet result = stmt.executeQuery();
+			while(result.next())
+			{
+				list.add(result.getString("playerName"));
+			}
+		} catch (SQLException e)
+		{
+			throw new DatabaseException(
+					"Couldn't retrieve all of the player names", e);
+		}
+		return list;
+	}
 	/**
 	 * Drop and re-create the PlayerLogin table this gateway manages
 	 * 

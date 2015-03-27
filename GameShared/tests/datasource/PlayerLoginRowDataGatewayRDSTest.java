@@ -1,5 +1,12 @@
 package datasource;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
+import org.junit.Test;
+
+
 
 /**
  * Tests the RDS gateway
@@ -38,5 +45,20 @@ public class PlayerLoginRowDataGatewayRDSTest extends PlayerLoginRowDataGatewayT
 	PlayerLoginRowDataGateway findRowDataGateway(int playerID) throws DatabaseException
 	{
 		return new PlayerLoginRowDataGatewayRDS(playerID);
+	}
+	
+
+	/**
+	 * check that we can retrieve all of the names of the players in the database
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void canGetAllPlayerNames() throws DatabaseException
+	{
+		List<String> names = PlayerLoginRowDataGatewayRDS.getAllPlayerNames();
+		for( PlayersForTest player :PlayersForTest.values())
+		{
+			assertTrue(names.contains(player.getPlayerName()));
+		}
 	}
 }
