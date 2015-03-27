@@ -3,10 +3,6 @@ package view.screen.map;
 //import model.CommandQuestScreenOpen;
 //import model.ModelFacade;
 
-import java.util.ArrayList;
-
-import model.ClientPlayerQuest;
-import model.QualifiedObservableReport;
 import view.player.PlayerSprite;
 import view.player.PlayerSpriteFactory;
 import view.player.PlayerType;
@@ -46,9 +42,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import data.ChatType;
 import data.Position;
-import edu.ship.shipsim.client.model.CommandSendQuestState;
-import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.reports.QuestStateReport;
 import static view.screen.Screens.DEFAULT_RES;
 
 /**
@@ -75,9 +68,11 @@ public class ScreenMap extends ScreenBasic
 	private OrthographicCamera camera;
 	private final float unitScale;
 	private ScreenMapInput mapInput;
-	private ChatUi chatArea;
 	
+	//GUIs that get displayed on the map
 	private ScreenQAs qaScreen;
+	private ExperienceDisplay expDisplay;
+	private ChatUi chatArea;
 	
 	//tile size that we will be moving in according to the collision masking tileset
 	private Vector2 tileSize;
@@ -103,14 +98,13 @@ public class ScreenMap extends ScreenBasic
 	private Group loadingLayer;
 	private OrthographicCamera worldCamera;
 	
-	private ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
 	/**
 	 * 
 	 */
 	public ScreenMap()
 	{
 		
-		super.setUpListening();
+		//super.setUpListening();
 		
 		// unitScale = 1 / 32f;
 		unitScale = 1f;
@@ -387,6 +381,7 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void show()
 	{
+		expDisplay = new ExperienceDisplay();
 		qaScreen = new ScreenQAs();
 		
 		worldStage = new Stage();
@@ -422,21 +417,15 @@ public class ScreenMap extends ScreenBasic
 				}
 				if(keycode == Keys.Q)
 				{
-					qaScreen.toggleVisible();
-					
-					CommandSendQuestState cmd = new CommandSendQuestState();
-				
-					ModelFacade.getSingleton().queueCommand(cmd);
-					
-					qaScreen.updateTable(questList);									
-					
-					for(ClientPlayerQuest q : questList)
+					if (!(stage.getKeyboardFocus() == null))
 					{
-						System.out.println(q.getQuestID());
-						System.out.println(q.getQuestDescription());
-						System.out.println(q.getQuestState());
-						System.out.println();
+						qaScreen.setVisibility(false);
 					}
+					else
+					{
+						qaScreen.toggleVisible();
+					}
+					
 					return true;
 				}
 				return false;
@@ -444,6 +433,7 @@ public class ScreenMap extends ScreenBasic
 		});
 		stage.addActor(chatArea);
 		stage.addActor(qaScreen);
+		stage.addActor(expDisplay);
 		
 		loadingLayer = new Group();
 		loadingLayer.setSize(stage.getWidth(), stage.getHeight());
@@ -563,16 +553,4 @@ public class ScreenMap extends ScreenBasic
 		characterDequeue.add(playerID);
 	}
 
-	/**
-	 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
-	 */
-	@Override
-	public void receiveReport(QualifiedObservableReport report) 
-	{
-		if(report.getClass().equals(QuestStateReport.class))
-		{
-			QuestStateReport r = (QuestStateReport) report;
-			questList = r.getClientPlayerQuestList();
-		}
-	}
 }

@@ -31,6 +31,8 @@ public class Player
 
 	private String mapName;
 	
+	private int experiencePoints;
+	
 
 	/**
 	 * Get the appearance type for how this player should be drawn
@@ -89,6 +91,14 @@ public class Player
 		return this.quizScore;
 	}
 
+	/**
+	 * Get the player's experience points
+	 * @return experience points
+	 */
+	public int getExperiencePoints()
+	{
+		return experiencePoints;
+	}
 	/**
 	 * Increment quiz score;
 	 */
@@ -226,5 +236,21 @@ public class Player
 		this.quizScore = score;
 	}
 
+	/**
+	 * Set experience points
+	 * @param expPoints
+	 */
+	public void setExperiencePoints(int expPoints)
+	{
+		this.experiencePoints = expPoints;
+	}
 	
+	/**
+	 * Add experience points
+	 * @param expPoints
+	 */
+	public void addExperiencePoints(int expPoints)
+	{
+		this.experiencePoints = experiencePoints + expPoints;
+	}
 }

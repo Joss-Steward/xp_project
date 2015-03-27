@@ -18,6 +18,10 @@ public class ThisClientsPlayer extends Player
 {
 	ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
 	
+	private int experiencePoints;
+	private String levelDescription;
+	private int numPointsLvlRequires;
+	
 	protected ThisClientsPlayer(int playerID)
 	{
 		super(playerID);
@@ -77,6 +81,59 @@ public class ThisClientsPlayer extends Player
 	{
 		QuestStateReport r = new QuestStateReport(questList);
 		QualifiedObservableConnector.getSingleton().sendReport(r);
+	}
+
+	/**
+	 * @return the number of experience points for ThisClientsPlayer
+	 */
+	public int getExperiencePoints()
+	{
+		return experiencePoints;
+	}
+
+	/**
+	 * set the number of experience points for ThisClientsPlayer
+	 * @param experiencePoints ThisClientsPlayer's exp points
+	 */
+	public void setExperiencePoints(int experiencePoints)
+	{
+		this.experiencePoints = experiencePoints;
+	}
+
+	/**
+	 * @return the description of the level that ThisClientsPlayer is in
+	 */
+	public String getLevelDescription()
+	{
+		return levelDescription;
+	}
+
+	/**
+	 * set the level description from the report given to ThisClientsPlayer
+	 * @param levelDescription the level description
+	 */
+	public void setLevelDescription(String levelDescription)
+	{
+		this.levelDescription = levelDescription;
+	}
+
+	/**
+	 * @return the number of points the level requires for ThisClientsPlayer
+	 * to level up
+	 */
+	public int getNumPointsLvlRequires()
+	{
+		return numPointsLvlRequires;
+	}
+
+	/**
+	 * sets the number of points required for this ThisClientsPlayer to 
+	 * level up for this particular level that they're in
+	 * @param numPointsLvlRequires the number of points the level requires
+	 */
+	public void setNumPointsLvlRequires(int numPointsLvlRequires)
+	{
+		this.numPointsLvlRequires = numPointsLvlRequires;
 	}
 
 }

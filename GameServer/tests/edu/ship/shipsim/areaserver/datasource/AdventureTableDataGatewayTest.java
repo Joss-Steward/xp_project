@@ -41,7 +41,7 @@ public abstract class AdventureTableDataGatewayTest
 	{
 		AdventureTableDataGateway gateway = getGateway();
 		ArrayList<AdventureRecord> records = gateway.getAdventuresForQuest(1);
-		assertEquals(2, records.size());
+		assertEquals(3, records.size());
 		AdventureRecord record = records.get(0);
 		// the records could be in either order
 		if (record.getAdventureID() == AdventuresForTest.ONE.getAdventureID())
