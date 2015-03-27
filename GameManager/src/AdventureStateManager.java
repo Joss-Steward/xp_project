@@ -1,5 +1,8 @@
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.List;
 
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
 import datasource.DatabaseException;
@@ -40,12 +43,26 @@ public class AdventureStateManager
 		SearchableString playerNames = new SearchableString(names);
 
 		AutoCompleteJComboBox studentCombo = new AutoCompleteJComboBox(playerNames);
+		studentCombo.addItemListener(new ItemListener()
+		{
+			public void itemStateChanged(ItemEvent arg0)
+			{
+				if (arg0.getStateChange() == ItemEvent.SELECTED)
+				{
+					String playerName = arg0.getItem().toString();
+					System.out.println("Selected " + playerName);
+				}
+			}
+		});
+
 		return studentCombo;
 	}
 
 	/**
-	 * @param args none are used
-	 * @throws DatabaseException if things go terribly awry!
+	 * @param args
+	 *            none are used
+	 * @throws DatabaseException
+	 *             if things go terribly awry!
 	 */
 	public static void main(String[] args) throws DatabaseException
 	{
