@@ -24,19 +24,20 @@ import javax.swing.text.JTextComponent;
  * 
  *
  */
-public class AutoCompleteJComboBox extends JComboBox
+public class AutoCompleteJComboBox extends JComboBox<String>
 {
 
-	static final long serialVersionUID = 4321421L;
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private  Searchable<String, String> searchable;
 
 	/**
 	 * 
 	 * Constructs a new object based upon the parameter searchable
 	 * 
-	 * @param s
-	 * @return 
+	 * @param s the searchable list the box should display
 	 */
 	public AutoCompleteJComboBox(Searchable<String, String> s)
 	{
