@@ -16,9 +16,9 @@ import javax.swing.text.JTextComponent;
 /**
  * 
  * JComboBox with an autocomplete drop down menu. This class is hard-coded for
- * String objects, but can be
- * 
- * altered into a generic form to allow for any searchable item.
+ * String objects, but can be altered into a generic form to allow for any
+ * searchable item. Adapted from
+ * http://www.algosome.com/articles/java-jcombobox-autocomplete.html
  * 
  * @author G. Cope
  * 
@@ -31,13 +31,14 @@ public class AutoCompleteJComboBox extends JComboBox<String>
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private  Searchable<String, String> searchable;
+	private Searchable<String, String> searchable;
 
 	/**
 	 * 
 	 * Constructs a new object based upon the parameter searchable
 	 * 
-	 * @param s the searchable list the box should display
+	 * @param s
+	 *            the searchable list the box should display
 	 */
 	public AutoCompleteJComboBox(Searchable<String, String> s)
 	{
