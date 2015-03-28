@@ -31,6 +31,7 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 	}
 
 	private Hashtable<Key, ArrayList<AdventureStateRecord>> data;
+	private int maxQuestIDSeen;
 
 	/**
 	 * build the mock data from AdventuresForTest
@@ -50,7 +51,10 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 		{
 			AdventureStateRecord rec = new AdventureStateRecord(a.getPlayerID(),
 					a.getQuestID(), a.getAdventureID(), a.getState());
-
+			if (a.getQuestID() > maxQuestIDSeen)
+			{
+				maxQuestIDSeen = a.getQuestID();
+			}
 			Key key = new Key(a.getPlayerID(), a.getQuestID());
 			if (data.containsKey(key))
 			{
@@ -175,6 +179,31 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 			AdventureStateEnum state) throws DatabaseException
 	{
 		updateState(playerID, questID, adventureID, state);
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway#getPendingAdventuresForPlayer(int)
+	 */
+	@Override
+	public ArrayList<AdventureStateRecord> getPendingAdventuresForPlayer(int playerID)
+			throws DatabaseException
+	{
+		ArrayList<AdventureStateRecord> results = new ArrayList<AdventureStateRecord>();
+		for (int questID = 0; questID <= maxQuestIDSeen; questID++)
+		{
+			if (data.containsKey(new Key(playerID, questID)))
+			{
+				ArrayList<AdventureStateRecord> adventureList = data.get(new Key(playerID, questID));
+				for (AdventureStateRecord a:adventureList)
+				{
+					if (a.getState() == AdventureStateEnum.PENDING)
+					{
+						results.add(a);
+					}
+				}
+			} 
+		}
+		return results;
 	}
 
 }

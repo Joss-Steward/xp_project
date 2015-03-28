@@ -174,4 +174,37 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 		// nothing necessary
 
 	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway#getPendingAdventuresForPlayer(int)
+	 */
+	@Override
+	public ArrayList<AdventureStateRecord> getPendingAdventuresForPlayer(int playerID)
+			throws DatabaseException
+	{
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
+		{
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT * FROM AdventureStates WHERE adventureState = ? and playerID = ?");
+			stmt.setInt(1, AdventureStateEnum.PENDING.ordinal());
+			stmt.setInt(2, playerID);
+			ResultSet result = stmt.executeQuery();
+
+			ArrayList<AdventureStateRecord> results = new ArrayList<AdventureStateRecord>();
+			while (result.next())
+			{
+				AdventureStateRecord rec = new AdventureStateRecord(
+						result.getInt("playerID"), result.getInt("questID"),
+						result.getInt("adventureID"),
+						convertToState(result.getInt("adventureState")));
+				results.add(rec);
+			}
+			return results;
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Couldn't find pending adventures for player ID "
+					+ playerID, e);
+		}
+	}
 }

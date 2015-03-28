@@ -22,6 +22,15 @@ public interface AdventureStateTableDataGateway
 	 */
 	ArrayList<AdventureStateRecord> getAdventureStates(int playerID, int questID) throws DatabaseException;
 
+
+	/**
+	 * Get a list of all of the adventures that a player current has pending
+	 * @param playerID the player
+	 * @return the list
+	 * @throws DatabaseException if we can't talk to the data source
+	 */
+	ArrayList<AdventureStateRecord> getPendingAdventuresForPlayer(int playerID) throws DatabaseException;
+	
 	/**
 	 * Change the state of an adventure for a given player.  If no state currently exists, this will add it
 	 * @param playerID the player
