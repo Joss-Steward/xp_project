@@ -145,6 +145,22 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 	}
 	
 	/**
+	 * @throws DatabaseException 
+	 * 				shouldn't
+	 */
+	@Test
+	public void changeExperiencePoints() throws DatabaseException
+	{
+		gateway = findGateway(PlayersForTest.MERLIN.getPlayerID());
+		gateway.setExperiencePoints(424);
+		gateway.persist();
+		
+		PlayerRowDataGateway after = findGateway(PlayersForTest.MERLIN
+				.getPlayerID());
+		assertEquals(424, after.getExperiencePoints());		
+	}
+	
+	/**
 	 * @throws DatabaseException
 	 *             shouldn't
 	 */

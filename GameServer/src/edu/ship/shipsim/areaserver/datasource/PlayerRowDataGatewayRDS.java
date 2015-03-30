@@ -188,13 +188,14 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 		try
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"UPDATE Players SET mapName = ?, row = ?, col = ?, appearanceType = ?, quizScore = ? WHERE playerID = ?");
+					"UPDATE Players SET mapName = ?, row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ? WHERE playerID = ?");
 			stmt.setString(1, mapName);
 			stmt.setInt(2, position.getRow());
 			stmt.setInt(3, position.getColumn());
 			stmt.setString(4, appearanceType);
 			stmt.setInt(5, quizScore);
-			stmt.setInt(6, playerID);
+			stmt.setInt(6, experiencePoints);
+			stmt.setInt(7, playerID);
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -255,6 +256,15 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	public int getExperiencePoints()
 	{
 		return experiencePoints;
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#setExperiencePoints(int)
+	 */
+	@Override
+	public void setExperiencePoints(int experiencePoints)
+	{
+		this.experiencePoints = experiencePoints;
 	}
 
 }

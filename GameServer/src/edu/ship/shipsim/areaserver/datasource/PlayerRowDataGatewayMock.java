@@ -231,4 +231,13 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		return info.experiencePoints;
 	}
 
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#setExperiencePoints(int)
+	 */
+	@Override
+	public void setExperiencePoints(int experiencePoints)
+	{
+		info.experiencePoints = experiencePoints;		
+	}
+
 }

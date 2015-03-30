@@ -71,4 +71,9 @@ public interface PlayerRowDataGateway
 	 * @return the player's experience points
 	 */
 	int getExperiencePoints();
+
+	/**
+	 * @param experiencePoints this player's new experience points
+	 */
+	void setExperiencePoints(int experiencePoints);
 }
