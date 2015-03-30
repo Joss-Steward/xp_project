@@ -66,6 +66,7 @@ public class PlayerMapper
 		player.setPlayerLogin(new PlayerLogin(playerID));
 		player.setPlayerID(playerID);
 		player.setMapName(playerGateway.getMapName());
+		player.setExperiencePoints(playerGateway.getExperiencePoints());
 		player.setDataMapper(this);
 		loadQuestStates();
 	}
@@ -121,6 +122,7 @@ public class PlayerMapper
 		playerGateway.setMapName(player.getMapName());
 		playerGateway.setPosition(player.getPlayerPosition());
 		playerGateway.setQuizScore(player.getQuizScore());
+		playerGateway.setExperiencePoints(player.getExperiencePoints());
 		playerGateway.persist();
 		ArrayList<QuestState> questList = QuestManager.getSingleton().getQuestList(
 				player.getPlayerID());

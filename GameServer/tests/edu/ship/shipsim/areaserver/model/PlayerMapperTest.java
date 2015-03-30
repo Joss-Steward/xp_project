@@ -60,6 +60,7 @@ public class PlayerMapperTest extends DatabaseTest
 		assertEquals(testPlayer.getPosition(), p.getPlayerPosition());
 		assertEquals(testPlayer.getQuizScore(), p.getQuizScore());
 		assertEquals(testPlayer.getMapName(), p.getMapName());
+		assertEquals(testPlayer.getExperiencePoints(), p.getExperiencePoints());
 
 		for (QuestStatesForTest qs : QuestStatesForTest.values())
 		{
@@ -136,6 +137,7 @@ public class PlayerMapperTest extends DatabaseTest
 		p.setPlayerPositionWithoutNotifying(new Position(42, 24));
 		p.setQuizScore(666);
 		p.setMapName("sillyMap");
+		p.setExperiencePoints(424);
 		QuestState questState = null;
 		if (p.getClass() == Player.class)
 		{
@@ -151,6 +153,7 @@ public class PlayerMapperTest extends DatabaseTest
 		assertEquals(p.getPlayerPosition(), p2.getPlayerPosition());
 		assertEquals(p.getQuizScore(), p2.getQuizScore());
 		assertEquals(p.getMapName(), p2.getMapName());
+		assertEquals(p.getExperiencePoints(), p2.getExperiencePoints());
 		if (p.getClass() == Player.class)
 		{
 			QuestState retrievedQuestState = QuestManager.getSingleton()
