@@ -66,4 +66,9 @@ public interface PlayerRowDataGateway
 	 * @param quizScore this player's new score
 	 */
 	void setQuizScore(int quizScore);
+
+	/**
+	 * @return the player's experience points
+	 */
+	int getExperiencePoints();
 }

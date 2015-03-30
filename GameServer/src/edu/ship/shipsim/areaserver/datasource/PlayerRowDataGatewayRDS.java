@@ -37,7 +37,8 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 
 			stmt = new ClosingPreparedStatement(
 					connection,
-					"Create TABLE Players (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, mapName VARCHAR(80), row INTEGER, col INTEGER, appearanceType VARCHAR(255), quizScore INTEGER)");
+					"Create TABLE Players (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, mapName VARCHAR(80), row INTEGER, col INTEGER, " +
+					"appearanceType VARCHAR(255), quizScore INTEGER, experiencePoints INTEGER)");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -50,8 +51,10 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	private Position position;
 	private String appearanceType;
 	private int quizScore;
-
+	private int experiencePoints;
+	
 	private Connection connection;
+
 
 	/**
 	 * finder constructor
@@ -77,6 +80,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 					result.getInt("col"));
 			this.appearanceType = result.getString("appearanceType");
 			this.quizScore = result.getInt("quizScore");
+			this.experiencePoints = result.getInt("experiencePoints");
 
 		} catch (SQLException e)
 		{
@@ -93,23 +97,27 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	 *            the row/column of the position the player is in
 	 * @param appearanceType
 	 *            the appearance type this player should be rendered with
+	 * @param quizScore TODO
+	 * @param experiencePoints TODO
 	 * @throws DatabaseException
 	 *             shouldn't
 	 */
 	public PlayerRowDataGatewayRDS(String mapName, Position position,
-			String appearanceType) throws DatabaseException
+			String appearanceType, int quizScore, int experiencePoints) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
 					connection,
-					"Insert INTO Players SET mapName = ?, row = ?, col = ?, appearanceType = ?, quizScore = 0",
+					"Insert INTO Players SET mapName = ?, row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ?",
 					Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, mapName);
 			stmt.setInt(2, position.getRow());
 			stmt.setInt(3, position.getColumn());
 			stmt.setString(4, appearanceType);
+			stmt.setInt(5,  quizScore);
+			stmt.setInt(6, experiencePoints);
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next())
@@ -238,6 +246,15 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	public void setQuizScore(int quizScore)
 	{
 		this.quizScore = quizScore;
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#getExperiencePoints()
+	 */
+	@Override
+	public int getExperiencePoints()
+	{
+		return experiencePoints;
 	}
 
 }

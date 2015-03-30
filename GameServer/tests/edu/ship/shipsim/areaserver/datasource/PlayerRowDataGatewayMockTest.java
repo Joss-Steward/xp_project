@@ -22,13 +22,13 @@ public class PlayerRowDataGatewayMockTest extends PlayerRowDataGatewayTest
 	}
 
 	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayTest#createGateway(java.lang.String, data.Position, java.lang.String)
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayTest#createGateway(java.lang.String, data.Position, java.lang.String, int, int)
 	 */
 	@Override
 	PlayerRowDataGateway createGateway(String mapName, Position position,
-			String appearanceType) throws DatabaseException
+			String appearanceType, int quizScore, int experiencePoints) throws DatabaseException
 	{
-		return new PlayerRowDataGatewayMock(mapName, position, appearanceType, 0);
+		return new PlayerRowDataGatewayMock(mapName, position, appearanceType, quizScore, experiencePoints);
 	}
 
 	

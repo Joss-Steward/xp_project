@@ -51,6 +51,7 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 		assertEquals(john.getPlayerID(), gateway.getPlayerID());
 		assertEquals(john.getPosition(), gateway.getPosition());
 		assertEquals(john.getAppearanceType(), gateway.getAppearanceType());
+		assertEquals(john.getExperiencePoints(), gateway.getExperiencePoints());
 	}
 
 	/**
@@ -62,13 +63,14 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 	@Test
 	public void creation() throws DatabaseException
 	{
-		gateway = createGateway("mapName", new Position(3,2), "Warrior");
+		gateway = createGateway("mapName", new Position(3,2), "Warrior", 2, 13);
 
 		PlayerRowDataGateway after = findGateway(gateway.getPlayerID());
 		assertEquals("mapName", after.getMapName());
 		assertEquals(new Position(3,2), after.getPosition());
 		assertEquals("Warrior", after.getAppearanceType());
-		assertEquals(0,after.getQuizScore());
+		assertEquals(2,after.getQuizScore());
+		assertEquals(13, after.getExperiencePoints());
 	}
 
 	/**
@@ -76,11 +78,13 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 	 * @param mapName the name of the map
 	 * @param position the position on the map
 	 * @param appearanceType the appearance type of the player
+	 * @param quizScore TODO
+	 * @param experiencePoints TODO
 	 * @return the gateway
 	 * @throws DatabaseException if we fail to create the row
 	 */
 	abstract PlayerRowDataGateway createGateway(String mapName, Position position,
-			String appearanceType) throws DatabaseException;
+			String appearanceType, int quizScore, int experiencePoints) throws DatabaseException;
 	
 	/**
 	 * make sure we get the right exception if we try to find someone who
