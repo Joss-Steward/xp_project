@@ -437,6 +437,8 @@ public class ScreenMap extends ScreenBasic
 		stage.addActor(qaScreen);
 		stage.addActor(expDisplay);
 		
+		popup = new ScreenPopUp(stage);
+		
 		loadingLayer = new Group();
 		loadingLayer.setSize(stage.getWidth(), stage.getHeight());
 		TextureRegion fillTex = new TextureRegion(new Texture(Gdx.files.internal("data/fill.png")));
