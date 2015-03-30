@@ -50,7 +50,7 @@ import edu.ship.shipsim.areaserver.model.QuestManagerTest;
 import edu.ship.shipsim.areaserver.model.QuestModelTest;
 import edu.ship.shipsim.areaserver.model.QuestStateTest;
 import edu.ship.shipsim.areaserver.model.QuizBotBehaviorTest;
-import edu.ship.shipsim.areaserver.model.reports.CurrentQuestStateReportTest;
+import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReportTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReportTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReportTest;
 import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
@@ -137,10 +137,10 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		
 		
 		// model.reports
-		CurrentQuestStateReportTest.class,
 		PlayerConnectionReportTest.class, 
 		PlayerMovedReportTest.class, 
 		SendChatMessageReportTest.class,
+		UpdatePlayerInformationReportTest.class,
 		})
 
 public class AllServerTests
