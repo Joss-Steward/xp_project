@@ -48,9 +48,6 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	
 	private final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 	
-	SpriteBatch batch;
-	ThisClientsPlayer myPlayer;
-	
 	boolean showing = true;
 	
 	private ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
@@ -109,7 +106,6 @@ public class ScreenQAs extends Group implements QualifiedObserver
 		initializeQuestTableContents();
 		initializeAdventureTableContents();
 
-		adventureTable.setFillParent(true);
 		this.addActor(questTable);
 		this.addActor(adventureTable);
 		
@@ -120,8 +116,8 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	{
 		//Table Setup
 		adventureTable = new Table(); 
+		adventureTable.setFillParent(true);
 		adventureTable.center().top();
-		adventureTable.setFillParent(true);	
 		clearAdventureTable();
 	}
 
@@ -180,21 +176,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 		questTable.top().left();
 		questTable.add(q_header).colspan(2).center();
 		questTable.row();
-		
-		/*for(ClientPlayerQuest q : quests) 
-		{
-			if(!q.getQuestState().equals(QuestStateEnum.AVAILABLE))
-			{
-				buildQuestRow(q, skin);
-			}
-			else
-			{
-				//Increment the number of quests available to find
-				num_Avail++;
-			}
-		}		
-		*/
-		
+	
 		//Show how many quests are available to be found
 		questTable.add(new Label(""+numAvailable,skin));
 		questTable.add(new Label("?????", skin));	

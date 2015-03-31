@@ -16,7 +16,7 @@ import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.QuestManager;
-import edu.ship.shipsim.areaserver.model.reports.CurrentQuestStateReport;
+import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReport;
 
 /**
  * 
@@ -52,7 +52,7 @@ public class CurrentQuestStateMessagePackerTest
 	public void testReportTypeWePack()
 	{
 		CurrentQuestStateMessagePacker packer = new CurrentQuestStateMessagePacker();
-		assertEquals(CurrentQuestStateReport.class, packer.getReportTypeWePack());
+		assertEquals(UpdatePlayerInformationReport.class, packer.getReportTypeWePack());
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class CurrentQuestStateMessagePackerTest
 	public void testPackedObjectIsCurrentPlayer() throws DatabaseException
 	{
 		Player player = PlayerManager.getSingleton().getPlayerFromID(stateAccumulator.getPlayerID());
-		CurrentQuestStateReport report = new CurrentQuestStateReport(player);
+		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(player);
 		CurrentQuestStateMessagePacker packer = new CurrentQuestStateMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 

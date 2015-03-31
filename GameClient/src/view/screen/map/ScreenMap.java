@@ -7,6 +7,7 @@ import view.player.PlayerSprite;
 import view.player.PlayerSpriteFactory;
 import view.player.PlayerType;
 import view.screen.ScreenBasic;
+import view.screen.popup.ScreenPopUp;
 import view.screen.qas.ScreenQAs;
 
 import com.badlogic.gdx.Gdx;
@@ -73,6 +74,7 @@ public class ScreenMap extends ScreenBasic
 	private ScreenQAs qaScreen;
 	private ExperienceDisplay expDisplay;
 	private ChatUi chatArea;
+	private ScreenPopUp popup;
 	
 	//tile size that we will be moving in according to the collision masking tileset
 	private Vector2 tileSize;
@@ -434,6 +436,8 @@ public class ScreenMap extends ScreenBasic
 		stage.addActor(chatArea);
 		stage.addActor(qaScreen);
 		stage.addActor(expDisplay);
+		
+		popup = new ScreenPopUp(stage);
 		
 		loadingLayer = new Group();
 		loadingLayer.setSize(stage.getWidth(), stage.getHeight());

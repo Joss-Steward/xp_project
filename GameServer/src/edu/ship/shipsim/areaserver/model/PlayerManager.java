@@ -10,7 +10,7 @@ import model.PlayerConnection;
 import model.PlayerLogin;
 import model.QualifiedObservableConnector;
 import datasource.DatabaseException;
-import edu.ship.shipsim.areaserver.model.reports.CurrentQuestStateReport;
+import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerLeaveReport;
 
@@ -108,7 +108,7 @@ public class PlayerManager
 
 			QualifiedObservableConnector.getSingleton().sendReport(new PlayerConnectionReport(player));
 			
-			QualifiedObservableConnector.getSingleton().sendReport(new CurrentQuestStateReport(player));
+			QualifiedObservableConnector.getSingleton().sendReport(new UpdatePlayerInformationReport(player));
 			
 			return player;
 		} else
