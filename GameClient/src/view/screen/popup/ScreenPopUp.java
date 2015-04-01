@@ -13,40 +13,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  */
 public class ScreenPopUp extends Group 
 {
-	private static String pop_header = "Quest";
-	private static String pop_data = "adventure complete";
 	private final Skin skin = new Skin (Gdx.files.internal("data/uiskin.json"));
-	
-	private Stage stage;
 	
 	/**
 	 * Basic constructor. will call showPopUp() to initialize all the data in the tables.
+	 * @param header name for the dialog box
+	 * @param description for text in popup
 	 * @param stage the stage
 	 */
-	public ScreenPopUp(Stage stage)
+	public ScreenPopUp(String header, String description, Stage stage)
 	{
-		this.stage = stage;
-		this.showPopup();
-		setUpListening();
-	}
-
-	
-	/**
-	* Sets up the QualifiedObserver for PlayerMapperReport
-	*/
-	private void setUpListening()
-	{
-		//QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
-		//// Need Player Mapper Report ////
-		//cm.registerObserver(this, PlayerMapperReport.class); 		
-	}
-	
-	/**
-	 * initializes popup contents and displays center screen with ok button to close
-	 */
-	private void showPopup()
-	{
-		ExitDialog pop_close = new ExitDialog(pop_header,skin);
+		ExitDialog pop_close = new ExitDialog(header, description, skin);
 		pop_close.show(stage);
 	}
 	
@@ -58,10 +35,10 @@ public class ScreenPopUp extends Group
 		 * @param header The name of the popup window
 		 * @param skin The skin the window uses
 		 */
-		public ExitDialog(String header, Skin skin)
+		public ExitDialog(String header, String description, Skin skin)
 		{
 			super(header, skin);
-			text(pop_data);
+			text(description);
 			button("OK");
 		}		
 	}
