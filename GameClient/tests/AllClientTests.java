@@ -34,6 +34,7 @@ import edu.ship.shipsim.client.model.ModelFacadeTest;
 import edu.ship.shipsim.client.model.PlayerManagerTest;
 import edu.ship.shipsim.client.model.PlayerTest;
 import edu.ship.shipsim.client.model.ThisClientsPlayerTest;
+import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReportTest;
 import edu.ship.shipsim.client.model.reports.AreaCollisionReportTest;
 import edu.ship.shipsim.client.model.reports.ChangeMapReportTest;
 import edu.ship.shipsim.client.model.reports.ChatSentReportTest;
@@ -92,6 +93,7 @@ import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 		ThisClientsPlayerTest.class,
 		
 		// model.reports
+		AdventuresNeedingNotificationReportTest.class,
 		AreaCollisionReportTest.class,
 		ChangeMapReportTest.class,
 		ChatSentReportTest.class,

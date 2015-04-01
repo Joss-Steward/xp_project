@@ -2,9 +2,12 @@ package edu.ship.shipsim.client.model;
 
 import java.util.ArrayList;
 
+import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
 import model.QualifiedObservableConnector;
 import data.Position;
+import datasource.AdventureStateEnum;
+import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
 import edu.ship.shipsim.client.model.reports.AreaCollisionReport;
 import edu.ship.shipsim.client.model.reports.QuestStateReport;
 
@@ -70,7 +73,21 @@ public class ThisClientsPlayer extends Player
 	{
 		questList.clear();
 		questList = qList;
+		ArrayList<String> adventuresDescriptions = new ArrayList<String>();
 		
+		for(ClientPlayerQuest q : questList) 
+		{
+			for(ClientPlayerAdventure a : q.getAdventureList())
+			{
+				if(a.getAdventuretState().equals(AdventureStateEnum.NEED_NOTIFICATION))
+				{
+					adventuresDescriptions.add(a.getAdventureDescription());
+				}
+			}
+		}
+		
+		AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(adventuresDescriptions);
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 
 	/**

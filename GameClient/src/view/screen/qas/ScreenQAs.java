@@ -11,7 +11,6 @@ import model.QualifiedObserver;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -26,7 +25,6 @@ import datasource.AdventureStateEnum;
 import datasource.QuestStateEnum;
 import edu.ship.shipsim.client.model.CommandSendQuestState;
 import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.ThisClientsPlayer;
 import edu.ship.shipsim.client.model.reports.QuestStateReport;
 
 /**
