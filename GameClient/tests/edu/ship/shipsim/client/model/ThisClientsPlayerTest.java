@@ -22,6 +22,7 @@ import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
 import edu.ship.shipsim.client.model.PlayerManager;
 import edu.ship.shipsim.client.model.ThisClientsPlayer;
+import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
 import edu.ship.shipsim.client.model.reports.PlayerMovedReport;
 import edu.ship.shipsim.client.model.reports.QuestStateReport;
 
@@ -162,5 +163,37 @@ public class ThisClientsPlayerTest
 		assertEquals(10, cp.getExperiencePoints());
 		assertEquals("The bookshelf", cp.getLevelDescription());
 		assertEquals(100, cp.getNumPointsLvlRequires());
+	}
+	
+	/**
+	 * Test that we can send a report that contains the adventures that currently
+	 * have the state of NEED_NOTIFICATION
+	 */
+	@Test
+	public void testSendAdventuresNeedingNotificationReport()
+	{
+		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventuresNeedingNotification();
+		cp.addQuest(q);
+		ArrayList<String> expected = new ArrayList<String>() ;
+		
+		// Retrieve each adventure's descriptions from the quest
+		for(ClientPlayerAdventure a : q.getAdventureList())
+		{
+			expected.add(a.getAdventureDescription());
+		}
+		
+		ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
+		questList.add(q);
+		
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, AdventuresNeedingNotificationReport.class);
+		AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(expected);
+		obs.receiveReport(EasyMock.eq(report));
+		EasyMock.replay(obs);
+
+		cp.overwriteQuestList(questList);
+		
+		EasyMock.verify(obs);
 	}
 }
