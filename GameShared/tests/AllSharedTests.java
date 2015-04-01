@@ -28,6 +28,7 @@ import communication.messages.MovementMessageTest;
 import communication.messages.PlayerJoinedMessageTest;
 import communication.packers.MessagePackerSetTest;
 import data.PositionTest;
+import datasource.LevelRecordTest;
 import datasource.PlayerConnectionRowDataGatewayMockTest;
 import datasource.PlayerConnectionRowDataGatewayRDSTest;
 import datasource.PlayerLoginRowDataGatewayMockTest;
@@ -86,6 +87,7 @@ import datasource.ServerRowDataGatewayRDSTest;
 		PositionTest.class,
 		
 		//datasource
+		LevelRecordTest.class,
 		PlayerConnectionRowDataGatewayMockTest.class,
 		PlayerConnectionRowDataGatewayRDSTest.class,
 		//PlayerConnectionRowDataGateway,
