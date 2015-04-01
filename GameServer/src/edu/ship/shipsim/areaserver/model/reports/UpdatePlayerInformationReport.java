@@ -36,6 +36,7 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 	{
 		combineQuest(QuestManager.getSingleton().getQuestList(player.getPlayerID()));
 		this.experiencePoints = player.getExperiencePoints();
+//		this.level = LevelManager.getSingleton().getLevel();
 	}
 	
 	/**

@@ -16,6 +16,8 @@ import communication.handlers.MessageHandlerSetTest;
 import communication.messages.ChatMessageTest;
 import communication.messages.ConnectionMessageTest;
 import communication.messages.DisconnectionMessageTest;
+import communication.messages.InitializeThisClientsPlayerMessageTest;
+import communication.messages.PlayerLeaveMessageTest;
 import communication.messages.TeleportationInitiationMessageTest;
 import communication.messages.TeleportationContinuationMessageTest;
 import communication.messages.LoginMessageTest;
@@ -56,19 +58,21 @@ import datasource.ServerRowDataGatewayRDSTest;
 		// StubMessageHandler2.class,
 
 		// communication.messages
+		//AreaCollisionMessageTest.class,
 		ChatMessageTest.class,
 		ConnectionMessageTest.class,
 		DisconnectionMessageTest.class,
-		TeleportationContinuationMessageTest.class,
+		InitializeThisClientsPlayerMessageTest.class,
 		LoginMessageTest.class,
-		TeleportationContinuationMessageTest.class,
 		LoginResponseMessageTest.class,
 		MapFileMessageTest.class,
 		MessageStructureVerifier.class, 
 		MovementMessageTest.class,
 		PlayerJoinedMessageTest.class,
+		PlayerLeaveMessageTest.class,
 		// StubMessage1.class,
 		// StubMessage2.class,
+		TeleportationContinuationMessageTest.class,
 		TeleportationInitiationMessageTest.class,
 		
 

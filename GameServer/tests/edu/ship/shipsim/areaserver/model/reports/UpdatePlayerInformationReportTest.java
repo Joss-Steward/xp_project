@@ -15,6 +15,7 @@ import datasource.DatabaseException;
 import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureStatesForTest;
 import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
+import edu.ship.shipsim.areaserver.datasource.LevelsForTest;
 import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
 import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
 import edu.ship.shipsim.areaserver.model.Player;
@@ -23,7 +24,7 @@ import edu.ship.shipsim.areaserver.model.QuestManager;
 
 /**
  * Test the CurrentQuestStateReport
- * @author Ryan
+ * @author Ryan, LaVonne, Olivia
  *
  */
 public class UpdatePlayerInformationReportTest {
@@ -137,8 +138,8 @@ public class UpdatePlayerInformationReportTest {
 		
 		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(john);
 		assertEquals(PlayersForTest.JOHN.getExperiencePoints(), report.getExperiencePts());
-		assertEquals("Level 1", report.getLevel().getDescription());
-		assertEquals(30, report.getLevel().getLevelUpPoints());
+		assertEquals(LevelsForTest.ONE.getDescription(), report.getLevel().getDescription());
+		assertEquals(LevelsForTest.ONE.getLevelUpPoints(), report.getLevel().getLevelUpPoints());
 		
 	}
 }

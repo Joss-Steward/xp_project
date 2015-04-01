@@ -11,7 +11,7 @@ import model.ClientPlayerQuest;
 
 import org.junit.Test;
 
-import communication.messages.CurrentQuestStateMessage;
+import communication.messages.InitializeThisClientsPlayerMessage;
 import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
 
@@ -32,7 +32,7 @@ public class CommandOverwriteQuestStateTest
 		ClientPlayerQuest q = new ClientPlayerQuest(42, "silly", QuestStateEnum.AVAILABLE);
 		expected.add(q);
 		
-		CommandOverwriteQuestState x = new CommandOverwriteQuestState(new CurrentQuestStateMessage(expected));
+		CommandOverwriteQuestState x = new CommandOverwriteQuestState(new InitializeThisClientsPlayerMessage(expected));
 		assertEquals(expected, x.getClientPlayerQuestList());
 	}
 	
@@ -63,7 +63,7 @@ public class CommandOverwriteQuestStateTest
 		ClientPlayerQuest q = new ClientPlayerQuest(42, "silly", QuestStateEnum.AVAILABLE);
 		expected.add(q);
 		
-		CommandOverwriteQuestState x = new CommandOverwriteQuestState(new CurrentQuestStateMessage(expected));
+		CommandOverwriteQuestState x = new CommandOverwriteQuestState(new InitializeThisClientsPlayerMessage(expected));
 		x.execute();
 		
 		ThisClientsPlayer player = PlayerManager.getSingleton().getThisClientsPlayer();
