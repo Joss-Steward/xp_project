@@ -3,11 +3,11 @@ package edu.ship.shipsim.areaserver.model.reports;
 import java.util.ArrayList;
 
 import datasource.DatabaseException;
+import datasource.LevelRecord;
 import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
 import model.QualifiedObservableReport;
 import edu.ship.shipsim.areaserver.model.AdventureState;
-import edu.ship.shipsim.areaserver.model.Level;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.Quest;
 import edu.ship.shipsim.areaserver.model.QuestManager;
@@ -23,7 +23,7 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 
 	private ArrayList<ClientPlayerQuest> clientPlayerQuestList = new ArrayList<ClientPlayerQuest>();
 	private int experiencePoints;
-	private Level level;
+	private LevelRecord level;
 	
 	
 	/**
@@ -92,7 +92,7 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 	 * Returns the Player's level
 	 * @return level
 	 */
-	public Level getLevel() 
+	public LevelRecord getLevel() 
 	{
 		return level;
 	}

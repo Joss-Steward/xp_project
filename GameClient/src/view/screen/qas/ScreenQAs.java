@@ -48,9 +48,6 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	
 	private final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 	
-	SpriteBatch batch;
-	ThisClientsPlayer myPlayer;
-	
 	boolean showing = true;
 	
 	private ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();

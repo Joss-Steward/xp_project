@@ -5,7 +5,7 @@ import edu.ship.shipsim.areaserver.datasource.NPCQuestionRowDataGatewayRDS;
 import edu.ship.shipsim.areaserver.datasource.NPCQuestionsForTest;
 
 /**
- * Builds the Player portion of the database
+ * Builds the Question portion of the database for the quizbot
  * 
  * @author Merlin
  * 

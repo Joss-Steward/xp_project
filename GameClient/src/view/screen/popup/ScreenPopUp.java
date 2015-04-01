@@ -2,6 +2,7 @@ package view.screen.popup;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
@@ -12,15 +13,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  */
 public class ScreenPopUp extends Group 
 {
-	private String pop_header = "Quest";
+	private static String pop_header = "Quest";
 	private static String pop_data = "adventure complete";
 	private final Skin skin = new Skin (Gdx.files.internal("data/uiskin.json"));
 	
+	private Stage stage;
+	
 	/**
-	 * Basic constructor. will call show() to initialize all the data in the tables.
+	 * Basic constructor. will call showPopUp() to initialize all the data in the tables.
+	 * @param stage the stage
 	 */
-	public ScreenPopUp()
+	public ScreenPopUp(Stage stage)
 	{
+		this.stage = stage;
 		this.showPopup();
 		setUpListening();
 	}
@@ -42,7 +47,7 @@ public class ScreenPopUp extends Group
 	private void showPopup()
 	{
 		ExitDialog pop_close = new ExitDialog(pop_header,skin);
-		pop_close.show(getStage());
+		pop_close.show(stage);
 	}
 	
 	
