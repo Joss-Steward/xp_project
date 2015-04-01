@@ -27,7 +27,6 @@ public class ScreenPopUp extends Group
 		pop_close.show(stage);
 	}
 	
-	
 	@SuppressWarnings("javadoc")
 	public static class ExitDialog extends Dialog{
 
@@ -42,4 +41,7 @@ public class ScreenPopUp extends Group
 			button("OK");
 		}		
 	}
+
+
+	
 }
