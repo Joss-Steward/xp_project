@@ -23,7 +23,8 @@ import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReport;
  * @author Andrew
  * @author Steve
  * @author Matt
- * 
+ * @author Olivia
+ * @author LaVonne
  */
 public class UpdatePlayerInformationMessagePackerTest
 {
@@ -77,6 +78,11 @@ public class UpdatePlayerInformationMessagePackerTest
 		}
 	}
 	
+	/**
+	 * Tests that we can add experience pts and levelrecord to 
+	 * InitializeThisClientsPlayerMessage message
+	 * @throws DatabaseException shouldn't
+	 */
 	@Test
 	public void testPackExperiencePtsAndLevel() throws DatabaseException
 	{
@@ -89,5 +95,4 @@ public class UpdatePlayerInformationMessagePackerTest
 		assertEquals(report.getExperiencePts(), message.getExperiencePts());
 		assertEquals(report.getLevel(), message.getLevel());
 	}
-
 }
