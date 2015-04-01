@@ -43,6 +43,21 @@ public class ClientPlayerQuestTest
 	}
 	
 	/**
+	 * Create a new ClientPlayerQuest with two ClientPlayerAdventures
+	 * @return the ClientPlayerQuest
+	 */
+	public static ClientPlayerQuest createOneQuestWithTwoAdventuresNeedingNotification()
+	{
+		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", AdventureStateEnum.NEED_NOTIFICATION);
+		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", AdventureStateEnum.NEED_NOTIFICATION);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.FINISHED);
+		q.addAdventure(adventureOne);
+		q.addAdventure(adventureTwo);
+		assertEquals(2, q.getAdventureList().size());
+		return q;
+	}
+	
+	/**
 	 * Tests the ability to add an adventure to the quest
 	 */
 	@Test

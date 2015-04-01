@@ -18,8 +18,12 @@ public enum LevelsForTest
 	/**
 	 * 
 	 */
-	THREE("Lord", 125);
-
+	THREE("Lord", 125),
+	/**
+	 * 
+	 */
+	FOUR("King", Integer.MAX_VALUE);
+	
 	private String description;
 
 	private int levelUpPoints;

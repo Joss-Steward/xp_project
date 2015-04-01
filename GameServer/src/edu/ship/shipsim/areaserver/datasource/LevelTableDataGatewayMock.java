@@ -31,7 +31,10 @@ public class LevelTableDataGatewayMock implements LevelTableDataGateway
 
 	private HashMap<String, Integer> data = new HashMap<String, Integer>();
 
-	private LevelTableDataGatewayMock()
+	/**
+	 * Constructor for LevelTableDataGatewayMock
+	 */
+	public LevelTableDataGatewayMock()
 	{
 		for (LevelsForTest l : LevelsForTest.values())
 		{
