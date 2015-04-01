@@ -53,7 +53,7 @@ public class LevelManager
 	 * @param levelUpPoints the experience points being sent in
 	 * @return level record based on the level up points
 	 */
-	public static LevelRecord getLevelForPoints(int levelUpPoints)
+	public LevelRecord getLevelForPoints(int levelUpPoints)
 	{
 		int i = 0;
 		while(levelUpPoints >= allLevels.get(i).getLevelUpPoints())

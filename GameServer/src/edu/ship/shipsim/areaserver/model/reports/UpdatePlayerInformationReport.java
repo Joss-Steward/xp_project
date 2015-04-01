@@ -8,6 +8,7 @@ import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
 import model.QualifiedObservableReport;
 import edu.ship.shipsim.areaserver.model.AdventureState;
+import edu.ship.shipsim.areaserver.model.LevelManager;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.Quest;
 import edu.ship.shipsim.areaserver.model.QuestManager;
@@ -15,7 +16,7 @@ import edu.ship.shipsim.areaserver.model.QuestState;
 
 /**
  * Report that combines Quest descriptions and Quest states
- * @author Ryan
+ * @author Ryan, LaVonne, Olivia
  *
  */
 public class UpdatePlayerInformationReport implements QualifiedObservableReport
@@ -36,7 +37,7 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 	{
 		combineQuest(QuestManager.getSingleton().getQuestList(player.getPlayerID()));
 		this.experiencePoints = player.getExperiencePoints();
-//		this.level = LevelManager.getSingleton().getLevel();
+		this.level = LevelManager.getSingleton().getLevelForPoints(experiencePoints);
 	}
 	
 	/**

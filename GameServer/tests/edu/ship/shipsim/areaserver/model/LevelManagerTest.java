@@ -48,21 +48,23 @@ public class LevelManagerTest
 	
 	/**
 	 * Test the LevelManager's getLevelForPoints method
+	 * @throws DatabaseException 
 	 */
 	@Test
-	public void getsRightRange()
+	public void getsRightRange() throws DatabaseException
 	{
 		LevelRecord expected = new LevelRecord(LevelsForTest.TWO.getDescription(), LevelsForTest.TWO.getLevelUpPoints());
-		assertEquals(expected, LevelManager.getLevelForPoints(LevelsForTest.ONE.getLevelUpPoints()));
+		assertEquals(expected, LevelManager.getSingleton().getLevelForPoints(LevelsForTest.ONE.getLevelUpPoints()));
 	}
 	
 	/**
 	 * Test getting the last level with sending in the level up points for level three
+	 * @throws DatabaseException 
 	 */
 	@Test
-	public void getsLastLevel()
+	public void getsLastLevel() throws DatabaseException
 	{
 		LevelRecord expected = new LevelRecord(LevelsForTest.FOUR.getDescription(), LevelsForTest.FOUR.getLevelUpPoints());
-		assertEquals(expected, LevelManager.getLevelForPoints(LevelsForTest.THREE.getLevelUpPoints()));
+		assertEquals(expected, LevelManager.getSingleton().getLevelForPoints(LevelsForTest.THREE.getLevelUpPoints()));
 	}
 }
