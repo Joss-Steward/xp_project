@@ -24,6 +24,8 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 	/**
 	 * Constructor for Quest State Message
 	 * @param clientPlayerQuestList players quest list
+	 * @param experiencePts player's experience points
+	 * @param level LevelRecord
 	 */
 	public InitializeThisClientsPlayerMessage(ArrayList<ClientPlayerQuest> clientPlayerQuestList, int experiencePts, LevelRecord level)
 	{
