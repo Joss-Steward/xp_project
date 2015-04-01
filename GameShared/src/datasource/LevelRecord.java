@@ -5,7 +5,7 @@ package datasource;
  * @author Merlin
  *
  */
-public class LevelRecord
+public class LevelRecord implements Comparable<LevelRecord>
 {
 
 	/**
@@ -75,6 +75,15 @@ public class LevelRecord
 	public int getLevelUpPoints()
 	{
 		return levelUpPoints;
+	}
+
+	/**
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(LevelRecord o)
+	{
+		return levelUpPoints - o.levelUpPoints;
 	}
 
 }
