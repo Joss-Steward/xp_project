@@ -138,8 +138,8 @@ public class UpdatePlayerInformationReportTest {
 		
 		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(john);
 		assertEquals(PlayersForTest.JOHN.getExperiencePoints(), report.getExperiencePts());
-//		assertEquals("Level 1", report.getLevel().getDescription());
-//		assertEquals(30, report.getLevel().getLevelUpPoints());
+		assertEquals("Level 1", report.getLevel().getDescription());
+		assertEquals(30, report.getLevel().getLevelUpPoints());
 		
 	}
 }
