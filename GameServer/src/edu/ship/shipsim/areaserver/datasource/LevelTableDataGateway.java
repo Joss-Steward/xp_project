@@ -3,6 +3,7 @@ package edu.ship.shipsim.areaserver.datasource;
 import java.util.ArrayList;
 
 import datasource.DatabaseException;
+import datasource.LevelRecord;
 
 /**
  * Requirements for all gateways into the adventure table

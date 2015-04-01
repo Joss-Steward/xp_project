@@ -1,4 +1,4 @@
-package edu.ship.shipsim.areaserver.datasource;
+package datasource;
 
 /**
  * Level object class that contains a description and levelUpPoints

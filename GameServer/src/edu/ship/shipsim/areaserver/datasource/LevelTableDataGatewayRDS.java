@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import model.DatabaseManager;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
+import datasource.LevelRecord;
 
 /**
  * The RDS implementation

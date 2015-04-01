@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import datasource.DatabaseException;
+import datasource.LevelRecord;
 
 /**
  * The mock version of LevelTableDataGatewas
