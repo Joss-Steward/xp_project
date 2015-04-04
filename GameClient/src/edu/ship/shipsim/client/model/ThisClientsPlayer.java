@@ -2,10 +2,15 @@ package edu.ship.shipsim.client.model;
 
 import java.util.ArrayList;
 
+import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
 import model.QualifiedObservableConnector;
 import data.Position;
+import datasource.AdventureStateEnum;
+import datasource.LevelRecord;
+import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
 import edu.ship.shipsim.client.model.reports.AreaCollisionReport;
+import edu.ship.shipsim.client.model.reports.ExperiencePointsChangeReport;
 import edu.ship.shipsim.client.model.reports.QuestStateReport;
 
 /**
@@ -19,8 +24,7 @@ public class ThisClientsPlayer extends Player
 	ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
 	
 	private int experiencePoints;
-	private String levelDescription;
-	private int numPointsLvlRequires;
+	private LevelRecord record;
 	
 	protected ThisClientsPlayer(int playerID)
 	{
@@ -70,7 +74,21 @@ public class ThisClientsPlayer extends Player
 	{
 		questList.clear();
 		questList = qList;
+		ArrayList<String> adventuresDescriptions = new ArrayList<String>();
 		
+		for(ClientPlayerQuest q : questList) 
+		{
+			for(ClientPlayerAdventure a : q.getAdventureList())
+			{
+				if(a.getAdventuretState().equals(AdventureStateEnum.NEED_NOTIFICATION))
+				{
+					adventuresDescriptions.add(a.getAdventureDescription());
+				}
+			}
+		}
+		
+		AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(adventuresDescriptions);
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 
 	/**
@@ -100,40 +118,32 @@ public class ThisClientsPlayer extends Player
 		this.experiencePoints = experiencePoints;
 	}
 
+
 	/**
-	 * @return the description of the level that ThisClientsPlayer is in
+	 * Sends the report to say that experience points have changed.
 	 */
-	public String getLevelDescription()
+	public void sendExperiencePointsChangeReport() 
 	{
-		return levelDescription;
+		ExperiencePointsChangeReport r = new ExperiencePointsChangeReport(experiencePoints, record);
+		QualifiedObservableConnector.getSingleton().sendReport(r);
 	}
 
 	/**
-	 * set the level description from the report given to ThisClientsPlayer
-	 * @param levelDescription the level description
+	 * returns the Level Record
+	 * @return record the Level Record
 	 */
-	public void setLevelDescription(String levelDescription)
+	public LevelRecord getLevelRecord() 
 	{
-		this.levelDescription = levelDescription;
+		return record;
 	}
 
 	/**
-	 * @return the number of points the level requires for ThisClientsPlayer
-	 * to level up
+	 * set the this player's LevelRecord
+	 * @param record the Level Record
 	 */
-	public int getNumPointsLvlRequires()
+	public void setRecord(LevelRecord record) 
 	{
-		return numPointsLvlRequires;
-	}
-
-	/**
-	 * sets the number of points required for this ThisClientsPlayer to 
-	 * level up for this particular level that they're in
-	 * @param numPointsLvlRequires the number of points the level requires
-	 */
-	public void setNumPointsLvlRequires(int numPointsLvlRequires)
-	{
-		this.numPointsLvlRequires = numPointsLvlRequires;
+		this.record = record;
 	}
 
 }

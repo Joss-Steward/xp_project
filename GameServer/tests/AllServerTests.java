@@ -12,7 +12,7 @@ import communication.handlers.DisconnectMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.TeleportationInitiationHandlerTest;
 import communication.packers.ChatMessagePackerTest;
-import communication.packers.CurrentQuestStateMessagePackerTest;
+import communication.packers.UpdatePlayerInformationMessagePackerTest;
 import communication.packers.MapFileMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.PlayerJoinedMessagePackerTest;
@@ -39,6 +39,8 @@ import edu.ship.shipsim.areaserver.model.CommandAddPlayerTest;
 import edu.ship.shipsim.areaserver.model.CommandMovePlayerSilentlyTest;
 import edu.ship.shipsim.areaserver.model.CommandMovePlayerTest;
 import edu.ship.shipsim.areaserver.model.CommandPersistPlayerTest;
+import edu.ship.shipsim.areaserver.model.CommandRemovePlayerTest;
+import edu.ship.shipsim.areaserver.model.LevelManagerTest;
 import edu.ship.shipsim.areaserver.model.NPCMapperTest;
 import edu.ship.shipsim.areaserver.model.NPCQuestionTest;
 import edu.ship.shipsim.areaserver.model.NPCTest;
@@ -50,7 +52,7 @@ import edu.ship.shipsim.areaserver.model.QuestManagerTest;
 import edu.ship.shipsim.areaserver.model.QuestModelTest;
 import edu.ship.shipsim.areaserver.model.QuestStateTest;
 import edu.ship.shipsim.areaserver.model.QuizBotBehaviorTest;
-import edu.ship.shipsim.areaserver.model.reports.CurrentQuestStateReportTest;
+import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReportTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReportTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReportTest;
 import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
@@ -78,10 +80,10 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 
 		// communication.packers
 		ChatMessagePackerTest.class,
-		CurrentQuestStateMessagePackerTest.class,
 		MapFileMessagePackerTest.class,
 		MovementMessagePackerTest.class, 
 		PlayerJoinedMessagePackerTest.class,
+		UpdatePlayerInformationMessagePackerTest.class,
 		
 		//dataSource
 		AdventureRecordTest.class,
@@ -120,9 +122,11 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		ChatManagerTest.class,
 		ChatMessageReceivedCommandTest.class,
 		CommandAddPlayerTest.class, 
-		CommandMovePlayerTest.class, 
 		CommandMovePlayerSilentlyTest.class,
+		CommandMovePlayerTest.class, 
 		CommandPersistPlayerTest.class,
+		CommandRemovePlayerTest.class,
+		LevelManagerTest.class,
 		NPCMapperTest.class,
 		NPCQuestionTest.class,
 		NPCTest.class,
@@ -137,10 +141,10 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		
 		
 		// model.reports
-		CurrentQuestStateReportTest.class,
 		PlayerConnectionReportTest.class, 
 		PlayerMovedReportTest.class, 
 		SendChatMessageReportTest.class,
+		UpdatePlayerInformationReportTest.class,
 		})
 
 public class AllServerTests

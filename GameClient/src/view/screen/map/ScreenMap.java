@@ -1,8 +1,5 @@
 package view.screen.map;
 
-//import model.CommandQuestScreenOpen;
-//import model.ModelFacade;
-
 import view.player.PlayerSprite;
 import view.player.PlayerSpriteFactory;
 import view.player.PlayerType;

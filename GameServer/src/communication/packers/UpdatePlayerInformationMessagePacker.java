@@ -1,15 +1,15 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
-import communication.messages.CurrentQuestStateMessage;
+import communication.messages.InitializeThisClientsPlayerMessage;
 import communication.messages.Message;
-import edu.ship.shipsim.areaserver.model.reports.CurrentQuestStateReport;
+import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReport;
 
 /**
  * @author Merlin
  *
  */
-public class CurrentQuestStateMessagePacker extends MessagePacker
+public class UpdatePlayerInformationMessagePacker extends MessagePacker
 {
 
 	/**
@@ -17,7 +17,7 @@ public class CurrentQuestStateMessagePacker extends MessagePacker
 	 */
 	public  Class<? extends QualifiedObservableReport> getReportTypeWePack()
 	{
-		return CurrentQuestStateReport.class;
+		return UpdatePlayerInformationReport.class;
 	}
 
 	/**
@@ -26,8 +26,8 @@ public class CurrentQuestStateMessagePacker extends MessagePacker
 	@Override
 	public Message pack(QualifiedObservableReport object)
 	{
-		CurrentQuestStateReport x = (CurrentQuestStateReport) object;
-		CurrentQuestStateMessage m = new CurrentQuestStateMessage(x.getClientPlayerQuestList());
+		UpdatePlayerInformationReport x = (UpdatePlayerInformationReport) object;
+		InitializeThisClientsPlayerMessage m = new InitializeThisClientsPlayerMessage(x.getClientPlayerQuestList(), x.getExperiencePts(), x.getLevel());
 		return m;
 	}
 

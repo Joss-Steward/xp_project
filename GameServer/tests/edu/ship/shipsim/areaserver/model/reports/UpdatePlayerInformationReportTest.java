@@ -12,8 +12,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import datasource.DatabaseException;
+import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureStatesForTest;
 import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
+import edu.ship.shipsim.areaserver.datasource.LevelsForTest;
 import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
 import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
 import edu.ship.shipsim.areaserver.model.Player;
@@ -22,10 +24,10 @@ import edu.ship.shipsim.areaserver.model.QuestManager;
 
 /**
  * Test the CurrentQuestStateReport
- * @author Ryan
+ * @author Ryan, LaVonne, Olivia
  *
  */
-public class CurrentQuestStateReportTest {
+public class UpdatePlayerInformationReportTest {
 	
 	/**
 	 * reset the necessary singletons
@@ -47,7 +49,7 @@ public class CurrentQuestStateReportTest {
 	public void testCombineQuestDescriptionAndState() throws DatabaseException
 	{
 		Player john = PlayerManager.getSingleton().addPlayer(1);
-		CurrentQuestStateReport report = new CurrentQuestStateReport(john);
+		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(john);
 		
 		assertEquals(QuestManager.getSingleton().getQuestList(john.getPlayerID()).size(), report.getClientPlayerQuestList().size());
 		
@@ -76,7 +78,7 @@ public class CurrentQuestStateReportTest {
 	public void testCombineAdventureDescriptionAndState() throws DatabaseException
 	{
 		Player john = PlayerManager.getSingleton().addPlayer(1);
-		CurrentQuestStateReport report = new CurrentQuestStateReport(john);
+		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(john);
 		
 		int i = 1;
 		for(ClientPlayerQuest q: report.getClientPlayerQuestList())
@@ -122,5 +124,22 @@ public class CurrentQuestStateReportTest {
 			}
 			i++;
 		}
+	}
+	
+	/**
+	 * Tests that we can report a players experience points
+	 * and their levels description and the points level requires
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void testExperienceAndLevelPoints() throws DatabaseException
+	{
+		Player john = PlayerManager.getSingleton().addPlayer(1);
+		
+		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(john);
+		assertEquals(PlayersForTest.JOHN.getExperiencePoints(), report.getExperiencePts());
+		assertEquals(LevelsForTest.ONE.getDescription(), report.getLevel().getDescription());
+		assertEquals(LevelsForTest.ONE.getLevelUpPoints(), report.getLevel().getLevelUpPoints());
+		
 	}
 }

@@ -238,7 +238,7 @@ public class Player
 
 	/**
 	 * Set experience points
-	 * @param expPoints
+	 * @param expPoints Player's experience points
 	 */
 	public void setExperiencePoints(int expPoints)
 	{
@@ -247,7 +247,7 @@ public class Player
 	
 	/**
 	 * Add experience points
-	 * @param expPoints
+	 * @param expPoints Player's experience points
 	 */
 	public void addExperiencePoints(int expPoints)
 	{

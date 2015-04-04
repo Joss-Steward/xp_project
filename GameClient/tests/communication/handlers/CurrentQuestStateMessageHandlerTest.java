@@ -10,8 +10,9 @@ import model.ClientPlayerQuest;
 import org.junit.Before;
 import org.junit.Test;
 
-import communication.messages.CurrentQuestStateMessage;
+import communication.messages.InitializeThisClientsPlayerMessage;
 import datasource.AdventureStateEnum;
+import datasource.LevelRecord;
 import datasource.QuestStateEnum;
 import edu.ship.shipsim.client.model.ModelFacade;
 import edu.ship.shipsim.client.model.CommandOverwriteQuestState;
@@ -40,7 +41,7 @@ public class CurrentQuestStateMessageHandlerTest
 	public void typeWeHandle()
 	{
 		CurrentQuestStateMessageHandler h = new CurrentQuestStateMessageHandler();
-		assertEquals(CurrentQuestStateMessage.class, h.getMessageTypeWeHandle());
+		assertEquals(InitializeThisClientsPlayerMessage.class, h.getMessageTypeWeHandle());
 	}
 	
 	/**
@@ -57,7 +58,8 @@ public class CurrentQuestStateMessageHandlerTest
 		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED); 
 		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", AdventureStateEnum.PENDING));
 		qList.add(q);
-		CurrentQuestStateMessage msg = new CurrentQuestStateMessage(qList);
+		LevelRecord level = new LevelRecord("One", 15);
+		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(qList, 20, level);
 		handler.process(msg);
 		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
 		CommandOverwriteQuestState cmd = (CommandOverwriteQuestState) ModelFacade.getSingleton().getNextCommand();

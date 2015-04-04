@@ -2,7 +2,7 @@ package edu.ship.shipsim.client.model;
 
 import java.util.ArrayList;
 
-import communication.messages.CurrentQuestStateMessage;
+import communication.messages.InitializeThisClientsPlayerMessage;
 import model.ClientPlayerQuest;
 
 /**
@@ -20,7 +20,7 @@ public class CommandOverwriteQuestState extends Command
 	 * Initializes clientPlayerQuestList
 	 * @param msg message that contains new clientPlayerQuestList
 	 */
-	public CommandOverwriteQuestState(CurrentQuestStateMessage msg)
+	public CommandOverwriteQuestState(InitializeThisClientsPlayerMessage msg)
 	{
 		
 		this.clientPlayerQuestList = msg.getClientPlayerQuestList();

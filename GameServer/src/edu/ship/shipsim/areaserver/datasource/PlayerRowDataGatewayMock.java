@@ -21,13 +21,16 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		private Position position;
 		private String appearanceType;
 		private int quizScore;
+		private int experiencePoints;
 
 		public PlayerInfo(String mapName, Position position,
-				String appearanceType, int quizScore)
+				String appearanceType, int quizScore, int experiencePoints)
 		{
 			this.mapName = mapName;
 			this.position = position;
 			this.appearanceType = appearanceType;
+			this.quizScore = quizScore;
+			this.experiencePoints = experiencePoints;
 		}
 
 		public String getMapName()
@@ -87,9 +90,10 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	 * @param position the position of the player on the map
 	 * @param appearanceType the appearance type of the player
 	 * @param quizScore this player's current quiz score
+	 * @param experiencePoints TODO
 	 */
 	public PlayerRowDataGatewayMock(String mapName, Position position,
-			String appearanceType, int quizScore) 
+			String appearanceType, int quizScore, int experiencePoints) 
 	{
 		if (playerInfo == null)
 		{
@@ -99,7 +103,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		nextKey++;
 		
 		playerInfo.put(playerID, new PlayerInfo(mapName, position,
-				appearanceType, quizScore));
+				appearanceType, quizScore, experiencePoints));
 	}
 
 	/**
@@ -122,7 +126,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 			playerInfo.put(
 					nextKey,
 					new PlayerInfo(p.getMapName(), p.getPosition(), p
-							.getAppearanceType(), p.getQuizScore()));
+							.getAppearanceType(), p.getQuizScore(), p.getExperiencePoints()));
 			nextKey++;
 		}
 	}
@@ -216,6 +220,24 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	{
 		info.quizScore = quizScore;
 		
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#getExperiencePoints()
+	 */
+	@Override
+	public int getExperiencePoints()
+	{
+		return info.experiencePoints;
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#setExperiencePoints(int)
+	 */
+	@Override
+	public void setExperiencePoints(int experiencePoints)
+	{
+		info.experiencePoints = experiencePoints;		
 	}
 
 }

@@ -1,6 +1,5 @@
 package view.screen.map;
 
-import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 
@@ -9,10 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-
-import edu.ship.shipsim.client.model.PlayerManager;
-import edu.ship.shipsim.client.model.ThisClientsPlayer;
-import edu.ship.shipsim.client.model.reports.QuestStateReport;
 
 /**
  * @author ck4124
@@ -59,32 +54,62 @@ public class ExperienceDisplay extends Group implements QualifiedObserver
 	}
 
 
+	/**
+	 * @return experiencePoints
+	 */
 	public int getExperiencePoints()
 	{
 		return experiencePoints;
 	}
+	
+	/**
+	 * Set player's experience points
+	 * @param experiencePoints player's experience points
+	 */
 	public void setExperiencePoints(int experiencePoints)
 	{
 		this.experiencePoints = experiencePoints;
 	}
+	
+	/**
+	 * @return numPointsLvlRequries
+	 */
 	public int getNumPointsLvlRequries()
 	{
 		return numPointsLvlRequries;
 	}
+	
+	/**
+	 * Set number of points level requires
+	 * @param numPointsLvlRequries player's number of points level requires
+	 */
 	public void setNumPointsLvlRequries(int numPointsLvlRequries)
 	{
 		this.numPointsLvlRequries = numPointsLvlRequries;
 	}
+	
+	/**
+	 * Get player's level
+	 * @return playersLevel
+	 */
 	public String getPlayersLevel()
 	{
 		return playersLevel;
 	}
+	
+	/**
+	 * Set the player's level
+	 * @param playersLevel this player's level
+	 */
 	public void setPlayersLevel(String playersLevel)
 	{
 		this.playersLevel = playersLevel;
 	}
 
 
+	/**
+	 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
+	 */
 	@Override
 	public void receiveReport(QualifiedObservableReport report)
 	{

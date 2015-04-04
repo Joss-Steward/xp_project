@@ -18,10 +18,13 @@ import org.junit.Test;
 
 import data.Position;
 import datasource.AdventureStateEnum;
+import datasource.LevelRecord;
 import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
 import edu.ship.shipsim.client.model.PlayerManager;
 import edu.ship.shipsim.client.model.ThisClientsPlayer;
+import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
+import edu.ship.shipsim.client.model.reports.ExperiencePointsChangeReport;
 import edu.ship.shipsim.client.model.reports.PlayerMovedReport;
 import edu.ship.shipsim.client.model.reports.QuestStateReport;
 
@@ -155,12 +158,70 @@ public class ThisClientsPlayerTest
 	{
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
 		
+		LevelRecord rec = new LevelRecord("Felyne Explorer", 100);
 		cp.setExperiencePoints(10);
-		cp.setLevelDescription("The bookshelf");
-		cp.setNumPointsLvlRequires(100);
+		cp.setRecord(rec);
 		
 		assertEquals(10, cp.getExperiencePoints());
-		assertEquals("The bookshelf", cp.getLevelDescription());
-		assertEquals(100, cp.getNumPointsLvlRequires());
+		assertEquals("Felyne Explorer", cp.getLevelRecord().getDescription());
+		assertEquals(100, cp.getLevelRecord().getLevelUpPoints());
+	}
+	
+	/**
+	 * Test that we can send a report that contains the adventures that currently
+	 * have the state of NEED_NOTIFICATION
+	 */
+	@Test
+	public void testSendAdventuresNeedingNotificationReport()
+	{
+		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventuresNeedingNotification();
+		cp.addQuest(q);
+		ArrayList<String> expected = new ArrayList<String>() ;
+		
+		// Retrieve each adventure's descriptions from the quest
+		for(ClientPlayerAdventure a : q.getAdventureList())
+		{
+			expected.add(a.getAdventureDescription());
+		}
+		
+		ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
+		questList.add(q);
+		
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, AdventuresNeedingNotificationReport.class);
+		AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(expected);
+		obs.receiveReport(EasyMock.eq(report));
+		EasyMock.replay(obs);
+
+		cp.overwriteQuestList(questList);
+		
+		EasyMock.verify(obs);
+	}
+	
+	/**
+	 * Test that we can set the values of ThisClientPlayer's experience info,
+	 * level description, and # points required for this player to level up 
+	 * for this level
+	 */
+	@Test
+	public void testSendExperiencePointsChangeReport()
+	{
+		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		
+		int exp = 10;
+		LevelRecord rec = new LevelRecord("Felyne Explorer", 10);
+		cp.setExperiencePoints(10);
+		cp.setRecord(rec);
+		
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, ExperiencePointsChangeReport.class);
+		ExperiencePointsChangeReport report = new ExperiencePointsChangeReport(exp, rec);
+		obs.receiveReport(EasyMock.eq(report));
+		EasyMock.replay(obs);
+
+		cp.sendExperiencePointsChangeReport();
+		
+		EasyMock.verify(obs);
 	}
 }
