@@ -9,7 +9,6 @@ import data.Position;
 import datasource.AdventureStateEnum;
 import datasource.LevelRecord;
 import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
-import edu.ship.shipsim.client.model.reports.AreaCollisionReport;
 import edu.ship.shipsim.client.model.reports.ExperiencePointsChangeReport;
 import edu.ship.shipsim.client.model.reports.QuestStateReport;
 
@@ -150,8 +149,7 @@ public class ThisClientsPlayer extends Player
 	 */
 	public void overwriteExperiencePoints(int experience, LevelRecord rec) 
 	{
-		this.experiencePoints = experience;
-		this.record = rec;
+		setLevelInfo(rec, experience);
 	}
 
 }
