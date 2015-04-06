@@ -5,19 +5,19 @@ package edu.ship.shipsim.areaserver.datasource;
  * @author merlin
  *
  */
-public class AdventureRecord
+public final class AdventureRecord
 {
-	private int adventureID;
-	private String adventureDescription;
-	private int questID;
+	private final int adventureID;
+	private final String adventureDescription;
+	private final int questID;
 	
 	/**
 	 * Create it
+	 * @param questID the unique ID of the quest that contains the adventure
 	 * @param adventureID the adventure's unique ID
 	 * @param adventureDescription the adventure's description
-	 * @param questID the unique ID of the quest that contains the adventure
 	 */
-	public AdventureRecord(int adventureID, String adventureDescription, int questID)
+	public AdventureRecord(int questID, int adventureID, String adventureDescription)
 	{
 		this.adventureID = adventureID;
 		this.adventureDescription = adventureDescription;
@@ -50,5 +50,10 @@ public class AdventureRecord
 	public int getQuestID()
 	{
 		return questID;
+	}
+	
+	public String toString()
+	{
+		return questID + ":" + adventureID + " " + adventureDescription;
 	}
 }

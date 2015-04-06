@@ -78,9 +78,9 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 			while (result.next())
 			{
 				AdventureRecord rec = new AdventureRecord(
+						result.getInt("questID"),
 						result.getInt("adventureID"),
-						result.getString("adventureDescription"),
-						result.getInt("questID"));
+						result.getString("adventureDescription"));
 				results.add(rec);
 			}
 			return results;
