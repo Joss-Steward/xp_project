@@ -1,11 +1,10 @@
 package view.screen.popup;
 
-import view.screen.ScreenBasic;
-import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
-import edu.ship.shipsim.client.model.reports.QuestStateReport;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
+import view.screen.ScreenBasic;
+import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
 
 /**
  * @author Cody/Scott
