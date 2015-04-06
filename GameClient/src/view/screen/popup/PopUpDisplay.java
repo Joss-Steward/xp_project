@@ -19,7 +19,7 @@ public abstract class PopUpDisplay extends ScreenBasic implements QualifiedObser
 	@Override
 	public void receiveReport(QualifiedObservableReport report)
 	{
-		if (report.getClass().equals(QuestStateReport.class))
+		if (report.getClass().equals(AdventuresNeedingNotificationReport.class))
 		{
 			AdventuresNeedingNotificationReport r = (AdventuresNeedingNotificationReport) report;
 			@SuppressWarnings("unused")
@@ -28,7 +28,7 @@ public abstract class PopUpDisplay extends ScreenBasic implements QualifiedObser
 	}
 	
 	/**
-	 * Sets up the QualifiedObserver for QuestStateReport
+	 * Sets up the QualifiedObserver for AdventuresNeedingNotificationReport
 	 */
 	public void setUpListening()
 	{
