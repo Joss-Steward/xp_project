@@ -432,8 +432,8 @@ public class ScreenMap extends ScreenBasic
 			}
 		});
 		stage.addActor(chatArea);
-		stage.addActor(qaScreen);
 		stage.addActor(expDisplay);
+		stage.addActor(qaScreen);
 		
 		loadingLayer = new Group();
 		loadingLayer.setSize(stage.getWidth(), stage.getHeight());

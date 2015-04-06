@@ -50,6 +50,7 @@ public class ExperienceDisplay extends Group implements QualifiedObserver
 		experienceDisplay = new Table();
 		experienceDisplay.setFillParent(true);
 		experienceDisplay.top().right();
+		experienceDisplay.debug();
 		
 		experienceDisplay.add(new Label("Experience Display goes here", skin)).row();
 			
