@@ -21,7 +21,7 @@ import edu.ship.shipsim.client.model.CommandOverwriteQuestState;
  * @author Frank Schmidt
  *
  */
-public class CurrentQuestStateMessageHandlerTest 
+public class InitializeThisClientsPlayerMessageHandlerTest 
 {
 	
 	/**
@@ -40,7 +40,7 @@ public class CurrentQuestStateMessageHandlerTest
 	@Test
 	public void typeWeHandle()
 	{
-		CurrentQuestStateMessageHandler h = new CurrentQuestStateMessageHandler();
+		InitializeThisClientsPlayerMessageHandler h = new InitializeThisClientsPlayerMessageHandler();
 		assertEquals(InitializeThisClientsPlayerMessage.class, h.getMessageTypeWeHandle());
 	}
 	
@@ -53,17 +53,42 @@ public class CurrentQuestStateMessageHandlerTest
 	@Test
 	public void test() throws InterruptedException
 	{
-		CurrentQuestStateMessageHandler handler = new CurrentQuestStateMessageHandler();
+		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
 		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED); 
 		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", AdventureStateEnum.PENDING));
 		qList.add(q);
-		LevelRecord level = new LevelRecord("One", 15);
+		LevelRecord level = new LevelRecord("One", 45);
 		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(qList, 20, level);
 		handler.process(msg);
 		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
 		CommandOverwriteQuestState cmd = (CommandOverwriteQuestState) ModelFacade.getSingleton().getNextCommand();
 		ArrayList<ClientPlayerQuest> actual = cmd.getClientPlayerQuestList();
 		assertEquals(qList, actual);
+	}
+	
+	/**
+	 * We should add a command  to the ModelFacade command queue
+	 * 
+	 * @throws InterruptedException
+	 * 				shouldn't
+	 */
+	@Test
+	public void testExperiencePts() throws InterruptedException
+	{
+		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
+		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
+		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED); 
+		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", AdventureStateEnum.PENDING));
+		qList.add(q);
+		int expectedPoints = 20;
+		LevelRecord level = new LevelRecord("One", 45);
+		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(qList, expectedPoints, level);
+		handler.process(msg);
+		
+		assertEquals(2, ModelFacade.getSingleton().getCommandQueueLength());
+		//CommandOverwriteExperiencePoints cmd = ModelFacade.getSingleton().getNextCommand();
+		//int actualPoints =cmd.getExperiencePts;
+		//assertEquals(expectedPoints, actualPoints);
 	}
 }

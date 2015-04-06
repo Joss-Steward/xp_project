@@ -6,7 +6,7 @@ import view.player.PlayerSpriteTest;
 import view.screen.ScreenListenerTest;
 import view.screen.map.ScreenMapInputTest;
 import communication.handlers.ChatMessageHandlerTest;
-import communication.handlers.CurrentQuestStateMessageHandlerTest;
+import communication.handlers.InitializeThisClientsPlayerMessageHandlerTest;
 import communication.handlers.LoginFailedMessageHandlerTest;
 import communication.handlers.MapFileMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
@@ -58,7 +58,7 @@ import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 {
 		// communication.handlers
 		ChatMessageHandlerTest.class,
-		CurrentQuestStateMessageHandlerTest.class,
+		InitializeThisClientsPlayerMessageHandlerTest.class,
 		LoginFailedMessageHandlerTest.class,
 		MapFileMessageHandlerTest.class,
 		MovementMessageHandlerTest.class,

@@ -11,7 +11,7 @@ import edu.ship.shipsim.client.model.CommandOverwriteQuestState;
  * @author Merlin
  *
  */
-public class CurrentQuestStateMessageHandler extends MessageHandler
+public class InitializeThisClientsPlayerMessageHandler extends MessageHandler
 {
 	
 	/**
@@ -23,6 +23,7 @@ public class CurrentQuestStateMessageHandler extends MessageHandler
 	{
 		InitializeThisClientsPlayerMessage ourMsg = (InitializeThisClientsPlayerMessage)msg;
 		CommandOverwriteQuestState cmd = new CommandOverwriteQuestState(ourMsg);
+		
 		ModelFacade.getSingleton().queueCommand(cmd);
 	}
 
