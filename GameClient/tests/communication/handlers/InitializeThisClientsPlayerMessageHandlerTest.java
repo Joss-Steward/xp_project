@@ -14,6 +14,7 @@ import communication.messages.InitializeThisClientsPlayerMessage;
 import datasource.AdventureStateEnum;
 import datasource.LevelRecord;
 import datasource.QuestStateEnum;
+import edu.ship.shipsim.client.model.CommandOverwriteExperience;
 import edu.ship.shipsim.client.model.ModelFacade;
 import edu.ship.shipsim.client.model.CommandOverwriteQuestState;
 
@@ -61,7 +62,7 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		LevelRecord level = new LevelRecord("One", 45);
 		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(qList, 20, level);
 		handler.process(msg);
-		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
+		assertEquals(2, ModelFacade.getSingleton().getCommandQueueLength());
 		CommandOverwriteQuestState cmd = (CommandOverwriteQuestState) ModelFacade.getSingleton().getNextCommand();
 		ArrayList<ClientPlayerQuest> actual = cmd.getClientPlayerQuestList();
 		assertEquals(qList, actual);
@@ -87,8 +88,9 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		handler.process(msg);
 		
 		assertEquals(2, ModelFacade.getSingleton().getCommandQueueLength());
-		//CommandOverwriteExperiencePoints cmd = ModelFacade.getSingleton().getNextCommand();
-		//int actualPoints =cmd.getExperiencePts;
-		//assertEquals(expectedPoints, actualPoints);
+		ModelFacade.getSingleton().getNextCommand();
+		CommandOverwriteExperience cmd = (CommandOverwriteExperience) ModelFacade.getSingleton().getNextCommand();
+		int actualPoints = cmd.getExperiencePoints();
+		assertEquals(expectedPoints, actualPoints);
 	}
 }
