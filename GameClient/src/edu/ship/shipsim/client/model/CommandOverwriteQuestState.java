@@ -3,6 +3,7 @@ package edu.ship.shipsim.client.model;
 import java.util.ArrayList;
 
 import communication.messages.InitializeThisClientsPlayerMessage;
+import datasource.LevelRecord;
 import model.ClientPlayerQuest;
 
 /**
@@ -15,6 +16,8 @@ public class CommandOverwriteQuestState extends Command
 {
 
 	private ArrayList<ClientPlayerQuest> clientPlayerQuestList;
+	private LevelRecord record;
+	private int expPoints;
 
 	/**
 	 * Initializes clientPlayerQuestList
@@ -23,12 +26,16 @@ public class CommandOverwriteQuestState extends Command
 	public CommandOverwriteQuestState(InitializeThisClientsPlayerMessage msg)
 	{
 		this.clientPlayerQuestList = msg.getClientPlayerQuestList();
+		
+		this.record = msg.getLevel();
+		this.expPoints = msg.getExperiencePts();
 	}
 
 	@Override
 	protected boolean execute()
 	{
 		PlayerManager.getSingleton().getThisClientsPlayer().overwriteQuestList(clientPlayerQuestList);
+		PlayerManager.getSingleton().getThisClientsPlayer().setLevelInfo(record, expPoints);
 		return true;
 	}
 
