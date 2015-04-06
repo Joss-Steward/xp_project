@@ -14,7 +14,7 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST1_ADV1(1, 1, 1, AdventureStateEnum.PENDING),
+	PLAYER1_QUEST1_ADV1(1, 1, 1, AdventureStateEnum.NEED_NOTIFICATION),
 	/**
 	 * 
 	 */
