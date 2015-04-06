@@ -30,7 +30,12 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
+	PLAYER1_QUEST3_ADV1(1, 3, 1, AdventureStateEnum.PENDING),
+	/**
+	 * 
+	 */
 	PLAYER2_QUEST1_ADV1(2, 1, 1, AdventureStateEnum.HIDDEN),
+
 
 	/**
 	 * 

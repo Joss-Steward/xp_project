@@ -20,8 +20,8 @@ public class AdventureStateViewTableDataGatewayRDSTest
 		AdventureStateViewTableDataGatewayRDS gateway = new AdventureStateViewTableDataGatewayRDS(PlayersForTest.JOHN.getPlayerID());
 		List<AdventureRecord> results = gateway.getPendingAdventureRecords();
 		assertEquals(2, results.size());
-		AdventureRecord expected = new AdventureRecord(AdventuresForTest.ONE.getQuestID(), AdventuresForTest.ONE.getAdventureID(),
-				AdventuresForTest.ONE.getAdventureDescription());
+		AdventureRecord expected = new AdventureRecord(AdventuresForTest.FIVE.getQuestID(), AdventuresForTest.FIVE.getAdventureID(),
+				AdventuresForTest.FIVE.getAdventureDescription());
 		assertTrue(results.contains(expected));
 		assertTrue(results.contains(new AdventureRecord(AdventuresForTest.FOUR.getQuestID(), AdventuresForTest.FOUR.getAdventureID(),
 				AdventuresForTest.FOUR.getAdventureDescription())));

@@ -56,4 +56,39 @@ public final class AdventureRecord
 	{
 		return questID + ":" + adventureID + " " + adventureDescription;
 	}
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((adventureDescription == null) ? 0 : adventureDescription.hashCode());
+		result = prime * result + adventureID;
+		result = prime * result + questID;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AdventureRecord other = (AdventureRecord) obj;
+		if (adventureDescription == null)
+		{
+			if (other.adventureDescription != null)
+				return false;
+		} else if (!adventureDescription.equals(other.adventureDescription))
+			return false;
+		if (adventureID != other.adventureID)
+			return false;
+		if (questID != other.questID)
+			return false;
+		return true;
+	}
 }
