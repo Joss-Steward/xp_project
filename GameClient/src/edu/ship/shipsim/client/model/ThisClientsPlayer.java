@@ -146,4 +146,15 @@ public class ThisClientsPlayer extends Player
 		this.record = record;
 	}
 
+	/**
+	 * Overwrite the experience and level record in the clients player
+	 * @param experience current experience
+	 * @param rec level report
+	 */
+	public void overwriteExperiencePoints(int experience, LevelRecord rec) 
+	{
+		this.experiencePoints = experience;
+		this.record = rec;
+	}
+
 }

@@ -22,7 +22,6 @@ public class CommandOverwriteQuestState extends Command
 	 */
 	public CommandOverwriteQuestState(InitializeThisClientsPlayerMessage msg)
 	{
-		
 		this.clientPlayerQuestList = msg.getClientPlayerQuestList();
 	}
 
