@@ -110,17 +110,19 @@ public class ThisClientsPlayer extends Player
 	{
 		return experiencePoints;
 	}
-
+	
 	/**
-	 * set the number of experience points for ThisClientsPlayer
-	 * @param experiencePoints ThisClientsPlayer's exp points
+	 * @param record level record
+	 * @param expPoints experience points
 	 */
-	public void setExperiencePoints(int experiencePoints)
+	public void setLevelInfo(LevelRecord record, int expPoints)
 	{
-		this.experiencePoints = experiencePoints;
+		this.record = record;
+		this.experiencePoints = expPoints;
+		
+		sendExperiencePointsChangeReport();
 	}
-
-
+	
 	/**
 	 * Sends the report to say that experience points have changed.
 	 */
@@ -139,14 +141,7 @@ public class ThisClientsPlayer extends Player
 		return record;
 	}
 
-	/**
-	 * set the this player's LevelRecord
-	 * @param record the Level Record
-	 */
-	public void setRecord(LevelRecord record) 
-	{
-		this.record = record;
-	}
+	
 
 	/**
 	 * Overwrite the experience and level record in the clients player
