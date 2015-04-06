@@ -1,11 +1,10 @@
 package view.screen.popup;
 
-import view.screen.ScreenBasic;
-import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
-import edu.ship.shipsim.client.model.reports.QuestStateReport;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
+import view.screen.ScreenBasic;
+import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
 
 /**
  * @author Cody/Scott
@@ -19,7 +18,7 @@ public abstract class PopUpDisplay extends ScreenBasic implements QualifiedObser
 	@Override
 	public void receiveReport(QualifiedObservableReport report)
 	{
-		if (report.getClass().equals(QuestStateReport.class))
+		if (report.getClass().equals(AdventuresNeedingNotificationReport.class))
 		{
 			AdventuresNeedingNotificationReport r = (AdventuresNeedingNotificationReport) report;
 			@SuppressWarnings("unused")
@@ -28,7 +27,7 @@ public abstract class PopUpDisplay extends ScreenBasic implements QualifiedObser
 	}
 	
 	/**
-	 * Sets up the QualifiedObserver for QuestStateReport
+	 * Sets up the QualifiedObserver for AdventuresNeedingNotificationReport
 	 */
 	public void setUpListening()
 	{

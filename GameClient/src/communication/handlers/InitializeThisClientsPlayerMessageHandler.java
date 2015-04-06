@@ -2,6 +2,7 @@ package communication.handlers;
 
 import communication.messages.InitializeThisClientsPlayerMessage;
 import communication.messages.Message;
+import edu.ship.shipsim.client.model.CommandOverwriteExperience;
 import edu.ship.shipsim.client.model.ModelFacade;
 import edu.ship.shipsim.client.model.CommandOverwriteQuestState;
 
@@ -11,7 +12,7 @@ import edu.ship.shipsim.client.model.CommandOverwriteQuestState;
  * @author Merlin
  *
  */
-public class CurrentQuestStateMessageHandler extends MessageHandler
+public class InitializeThisClientsPlayerMessageHandler extends MessageHandler
 {
 	
 	/**
@@ -23,7 +24,9 @@ public class CurrentQuestStateMessageHandler extends MessageHandler
 	{
 		InitializeThisClientsPlayerMessage ourMsg = (InitializeThisClientsPlayerMessage)msg;
 		CommandOverwriteQuestState cmd = new CommandOverwriteQuestState(ourMsg);
+		CommandOverwriteExperience cmdExperiencePts = new CommandOverwriteExperience(ourMsg);
 		ModelFacade.getSingleton().queueCommand(cmd);
+		ModelFacade.getSingleton().queueCommand(cmdExperiencePts);
 	}
 
 	/**

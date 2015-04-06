@@ -40,12 +40,14 @@ public class ThisClientsPlayer extends Player
 	{
 		super.move(pos);
 		
+		//Commented out because we are not using AreaCollision right now
+		
 		//check if entering a region
-		String region = MapManager.getSingleton().getIsInRegion(pos);
-		if (region != null)
-		{
-			QualifiedObservableConnector.getSingleton().sendReport(new AreaCollisionReport(this.id, region));
-		}
+//		String region = MapManager.getSingleton().getIsInRegion(pos);
+//		if (region != null)
+//		{
+//			QualifiedObservableConnector.getSingleton().sendReport(new AreaCollisionReport(this.id, region));
+//		}
 	}
 
 	/**
@@ -108,17 +110,19 @@ public class ThisClientsPlayer extends Player
 	{
 		return experiencePoints;
 	}
-
+	
 	/**
-	 * set the number of experience points for ThisClientsPlayer
-	 * @param experiencePoints ThisClientsPlayer's exp points
+	 * @param record level record
+	 * @param expPoints experience points
 	 */
-	public void setExperiencePoints(int experiencePoints)
+	public void setLevelInfo(LevelRecord record, int expPoints)
 	{
-		this.experiencePoints = experiencePoints;
+		this.record = record;
+		this.experiencePoints = expPoints;
+		
+		sendExperiencePointsChangeReport();
 	}
-
-
+	
 	/**
 	 * Sends the report to say that experience points have changed.
 	 */
@@ -137,13 +141,17 @@ public class ThisClientsPlayer extends Player
 		return record;
 	}
 
+	
+
 	/**
-	 * set the this player's LevelRecord
-	 * @param record the Level Record
+	 * Overwrite the experience and level record in the clients player
+	 * @param experience current experience
+	 * @param rec level report
 	 */
-	public void setRecord(LevelRecord record) 
+	public void overwriteExperiencePoints(int experience, LevelRecord rec) 
 	{
-		this.record = record;
+		this.experiencePoints = experience;
+		this.record = rec;
 	}
 
 }
