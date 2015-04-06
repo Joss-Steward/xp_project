@@ -8,8 +8,6 @@ import java.util.List;
 
 import model.DatabaseManager;
 import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
-import edu.ship.shipsim.areaserver.datasource.NPCRowDataGateway;
-import edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayRDS;
 
 /**
  * A table data gateway that feels like it is a gateway into a view (for now it
@@ -21,14 +19,13 @@ import edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayRDS;
 public class AdventureStateViewTableDataGatewayRDS
 {
 
-	private int playerID;
-
-	public AdventureStateViewTableDataGatewayRDS(int playerID)
-	{
-		this.playerID = playerID;
-	}
-
-	public List<AdventureRecord> getPendingAdventureRecords() throws DatabaseException
+	/**
+	 * Get the adventures that are pending for a given player
+	 * @param playerID the player's ID
+	 * @return the list of pending adventures
+	 * @throws DatabaseException if we fail to talk to the DB
+	 */
+	public static List<AdventureRecord> getPendingAdventureRecords(int playerID) throws DatabaseException
 	{
 		ArrayList<AdventureRecord> records = new ArrayList<AdventureRecord>();
 
