@@ -40,12 +40,14 @@ public class ThisClientsPlayer extends Player
 	{
 		super.move(pos);
 		
+		//Commented out because we are not using AreaCollision right now
+		
 		//check if entering a region
-		String region = MapManager.getSingleton().getIsInRegion(pos);
-		if (region != null)
-		{
-			QualifiedObservableConnector.getSingleton().sendReport(new AreaCollisionReport(this.id, region));
-		}
+//		String region = MapManager.getSingleton().getIsInRegion(pos);
+//		if (region != null)
+//		{
+//			QualifiedObservableConnector.getSingleton().sendReport(new AreaCollisionReport(this.id, region));
+//		}
 	}
 
 	/**
