@@ -45,7 +45,6 @@ public class ExperienceDisplay extends Group implements QualifiedObserver
 
 	private void show()
 	{
-		
 		experienceDisplay = new Table();
 		experienceDisplay.setFillParent(true);
 		experienceDisplay.top().right();

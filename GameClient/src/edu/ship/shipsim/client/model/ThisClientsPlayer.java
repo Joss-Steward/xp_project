@@ -9,7 +9,6 @@ import data.Position;
 import datasource.AdventureStateEnum;
 import datasource.LevelRecord;
 import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
-import edu.ship.shipsim.client.model.reports.AreaCollisionReport;
 import edu.ship.shipsim.client.model.reports.ExperiencePointsChangeReport;
 import edu.ship.shipsim.client.model.reports.QuestStateReport;
 
@@ -40,12 +39,14 @@ public class ThisClientsPlayer extends Player
 	{
 		super.move(pos);
 		
+		//Commented out because we are not using AreaCollision right now
+		
 		//check if entering a region
-		String region = MapManager.getSingleton().getIsInRegion(pos);
-		if (region != null)
-		{
-			QualifiedObservableConnector.getSingleton().sendReport(new AreaCollisionReport(this.id, region));
-		}
+//		String region = MapManager.getSingleton().getIsInRegion(pos);
+//		if (region != null)
+//		{
+//			QualifiedObservableConnector.getSingleton().sendReport(new AreaCollisionReport(this.id, region));
+//		}
 	}
 
 	/**
@@ -108,17 +109,19 @@ public class ThisClientsPlayer extends Player
 	{
 		return experiencePoints;
 	}
-
+	
 	/**
-	 * set the number of experience points for ThisClientsPlayer
-	 * @param experiencePoints ThisClientsPlayer's exp points
+	 * @param record level record
+	 * @param expPoints experience points
 	 */
-	public void setExperiencePoints(int experiencePoints)
+	public void setLevelInfo(LevelRecord record, int expPoints)
 	{
-		this.experiencePoints = experiencePoints;
+		this.record = record;
+		this.experiencePoints = expPoints;
+		
+		sendExperiencePointsChangeReport();
 	}
-
-
+	
 	/**
 	 * Sends the report to say that experience points have changed.
 	 */
@@ -137,14 +140,7 @@ public class ThisClientsPlayer extends Player
 		return record;
 	}
 
-	/**
-	 * set the this player's LevelRecord
-	 * @param record the Level Record
-	 */
-	public void setRecord(LevelRecord record) 
-	{
-		this.record = record;
-	}
+	
 
 	/**
 	 * Overwrite the experience and level record in the clients player
@@ -153,8 +149,7 @@ public class ThisClientsPlayer extends Player
 	 */
 	public void overwriteExperiencePoints(int experience, LevelRecord rec) 
 	{
-		this.experiencePoints = experience;
-		this.record = rec;
+		setLevelInfo(rec, experience);
 	}
 
 }

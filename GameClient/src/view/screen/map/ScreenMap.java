@@ -1,5 +1,6 @@
 package view.screen.map;
 
+import static view.screen.Screens.DEFAULT_RES;
 import view.player.PlayerSprite;
 import view.player.PlayerSpriteFactory;
 import view.player.PlayerType;
@@ -7,8 +8,8 @@ import view.screen.ScreenBasic;
 import view.screen.qas.ScreenQAs;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -39,7 +40,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import data.ChatType;
 import data.Position;
-import static view.screen.Screens.DEFAULT_RES;
 
 /**
  * A basic screen that, for now, just displays the map
@@ -70,6 +70,8 @@ public class ScreenMap extends ScreenBasic
 	private ScreenQAs qaScreen;
 	private ExperienceDisplay expDisplay;
 	private ChatUi chatArea;
+	
+	//private PopUpDisplay popUpDisplay;
 	
 	//tile size that we will be moving in according to the collision masking tileset
 	private Vector2 tileSize;
@@ -379,6 +381,7 @@ public class ScreenMap extends ScreenBasic
 	public void show()
 	{
 		expDisplay = new ExperienceDisplay();
+		//popUpDisplay = new PopUpDisplay();
 		qaScreen = new ScreenQAs();
 		
 		worldStage = new Stage();
@@ -430,8 +433,8 @@ public class ScreenMap extends ScreenBasic
 			}
 		});
 		stage.addActor(chatArea);
-		stage.addActor(qaScreen);
 		stage.addActor(expDisplay);
+		stage.addActor(qaScreen);
 		
 		loadingLayer = new Group();
 		loadingLayer.setSize(stage.getWidth(), stage.getHeight());

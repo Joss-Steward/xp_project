@@ -67,8 +67,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 */
 	public void setUpListening()
 	{
-		QualifiedObservableConnector cm = QualifiedObservableConnector
-				.getSingleton();
+		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
 		cm.registerObserver(this, QuestStateReport.class);
 	}
 
