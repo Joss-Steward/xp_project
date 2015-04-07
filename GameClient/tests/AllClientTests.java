@@ -6,7 +6,7 @@ import view.player.PlayerSpriteTest;
 import view.screen.ScreenListenerTest;
 import view.screen.map.ScreenMapInputTest;
 import communication.handlers.ChatMessageHandlerTest;
-import communication.handlers.CurrentQuestStateMessageHandlerTest;
+import communication.handlers.InitializeThisClientsPlayerMessageHandlerTest;
 import communication.handlers.LoginFailedMessageHandlerTest;
 import communication.handlers.MapFileMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
@@ -26,6 +26,7 @@ import edu.ship.shipsim.client.model.CommandLoginFailedTest;
 import edu.ship.shipsim.client.model.CommandLoginTest;
 import edu.ship.shipsim.client.model.CommandMovePlayerTest;
 import edu.ship.shipsim.client.model.CommandNewMapTest;
+import edu.ship.shipsim.client.model.CommandOverwriteExperienceTest;
 import edu.ship.shipsim.client.model.CommandOverwriteQuestStateTest;
 import edu.ship.shipsim.client.model.CommandRemovePlayerTest;
 import edu.ship.shipsim.client.model.CommandSendQuestStateTest;
@@ -38,6 +39,7 @@ import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport
 import edu.ship.shipsim.client.model.reports.AreaCollisionReportTest;
 import edu.ship.shipsim.client.model.reports.ChangeMapReportTest;
 import edu.ship.shipsim.client.model.reports.ChatSentReportTest;
+import edu.ship.shipsim.client.model.reports.ExperiencePointsChangeReportTest;
 import edu.ship.shipsim.client.model.reports.LoginFailedReportTest;
 import edu.ship.shipsim.client.model.reports.LoginInitiatedReportTest;
 import edu.ship.shipsim.client.model.reports.NewMapReportTest;
@@ -58,7 +60,7 @@ import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 {
 		// communication.handlers
 		ChatMessageHandlerTest.class,
-		CurrentQuestStateMessageHandlerTest.class,
+		InitializeThisClientsPlayerMessageHandlerTest.class,
 		LoginFailedMessageHandlerTest.class,
 		MapFileMessageHandlerTest.class,
 		MovementMessageHandlerTest.class,
@@ -83,6 +85,7 @@ import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 		CommandLoginTest.class,
 		CommandMovePlayerTest.class,
 		CommandNewMapTest.class, 
+		CommandOverwriteExperienceTest.class,
 		CommandOverwriteQuestStateTest.class,
 		CommandRemovePlayerTest.class,
 		CommandSendQuestStateTest.class,
@@ -97,6 +100,7 @@ import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 		AreaCollisionReportTest.class,
 		ChangeMapReportTest.class,
 		ChatSentReportTest.class,
+		ExperiencePointsChangeReportTest.class,
 		LoginFailedReportTest.class,
 		LoginInitiatedReportTest.class, 
 		NewMapReportTest.class,

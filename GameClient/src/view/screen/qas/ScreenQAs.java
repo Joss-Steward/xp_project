@@ -65,8 +65,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 */
 	public void setUpListening()
 	{
-		QualifiedObservableConnector cm = QualifiedObservableConnector
-				.getSingleton();
+		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
 		cm.registerObserver(this, QuestStateReport.class);
 	}
 
@@ -130,7 +129,8 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	}
 
 	/**
-	 * TODO right comment
+	 * Update the quest table with whatever we retrieve from the model regarding
+	 * this client player's quests and their states.
 	 * 
 	 * @param quests
 	 *            the list of ClientPlayerQuests quest from ThisClientPlayer
@@ -237,12 +237,10 @@ public class ScreenQAs extends Group implements QualifiedObserver
 		}
 
 		TextButton button = new TextButton(quest.getQuestDescription(), skin);
-		questTable.add(button);
-
-		button.addListener(new ClickListener()
+		button.addListener(new ClickListener() 
 		{
 			@Override
-			public void clicked(InputEvent event, float x, float y)
+			public void clicked(InputEvent evt, float x, float y) 
 			{
 				clearAdventureTable();
 				for (ClientPlayerAdventure a : quest.getAdventureList())
@@ -252,7 +250,6 @@ public class ScreenQAs extends Group implements QualifiedObserver
 					{
 						buildAdvRow(triggered, a.getAdventureDescription());
 					}
-
 					else
 					{
 						buildAdvRow(complete, a.getAdventureDescription());
@@ -260,7 +257,8 @@ public class ScreenQAs extends Group implements QualifiedObserver
 				}
 			}
 		});
-
+		
+		questTable.add(button);
 		questTable.row();
 	}
 

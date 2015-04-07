@@ -5,19 +5,19 @@ package edu.ship.shipsim.areaserver.datasource;
  * @author merlin
  *
  */
-public class AdventureRecord
+public final class AdventureRecord
 {
-	private int adventureID;
-	private String adventureDescription;
-	private int questID;
+	private final int adventureID;
+	private final String adventureDescription;
+	private final int questID;
 	
 	/**
 	 * Create it
+	 * @param questID the unique ID of the quest that contains the adventure
 	 * @param adventureID the adventure's unique ID
 	 * @param adventureDescription the adventure's description
-	 * @param questID the unique ID of the quest that contains the adventure
 	 */
-	public AdventureRecord(int adventureID, String adventureDescription, int questID)
+	public AdventureRecord(int questID, int adventureID, String adventureDescription)
 	{
 		this.adventureID = adventureID;
 		this.adventureDescription = adventureDescription;
@@ -50,5 +50,54 @@ public class AdventureRecord
 	public int getQuestID()
 	{
 		return questID;
+	}
+	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString()
+	{
+		return "Quest " + questID + ":     " + "Adventure  " + adventureID + "      " + adventureDescription;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((adventureDescription == null) ? 0 : adventureDescription.hashCode());
+		result = prime * result + adventureID;
+		result = prime * result + questID;
+		return result;
+	}
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AdventureRecord other = (AdventureRecord) obj;
+		if (adventureDescription == null)
+		{
+			if (other.adventureDescription != null)
+				return false;
+		} else if (!adventureDescription.equals(other.adventureDescription))
+			return false;
+		if (adventureID != other.adventureID)
+			return false;
+		if (questID != other.questID)
+			return false;
+		return true;
 	}
 }

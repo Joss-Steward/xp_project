@@ -1,14 +1,16 @@
 package view.screen.map;
 
+import static view.screen.Screens.DEFAULT_RES;
 import view.player.PlayerSprite;
 import view.player.PlayerSpriteFactory;
 import view.player.PlayerType;
 import view.screen.ScreenBasic;
+import view.screen.popup.PopUpDisplay;
 import view.screen.qas.ScreenQAs;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -39,7 +41,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import data.ChatType;
 import data.Position;
-import static view.screen.Screens.DEFAULT_RES;
 
 /**
  * A basic screen that, for now, just displays the map
@@ -70,6 +71,9 @@ public class ScreenMap extends ScreenBasic
 	private ScreenQAs qaScreen;
 	private ExperienceDisplay expDisplay;
 	private ChatUi chatArea;
+	
+	@SuppressWarnings("unused")
+	private PopUpDisplay popUpDisplay;
 	
 	//tile size that we will be moving in according to the collision masking tileset
 	private Vector2 tileSize;
@@ -155,7 +159,7 @@ public class ScreenMap extends ScreenBasic
 		
 		camera.update();
 		stage.act();
-
+		
 		if (!loading)
 		{
 			Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, 1);
@@ -385,6 +389,11 @@ public class ScreenMap extends ScreenBasic
 		blurBatch = new SpriteBatch();
 		
 		stage = new Stage(new ExtendViewport(DEFAULT_RES[0], DEFAULT_RES[1]));
+		
+
+		popUpDisplay = new PopUpDisplay(stage);
+		
+		Gdx.input.setInputProcessor(stage);
 		defaultCamera = (OrthographicCamera)stage.getCamera();
 		worldStage = new Stage(new ExtendViewport(DEFAULT_RES[0], DEFAULT_RES[1]));
 		worldCamera = (OrthographicCamera)worldStage.getCamera();
@@ -429,8 +438,8 @@ public class ScreenMap extends ScreenBasic
 			}
 		});
 		stage.addActor(chatArea);
-		stage.addActor(qaScreen);
 		stage.addActor(expDisplay);
+		stage.addActor(qaScreen);
 		
 		loadingLayer = new Group();
 		loadingLayer.setSize(stage.getWidth(), stage.getHeight());

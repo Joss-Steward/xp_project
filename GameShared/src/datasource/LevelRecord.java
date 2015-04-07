@@ -1,12 +1,18 @@
 package datasource;
+import java.io.Serializable;
 
 /**
  * Level object class that contains a description and levelUpPoints
  * @author Merlin
  *
  */
-public class LevelRecord implements Comparable<LevelRecord>
+public class LevelRecord implements Comparable<LevelRecord>, Serializable
 {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see java.lang.Object#hashCode()

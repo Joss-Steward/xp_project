@@ -27,11 +27,16 @@ public class ScreenPopUp extends Group
 		pop_close.show(stage);
 	}
 	
-	@SuppressWarnings("javadoc")
+	
+	/**
+	 * @author sl6469
+	 *
+	 */
 	public static class ExitDialog extends Dialog{
 
 		/**
 		 * @param header The name of the popup window
+		 * @param description infomation pop up is displaying
 		 * @param skin The skin the window uses
 		 */
 		public ExitDialog(String header, String description, Skin skin)

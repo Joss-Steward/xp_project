@@ -48,7 +48,7 @@ public class LevelManagerTest
 	
 	/**
 	 * Test the LevelManager's getLevelForPoints method
-	 * @throws DatabaseException 
+	 * @throws DatabaseException  shouldn't
 	 */
 	@Test
 	public void getsRightRange() throws DatabaseException
@@ -59,7 +59,7 @@ public class LevelManagerTest
 	
 	/**
 	 * Test getting the last level with sending in the level up points for level three
-	 * @throws DatabaseException 
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void getsLastLevel() throws DatabaseException

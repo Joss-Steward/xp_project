@@ -1,5 +1,6 @@
 package view.screen.map;
 
+import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 
@@ -8,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+
+import edu.ship.shipsim.client.model.reports.ExperiencePointsChangeReport;
 
 /**
  * @author ck4124
@@ -35,21 +38,22 @@ public class ExperienceDisplay extends Group implements QualifiedObserver
 	
 	private void setUpListening()
 	{
-//		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
-//		cm.registerObserver(this, QuestStateReport.class);
+		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
+		cm.registerObserver(this, ExperiencePointsChangeReport.class);
 	}
 
 
 	private void show()
 	{
-		this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		
 		experienceDisplay = new Table();
 		experienceDisplay.setFillParent(true);
-		experienceDisplay.top().right();
+		this.setSize(100, 50);
 		
+		this.setPosition(Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-50);
+		
+		experienceDisplay.top();
 		experienceDisplay.add(new Label("Experience Display goes here", skin)).row();
-			
+		
 		this.addActor(experienceDisplay);
 	}
 
@@ -113,8 +117,27 @@ public class ExperienceDisplay extends Group implements QualifiedObserver
 	@Override
 	public void receiveReport(QualifiedObservableReport report)
 	{
-		// TODO Auto-generated method stub
+		if (report.getClass().equals(ExperiencePointsChangeReport.class))
+		{
+			ExperiencePointsChangeReport r = (ExperiencePointsChangeReport) report;
+			setExperiencePoints(r.getExperiencePoints());
+			setNumPointsLvlRequries(r.getLevelRecord().getLevelUpPoints());
+			setPlayersLevel(r.getLevelRecord().getDescription());
+			
+			updateExperienceDisplay();
+		}
 		
+	}
+
+	/**
+	 * clears the experiencePoints UI display and sets the new values from the report
+	 */
+	private void updateExperienceDisplay()
+	{
+		experienceDisplay.clear();
+		
+		experienceDisplay.add(new Label(getPlayersLevel() + " " + 
+				getExperiencePoints() + " / " + getNumPointsLvlRequries(), skin)).row();
 	}
 	
 }

@@ -1,40 +1,51 @@
 package view.screen.popup;
 
-import view.screen.ScreenBasic;
-import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
-import edu.ship.shipsim.client.model.reports.QuestStateReport;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
+
+import com.badlogic.gdx.scenes.scene2d.Stage;
+
+import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
 
 /**
  * @author Cody/Scott
  * Sends popup data to constructor from reports observed
  */
-public abstract class PopUpDisplay extends ScreenBasic implements QualifiedObserver
+public class PopUpDisplay implements QualifiedObserver
 {
 
-	
-	@SuppressWarnings("javadoc")
-	@Override
-	public void receiveReport(QualifiedObservableReport report)
+	private Stage stage;
+	/**
+	 * Constructor for pop up display, set up observer
+	 * @param stage stage of screen map
+	 */
+	public PopUpDisplay(Stage stage)
 	{
-		if (report.getClass().equals(QuestStateReport.class))
-		{
-			AdventuresNeedingNotificationReport r = (AdventuresNeedingNotificationReport) report;
-			@SuppressWarnings("unused")
-			ScreenPopUp popup = new ScreenPopUp("Adventure Completed",r.getAdventuresDescriptionList()+" completed", stage);
-		}
+		this.stage = stage;
+		setUpListening();
 	}
 	
 	/**
-	 * Sets up the QualifiedObserver for QuestStateReport
+	 * Sets up the QualifiedObserver for AdventuresNeedingNotificationReport
 	 */
 	public void setUpListening()
 	{
 		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
 		cm.registerObserver(this, AdventuresNeedingNotificationReport.class);
 	}
-
-
+	
+	/**
+	 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
+	 */
+	@Override
+	public void receiveReport(QualifiedObservableReport report)
+	{
+		if (report.getClass().equals(AdventuresNeedingNotificationReport.class))
+		{
+			AdventuresNeedingNotificationReport r = (AdventuresNeedingNotificationReport) report;
+			@SuppressWarnings("unused")
+			ScreenPopUp popup = new ScreenPopUp("Adventure Completed",r.getAdventuresDescriptionList()+" completed", this.stage);
+		}
+	}
 }
