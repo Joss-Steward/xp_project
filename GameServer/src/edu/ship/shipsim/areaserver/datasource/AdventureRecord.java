@@ -57,7 +57,7 @@ public final class AdventureRecord
 	 */
 	public String toString()
 	{
-		return questID + ":" + adventureID + " " + adventureDescription;
+		return "Quest " + questID + ":     " + "Adventure  " + adventureID + "      " + adventureDescription;
 	}
 
 	/**
