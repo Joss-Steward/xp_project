@@ -10,6 +10,7 @@ import model.QualifiedObserver;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import datasource.AdventureStateEnum;
@@ -237,12 +239,10 @@ public class ScreenQAs extends Group implements QualifiedObserver
 		}
 
 		TextButton button = new TextButton(quest.getQuestDescription(), skin);
-		questTable.add(button);
-
-		button.addListener(new ClickListener()
+		button.addListener(new ClickListener() 
 		{
 			@Override
-			public void clicked(InputEvent event, float x, float y)
+			public void clicked(InputEvent evt, float x, float y) 
 			{
 				clearAdventureTable();
 				for (ClientPlayerAdventure a : quest.getAdventureList())
@@ -252,7 +252,6 @@ public class ScreenQAs extends Group implements QualifiedObserver
 					{
 						buildAdvRow(triggered, a.getAdventureDescription());
 					}
-
 					else
 					{
 						buildAdvRow(complete, a.getAdventureDescription());
@@ -260,7 +259,8 @@ public class ScreenQAs extends Group implements QualifiedObserver
 				}
 			}
 		});
-
+		
+		questTable.add(button);
 		questTable.row();
 	}
 

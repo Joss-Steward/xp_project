@@ -155,7 +155,7 @@ public class ScreenMap extends ScreenBasic
 		
 		camera.update();
 		stage.act();
-
+		
 		if (!loading)
 		{
 			Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, 1);
@@ -385,6 +385,7 @@ public class ScreenMap extends ScreenBasic
 		blurBatch = new SpriteBatch();
 		
 		stage = new Stage(new ExtendViewport(DEFAULT_RES[0], DEFAULT_RES[1]));
+		Gdx.input.setInputProcessor(stage);
 		defaultCamera = (OrthographicCamera)stage.getCamera();
 		worldStage = new Stage(new ExtendViewport(DEFAULT_RES[0], DEFAULT_RES[1]));
 		worldCamera = (OrthographicCamera)worldStage.getCamera();

@@ -45,11 +45,11 @@ public class ExperienceDisplay extends Group implements QualifiedObserver
 
 	private void show()
 	{
-		this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		experienceDisplay = new Table();
 		experienceDisplay.setFillParent(true);
 		experienceDisplay.top().right();
+		this.setSize(300, 50);
 		
 		experienceDisplay.add(new Label("Experience Display goes here", skin)).row();
 			
