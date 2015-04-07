@@ -10,7 +10,6 @@ import model.QualifiedObserver;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -19,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import datasource.AdventureStateEnum;
@@ -131,7 +129,8 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	}
 
 	/**
-	 * TODO right comment
+	 * Update the quest table with whatever we retrieve from the model regarding
+	 * this client player's quests and their states.
 	 * 
 	 * @param quests
 	 *            the list of ClientPlayerQuests quest from ThisClientPlayer
