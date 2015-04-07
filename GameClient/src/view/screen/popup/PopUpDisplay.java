@@ -3,21 +3,26 @@ package view.screen.popup;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
-import view.screen.ScreenBasic;
+
+import com.badlogic.gdx.scenes.scene2d.Stage;
+
 import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
 
 /**
  * @author Cody/Scott
  * Sends popup data to constructor from reports observed
  */
-public class PopUpDisplay extends ScreenBasic implements QualifiedObserver
+public class PopUpDisplay implements QualifiedObserver
 {
 
+	private Stage stage;
 	/**
-	 * Constructor for pop up display, set up oberserver
+	 * Constructor for pop up display, set up observer
+	 * @param stage stage of screen map
 	 */
-	public PopUpDisplay()
+	public PopUpDisplay(Stage stage)
 	{
+		this.stage = stage;
 		setUpListening();
 	}
 	
@@ -40,71 +45,7 @@ public class PopUpDisplay extends ScreenBasic implements QualifiedObserver
 		{
 			AdventuresNeedingNotificationReport r = (AdventuresNeedingNotificationReport) report;
 			@SuppressWarnings("unused")
-			ScreenPopUp popup = new ScreenPopUp("Adventure Completed",r.getAdventuresDescriptionList()+" completed", stage);
+			ScreenPopUp popup = new ScreenPopUp("Adventure Completed",r.getAdventuresDescriptionList()+" completed", this.stage);
 		}
 	}
-
-	/**
-	 * @see com.badlogic.gdx.Screen#render(float)
-	 */
-	@Override
-	public void render(float delta)
-	{
-		
-	}
-
-	/**
-	 * @see com.badlogic.gdx.Screen#resize(int, int)
-	 */
-	@Override
-	public void resize(int width, int height)
-	{
-		
-	}
-
-	/**
-	 * @see com.badlogic.gdx.Screen#show()
-	 */
-	@Override
-	public void show()
-	{
-		
-	}
-
-	/**
-	 * @see com.badlogic.gdx.Screen#hide()
-	 */
-	@Override
-	public void hide()
-	{
-		
-	}
-
-	/**
-	 * @see com.badlogic.gdx.Screen#pause()
-	 */
-	@Override
-	public void pause()
-	{
-		
-	}
-
-	/**
-	 * @see com.badlogic.gdx.Screen#resume()
-	 */
-	@Override
-	public void resume()
-	{
-		
-	}
-
-	/**
-	 * @see com.badlogic.gdx.Screen#dispose()
-	 */
-	@Override
-	public void dispose()
-	{
-		
-	}
-
 }

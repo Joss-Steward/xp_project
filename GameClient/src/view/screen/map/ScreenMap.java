@@ -5,6 +5,7 @@ import view.player.PlayerSprite;
 import view.player.PlayerSpriteFactory;
 import view.player.PlayerType;
 import view.screen.ScreenBasic;
+import view.screen.popup.PopUpDisplay;
 import view.screen.qas.ScreenQAs;
 
 import com.badlogic.gdx.Gdx;
@@ -71,7 +72,8 @@ public class ScreenMap extends ScreenBasic
 	private ExperienceDisplay expDisplay;
 	private ChatUi chatArea;
 	
-	//private PopUpDisplay popUpDisplay;
+	@SuppressWarnings("unused")
+	private PopUpDisplay popUpDisplay;
 	
 	//tile size that we will be moving in according to the collision masking tileset
 	private Vector2 tileSize;
@@ -381,13 +383,16 @@ public class ScreenMap extends ScreenBasic
 	public void show()
 	{
 		expDisplay = new ExperienceDisplay();
-		//popUpDisplay = new PopUpDisplay();
 		qaScreen = new ScreenQAs();
 		
 		worldStage = new Stage();
 		blurBatch = new SpriteBatch();
 		
 		stage = new Stage(new ExtendViewport(DEFAULT_RES[0], DEFAULT_RES[1]));
+		
+
+		popUpDisplay = new PopUpDisplay(stage);
+		
 		Gdx.input.setInputProcessor(stage);
 		defaultCamera = (OrthographicCamera)stage.getCamera();
 		worldStage = new Stage(new ExtendViewport(DEFAULT_RES[0], DEFAULT_RES[1]));
