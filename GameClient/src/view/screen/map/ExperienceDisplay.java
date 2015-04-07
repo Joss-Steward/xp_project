@@ -47,11 +47,13 @@ public class ExperienceDisplay extends Group implements QualifiedObserver
 	{
 		experienceDisplay = new Table();
 		experienceDisplay.setFillParent(true);
-		experienceDisplay.top().right();
-		this.setSize(300, 50);
+		this.setSize(100, 50);
 		
+		this.setPosition(Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-50);
+		
+		experienceDisplay.top();
 		experienceDisplay.add(new Label("Experience Display goes here", skin)).row();
-			
+		
 		this.addActor(experienceDisplay);
 	}
 
