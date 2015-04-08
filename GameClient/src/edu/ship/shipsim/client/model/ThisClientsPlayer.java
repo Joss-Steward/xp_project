@@ -88,8 +88,11 @@ public class ThisClientsPlayer extends Player
 			}
 		}
 		
-		AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(adventuresDescriptions);
-		QualifiedObservableConnector.getSingleton().sendReport(report);
+		if(!adventuresDescriptions.isEmpty())
+		{
+			AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(adventuresDescriptions);
+			QualifiedObservableConnector.getSingleton().sendReport(report);
+		}
 	}
 
 	/**
