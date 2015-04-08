@@ -3,6 +3,7 @@ import java.util.List;
 
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -11,27 +12,31 @@ import javax.swing.event.ListSelectionListener;
 import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
 
 /**
- * Creates a window containing a list of Pending Adventures 
+ * Creates a window containing a list of Pending Adventures
+ * 
  * @author Olivia and LaVonne
  *
  */
-public class AdventureJList extends JList<AdventureRecord>
+public class AdventureJList extends JPanel
 {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JList<Object> list;
-
+	private JList<AdventureRecord> list;
 	/**
 	 * Constructs a new object based upon the parameter adventures
-	 * @param adventures
-	 * 					the list of pending adventures for one PlayerID
+	 * 
+	 * @param advs
+	 *            the list of pending adventures for one PlayerID
 	 */
-	public AdventureJList(List<AdventureRecord> adventures) 
+	public AdventureJList(final List<AdventureRecord> advs)
 	{
-		setLayout(new BorderLayout());
-		list = new JList<Object>(adventures.toArray());
+		this.list = new JList<AdventureRecord>();
+		list.setLayout(new BorderLayout());
+		list = new JList<AdventureRecord>();
+
+		setListData(advs);
 		JScrollPane pane = new JScrollPane(list);
 
 		DefaultListSelectionModel model = new DefaultListSelectionModel();
@@ -43,19 +48,19 @@ public class AdventureJList extends JList<AdventureRecord>
 		{
 			@SuppressWarnings("deprecation")
 			@Override
-			public void valueChanged(ListSelectionEvent event) 
+			public void valueChanged(ListSelectionEvent event)
 			{
 				boolean adjust = event.getValueIsAdjusting();
-				
-				if(!adjust)
+
+				if (!adjust)
 				{
 					@SuppressWarnings("unchecked")
 					JList<String> l = (JList<String>) event.getSource();
 					int selections[] = l.getSelectedIndices();
 					Object selectionValues[] = l.getSelectedValues();
-					
+
 					System.out.println("Selections: ");
-					for(int i = 0, n = selections.length; i < n; i++)
+					for (int i = 0, n = selections.length; i < n; i++)
 					{
 						System.out.println(selectionValues[i] + " ");
 					}
@@ -64,6 +69,27 @@ public class AdventureJList extends JList<AdventureRecord>
 
 		});
 		add(pane, BorderLayout.NORTH);
+	}
+
+	/**
+	 * @return the items that are selected in the list
+	 */
+	List<AdventureRecord> getSelectedItems()
+	{
+		return list.getSelectedValuesList();
+	}
+
+	/**
+	 * @param advs the adventure records we should have in the list
+	 */
+	void setListData(List<AdventureRecord> advs)
+	{
+		AdventureRecord[] x = new AdventureRecord[advs.size()];
+		for (int i = 0; i < x.length; i++)
+		{
+			x[i] = advs.get(i);
+		}
+		list.setListData(x);
 	}
 
 }

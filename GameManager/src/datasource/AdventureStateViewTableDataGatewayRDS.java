@@ -8,6 +8,7 @@ import java.util.List;
 
 import model.DatabaseManager;
 import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
+import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayRDS;
 
 /**
  * A table data gateway that feels like it is a gateway into a view (for now it
@@ -35,8 +36,9 @@ public class AdventureStateViewTableDataGatewayRDS
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
 					connection,
 					"SELECT * FROM Adventures INNER JOIN AdventureStates ON Adventures.QuestID = AdventureStates.QuestID AND Adventures.AdventureID = AdventureStates.AdventureID"
-							+ " WHERE adventureState = ?");
+							+ " WHERE adventureState = ? AND playerID = ?");
 			stmt.setInt(1, AdventureStateEnum.PENDING.ordinal());
+			stmt.setInt(2, playerID);
 			ResultSet result = stmt.executeQuery();
 			while (result.next())
 			{
@@ -52,5 +54,18 @@ public class AdventureStateViewTableDataGatewayRDS
 			throw new DatabaseException("Unable to retrieve pending adventures for player #" + playerID, e);
 		}
 		return records;
+	}
+
+	/**
+	 * Change the state of an adventure for a given player to needing notification
+	 * @param playerID the player
+	 * @param questID the quest containing the adventure
+	 * @param adventureID the adventure
+	 * @throws DatabaseException if we fail talking to the database
+	 */
+	public static void moveToNeedNotification(int playerID, int questID, int adventureID) throws DatabaseException
+	{
+		AdventureStateTableDataGatewayRDS.getSingleton().updateState(playerID, questID, adventureID, AdventureStateEnum.NEED_NOTIFICATION);
+		
 	}
 }
