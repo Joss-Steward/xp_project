@@ -27,7 +27,7 @@ public enum QuestsForTest
 	private String questDescription;
 	private String mapName;
 	private Position position;
-	private int adventuersForFulfillment;
+	private int adventuresForFulfillment;
 	private int experienceGained;
 
 	/**
@@ -52,15 +52,15 @@ public enum QuestsForTest
 		this.mapName = mapName;
 		this.position = position;
 		this.experienceGained = experienceGained;
-		this.adventuersForFulfillment = adventuresForFulfillment;
+		this.adventuresForFulfillment = adventuresForFulfillment;
 	}
 
 	/**
 	 * @return the number of adventures you must complete to fulfill the quest
 	 */
-	public int getAdventuersForFulfillment()
+	public int getAdventuresForFulfillment()
 	{
-		return adventuersForFulfillment;
+		return adventuresForFulfillment;
 	}
 
 	/**

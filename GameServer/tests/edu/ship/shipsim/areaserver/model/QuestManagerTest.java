@@ -77,8 +77,13 @@ public class QuestManagerTest
 	public void testGettingOneQuest() throws DatabaseException
 	{
 		QuestManager qm = QuestManager.getSingleton();
-		assertEquals(1, qm.getQuest(1).getQuestID());
-		assertEquals("A Big Quest", qm.getQuest(1).getDescription());
+		QuestsForTest expected = QuestsForTest.ONE_BIG_QUEST;
+		Quest actual = qm.getQuest(1);
+		assertEquals(expected.getQuestID(), actual.getQuestID());
+		assertEquals(expected.getQuestDescription(), actual.getDescription());
+		assertEquals(expected.getMapName(), actual.getMapName());
+		assertEquals(expected.getAdventuresForFulfillment(), actual.getAdventuresForFulfillment());
+		assertEquals(expected.getExperienceGained(), actual.getExperiencePointsGained());
 	}
 
 	/**

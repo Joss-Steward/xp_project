@@ -49,7 +49,7 @@ import edu.ship.shipsim.areaserver.model.PlayerManagerTest;
 import edu.ship.shipsim.areaserver.model.PlayerMapperTest;
 import edu.ship.shipsim.areaserver.model.PlayerTest;
 import edu.ship.shipsim.areaserver.model.QuestManagerTest;
-import edu.ship.shipsim.areaserver.model.QuestModelTest;
+import edu.ship.shipsim.areaserver.model.QuestTest;
 import edu.ship.shipsim.areaserver.model.QuestStateTest;
 import edu.ship.shipsim.areaserver.model.QuizBotBehaviorTest;
 import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReportTest;
@@ -135,7 +135,7 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		PlayerMapperTest.class,
 		PlayerTest.class,
 		QuestManagerTest.class,
-		QuestModelTest.class,
+		QuestTest.class,
 		QuestStateTest.class,
 		QuizBotBehaviorTest.class,
 		

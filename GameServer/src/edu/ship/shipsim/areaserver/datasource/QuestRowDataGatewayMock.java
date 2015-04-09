@@ -194,7 +194,7 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 					p.getQuestID(),
 					new QuestData(p.getQuestID(), p.getQuestDescription(),
 							p.getMapName(), p.getPosition(), p.getExperienceGained(), p
-									.getAdventuersForFulfillment()));
+									.getAdventuresForFulfillment()));
 		}
 	}
 

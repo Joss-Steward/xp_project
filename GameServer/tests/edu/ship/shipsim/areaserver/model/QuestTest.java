@@ -15,7 +15,7 @@ import edu.ship.shipsim.areaserver.model.Quest;
  * @author Scott Lantz, LaVonne Diller
  *
  */
-public class QuestModelTest {
+public class QuestTest {
 
 	/**
 	 * Test the initialization of Quests and its parameters
@@ -29,13 +29,15 @@ public class QuestModelTest {
 		
 		Position pos = new Position(33,44);
 		
-		Quest q = new Quest(245,"I am a description","HappyZone",pos, adventures);
+		Quest q = new Quest(245,"I am a description","HappyZone",pos, adventures, 42, 13);
 		
 		assertEquals(245,q.getQuestID());
 		assertEquals("I am a description", q.getDescription());
 		assertEquals("HappyZone",q.getMapName());
 		assertEquals(pos,q.getPos());
 		assertNotNull(q.getAdventures().contains(adventures));
+		assertEquals(42, q.getExperiencePointsGained());
+		assertEquals(13, q.getAdventuresForFulfillment());
 	}
 
 	/**
@@ -44,7 +46,7 @@ public class QuestModelTest {
 	@Test
 	public void testSetters()
 	{
-		Quest q = new Quest(-1, null,null,null,null);
+		Quest q = new Quest(-1, null,null,null,null, 42, 45);
 		ArrayList<Adventure> adventures = new ArrayList<Adventure>();
 		adventures.add(new Adventure(42,"Merlin Zone"));
 		adventures.add(new Adventure(420,"Library Quest"));

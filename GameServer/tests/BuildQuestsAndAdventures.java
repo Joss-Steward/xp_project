@@ -70,7 +70,7 @@ public class BuildQuestsAndAdventures
 		{
 			new QuestRowDataGatewayRDS(quest.getQuestID(), quest.getQuestDescription(),
 					quest.getMapName(), quest.getPosition(), quest.getExperienceGained(),
-					quest.getAdventuersForFulfillment());
+					quest.getAdventuresForFulfillment());
 			;
 		}
 	}

@@ -91,15 +91,17 @@ public class QuestManager implements QualifiedObserver
 
 		ArrayList<Adventure> adventureList = new ArrayList<Adventure>();
 
-		for (AdventureRecord ar : adventureGateway
-				.getAdventuresForQuest(questID))
+		for (AdventureRecord ar : adventureGateway.getAdventuresForQuest(questID))
 		{
 			adventureList.add(new Adventure(ar.getAdventureID(), ar
 					.getAdventureDescription()));
 		}
 
 		Quest quest = new Quest(questGateway.getQuestID(),
-				questGateway.getQuestDescription(), null, null, adventureList);
+				questGateway.getQuestDescription(), questGateway.getTriggerMapName(), questGateway.getTriggerPosition(), adventureList,
+				questGateway.getExperiencePointsGained(),
+				questGateway.getAdventuresForFulfillment());
+
 		return quest;
 	}
 
@@ -119,12 +121,10 @@ public class QuestManager implements QualifiedObserver
 	{
 		if (OptionsManager.getSingleton().isTestMode())
 		{
-			return QuestRowDataGatewayMock.findQuestsForMapLocation(mapName,
-					pos);
+			return QuestRowDataGatewayMock.findQuestsForMapLocation(mapName, pos);
 		} else
 		{
-			return QuestRowDataGatewayRDS
-					.findQuestsForMapLocation(mapName, pos);
+			return QuestRowDataGatewayRDS.findQuestsForMapLocation(mapName, pos);
 		}
 	}
 
@@ -227,7 +227,9 @@ public class QuestManager implements QualifiedObserver
 
 	/**
 	 * Remove all of the quest states for a given player
-	 * @param playerID the player we are removing
+	 * 
+	 * @param playerID
+	 *            the player we are removing
 	 */
 	public void removeQuestStatesForPlayer(int playerID)
 	{

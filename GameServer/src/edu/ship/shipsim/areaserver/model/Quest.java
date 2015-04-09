@@ -12,11 +12,13 @@ import data.Position;
  */
 public class Quest 
 {
-	private String q_description;
-	private ArrayList<Adventure> list_adventures;
-	private int q_id;
-	private String q_mapName;
-	private Position q_position;
+	private String description;
+	private ArrayList<Adventure> adventures;
+	private int questID;
+	private String mapName;
+	private Position position;
+	private int experiencePointsGained;
+	private int adventuresForFulfillment;
 
 	/**
 	 * Creates a Quest Object
@@ -25,14 +27,18 @@ public class Quest
 	 * @param map the map that the quest is on
 	 * @param pos position of the quest
 	 * @param adventures the list of adventures
+	 * @param experiencePointsGained the number of points we get when we fulfill this quest
+	 * @param adventuresForFulfillment the number of adventures we have to complete to fulfill this quest
 	 */
-	public Quest(int id, String desc, String map, Position pos, ArrayList<Adventure> adventures) 
+	public Quest(int id, String desc, String map, Position pos, ArrayList<Adventure> adventures, int experiencePointsGained, int adventuresForFulfillment) 
 	{
-		this.q_id = id;
-		this.q_description = desc;
-		this.q_mapName = map;
-		this.q_position = pos;
-		this.list_adventures = adventures;
+		this.questID = id;
+		this.description = desc;
+		this.mapName = map;
+		this.position = pos;
+		this.adventures = adventures;
+		this.experiencePointsGained = experiencePointsGained;
+		this.adventuresForFulfillment = adventuresForFulfillment;
 	}
 
 	/**
@@ -40,7 +46,7 @@ public class Quest
 	 */
 	public String getDescription() 
 	{
-		return this.q_description;
+		return this.description;
 	}
 	
 	/**
@@ -48,7 +54,7 @@ public class Quest
 	 */
 	public ArrayList<Adventure> getAdventures() 
 	{
-		return list_adventures;
+		return adventures;
 	}
 
 	/**
@@ -57,7 +63,7 @@ public class Quest
 	 */
 	public void setDescription(String newDesc) 
 	{
-		this.q_description = newDesc;
+		this.description = newDesc;
 	}
 
 	/**
@@ -66,7 +72,7 @@ public class Quest
 	 */
 	public void setAdventures(ArrayList<Adventure> adventures) 
 	{
-		this.list_adventures = adventures;
+		this.adventures = adventures;
 	}
 
 	/**
@@ -74,7 +80,7 @@ public class Quest
 	 */
 	public int getQuestID() 
 	{
-		return this.q_id;
+		return this.questID;
 	}
 
 	/**
@@ -83,7 +89,7 @@ public class Quest
 	 */
 	public void setQuestID(int newId) 
 	{
-		this.q_id = newId;	
+		this.questID = newId;	
 	}
 
 	/**
@@ -91,7 +97,7 @@ public class Quest
 	 * @return map name
 	 */
 	public String getMapName() {
-		return q_mapName;
+		return mapName;
 	}
 
 	/**
@@ -99,7 +105,7 @@ public class Quest
 	 * @param mapName the map that the quest is on
 	 */
 	public void setMapName(String mapName) {
-		this.q_mapName = mapName;
+		this.mapName = mapName;
 	}
 
 	/**
@@ -107,7 +113,7 @@ public class Quest
 	 * @return position of quest
 	 */
 	public Position getPos() {
-		return q_position;
+		return position;
 	}
 
 	/**
@@ -115,7 +121,7 @@ public class Quest
 	 * @param pos position of the quest
 	 */
 	public void setPos(Position pos) {
-		this.q_position = pos;
+		this.position = pos;
 	}
 	
 	/**
@@ -125,7 +131,7 @@ public class Quest
 	 */
 	public String getAdventureDescription(int adventureID)
 	{
-		for(Adventure a: list_adventures)
+		for(Adventure a: adventures)
 		{
 			if(a.getID() == adventureID)
 			{
@@ -135,6 +141,22 @@ public class Quest
 		
 		return null;
 		
+	}
+
+	/**
+	 * @return the number of adventures necessary to fulfill this quest
+	 */
+	public int getAdventuresForFulfillment()
+	{
+		return adventuresForFulfillment;
+	}
+
+	/**
+	 * @return the number of experience points gained when we fulfill this quest
+	 */
+	public int getExperiencePointsGained()
+	{
+		return experiencePointsGained;
 	}
 	
 }
