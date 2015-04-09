@@ -34,6 +34,7 @@ public class AdventureJList extends JPanel
 	{
 		this.list = new JList<AdventureRecord>();
 		list.setLayout(new BorderLayout());
+		list.setFixedCellWidth(50);
 		list = new JList<AdventureRecord>();
 
 		setListData(advs);

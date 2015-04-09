@@ -1,16 +1,24 @@
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import model.PlayerID;
+import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.GlazedLists;
+import ca.odell.glazedlists.TextFilterator;
+import ca.odell.glazedlists.swing.AutoCompleteSupport;
 import datasource.AdventureStateViewTableDataGatewayRDS;
 import datasource.DatabaseException;
 import datasource.PlayerLoginTableDataGatewayRDS;
@@ -29,6 +37,7 @@ public class AdventureStateManager
 	private PlayerID lastSelectedPlayerID;
 	private JPanel adventureCompletionPanel;
 	private AdventureJList adventureList;
+	private JComboBox<PlayerID> comboBox;
 
 	/**
 	 * 
@@ -38,17 +47,84 @@ public class AdventureStateManager
 	public AdventureStateManager() throws DatabaseException
 	{
 		window = new JFrame("Adventure Manager");
-		window.setLayout(new FlowLayout());
+		window.setLayout(new BorderLayout());
 
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		AutoCompletePlayerJComboBox studentCombo = buildNameComboBox();
-		window.add(studentCombo);
+		try
+		{
+			SwingUtilities.invokeAndWait(setUpStudentComboBox);
+		} catch (InvocationTargetException | InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+
+		JPanel studentPanel = new JPanel();
+		studentPanel.add(comboBox);
+		window.add(studentPanel, BorderLayout.WEST);
 		adventureCompletionPanel = buildAdventureCompletionPanel();
-		window.add(adventureCompletionPanel);
+		window.add(adventureCompletionPanel, BorderLayout.EAST);
 
 		window.pack();
 		window.setVisible(true);
+	}
+
+	private final Runnable setUpStudentComboBox = new Runnable()
+	{
+		public void run()
+		{
+
+			comboBox = new JComboBox<PlayerID>();
+			comboBox.addItemListener(new ItemListener()
+			{
+				public void itemStateChanged(ItemEvent arg0)
+				{
+					if (arg0.getStateChange() == ItemEvent.SELECTED)
+					{
+						if (!arg0.getItem().equals(lastSelectedPlayerID))
+						{
+							lastSelectedPlayerID = (PlayerID) arg0.getItem();
+							if (lastSelectedPlayerID.getPlayerID() > 0)
+							{
+								System.out.println("Selected "
+										+ lastSelectedPlayerID.getPlayerID() + " "
+										+ lastSelectedPlayerID.getPlayerName());
+
+								reloadAdventureList();
+
+							}
+						}
+					}
+				}
+
+			});
+
+			try
+			{
+				List<PlayerID> playerIDs = PlayerLoginTableDataGatewayRDS
+						.getPlayerIDList();
+				final EventList<PlayerID> playerIDEvents = GlazedLists
+						.eventList(playerIDs);
+
+				AutoCompleteSupport.install(comboBox, playerIDEvents,
+						new PlayerIDTextFilterator());
+				// support.setStrict(true);
+			} catch (DatabaseException e)
+			{
+				e.printStackTrace();
+			}
+
+			System.out.println("Is editable - " + comboBox.isEditable() + ". Surprise!");
+		}
+	};
+
+	private static final class PlayerIDTextFilterator implements TextFilterator<PlayerID>
+	{
+		public void getFilterStrings(List<String> baseList, PlayerID element)
+		{
+			final String name = element.getPlayerName();
+			baseList.add(name);
+		}
 	}
 
 	private JPanel buildAdventureCompletionPanel() throws DatabaseException
@@ -73,7 +149,6 @@ public class AdventureStateManager
 								rec.getAdventureID());
 					} catch (DatabaseException e)
 					{
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -95,49 +170,20 @@ public class AdventureStateManager
 			AdventureJList adventureList = new AdventureJList(adventures);
 			return adventureList;
 		}
-		return new AdventureJList(new ArrayList<AdventureRecord>());
-	}
-
-	private AutoCompletePlayerJComboBox buildNameComboBox() throws DatabaseException
-	{
-		List<PlayerID> names = PlayerLoginTableDataGatewayRDS.getPlayerIDList();
-		SearchablePlayerIDList playerNames = new SearchablePlayerIDList(names);
-		AutoCompletePlayerJComboBox studentCombo = new AutoCompletePlayerJComboBox(
-				playerNames);
-
-		studentCombo.addItemListener(new ItemListener()
-		{
-			public void itemStateChanged(ItemEvent arg0)
-			{
-				if (arg0.getStateChange() == ItemEvent.SELECTED)
-				{
-					if (!arg0.getItem().equals(lastSelectedPlayerID))
-					{
-						lastSelectedPlayerID = (PlayerID) arg0.getItem();
-						if (lastSelectedPlayerID.getPlayerID() > 0)
-						{
-							System.out.println("Selected "
-									+ lastSelectedPlayerID.getPlayerID() + " "
-									+ lastSelectedPlayerID.getPlayerName());
-
-							reloadAdventureList();
-
-						}
-					}
-				}
-			}
-
-		});
-
-		return studentCombo;
+		AdventureJList adventureJList = new AdventureJList(
+				new ArrayList<AdventureRecord>());
+		return adventureJList;
 	}
 
 	private void reloadAdventureList()
 	{
 		try
 		{
-			adventureList.setListData(AdventureStateViewTableDataGatewayRDS
-					.getPendingAdventureRecords(lastSelectedPlayerID.getPlayerID()));
+			if (lastSelectedPlayerID != null && adventureList != null)
+			{
+				adventureList.setListData(AdventureStateViewTableDataGatewayRDS
+						.getPendingAdventureRecords(lastSelectedPlayerID.getPlayerID()));
+			}
 		} catch (DatabaseException e)
 		{
 			e.printStackTrace();
