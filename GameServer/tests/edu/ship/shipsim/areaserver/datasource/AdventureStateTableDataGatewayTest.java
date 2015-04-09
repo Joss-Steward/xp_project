@@ -51,8 +51,8 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 		assertEquals(2, records.size());
 		AdventureStateRecord record = records.get(0);
 		// the records could be in either order
-		AdventureStatesForTest first = AdventureStatesForTest.PLAYER1_QUEST1_ADV1;
-		AdventureStatesForTest other = AdventureStatesForTest.PLAYER1_QUEST2_ADV2;
+		AdventureStatesForTest first = AdventureStatesForTest.PLAYER1_QUEST2_ADV2;
+		AdventureStatesForTest other = AdventureStatesForTest.PLAYER1_QUEST3_ADV1;
 		if (record.getAdventureID() == first.getAdventureID())
 		{
 			assertEquals(first.getState(), record.getState());
