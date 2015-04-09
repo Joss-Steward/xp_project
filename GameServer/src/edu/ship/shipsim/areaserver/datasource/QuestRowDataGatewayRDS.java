@@ -38,7 +38,7 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 			stmt = new ClosingPreparedStatement(
 					connection,
 					"Create TABLE Quests (questID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questDescription VARCHAR(80), triggerMapName VARCHAR(80),"
-							+ " triggerRow INT, triggerColumn INT)");
+							+ " triggerRow INT, triggerColumn INT, experiencePointsGained INT, adventuresForFulfillment INT)");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -51,6 +51,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	private String triggerMapName;
 	private Position triggerPosition;
 	private Connection connection;
+	private int experiencePointsGained;
+	private int adventuresForFulfillment;
 
 	/**
 	 * Finder constructor
@@ -75,6 +77,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 			this.triggerMapName = result.getString("triggerMapName");
 			this.triggerPosition = new Position(result.getInt("triggerRow"),
 					result.getInt("triggerColumn"));
+			this.experiencePointsGained = result.getInt("experiencePointsGained");
+			this.adventuresForFulfillment = result.getInt("adventuresForFulfillment");
 		} catch (SQLException e)
 		{
 			throw new DatabaseException("Couldn't find a quest with ID " + questID, e);
@@ -93,11 +97,13 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	 *            this quest
 	 * @param triggerPosition
 	 *            the coordinates of the trigger location for this quest
+	 * @param experiencePointsGained TODO
+	 * @param adventuresForFulfillment TODO
 	 * @throws DatabaseException
 	 *             if we can't talk to the RDS
 	 */
 	public QuestRowDataGatewayRDS(int questID, String questDescription,
-			String triggerMapName, Position triggerPosition) throws DatabaseException
+			String triggerMapName, Position triggerPosition, int experiencePointsGained, int adventuresForFulfillment) throws DatabaseException
 	{
 		this.questID = questID;
 		Connection connection = DatabaseManager.getSingleton().getConnection();
@@ -105,12 +111,15 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
 					connection,
-					"Insert INTO Quests SET questID = ?, questDescription = ?, triggerMapname = ?, triggerRow = ?, triggerColumn = ?");
+					"Insert INTO Quests SET questID = ?, questDescription = ?, triggerMapname = ?, triggerRow = ?, triggerColumn = ?, " + 
+					"experiencePointsGained = ?, adventuresForFulfillment = ?");
 			stmt.setInt(1, questID);
 			stmt.setString(2, questDescription);
 			stmt.setString(3, triggerMapName);
 			stmt.setInt(4, triggerPosition.getRow());
 			stmt.setInt(5, triggerPosition.getColumn());
+			stmt.setInt(6, experiencePointsGained);
+			stmt.setInt(7, adventuresForFulfillment);
 			stmt.executeUpdate();
 
 			this.questDescription = questDescription;
@@ -206,6 +215,24 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 			throw new DatabaseException("Couldn't find a quests for map named " + mapName
 					+ " and position " + position, e);
 		}
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestRowDataGateway#getAdventuresForFulfillment()
+	 */
+	@Override
+	public int getAdventuresForFulfillment()
+	{
+		return adventuresForFulfillment;
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestRowDataGateway#getExperiencePointsGained()
+	 */
+	@Override
+	public int getExperiencePointsGained()
+	{
+		return experiencePointsGained;
 	}
 
 }

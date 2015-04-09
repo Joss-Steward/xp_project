@@ -41,21 +41,25 @@ public class BuildQuestsAndAdventures
 		QuestStateTableDataGatewayRDS.getSingleton().createTable();
 		for (QuestStatesForTest quest : QuestStatesForTest.values())
 		{
-			QuestStateTableDataGatewayRDS.getSingleton().createRow(quest.getPlayerID(), quest.getQuestID(),quest.getState());
+			QuestStateTableDataGatewayRDS.getSingleton().createRow(quest.getPlayerID(),
+					quest.getQuestID(), quest.getState());
 		}
 	}
-	
+
 	private static void createAdventureStateTable() throws DatabaseException
 	{
 		AdventureStateTableDataGatewayRDS.getSingleton().createTable();
 		for (AdventureStatesForTest adventure : AdventureStatesForTest.values())
 		{
-			AdventureStateTableDataGatewayRDS.getSingleton().createRow(adventure.getPlayerID(),adventure.getQuestID(), adventure.getAdventureID(), adventure.getState());
+			AdventureStateTableDataGatewayRDS.getSingleton().createRow(
+					adventure.getPlayerID(), adventure.getQuestID(),
+					adventure.getAdventureID(), adventure.getState());
 		}
 	}
 
 	/**
 	 * Create a table of quests
+	 * 
 	 * @throws SQLException
 	 * @throws DatabaseException
 	 */
@@ -64,11 +68,16 @@ public class BuildQuestsAndAdventures
 		QuestRowDataGatewayRDS.createTable();
 		for (QuestsForTest quest : QuestsForTest.values())
 		{
-			new QuestRowDataGatewayRDS(quest.getQuestID(),quest.getQuestDescription(), quest.getMapName(), quest.getPosition());
+			new QuestRowDataGatewayRDS(quest.getQuestID(), quest.getQuestDescription(),
+					quest.getMapName(), quest.getPosition(), quest.getExperienceGained(),
+					quest.getAdventuersForFulfillment());
+			;
 		}
 	}
+
 	/**
 	 * Create a table of adventures
+	 * 
 	 * @throws SQLException
 	 * @throws DatabaseException
 	 */
@@ -77,8 +86,8 @@ public class BuildQuestsAndAdventures
 		AdventureTableDataGatewayRDS.createTable();
 		for (AdventuresForTest adventure : AdventuresForTest.values())
 		{
-			AdventureTableDataGatewayRDS.createRow(adventure.getAdventureID(),adventure.getAdventureDescription(),
-					adventure.getQuestID());
+			AdventureTableDataGatewayRDS.createRow(adventure.getAdventureID(),
+					adventure.getAdventureDescription(), adventure.getQuestID());
 		}
 	}
 }

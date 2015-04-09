@@ -37,4 +37,14 @@ public interface QuestRowDataGateway
 	 */
 	public Position getTriggerPosition();
 
+	/**
+	 * @return the number of adventures you must complete to fulfill this quest
+	 */
+	public int getAdventuresForFulfillment();
+
+	/**
+	 * @return the number of experience points you gain when you fulfill this quest
+	 */
+	int getExperiencePointsGained();
+
 }

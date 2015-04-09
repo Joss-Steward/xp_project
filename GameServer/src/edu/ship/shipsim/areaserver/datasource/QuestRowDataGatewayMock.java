@@ -25,18 +25,37 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 
 		private int questID;
 
+		private int experiencePointsGained;
+
+		private int adventuresForFulfillment;
+
 		public QuestData(int questID, String questDescription, String mapName,
-				Position position)
+				Position position, int experiencePointsGained,
+				int adventuresForFulfillment)
 		{
 			this.questDescription = questDescription;
 			this.mapName = mapName;
 			this.position = position;
 			this.questID = questID;
+			this.experiencePointsGained = experiencePointsGained;
+			this.adventuresForFulfillment = adventuresForFulfillment;
 		}
+
+		public int getExperiencePointsGained()
+		{
+			return experiencePointsGained;
+		}
+
+		public int getAdventuresForFulfillment()
+		{
+			return adventuresForFulfillment;
+		}
+
 		public String getMapName()
 		{
 			return mapName;
 		}
+
 		public Position getPosition()
 		{
 			return position;
@@ -51,13 +70,20 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		{
 			return questID;
 		}
+
 	}
+
 	/**
-	 * Get the IDs of the quests that are supposed to trigger at a specified map location
-	 * @param mapName the name of the map
-	 * @param position the position on the map
+	 * Get the IDs of the quests that are supposed to trigger at a specified map
+	 * location
+	 * 
+	 * @param mapName
+	 *            the name of the map
+	 * @param position
+	 *            the position on the map
 	 * @return the quest IDs
-	 * @throws DatabaseException shouldn't
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	public static ArrayList<Integer> findQuestsForMapLocation(String mapName,
 			Position position) throws DatabaseException
@@ -67,7 +93,7 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 			new QuestRowDataGatewayMock(1).resetData();
 		}
 		ArrayList<Integer> results = new ArrayList<Integer>();
-		for (QuestData q:questInfo.values())
+		for (QuestData q : questInfo.values())
 		{
 			if ((q.getMapName().equals(mapName)) && (q.getPosition().equals(position)))
 			{
@@ -76,6 +102,7 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		}
 		return results;
 	}
+
 	/**
 	 * Map quest ID to questDescription
 	 */
@@ -86,6 +113,8 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 	private String triggerMapName;
 
 	private Position triggerPosition;
+	private int experiencePointsGained;
+	private int adventuresForFulfillment;
 
 	/**
 	 * Get the row data gateway object for an existing quest
@@ -108,6 +137,8 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 			this.triggerMapName = questData.getMapName();
 			this.triggerPosition = questData.getPosition();
 			this.questID = questID;
+			this.experiencePointsGained = questData.getExperiencePointsGained();
+			this.adventuresForFulfillment = questData.getAdventuresForFulfillment();
 		} else
 		{
 			throw new DatabaseException("Couldn't find quest with ID " + questID);
@@ -159,10 +190,30 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		questInfo = new HashMap<Integer, QuestData>();
 		for (QuestsForTest p : QuestsForTest.values())
 		{
-			questInfo.put(p.getQuestID(),
+			questInfo.put(
+					p.getQuestID(),
 					new QuestData(p.getQuestID(), p.getQuestDescription(),
-							p.getMapName(), p.getPosition()));
+							p.getMapName(), p.getPosition(), p.getExperienceGained(), p
+									.getAdventuersForFulfillment()));
 		}
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestRowDataGateway#getAdventuresForFulfillment()
+	 */
+	@Override
+	public int getAdventuresForFulfillment()
+	{
+		return adventuresForFulfillment;
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestRowDataGateway#getExperiencePointsGained()
+	 */
+	@Override
+	public int getExperiencePointsGained()
+	{
+		return experiencePointsGained;
 	}
 
 }
