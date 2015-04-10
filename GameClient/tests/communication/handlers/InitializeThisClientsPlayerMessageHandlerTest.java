@@ -56,7 +56,7 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 	{
 		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
-		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED); 
+		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED, 42, 133); 
 		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", AdventureStateEnum.PENDING));
 		qList.add(q);
 		LevelRecord level = new LevelRecord("One", 45);
@@ -66,6 +66,8 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		CommandOverwriteQuestState cmd = (CommandOverwriteQuestState) ModelFacade.getSingleton().getNextCommand();
 		ArrayList<ClientPlayerQuest> actual = cmd.getClientPlayerQuestList();
 		assertEquals(qList, actual);
+		assertEquals(42, q.getExperiencePointsGained());
+		assertEquals(133, q.getAdventuresToFulfillment());
 	}
 	
 	/**
@@ -79,7 +81,7 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 	{
 		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
-		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED); 
+		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED, 42, 8); 
 		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", AdventureStateEnum.PENDING));
 		qList.add(q);
 		int expectedPoints = 20;

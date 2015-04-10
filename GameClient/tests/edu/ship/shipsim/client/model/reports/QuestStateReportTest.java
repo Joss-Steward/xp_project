@@ -25,7 +25,7 @@ public class QuestStateReportTest
 	public void test()
 	{
 		ArrayList<ClientPlayerQuest> data = new ArrayList<ClientPlayerQuest>();
-		ClientPlayerQuest q = new ClientPlayerQuest(4, "silly", QuestStateEnum.TRIGGERED);
+		ClientPlayerQuest q = new ClientPlayerQuest(4, "silly", QuestStateEnum.TRIGGERED, 42, 13);
 		data.add(q);
 		QuestStateReport report = new QuestStateReport(data);
 		assertSame(data, report.getClientPlayerQuestList());

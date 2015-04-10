@@ -21,18 +21,24 @@ public class ClientPlayerQuest implements Serializable
 	private String questDescription;
 	private QuestStateEnum state;
 	private ArrayList<ClientPlayerAdventure> adventures = new ArrayList<ClientPlayerAdventure>();
+	private int experiencePointsGained;
+	private int adventuresToFulfillment;
 	
 	/**
 	 * Constructor for client player quest
 	 * @param questID the quests id
 	 * @param questDescription the quests description
 	 * @param state the quests state
+	 * @param experiencePointsGained the number of experience you get when you fulfill this quest
+	 * @param adventuresToFulfillment the number of adventures required to fulfill this quest
 	 */
-	public ClientPlayerQuest(int questID, String questDescription, QuestStateEnum state)
+	public ClientPlayerQuest(int questID, String questDescription, QuestStateEnum state, int experiencePointsGained, int adventuresToFulfillment)
 	{
 		this.questID = questID;
 		this.questDescription = questDescription;
 		this.state = state;
+		this.experiencePointsGained = experiencePointsGained;
+		this.adventuresToFulfillment = adventuresToFulfillment;
 	}
 
 	/**
@@ -96,6 +102,22 @@ public class ClientPlayerQuest implements Serializable
 	public void setAdventures(ArrayList<ClientPlayerAdventure> adventureList) 
 	{
 		this.adventures = adventureList;
+	}
+
+	/**
+	 * @return the number of experience points you get when you fulfill this quest
+	 */
+	public int getExperiencePointsGained()
+	{
+		return experiencePointsGained;
+	}
+
+	/**
+	 * @return the number of adventures required to fulfill this quest
+	 */
+	public int getAdventuresToFulfillment()
+	{
+		return adventuresToFulfillment;
 	}
 	
 }

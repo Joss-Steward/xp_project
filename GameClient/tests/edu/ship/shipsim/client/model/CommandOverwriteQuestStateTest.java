@@ -30,7 +30,7 @@ public class CommandOverwriteQuestStateTest
 	public void constructor()
 	{
 		ArrayList<ClientPlayerQuest> expected = new ArrayList<ClientPlayerQuest>();
-		ClientPlayerQuest q = new ClientPlayerQuest(42, "silly", QuestStateEnum.AVAILABLE);
+		ClientPlayerQuest q = new ClientPlayerQuest(42, "silly", QuestStateEnum.AVAILABLE, 42, 2);
 		expected.add(q);
 		LevelRecord level = new LevelRecord("One", 15);
 		
@@ -62,7 +62,7 @@ public class CommandOverwriteQuestStateTest
 		}
 		
 		ArrayList<ClientPlayerQuest> expected = new ArrayList<ClientPlayerQuest>();
-		ClientPlayerQuest q = new ClientPlayerQuest(42, "silly", QuestStateEnum.AVAILABLE);
+		ClientPlayerQuest q = new ClientPlayerQuest(42, "silly", QuestStateEnum.AVAILABLE, 22, 13);
 		expected.add(q);
 		LevelRecord level = new LevelRecord("One", 15);
 		

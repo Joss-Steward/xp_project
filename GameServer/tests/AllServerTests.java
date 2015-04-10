@@ -21,6 +21,8 @@ import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayMock
 import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayRDSTest;
+import edu.ship.shipsim.areaserver.datasource.LevelTableDataGatewayMockTest;
+import edu.ship.shipsim.areaserver.datasource.LevelTableDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.datasource.NPCQuestionRowDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.NPCQuestionRowDataGatewayRDSTest;
 import edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayMockTest;
@@ -95,6 +97,10 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		AdventureTableDataGatewayMockTest.class,
 		AdventureTableDataGatewayRDSTest.class,
 		//AdventureTableDataGateway.class
+		//LevelsForTest.class
+		LevelTableDataGatewayMockTest.class,
+		LevelTableDataGatewayRDSTest.class,
+		//LevelTableDataGatewayTest.class,
 		//MapAreasForTest.class
 		NPCQuestionRowDataGatewayMockTest.class,
 		NPCQuestionRowDataGatewayRDSTest.class,

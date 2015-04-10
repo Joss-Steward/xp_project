@@ -21,10 +21,12 @@ public class ClientPlayerQuestTest
 	@Test
 	public void testClientPlayerQuestInitialization() 
 	{
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.HIDDEN);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.HIDDEN, 42, 133);
 		assertEquals(1, q.getQuestID());
 		assertEquals("Test Quest 1", q.getQuestDescription());
 		assertEquals(QuestStateEnum.HIDDEN, q.getQuestState());
+		assertEquals(42, q.getExperiencePointsGained());
+		assertEquals(133, q.getAdventuresToFulfillment());
 	}
 
 	/**
@@ -35,7 +37,7 @@ public class ClientPlayerQuestTest
 	{
 		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", AdventureStateEnum.HIDDEN);
 		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", AdventureStateEnum.HIDDEN);
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.HIDDEN);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.HIDDEN, 1, 2);
 		q.addAdventure(adventureOne);
 		q.addAdventure(adventureTwo);
 		assertEquals(2, q.getAdventureList().size());
@@ -50,7 +52,7 @@ public class ClientPlayerQuestTest
 	{
 		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", AdventureStateEnum.NEED_NOTIFICATION);
 		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", AdventureStateEnum.NEED_NOTIFICATION);
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.FINISHED);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.FINISHED, 1, 2);
 		q.addAdventure(adventureOne);
 		q.addAdventure(adventureTwo);
 		assertEquals(2, q.getAdventureList().size());
@@ -67,7 +69,7 @@ public class ClientPlayerQuestTest
 		assertEquals(1, adventureOne.getAdventureID());
 		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", AdventureStateEnum.HIDDEN);
 		assertEquals(2, adventureTwo.getAdventureID());
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.HIDDEN);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.HIDDEN, 1, 2);
 		q.addAdventure(adventureOne);
 		q.addAdventure(adventureTwo);
 		assertEquals(2, q.getAdventureList().size());
