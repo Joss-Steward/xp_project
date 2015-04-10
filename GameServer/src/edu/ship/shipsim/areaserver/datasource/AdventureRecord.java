@@ -10,19 +10,21 @@ public final class AdventureRecord
 	private final int adventureID;
 	private final String adventureDescription;
 	private final int questID;
+	private int experiencePointsGained;
 	
 	/**
 	 * Create it
 	 * @param questID the unique ID of the quest that contains the adventure
 	 * @param adventureID the adventure's unique ID
 	 * @param adventureDescription the adventure's description
+	 * @param experiencePointsGained TODO
 	 */
-	public AdventureRecord(int questID, int adventureID, String adventureDescription)
+	public AdventureRecord(int questID, int adventureID, String adventureDescription, int experiencePointsGained)
 	{
 		this.adventureID = adventureID;
 		this.adventureDescription = adventureDescription;
 		this.questID = questID;
-		
+		this.experiencePointsGained = experiencePointsGained;
 	}
 
 	/**
@@ -99,5 +101,13 @@ public final class AdventureRecord
 		if (questID != other.questID)
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the number of points you get when you complete this adventure
+	 */
+	public int getExperiencePointsGained()
+	{
+		return experiencePointsGained;
 	}
 }

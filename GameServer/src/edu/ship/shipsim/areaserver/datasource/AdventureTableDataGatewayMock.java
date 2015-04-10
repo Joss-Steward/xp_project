@@ -35,7 +35,7 @@ public class AdventureTableDataGatewayMock implements AdventureTableDataGateway
 		data = new Hashtable<Integer, ArrayList<AdventureRecord>>();
 		for(AdventuresForTest a:AdventuresForTest.values())
 		{
-			AdventureRecord rec = new AdventureRecord(a.getQuestID(), a.getAdventureID(), a.getAdventureDescription());
+			AdventureRecord rec = new AdventureRecord(a.getQuestID(), a.getAdventureID(), a.getAdventureDescription(), a.getExperiencePointsGained());
 			
 			if (data.containsKey(a.getQuestID()))
 			{

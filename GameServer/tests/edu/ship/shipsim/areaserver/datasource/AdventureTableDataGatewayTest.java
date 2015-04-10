@@ -48,17 +48,22 @@ public abstract class AdventureTableDataGatewayTest
 		{
 			assertEquals(AdventuresForTest.ONE.getAdventureDescription(), record.getAdventureDescription());
 			assertEquals(AdventuresForTest.ONE.getQuestID(), record.getQuestID());
+			assertEquals(AdventuresForTest.ONE.getExperiencePointsGained(), record.getExperiencePointsGained());
 			record = records.get(1);
 			assertEquals(AdventuresForTest.TWO.getAdventureDescription(), record.getAdventureDescription());
 			assertEquals(AdventuresForTest.TWO.getQuestID(), record.getQuestID());
+			assertEquals(AdventuresForTest.TWO.getExperiencePointsGained(), record.getExperiencePointsGained());
 		} else
 		{
 			assertEquals(AdventuresForTest.TWO.getAdventureID(), record.getAdventureID());
 			assertEquals(AdventuresForTest.TWO.getAdventureDescription(), record.getAdventureDescription());
 			assertEquals(AdventuresForTest.TWO.getQuestID(), record.getQuestID());
+			assertEquals(AdventuresForTest.TWO.getExperiencePointsGained(), record.getExperiencePointsGained());
 			record = records.get(1);
 			assertEquals(AdventuresForTest.ONE.getAdventureDescription(), record.getAdventureDescription());
 			assertEquals(AdventuresForTest.ONE.getQuestID(), record.getQuestID());
+			assertEquals(AdventuresForTest.ONE.getExperiencePointsGained(), record.getExperiencePointsGained());
+			
 		}
 	}
 	

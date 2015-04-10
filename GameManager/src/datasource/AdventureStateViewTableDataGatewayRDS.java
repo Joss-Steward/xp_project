@@ -45,7 +45,7 @@ public class AdventureStateViewTableDataGatewayRDS
 				records.add(new AdventureRecord(
 						result.getInt("AdventureStates.questID"), result
 								.getInt("AdventureStates.adventureID"), result
-								.getString("Adventures.adventureDescription")));
+								.getString("Adventures.adventureDescription"), result.getInt("Adventures.experiencePointsGained")));
 
 			}
 
