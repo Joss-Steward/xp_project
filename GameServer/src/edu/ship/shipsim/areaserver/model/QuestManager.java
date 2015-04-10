@@ -9,7 +9,6 @@ import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 import data.Position;
 import datasource.DatabaseException;
-import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGateway;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayMock;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayRDS;
