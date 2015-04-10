@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import data.Position;
-import edu.ship.shipsim.areaserver.model.Adventure;
+import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
 import edu.ship.shipsim.areaserver.model.Quest;
 
 /**
@@ -23,9 +23,9 @@ public class QuestTest {
 	@Test
 	public void testInitialize() 
 	{
-		ArrayList<Adventure> adventures = new ArrayList<Adventure>();
-		adventures.add(new Adventure(42,"Merlin Zone"));
-		adventures.add(new Adventure(420,"Library Quest"));
+		ArrayList<AdventureRecord> adventures = new ArrayList<AdventureRecord>();
+		adventures.add(new AdventureRecord(5, 42,"Merlin Zone",4));
+		adventures.add(new AdventureRecord(5, 420,"Library Quest",8));
 		
 		Position pos = new Position(33,44);
 		
@@ -47,9 +47,9 @@ public class QuestTest {
 	public void testSetters()
 	{
 		Quest q = new Quest(-1, null,null,null,null, 42, 45);
-		ArrayList<Adventure> adventures = new ArrayList<Adventure>();
-		adventures.add(new Adventure(42,"Merlin Zone"));
-		adventures.add(new Adventure(420,"Library Quest"));
+		ArrayList<AdventureRecord> adventures = new ArrayList<AdventureRecord>();
+		adventures.add(new AdventureRecord(5, 42,"Merlin Zone",3));
+		adventures.add(new AdventureRecord(5, 420,"Library Quest", 2));
 		Position pos = new Position(22,20);
 		
 		q.setQuestID(44);

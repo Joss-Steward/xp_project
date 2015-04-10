@@ -3,6 +3,7 @@ package edu.ship.shipsim.areaserver.model;
 import java.util.ArrayList;
 
 import data.Position;
+import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
 
 /**
  * The class that hold the functionality for Quest
@@ -13,7 +14,7 @@ import data.Position;
 public class Quest 
 {
 	private String description;
-	private ArrayList<Adventure> adventures;
+	private ArrayList<AdventureRecord> adventures;
 	private int questID;
 	private String mapName;
 	private Position position;
@@ -30,7 +31,7 @@ public class Quest
 	 * @param experiencePointsGained the number of points we get when we fulfill this quest
 	 * @param adventuresForFulfillment the number of adventures we have to complete to fulfill this quest
 	 */
-	public Quest(int id, String desc, String map, Position pos, ArrayList<Adventure> adventures, int experiencePointsGained, int adventuresForFulfillment) 
+	public Quest(int id, String desc, String map, Position pos, ArrayList<AdventureRecord> adventures, int experiencePointsGained, int adventuresForFulfillment) 
 	{
 		this.questID = id;
 		this.description = desc;
@@ -52,7 +53,7 @@ public class Quest
 	/**
 	 * @return list_adventures the quest's adventures
 	 */
-	public ArrayList<Adventure> getAdventures() 
+	public ArrayList<AdventureRecord> getAdventures() 
 	{
 		return adventures;
 	}
@@ -70,7 +71,7 @@ public class Quest
 	 * Sets the quests adventure list
 	 * @param adventures the new adventure list
 	 */
-	public void setAdventures(ArrayList<Adventure> adventures) 
+	public void setAdventures(ArrayList<AdventureRecord> adventures) 
 	{
 		this.adventures = adventures;
 	}
@@ -131,11 +132,11 @@ public class Quest
 	 */
 	public String getAdventureDescription(int adventureID)
 	{
-		for(Adventure a: adventures)
+		for(AdventureRecord a: adventures)
 		{
-			if(a.getID() == adventureID)
+			if(a.getAdventureID() == adventureID)
 			{
-				return a.getDescription();
+				return a.getAdventureDescription();
 			}
 		}
 		

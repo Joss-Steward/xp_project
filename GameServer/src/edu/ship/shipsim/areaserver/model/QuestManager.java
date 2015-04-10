@@ -89,16 +89,8 @@ public class QuestManager implements QualifiedObserver
 			this.adventureGateway = new AdventureTableDataGatewayRDS();
 		}
 
-		ArrayList<Adventure> adventureList = new ArrayList<Adventure>();
-
-		for (AdventureRecord ar : adventureGateway.getAdventuresForQuest(questID))
-		{
-			adventureList.add(new Adventure(ar.getAdventureID(), ar
-					.getAdventureDescription()));
-		}
-
 		Quest quest = new Quest(questGateway.getQuestID(),
-				questGateway.getQuestDescription(), questGateway.getTriggerMapName(), questGateway.getTriggerPosition(), adventureList,
+				questGateway.getQuestDescription(), questGateway.getTriggerMapName(), questGateway.getTriggerPosition(), adventureGateway.getAdventuresForQuest(questID),
 				questGateway.getExperiencePointsGained(),
 				questGateway.getAdventuresForFulfillment());
 

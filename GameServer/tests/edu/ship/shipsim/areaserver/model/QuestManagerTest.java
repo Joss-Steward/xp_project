@@ -12,6 +12,7 @@ import org.junit.Test;
 import data.Position;
 import datasource.DatabaseException;
 import datasource.QuestStateEnum;
+import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
 import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
 import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayMock;
 import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
@@ -117,19 +118,19 @@ public class QuestManagerTest
 		Quest quest = qm.getQuest(1);
 
 		int i = 1;
-		for (Adventure a : quest.getAdventures())
+		for (AdventureRecord a : quest.getAdventures())
 		{
 			if (i == 1)
 			{
-				assertEquals(AdventuresForTest.ONE.getAdventureID(), a.getID());
+				assertEquals(AdventuresForTest.ONE.getAdventureID(), a.getAdventureID());
 				assertEquals(AdventuresForTest.ONE.getAdventureDescription(),
-						a.getDescription());
+						a.getAdventureDescription());
 			}
 			if (i == 2)
 			{
-				assertEquals(AdventuresForTest.TWO.getAdventureID(), a.getID());
+				assertEquals(AdventuresForTest.TWO.getAdventureID(), a.getAdventureID());
 				assertEquals(AdventuresForTest.TWO.getAdventureDescription(),
-						a.getDescription());
+						a.getAdventureDescription());
 			}
 			i++;
 		}
@@ -149,37 +150,37 @@ public class QuestManagerTest
 		Quest quest2 = qm.getQuest(2);
 
 		int i = 1;
-		for (Adventure a : quest1.getAdventures())
+		for (AdventureRecord a : quest1.getAdventures())
 		{
 			if (i == 1)
 			{
-				assertEquals(AdventuresForTest.ONE.getAdventureID(), a.getID());
+				assertEquals(AdventuresForTest.ONE.getAdventureID(), a.getAdventureID());
 				assertEquals(AdventuresForTest.ONE.getAdventureDescription(),
-						a.getDescription());
+						a.getAdventureDescription());
 			}
 			if (i == 2)
 			{
-				assertEquals(AdventuresForTest.TWO.getAdventureID(), a.getID());
+				assertEquals(AdventuresForTest.TWO.getAdventureID(), a.getAdventureID());
 				assertEquals(AdventuresForTest.TWO.getAdventureDescription(),
-						a.getDescription());
+						a.getAdventureDescription());
 			}
 			i++;
 		}
 
 		i = 1;
-		for (Adventure a : quest2.getAdventures())
+		for (AdventureRecord a : quest2.getAdventures())
 		{
 			if (i == 1)
 			{
-				assertEquals(AdventuresForTest.THREE.getAdventureID(), a.getID());
+				assertEquals(AdventuresForTest.THREE.getAdventureID(), a.getAdventureID());
 				assertEquals(AdventuresForTest.THREE.getAdventureDescription(),
-						a.getDescription());
+						a.getAdventureDescription());
 			}
 			if (i == 2)
 			{
-				assertEquals(AdventuresForTest.FOUR.getAdventureID(), a.getID());
+				assertEquals(AdventuresForTest.FOUR.getAdventureID(), a.getAdventureID());
 				assertEquals(AdventuresForTest.FOUR.getAdventureDescription(),
-						a.getDescription());
+						a.getAdventureDescription());
 			}
 			i++;
 		}
