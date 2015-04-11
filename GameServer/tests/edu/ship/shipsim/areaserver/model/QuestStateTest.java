@@ -35,14 +35,15 @@ public class QuestStateTest
 	@Test
 	public void testAddAdventures()
 	{
+		QuestState qs = new QuestState(1, QuestStateEnum.HIDDEN);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
-		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN);
-		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN);
+		AdventureState as1 = new AdventureState(qs, 1, AdventureStateEnum.HIDDEN);
+		AdventureState as2 = new AdventureState(qs, 2, AdventureStateEnum.HIDDEN);
 		
 		adventureList.add(as1);
 		adventureList.add(as2);
 		
-		QuestState qs = new QuestState(1, QuestStateEnum.HIDDEN);
+		
 		qs.addAdventures(adventureList);
 		
 		assertEquals(2, qs.getSizeOfAdventureList());
@@ -79,9 +80,9 @@ public class QuestStateTest
 		QuestState qs = new QuestState(1, QuestStateEnum.AVAILABLE);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
 		
-		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN);
-		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN);
-		AdventureState as3 = new AdventureState(3, AdventureStateEnum.HIDDEN);
+		AdventureState as1 = new AdventureState(qs, 1, AdventureStateEnum.HIDDEN);
+		AdventureState as2 = new AdventureState(qs, 2, AdventureStateEnum.HIDDEN);
+		AdventureState as3 = new AdventureState(qs, 3, AdventureStateEnum.HIDDEN);
 		
 		adList.add(as1);
 		adList.add(as2);

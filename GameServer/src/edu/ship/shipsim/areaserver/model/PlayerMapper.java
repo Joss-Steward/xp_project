@@ -83,7 +83,7 @@ public class PlayerMapper
 			ArrayList<AdventureState> adventureStates = new ArrayList<AdventureState>();
 			for (AdventureStateRecord asRec : adventureStateRecords)
 			{
-				adventureStates.add(new AdventureState(asRec.getAdventureID(), asRec
+				adventureStates.add(new AdventureState(questState, asRec.getAdventureID(), asRec
 						.getState()));
 			}
 			questState.addAdventures(adventureStates);

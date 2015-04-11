@@ -18,13 +18,13 @@ public class AdventureState
 
 	/**
 	 * Constructor for the instance variables.
-	 * 
+	 * @param parentQuest TODO
 	 * @param id
 	 *            : id of adventure
 	 * @param state
 	 *            : state of adventure
 	 */
-	public AdventureState(int id, AdventureStateEnum state)
+	public AdventureState(QuestState parentQuest, int id, AdventureStateEnum state)
 	{
 		this.adventureID = id;
 		this.adventureState = state;

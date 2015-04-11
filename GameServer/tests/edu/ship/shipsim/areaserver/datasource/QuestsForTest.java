@@ -17,7 +17,7 @@ public enum QuestsForTest
 	/**
 	 * 
 	 */
-	THE_OTHER_QUEST(2, "The Other Quest", "sillymap.tmx", new Position(42, 2), 4, 3),
+	THE_OTHER_QUEST(2, "The Other Quest", "sillymap.tmx", new Position(42, 2), 4, 1),
 	/**
 	 * 
 	 */
