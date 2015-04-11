@@ -4,9 +4,13 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import model.OptionsManager;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import datasource.AdventureStateEnum;
+import datasource.DatabaseException;
 import datasource.QuestStateEnum;
 
 /**
@@ -17,6 +21,16 @@ import datasource.QuestStateEnum;
 public class QuestStateTest 
 {
 
+	/**
+	 * 
+	 */
+	@Before
+	public void setUp()
+	{
+		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton(true);
+		QuestManager.resetSingleton();
+	}
 	/**
 	 * Test creating a very simple quest, and retreiving its information
 	 */
@@ -37,8 +51,8 @@ public class QuestStateTest
 	{
 		QuestState qs = new QuestState(1, QuestStateEnum.HIDDEN);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
-		AdventureState as1 = new AdventureState(qs, 1, AdventureStateEnum.HIDDEN);
-		AdventureState as2 = new AdventureState(qs, 2, AdventureStateEnum.HIDDEN);
+		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN);
+		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN);
 		
 		adventureList.add(as1);
 		adventureList.add(as2);
@@ -80,9 +94,9 @@ public class QuestStateTest
 		QuestState qs = new QuestState(1, QuestStateEnum.AVAILABLE);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
 		
-		AdventureState as1 = new AdventureState(qs, 1, AdventureStateEnum.HIDDEN);
-		AdventureState as2 = new AdventureState(qs, 2, AdventureStateEnum.HIDDEN);
-		AdventureState as3 = new AdventureState(qs, 3, AdventureStateEnum.HIDDEN);
+		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN);
+		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN);
+		AdventureState as3 = new AdventureState(3, AdventureStateEnum.HIDDEN);
 		
 		adList.add(as1);
 		adList.add(as2);
@@ -97,6 +111,32 @@ public class QuestStateTest
 		{
 			assertEquals(AdventureStateEnum.PENDING, as.getState());
 		}
+	}
+	
+	/**
+	 * When the right number of adventures are complete (with or without notifications complete)
+	 * the quest should become fulfilled
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void testFulfilling() throws DatabaseException
+	{
+		QuestState qs = new QuestState(3, QuestStateEnum.TRIGGERED);
+		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
 		
+		AdventureState as = new AdventureState(1, AdventureStateEnum.COMPLETED);
+		adList.add(as);
+		as = new AdventureState(2, AdventureStateEnum.NEED_NOTIFICATION);
+		adList.add(as);
+		as = new AdventureState(3, AdventureStateEnum.COMPLETED);
+		adList.add(as);
+		as = new AdventureState(4, AdventureStateEnum.PENDING);
+		adList.add(as);
+		as = new AdventureState(5, AdventureStateEnum.COMPLETED);
+		adList.add(as);
+		
+		qs.addAdventures(adList);
+		qs.checkForFulfillment();
+		assertEquals(QuestStateEnum.NEED_FULFILLED_NOTIFICATION, qs.getStateValue());
 	}
 }

@@ -1,6 +1,7 @@
 package edu.ship.shipsim.areaserver.model;
 
 import datasource.AdventureStateEnum;
+import datasource.DatabaseException;
 
 /**
  * Stores the states of all the adventures for an individual player on the
@@ -16,15 +17,17 @@ public class AdventureState
 
 	private AdventureStateEnum adventureState;
 
+	private QuestState parentQuestState;
+
 	/**
 	 * Constructor for the instance variables.
-	 * @param parentQuest TODO
+	 * 
 	 * @param id
 	 *            : id of adventure
 	 * @param state
 	 *            : state of adventure
 	 */
-	public AdventureState(QuestState parentQuest, int id, AdventureStateEnum state)
+	public AdventureState(int id, AdventureStateEnum state)
 	{
 		this.adventureID = id;
 		this.adventureState = state;
@@ -93,6 +96,30 @@ public class AdventureState
 		{
 			this.adventureState = AdventureStateEnum.PENDING;
 		}
+	}
+
+	/**
+	 * Change the state of the adventure from pending to needing notification.
+	 * The adventure is complete, but we need to tell the player
+	 * 
+	 * @throws DatabaseException
+	 *             if the datasource fails
+	 */
+	public void completeNeedingNotification() throws DatabaseException
+	{
+		this.adventureState = AdventureStateEnum.NEED_NOTIFICATION;
+		this.parentQuestState.checkForFulfillment();
+	}
+
+	/**
+	 * Tell this adventure which quest state it is contained within
+	 * 
+	 * @param questState
+	 *            the parent state
+	 */
+	public void setParentQuest(QuestState questState)
+	{
+		this.parentQuestState = questState;
 	}
 
 }

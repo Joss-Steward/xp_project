@@ -21,11 +21,15 @@ public enum QuestStateEnum
 	 */
 	TRIGGERED,
 	/**
+	 * The quest has been fulfilled, but the player has not been notified yet
+	 */
+	NEED_FULFILLED_NOTIFICATION,
+	/**
 	 * The player has completed enough adventures to get the points for this quest
 	 */
 	FULFILLED,
 	/**
 	 * The player has completed all of the adventures within this quest
 	 */
-	FINISHED
+	FINISHED, 
 }
