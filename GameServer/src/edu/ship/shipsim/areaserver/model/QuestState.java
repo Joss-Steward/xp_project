@@ -2,9 +2,11 @@ package edu.ship.shipsim.areaserver.model;
 
 import java.util.ArrayList;
 
+import model.QualifiedObservableConnector;
 import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
 import datasource.QuestStateEnum;
+import edu.ship.shipsim.areaserver.model.reports.QuestNeedsFulfillmentNotificationReport;
 
 /**
  * Stores the states of all the quests for an individual player on the server
@@ -17,6 +19,7 @@ public class QuestState
 	private int questID;
 	private QuestStateEnum questState;
 	private ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
+	private int playerID;
 
 	/**
 	 * Constructs the QuestState
@@ -34,26 +37,6 @@ public class QuestState
 	}
 
 	/**
-	 * Returns the quest's unique ID
-	 * 
-	 * @return questID the quest's unique ID
-	 */
-	public int getID()
-	{
-		return questID;
-	}
-
-	/**
-	 * Returns the quest's state
-	 * 
-	 * @return questState the state of the quest for a player
-	 */
-	public QuestStateEnum getStateValue()
-	{
-		return questState;
-	}
-
-	/**
 	 * Assigns the quest's adventures using an ArrayList of adventures prepared
 	 * already
 	 * 
@@ -67,42 +50,6 @@ public class QuestState
 			this.adventureList.add(adventure);
 			adventure.setParentQuest(this);
 		}
-	}
-
-	/**
-	 * Returns the size of this quest's adventure list
-	 * 
-	 * @return the number of adventures this quest has
-	 */
-	public int getSizeOfAdventureList()
-	{
-		return this.adventureList.size();
-	}
-
-	/**
-	 * Change the quest's state from hidden to available Also change all the
-	 * quest's adventures from hidden to pending.
-	 */
-	public void trigger()
-	{
-		if (this.getStateValue().equals(QuestStateEnum.AVAILABLE))
-		{
-			this.questState = QuestStateEnum.TRIGGERED;
-			for (AdventureState state : adventureList)
-			{
-				state.trigger();
-			}
-		}
-	}
-
-	/**
-	 * Returns the adventures in this quest
-	 * 
-	 * @return list of adventures
-	 */
-	public ArrayList<AdventureState> getAdventureList()
-	{
-		return adventureList;
 	}
 
 	/**
@@ -131,6 +78,83 @@ public class QuestState
 			if (adventuresComplete >= adventuresRequired)
 			{
 				questState = QuestStateEnum.NEED_FULFILLED_NOTIFICATION;
+				QualifiedObservableConnector.getSingleton().sendReport(
+						new QuestNeedsFulfillmentNotificationReport(playerID, questID));
+			}
+		}
+	}
+
+	/**
+	 * Returns the adventures in this quest
+	 * 
+	 * @return list of adventures
+	 */
+	public ArrayList<AdventureState> getAdventureList()
+	{
+		return adventureList;
+	}
+
+	/**
+	 * Returns the quest's unique ID
+	 * 
+	 * @return questID the quest's unique ID
+	 */
+	public int getID()
+	{
+		return questID;
+	}
+
+	/**
+	 * @return the ID of the player whose state this belongs to
+	 */
+	public int getPlayerID()
+	{
+		return playerID;
+	}
+
+	/**
+	 * Returns the size of this quest's adventure list
+	 * 
+	 * @return the number of adventures this quest has
+	 */
+	public int getSizeOfAdventureList()
+	{
+		return this.adventureList.size();
+	}
+
+	/**
+	 * Returns the quest's state
+	 * 
+	 * @return questState the state of the quest for a player
+	 */
+	public QuestStateEnum getStateValue()
+	{
+		return questState;
+	}
+
+	/**
+	 * Tell this state which player it belongs to
+	 * 
+	 * @param playerID
+	 *            the player's unique id
+	 */
+	public void setPlayerID(int playerID)
+	{
+		this.playerID = playerID;
+	}
+
+	/**
+	 * Change the quest's state from hidden to available Also change all the
+	 * quest's adventures from hidden to pending.
+	 */
+	public void trigger()
+	{
+		if (this.getStateValue().equals(QuestStateEnum.AVAILABLE))
+		{
+			this.questState = QuestStateEnum.TRIGGERED;
+			for (AdventureState state : adventureList)
+			{
+				state.trigger();
 			}
 		}
 	}

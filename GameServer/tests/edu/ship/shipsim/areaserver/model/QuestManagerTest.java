@@ -337,6 +337,18 @@ public class QuestManagerTest
 								QuestStatesForTest.PLAYER1_QUEST1.getQuestID())
 						.getStateValue());
 	}
+	
+	/**
+	 * When we add a quest state to a player, we should tell it which player it
+	 * belongs to
+	 */
+	@Test
+	public void setPlayerIDWhenQuestStateAdded()
+	{
+		QuestState questState = new QuestState(1,QuestStateEnum.AVAILABLE);
+		QuestManager.getSingleton().addQuestState(4, questState);
+		assertEquals(4, questState.getPlayerID());
+	}
 
 	/**
 	 * We should be able to clear out all of the quest states for a given player

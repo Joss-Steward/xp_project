@@ -5,21 +5,27 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import model.OptionsManager;
+import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
 
+import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
 import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
+import datasource.DatabaseTest;
 import datasource.QuestStateEnum;
+import edu.ship.shipsim.areaserver.model.reports.QuestNeedsFulfillmentNotificationReport;
 
 /**
  * Test for the QuestState Class 
  * @author Ryan
  *
  */
-public class QuestStateTest 
+public class QuestStateTest extends DatabaseTest
 {
+	
 
 	/**
 	 * 
@@ -115,12 +121,17 @@ public class QuestStateTest
 	
 	/**
 	 * When the right number of adventures are complete (with or without notifications complete)
-	 * the quest should become fulfilled
+	 * the quest should become fulfilled and the appropriate report should be generated
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void testFulfilling() throws DatabaseException
 	{
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestNeedsFulfillmentNotificationReport.class);
+		QuestNeedsFulfillmentNotificationReport rpt = new QuestNeedsFulfillmentNotificationReport(13,3);
+		obs.receiveReport(rpt);
+		EasyMock.replay(obs);
 		QuestState qs = new QuestState(3, QuestStateEnum.TRIGGERED);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
 		
@@ -138,5 +149,35 @@ public class QuestStateTest
 		qs.addAdventures(adList);
 		qs.checkForFulfillment();
 		assertEquals(QuestStateEnum.NEED_FULFILLED_NOTIFICATION, qs.getStateValue());
+		EasyMock.verify(obs);
+	}
+	/**
+	 * If a quest is already in the process of being fulfilled, no report should be generated
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void testFulfillingRepeatedly() throws DatabaseException
+	{
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestNeedsFulfillmentNotificationReport.class);
+		EasyMock.replay(obs);
+		QuestState qs = new QuestState(3, QuestStateEnum.NEED_FULFILLED_NOTIFICATION);
+		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
+		
+		AdventureState as = new AdventureState(1, AdventureStateEnum.COMPLETED);
+		adList.add(as);
+		as = new AdventureState(2, AdventureStateEnum.NEED_NOTIFICATION);
+		adList.add(as);
+		as = new AdventureState(3, AdventureStateEnum.COMPLETED);
+		adList.add(as);
+		as = new AdventureState(4, AdventureStateEnum.PENDING);
+		adList.add(as);
+		as = new AdventureState(5, AdventureStateEnum.COMPLETED);
+		adList.add(as);
+		
+		qs.addAdventures(adList);
+		qs.checkForFulfillment();
+		assertEquals(QuestStateEnum.NEED_FULFILLED_NOTIFICATION, qs.getStateValue());
+		EasyMock.verify(obs);
 	}
 }

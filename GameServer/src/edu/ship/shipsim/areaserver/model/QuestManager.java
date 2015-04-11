@@ -180,6 +180,7 @@ public class QuestManager implements QualifiedObserver
 			questStateList = questStates.get(playerID);
 		}
 		questStateList.add(quest);
+		quest.setPlayerID(playerID);
 	}
 
 	/**
