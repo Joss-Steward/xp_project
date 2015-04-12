@@ -15,7 +15,7 @@ public class UpdatePlayerInformationMessagePacker extends MessagePacker
 	/**
 	 * @see communication.packers.MessagePacker#getReportTypeWePack()
 	 */
-	public  Class<? extends QualifiedObservableReport> getReportTypeWePack()
+	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
 	{
 		return UpdatePlayerInformationReport.class;
 	}
@@ -27,8 +27,12 @@ public class UpdatePlayerInformationMessagePacker extends MessagePacker
 	public Message pack(QualifiedObservableReport object)
 	{
 		UpdatePlayerInformationReport x = (UpdatePlayerInformationReport) object;
-		InitializeThisClientsPlayerMessage m = new InitializeThisClientsPlayerMessage(x.getClientPlayerQuestList(), x.getExperiencePts(), x.getLevel());
-		return m;
+		if (this.getAccumulator().getPlayerID() == x.getPlayerID())
+		{
+			return new InitializeThisClientsPlayerMessage(
+					x.getClientPlayerQuestList(), x.getExperiencePts(), x.getLevel());
+		}
+		return null;
 	}
 
 }

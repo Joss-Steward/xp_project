@@ -25,6 +25,7 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 	private ArrayList<ClientPlayerQuest> clientPlayerQuestList = new ArrayList<ClientPlayerQuest>();
 	private int experiencePoints;
 	private LevelRecord level;
+	private int playerID;
 	
 	
 	/**
@@ -38,6 +39,7 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 		combineQuest(QuestManager.getSingleton().getQuestList(player.getPlayerID()));
 		this.experiencePoints = player.getExperiencePoints();
 		this.level = LevelManager.getSingleton().getLevelForPoints(experiencePoints);
+		this.playerID = player.getPlayerID();
 	}
 	
 	/**
@@ -98,5 +100,13 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 	public LevelRecord getLevel() 
 	{
 		return level;
+	}
+
+	/**
+	 * @return this player's playerID
+	 */
+	public int getPlayerID()
+	{
+		return playerID;
 	}
 }

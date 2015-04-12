@@ -51,6 +51,7 @@ public class UpdatePlayerInformationReportTest {
 		Player john = PlayerManager.getSingleton().addPlayer(1);
 		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(john);
 		
+		assertEquals(1, report.getPlayerID());
 		assertEquals(QuestManager.getSingleton().getQuestList(john.getPlayerID()).size(), report.getClientPlayerQuestList().size());
 		
 		int i = 1;
