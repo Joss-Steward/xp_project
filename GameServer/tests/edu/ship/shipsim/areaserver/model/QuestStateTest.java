@@ -16,6 +16,7 @@ import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.QuestStateEnum;
+import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
 import edu.ship.shipsim.areaserver.model.reports.QuestNeedsFulfillmentNotificationReport;
 
 /**
@@ -129,7 +130,8 @@ public class QuestStateTest extends DatabaseTest
 	{
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestNeedsFulfillmentNotificationReport.class);
-		QuestNeedsFulfillmentNotificationReport rpt = new QuestNeedsFulfillmentNotificationReport(13,3);
+		QuestNeedsFulfillmentNotificationReport rpt = new QuestNeedsFulfillmentNotificationReport(13,QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(),
+				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestDescription());
 		obs.receiveReport(rpt);
 		EasyMock.replay(obs);
 		QuestState qs = new QuestState(3, QuestStateEnum.TRIGGERED);

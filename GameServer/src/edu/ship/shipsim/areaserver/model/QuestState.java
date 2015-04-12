@@ -79,7 +79,9 @@ public class QuestState
 			{
 				questState = QuestStateEnum.NEED_FULFILLED_NOTIFICATION;
 				QualifiedObservableConnector.getSingleton().sendReport(
-						new QuestNeedsFulfillmentNotificationReport(playerID, questID));
+						new QuestNeedsFulfillmentNotificationReport(playerID, questID,
+								QuestManager.getSingleton().getQuest(questID)
+										.getDescription()));
 			}
 		}
 	}

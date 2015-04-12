@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import datasource.DatabaseException;
+import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
 
 /**
  * @author Merlin
@@ -32,10 +33,12 @@ public class QuestNeedsFulfillmentNotificationReportTest
 	@Test
 	public void creation() throws DatabaseException
 	{
-		QuestNeedsFulfillmentNotificationReport report = new QuestNeedsFulfillmentNotificationReport(1,32);
+		QuestNeedsFulfillmentNotificationReport report = new QuestNeedsFulfillmentNotificationReport(1,QuestsForTest.ONE_BIG_QUEST.getQuestID(), 
+				QuestsForTest.ONE_BIG_QUEST.getQuestDescription());
 		
 		assertEquals(1, report.getPlayerID());
-		assertEquals(32, report.getQuestID());
+		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestID(), report.getQuestID());
+		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestDescription(),report.getQuestDescription());
 		
 	}
 

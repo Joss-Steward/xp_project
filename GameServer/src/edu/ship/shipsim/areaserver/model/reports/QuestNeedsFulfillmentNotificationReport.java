@@ -12,15 +12,18 @@ public final class QuestNeedsFulfillmentNotificationReport implements QualifiedO
 
 	private final int questID;
 	private final int playerID;
+	private String questDescription;
 
 	/**
 	 * @param playerID the player's unique ID
 	 * @param questID the quest's unique ID
+	 * @param questDescription TODO
 	 */
-	public QuestNeedsFulfillmentNotificationReport(int playerID, int questID)
+	public QuestNeedsFulfillmentNotificationReport(int playerID, int questID, String questDescription)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
+		this.questDescription = questDescription;
 	}
 
 	/**
@@ -67,6 +70,14 @@ public final class QuestNeedsFulfillmentNotificationReport implements QualifiedO
 		int result = 1;
 		result = prime * result + questID;
 		return result;
+	}
+
+	/**
+	 * @return the description of the quest whose state has changed
+	 */
+	public String getQuestDescription()
+	{
+		return questDescription;
 	}
 
 }
