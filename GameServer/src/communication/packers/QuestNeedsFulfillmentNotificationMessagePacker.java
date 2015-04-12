@@ -12,7 +12,7 @@ import edu.ship.shipsim.areaserver.model.reports.QuestNeedsFulfillmentNotificati
  * @author Merlin
  *
  */
-public class QuestNeedsFulfillmentMessagePacker extends MessagePacker
+public class QuestNeedsFulfillmentNotificationMessagePacker extends MessagePacker
 {
 
 	/**

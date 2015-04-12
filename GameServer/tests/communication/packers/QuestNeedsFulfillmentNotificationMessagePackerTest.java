@@ -42,7 +42,7 @@ public class QuestNeedsFulfillmentNotificationMessagePackerTest
 	@Test
 	public void testReportTypeWePack()
 	{
-		QuestNeedsFulfillmentMessagePacker packer = new QuestNeedsFulfillmentMessagePacker();
+		QuestNeedsFulfillmentNotificationMessagePacker packer = new QuestNeedsFulfillmentNotificationMessagePacker();
 		assertEquals(QuestNeedsFulfillmentNotificationReport.class,
 				packer.getReportTypeWePack());
 	}
@@ -62,7 +62,7 @@ public class QuestNeedsFulfillmentNotificationMessagePackerTest
 
 		QuestNeedsFulfillmentNotificationReport report = new QuestNeedsFulfillmentNotificationReport(
 				2, QuestsForTest.ONE_BIG_QUEST.getQuestID(), QuestsForTest.ONE_BIG_QUEST.getQuestDescription());
-		QuestNeedsFulfillmentMessagePacker packer = new QuestNeedsFulfillmentMessagePacker();
+		QuestNeedsFulfillmentNotificationMessagePacker packer = new QuestNeedsFulfillmentNotificationMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		
 		QuestNeedsFulfillmentNotificationMessage msg = (QuestNeedsFulfillmentNotificationMessage) packer.pack(report);
@@ -82,7 +82,7 @@ public class QuestNeedsFulfillmentNotificationMessagePackerTest
 		
 		QuestNeedsFulfillmentNotificationReport report = new QuestNeedsFulfillmentNotificationReport(
 				stateAccumulator.getPlayerID(), QuestsForTest.ONE_BIG_QUEST.getQuestID(), QuestsForTest.ONE_BIG_QUEST.getQuestDescription());
-		QuestNeedsFulfillmentMessagePacker packer = new QuestNeedsFulfillmentMessagePacker();
+		QuestNeedsFulfillmentNotificationMessagePacker packer = new QuestNeedsFulfillmentNotificationMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		
 		QuestNeedsFulfillmentNotificationMessage msg = (QuestNeedsFulfillmentNotificationMessage) packer.pack(report);
