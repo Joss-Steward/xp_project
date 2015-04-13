@@ -133,9 +133,10 @@ public class ExperienceDisplay extends Group implements QualifiedObserver
 	private void updateExperienceDisplay()
 	{
 		experienceDisplay.clear();
-		
-		experienceDisplay.add(new Label(getPlayersLevel() + " " + 
-				getExperiencePoints() + " / " + getNumPointsLvlRequries(), skin)).row();
+		Label xp_display = new Label(getPlayersLevel() + " " + 
+				getExperiencePoints() + " / " + getNumPointsLvlRequries(), skin);
+		xp_display.setFontScale((float)1.15);
+		experienceDisplay.add(xp_display).row();
 	}
 	
 }
