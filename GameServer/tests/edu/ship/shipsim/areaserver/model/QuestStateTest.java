@@ -131,7 +131,7 @@ public class QuestStateTest extends DatabaseTest
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestStateChangeReport.class);
 		QuestStateChangeReport rpt = new QuestStateChangeReport(13,QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(),
-				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestDescription());
+				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestDescription(), QuestStateEnum.NEED_FULFILLED_NOTIFICATION);
 		obs.receiveReport(rpt);
 		EasyMock.replay(obs);
 		QuestState qs = new QuestState(3, QuestStateEnum.TRIGGERED);

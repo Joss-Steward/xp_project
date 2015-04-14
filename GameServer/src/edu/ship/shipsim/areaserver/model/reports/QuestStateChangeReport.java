@@ -1,5 +1,6 @@
 package edu.ship.shipsim.areaserver.model.reports;
 
+import datasource.QuestStateEnum;
 import model.QualifiedObservableReport;
 
 /**
@@ -13,17 +14,20 @@ public final class QuestStateChangeReport implements QualifiedObservableReport
 	private final int questID;
 	private final int playerID;
 	private String questDescription;
+	private QuestStateEnum newState;
 
 	/**
 	 * @param playerID the player's unique ID
 	 * @param questID the quest's unique ID
-	 * @param questDescription TODO
+	 * @param questDescription the description of this quest
+	 * @param newState the state the quest has transitioned to for this player
 	 */
-	public QuestStateChangeReport(int playerID, int questID, String questDescription)
+	public QuestStateChangeReport(int playerID, int questID, String questDescription, QuestStateEnum newState)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
 		this.questDescription = questDescription;
+		this.newState = newState;
 	}
 
 	/**
@@ -45,11 +49,27 @@ public final class QuestStateChangeReport implements QualifiedObservableReport
 	}
 
 	/**
+	 * @return the state the quest has moved to
+	 */
+	public QuestStateEnum getNewState()
+	{
+		return newState;
+	}
+
+	/**
 	 * @return the player whose quest state has changed
 	 */
 	public int getPlayerID()
 	{
 		return playerID;
+	}
+
+	/**
+	 * @return the description of the quest whose state has changed
+	 */
+	public String getQuestDescription()
+	{
+		return questDescription;
 	}
 
 	/**
@@ -70,14 +90,6 @@ public final class QuestStateChangeReport implements QualifiedObservableReport
 		int result = 1;
 		result = prime * result + questID;
 		return result;
-	}
-
-	/**
-	 * @return the description of the quest whose state has changed
-	 */
-	public String getQuestDescription()
-	{
-		return questDescription;
 	}
 
 }

@@ -3,7 +3,6 @@ package communication.packers;
 import model.QualifiedObservableReport;
 import communication.messages.Message;
 import communication.messages.QuestStateChangeMessage;
-import datasource.QuestStateEnum;
 import edu.ship.shipsim.areaserver.model.reports.QuestStateChangeReport;
 
 /**
@@ -28,7 +27,7 @@ public class QuestStateChangeMessagePacker extends MessagePacker
 		if (this.getAccumulator().getPlayerID() == playerID)
 		{
 			msg = new QuestStateChangeMessage(rpt.getQuestID(),
-					rpt.getQuestDescription(), QuestStateEnum.NEED_FULFILLED_NOTIFICATION);
+					rpt.getQuestDescription(), rpt.getNewState());
 		}
 		return msg;
 

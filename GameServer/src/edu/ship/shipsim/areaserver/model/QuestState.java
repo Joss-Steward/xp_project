@@ -81,7 +81,7 @@ public class QuestState
 				QualifiedObservableConnector.getSingleton().sendReport(
 						new QuestStateChangeReport(playerID, questID,
 								QuestManager.getSingleton().getQuest(questID)
-										.getDescription()));
+										.getDescription(), questState));
 			}
 		}
 	}
