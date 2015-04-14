@@ -33,7 +33,7 @@ public class QuestNeedsFulfillmentNotificationReportTest
 	@Test
 	public void creation() throws DatabaseException
 	{
-		QuestNeedsFulfillmentNotificationReport report = new QuestNeedsFulfillmentNotificationReport(1,QuestsForTest.ONE_BIG_QUEST.getQuestID(), 
+		QuestStateChangeReport report = new QuestStateChangeReport(1,QuestsForTest.ONE_BIG_QUEST.getQuestID(), 
 				QuestsForTest.ONE_BIG_QUEST.getQuestDescription());
 		
 		assertEquals(1, report.getPlayerID());
@@ -48,6 +48,6 @@ public class QuestNeedsFulfillmentNotificationReportTest
 	@Test
 	public void equalsContract()
 	{
-		EqualsVerifier.forClass(QuestNeedsFulfillmentNotificationReport.class).verify();
+		EqualsVerifier.forClass(QuestStateChangeReport.class).verify();
 	}
 }

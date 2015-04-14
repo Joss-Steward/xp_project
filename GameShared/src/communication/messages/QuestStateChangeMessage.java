@@ -1,5 +1,7 @@
 package communication.messages;
 
+import datasource.QuestStateEnum;
+
 /**
  * A message from an area server to a client telling the client to notify the
  * player that he has fulfilled a quest
@@ -7,7 +9,7 @@ package communication.messages;
  * @author Merlin
  *
  */
-public class QuestNeedsFulfillmentNotificationMessage implements Message
+public class QuestStateChangeMessage implements Message
 {
 
 	/**
@@ -23,8 +25,9 @@ public class QuestNeedsFulfillmentNotificationMessage implements Message
 	 *            the ID of the quest
 	 * @param questDescription
 	 *            the description of the quest
+	 * @param newState TODO
 	 */
-	public QuestNeedsFulfillmentNotificationMessage(int questID, String questDescription)
+	public QuestStateChangeMessage(int questID, String questDescription, QuestStateEnum newState)
 	{
 		this.questID = questID;
 		this.questDescription = questDescription;

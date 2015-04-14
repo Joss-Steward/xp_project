@@ -7,7 +7,7 @@ import model.QualifiedObservableReport;
  * @author Merlin
  *
  */
-public final class QuestNeedsFulfillmentNotificationReport implements QualifiedObservableReport
+public final class QuestStateChangeReport implements QualifiedObservableReport
 {
 
 	private final int questID;
@@ -19,7 +19,7 @@ public final class QuestNeedsFulfillmentNotificationReport implements QualifiedO
 	 * @param questID the quest's unique ID
 	 * @param questDescription TODO
 	 */
-	public QuestNeedsFulfillmentNotificationReport(int playerID, int questID, String questDescription)
+	public QuestStateChangeReport(int playerID, int questID, String questDescription)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
@@ -38,7 +38,7 @@ public final class QuestNeedsFulfillmentNotificationReport implements QualifiedO
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		QuestNeedsFulfillmentNotificationReport other = (QuestNeedsFulfillmentNotificationReport) obj;
+		QuestStateChangeReport other = (QuestStateChangeReport) obj;
 		if (questID != other.questID)
 			return false;
 		return true;

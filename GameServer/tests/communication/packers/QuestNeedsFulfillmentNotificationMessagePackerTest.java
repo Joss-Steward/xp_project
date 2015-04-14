@@ -8,12 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.StateAccumulator;
-import communication.messages.QuestNeedsFulfillmentNotificationMessage;
+import communication.messages.QuestStateChangeMessage;
 
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
 import edu.ship.shipsim.areaserver.model.QuestManager;
-import edu.ship.shipsim.areaserver.model.reports.QuestNeedsFulfillmentNotificationReport;
+import edu.ship.shipsim.areaserver.model.reports.QuestStateChangeReport;
 
 /**
  * 
@@ -42,8 +42,8 @@ public class QuestNeedsFulfillmentNotificationMessagePackerTest
 	@Test
 	public void testReportTypeWePack()
 	{
-		QuestNeedsFulfillmentNotificationMessagePacker packer = new QuestNeedsFulfillmentNotificationMessagePacker();
-		assertEquals(QuestNeedsFulfillmentNotificationReport.class,
+		QuestStateChangeMessagePacker packer = new QuestStateChangeMessagePacker();
+		assertEquals(QuestStateChangeReport.class,
 				packer.getReportTypeWePack());
 	}
 
@@ -60,12 +60,12 @@ public class QuestNeedsFulfillmentNotificationMessagePackerTest
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
 
-		QuestNeedsFulfillmentNotificationReport report = new QuestNeedsFulfillmentNotificationReport(
+		QuestStateChangeReport report = new QuestStateChangeReport(
 				2, QuestsForTest.ONE_BIG_QUEST.getQuestID(), QuestsForTest.ONE_BIG_QUEST.getQuestDescription());
-		QuestNeedsFulfillmentNotificationMessagePacker packer = new QuestNeedsFulfillmentNotificationMessagePacker();
+		QuestStateChangeMessagePacker packer = new QuestStateChangeMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		
-		QuestNeedsFulfillmentNotificationMessage msg = (QuestNeedsFulfillmentNotificationMessage) packer.pack(report);
+		QuestStateChangeMessage msg = (QuestStateChangeMessage) packer.pack(report);
 		assertNull(msg);
 	}
 	/**
@@ -80,12 +80,12 @@ public class QuestNeedsFulfillmentNotificationMessagePackerTest
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
 		
-		QuestNeedsFulfillmentNotificationReport report = new QuestNeedsFulfillmentNotificationReport(
+		QuestStateChangeReport report = new QuestStateChangeReport(
 				stateAccumulator.getPlayerID(), QuestsForTest.ONE_BIG_QUEST.getQuestID(), QuestsForTest.ONE_BIG_QUEST.getQuestDescription());
-		QuestNeedsFulfillmentNotificationMessagePacker packer = new QuestNeedsFulfillmentNotificationMessagePacker();
+		QuestStateChangeMessagePacker packer = new QuestStateChangeMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		
-		QuestNeedsFulfillmentNotificationMessage msg = (QuestNeedsFulfillmentNotificationMessage) packer.pack(report);
+		QuestStateChangeMessage msg = (QuestStateChangeMessage) packer.pack(report);
 		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestID(), msg.getQuestID());
 		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestDescription(),msg.getQuestDescription());
 
