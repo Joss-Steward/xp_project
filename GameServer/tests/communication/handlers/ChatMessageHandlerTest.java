@@ -16,7 +16,8 @@ import edu.ship.shipsim.areaserver.model.ModelFacade;
  * @author Josh
  */
 
-public class ChatMessageHandlerTest {
+public class ChatMessageHandlerTest 
+{
 	
 	/**
 	 * Reset the ModelFacade

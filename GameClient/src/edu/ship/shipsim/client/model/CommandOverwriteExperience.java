@@ -14,6 +14,7 @@ public class CommandOverwriteExperience extends Command
 {
 	private int experience;
 	private LevelRecord record;
+	private int playerID;
 	
 	/**
 	 * constructor for the command
@@ -26,6 +27,16 @@ public class CommandOverwriteExperience extends Command
 		this.record = msg.getLevel();
 	}
 
+	/**
+	 * @param playerID player's ID
+	 * @param experiencePoints player's experience points
+	 */
+	public CommandOverwriteExperience(int playerID, int experiencePoints) 
+	{
+		this.playerID = playerID;
+		this.experience = experiencePoints;
+	}
+	
 	/**
 	 * Overwrites the player's experience
 	 */

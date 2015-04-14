@@ -1,0 +1,45 @@
+package communication.packers;
+
+import model.QualifiedObservableReport;
+
+import communication.messages.ExperienceChangedMessage;
+import communication.messages.Message;
+
+import edu.ship.shipsim.areaserver.model.reports.ExperienceChangedReport;
+
+/**
+ * @author Ryan
+ *
+ */
+public class ExperienceChangedMessagePacker extends MessagePacker 
+{
+
+	/**
+	 * @see communication.packers.MessagePacker#pack(model.QualifiedObservableReport)
+	 */
+	@Override
+	public Message pack(QualifiedObservableReport object) 
+	{
+		if(object.getClass() != ExperienceChangedReport.class)
+		{
+			throw new IllegalArgumentException(
+					"ExperienceChangedMessagePacker cannot pack messages of type "
+							+ object.getClass());
+		}
+		
+		ExperienceChangedReport report = (ExperienceChangedReport)object;
+		ExperienceChangedMessage msg = new 	ExperienceChangedMessage(report.getExperiencePoints(), report.getPlayerID());
+		
+		return msg;
+	}
+
+	/**
+	 * @see communication.packers.MessagePacker#getReportTypeWePack()
+	 */
+	@Override
+	public Class<? extends QualifiedObservableReport> getReportTypeWePack() 
+	{
+		return ExperienceChangedReport.class;
+	}
+
+}
