@@ -45,7 +45,17 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1_ADV3(2, 1, 3, AdventureStateEnum.HIDDEN);
+	PLAYER2_QUEST1_ADV3(2, 1, 3, AdventureStateEnum.HIDDEN),
+	
+	/**
+	 * 
+	 */
+	PLAYER2_QUEST4_ADV1(2, 4, 1, AdventureStateEnum.COMPLETED),
+	
+	/**
+	 * 
+	 */
+	PLAYER2_QUEST4_ADV2(2, 4, 2, AdventureStateEnum.PENDING);
 
 	
 	private int adventureID;

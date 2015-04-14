@@ -78,6 +78,7 @@ public class QuestState
 			if (adventuresComplete >= adventuresRequired)
 			{
 				questState = QuestStateEnum.NEED_FULFILLED_NOTIFICATION;
+				QuestManager.getSingleton().updateExpPoints(playerID, questID);
 				QualifiedObservableConnector.getSingleton().sendReport(
 						new QuestNeedsFulfillmentNotificationReport(playerID, questID,
 								QuestManager.getSingleton().getQuest(questID)

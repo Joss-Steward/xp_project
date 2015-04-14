@@ -25,7 +25,11 @@ public enum QuestStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST3(1, 3, QuestStateEnum.FULFILLED);
+	PLAYER1_QUEST3(1, 3, QuestStateEnum.FULFILLED),
+	/**
+	 * 
+	 */
+	PLAYER2_QUEST2(2, 4, QuestStateEnum.TRIGGERED);
 	
 	private int playerID;
 	private int questID;
