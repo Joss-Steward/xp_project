@@ -6,7 +6,7 @@ import communication.messages.QuestStateChangeMessage;
 import edu.ship.shipsim.areaserver.model.reports.QuestStateChangeReport;
 
 /**
- * If our player has fulfilled a quest, we need to send a message so that the
+ * If our player quest state has changed, we need to send a message so that the
  * client can tell the player of their success
  * 
  * @author Merlin
