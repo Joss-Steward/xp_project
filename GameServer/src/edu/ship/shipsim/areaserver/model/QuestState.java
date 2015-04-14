@@ -6,7 +6,7 @@ import model.QualifiedObservableConnector;
 import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
 import datasource.QuestStateEnum;
-import edu.ship.shipsim.areaserver.model.reports.QuestNeedsFulfillmentNotificationReport;
+import edu.ship.shipsim.areaserver.model.reports.QuestStateChangeReport;
 
 /**
  * Stores the states of all the quests for an individual player on the server
@@ -80,9 +80,9 @@ public class QuestState
 				questState = QuestStateEnum.NEED_FULFILLED_NOTIFICATION;
 				QuestManager.getSingleton().updateExpPoints(playerID, questID);
 				QualifiedObservableConnector.getSingleton().sendReport(
-						new QuestNeedsFulfillmentNotificationReport(playerID, questID,
+						new QuestStateChangeReport(playerID, questID,
 								QuestManager.getSingleton().getQuest(questID)
-										.getDescription()));
+										.getDescription(), questState));
 			}
 		}
 	}

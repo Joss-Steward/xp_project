@@ -2,17 +2,17 @@ package communication.packers;
 
 import model.QualifiedObservableReport;
 import communication.messages.Message;
-import communication.messages.QuestNeedsFulfillmentNotificationMessage;
-import edu.ship.shipsim.areaserver.model.reports.QuestNeedsFulfillmentNotificationReport;
+import communication.messages.QuestStateChangeMessage;
+import edu.ship.shipsim.areaserver.model.reports.QuestStateChangeReport;
 
 /**
- * If our player has fulfilled a quest, we need to send a message so that the
+ * If our player quest state has changed, we need to send a message so that the
  * client can tell the player of their success
  * 
  * @author Merlin
  *
  */
-public class QuestNeedsFulfillmentNotificationMessagePacker extends MessagePacker
+public class QuestStateChangeMessagePacker extends MessagePacker
 {
 
 	/**
@@ -21,13 +21,13 @@ public class QuestNeedsFulfillmentNotificationMessagePacker extends MessagePacke
 	@Override
 	public Message pack(QualifiedObservableReport object)
 	{
-		QuestNeedsFulfillmentNotificationReport rpt = (QuestNeedsFulfillmentNotificationReport) object;
-		QuestNeedsFulfillmentNotificationMessage msg = null;
+		QuestStateChangeReport rpt = (QuestStateChangeReport) object;
+		QuestStateChangeMessage msg = null;
 		int playerID = rpt.getPlayerID();
 		if (this.getAccumulator().getPlayerID() == playerID)
 		{
-			msg = new QuestNeedsFulfillmentNotificationMessage(rpt.getQuestID(),
-					rpt.getQuestDescription());
+			msg = new QuestStateChangeMessage(rpt.getQuestID(),
+					rpt.getQuestDescription(), rpt.getNewState());
 		}
 		return msg;
 
@@ -39,7 +39,7 @@ public class QuestNeedsFulfillmentNotificationMessagePacker extends MessagePacke
 	@Override
 	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
 	{
-		return QuestNeedsFulfillmentNotificationReport.class;
+		return QuestStateChangeReport.class;
 	}
 
 }

@@ -17,7 +17,7 @@ import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.QuestStateEnum;
 import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
-import edu.ship.shipsim.areaserver.model.reports.QuestNeedsFulfillmentNotificationReport;
+import edu.ship.shipsim.areaserver.model.reports.QuestStateChangeReport;
 
 /**
  * Test for the QuestState Class 
@@ -129,9 +129,9 @@ public class QuestStateTest extends DatabaseTest
 	public void testFulfilling() throws DatabaseException
 	{
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestNeedsFulfillmentNotificationReport.class);
-		QuestNeedsFulfillmentNotificationReport rpt = new QuestNeedsFulfillmentNotificationReport(13,QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(),
-				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestDescription());
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestStateChangeReport.class);
+		QuestStateChangeReport rpt = new QuestStateChangeReport(13,QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(),
+				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestDescription(), QuestStateEnum.NEED_FULFILLED_NOTIFICATION);
 		obs.receiveReport(rpt);
 		EasyMock.replay(obs);
 		QuestState qs = new QuestState(3, QuestStateEnum.TRIGGERED);
@@ -161,7 +161,7 @@ public class QuestStateTest extends DatabaseTest
 	public void testFulfillingRepeatedly() throws DatabaseException
 	{
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestNeedsFulfillmentNotificationReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestStateChangeReport.class);
 		EasyMock.replay(obs);
 		QuestState qs = new QuestState(3, QuestStateEnum.NEED_FULFILLED_NOTIFICATION);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();

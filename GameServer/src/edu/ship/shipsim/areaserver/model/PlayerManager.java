@@ -70,6 +70,10 @@ public class PlayerManager
 	 */
 	public Player addPlayer(int playerID)
 	{
+		if (!OptionsManager.getSingleton().isTestMode())
+		{
+			throw new IllegalStateException("Trying to add a player without giving a PIN when not in test mode");
+		}
 		try
 		{
 			PlayerMapper mapper = new PlayerMapper(playerID);
@@ -102,7 +106,7 @@ public class PlayerManager
 
 		PlayerMapper pm = new PlayerMapper(playerID);
 		Player player = pm.getPlayer();
-		if (OptionsManager.getSingleton().isTestMode() || player.isPinValid(pin))
+		if ( player.isPinValid(pin))
 		{
 			players.put(playerID, player);
 

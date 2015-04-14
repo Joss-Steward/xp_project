@@ -16,6 +16,7 @@ import communication.handlers.MessageHandlerSetTest;
 import communication.messages.ChatMessageTest;
 import communication.messages.ConnectionMessageTest;
 import communication.messages.DisconnectionMessageTest;
+import communication.messages.ExperienceChangedMessageTest;
 import communication.messages.InitializeThisClientsPlayerMessageTest;
 import communication.messages.PlayerLeaveMessageTest;
 import communication.messages.TeleportationInitiationMessageTest;
@@ -63,6 +64,7 @@ import datasource.ServerRowDataGatewayRDSTest;
 		ChatMessageTest.class,
 		ConnectionMessageTest.class,
 		DisconnectionMessageTest.class,
+		ExperienceChangedMessageTest.class,
 		InitializeThisClientsPlayerMessageTest.class,
 		LoginMessageTest.class,
 		LoginResponseMessageTest.class,

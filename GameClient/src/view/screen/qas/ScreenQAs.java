@@ -41,8 +41,9 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	private Texture checkmark;
 	private Texture complete;
 	private Texture legend;
-
+	
 	private Label q_header;
+	private float fontScale = (float) 1.25;
 
 	private final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
@@ -138,7 +139,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	public void updateTable(ArrayList<ClientPlayerQuest> quests)
 	{
 		questTable.clearChildren();
-		questTable.add(q_header).colspan(2).center();
+		questTable.add(q_header).colspan(2).center();		
 		questTable.row();
 
 		int numAvailable = 0;
@@ -159,8 +160,12 @@ public class ScreenQAs extends Group implements QualifiedObserver
 		}
 
 		// Show how many quests are available to be found
-		questTable.add(new Label("" + numAvailable, skin));
-		questTable.add(new Label("?????", skin));
+		Label q_avail = new Label(""+ numAvailable, skin);
+		q_avail.setFontScale(fontScale);
+		questTable.add(q_avail);
+		Label huh = new Label("?????", skin);
+		huh.setFontScale(fontScale);
+		questTable.add(huh);
 		// Set the Legend at the bottom of the Quests Table
 		questTable.row();
 		questTable.add(new Image(legend)).colspan(2).center();
@@ -171,14 +176,13 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 */
 	private void initializeQuestTableContents()
 	{
-
-		// available = new Texture("img/available.png");
 		triggered = new Texture("img/triggered.png");
 		checkmark = new Texture("img/check.png");
 		complete = new Texture("img/complete.png");
 		legend = new Texture("img/legend.png");
 		q_header = new Label("Quests", skin);
-
+		q_header.setFontScale(fontScale);
+		
 		int numAvailable = 0;
 		// Table Setup
 		questTable = new Table();
@@ -206,7 +210,10 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	private void buildAdvRow(Texture state, String desc)
 	{
 		adventureTable.add(new Image(state));
-		adventureTable.add(new Label(desc, skin));
+		TextButton temp = new TextButton(desc,skin);
+		//Label temp = new Label(desc,skin);
+		//temp.setFontScale(fontScale);
+		adventureTable.add(temp);
 		adventureTable.row();
 	}
 
@@ -268,6 +275,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	private void clearAdventureTable()
 	{
 		Label header = new Label("Adventures", skin);
+		header.setFontScale(fontScale);
 		adventureTable.clearChildren();
 		// Set Header
 		adventureTable.add(header).colspan(2).center();
@@ -280,6 +288,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	private void clearQuestTable()
 	{
 		Label header = new Label("Quests", skin);
+		header.setFontScale(fontScale);
 		questTable.clearChildren();
 		// Set Header
 		questTable.add(header).colspan(2).center();
