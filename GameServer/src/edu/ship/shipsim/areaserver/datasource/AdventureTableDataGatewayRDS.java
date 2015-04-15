@@ -78,10 +78,7 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 			ArrayList<AdventureRecord> results = new ArrayList<AdventureRecord>();
 			while (queryResult.next())
 			{
-				AdventureRecord rec = new AdventureRecord(queryResult.getInt("questID"),
-						queryResult.getInt("adventureID"),
-						queryResult.getString("adventureDescription"),
-						queryResult.getInt("experiencePointsGained"));
+				AdventureRecord rec = buildAdventureRecord(queryResult);
 				results.add(rec);
 			}
 			return results;
@@ -127,6 +124,44 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 					"Couldn't create a adventure record for adventure with ID "
 							+ adventureID, e);
 		}
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.AdventureTableDataGateway#getAdventure(int, int)
+	 */
+	@Override
+	public AdventureRecord getAdventure(int questID, int adventureID) throws DatabaseException
+	{
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
+		{
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT * FROM Adventures WHERE questID = ? and AdventureID = ?");
+			stmt.setInt(1, questID);
+			stmt.setInt(2, adventureID);
+			ResultSet queryResult = stmt.executeQuery();
+
+			if (queryResult.next())
+			{
+				AdventureRecord rec = buildAdventureRecord(queryResult);
+				return rec;
+			}
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Couldn't find adventure " + adventureID + " for quest ID "
+					+ questID, e);
+		}
+		return null;
+	}
+
+	private AdventureRecord buildAdventureRecord(ResultSet queryResult)
+			throws SQLException
+	{
+		AdventureRecord rec = new AdventureRecord(queryResult.getInt("questID"),
+				queryResult.getInt("adventureID"),
+				queryResult.getString("adventureDescription"),
+				queryResult.getInt("experiencePointsGained"));
+		return rec;
 	}
 
 }

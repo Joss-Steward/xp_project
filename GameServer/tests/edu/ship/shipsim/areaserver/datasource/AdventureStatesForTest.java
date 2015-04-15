@@ -85,7 +85,7 @@ public enum AdventureStatesForTest
 	}
 
 	/**
-	 * @return the boolean for needing notification
+	 * @return true if the state should be shared with the player
 	 */
 	public boolean isNeedingNotification()
 	{
