@@ -1,17 +1,29 @@
 package communication.packers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+
+import model.ClientPlayerQuest;
 import model.OptionsManager;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import communication.StateAccumulator;
 import communication.messages.ExperienceChangedMessage;
+import communication.messages.InitializeThisClientsPlayerMessage;
 import datasource.DatabaseException;
+import datasource.LevelRecord;
 import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.model.LevelManager;
+import edu.ship.shipsim.areaserver.model.Player;
+import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.QuestManager;
 import edu.ship.shipsim.areaserver.model.reports.ExperienceChangedReport;
+import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReport;
 
 /**
  * @author Ryan
@@ -20,6 +32,7 @@ import edu.ship.shipsim.areaserver.model.reports.ExperienceChangedReport;
  */
 public class ExperienceChangedMessagePackerTest
 {
+	private StateAccumulator stateAccumulator;
 	/**
 	 * reset the necessary singletons
 	 */
@@ -29,6 +42,13 @@ public class ExperienceChangedMessagePackerTest
 		OptionsManager.getSingleton(true);
 		QuestManager.resetSingleton();
 		//TODO - Need test mode of Level Manager : LevelManager.getSingleton(true);
+		
+
+		PlayerManager playerManager = PlayerManager.getSingleton();
+		playerManager.addPlayer(PlayersForTest.JOHN.getPlayerID());
+		playerManager.addPlayer(PlayersForTest.MERLIN.getPlayerID());
+		stateAccumulator = new StateAccumulator(null);
+		stateAccumulator.setPlayerId(PlayersForTest.MERLIN.getPlayerID());
 	}
 	/**
 	 * 
@@ -42,20 +62,41 @@ public class ExperienceChangedMessagePackerTest
 	}
 	
 	/**
-	 * Make sure that the report is properly translated into the message.
-	 * @throws DatabaseException shouldn't
+	 * the message should contain the appropriate player's ID, experience points and level object
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
-	public void testPacking() throws DatabaseException
-	{		
-		ExperienceChangedReport report = new ExperienceChangedReport(PlayersForTest.JOHN.getPlayerID(), PlayersForTest.JOHN.getExperiencePoints(), LevelManager.getSingleton().getLevelForPoints(PlayersForTest.JOHN.getExperiencePoints()));
+	public void testPackedObjectIsCurrentPlayer() throws DatabaseException
+	{
+		Player player = PlayerManager.getSingleton().getPlayerFromID(
+				stateAccumulator.getPlayerID());
+		
+		LevelRecord record = LevelManager.getSingleton().getLevelForPoints(PlayersForTest.MERLIN.getExperiencePoints()); 
+		ExperienceChangedReport report = new ExperienceChangedReport(PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.MERLIN.getExperiencePoints(), record);
 		ExperienceChangedMessagePacker packer = new ExperienceChangedMessagePacker();
+		packer.setAccumulator(stateAccumulator);
+ 
 		ExperienceChangedMessage msg = (ExperienceChangedMessage) packer.pack(report);
 		
-		
-		assertEquals(PlayersForTest.JOHN.getExperiencePoints(), msg.getExperiencePoints());
+		assertEquals(PlayersForTest.MERLIN.getExperiencePoints(), msg.getExperiencePoints());
+		assertEquals(record, msg.getLevel());
 	}
 	
-	
+	/**
+	 * If the report is not about the player we are communicating with, we should ignore it
+	 * @throws DatabaseException
+	 */
+	@Test
+	public void ifItIsntAboutUsDontPack() throws DatabaseException
+	{
+
+		ExperienceChangedMessagePacker packer = new ExperienceChangedMessagePacker();
+		packer.setAccumulator(stateAccumulator);
+
+		ExperienceChangedReport report = new ExperienceChangedReport(PlayersForTest.JOHN.getPlayerID(), PlayersForTest.JOHN.getExperiencePoints(), LevelManager.getSingleton().getLevelForPoints(PlayersForTest.JOHN.getExperiencePoints()));
+		assertNull(packer.pack(report));
+	}
 
 }

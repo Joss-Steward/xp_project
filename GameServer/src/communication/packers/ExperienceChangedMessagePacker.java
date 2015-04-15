@@ -26,11 +26,15 @@ public class ExperienceChangedMessagePacker extends MessagePacker
 					"ExperienceChangedMessagePacker cannot pack messages of type "
 							+ object.getClass());
 		}
-		
+
 		ExperienceChangedReport report = (ExperienceChangedReport)object;
-		ExperienceChangedMessage msg = new 	ExperienceChangedMessage(report.getExperiencePoints(), report.getRecord());
-		
-		return msg;
+
+		if (this.getAccumulator().getPlayerID() == report.getPlayerID())
+		{
+			ExperienceChangedMessage msg = new 	ExperienceChangedMessage(report.getExperiencePoints(), report.getRecord());
+			return msg;
+		}
+		return null;
 	}
 
 	/**
