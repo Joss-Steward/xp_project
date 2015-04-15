@@ -103,7 +103,7 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	{
 		gateway = getGateway();
 		ArrayList<AdventureStateRecord> records = gateway
-				.getPendingAdventuresForPlayer(2);
+				.getPendingAdventuresForPlayer(3);
 		assertEquals(0, records.size());
 	}
 

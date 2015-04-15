@@ -14,6 +14,10 @@ public final class ExperienceChangedReport  implements QualifiedObservableReport
 	
 	private final int playerID;
 
+	/**
+	 * @param experiencePoints experience points of the player
+	 * @param playerID id of the player
+	 */
 	public ExperienceChangedReport(int experiencePoints, int playerID) 
 	{
 		this.experiencePoints = experiencePoints;

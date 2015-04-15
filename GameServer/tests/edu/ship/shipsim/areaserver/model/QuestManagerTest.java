@@ -10,7 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import data.Position;
+import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
+import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
 import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
 import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
@@ -360,4 +362,49 @@ public class QuestManagerTest
 		QuestManager.getSingleton().removeQuestStatesForPlayer(4);
 		assertNull(QuestManager.getSingleton().getQuestList(4));
 	}
+	
+	
+	/**
+	 * Should be able to change the state of a quest to fulfilled if enough 
+	 * adventures are completed.
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void testFulfillQuest() throws DatabaseException 
+	{
+		int playerID = 2;
+		int questID = 4;
+		Player p = playerManager.addPlayer(playerID);
+		int initialExp = p.getExperiencePoints();
+		assertEquals(initialExp, PlayersForTest.MERLIN.getExperiencePoints());
+		int expGain = QuestManager.getSingleton().getQuest(questID).getExperiencePointsGained();
+		QuestManager.getSingleton().getQuestStateByID(playerID, questID).checkForFulfillment();
+		assertEquals(initialExp + expGain, p.getExperiencePoints());
+	}
+	
+	/**
+	 * @throws DatabaseException shouldn't
+	 * 
+	 */
+	@Test
+	public void testCompletingAdventure() throws DatabaseException
+	{
+		int playerID = 2;
+		int questID = 4;
+		Player p = playerManager.addPlayer(playerID);
+		int initialExp = p.getExperiencePoints();
+		
+		AdventureState as = new AdventureState(2, AdventureStateEnum.PENDING, false);
+		
+		ArrayList<AdventureState> adventures = new ArrayList<AdventureState>();
+		adventures.add(as);
+		QuestState qs = new QuestState(questID, QuestStateEnum.FULFILLED);
+		qs.setPlayerID(playerID);
+		qs.addAdventures(adventures);
+		QuestManager.getSingleton().addQuestState(playerID, qs);
+		int expGain = QuestManager.getSingleton().getQuest(questID).getAdventures().get(1).getExperiencePointsGained();
+		as.complete();
+		assertEquals(initialExp+expGain, p.getExperiencePoints());
+	}
+	
 }

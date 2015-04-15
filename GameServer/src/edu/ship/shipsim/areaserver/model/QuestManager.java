@@ -89,7 +89,9 @@ public class QuestManager implements QualifiedObserver
 		}
 
 		Quest quest = new Quest(questGateway.getQuestID(),
-				questGateway.getQuestDescription(), questGateway.getTriggerMapName(), questGateway.getTriggerPosition(), adventureGateway.getAdventuresForQuest(questID),
+				questGateway.getQuestDescription(), questGateway.getTriggerMapName(),
+				questGateway.getTriggerPosition(),
+				adventureGateway.getAdventuresForQuest(questID),
 				questGateway.getExperiencePointsGained(),
 				questGateway.getAdventuresForFulfillment());
 
@@ -226,5 +228,50 @@ public class QuestManager implements QualifiedObserver
 	public void removeQuestStatesForPlayer(int playerID)
 	{
 		questStates.remove(playerID);
+	}
+
+	/**
+	 * Update the players experience points when fulfilling a quest.
+	 * 
+	 * @param playerID
+	 *            player who fulfilled
+	 * @param questID
+	 *            quest fulfilled
+	 * @throws DatabaseException
+	 *             should not happen
+	 */
+	public void updateExpPoints(int playerID, int questID) throws DatabaseException
+	{
+		Player playerFromID = PlayerManager.getSingleton().getPlayerFromID(playerID);
+		if (playerFromID != null)
+		{
+			playerFromID.addExperiencePoints(QuestManager.getSingleton()
+					.getQuest(questID).getExperiencePointsGained());
+		}
+	}
+
+	/**
+	 * When finishing an adventure, add its experience to the player's
+	 * experience
+	 * 
+	 * @param playerID
+	 *            player who finished adventure
+	 * @param id
+	 *            quest ID for adventure
+	 * @param adventureID
+	 *            ID for the adventure that was finished
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	public void updateExpPointsAdventure(int playerID, int id, int adventureID)
+			throws DatabaseException
+	{
+		int expPoints = QuestManager.getSingleton().getQuest(id).getAdventures()
+				.get(adventureID - 1).getExperiencePointsGained();
+		Player player = PlayerManager.getSingleton().getPlayerFromID(playerID);
+		if (player != null)
+		{
+			player.addExperiencePoints(expPoints);
+		}
 	}
 }

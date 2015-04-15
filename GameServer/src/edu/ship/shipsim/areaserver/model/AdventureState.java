@@ -123,8 +123,10 @@ public class AdventureState
 	 */
 	public void complete() throws DatabaseException
 	{
+
 		this.adventureState = AdventureStateEnum.COMPLETED;
 		this.needingNotification = true;
+		QuestManager.getSingleton().updateExpPointsAdventure(this.parentQuestState.getPlayerID(), this.parentQuestState.getID(), adventureID);
 		this.parentQuestState.checkForFulfillment();
 	}
 
