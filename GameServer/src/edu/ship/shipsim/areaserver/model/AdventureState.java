@@ -126,7 +126,14 @@ public class AdventureState
 
 		this.adventureState = AdventureStateEnum.COMPLETED;
 		this.needingNotification = true;
-		QuestManager.getSingleton().updateExpPointsAdventure(this.parentQuestState.getPlayerID(), this.parentQuestState.getID(), adventureID);
+		
+		PlayerManager.getSingleton()
+				.getPlayerFromID(this.parentQuestState.getPlayerID())
+				.addExperiencePoints(
+						QuestManager.getSingleton()
+								.getAdventure(this.parentQuestState.getID(),
+										adventureID)
+								.getExperiencePointsGained());
 		this.parentQuestState.checkForFulfillment();
 	}
 

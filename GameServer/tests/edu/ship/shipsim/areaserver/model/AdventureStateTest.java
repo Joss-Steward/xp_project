@@ -83,7 +83,12 @@ public class AdventureStateTest extends DatabaseTest
 	@Test
 	public void testCompleteNotFulfillingAdventure() throws DatabaseException
 	{
+		PlayerManager.getSingleton().addPlayer(1);
+		
 		questState = new QuestState(1, QuestStateEnum.TRIGGERED);
+		
+		questState.setPlayerID(1);
+		
 		AdventureState adventure = new AdventureState(1, AdventureStateEnum.PENDING, false);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
 		adventureList.add(adventure);
@@ -104,7 +109,12 @@ public class AdventureStateTest extends DatabaseTest
 	@Test
 	public void testCompleteFulfillingAdventure() throws DatabaseException
 	{
+		PlayerManager.getSingleton().addPlayer(1);
+		
 		questState = new QuestState(2, QuestStateEnum.TRIGGERED);
+		
+		questState.setPlayerID(1);
+		
 		AdventureState adventure = new AdventureState(1, AdventureStateEnum.PENDING, false);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
 		adventureList.add(adventure);
@@ -126,7 +136,13 @@ public class AdventureStateTest extends DatabaseTest
 	@Test
 	public void testCompleteAlreadyFulfilledAdventure() throws DatabaseException
 	{
+		PlayerManager.getSingleton().addPlayer(1);
+		
 		questState = new QuestState(2, QuestStateEnum.FULFILLED);
+		
+		questState.setPlayerID(1);
+		
+		
 		AdventureState adventure = new AdventureState(1, AdventureStateEnum.COMPLETED, false);
 		AdventureState adventure2 = new AdventureState(2, AdventureStateEnum.PENDING, false);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();

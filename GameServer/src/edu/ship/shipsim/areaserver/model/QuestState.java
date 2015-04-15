@@ -77,11 +77,12 @@ public class QuestState
 			if (adventuresComplete >= adventuresRequired)
 			{
 				questState = QuestStateEnum.NEED_FULFILLED_NOTIFICATION;
-				QuestManager.getSingleton().updateExpPoints(playerID, questID);
 				QualifiedObservableConnector.getSingleton().sendReport(
 						new QuestStateChangeReport(playerID, questID,
 								QuestManager.getSingleton().getQuest(questID)
 										.getDescription(), questState));
+				
+				PlayerManager.getSingleton().getPlayerFromID(playerID).addExperiencePoints(QuestManager.getSingleton().getQuest(questID).getExperiencePointsGained());
 			}
 		}
 	}
