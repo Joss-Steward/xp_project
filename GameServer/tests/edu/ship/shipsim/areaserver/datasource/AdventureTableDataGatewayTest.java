@@ -68,4 +68,20 @@ public abstract class AdventureTableDataGatewayTest
 	}
 	
 
+	/**
+	 * We should be able to retrieve the specific information about one single adventure
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void canGetSingleAdventure() throws DatabaseException
+	{
+		AdventureTableDataGateway gateway = getGateway();
+		AdventureRecord record = gateway.getAdventure(AdventuresForTest.ONE.getQuestID(),AdventuresForTest.ONE.getAdventureID());
+		assertEquals(AdventuresForTest.ONE.getAdventureDescription(),record.getAdventureDescription());
+		assertEquals(AdventuresForTest.ONE.getAdventureID(),record.getAdventureID());
+		assertEquals(AdventuresForTest.ONE.getExperiencePointsGained(),record.getExperiencePointsGained());
+		assertEquals(AdventuresForTest.ONE.getQuestID(),record.getQuestID());
+		
+		
+	}
 }

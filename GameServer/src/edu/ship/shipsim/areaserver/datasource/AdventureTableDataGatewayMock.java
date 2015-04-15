@@ -58,5 +58,22 @@ public class AdventureTableDataGatewayMock implements AdventureTableDataGateway
 	{
 		return data.get(questID);
 	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.AdventureTableDataGateway#getAdventure(int, int)
+	 */
+	@Override
+	public AdventureRecord getAdventure(int questID, int adventureID)
+	{
+		ArrayList<AdventureRecord> adventures = data.get(questID);
+		for (AdventureRecord adv:adventures)
+		{
+			if (adv.getAdventureID() == adventureID)
+			{
+				return adv;
+			}
+		}
+		return null;
+	}
 	
 }

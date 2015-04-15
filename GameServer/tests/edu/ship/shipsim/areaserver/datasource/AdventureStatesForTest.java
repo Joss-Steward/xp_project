@@ -84,6 +84,9 @@ public enum AdventureStatesForTest
 		this.needsNotification = needsNotification;
 	}
 
+	/**
+	 * @return true if the state should be shared with the player
+	 */
 	public boolean isNeedingNotification()
 	{
 		return needsNotification;
