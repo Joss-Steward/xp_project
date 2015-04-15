@@ -72,7 +72,7 @@ public class ExperienceChangedMessagePackerTest
 	
 	/**
 	 * If the report is not about the player we are communicating with, we should ignore it
-	 * @throws DatabaseException
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void ifItIsntAboutUsDontPack() throws DatabaseException

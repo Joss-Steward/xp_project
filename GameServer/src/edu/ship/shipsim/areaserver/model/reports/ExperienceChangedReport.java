@@ -18,6 +18,7 @@ public final class ExperienceChangedReport  implements QualifiedObservableReport
 	private final int playerID;
 
 	/**
+	 * @param playerID the player's id
 	 * @param experiencePoints experience points of the player
 	 * @param record level record of the player
 	 */
@@ -55,6 +56,9 @@ public final class ExperienceChangedReport  implements QualifiedObservableReport
 		return playerID;
 	}
 
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -65,6 +69,9 @@ public final class ExperienceChangedReport  implements QualifiedObservableReport
 		return result;
 	}
 
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
