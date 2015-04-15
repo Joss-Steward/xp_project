@@ -90,6 +90,33 @@ public class QuestManagerTest
 	}
 
 	/**
+	 * We should be able to retrieve data about a specific adventure
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void testGettingOneAdventure() throws DatabaseException
+	{
+		QuestManager qm = QuestManager.getSingleton();
+		AdventuresForTest expected = AdventuresForTest.FIVE;
+		AdventureRecord actual = qm.getAdventure(expected.getQuestID(), expected.getAdventureID());
+		assertEquals(AdventuresForTest.FIVE.getAdventureDescription(),actual.getAdventureDescription());
+		assertEquals(AdventuresForTest.FIVE.getAdventureID(),actual.getAdventureID());
+		assertEquals(AdventuresForTest.FIVE.getExperiencePointsGained(),actual.getExperiencePointsGained());
+		assertEquals(AdventuresForTest.FIVE.getQuestID(),actual.getQuestID());
+	}
+	
+	/**
+	 * If we ask for an adventure that doesn't exist, we should get null
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void testGettingMissingAdventure() throws DatabaseException
+	{
+		QuestManager qm = QuestManager.getSingleton();
+		AdventureRecord actual = qm.getAdventure(42,16);
+		assertNull(actual);
+	}
+	/**
 	 * Test getting two quests from the database
 	 * 
 	 * @throws DatabaseException

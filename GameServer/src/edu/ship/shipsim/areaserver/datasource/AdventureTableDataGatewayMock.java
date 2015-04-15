@@ -5,20 +5,22 @@ import java.util.Hashtable;
 
 /**
  * Mock version of the gateway to the table of adventures.
+ * 
  * @author merlin
  *
  */
 public class AdventureTableDataGatewayMock implements AdventureTableDataGateway
 {
 	private static AdventureTableDataGateway singleton;
-	
+
 	/**
 	 * Retrieves the mock gateway singleton.
+	 * 
 	 * @return singleton
 	 */
 	public static synchronized AdventureTableDataGateway getSingleton()
 	{
-		if(singleton == null)
+		if (singleton == null)
 		{
 			singleton = new AdventureTableDataGatewayMock();
 		}
@@ -26,17 +28,18 @@ public class AdventureTableDataGatewayMock implements AdventureTableDataGateway
 	}
 
 	private Hashtable<Integer, ArrayList<AdventureRecord>> data;
-	
+
 	/**
 	 * build the mock data from AdventuresForTest
 	 */
 	public AdventureTableDataGatewayMock()
 	{
 		data = new Hashtable<Integer, ArrayList<AdventureRecord>>();
-		for(AdventuresForTest a:AdventuresForTest.values())
+		for (AdventuresForTest a : AdventuresForTest.values())
 		{
-			AdventureRecord rec = new AdventureRecord(a.getQuestID(), a.getAdventureID(), a.getAdventureDescription(), a.getExperiencePointsGained());
-			
+			AdventureRecord rec = new AdventureRecord(a.getQuestID(), a.getAdventureID(),
+					a.getAdventureDescription(), a.getExperiencePointsGained());
+
 			if (data.containsKey(a.getQuestID()))
 			{
 				ArrayList<AdventureRecord> x = data.get(a.getQuestID());
@@ -49,7 +52,7 @@ public class AdventureTableDataGatewayMock implements AdventureTableDataGateway
 			}
 		}
 	}
-	
+
 	/**
 	 * @see edu.ship.shipsim.areaserver.datasource.AdventureTableDataGateway#getAdventuresForQuest(int)
 	 */
@@ -60,20 +63,23 @@ public class AdventureTableDataGatewayMock implements AdventureTableDataGateway
 	}
 
 	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.AdventureTableDataGateway#getAdventure(int, int)
+	 * @see edu.ship.shipsim.areaserver.datasource.AdventureTableDataGateway#getAdventure(int,
+	 *      int)
 	 */
 	@Override
 	public AdventureRecord getAdventure(int questID, int adventureID)
 	{
 		ArrayList<AdventureRecord> adventures = data.get(questID);
-		for (AdventureRecord adv:adventures)
+		if (adventures != null)
 		{
-			if (adv.getAdventureID() == adventureID)
+			for (AdventureRecord adv : adventures)
 			{
-				return adv;
+				if (adv.getAdventureID() == adventureID)
+				{
+					return adv;
+				}
 			}
 		}
 		return null;
 	}
-	
 }

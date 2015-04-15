@@ -9,6 +9,7 @@ import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 import data.Position;
 import datasource.DatabaseException;
+import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGateway;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayMock;
 import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayRDS;
@@ -25,8 +26,6 @@ import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
  */
 public class QuestManager implements QualifiedObserver
 {
-
-	private QuestRowDataGateway questGateway;
 	private AdventureTableDataGateway adventureGateway;
 	private HashMap<Integer, ArrayList<QuestState>> questStates;
 
@@ -50,6 +49,13 @@ public class QuestManager implements QualifiedObserver
 		QualifiedObservableConnector.getSingleton().registerObserver(this,
 				PlayerMovedReport.class);
 		questStates = new HashMap<Integer, ArrayList<QuestState>>();
+		if (OptionsManager.getSingleton().isTestMode())
+		{
+			this.adventureGateway = new AdventureTableDataGatewayMock();
+		} else
+		{
+			this.adventureGateway = new AdventureTableDataGatewayRDS();
+		}
 	}
 
 	/**
@@ -78,14 +84,14 @@ public class QuestManager implements QualifiedObserver
 	public Quest getQuest(int questID) throws DatabaseException
 	{
 
+		QuestRowDataGateway questGateway;
+		
 		if (OptionsManager.getSingleton().isTestMode())
 		{
-			this.questGateway = new QuestRowDataGatewayMock(questID);
-			this.adventureGateway = new AdventureTableDataGatewayMock();
+			questGateway = new QuestRowDataGatewayMock(questID);
 		} else
 		{
-			this.questGateway = new QuestRowDataGatewayRDS(questID);
-			this.adventureGateway = new AdventureTableDataGatewayRDS();
+			questGateway = new QuestRowDataGatewayRDS(questID);
 		}
 
 		Quest quest = new Quest(questGateway.getQuestID(),
@@ -273,5 +279,17 @@ public class QuestManager implements QualifiedObserver
 		{
 			player.addExperiencePoints(expPoints);
 		}
+	}
+
+	/**
+	 * Get the information about a specific adventure
+	 * @param questID the quest that contains the adventure
+	 * @param adventureID the adventure ID within that quest
+	 * @return the requested details
+	 * @throws DatabaseException if the data source can't respond well
+	 */
+	public AdventureRecord getAdventure(int questID, int adventureID) throws DatabaseException
+	{
+		return this.adventureGateway.getAdventure(questID, adventureID);
 	}
 }
