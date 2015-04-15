@@ -252,7 +252,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 				clearAdventureTable();
 				for (ClientPlayerAdventure a : quest.getAdventureList())
 				{
-					if (a.getAdventuretState().equals(
+					if (a.getAdventureState().equals(
 							AdventureStateEnum.PENDING))
 					{
 						buildAdvRow(triggered, a.getAdventureDescription());

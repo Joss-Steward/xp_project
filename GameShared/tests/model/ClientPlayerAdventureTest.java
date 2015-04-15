@@ -19,9 +19,9 @@ public class ClientPlayerAdventureTest
 	@Test
 	public void testClientPlayerAdventureInitializaiton() 
 	{
-		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure", AdventureStateEnum.HIDDEN);
+		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure", AdventureStateEnum.HIDDEN, false);
 		assertEquals(1, a.getAdventureID());
 		assertEquals("Test Adventure", a.getAdventureDescription());
-		assertEquals(AdventureStateEnum.HIDDEN, a.getAdventuretState());
+		assertEquals(AdventureStateEnum.HIDDEN, a.getAdventureState());
 	}
 }

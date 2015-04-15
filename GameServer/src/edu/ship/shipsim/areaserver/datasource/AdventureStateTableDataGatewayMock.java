@@ -50,7 +50,7 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 		for (AdventureStatesForTest a : AdventureStatesForTest.values())
 		{
 			AdventureStateRecord rec = new AdventureStateRecord(a.getPlayerID(),
-					a.getQuestID(), a.getAdventureID(), a.getState());
+					a.getQuestID(), a.getAdventureID(), a.getState(), a.isNeedingNotification());
 			if (a.getQuestID() > maxQuestIDSeen)
 			{
 				maxQuestIDSeen = a.getQuestID();
@@ -151,12 +151,13 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 						&& (asRec.getAdventureID() == adventureID))
 				{
 					asRec.setState(newState);
+					asRec.setNeedingNotification(true);
 				}
 			}
 		} else
 		{
 			ArrayList<AdventureStateRecord> list = new ArrayList<AdventureStateRecord>();
-			list.add(new AdventureStateRecord(playerID, questID, adventureID, newState));
+			list.add(new AdventureStateRecord(playerID, questID, adventureID, newState, true));
 			data.put(new Key(playerID, questID), list);
 		}
 	}
@@ -172,11 +173,11 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 
 	/**
 	 * @see edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway#createRow(int,
-	 *      int, int, datasource.AdventureStateEnum)
+	 *      int, int, datasource.AdventureStateEnum, boolean)
 	 */
 	@Override
 	public void createRow(int playerID, int questID, int adventureID,
-			AdventureStateEnum state) throws DatabaseException
+			AdventureStateEnum state, boolean needingNotification) throws DatabaseException
 	{
 		updateState(playerID, questID, adventureID, state);
 	}

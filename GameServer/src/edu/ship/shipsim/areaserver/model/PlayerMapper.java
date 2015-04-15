@@ -84,7 +84,7 @@ public class PlayerMapper
 			for (AdventureStateRecord asRec : adventureStateRecords)
 			{
 				adventureStates.add(new AdventureState(asRec.getAdventureID(), asRec
-						.getState()));
+						.getState(), asRec.isNeedingNotification()));
 			}
 			questState.addAdventures(adventureStates);
 			QuestManager.getSingleton().addQuestState(player.getPlayerID(), questState);

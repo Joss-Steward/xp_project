@@ -1,6 +1,7 @@
 package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ public class AdventureStateTest extends DatabaseTest
 	@Test
 	public void testInitialization()
 	{
-		AdventureState adventure = new AdventureState(1, AdventureStateEnum.HIDDEN);
+		AdventureState adventure = new AdventureState(1, AdventureStateEnum.HIDDEN, false);
 
 		assertEquals(1, adventure.getID());
 		assertEquals(AdventureStateEnum.HIDDEN, adventure.getState());
@@ -56,7 +57,7 @@ public class AdventureStateTest extends DatabaseTest
 	@Test
 	public void testTriggerAdventure()
 	{
-		AdventureState adventure = new AdventureState(1, AdventureStateEnum.HIDDEN);
+		AdventureState adventure = new AdventureState(1, AdventureStateEnum.HIDDEN, false);
 		adventure.trigger();
 		assertEquals(AdventureStateEnum.PENDING, adventure.getState());
 	}
@@ -67,7 +68,7 @@ public class AdventureStateTest extends DatabaseTest
 	@Test
 	public void testTriggerNonHiddenAdventure()
 	{
-		AdventureState adventure = new AdventureState(1, AdventureStateEnum.COMPLETED);
+		AdventureState adventure = new AdventureState(1, AdventureStateEnum.COMPLETED, false);
 		adventure.trigger();
 		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
 	}
@@ -83,12 +84,13 @@ public class AdventureStateTest extends DatabaseTest
 	public void testCompleteNotFulfillingAdventure() throws DatabaseException
 	{
 		questState = new QuestState(1, QuestStateEnum.TRIGGERED);
-		AdventureState adventure = new AdventureState(1, AdventureStateEnum.PENDING);
+		AdventureState adventure = new AdventureState(1, AdventureStateEnum.PENDING, false);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
 		adventureList.add(adventure);
 		questState.addAdventures(adventureList);
-		adventure.completeNeedingNotification();
-		assertEquals(AdventureStateEnum.NEED_NOTIFICATION, adventure.getState());
+		adventure.complete();
+		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
+		assertTrue(adventure.isNeedingNotification());
 		assertEquals(QuestStateEnum.TRIGGERED, questState.getStateValue());
 	}
 
@@ -103,13 +105,14 @@ public class AdventureStateTest extends DatabaseTest
 	public void testCompleteFulfillingAdventure() throws DatabaseException
 	{
 		questState = new QuestState(2, QuestStateEnum.TRIGGERED);
-		AdventureState adventure = new AdventureState(1, AdventureStateEnum.PENDING);
+		AdventureState adventure = new AdventureState(1, AdventureStateEnum.PENDING, false);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
 		adventureList.add(adventure);
 		questState.addAdventures(adventureList);
 
-		adventure.completeNeedingNotification();
-		assertEquals(AdventureStateEnum.NEED_NOTIFICATION, adventure.getState());
+		adventure.complete();
+		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
+		assertTrue(adventure.isNeedingNotification());
 		assertEquals(QuestStateEnum.NEED_FULFILLED_NOTIFICATION,
 				questState.getStateValue());
 	}
@@ -124,15 +127,16 @@ public class AdventureStateTest extends DatabaseTest
 	public void testCompleteAlreadyFulfilledAdventure() throws DatabaseException
 	{
 		questState = new QuestState(2, QuestStateEnum.FULFILLED);
-		AdventureState adventure = new AdventureState(1, AdventureStateEnum.COMPLETED);
-		AdventureState adventure2 = new AdventureState(2, AdventureStateEnum.PENDING);
+		AdventureState adventure = new AdventureState(1, AdventureStateEnum.COMPLETED, false);
+		AdventureState adventure2 = new AdventureState(2, AdventureStateEnum.PENDING, false);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
 		adventureList.add(adventure);
 		adventureList.add(adventure2);
 		questState.addAdventures(adventureList);
 
-		adventure2.completeNeedingNotification();
-		assertEquals(AdventureStateEnum.NEED_NOTIFICATION, adventure2.getState());
+		adventure2.complete();
+		assertEquals(AdventureStateEnum.COMPLETED, adventure2.getState());
+		assertTrue(adventure2.isNeedingNotification());
 		assertEquals(QuestStateEnum.FULFILLED, questState.getStateValue());
 	}
 }

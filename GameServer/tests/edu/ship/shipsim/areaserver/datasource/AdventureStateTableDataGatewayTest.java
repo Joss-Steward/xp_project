@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import org.junit.After;
 import org.junit.Test;
 
 import datasource.AdventureStateEnum;
@@ -19,6 +20,19 @@ import datasource.DatabaseTest;
 public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 {
 
+	private AdventureStateTableDataGateway gateway;
+
+	/**
+	 * Make sure any static information is cleaned up between tests
+	 */
+	@After
+	public void cleanup()
+	{
+		if (gateway != null)
+		{
+			gateway.resetData();
+		}
+	}
 	/**
 	 * @return the gateway we should test
 	 */
@@ -45,7 +59,7 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	@Test
 	public void retrieveAllPendingAdventuresForPlayer() throws DatabaseException
 	{
-		AdventureStateTableDataGateway gateway = getGateway();
+		 gateway = getGateway();
 		ArrayList<AdventureStateRecord> records = gateway
 				.getPendingAdventuresForPlayer(1);
 		assertEquals(2, records.size());
@@ -57,17 +71,24 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 		{
 			assertEquals(first.getState(), record.getState());
 			assertEquals(first.getQuestID(), record.getQuestID());
+			assertEquals(first.isNeedingNotification(), record.isNeedingNotification());
 			record = records.get(1);
 			assertEquals(other.getState(), record.getState());
 			assertEquals(other.getQuestID(), record.getQuestID());
+			assertEquals(other.isNeedingNotification(), record.isNeedingNotification());
+			
 		} else
 		{
 			assertEquals(other.getAdventureID(), record.getAdventureID());
 			assertEquals(other.getState(), record.getState());
 			assertEquals(other.getQuestID(), record.getQuestID());
+			assertEquals(other.isNeedingNotification(), record.isNeedingNotification());
+			
 			record = records.get(1);
 			assertEquals(first.getState(), record.getState());
 			assertEquals(first.getQuestID(), record.getQuestID());
+			assertEquals(first.isNeedingNotification(), record.isNeedingNotification());
+			
 		}
 	}
 
@@ -80,7 +101,7 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	@Test
 	public void retrievePendingAdventuresForPlayerWithNone() throws DatabaseException
 	{
-		AdventureStateTableDataGateway gateway = getGateway();
+		gateway = getGateway();
 		ArrayList<AdventureStateRecord> records = gateway
 				.getPendingAdventuresForPlayer(2);
 		assertEquals(0, records.size());
@@ -93,7 +114,7 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	@Test
 	public void retrieveAllAdventuresForQuest() throws DatabaseException
 	{
-		AdventureStateTableDataGateway gateway = getGateway();
+		gateway = getGateway();
 		ArrayList<AdventureStateRecord> records = gateway.getAdventureStates(1, 2);
 		assertEquals(2, records.size());
 		AdventureStateRecord record = records.get(0);
@@ -127,7 +148,7 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	@Test
 	public void returnsEmptyListIfNone() throws DatabaseException
 	{
-		AdventureStateTableDataGateway gateway = getGateway();
+		gateway = getGateway();
 		ArrayList<AdventureStateRecord> actual = gateway.getAdventureStates(109, 1);
 		assertEquals(0, actual.size());
 	}
@@ -141,7 +162,7 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	@Test
 	public void canChangeExisting() throws DatabaseException
 	{
-		AdventureStateTableDataGateway gateway = getGateway();
+		gateway = getGateway();
 		AdventureStatesForTest adv = AdventureStatesForTest.PLAYER2_QUEST1_ADV3;
 		gateway.updateState(adv.getPlayerID(), adv.getQuestID(), adv.getAdventureID(),
 				AdventureStateEnum.COMPLETED);
@@ -156,6 +177,7 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 			{
 				count = count + 1;
 				assertEquals(AdventureStateEnum.COMPLETED, asRec.getState());
+				assertTrue(asRec.isNeedingNotification());
 			}
 		}
 		assertEquals(1, count);
@@ -170,7 +192,7 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	@Test
 	public void canAddNew() throws DatabaseException
 	{
-		AdventureStateTableDataGateway gateway = getGateway();
+		gateway = getGateway();
 		gateway.updateState(13, 22, 11, AdventureStateEnum.PENDING);
 		ArrayList<AdventureStateRecord> actual = gateway.getAdventureStates(13, 22);
 		assertEquals(1, actual.size());
@@ -179,6 +201,7 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 		assertEquals(22, asRec.getQuestID());
 		assertEquals(11, asRec.getAdventureID());
 		assertEquals(AdventureStateEnum.PENDING, asRec.getState());
+		assertTrue(asRec.isNeedingNotification());
 
 	}
 }

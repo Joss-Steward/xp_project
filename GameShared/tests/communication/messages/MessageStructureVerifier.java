@@ -49,7 +49,7 @@ public class MessageStructureVerifier extends TypeDetector
 			for (Map.Entry<String, String> entry : mmap.entries())
 			{
 				Class<?> classToCheck = Class.forName(entry.getValue());
-				if (classToCheck != this.getClass())
+				if (classToCheck != this.getClass() && (classToCheck != Message.class))
 				{
 					if (!messageClasses.contains(classToCheck))
 					{

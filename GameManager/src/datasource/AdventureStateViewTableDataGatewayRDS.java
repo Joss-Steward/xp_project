@@ -65,7 +65,7 @@ public class AdventureStateViewTableDataGatewayRDS
 	 */
 	public static void moveToNeedNotification(int playerID, int questID, int adventureID) throws DatabaseException
 	{
-		AdventureStateTableDataGatewayRDS.getSingleton().updateState(playerID, questID, adventureID, AdventureStateEnum.NEED_NOTIFICATION);
+		AdventureStateTableDataGatewayRDS.getSingleton().updateState(playerID, questID, adventureID, AdventureStateEnum.COMPLETED);
 		
 	}
 }

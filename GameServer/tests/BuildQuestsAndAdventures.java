@@ -53,7 +53,7 @@ public class BuildQuestsAndAdventures
 		{
 			AdventureStateTableDataGatewayRDS.getSingleton().createRow(
 					adventure.getPlayerID(), adventure.getQuestID(),
-					adventure.getAdventureID(), adventure.getState());
+					adventure.getAdventureID(), adventure.getState(), adventure.isNeedingNotification());
 		}
 	}
 

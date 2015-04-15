@@ -67,8 +67,7 @@ public class QuestState
 			int adventuresComplete = 0;
 			for (AdventureState state : adventureList)
 			{
-				if (state.getState() == AdventureStateEnum.NEED_NOTIFICATION
-						|| state.getState() == AdventureStateEnum.COMPLETED)
+				if ( state.getState() == AdventureStateEnum.COMPLETED)
 				{
 					adventuresComplete++;
 				}

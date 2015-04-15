@@ -77,7 +77,8 @@ public class PlayerMapperTest extends DatabaseTest
 							&& (as.getQuestID() == playerQuestState.getID()))
 					{
 						AdventureState expected = new AdventureState(as.getAdventureID(),
-								as.getState());
+								as.getState(), as.isNeedingNotification());
+						expected.setParentQuest(playerQuestState);
 						assertTrue(
 								"questID " + qs.getQuestID() + " adventureID "
 										+ as.getAdventureID() + " state " + as.getState(),

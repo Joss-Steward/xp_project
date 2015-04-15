@@ -50,7 +50,8 @@ public class AdventureStateViewTableDataGatewayRDSTest extends DatabaseTest
 		{
 			if (rec.getAdventureID() == initial.get(0).getAdventureID())
 			{
-				assertTrue(rec.getState() == AdventureStateEnum.NEED_NOTIFICATION);
+				assertEquals(AdventureStateEnum.COMPLETED, rec.getState());
+				assertTrue(rec.isNeedingNotification());
 			}
 		}
 	}

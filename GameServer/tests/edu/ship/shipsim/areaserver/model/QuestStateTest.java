@@ -58,8 +58,8 @@ public class QuestStateTest extends DatabaseTest
 	{
 		QuestState qs = new QuestState(1, QuestStateEnum.HIDDEN);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
-		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN);
-		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN);
+		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN, false);
+		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN, false);
 		
 		adventureList.add(as1);
 		adventureList.add(as2);
@@ -101,9 +101,9 @@ public class QuestStateTest extends DatabaseTest
 		QuestState qs = new QuestState(1, QuestStateEnum.AVAILABLE);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
 		
-		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN);
-		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN);
-		AdventureState as3 = new AdventureState(3, AdventureStateEnum.HIDDEN);
+		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN, false);
+		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN, false);
+		AdventureState as3 = new AdventureState(3, AdventureStateEnum.HIDDEN, false);
 		
 		adList.add(as1);
 		adList.add(as2);
@@ -117,6 +117,7 @@ public class QuestStateTest extends DatabaseTest
 		for(AdventureState as : adList)
 		{
 			assertEquals(AdventureStateEnum.PENDING, as.getState());
+			assertFalse(as.isNeedingNotification());
 		}
 	}
 	
@@ -137,15 +138,16 @@ public class QuestStateTest extends DatabaseTest
 		QuestState qs = new QuestState(3, QuestStateEnum.TRIGGERED);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
 		
-		AdventureState as = new AdventureState(1, AdventureStateEnum.COMPLETED);
+		AdventureState as = new AdventureState(1, AdventureStateEnum.COMPLETED, true);
 		adList.add(as);
-		as = new AdventureState(2, AdventureStateEnum.NEED_NOTIFICATION);
+		as = new AdventureState(2, AdventureStateEnum.COMPLETED, false);
+		
 		adList.add(as);
-		as = new AdventureState(3, AdventureStateEnum.COMPLETED);
+		as = new AdventureState(3, AdventureStateEnum.COMPLETED, false);
 		adList.add(as);
-		as = new AdventureState(4, AdventureStateEnum.PENDING);
+		as = new AdventureState(4, AdventureStateEnum.PENDING, false);
 		adList.add(as);
-		as = new AdventureState(5, AdventureStateEnum.COMPLETED);
+		as = new AdventureState(5, AdventureStateEnum.COMPLETED, false);
 		adList.add(as);
 		
 		qs.addAdventures(adList);
@@ -166,15 +168,15 @@ public class QuestStateTest extends DatabaseTest
 		QuestState qs = new QuestState(3, QuestStateEnum.NEED_FULFILLED_NOTIFICATION);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
 		
-		AdventureState as = new AdventureState(1, AdventureStateEnum.COMPLETED);
+		AdventureState as = new AdventureState(1, AdventureStateEnum.COMPLETED, false);
 		adList.add(as);
-		as = new AdventureState(2, AdventureStateEnum.NEED_NOTIFICATION);
+		as = new AdventureState(2, AdventureStateEnum.COMPLETED, true);
 		adList.add(as);
-		as = new AdventureState(3, AdventureStateEnum.COMPLETED);
+		as = new AdventureState(3, AdventureStateEnum.COMPLETED, false);
 		adList.add(as);
-		as = new AdventureState(4, AdventureStateEnum.PENDING);
+		as = new AdventureState(4, AdventureStateEnum.PENDING, false);
 		adList.add(as);
-		as = new AdventureState(5, AdventureStateEnum.COMPLETED);
+		as = new AdventureState(5, AdventureStateEnum.COMPLETED, false);
 		adList.add(as);
 		
 		qs.addAdventures(adList);

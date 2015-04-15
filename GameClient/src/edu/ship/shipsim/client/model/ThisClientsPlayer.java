@@ -6,7 +6,6 @@ import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
 import model.QualifiedObservableConnector;
 import data.Position;
-import datasource.AdventureStateEnum;
 import datasource.LevelRecord;
 import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
 import edu.ship.shipsim.client.model.reports.ExperiencePointsChangeReport;
@@ -81,7 +80,7 @@ public class ThisClientsPlayer extends Player
 		{
 			for(ClientPlayerAdventure a : q.getAdventureList())
 			{
-				if(a.getAdventuretState().equals(AdventureStateEnum.NEED_NOTIFICATION))
+				if(a.isNeedingNotification())
 				{
 					adventuresDescriptions.add(a.getAdventureDescription());
 				}
