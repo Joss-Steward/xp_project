@@ -2,29 +2,18 @@ package communication.packers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-
-import model.ClientPlayerQuest;
 import model.OptionsManager;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import communication.StateAccumulator;
 import communication.messages.ExperienceChangedMessage;
-import communication.messages.InitializeThisClientsPlayerMessage;
 import datasource.DatabaseException;
 import datasource.LevelRecord;
 import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.model.LevelManager;
-import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.QuestManager;
 import edu.ship.shipsim.areaserver.model.reports.ExperienceChangedReport;
-import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReport;
-
 /**
  * @author Ryan
  *
@@ -70,9 +59,6 @@ public class ExperienceChangedMessagePackerTest
 	@Test
 	public void testPackedObjectIsCurrentPlayer() throws DatabaseException
 	{
-		Player player = PlayerManager.getSingleton().getPlayerFromID(
-				stateAccumulator.getPlayerID());
-		
 		LevelRecord record = LevelManager.getSingleton().getLevelForPoints(PlayersForTest.MERLIN.getExperiencePoints()); 
 		ExperienceChangedReport report = new ExperienceChangedReport(PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.MERLIN.getExperiencePoints(), record);
 		ExperienceChangedMessagePacker packer = new ExperienceChangedMessagePacker();
