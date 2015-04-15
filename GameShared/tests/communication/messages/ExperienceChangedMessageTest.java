@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import datasource.LevelRecord;
 import datasource.PlayersForTest;
 
 /**
@@ -20,8 +21,8 @@ public class ExperienceChangedMessageTest
 	@Test
 	public void testCreateMessage() 
 	{
-		ExperienceChangedMessage msg = new ExperienceChangedMessage(PlayersForTest.JOHN.getExperiencePoints(), PlayersForTest.JOHN.getPlayerID());
+		LevelRecord record = new LevelRecord("Serf", 15);
+		ExperienceChangedMessage msg = new ExperienceChangedMessage(PlayersForTest.JOHN.getExperiencePoints(), record);
 		assertEquals(PlayersForTest.JOHN.getExperiencePoints(), msg.getExperiencePoints());
-		assertEquals(PlayersForTest.JOHN.getPlayerID(), msg.getPlayerID());
 	}
 }

@@ -7,6 +7,9 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Before;
 import org.junit.Test;
 
+import datasource.DatabaseException;
+import datasource.LevelRecord;
+import edu.ship.shipsim.areaserver.model.LevelManager;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.QuestManager;
@@ -31,14 +34,16 @@ public class ExperienceChangedReportTest
 	/**
 	 * Tests that we can create a ExperienceChangedReport
 	 * and get its experience points and playerID
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void testCreateReport() 
+	public void testCreateReport() throws DatabaseException 
 	{
 		Player john = PlayerManager.getSingleton().addPlayer(1);
-		ExperienceChangedReport report = new ExperienceChangedReport(john.getExperiencePoints(), john.getPlayerID());
+		LevelRecord expected = LevelManager.getSingleton().getLevelForPoints(john.getExperiencePoints());
+		ExperienceChangedReport report = new ExperienceChangedReport(john.getExperiencePoints(), expected);
 		assertEquals(john.getExperiencePoints(), report.getExperiencePoints());
-		assertEquals(john.getPlayerID(), report.getPlayerID());
+		assertEquals(expected, report.getRecord());
 	}	
 	
 	/**

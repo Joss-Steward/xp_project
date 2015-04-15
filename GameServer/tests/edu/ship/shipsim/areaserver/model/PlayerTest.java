@@ -157,9 +157,10 @@ public class PlayerTest extends DatabaseTest
 
 	/**
 	 * Test that we can set Player's experience points and add to it
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void testPlayerExpPoints()
+	public void testPlayerExpPoints() throws DatabaseException
 	{
 		Player p = playerManager.addPlayer(1);
 
@@ -173,16 +174,17 @@ public class PlayerTest extends DatabaseTest
 	/**
 	 * Tests that setting players experience points 
 	 * generates ExperienceChangedReport
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void testSetExpPointsCreatesReport()
+	public void testSetExpPointsCreatesReport() throws DatabaseException
 	{
 		Player p = playerManager.addPlayer(1);
 		
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				ExperienceChangedReport.class);
-		obs.receiveReport(new ExperienceChangedReport(45, p.getPlayerID()));
+		obs.receiveReport(new ExperienceChangedReport(45, LevelManager.getSingleton().getLevelForPoints(45)));
 		EasyMock.replay(obs);
 
 		p.setExperiencePoints(45);
@@ -192,16 +194,17 @@ public class PlayerTest extends DatabaseTest
 	/**
 	 * Tests that adding experience points to a player object 
 	 * generates ExperienceChangedReport
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void testAddExpPointsCreatesReport()
+	public void testAddExpPointsCreatesReport() throws DatabaseException
 	{
 		Player p = playerManager.addPlayer(1);
 		
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				ExperienceChangedReport.class);
-		obs.receiveReport(new ExperienceChangedReport(30, p.getPlayerID()));
+		obs.receiveReport(new ExperienceChangedReport(30, LevelManager.getSingleton().getLevelForPoints(30)));
 		EasyMock.replay(obs);
 
 		p.addExperiencePoints(15);

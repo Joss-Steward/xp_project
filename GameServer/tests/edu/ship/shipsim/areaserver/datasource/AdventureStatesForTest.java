@@ -84,6 +84,9 @@ public enum AdventureStatesForTest
 		this.needsNotification = needsNotification;
 	}
 
+	/**
+	 * @return the boolean for needing notification
+	 */
 	public boolean isNeedingNotification()
 	{
 		return needsNotification;

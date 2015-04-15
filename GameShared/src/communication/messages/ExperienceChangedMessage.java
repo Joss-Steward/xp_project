@@ -2,6 +2,8 @@ package communication.messages;
 
 import java.io.Serializable;
 
+import datasource.LevelRecord;
+
 /**
  * ExperienceChangeMessage class 
  * @author Olivia
@@ -15,16 +17,16 @@ public class ExperienceChangedMessage implements Message, Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 	private int experiencePoints;
-	private int playerID;
+	private LevelRecord level;
 
 	/**
 	 * @param experiencePoints the amount of experience points the player has
-	 * @param playerID the id of the player
+	 * @param levelRecord the id of the player
 	 */
-	public ExperienceChangedMessage(int experiencePoints, int playerID) 
+	public ExperienceChangedMessage(int experiencePoints, LevelRecord levelRecord) 
 	{
 		this.experiencePoints = experiencePoints;
-		this.playerID = playerID;
+		this.level = levelRecord;
 	}
 
 	/**
@@ -40,9 +42,9 @@ public class ExperienceChangedMessage implements Message, Serializable
 	 * Gets player's ID
 	 * @return playerID
 	 */
-	public int getPlayerID() 
+	public LevelRecord getLevel() 
 	{
-		return playerID;
+		return level;
 	}
 
 }
