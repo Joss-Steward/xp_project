@@ -41,7 +41,7 @@ public class ExperienceChangedReportTest
 	{
 		Player john = PlayerManager.getSingleton().addPlayer(1);
 		LevelRecord expected = LevelManager.getSingleton().getLevelForPoints(john.getExperiencePoints());
-		ExperienceChangedReport report = new ExperienceChangedReport(john.getExperiencePoints(), expected);
+		ExperienceChangedReport report = new ExperienceChangedReport(john.getPlayerID(), john.getExperiencePoints(), expected);
 		assertEquals(john.getExperiencePoints(), report.getExperiencePoints());
 		assertEquals(expected, report.getRecord());
 	}	

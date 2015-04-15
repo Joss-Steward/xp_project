@@ -15,14 +15,17 @@ public final class ExperienceChangedReport  implements QualifiedObservableReport
 	
 	private final LevelRecord record;
 
+	private final int playerID;
+
 	/**
 	 * @param experiencePoints experience points of the player
 	 * @param record level record of the player
 	 */
-	public ExperienceChangedReport(int experiencePoints, LevelRecord record) 
+	public ExperienceChangedReport(int playerID, int experiencePoints, LevelRecord record) 
 	{
 		this.experiencePoints = experiencePoints;
 		this.record = record;
+		this.playerID = playerID;
 	}
 
 	/**
@@ -38,37 +41,42 @@ public final class ExperienceChangedReport  implements QualifiedObservableReport
 	 * Returns the player's LevelRecord 
 	 * @return the record
 	 */
-	public LevelRecord getRecord() {
+	public LevelRecord getRecord() 
+	{
 		return record;
 	}
-
+	
 	/**
-	 *  (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
+	 * Returns the player's ID
+	 * @return playerID
 	 */
+	public int getPlayerID()
+	{
+		return playerID;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + experiencePoints;
+		result = prime * result + playerID;
 		result = prime * result + ((record == null) ? 0 : record.hashCode());
 		return result;
 	}
 
-	/** 
-	 * (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof ExperienceChangedReport))
+		if (getClass() != obj.getClass())
 			return false;
 		ExperienceChangedReport other = (ExperienceChangedReport) obj;
 		if (experiencePoints != other.experiencePoints)
+			return false;
+		if (playerID != other.playerID)
 			return false;
 		if (record == null) {
 			if (other.record != null)
@@ -77,6 +85,7 @@ public final class ExperienceChangedReport  implements QualifiedObservableReport
 			return false;
 		return true;
 	}
+
 
 	
 }

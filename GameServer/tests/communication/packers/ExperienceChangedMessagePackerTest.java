@@ -48,7 +48,7 @@ public class ExperienceChangedMessagePackerTest
 	@Test
 	public void testPacking() throws DatabaseException
 	{		
-		ExperienceChangedReport report = new ExperienceChangedReport(PlayersForTest.JOHN.getExperiencePoints(), LevelManager.getSingleton().getLevelForPoints(PlayersForTest.JOHN.getExperiencePoints()));
+		ExperienceChangedReport report = new ExperienceChangedReport(PlayersForTest.JOHN.getPlayerID(), PlayersForTest.JOHN.getExperiencePoints(), LevelManager.getSingleton().getLevelForPoints(PlayersForTest.JOHN.getExperiencePoints()));
 		ExperienceChangedMessagePacker packer = new ExperienceChangedMessagePacker();
 		ExperienceChangedMessage msg = (ExperienceChangedMessage) packer.pack(report);
 		
