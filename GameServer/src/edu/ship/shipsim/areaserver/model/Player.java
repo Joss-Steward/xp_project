@@ -241,11 +241,12 @@ public class Player
 	 * Set experience points
 	 * and generates ExperienceChangedReport
 	 * @param expPoints Player's experience points
+	 * @throws DatabaseException shouldn't
 	 */
-	public void setExperiencePoints(int expPoints)
+	public void setExperiencePoints(int expPoints) throws DatabaseException
 	{
 		this.experiencePoints = expPoints;
-		ExperienceChangedReport report = new ExperienceChangedReport(this.experiencePoints, this.playerID);
+		ExperienceChangedReport report = new ExperienceChangedReport(this.experiencePoints, LevelManager.getSingleton().getLevelForPoints(this.experiencePoints));
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 	
@@ -253,11 +254,12 @@ public class Player
 	 * Add experience points
 	 * and generates ExperienceChangedReport
 	 * @param expPoints Player's experience points
+	 * @throws DatabaseException shouldn't
 	 */
-	public void addExperiencePoints(int expPoints)
+	public void addExperiencePoints(int expPoints) throws DatabaseException
 	{
 		this.experiencePoints = experiencePoints + expPoints;
-		ExperienceChangedReport report = new ExperienceChangedReport(this.experiencePoints, this.playerID);
+		ExperienceChangedReport report = new ExperienceChangedReport(this.experiencePoints, LevelManager.getSingleton().getLevelForPoints(this.experiencePoints));
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 }

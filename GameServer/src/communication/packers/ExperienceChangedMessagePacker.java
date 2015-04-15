@@ -28,7 +28,7 @@ public class ExperienceChangedMessagePacker extends MessagePacker
 		}
 		
 		ExperienceChangedReport report = (ExperienceChangedReport)object;
-		ExperienceChangedMessage msg = new 	ExperienceChangedMessage(report.getExperiencePoints(), report.getPlayerID());
+		ExperienceChangedMessage msg = new 	ExperienceChangedMessage(report.getExperiencePoints(), report.getRecord());
 		
 		return msg;
 	}

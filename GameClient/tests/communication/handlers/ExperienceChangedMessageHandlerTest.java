@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.ExperienceChangedMessage;
+import datasource.LevelRecord;
 import datasource.PlayersForTest;
 import edu.ship.shipsim.client.model.ModelFacade;
 
@@ -22,6 +23,7 @@ public class ExperienceChangedMessageHandlerTest {
 	public void reset()
 	{
 		ModelFacade.resetSingleton();
+		ModelFacade.getSingleton(true, false);
 	}
 	
 	/**
@@ -39,14 +41,16 @@ public class ExperienceChangedMessageHandlerTest {
 	 */
 	@Test
 	public void handleExperienceChangedMessage()
-	{
+	{		
 		reset();
 		
-		ExperienceChangedMessage msg = new ExperienceChangedMessage(PlayersForTest.JOHN.getExperiencePoints(), PlayersForTest.JOHN.getPlayerID());
+		LevelRecord record = new LevelRecord("Serf", 15);
+		
+		ExperienceChangedMessage msg = new ExperienceChangedMessage(PlayersForTest.JOHN.getExperiencePoints(),record);
 		ExperienceChangedMessageHandler h = new ExperienceChangedMessageHandler();
 		h.process(msg);
 
-		assertEquals(1,ModelFacade.getSingleton().queueSize());
+		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
 		
 		reset();
 	}

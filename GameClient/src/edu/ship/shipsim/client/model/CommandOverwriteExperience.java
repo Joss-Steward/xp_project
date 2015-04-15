@@ -14,7 +14,6 @@ public class CommandOverwriteExperience extends Command
 {
 	private int experience;
 	private LevelRecord record;
-	private int playerID;
 	
 	/**
 	 * constructor for the command
@@ -28,12 +27,12 @@ public class CommandOverwriteExperience extends Command
 	}
 
 	/**
-	 * @param playerID player's ID
 	 * @param experiencePoints player's experience points
+	 * @param record level record of the player
 	 */
-	public CommandOverwriteExperience(int playerID, int experiencePoints) 
+	public CommandOverwriteExperience(int experiencePoints, LevelRecord record) 
 	{
-		this.playerID = playerID;
+		this.record = record;
 		this.experience = experiencePoints;
 	}
 	
