@@ -10,6 +10,8 @@ import model.QualifiedObserver;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -19,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 import datasource.AdventureStateEnum;
 import datasource.QuestStateEnum;
@@ -65,7 +68,8 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 */
 	public void setUpListening()
 	{
-		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
+		QualifiedObservableConnector cm = QualifiedObservableConnector
+				.getSingleton();
 		cm.registerObserver(this, QuestStateReport.class);
 	}
 
@@ -108,10 +112,10 @@ public class ScreenQAs extends Group implements QualifiedObserver
 
 		initializeQuestTableContents();
 		initializeAdventureTableContents();
-
+		
 		this.addActor(questTable);
 		this.addActor(adventureTable);
-
+		
 		toggleVisible();
 	}
 
@@ -137,6 +141,8 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 */
 	public void updateTable(ArrayList<ClientPlayerQuest> quests)
 	{
+		questTable.setBackground(new NinePatchDrawable(
+				getNinePatch("data/background.9.png")));
 		questTable.clearChildren();
 		questTable.add(q_header).colspan(2).center();
 		questTable.row();
@@ -167,7 +173,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	}
 
 	/**
-	 * initializes the table contents for the QA screen 
+	 * initializes the table contents for the QA screen
 	 */
 	private void initializeQuestTableContents()
 	{
@@ -183,6 +189,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 		// Table Setup
 		questTable = new Table();
 		questTable.setFillParent(true);
+		
 		questTable.top().left();
 		questTable.add(q_header).colspan(2).center();
 		questTable.row();
@@ -198,10 +205,13 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	}
 
 	/**
-	 * builds an individual row with the appropriate radio button and 
-	 * its description
-	 * @param state the state of which the adventure is in
-	 * @param description of the adventure
+	 * builds an individual row with the appropriate radio button and its
+	 * description
+	 * 
+	 * @param state
+	 *            the state of which the adventure is in
+	 * @param description
+	 *            of the adventure
 	 */
 	private void buildAdvRow(Texture state, String desc)
 	{
@@ -211,9 +221,10 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	}
 
 	/**
-	 * sets the image for the quest (dependent on state) and its
-	 * description
-	 * @param quest of the client
+	 * sets the image for the quest (dependent on state) and its description
+	 * 
+	 * @param quest
+	 *            of the client
 	 */
 	private void buildQuestRow(final ClientPlayerQuest quest)
 	{
@@ -222,7 +233,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 		switch (state)
 		{
 		case TRIGGERED:
-			questTable.add(new Image(triggered));
+			questTable.add(new Image(new NinePatch(triggered)));
 			break;
 		case FULFILLED:
 			questTable.add(new Image(checkmark));
@@ -237,10 +248,10 @@ public class ScreenQAs extends Group implements QualifiedObserver
 		}
 
 		TextButton button = new TextButton(quest.getQuestDescription(), skin);
-		button.addListener(new ClickListener() 
+		button.addListener(new ClickListener()
 		{
 			@Override
-			public void clicked(InputEvent evt, float x, float y) 
+			public void clicked(InputEvent evt, float x, float y)
 			{
 				clearAdventureTable();
 				for (ClientPlayerAdventure a : quest.getAdventureList())
@@ -249,15 +260,14 @@ public class ScreenQAs extends Group implements QualifiedObserver
 							AdventureStateEnum.PENDING))
 					{
 						buildAdvRow(triggered, a.getAdventureDescription());
-					}
-					else
+					} else
 					{
 						buildAdvRow(complete, a.getAdventureDescription());
 					}
 				}
 			}
 		});
-		
+
 		questTable.add(button);
 		questTable.row();
 	}
@@ -310,5 +320,13 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	public void setVisibility(boolean statement)
 	{
 		showing = statement;
+	}
+
+	private NinePatch getNinePatch(String fileName)
+	{
+		// get the image
+		final Texture t = new Texture(Gdx.files.internal(fileName));
+
+		return new NinePatch(new TextureRegion(t));
 	}
 }
