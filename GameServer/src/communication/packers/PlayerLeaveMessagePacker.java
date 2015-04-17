@@ -7,7 +7,7 @@ import communication.packers.MessagePacker;
 import edu.ship.shipsim.areaserver.model.reports.PlayerLeaveReport;
 
 /**
- * Packs a message telling clients that a new player has joined this area server
+ * Packs a message telling clients that a player has left this area server
  * 
  * @author Merlin
  * 
