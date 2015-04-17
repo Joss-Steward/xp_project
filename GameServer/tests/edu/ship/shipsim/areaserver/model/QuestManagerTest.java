@@ -434,4 +434,50 @@ public class QuestManagerTest
 		assertEquals(initialExp+expGain, p.getExperiencePoints());
 	}
 	
+	/**
+	 * Tests that we finishing a quest changes its state to finished
+	 */
+	@Test
+	public void testFinishQuest()
+	{
+		int playerID = 1;
+		int questID = 3;
+		Player p = playerManager.addPlayer(playerID);
+		QuestState qs = QuestManager.getSingleton().getQuestStateByID(playerID, questID);
+		qs.setPlayerID(playerID);
+		
+		QuestManager.getSingleton().finishQuest(p.getPlayerID(), qs.getID());
+		
+		assertEquals(QuestStateEnum.FINISHED, qs.getStateValue());
+	}
+	
+	/**
+	 * @throws DatabaseException shouldn't
+	 *  
+	 */
+	@Test
+	public void testCompleteAdventure() throws DatabaseException
+	{
+		int playerID = 1;
+		int questID = 3;
+		int adventureID = 1;
+		
+		Player p = playerManager.addPlayer(playerID);
+		QuestState qs = QuestManager.getSingleton().getQuestStateByID(p.getPlayerID(), questID);
+		
+		AdventureState as = QuestManager.getSingleton().getAdventureStateByID(p.getPlayerID(), questID, adventureID);
+		
+		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
+		
+		adventureList.add(as);
+		
+		qs.addAdventures(adventureList);
+		
+		qs.setPlayerID(playerID);
+		
+		QuestManager.getSingleton().completeAdventure(playerID, questID, adventureID);
+		
+		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton().getAdventureStateByID(playerID, questID, adventureID).getState());
+	}
+	
 }

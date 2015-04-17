@@ -161,4 +161,15 @@ public class QuestState
 			}
 		}
 	}
+
+	/**
+	 * Changes the quest's state from fulfilled to finished
+	 */
+	public void finish() 
+	{
+		if(this.getStateValue().equals(QuestStateEnum.FULFILLED))
+		{
+			this.questState = QuestStateEnum.FINISHED;
+		}
+	}
 }

@@ -115,7 +115,7 @@ public class AdventureState
 	}
 
 	/**
-	 * Change the state of the adventure from pending to needing notification.
+	 * Change the state of the adventure from pending to complete.
 	 * The adventure is complete, but we need to tell the player
 	 * 
 	 * @throws DatabaseException
@@ -123,18 +123,20 @@ public class AdventureState
 	 */
 	public void complete() throws DatabaseException
 	{
-
-		this.adventureState = AdventureStateEnum.COMPLETED;
-		this.needingNotification = true;
-		
-		PlayerManager.getSingleton()
-				.getPlayerFromID(this.parentQuestState.getPlayerID())
-				.addExperiencePoints(
-						QuestManager.getSingleton()
-								.getAdventure(this.parentQuestState.getID(),
-										adventureID)
-								.getExperiencePointsGained());
-		this.parentQuestState.checkForFulfillment();
+		if (this.adventureState.equals(AdventureStateEnum.PENDING))
+		{
+			this.adventureState = AdventureStateEnum.COMPLETED;
+			this.needingNotification = true;
+			
+			PlayerManager.getSingleton()
+					.getPlayerFromID(this.parentQuestState.getPlayerID())
+					.addExperiencePoints(
+							QuestManager.getSingleton()
+									.getAdventure(this.parentQuestState.getID(),
+											adventureID)
+									.getExperiencePointsGained());
+			this.parentQuestState.checkForFulfillment();
+		}
 	}
 
 	/**
