@@ -22,7 +22,7 @@ public class ExperienceChangedMessageHandler extends MessageHandler
 		if (msg.getClass().equals(ExperienceChangedMessage.class))
 		{
 			ExperienceChangedMessage experienceChangedMessage = (ExperienceChangedMessage) msg;
-			CommandOverwriteExperience cmd = new CommandOverwriteExperience(experienceChangedMessage.getExperiencePoints(),
+			CommandOverwriteExperience cmd = new CommandOverwriteExperience(experienceChangedMessage.getPlayerID(),experienceChangedMessage.getExperiencePoints(),
 					experienceChangedMessage.getLevel());
 			ModelFacade.getSingleton().queueCommand(cmd);
 		}

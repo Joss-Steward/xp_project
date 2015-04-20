@@ -129,6 +129,7 @@ public class QuestStateTest extends DatabaseTest
 	@Test
 	public void testFulfilling() throws DatabaseException
 	{
+		
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestStateChangeReport.class);
 		QuestStateChangeReport rpt = new QuestStateChangeReport(13,QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(),
@@ -137,6 +138,10 @@ public class QuestStateTest extends DatabaseTest
 		EasyMock.replay(obs);
 		QuestState qs = new QuestState(3, QuestStateEnum.TRIGGERED);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
+		
+		@SuppressWarnings("unused")
+		Player p = PlayerManager.getSingleton().addPlayer(2);
+		qs.setPlayerID(2);
 		
 		AdventureState as = new AdventureState(1, AdventureStateEnum.COMPLETED, true);
 		adList.add(as);

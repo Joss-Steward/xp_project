@@ -18,13 +18,15 @@ public class ExperienceChangedMessage implements Message, Serializable
 	private static final long serialVersionUID = 1L;
 	private int experiencePoints;
 	private LevelRecord level;
+	private int playerID;
 
 	/**
 	 * @param experiencePoints the amount of experience points the player has
 	 * @param levelRecord the id of the player
 	 */
-	public ExperienceChangedMessage(int experiencePoints, LevelRecord levelRecord) 
+	public ExperienceChangedMessage(int playerID, int experiencePoints, LevelRecord levelRecord) 
 	{
+		this.playerID = playerID;
 		this.experiencePoints = experiencePoints;
 		this.level = levelRecord;
 	}
@@ -39,12 +41,21 @@ public class ExperienceChangedMessage implements Message, Serializable
 	}
 
 	/**
-	 * Gets player's ID
-	 * @return playerID
+	 * Gets player's level
+	 * @return level
 	 */
 	public LevelRecord getLevel() 
 	{
 		return level;
+	}
+
+	/**
+	 * Get the player's id
+	 * @return player id
+	 */
+	public int getPlayerID() 
+	{
+		return playerID;
 	}
 
 }

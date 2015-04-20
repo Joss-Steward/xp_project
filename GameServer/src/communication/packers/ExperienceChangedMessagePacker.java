@@ -31,7 +31,7 @@ public class ExperienceChangedMessagePacker extends MessagePacker
 
 		if (this.getAccumulator().getPlayerID() == report.getPlayerID())
 		{
-			ExperienceChangedMessage msg = new 	ExperienceChangedMessage(report.getExperiencePoints(), report.getRecord());
+			ExperienceChangedMessage msg = new 	ExperienceChangedMessage(report.getPlayerID(), report.getExperiencePoints(), report.getRecord());
 			return msg;
 		}
 		return null;
