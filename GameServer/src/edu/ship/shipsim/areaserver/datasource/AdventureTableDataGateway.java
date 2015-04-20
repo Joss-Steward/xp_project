@@ -20,5 +20,14 @@ public interface AdventureTableDataGateway
 	 */
 	ArrayList<AdventureRecord> getAdventuresForQuest(int questID) throws DatabaseException;
 
+	/**
+	 * Get the information about a specific adventure
+	 * @param questID the quest containing the adventure
+	 * @param adventureID the adventure's ID within that quest
+	 * @return the adventure's information
+	 * @throws DatabaseException if we have trouble talking to the data source
+	 */
+	AdventureRecord getAdventure(int questID, int adventureID) throws DatabaseException;
+
 
 }

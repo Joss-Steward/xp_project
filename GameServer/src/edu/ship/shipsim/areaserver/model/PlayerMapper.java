@@ -77,14 +77,14 @@ public class PlayerMapper
 				.getQuestStates(player.getPlayerID());
 		for (QuestStateRecord qsRec : questStateRecords)
 		{
-			QuestState questState = new QuestState(qsRec.getQuestID(), qsRec.getState());
+			QuestState questState = new QuestState(qsRec.getQuestID(), qsRec.getState(), qsRec.isNeedingNotification());
 			ArrayList<AdventureStateRecord> adventureStateRecords = adventureStateGateway
 					.getAdventureStates(player.getPlayerID(), qsRec.getQuestID());
 			ArrayList<AdventureState> adventureStates = new ArrayList<AdventureState>();
 			for (AdventureStateRecord asRec : adventureStateRecords)
 			{
 				adventureStates.add(new AdventureState(asRec.getAdventureID(), asRec
-						.getState()));
+						.getState(), asRec.isNeedingNotification()));
 			}
 			questState.addAdventures(adventureStates);
 			QuestManager.getSingleton().addQuestState(player.getPlayerID(), questState);
@@ -131,7 +131,7 @@ public class PlayerMapper
 			for (QuestState quest : questList)
 			{
 				questStateGateway.udpateState(player.getPlayerID(), quest.getID(),
-						quest.getStateValue());
+						quest.getStateValue(), quest.isNeedingNotification());
 				for (AdventureState a : quest.getAdventureList())
 				{
 					adventureStateGateway.updateState(player.getPlayerID(),

@@ -98,7 +98,7 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	 * @param triggerPosition
 	 *            the coordinates of the trigger location for this quest
 	 * @param experiencePointsGained TODO
-	 * @param adventuresForFulfillment TODO
+	 * @param adventuresForFulfillment the number of adventures this quest requires for fulfillment
 	 * @throws DatabaseException
 	 *             if we can't talk to the RDS
 	 */

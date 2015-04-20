@@ -5,6 +5,7 @@ import model.PlayerLogin;
 import model.QualifiedObservableConnector;
 import data.Position;
 import datasource.DatabaseException;
+import edu.ship.shipsim.areaserver.model.reports.ExperienceChangedReport;
 import edu.ship.shipsim.areaserver.model.reports.PinFailedReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
 
@@ -238,19 +239,25 @@ public class Player
 
 	/**
 	 * Set experience points
+	 * and generates ExperienceChangedReport
 	 * @param expPoints Player's experience points
+	 * @throws DatabaseException shouldn't
 	 */
-	public void setExperiencePoints(int expPoints)
+	public void setExperiencePoints(int expPoints) throws DatabaseException
 	{
 		this.experiencePoints = expPoints;
 	}
 	
 	/**
 	 * Add experience points
+	 * and generates ExperienceChangedReport
 	 * @param expPoints Player's experience points
+	 * @throws DatabaseException shouldn't
 	 */
-	public void addExperiencePoints(int expPoints)
+	public void addExperiencePoints(int expPoints) throws DatabaseException
 	{
 		this.experiencePoints = experiencePoints + expPoints;
+		ExperienceChangedReport report = new ExperienceChangedReport(this.playerID, this.experiencePoints, LevelManager.getSingleton().getLevelForPoints(this.experiencePoints));
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 }

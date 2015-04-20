@@ -19,6 +19,8 @@ public class AdventureState
 
 	private QuestState parentQuestState;
 
+	private boolean needingNotification;
+
 	/**
 	 * Constructor for the instance variables.
 	 * 
@@ -26,31 +28,14 @@ public class AdventureState
 	 *            : id of adventure
 	 * @param state
 	 *            : state of adventure
+	 * @param needingNotification
+	 *            true if the player has not been notified that we entered this
+	 *            state
 	 */
-	public AdventureState(int id, AdventureStateEnum state)
+	public AdventureState(int id, AdventureStateEnum state, boolean needingNotification)
 	{
 		this.adventureID = id;
 		this.adventureState = state;
-	}
-
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AdventureState other = (AdventureState) obj;
-		if (adventureID != other.adventureID)
-			return false;
-		if (adventureState != other.adventureState)
-			return false;
-		return true;
 	}
 
 	/**
@@ -84,7 +69,38 @@ public class AdventureState
 		result = prime * result + adventureID;
 		result = prime * result
 				+ ((adventureState == null) ? 0 : adventureState.hashCode());
+		result = prime * result + (needingNotification ? 1231 : 1237);
+		result = prime * result
+				+ ((parentQuestState == null) ? 0 : parentQuestState.hashCode());
 		return result;
+	}
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AdventureState other = (AdventureState) obj;
+		if (adventureID != other.adventureID)
+			return false;
+		if (adventureState != other.adventureState)
+			return false;
+		if (needingNotification != other.needingNotification)
+			return false;
+		if (parentQuestState == null)
+		{
+			if (other.parentQuestState != null)
+				return false;
+		} else if (!parentQuestState.equals(other.parentQuestState))
+			return false;
+		return true;
 	}
 
 	/**
@@ -99,16 +115,28 @@ public class AdventureState
 	}
 
 	/**
-	 * Change the state of the adventure from pending to needing notification.
+	 * Change the state of the adventure from pending to complete.
 	 * The adventure is complete, but we need to tell the player
 	 * 
 	 * @throws DatabaseException
 	 *             if the datasource fails
 	 */
-	public void completeNeedingNotification() throws DatabaseException
+	public void complete() throws DatabaseException
 	{
-		this.adventureState = AdventureStateEnum.NEED_NOTIFICATION;
-		this.parentQuestState.checkForFulfillment();
+		if (this.adventureState.equals(AdventureStateEnum.PENDING))
+		{
+			this.adventureState = AdventureStateEnum.COMPLETED;
+			this.needingNotification = true;
+			
+			PlayerManager.getSingleton()
+					.getPlayerFromID(this.parentQuestState.getPlayerID())
+					.addExperiencePoints(
+							QuestManager.getSingleton()
+									.getAdventure(this.parentQuestState.getID(),
+											adventureID)
+									.getExperiencePointsGained());
+			this.parentQuestState.checkForFulfillment();
+		}
 	}
 
 	/**
@@ -120,6 +148,15 @@ public class AdventureState
 	public void setParentQuest(QuestState questState)
 	{
 		this.parentQuestState = questState;
+	}
+
+	/**
+	 * Does the player need to be notified about the state of this adventure?
+	 * @return true if notification is required
+	 */
+	public boolean isNeedingNotification()
+	{
+		return needingNotification;
 	}
 
 }

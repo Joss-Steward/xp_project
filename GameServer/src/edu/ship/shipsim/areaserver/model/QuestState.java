@@ -6,7 +6,7 @@ import model.QualifiedObservableConnector;
 import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
 import datasource.QuestStateEnum;
-import edu.ship.shipsim.areaserver.model.reports.QuestNeedsFulfillmentNotificationReport;
+import edu.ship.shipsim.areaserver.model.reports.QuestStateChangeReport;
 
 /**
  * Stores the states of all the quests for an individual player on the server
@@ -20,20 +20,24 @@ public class QuestState
 	private QuestStateEnum questState;
 	private ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
 	private int playerID;
+	private boolean needingNotification;
 
 	/**
 	 * Constructs the QuestState
 	 * 
-	 * @param id
+	 * @param questID
 	 *            unique ID for the quest in the system
 	 * @param questStateList
 	 *            the quest's state for the player, can be either hidden,
 	 *            available, triggered, fulfilled, completed
+	 * @param needingNotification
+	 *            true if the player should be notified about the quest's state
 	 */
-	public QuestState(int id, QuestStateEnum questStateList)
+	public QuestState(int questID, QuestStateEnum questStateList, boolean needingNotification)
 	{
-		this.questID = id;
+		this.questID = questID;
 		this.questState = questStateList;
+		this.needingNotification = needingNotification;
 	}
 
 	/**
@@ -67,8 +71,7 @@ public class QuestState
 			int adventuresComplete = 0;
 			for (AdventureState state : adventureList)
 			{
-				if (state.getState() == AdventureStateEnum.NEED_NOTIFICATION
-						|| state.getState() == AdventureStateEnum.COMPLETED)
+				if (state.getState() == AdventureStateEnum.COMPLETED)
 				{
 					adventuresComplete++;
 				}
@@ -77,12 +80,32 @@ public class QuestState
 					.getAdventuresForFulfillment();
 			if (adventuresComplete >= adventuresRequired)
 			{
-				questState = QuestStateEnum.NEED_FULFILLED_NOTIFICATION;
+				questState = QuestStateEnum.FULFILLED;
+				this.needingNotification = true;
+				PlayerManager
+				.getSingleton()
+				.getPlayerFromID(playerID)
+				.addExperiencePoints(
+						QuestManager.getSingleton().getQuest(questID)
+								.getExperiencePointsGained());
 				QualifiedObservableConnector.getSingleton().sendReport(
-						new QuestNeedsFulfillmentNotificationReport(playerID, questID,
-								QuestManager.getSingleton().getQuest(questID)
-										.getDescription()));
+						new QuestStateChangeReport(playerID, questID, QuestManager
+								.getSingleton().getQuest(questID).getDescription(),
+								questState));
+
+				
 			}
+		}
+	}
+
+	/**
+	 * Changes the quest's state from fulfilled to finished
+	 */
+	public void finish()
+	{
+		if (this.getStateValue().equals(QuestStateEnum.FULFILLED))
+		{
+			this.questState = QuestStateEnum.FINISHED;
 		}
 	}
 
@@ -135,6 +158,15 @@ public class QuestState
 	}
 
 	/**
+	 * @return true if the player should be notified about the state of this
+	 *         quest
+	 */
+	public boolean isNeedingNotification()
+	{
+		return needingNotification;
+	}
+
+	/**
 	 * Tell this state which player it belongs to
 	 * 
 	 * @param playerID
@@ -154,6 +186,7 @@ public class QuestState
 		if (this.getStateValue().equals(QuestStateEnum.AVAILABLE))
 		{
 			this.questState = QuestStateEnum.TRIGGERED;
+			this.needingNotification = true;
 			for (AdventureState state : adventureList)
 			{
 				state.trigger();

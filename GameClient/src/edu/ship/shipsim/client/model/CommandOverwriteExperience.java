@@ -14,6 +14,7 @@ public class CommandOverwriteExperience extends Command
 {
 	private int experience;
 	private LevelRecord record;
+	private int playerID;
 	
 	/**
 	 * constructor for the command
@@ -27,12 +28,25 @@ public class CommandOverwriteExperience extends Command
 	}
 
 	/**
+	 * @param playerID the id of the player
+	 * @param experiencePoints player's experience points
+	 * @param record level record of the player
+	 */
+	public CommandOverwriteExperience(int playerID, int experiencePoints, LevelRecord record) 
+	{
+		this.playerID = playerID;
+		this.record = record;
+		this.experience = experiencePoints;
+	}
+	
+	/**
 	 * Overwrites the player's experience
 	 */
 	@Override
 	protected boolean execute() 
 	{
-		PlayerManager.getSingleton().getThisClientsPlayer().overwriteExperiencePoints(experience, record);
+		ThisClientsPlayer thisClientsPlayer = PlayerManager.getSingleton().getThisClientsPlayer();
+		thisClientsPlayer.overwriteExperiencePoints(experience, record);
 		return true;
 	}
 
@@ -53,6 +67,13 @@ public class CommandOverwriteExperience extends Command
 	{
 		return record;
 	}
-	
 
+	/**
+	 * Get the player's id
+	 * @return playerID
+	 */
+	public int getPlayerID() 
+	{
+		return playerID;
+	}
 }

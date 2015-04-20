@@ -17,16 +17,16 @@ import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.QuestStateEnum;
 import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
-import edu.ship.shipsim.areaserver.model.reports.QuestNeedsFulfillmentNotificationReport;
+import edu.ship.shipsim.areaserver.model.reports.QuestStateChangeReport;
 
 /**
- * Test for the QuestState Class 
+ * Test for the QuestState Class
+ * 
  * @author Ryan
  *
  */
 public class QuestStateTest extends DatabaseTest
 {
-	
 
 	/**
 	 * 
@@ -38,47 +38,49 @@ public class QuestStateTest extends DatabaseTest
 		OptionsManager.getSingleton(true);
 		QuestManager.resetSingleton();
 	}
+
 	/**
 	 * Test creating a very simple quest, and retreiving its information
 	 */
 	@Test
-	public void testInitialize() 
+	public void testInitialize()
 	{
-		QuestState qs = new QuestState(1, QuestStateEnum.AVAILABLE);
-		
+		QuestState qs = new QuestState(1, QuestStateEnum.AVAILABLE, true);
+
 		assertEquals(1, qs.getID());
 		assertEquals(QuestStateEnum.AVAILABLE, qs.getStateValue());
+		assertTrue(qs.isNeedingNotification());
 	}
-	
+
 	/**
 	 * Test adding an ArrayList of adventures into quest
 	 */
 	@Test
 	public void testAddAdventures()
 	{
-		QuestState qs = new QuestState(1, QuestStateEnum.HIDDEN);
+		QuestState qs = new QuestState(1, QuestStateEnum.HIDDEN, true);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
-		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN);
-		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN);
-		
+		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN, false);
+		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN, false);
+
 		adventureList.add(as1);
 		adventureList.add(as2);
-		
-		
+
 		qs.addAdventures(adventureList);
-		
+
 		assertEquals(2, qs.getSizeOfAdventureList());
 	}
-	
+
 	/**
 	 * Test the change in quest's state when triggered
 	 */
 	@Test
 	public void testTriggerQuest()
 	{
-		QuestState quest = new QuestState(1, QuestStateEnum.AVAILABLE);
+		QuestState quest = new QuestState(1, QuestStateEnum.AVAILABLE, false);
 		quest.trigger();
 		assertEquals(QuestStateEnum.TRIGGERED, quest.getStateValue());
+		assertTrue(quest.isNeedingNotification());
 	}
 
 	/**
@@ -87,99 +89,128 @@ public class QuestStateTest extends DatabaseTest
 	@Test
 	public void testTriggerFinishedQuest()
 	{
-		QuestState quest = new QuestState(1, QuestStateEnum.FINISHED);
+		QuestState quest = new QuestState(1, QuestStateEnum.FINISHED, false);
 		quest.trigger();
 		assertEquals(QuestStateEnum.FINISHED, quest.getStateValue());
+		assertFalse(quest.isNeedingNotification());
 	}
-	
+
 	/**
 	 * Test that when a quest is triggered, its adventures get triggered as well
 	 */
 	@Test
 	public void testTriggerQuestsAdventures()
 	{
-		QuestState qs = new QuestState(1, QuestStateEnum.AVAILABLE);
+		QuestState qs = new QuestState(1, QuestStateEnum.AVAILABLE, false);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
-		
-		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN);
-		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN);
-		AdventureState as3 = new AdventureState(3, AdventureStateEnum.HIDDEN);
-		
+
+		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN, false);
+		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN, false);
+		AdventureState as3 = new AdventureState(3, AdventureStateEnum.HIDDEN, false);
+
 		adList.add(as1);
 		adList.add(as2);
 		adList.add(as3);
-		
+
 		qs.addAdventures(adList);
 		adList = qs.getAdventureList();
 
 		qs.trigger();
-		
-		for(AdventureState as : adList)
+
+		for (AdventureState as : adList)
 		{
 			assertEquals(AdventureStateEnum.PENDING, as.getState());
+			assertFalse(as.isNeedingNotification());
 		}
 	}
-	
+
 	/**
-	 * When the right number of adventures are complete (with or without notifications complete)
-	 * the quest should become fulfilled and the appropriate report should be generated
-	 * @throws DatabaseException shouldn't
+	 * When the right number of adventures are complete (with or without
+	 * notifications complete) the quest should become fulfilled and the
+	 * appropriate report should be generated
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
 	public void testFulfilling() throws DatabaseException
 	{
+		
+		PlayerManager.getSingleton().addPlayer(2);
+		int origExperiencePoints = PlayerManager.getSingleton().getPlayerFromID(2)
+				.getExperiencePoints();
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestNeedsFulfillmentNotificationReport.class);
-		QuestNeedsFulfillmentNotificationReport rpt = new QuestNeedsFulfillmentNotificationReport(13,QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(),
-				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestDescription());
+		QualifiedObservableConnector.getSingleton().registerObserver(obs,
+				QuestStateChangeReport.class);
+		QuestStateChangeReport rpt = new QuestStateChangeReport(1,
+				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(),
+				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestDescription(),
+				QuestStateEnum.FULFILLED);
 		obs.receiveReport(rpt);
 		EasyMock.replay(obs);
-		QuestState qs = new QuestState(3, QuestStateEnum.TRIGGERED);
+		QuestState qs = new QuestState(QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(), QuestStateEnum.TRIGGERED, false);
+		qs.setPlayerID(1);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
+
+		@SuppressWarnings("unused")
+		Player p = PlayerManager.getSingleton().addPlayer(2);
+		qs.setPlayerID(2);
 		
-		AdventureState as = new AdventureState(1, AdventureStateEnum.COMPLETED);
+		AdventureState as = new AdventureState(1, AdventureStateEnum.COMPLETED, true);
 		adList.add(as);
-		as = new AdventureState(2, AdventureStateEnum.NEED_NOTIFICATION);
+		as = new AdventureState(2, AdventureStateEnum.COMPLETED, false);
+
 		adList.add(as);
-		as = new AdventureState(3, AdventureStateEnum.COMPLETED);
+		as = new AdventureState(3, AdventureStateEnum.COMPLETED, false);
 		adList.add(as);
-		as = new AdventureState(4, AdventureStateEnum.PENDING);
+		as = new AdventureState(4, AdventureStateEnum.PENDING, false);
 		adList.add(as);
-		as = new AdventureState(5, AdventureStateEnum.COMPLETED);
+		as = new AdventureState(5, AdventureStateEnum.COMPLETED, false);
 		adList.add(as);
-		
+
 		qs.addAdventures(adList);
 		qs.checkForFulfillment();
-		assertEquals(QuestStateEnum.NEED_FULFILLED_NOTIFICATION, qs.getStateValue());
+		assertEquals(
+				origExperiencePoints
+						+ QuestsForTest.ONE_SAME_LOCATION_QUEST.getExperienceGained(),
+				PlayerManager.getSingleton().getPlayerFromID(2).getExperiencePoints());
+		assertEquals(QuestStateEnum.FULFILLED, qs.getStateValue());
+		assertTrue(qs.isNeedingNotification());
 		EasyMock.verify(obs);
 	}
+
 	/**
-	 * If a quest is already in the process of being fulfilled, no report should be generated
-	 * @throws DatabaseException shouldn't
+	 * If a quest is already in the process of being fulfilled, no report should
+	 * be generated
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
 	public void testFulfillingRepeatedly() throws DatabaseException
 	{
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestNeedsFulfillmentNotificationReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs,
+				QuestStateChangeReport.class);
 		EasyMock.replay(obs);
-		QuestState qs = new QuestState(3, QuestStateEnum.NEED_FULFILLED_NOTIFICATION);
+		QuestState qs = new QuestState(3, QuestStateEnum.FULFILLED, false);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
-		
-		AdventureState as = new AdventureState(1, AdventureStateEnum.COMPLETED);
+
+		AdventureState as = new AdventureState(1, AdventureStateEnum.COMPLETED, false);
 		adList.add(as);
-		as = new AdventureState(2, AdventureStateEnum.NEED_NOTIFICATION);
+		as = new AdventureState(2, AdventureStateEnum.COMPLETED, true);
 		adList.add(as);
-		as = new AdventureState(3, AdventureStateEnum.COMPLETED);
+		as = new AdventureState(3, AdventureStateEnum.COMPLETED, false);
 		adList.add(as);
-		as = new AdventureState(4, AdventureStateEnum.PENDING);
+		as = new AdventureState(4, AdventureStateEnum.PENDING, false);
 		adList.add(as);
-		as = new AdventureState(5, AdventureStateEnum.COMPLETED);
+		as = new AdventureState(5, AdventureStateEnum.COMPLETED, false);
 		adList.add(as);
-		
+
 		qs.addAdventures(adList);
 		qs.checkForFulfillment();
-		assertEquals(QuestStateEnum.NEED_FULFILLED_NOTIFICATION, qs.getStateValue());
+		assertEquals(QuestStateEnum.FULFILLED, qs.getStateValue());
+		assertFalse(qs.isNeedingNotification());
 		EasyMock.verify(obs);
 	}
 }

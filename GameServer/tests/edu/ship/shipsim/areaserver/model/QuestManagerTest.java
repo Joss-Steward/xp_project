@@ -10,7 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import data.Position;
+import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
+import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
 import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
 import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
@@ -87,6 +89,33 @@ public class QuestManagerTest
 		assertEquals(expected.getExperienceGained(), actual.getExperiencePointsGained());
 	}
 
+	/**
+	 * We should be able to retrieve data about a specific adventure
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void testGettingOneAdventure() throws DatabaseException
+	{
+		QuestManager qm = QuestManager.getSingleton();
+		AdventuresForTest expected = AdventuresForTest.FIVE;
+		AdventureRecord actual = qm.getAdventure(expected.getQuestID(), expected.getAdventureID());
+		assertEquals(AdventuresForTest.FIVE.getAdventureDescription(),actual.getAdventureDescription());
+		assertEquals(AdventuresForTest.FIVE.getAdventureID(),actual.getAdventureID());
+		assertEquals(AdventuresForTest.FIVE.getExperiencePointsGained(),actual.getExperiencePointsGained());
+		assertEquals(AdventuresForTest.FIVE.getQuestID(),actual.getQuestID());
+	}
+	
+	/**
+	 * If we ask for an adventure that doesn't exist, we should get null
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void testGettingMissingAdventure() throws DatabaseException
+	{
+		QuestManager qm = QuestManager.getSingleton();
+		AdventureRecord actual = qm.getAdventure(42,16);
+		assertNull(actual);
+	}
 	/**
 	 * Test getting two quests from the database
 	 * 
@@ -255,11 +284,13 @@ public class QuestManagerTest
 	public void testAddQuests()
 	{
 		Player p = playerManager.addPlayer(1);
-		QuestState quest = new QuestState(15, QuestStateEnum.AVAILABLE);
+		QuestState quest = new QuestState(15, QuestStateEnum.AVAILABLE, false);
 		QuestManager.getSingleton().addQuestState(p.getPlayerID(), quest);
 
-		assertEquals(QuestStateEnum.AVAILABLE, QuestManager.getSingleton()
-				.getQuestStateByID(1, 15).getStateValue());
+		QuestState questStateByID = QuestManager.getSingleton()
+				.getQuestStateByID(1, 15);
+		assertEquals(QuestStateEnum.AVAILABLE, questStateByID.getStateValue());
+		assertFalse(questStateByID.isNeedingNotification());
 
 	}
 
@@ -345,7 +376,7 @@ public class QuestManagerTest
 	@Test
 	public void setPlayerIDWhenQuestStateAdded()
 	{
-		QuestState questState = new QuestState(1,QuestStateEnum.AVAILABLE);
+		QuestState questState = new QuestState(1,QuestStateEnum.AVAILABLE, false);
 		QuestManager.getSingleton().addQuestState(4, questState);
 		assertEquals(4, questState.getPlayerID());
 	}
@@ -356,8 +387,99 @@ public class QuestManagerTest
 	@Test
 	public void canRemoveAPlayersQuestStates()
 	{
-		QuestManager.getSingleton().addQuestState(4, new QuestState(1,QuestStateEnum.AVAILABLE));
+		QuestManager.getSingleton().addQuestState(4, new QuestState(1,QuestStateEnum.AVAILABLE, false));
 		QuestManager.getSingleton().removeQuestStatesForPlayer(4);
 		assertNull(QuestManager.getSingleton().getQuestList(4));
 	}
+	
+	
+	/**
+	 * Should be able to change the state of a quest to fulfilled if enough 
+	 * adventures are completed.
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void testFulfillQuest() throws DatabaseException 
+	{
+		int playerID = 2;
+		int questID = 4;
+		Player p = playerManager.addPlayer(playerID);
+		int initialExp = p.getExperiencePoints();
+		assertEquals(initialExp, PlayersForTest.MERLIN.getExperiencePoints());
+		int expGain = QuestManager.getSingleton().getQuest(questID).getExperiencePointsGained();
+		QuestManager.getSingleton().getQuestStateByID(playerID, questID).checkForFulfillment();
+		assertEquals(initialExp + expGain, p.getExperiencePoints());
+	}
+	
+	/**
+	 * @throws DatabaseException shouldn't
+	 * 
+	 */
+	@Test
+	public void testCompletingAdventure() throws DatabaseException
+	{
+		int playerID = 2;
+		int questID = 4;
+		Player p = playerManager.addPlayer(playerID);
+		int initialExp = p.getExperiencePoints();
+		
+		AdventureState as = new AdventureState(2, AdventureStateEnum.PENDING, false);
+		
+		ArrayList<AdventureState> adventures = new ArrayList<AdventureState>();
+		adventures.add(as);
+		QuestState qs = new QuestState(questID, QuestStateEnum.FULFILLED, false);
+		qs.setPlayerID(playerID);
+		qs.addAdventures(adventures);
+		QuestManager.getSingleton().addQuestState(playerID, qs);
+		int expGain = QuestManager.getSingleton().getQuest(questID).getAdventures().get(1).getExperiencePointsGained();
+		as.complete();
+		assertEquals(initialExp+expGain, p.getExperiencePoints());
+	}
+	
+	/**
+	 * Tests that we finishing a quest changes its state to finished
+	 */
+	@Test
+	public void testFinishQuest()
+	{
+		int playerID = 1;
+		int questID = 3;
+		Player p = playerManager.addPlayer(playerID);
+		QuestState qs = QuestManager.getSingleton().getQuestStateByID(playerID, questID);
+		qs.setPlayerID(playerID);
+		
+		QuestManager.getSingleton().finishQuest(p.getPlayerID(), qs.getID());
+		
+		assertEquals(QuestStateEnum.FINISHED, qs.getStateValue());
+	}
+	
+	/**
+	 * @throws DatabaseException shouldn't
+	 *  
+	 */
+	@Test
+	public void testCompleteAdventure() throws DatabaseException
+	{
+		int playerID = 1;
+		int questID = 3;
+		int adventureID = 1;
+		
+		Player p = playerManager.addPlayer(playerID);
+		QuestState qs = QuestManager.getSingleton().getQuestStateByID(p.getPlayerID(), questID);
+		
+		AdventureState as = QuestManager.getSingleton().getAdventureStateByID(p.getPlayerID(), questID, adventureID);
+		
+		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
+		
+		adventureList.add(as);
+		
+		qs.addAdventures(adventureList);
+		
+		qs.setPlayerID(playerID);
+		
+		QuestManager.getSingleton().completeAdventure(playerID, questID, adventureID);
+		
+		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton().getAdventureStateByID(playerID, questID, adventureID).getState());
+	}
+	
 }

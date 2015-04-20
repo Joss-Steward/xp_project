@@ -9,7 +9,8 @@ import java.util.GregorianCalendar;
 import model.OptionsManager;
 import model.PlayerConnection;
 import model.QualifiedObservableConnector;
-
+import model.QualifiedObserver;
+import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +22,7 @@ import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayMock;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
+import edu.ship.shipsim.areaserver.model.reports.ExperienceChangedReport;
 
 /**
  * Test the Player class
@@ -152,21 +154,40 @@ public class PlayerTest extends DatabaseTest
 	{
 		playerManager.addPlayer(1, -1);
 	}
-	
+
 	/**
-	 * Test that we can set Player's expiernce points and add to it
+	 * Test that we can set Player's experience points and add to it
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void testPlayerExpPoints()
+	public void testPlayerExpPoints() throws DatabaseException
 	{
 		Player p = playerManager.addPlayer(1);
-		
+
 		p.setExperiencePoints(34);
 		assertEquals(34, p.getExperiencePoints());
-		
+
 		p.addExperiencePoints(3);
 		assertEquals(37, p.getExperiencePoints());
 	}
 	
-	
+	/**
+	 * Tests that adding experience points to a player object 
+	 * generates ExperienceChangedReport
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void testAddExpPointsCreatesReport() throws DatabaseException
+	{
+		Player p = playerManager.addPlayer(1);
+		
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs,
+				ExperienceChangedReport.class);
+		obs.receiveReport(new ExperienceChangedReport(p.getPlayerID(), 30, LevelManager.getSingleton().getLevelForPoints(30)));
+		EasyMock.replay(obs);
+
+		p.addExperiencePoints(15);
+		EasyMock.verify(obs);
+	}
 }

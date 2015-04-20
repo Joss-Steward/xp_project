@@ -78,7 +78,7 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 	 * @param mapName the name of the map
 	 * @param position the position on the map
 	 * @param appearanceType the appearance type of the player
-	 * @param quizScore TODO
+	 * @param quizScore This player's quiz score
 	 * @param experiencePoints TODO
 	 * @return the gateway
 	 * @throws DatabaseException if we fail to create the row

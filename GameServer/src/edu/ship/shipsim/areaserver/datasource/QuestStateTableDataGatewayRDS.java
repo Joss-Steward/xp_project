@@ -12,40 +12,30 @@ import datasource.QuestStateEnum;
 
 /**
  * The RDS implementation of the gateway
+ * 
  * @author Merlin
  *
  */
 public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 {
-	/**
-	 * Add a new row to the table
-	 * @param playerID the player
-	 * @param questID the quest
-	 * @param state the player's state in that quest
-	 * @throws DatabaseException if we can't talk to the RDS server
-	 */
-	public void createRow(int playerID, int questID, QuestStateEnum state) throws DatabaseException
-	{
-		Connection connection = DatabaseManager.getSingleton().getConnection();
-		checkForDuplicateEntry(playerID, questID);
-		try
-		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"Insert INTO QuestStates SET playerID = ?, questID = ?, questState = ?");
-			stmt.setInt(1, playerID);
-			stmt.setInt(2, questID);
-			stmt.setInt(3, state.ordinal());
-			stmt.executeUpdate();
+	private static QuestStateTableDataGateway singleton;
 
-		} catch (SQLException e)
+	/**
+	 * Retrieves the rds gateway singleton.
+	 * 
+	 * @return singleton
+	 */
+	public static synchronized QuestStateTableDataGateway getSingleton()
+	{
+		if (singleton == null)
 		{
-			throw new DatabaseException(
-					"Couldn't create a quest state record for player with ID " + playerID
-							+ " and quest with ID " + questID, e);
+			singleton = new QuestStateTableDataGatewayRDS();
 		}
+		return singleton;
 	}
 
-	private void checkForDuplicateEntry(int playerID, int questID) throws DatabaseException
+	private void checkForDuplicateEntry(int playerID, int questID)
+			throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
@@ -58,13 +48,56 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 
 			if (result.next())
 			{
-				throw new DatabaseException(
-						"Duplicate quest state for player ID " + playerID + " and quest id " + questID);
+				throw new DatabaseException("Duplicate quest state for player ID "
+						+ playerID + " and quest id " + questID);
 			}
 		} catch (SQLException e)
 		{
+			throw new DatabaseException("Couldn't find quests for player ID " + playerID,
+					e);
+		}
+	}
+
+	private QuestStateEnum convertToState(int int1)
+	{
+		return QuestStateEnum.values()[int1];
+	}
+
+	/**
+	 * Add a new row to the table
+	 * 
+	 * @param playerID
+	 *            the player
+	 * @param questID
+	 *            the quest
+	 * @param state
+	 *            the player's state in that quest
+	 * @param needingNotification
+	 *            true if the player should be notified about this state
+	 * @throws DatabaseException
+	 *             if we can't talk to the RDS server
+	 */
+	public void createRow(int playerID, int questID, QuestStateEnum state,
+			boolean needingNotification) throws DatabaseException
+	{
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		checkForDuplicateEntry(playerID, questID);
+		try
+		{
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
+					connection,
+					"Insert INTO QuestStates SET playerID = ?, questID = ?, questState = ?, needingNotification = ?");
+			stmt.setInt(1, playerID);
+			stmt.setInt(2, questID);
+			stmt.setInt(3, state.ordinal());
+			stmt.setBoolean(4, needingNotification);
+			stmt.executeUpdate();
+
+		} catch (SQLException e)
+		{
 			throw new DatabaseException(
-					"Couldn't find quests for player ID " + playerID, e);
+					"Couldn't create a quest state record for player with ID " + playerID
+							+ " and quest with ID " + questID, e);
 		}
 	}
 
@@ -83,9 +116,10 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 					"DROP TABLE IF EXISTS QuestStates");
 			stmt.executeUpdate();
 			stmt.close();
-			
-			stmt = new ClosingPreparedStatement(connection,
-					"Create TABLE QuestStates (playerID INT NOT NULL, questID INT NOT NULL , questState INT NOT NULL)");
+
+			stmt = new ClosingPreparedStatement(
+					connection,
+					"Create TABLE QuestStates (playerID INT NOT NULL, questID INT NOT NULL , questState INT NOT NULL, needingNotification BOOLEAN NOT NULL)");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -94,31 +128,11 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 	}
 
 	/**
-	 * Retrieves the rds gateway singleton.
-	 * 
-	 * @return singleton
-	 */
-	public static synchronized QuestStateTableDataGateway getSingleton()
-	{
-		if (singleton == null)
-		{
-			singleton = new QuestStateTableDataGatewayRDS();
-		}
-		return singleton;
-	}
-
-	private static QuestStateTableDataGateway singleton;
-
-	private QuestStateEnum convertToState(int int1)
-	{
-		return QuestStateEnum.values()[int1];
-	}
-	
-	/**
 	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#getQuestStates(int)
 	 */
 	@Override
-	public ArrayList<QuestStateRecord> getQuestStates(int playerID) throws DatabaseException
+	public ArrayList<QuestStateRecord> getQuestStates(int playerID)
+			throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
@@ -131,45 +145,17 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 			ArrayList<QuestStateRecord> results = new ArrayList<QuestStateRecord>();
 			while (result.next())
 			{
-				QuestStateRecord rec = new QuestStateRecord(
-						result.getInt("playerID"),
+				QuestStateRecord rec = new QuestStateRecord(result.getInt("playerID"),
 						result.getInt("questID"),
-						convertToState(result.getInt("QuestState"))
-						);
+						convertToState(result.getInt("QuestState")),
+						result.getBoolean("needingNotification"));
 				results.add(rec);
 			}
 			return results;
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Couldn't find quests for player ID " + playerID, e);
-		}
-	}
-
-	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#udpateState(int, int, datasource.QuestStateEnum)
-	 */
-	@Override
-	public void udpateState(int playerID, int questID, QuestStateEnum newState) throws DatabaseException
-	{
-		Connection connection = DatabaseManager.getSingleton().getConnection();
-		try
-		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"UPDATE QuestStates SET questState = ? WHERE  playerID = ? and questID = ?");
-			stmt.setInt(1, newState.ordinal());
-			stmt.setInt(2, playerID);
-			stmt.setInt(3, questID);
-			int count = stmt.executeUpdate();
-			if ( count == 0)
-			{
-				this.createRow(playerID, questID, newState);
-			}
-		} catch (SQLException e)
-		{
-			throw new DatabaseException(
-					"Couldn't update a quest state record for player with ID " + playerID
-							+ " and quest with ID " + questID, e);
+			throw new DatabaseException("Couldn't find quests for player ID " + playerID,
+					e);
 		}
 	}
 
@@ -180,6 +166,37 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 	public void resetData()
 	{
 		// Nothing required
+	}
+
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#udpateState(int,
+	 *      int, datasource.QuestStateEnum, boolean)
+	 */
+	@Override
+	public void udpateState(int playerID, int questID, QuestStateEnum newState,
+			boolean needingNotification) throws DatabaseException
+	{
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
+		{
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
+					connection,
+					"UPDATE QuestStates SET questState = ?, needingNotification = ? WHERE  playerID = ? and questID = ?");
+			stmt.setInt(1, newState.ordinal());
+			stmt.setBoolean(2, needingNotification);
+			stmt.setInt(3, playerID);
+			stmt.setInt(4, questID);
+			int count = stmt.executeUpdate();
+			if (count == 0)
+			{
+				this.createRow(playerID, questID, newState, needingNotification);
+			}
+		} catch (SQLException e)
+		{
+			throw new DatabaseException(
+					"Couldn't update a quest state record for player with ID " + playerID
+							+ " and quest with ID " + questID, e);
+		}
 	}
 
 }

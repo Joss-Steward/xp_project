@@ -52,7 +52,8 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 			stmt.close();
 			stmt = new ClosingPreparedStatement(
 					connection,
-					"Create TABLE AdventureStates (adventureID INT NOT NULL, questID INT NOT NULL, playerID INT NOT NULL, adventureState INT)");
+					"Create TABLE AdventureStates (adventureID INT NOT NULL, questID INT NOT NULL, playerID INT NOT NULL, "
+							+ "adventureState INT, needingNotification BOOLEAN)");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -83,7 +84,8 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 				AdventureStateRecord rec = new AdventureStateRecord(
 						result.getInt("playerID"), result.getInt("questID"),
 						result.getInt("adventureID"),
-						convertToState(result.getInt("adventureState")));
+						convertToState(result.getInt("adventureState")),
+						result.getBoolean("needingNotification"));
 				results.add(rec);
 			}
 			return results;
@@ -110,21 +112,27 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 	 *            the unique ID of the adventure
 	 * @param adventureState
 	 *            the state of this adventure for this player
+	 * @param needingNotification
+	 *            true if the player should be notified about the state of this
+	 *            adventure
 	 * @throws DatabaseException
 	 *             if we can't talk to the RDS
 	 */
 	public void createRow(int playerID, int questID, int adventureID,
-			AdventureStateEnum adventureState) throws DatabaseException
+			AdventureStateEnum adventureState, boolean needingNotification)
+			throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"Insert INTO AdventureStates SET questID = ?, adventureID = ?, playerID = ?, adventureState = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
+					connection,
+					"Insert INTO AdventureStates SET questID = ?, adventureID = ?, playerID = ?, adventureState = ?, needingNotification = ?");
 			stmt.setInt(1, questID);
 			stmt.setInt(2, adventureID);
 			stmt.setInt(3, playerID);
 			stmt.setInt(4, adventureState.ordinal());
+			stmt.setBoolean(5, needingNotification);
 			stmt.executeUpdate();
 
 		} catch (SQLException e)
@@ -146,8 +154,9 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"UPDATE AdventureStates SET adventureState = ? WHERE  playerID = ? and questID = ? and adventureID = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
+					connection,
+					"UPDATE AdventureStates SET adventureState = ?, needingNotification = true WHERE  playerID = ? and questID = ? and adventureID = ?");
 			stmt.setInt(1, newState.ordinal());
 			stmt.setInt(2, playerID);
 			stmt.setInt(3, questID);
@@ -155,7 +164,7 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 			int count = stmt.executeUpdate();
 			if (count == 0)
 			{
-				this.createRow(playerID, questID, adventureID, newState);
+				this.createRow(playerID, questID, adventureID, newState, true);
 			}
 		} catch (SQLException e)
 		{
@@ -197,7 +206,8 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 				AdventureStateRecord rec = new AdventureStateRecord(
 						result.getInt("playerID"), result.getInt("questID"),
 						result.getInt("adventureID"),
-						convertToState(result.getInt("adventureState")));
+						convertToState(result.getInt("adventureState")),
+						result.getBoolean("needingNotification"));
 				results.add(rec);
 			}
 			return results;

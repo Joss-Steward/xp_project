@@ -68,7 +68,7 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 		for(AdventureState a: qs.getAdventureList())
 		{
 			int adventureID = a.getID();
-			ca.add(new ClientPlayerAdventure(a.getID(),quest.getAdventureDescription(adventureID), a.getState()));
+			ca.add(new ClientPlayerAdventure(a.getID(),quest.getAdventureDescription(adventureID), a.getState(), a.isNeedingNotification()));
 		}
 		
 		return ca;

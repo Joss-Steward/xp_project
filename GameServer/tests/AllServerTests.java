@@ -12,6 +12,7 @@ import communication.handlers.DisconnectMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.TeleportationInitiationHandlerTest;
 import communication.packers.ChatMessagePackerTest;
+import communication.packers.ExperienceChangedMessagePackerTest;
 import communication.packers.UpdatePlayerInformationMessagePackerTest;
 import communication.packers.MapFileMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
@@ -53,6 +54,7 @@ import edu.ship.shipsim.areaserver.model.QuestManagerTest;
 import edu.ship.shipsim.areaserver.model.QuestTest;
 import edu.ship.shipsim.areaserver.model.QuestStateTest;
 import edu.ship.shipsim.areaserver.model.QuizBotBehaviorTest;
+import edu.ship.shipsim.areaserver.model.reports.ExperienceChangedReportTest;
 import edu.ship.shipsim.areaserver.model.reports.QuestNeedsFulfillmentNotificationReportTest;
 import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReportTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReportTest;
@@ -82,6 +84,7 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 
 		// communication.packers
 		ChatMessagePackerTest.class,
+		ExperienceChangedMessagePackerTest.class,
 		MapFileMessagePackerTest.class,
 		MovementMessagePackerTest.class, 
 		PlayerJoinedMessagePackerTest.class,
@@ -146,6 +149,7 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		
 		
 		// model.reports
+		ExperienceChangedReportTest.class,
 		PlayerConnectionReportTest.class, 
 		PlayerMovedReportTest.class, 
 		QuestNeedsFulfillmentNotificationReportTest.class,

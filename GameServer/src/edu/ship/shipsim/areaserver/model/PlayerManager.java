@@ -18,7 +18,7 @@ import edu.ship.shipsim.areaserver.model.reports.PlayerLeaveReport;
  * @author Merlin
  * 
  */
-public class PlayerManager 
+public class PlayerManager
 {
 	/**
 	 * @return the only PlayerManger in the system
@@ -70,6 +70,11 @@ public class PlayerManager
 	 */
 	public Player addPlayer(int playerID)
 	{
+		if (!OptionsManager.getSingleton().isTestMode())
+		{
+			throw new IllegalStateException(
+					"Trying to add a player without giving a PIN when not in test mode");
+		}
 		try
 		{
 			PlayerMapper mapper = new PlayerMapper(playerID);
@@ -77,7 +82,8 @@ public class PlayerManager
 			player.setPlayerLogin(new PlayerLogin(playerID));
 			players.put(playerID, player);
 
-			QualifiedObservableConnector.getSingleton().sendReport(new PlayerConnectionReport(player));
+			QualifiedObservableConnector.getSingleton().sendReport(
+					new PlayerConnectionReport(player));
 			return player;
 		} catch (DatabaseException e)
 		{
@@ -102,14 +108,16 @@ public class PlayerManager
 
 		PlayerMapper pm = new PlayerMapper(playerID);
 		Player player = pm.getPlayer();
-		if (OptionsManager.getSingleton().isTestMode() || player.isPinValid(pin))
+		if (player.isPinValid(pin))
 		{
 			players.put(playerID, player);
 
-			QualifiedObservableConnector.getSingleton().sendReport(new PlayerConnectionReport(player));
-			
-			QualifiedObservableConnector.getSingleton().sendReport(new UpdatePlayerInformationReport(player));
-			
+			QualifiedObservableConnector.getSingleton().sendReport(
+					new PlayerConnectionReport(player));
+
+			QualifiedObservableConnector.getSingleton().sendReport(
+					new UpdatePlayerInformationReport(player));
+
 			return player;
 		} else
 		{
@@ -231,7 +239,10 @@ public class PlayerManager
 	{
 
 		Player player = this.getPlayerFromID(playerID);
-		player.persist();
+		if (player != null)
+		{
+			player.persist();
+		}
 		return true;
 
 	}
@@ -242,7 +253,8 @@ public class PlayerManager
 	 * 
 	 * @param playerID
 	 *            the ID of the player we should remove
-	 * @throws DatabaseException if we can't persist the player to the data source
+	 * @throws DatabaseException
+	 *             if we can't persist the player to the data source
 	 */
 	public void removePlayer(int playerID) throws DatabaseException
 	{
@@ -250,9 +262,9 @@ public class PlayerManager
 		Player p = this.players.remove(playerID);
 		if (p != null)
 		{
-			
+
 			System.out.println("Player " + p.getPlayerName() + " has left");
-			
+
 			// send the disconnect message to clients
 			PlayerLeaveReport report = new PlayerLeaveReport(playerID);
 			QualifiedObservableConnector.getSingleton().sendReport(report);

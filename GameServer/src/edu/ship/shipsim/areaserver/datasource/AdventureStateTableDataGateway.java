@@ -53,9 +53,10 @@ public interface AdventureStateTableDataGateway
 	 * @param questID the quest
 	 * @param adventureID the adventure within that quest
 	 * @param state the state of the adventure for that player
+	 * @param needingNotification true if the player should be notified about this adventure state
 	 * @throws DatabaseException if we have trouble talking to the data source
 	 */
-	void createRow(int playerID, int questID, int adventureID, AdventureStateEnum state) throws DatabaseException;
+	void createRow(int playerID, int questID, int adventureID, AdventureStateEnum state, boolean needingNotification) throws DatabaseException;
 
 	/**
 	 * reset the data back to the data in AdventureStatesForTest

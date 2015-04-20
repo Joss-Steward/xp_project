@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import datasource.DatabaseException;
+import datasource.QuestStateEnum;
 import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
 
 /**
@@ -33,13 +34,13 @@ public class QuestNeedsFulfillmentNotificationReportTest
 	@Test
 	public void creation() throws DatabaseException
 	{
-		QuestNeedsFulfillmentNotificationReport report = new QuestNeedsFulfillmentNotificationReport(1,QuestsForTest.ONE_BIG_QUEST.getQuestID(), 
-				QuestsForTest.ONE_BIG_QUEST.getQuestDescription());
+		QuestStateChangeReport report = new QuestStateChangeReport(1,QuestsForTest.ONE_BIG_QUEST.getQuestID(), 
+				QuestsForTest.ONE_BIG_QUEST.getQuestDescription(), QuestStateEnum.FINISHED);
 		
 		assertEquals(1, report.getPlayerID());
 		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestID(), report.getQuestID());
 		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestDescription(),report.getQuestDescription());
-		
+		assertEquals(QuestStateEnum.FINISHED, report.getNewState());
 	}
 
 	/**
@@ -48,6 +49,6 @@ public class QuestNeedsFulfillmentNotificationReportTest
 	@Test
 	public void equalsContract()
 	{
-		EqualsVerifier.forClass(QuestNeedsFulfillmentNotificationReport.class).verify();
+		EqualsVerifier.forClass(QuestStateChangeReport.class).verify();
 	}
 }
