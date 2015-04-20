@@ -284,11 +284,13 @@ public class QuestManagerTest
 	public void testAddQuests()
 	{
 		Player p = playerManager.addPlayer(1);
-		QuestState quest = new QuestState(15, QuestStateEnum.AVAILABLE);
+		QuestState quest = new QuestState(15, QuestStateEnum.AVAILABLE, false);
 		QuestManager.getSingleton().addQuestState(p.getPlayerID(), quest);
 
-		assertEquals(QuestStateEnum.AVAILABLE, QuestManager.getSingleton()
-				.getQuestStateByID(1, 15).getStateValue());
+		QuestState questStateByID = QuestManager.getSingleton()
+				.getQuestStateByID(1, 15);
+		assertEquals(QuestStateEnum.AVAILABLE, questStateByID.getStateValue());
+		assertFalse(questStateByID.isNeedingNotification());
 
 	}
 
@@ -374,7 +376,7 @@ public class QuestManagerTest
 	@Test
 	public void setPlayerIDWhenQuestStateAdded()
 	{
-		QuestState questState = new QuestState(1,QuestStateEnum.AVAILABLE);
+		QuestState questState = new QuestState(1,QuestStateEnum.AVAILABLE, false);
 		QuestManager.getSingleton().addQuestState(4, questState);
 		assertEquals(4, questState.getPlayerID());
 	}
@@ -385,7 +387,7 @@ public class QuestManagerTest
 	@Test
 	public void canRemoveAPlayersQuestStates()
 	{
-		QuestManager.getSingleton().addQuestState(4, new QuestState(1,QuestStateEnum.AVAILABLE));
+		QuestManager.getSingleton().addQuestState(4, new QuestState(1,QuestStateEnum.AVAILABLE, false));
 		QuestManager.getSingleton().removeQuestStatesForPlayer(4);
 		assertNull(QuestManager.getSingleton().getQuestList(4));
 	}
@@ -425,7 +427,7 @@ public class QuestManagerTest
 		
 		ArrayList<AdventureState> adventures = new ArrayList<AdventureState>();
 		adventures.add(as);
-		QuestState qs = new QuestState(questID, QuestStateEnum.FULFILLED);
+		QuestState qs = new QuestState(questID, QuestStateEnum.FULFILLED, false);
 		qs.setPlayerID(playerID);
 		qs.addAdventures(adventures);
 		QuestManager.getSingleton().addQuestState(playerID, qs);

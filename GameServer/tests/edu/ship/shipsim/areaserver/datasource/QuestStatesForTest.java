@@ -13,23 +13,23 @@ public enum QuestStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST1(1, 1, QuestStateEnum.TRIGGERED),
+	PLAYER1_QUEST1(1, 1, QuestStateEnum.TRIGGERED, false),
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST2(1, 2, QuestStateEnum.FULFILLED),
+	PLAYER1_QUEST2(1, 2, QuestStateEnum.FULFILLED, true),
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1(2, 1, QuestStateEnum.AVAILABLE),
+	PLAYER2_QUEST1(2, 1, QuestStateEnum.AVAILABLE, true),
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST3(1, 3, QuestStateEnum.FULFILLED),
+	PLAYER1_QUEST3(1, 3, QuestStateEnum.FULFILLED, true),
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST2(2, 4, QuestStateEnum.TRIGGERED);
+	PLAYER2_QUEST2(2, 4, QuestStateEnum.TRIGGERED, true);
 	
 	private int playerID;
 	private int questID;
@@ -37,15 +37,15 @@ public enum QuestStatesForTest
 
 	/**
 	 * Constructor for Quest State Enum
-	 * 
-	 * @param questID
-	 *            a quest's unique ID
 	 * @param playerID
 	 *            a player's unique ID
+	 * @param questID
+	 *            a quest's unique ID
 	 * @param questState
 	 *            the state of the quest for the specified player
+	 * @param needingNotification true if this player should be notified about the state of this quest
 	 */
-	QuestStatesForTest(int playerID, int questID, QuestStateEnum questState)
+	QuestStatesForTest(int playerID, int questID, QuestStateEnum questState, boolean needingNotification)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
@@ -74,6 +74,14 @@ public enum QuestStatesForTest
 	public int getQuestID()
 	{
 		return questID;
+	}
+
+	/**
+	 * @return true if the player should be notified of this state
+	 */
+	public boolean isNeedingNotification()
+	{
+		return true;
 	}
 
 }

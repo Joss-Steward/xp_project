@@ -69,6 +69,7 @@ public class PlayerMapperTest extends DatabaseTest
 				QuestState playerQuestState = QuestManager.getSingleton()
 						.getQuestStateByID(testPlayer.getPlayerID(), qs.getQuestID());
 				assertEquals(qs.getState(), playerQuestState.getStateValue());
+				assertEquals(qs.isNeedingNotification(), playerQuestState.isNeedingNotification());
 				for (AdventureStatesForTest as : AdventureStatesForTest.values())
 				{
 					ArrayList<AdventureState> adventureList = playerQuestState

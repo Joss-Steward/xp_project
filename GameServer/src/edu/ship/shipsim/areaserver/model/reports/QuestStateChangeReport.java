@@ -4,7 +4,7 @@ import datasource.QuestStateEnum;
 import model.QualifiedObservableReport;
 
 /**
- * Sent when a quest moves to the needs fullfillment notification state
+ * Sent when a quest changes state
  * @author Merlin
  *
  */
