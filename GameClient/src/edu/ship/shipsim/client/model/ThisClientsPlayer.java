@@ -7,9 +7,11 @@ import model.ClientPlayerQuest;
 import model.QualifiedObservableConnector;
 import data.Position;
 import datasource.LevelRecord;
+import datasource.QuestStateEnum;
 //import datasource.QuestStateEnum;
 import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
 import edu.ship.shipsim.client.model.reports.ExperiencePointsChangeReport;
+import edu.ship.shipsim.client.model.reports.QuestStateChangeReport;
 //import edu.ship.shipsim.client.model.reports.QuestStateChangeReport;
 import edu.ship.shipsim.client.model.reports.QuestStateReport;
 
@@ -137,12 +139,14 @@ public class ThisClientsPlayer extends Player
 	
 	/**
 	 * Sends the report to say that the quest state has changed.
+	 * @param questID for ThisClientsPlayer's quest
+	 * @param questDescription for ThisClientsPlayer's quest description
+	 * @param newState enum for the current quest
 	 */
-	public void sendQuestStateChangeReport() 
-	{
-		
-//		QuestStateChangeReport r = new QuestStateChangeReport(id, int questID, String questDescription, QuestStateEnum newState );
-//		QualifiedObservableConnector.getSingleton().sendReport(r);
+	public void sendQuestStateChangeReport(int questID, String questDescription, QuestStateEnum newState ) 
+	{	
+		QuestStateChangeReport r = new QuestStateChangeReport(questID, questDescription, newState);
+		QualifiedObservableConnector.getSingleton().sendReport(r);
 	}
 
 	/**
