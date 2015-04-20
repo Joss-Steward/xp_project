@@ -35,8 +35,8 @@ public class ScreenPopUp extends Group
 	public static class ExitDialog extends Dialog{
 
 		/**
-		 * @param header The name of the popup window
-		 * @param description infomation pop up is displaying
+		 * @param header The name of the pop up window
+		 * @param description information pop up is displaying
 		 * @param skin The skin the window uses
 		 */
 		public ExitDialog(String header, String description, Skin skin)
@@ -45,6 +45,12 @@ public class ScreenPopUp extends Group
 			text(description);
 			button("OK");
 		}		
+		
+		@Override
+		protected void result(Object object)
+		{
+			
+		}
 	}
 
 
