@@ -36,6 +36,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.IntMap;
+import com.badlogic.gdx.utils.IntMap.Entry;
 import com.badlogic.gdx.utils.Sort;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
@@ -321,6 +322,10 @@ public class ScreenMap extends ScreenBasic
 		if (tiledMap == null)
 		{
 			System.out.println("clearing tile map");
+			for (Entry<PlayerSprite> c:characters)
+			{
+				c.value.remove();
+			}
 			characters.clear();
 			this.mySprite = null;
 			mapInput.setSprite(null);
