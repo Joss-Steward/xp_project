@@ -144,9 +144,17 @@ public class ThisClientsPlayer extends Player
 	 * @param newState enum for the current quest
 	 */
 	public void sendQuestStateChangeReport(int questID, String questDescription, QuestStateEnum newState ) 
-	{	
-		QuestStateChangeReport r = new QuestStateChangeReport(questID, questDescription, newState);
-		QualifiedObservableConnector.getSingleton().sendReport(r);
+	{
+		for(ClientPlayerQuest q: questList)
+		{
+			if(q.getQuestID() == questID)
+			{
+				q.setState(newState);
+				
+				QuestStateChangeReport r = new QuestStateChangeReport(questID, questDescription, newState);
+				QualifiedObservableConnector.getSingleton().sendReport(r);
+			}
+		}
 	}
 
 	/**

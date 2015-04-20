@@ -1,5 +1,7 @@
 package communication.messages;
 
+import java.io.Serializable;
+
 import datasource.QuestStateEnum;
 
 /**
@@ -9,7 +11,7 @@ import datasource.QuestStateEnum;
  * @author Merlin
  *
  */
-public class QuestStateChangeMessage implements Message
+public class QuestStateChangeMessage implements Message, Serializable
 {
 
 	/**
@@ -17,11 +19,14 @@ public class QuestStateChangeMessage implements Message
 	 */
 	private static final long serialVersionUID = 1L;
 	private int questID;
+	private int playerID;
 	private String questDescription;
 	private QuestStateEnum newState;
 
 	/**
 	 * 
+	 * @param playerID 
+	 * 			  the ID of the player
 	 * @param questID
 	 *            the ID of the quest
 	 * @param questDescription
@@ -29,9 +34,10 @@ public class QuestStateChangeMessage implements Message
 	 * @param newState
 	 *            the state the quest has moved to
 	 */
-	public QuestStateChangeMessage(int questID, String questDescription,
+	public QuestStateChangeMessage(int playerID, int questID, String questDescription,
 			QuestStateEnum newState)
 	{
+		this.playerID = playerID;
 		this.questID = questID;
 		this.questDescription = questDescription;
 		this.newState = newState;
@@ -61,4 +67,12 @@ public class QuestStateChangeMessage implements Message
 		return newState;
 	}
 
+	/**
+	 * Get the player's ID
+	 * @return playerID
+	 */
+	public int getPlayerID()
+	{
+		return playerID;
+	}
 }
