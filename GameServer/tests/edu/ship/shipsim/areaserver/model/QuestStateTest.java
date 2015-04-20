@@ -136,8 +136,8 @@ public class QuestStateTest extends DatabaseTest
 	public void testFulfilling() throws DatabaseException
 	{
 		
-		PlayerManager.getSingleton().addPlayer(1);
-		int origExperiencePoints = PlayerManager.getSingleton().getPlayerFromID(1)
+		PlayerManager.getSingleton().addPlayer(2);
+		int origExperiencePoints = PlayerManager.getSingleton().getPlayerFromID(2)
 				.getExperiencePoints();
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
@@ -173,7 +173,7 @@ public class QuestStateTest extends DatabaseTest
 		assertEquals(
 				origExperiencePoints
 						+ QuestsForTest.ONE_SAME_LOCATION_QUEST.getExperienceGained(),
-				PlayerManager.getSingleton().getPlayerFromID(1).getExperiencePoints());
+				PlayerManager.getSingleton().getPlayerFromID(2).getExperiencePoints());
 		assertEquals(QuestStateEnum.FULFILLED, qs.getStateValue());
 		assertTrue(qs.isNeedingNotification());
 		EasyMock.verify(obs);
