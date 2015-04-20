@@ -21,6 +21,7 @@ public class ExperienceChangedMessage implements Message, Serializable
 	private int playerID;
 
 	/**
+	 * @param playerID the id of the plyaer
 	 * @param experiencePoints the amount of experience points the player has
 	 * @param levelRecord the id of the player
 	 */

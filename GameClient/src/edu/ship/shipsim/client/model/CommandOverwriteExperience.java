@@ -28,6 +28,7 @@ public class CommandOverwriteExperience extends Command
 	}
 
 	/**
+	 * @param playerID the id of the player
 	 * @param experiencePoints player's experience points
 	 * @param record level record of the player
 	 */
@@ -67,6 +68,10 @@ public class CommandOverwriteExperience extends Command
 		return record;
 	}
 
+	/**
+	 * Get the player's id
+	 * @return playerID
+	 */
 	public int getPlayerID() 
 	{
 		return playerID;
