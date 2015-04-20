@@ -13,6 +13,7 @@ import communication.handlers.MapFileMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.PlayerJoinedMessageHandlerTest;
 import communication.handlers.PlayerLeaveMessageHandlerTest;
+import communication.handlers.QuestStateChangeMessageHandlerTest;
 import communication.packers.AreaCollisionMessagePackerTest;
 import communication.packers.ChatMessagePackerTest;
 import communication.packers.LoginMessagePackerTest;
@@ -29,6 +30,7 @@ import edu.ship.shipsim.client.model.CommandMovePlayerTest;
 import edu.ship.shipsim.client.model.CommandNewMapTest;
 import edu.ship.shipsim.client.model.CommandOverwriteExperienceTest;
 import edu.ship.shipsim.client.model.CommandOverwriteQuestStateTest;
+import edu.ship.shipsim.client.model.CommandQuestStateChangeTest;
 import edu.ship.shipsim.client.model.CommandRemovePlayerTest;
 import edu.ship.shipsim.client.model.CommandSendQuestStateTest;
 import edu.ship.shipsim.client.model.MapManagerTest;
@@ -68,6 +70,7 @@ import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 		MovementMessageHandlerTest.class,
 		PlayerJoinedMessageHandlerTest.class,
 		PlayerLeaveMessageHandlerTest.class,
+		QuestStateChangeMessageHandlerTest.class,
 		
 
 		// communication.packers
@@ -89,6 +92,7 @@ import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 		CommandNewMapTest.class, 
 		CommandOverwriteExperienceTest.class,
 		CommandOverwriteQuestStateTest.class,
+		CommandQuestStateChangeTest.class,
 		CommandRemovePlayerTest.class,
 		CommandSendQuestStateTest.class,
 		MapManagerTest.class, 

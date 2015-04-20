@@ -119,5 +119,13 @@ public class ClientPlayerQuest implements Serializable
 	{
 		return adventuresToFulfillment;
 	}
+
+	/**
+	 * @param newState the new state of the quest
+	 */
+	public void setState(QuestStateEnum newState) 
+	{
+		this.state = newState;
+	}
 	
 }
