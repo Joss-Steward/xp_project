@@ -109,7 +109,8 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 */
 	public void show()
 	{
-		this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		this.setSize(Gdx.graphics.getWidth()*.75f, Gdx.graphics.getHeight());
+		
 
 		initializeQuestTableContents();
 		initializeAdventureTableContents();
@@ -129,6 +130,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 		// Table Setup
 		adventureTable = new Table();
 		adventureTable.setFillParent(true);
+		
 		adventureTable.center().top();
 		clearAdventureTable();
 	}
@@ -335,7 +337,6 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	{
 		// get the image
 		final Texture t = new Texture(Gdx.files.internal(fileName));
-
 		return new NinePatch(new TextureRegion(t));
 	}
 }
