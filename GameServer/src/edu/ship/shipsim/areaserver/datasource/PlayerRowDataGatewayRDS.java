@@ -97,7 +97,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	 *            the row/column of the position the player is in
 	 * @param appearanceType
 	 *            the appearance type this player should be rendered with
-	 * @param quizScore TODO
+	 * @param quizScore this player's current quiz score
 	 * @param experiencePoints TODO
 	 * @throws DatabaseException
 	 *             shouldn't

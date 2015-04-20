@@ -1,7 +1,6 @@
 package edu.ship.shipsim.areaserver.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -85,7 +84,7 @@ public class AdventureStateTest extends DatabaseTest
 	{
 		PlayerManager.getSingleton().addPlayer(1);
 		
-		questState = new QuestState(1, QuestStateEnum.TRIGGERED);
+		questState = new QuestState(1, QuestStateEnum.TRIGGERED, false);
 		
 		questState.setPlayerID(1);
 		
@@ -111,7 +110,7 @@ public class AdventureStateTest extends DatabaseTest
 	{
 		PlayerManager.getSingleton().addPlayer(1);
 		
-		questState = new QuestState(2, QuestStateEnum.TRIGGERED);
+		questState = new QuestState(2, QuestStateEnum.TRIGGERED, false);
 		
 		questState.setPlayerID(1);
 		
@@ -123,8 +122,9 @@ public class AdventureStateTest extends DatabaseTest
 		adventure.complete();
 		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
 		assertTrue(adventure.isNeedingNotification());
-		assertEquals(QuestStateEnum.NEED_FULFILLED_NOTIFICATION,
+		assertEquals(QuestStateEnum.FULFILLED,
 				questState.getStateValue());
+		assertTrue(questState.isNeedingNotification());
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class AdventureStateTest extends DatabaseTest
 	{
 		PlayerManager.getSingleton().addPlayer(1);
 		
-		questState = new QuestState(2, QuestStateEnum.FULFILLED);
+		questState = new QuestState(2, QuestStateEnum.FULFILLED, false);
 		
 		questState.setPlayerID(1);
 		
@@ -154,5 +154,6 @@ public class AdventureStateTest extends DatabaseTest
 		assertEquals(AdventureStateEnum.COMPLETED, adventure2.getState());
 		assertTrue(adventure2.isNeedingNotification());
 		assertEquals(QuestStateEnum.FULFILLED, questState.getStateValue());
+		assertFalse(questState.isNeedingNotification());
 	}
 }

@@ -46,7 +46,7 @@ private static QuestStateTableDataGateway singleton;
 		data = new Hashtable<Integer, ArrayList<QuestStateRecord>>();
 		for(QuestStatesForTest a:QuestStatesForTest.values())
 		{
-			QuestStateRecord rec = new QuestStateRecord(a.getPlayerID(), a.getQuestID(), a.getState());
+			QuestStateRecord rec = new QuestStateRecord(a.getPlayerID(), a.getQuestID(), a.getState(), a.isNeedingNotification());
 			
 			try
 			{
@@ -107,22 +107,22 @@ private static QuestStateTableDataGateway singleton;
 	}
 
 	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#createRow(int, int, datasource.QuestStateEnum)
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#createRow(int, int, datasource.QuestStateEnum, boolean)
 	 */
 	@Override
-	public void createRow(int playerID, int questID, QuestStateEnum state)
+	public void createRow(int playerID, int questID, QuestStateEnum state, boolean needingNotification)
 			throws DatabaseException
 	{
-		insertRow(playerID, new QuestStateRecord(playerID, questID, state));
+		insertRow(playerID, new QuestStateRecord(playerID, questID, state, needingNotification));
 		
 	}
 
 	/**
 	 * @throws DatabaseException shouldn't
-	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#udpateState(int, int, datasource.QuestStateEnum)
+	 * @see edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway#udpateState(int, int, datasource.QuestStateEnum, boolean)
 	 */
 	@Override
-	public void udpateState(int playerID, int questID, QuestStateEnum newState) throws DatabaseException
+	public void udpateState(int playerID, int questID, QuestStateEnum newState, boolean needingNotification) throws DatabaseException
 	{
 		boolean updated = false;
 		ArrayList<QuestStateRecord> quests = data.get(playerID);
@@ -140,7 +140,7 @@ private static QuestStateTableDataGateway singleton;
 		}
 		if (!updated)
 		{
-			createRow(playerID, questID, newState);
+			createRow(playerID, questID, newState, needingNotification);
 		}
 		
 	}

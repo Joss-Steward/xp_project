@@ -24,7 +24,7 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 	 *            the unique name of the player that moved
 	 * @param position
 	 *            the position he moved to
-	 * @param mapName TODO
+	 * @param mapName the name of the map the player is moving to
 	 */
 	public PlayerMovedReport(int playerID, String playerName, Position position, String mapName)
 	{

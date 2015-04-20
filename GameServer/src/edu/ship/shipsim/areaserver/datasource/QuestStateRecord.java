@@ -4,6 +4,7 @@ import datasource.QuestStateEnum;
 
 /**
  * A data transfer object that contains the state of a quest for a player
+ * 
  * @author Merlin
  *
  */
@@ -15,24 +16,28 @@ public class QuestStateRecord
 	private int questID;
 
 	private QuestStateEnum state;
+
+	private boolean needingNotification;
+
 	/**
-	 * @param playerID the player's unique ID
-	 * @param questID the quest's unique ID
-	 * @param state this player's state for the given quest
+	 * @param playerID
+	 *            the player's unique ID
+	 * @param questID
+	 *            the quest's unique ID
+	 * @param state
+	 *            this player's state for the given quest
+	 * @param needingNotification
+	 *            true if the player should be notified about this state
 	 */
-	public QuestStateRecord(int playerID, int questID, QuestStateEnum state)
+	public QuestStateRecord(int playerID, int questID, QuestStateEnum state,
+			boolean needingNotification)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
 		this.state = state;
+		this.needingNotification = needingNotification;
 	}
-	/**
-	 * @param state the new state
-	 */
-	public void setState(QuestStateEnum state)
-	{
-		this.state = state;
-	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -91,6 +96,23 @@ public class QuestStateRecord
 		result = prime * result + questID;
 		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		return result;
+	}
+
+	/**
+	 * @return true if the player should be notified about this state
+	 */
+	public boolean isNeedingNotification()
+	{
+		return needingNotification;
+	}
+
+	/**
+	 * @param state
+	 *            the new state
+	 */
+	public void setState(QuestStateEnum state)
+	{
+		this.state = state;
 	}
 
 }
