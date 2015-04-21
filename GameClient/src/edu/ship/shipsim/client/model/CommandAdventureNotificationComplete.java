@@ -22,10 +22,17 @@ public class CommandAdventureNotificationComplete extends Command
 		this.adventureID = adventureID;
 	}
 
+	/**
+	 * Command's execute method
+	 */
 	@Override
-	protected boolean execute() {
+	public boolean execute() 
+	{
+		System.out.println("Got here");
 		
-		return false;
+		// TODO Create a AdventureNotificationCompleteReport
+		
+		return true;
 	}
 	
 	/**

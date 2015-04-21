@@ -6,7 +6,6 @@ import model.QualifiedObserver;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import datasource.QuestStateEnum;
 import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
 import edu.ship.shipsim.client.model.reports.QuestStateChangeReport;
 
@@ -51,23 +50,25 @@ public class PopUpDisplay implements QualifiedObserver
 		if (report.getClass().equals(AdventuresNeedingNotificationReport.class))
 		{
 			AdventuresNeedingNotificationReport r = (AdventuresNeedingNotificationReport) report;
+			
+			AdventureCompleteBehavior behavior = new AdventureCompleteBehavior(r.getPlayerID(), r.getQuestID(), r.getAdventureID());
 			@SuppressWarnings("unused")
 			ScreenPopUp popup = new ScreenPopUp("Adventure Completed",
-					r.getAdventuresDescriptionList() + " completed", this.stage);
+					r.getAdventureDescription() + " completed", this.stage, behavior);
 		} else if (report.getClass().equals(QuestStateChangeReport.class))
 		{
-			QuestStateChangeReport r = (QuestStateChangeReport) report;
-			if (r.getNewState() == QuestStateEnum.FULFILLED)
-			{
-				@SuppressWarnings("unused")
-				ScreenPopUp popup = new ScreenPopUp("Quest Fulfilled",
-						r.getQuestDescription() + " fulfilled", this.stage);
-			} else if (r.getNewState() == QuestStateEnum.FINISHED)
-			{
-				@SuppressWarnings("unused")
-				ScreenPopUp popup = new ScreenPopUp("Quest Completed",
-						r.getQuestDescription() + " completed", this.stage);
-			}
+//			QuestStateChangeReport r = (QuestStateChangeReport) report;
+//			if (r.getNewState() == QuestStateEnum.FULFILLED)
+//			{
+//				@SuppressWarnings("unused")
+//				ScreenPopUp popup = new ScreenPopUp("Quest Fulfilled",
+//						r.getQuestDescription() + " fulfilled", this.stage);
+//			} else if (r.getNewState() == QuestStateEnum.FINISHED)
+//			{
+//				@SuppressWarnings("unused")
+//				ScreenPopUp popup = new ScreenPopUp("Quest Completed",
+//						r.getQuestDescription() + " completed", this.stage);
+//			}
 		}
 	}
 }

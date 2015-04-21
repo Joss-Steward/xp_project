@@ -1,7 +1,5 @@
 package edu.ship.shipsim.client.model.reports;
 
-import java.util.ArrayList;
-
 import model.QualifiedObservableReport;
 
 /**
@@ -13,40 +11,74 @@ import model.QualifiedObservableReport;
  */
 public final class AdventuresNeedingNotificationReport implements QualifiedObservableReport
 {
-	private final ArrayList<String> adventuresDescriptions = new ArrayList<String>();
 
+	private final int questID;
+	private final int adventureID;
+	private final int playerID;
+	private final String adventureDescription;
+	
 	/**
 	 * Constructor
-	 * @param adventuresDescriptions our list of adventures descriptions to overwrite
+	 * @param playerID id of the player
+	 * @param questID id of the quest
+	 * @param adventureID id of the adventure
+	 * @param adventureDescription the description of the adventure
 	 */
-	public AdventuresNeedingNotificationReport(ArrayList<String> adventuresDescriptions) 
+	public AdventuresNeedingNotificationReport(int playerID, int questID, int adventureID, String adventureDescription) 
 	{
-		for(String a : adventuresDescriptions)
-		{
-			this.adventuresDescriptions.add(a);
-		}
+		this.playerID = playerID;
+		this.questID = questID;
+		this.adventureID = adventureID;
+		this.adventureDescription = adventureDescription;
 	}
 
 	/**
-	 * Return adventure list's descriptions
-	 * @return adventure list
+	 * @return id of the quest
 	 */
-	public ArrayList<String> getAdventuresDescriptionList() 
+	public int getQuestID() 
 	{
-		return adventuresDescriptions;
+		return questID;
+	}
+
+	/**
+	 * @return id of the adventure
+	 */
+	public int getAdventureID() 
+	{
+		return adventureID;
+	}
+
+	/**
+	 * @return id of the player
+	 */
+	public int getPlayerID() 
+	{
+		return playerID;
+	}
+	
+	/**
+	 * @return description of adventure
+	 */
+	public String getAdventureDescription() 
+	{
+		return adventureDescription;
 	}
 
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode() 
+	{
 		final int prime = 31;
 		int result = 1;
 		result = prime
 				* result
-				+ ((adventuresDescriptions == null) ? 0
-						: adventuresDescriptions.hashCode());
+				+ ((adventureDescription == null) ? 0 : adventureDescription
+						.hashCode());
+		result = prime * result + adventureID;
+		result = prime * result + playerID;
+		result = prime * result + questID;
 		return result;
 	}
 
@@ -54,7 +86,8 @@ public final class AdventuresNeedingNotificationReport implements QualifiedObser
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj) 
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -62,10 +95,16 @@ public final class AdventuresNeedingNotificationReport implements QualifiedObser
 		if (getClass() != obj.getClass())
 			return false;
 		AdventuresNeedingNotificationReport other = (AdventuresNeedingNotificationReport) obj;
-		if (adventuresDescriptions == null) {
-			if (other.adventuresDescriptions != null)
+		if (adventureDescription == null) {
+			if (other.adventureDescription != null)
 				return false;
-		} else if (!adventuresDescriptions.equals(other.adventuresDescriptions))
+		} else if (!adventureDescription.equals(other.adventureDescription))
+			return false;
+		if (adventureID != other.adventureID)
+			return false;
+		if (playerID != other.playerID)
+			return false;
+		if (questID != other.questID)
 			return false;
 		return true;
 	}

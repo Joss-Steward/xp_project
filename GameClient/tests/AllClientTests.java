@@ -5,6 +5,7 @@ import view.player.DirectionTest;
 import view.player.PlayerSpriteTest;
 import view.screen.ScreenListenerTest;
 import view.screen.map.ScreenMapInputTest;
+import view.screen.popup.AdventureCompleteBehaviorTest;
 import communication.handlers.ChatMessageHandlerTest;
 import communication.handlers.ExperienceChangedMessageHandlerTest;
 import communication.handlers.InitializeThisClientsPlayerMessageHandlerTest;
@@ -123,7 +124,8 @@ import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 		//view.screen.map
 		ScreenMapInputTest.class, 
 		
-		
+		//view.screen.popup
+		AdventureCompleteBehaviorTest.class,
 
 })
 /**

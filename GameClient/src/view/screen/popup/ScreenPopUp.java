@@ -20,10 +20,11 @@ public class ScreenPopUp extends Group
 	 * @param header name for the dialog box
 	 * @param description for text in popup
 	 * @param stage the stage
+	 * @param behavior the PopupBehavior of the popup
 	 */
-	public ScreenPopUp(String header, String description, Stage stage)
+	public ScreenPopUp(String header, String description, Stage stage, PopupBehavior behavior)
 	{
-		ExitDialog pop_close = new ExitDialog(header, description, skin);
+		ExitDialog pop_close = new ExitDialog(header, description, skin, behavior);
 		pop_close.show(stage);
 	}
 	
@@ -32,24 +33,29 @@ public class ScreenPopUp extends Group
 	 * @author sl6469
 	 *
 	 */
-	public static class ExitDialog extends Dialog{
+	public static class ExitDialog extends Dialog
+	{
 
+		private PopupBehavior behavior;
 		/**
 		 * @param header The name of the pop up window
 		 * @param description information pop up is displaying
 		 * @param skin The skin the window uses
+		 * @param behavior the PopupBehavior of the popup
 		 */
-		public ExitDialog(String header, String description, Skin skin)
+		public ExitDialog(String header, String description, Skin skin, PopupBehavior behavior)
 		{
 			super(header, skin);
 			text(description);
 			button("OK");
+			
+			this.behavior = behavior;
 		}		
 		
 		@Override
 		protected void result(Object object)
 		{
-			
+			this.behavior.clicked();
 		}
 	}
 

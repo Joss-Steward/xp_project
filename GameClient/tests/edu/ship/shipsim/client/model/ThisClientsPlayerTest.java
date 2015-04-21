@@ -174,22 +174,18 @@ public class ThisClientsPlayerTest
 	public void testSendAdventuresNeedingNotificationReport()
 	{
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
-		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventuresNeedingNotification();
-		cp.addQuest(q);
-		ArrayList<String> expected = new ArrayList<String>() ;
 		
-		// Retrieve each adventure's descriptions from the quest
-		for(ClientPlayerAdventure a : q.getAdventureList())
-		{
-			expected.add(a.getAdventureDescription());
-		}
+		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", AdventureStateEnum.COMPLETED, true);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.FINISHED, 1, 2);
+		q.addAdventure(a);
+		cp.addQuest(q);
 		
 		ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
 		questList.add(q);
 		
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, AdventuresNeedingNotificationReport.class);
-		AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(expected);
+		AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(cp.getID(), q.getQuestID(), a.getAdventureID(), a.getAdventureDescription());
 		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
