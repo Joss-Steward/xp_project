@@ -78,7 +78,6 @@ public class ThisClientsPlayer extends Player
 	{
 		questList.clear();
 		questList = qList;
-		ArrayList<String> adventuresDescriptions = new ArrayList<String>();
 		
 		for(ClientPlayerQuest q : questList) 
 		{
@@ -86,15 +85,10 @@ public class ThisClientsPlayer extends Player
 			{
 				if(a.isNeedingNotification())
 				{
-					adventuresDescriptions.add(a.getAdventureDescription());
+					AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(PlayerManager.getSingleton().getThisClientsPlayer().getID(), q.getQuestID(), a.getAdventureID(), a.getAdventureDescription());
+					QualifiedObservableConnector.getSingleton().sendReport(report);
 				}
 			}
-		}
-		
-		if(!adventuresDescriptions.isEmpty())
-		{
-			AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(adventuresDescriptions);
-			QualifiedObservableConnector.getSingleton().sendReport(report);
 		}
 	}
 
