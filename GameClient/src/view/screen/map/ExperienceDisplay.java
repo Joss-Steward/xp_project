@@ -51,7 +51,6 @@ public class ExperienceDisplay extends Group implements QualifiedObserver
 		
 		experienceDisplay.top().right();
 		experienceDisplay.add(new Label("Experience Display goes here", skin)).row();
-		
 		this.addActor(experienceDisplay);
 	}
 

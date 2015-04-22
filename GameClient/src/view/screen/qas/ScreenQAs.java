@@ -46,8 +46,11 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	private Texture legend;
 	
 	private Label q_header;
+	private Label adv_header;
+	
 	private float fontScale = (float) 1.25;
 
+	
 	private final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
 	boolean showing = true;
@@ -130,8 +133,9 @@ public class ScreenQAs extends Group implements QualifiedObserver
 		// Table Setup
 		adventureTable = new Table();
 		adventureTable.setFillParent(true);
-		
-		adventureTable.center().top();
+		adv_header = new Label("", skin);
+		adv_header.setFontScale(fontScale);
+		adventureTable.right().top();
 		clearAdventureTable();
 	}
 
@@ -144,8 +148,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 */
 	public void updateTable(ArrayList<ClientPlayerQuest> quests)
 	{
-		questTable.setBackground(new NinePatchDrawable(
-				getNinePatch("data/background.9.png")));
+		questTable.setBackground(new NinePatchDrawable(getNinePatch("data/background.9.png")));
 		questTable.clearChildren();
 		questTable.add(q_header).colspan(2).center();		
 		questTable.row();
@@ -222,9 +225,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	private void buildAdvRow(Texture state, String desc)
 	{
 		adventureTable.add(new Image(state));
-		TextButton temp = new TextButton(desc,skin);
-		//Label temp = new Label(desc,skin);
-		//temp.setFontScale(fontScale);
+		Label temp = new Label(" "+desc+"     ",skin);
 		adventureTable.add(temp);
 		adventureTable.row();
 	}
@@ -262,7 +263,9 @@ public class ScreenQAs extends Group implements QualifiedObserver
 			@Override
 			public void clicked(InputEvent evt, float x, float y)
 			{
+				int num_left = quest.getAdventuresToFulfillment();
 				clearAdventureTable();
+				
 				for (ClientPlayerAdventure a : quest.getAdventureList())
 				{
 					if (a.getAdventureState().equals(
@@ -272,8 +275,11 @@ public class ScreenQAs extends Group implements QualifiedObserver
 					} else
 					{
 						buildAdvRow(complete, a.getAdventureDescription());
+						num_left--;
 					}
 				}
+				q_header.setText(quest.getQuestDescription()+" XP: "+quest.getExperiencePointsGained());
+				adv_header.setText(""+num_left+ " to Fulfillment");
 			}
 		});
 
@@ -286,11 +292,9 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 */
 	private void clearAdventureTable()
 	{
-		Label header = new Label("Adventures", skin);
-		header.setFontScale(fontScale);
 		adventureTable.clearChildren();
 		// Set Header
-		adventureTable.add(header).colspan(2).center();
+		adventureTable.add(adv_header).colspan(2).center();
 		adventureTable.row();
 	}
 
@@ -299,11 +303,9 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 */
 	private void clearQuestTable()
 	{
-		Label header = new Label("Quests", skin);
-		header.setFontScale(fontScale);
 		questTable.clearChildren();
 		// Set Header
-		questTable.add(header).colspan(2).center();
+		questTable.add(q_header).colspan(2).center();
 		questTable.row();
 	}
 
