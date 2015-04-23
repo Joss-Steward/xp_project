@@ -10,7 +10,8 @@ import org.junit.Test;
  * @author Ryan
  *
  */
-public class AdventureNotifcationCompleteReportTest {
+public class AdventureNotifcationCompleteReportTest 
+{
 
 	/**
 	 * Test init and getters for report
