@@ -14,7 +14,7 @@ import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
  * @author Merlin
  * 
  */
-public class QuestNeedsFulfillmentNotificationReportTest
+public class QuestStateChangeReportTest
 {
 
 	/**

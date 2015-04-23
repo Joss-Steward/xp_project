@@ -37,7 +37,7 @@ public class CommandAddPlayer extends Command
 		try
 		{
 			PlayerManager.getSingleton().addPlayer(playerID, pin);
-		} catch (DatabaseException e)
+		} catch (DatabaseException | IllegalQuestChangeException e)
 		{
 			e.printStackTrace();
 		}

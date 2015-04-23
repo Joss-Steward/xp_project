@@ -102,8 +102,9 @@ public class PlayerManager
 	 * @return the player object that we added
 	 * @throws DatabaseException
 	 *             if the player's pin was not correct
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
-	public Player addPlayer(int playerID, double pin) throws DatabaseException
+	public Player addPlayer(int playerID, double pin) throws DatabaseException, IllegalQuestChangeException
 	{
 
 		PlayerMapper pm = new PlayerMapper(playerID);
@@ -234,8 +235,9 @@ public class PlayerManager
 	 * @return Success status of persistence
 	 * @throws DatabaseException
 	 *             IF we have trouble persisting to the data source
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
-	public boolean persistPlayer(int playerID) throws DatabaseException
+	public boolean persistPlayer(int playerID) throws DatabaseException, IllegalQuestChangeException
 	{
 
 		Player player = this.getPlayerFromID(playerID);
@@ -255,8 +257,9 @@ public class PlayerManager
 	 *            the ID of the player we should remove
 	 * @throws DatabaseException
 	 *             if we can't persist the player to the data source
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
-	public void removePlayer(int playerID) throws DatabaseException
+	public void removePlayer(int playerID) throws DatabaseException, IllegalQuestChangeException
 	{
 		persistPlayer(playerID);
 		Player p = this.players.remove(playerID);

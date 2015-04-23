@@ -54,8 +54,9 @@ import edu.ship.shipsim.areaserver.model.QuestManagerTest;
 import edu.ship.shipsim.areaserver.model.QuestTest;
 import edu.ship.shipsim.areaserver.model.QuestStateTest;
 import edu.ship.shipsim.areaserver.model.QuizBotBehaviorTest;
+import edu.ship.shipsim.areaserver.model.reports.AdventureStateChangeReportTest;
 import edu.ship.shipsim.areaserver.model.reports.ExperienceChangedReportTest;
-import edu.ship.shipsim.areaserver.model.reports.QuestNeedsFulfillmentNotificationReportTest;
+import edu.ship.shipsim.areaserver.model.reports.QuestStateChangeReportTest;
 import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReportTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReportTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReportTest;
@@ -149,10 +150,11 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		
 		
 		// model.reports
+		AdventureStateChangeReportTest.class,
 		ExperienceChangedReportTest.class,
 		PlayerConnectionReportTest.class, 
 		PlayerMovedReportTest.class, 
-		QuestNeedsFulfillmentNotificationReportTest.class,
+		QuestStateChangeReportTest.class,
 		SendChatMessageReportTest.class,
 		UpdatePlayerInformationReportTest.class,
 		})

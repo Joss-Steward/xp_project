@@ -14,6 +14,7 @@ import communication.StateAccumulator;
 import communication.messages.InitializeThisClientsPlayerMessage;
 import datasource.DatabaseException;
 import datasource.PlayersForTest;
+import edu.ship.shipsim.areaserver.model.IllegalQuestChangeException;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.QuestManager;
@@ -65,9 +66,10 @@ public class UpdatePlayerInformationMessagePackerTest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void ifItIsntAboutUsDontPack() throws DatabaseException
+	public void ifItIsntAboutUsDontPack() throws DatabaseException, IllegalQuestChangeException
 	{
 
 		UpdatePlayerInformationMessagePacker packer = new UpdatePlayerInformationMessagePacker();
@@ -84,9 +86,10 @@ public class UpdatePlayerInformationMessagePackerTest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void testPackedObjectIsCurrentPlayer() throws DatabaseException
+	public void testPackedObjectIsCurrentPlayer() throws DatabaseException, IllegalQuestChangeException
 	{
 		Player player = PlayerManager.getSingleton().getPlayerFromID(
 				stateAccumulator.getPlayerID());
@@ -111,9 +114,10 @@ public class UpdatePlayerInformationMessagePackerTest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void testPackExperiencePtsAndLevel() throws DatabaseException
+	public void testPackExperiencePtsAndLevel() throws DatabaseException, IllegalQuestChangeException
 	{
 		Player player = PlayerManager.getSingleton().getPlayerFromID(
 				stateAccumulator.getPlayerID());

@@ -123,8 +123,11 @@ public class QuestManager implements QualifiedObserver {
 	 *            the player
 	 * @param questID
 	 *            the quest to be triggered
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException thrown if illegal state change
+	 * @throws DatabaseException shouldn't
 	 */
-	public void triggerQuest(int playerID, int questID) {
+	public void triggerQuest(int playerID, int questID) throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException {
 		QuestState qs = getQuestStateByID(playerID, questID);
 		if (qs != null) {
 			qs.trigger();
@@ -146,7 +149,7 @@ public class QuestManager implements QualifiedObserver {
 			for (Integer q : questIDs) {
 				this.triggerQuest(myReport.getPlayerID(), q);
 			}
-		} catch (DatabaseException e) {
+		} catch (DatabaseException | IllegalAdventureChangeException | IllegalQuestChangeException e) {
 			e.printStackTrace();
 		}
 	}
@@ -264,8 +267,10 @@ public class QuestManager implements QualifiedObserver {
 	 *            the player ID
 	 * @param questID
 	 *            the quest ID
+	 * @throws IllegalQuestChangeException thrown if illegal state change
+	 * @throws DatabaseException shouldn't
 	 */
-	public void finishQuest(int playerID, int questID) {
+	public void finishQuest(int playerID, int questID) throws IllegalQuestChangeException, DatabaseException {
 		QuestState qs = getQuestStateByID(playerID, questID);
 		if (qs != null) {
 			qs.finish();
@@ -280,9 +285,11 @@ public class QuestManager implements QualifiedObserver {
 	 * @param adventureID the id of the adventure
 	 * @throws DatabaseException
 	 *             shouldn't
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 */
 	public void completeAdventure(int playerID, int questID, int adventureID)
-			throws DatabaseException {
+			throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException {
 		getAdventureStateByID(playerID, questID, adventureID).complete();
 
 	}

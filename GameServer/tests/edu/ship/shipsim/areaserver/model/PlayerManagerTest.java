@@ -128,9 +128,10 @@ public class PlayerManagerTest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void playerIsSaved() throws DatabaseException
+	public void playerIsSaved() throws DatabaseException, IllegalQuestChangeException
 	{
 		Player player = PlayerManager.getSingleton().addPlayer(
 				PlayersForTest.MERLIN.getPlayerID());

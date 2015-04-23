@@ -92,9 +92,10 @@ public class PlayerTest extends DatabaseTest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void legitPin() throws DatabaseException
+	public void legitPin() throws DatabaseException, IllegalQuestChangeException
 	{
 		PlayerConnection playerPin = new PlayerConnection(1);
 		playerPin.generateTestPin();
@@ -120,7 +121,7 @@ public class PlayerTest extends DatabaseTest
 		try
 		{
 			playerManager.addPlayer(1, PlayerConnection.DEFAULT_PIN);
-		} catch (DatabaseException e)
+		} catch (DatabaseException | IllegalQuestChangeException e)
 		{
 			gotTheException = true;
 		}
@@ -147,10 +148,11 @@ public class PlayerTest extends DatabaseTest
 	 * 
 	 * @throws DatabaseException
 	 *             should
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 * 
 	 */
 	@Test(expected = DatabaseException.class)
-	public void wrongPin() throws DatabaseException
+	public void wrongPin() throws DatabaseException, IllegalQuestChangeException
 	{
 		playerManager.addPlayer(1, -1);
 	}

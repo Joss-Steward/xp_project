@@ -1,7 +1,9 @@
 package edu.ship.shipsim.areaserver.model;
 
+import model.QualifiedObservableConnector;
 import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
+import edu.ship.shipsim.areaserver.model.reports.AdventureStateChangeReport;
 
 /**
  * Stores the states of all the adventures for an individual player on the
@@ -105,13 +107,13 @@ public class AdventureState
 
 	/**
 	 * Changes the state of an adventure from hidden to pending.
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * @throws DatabaseException shouldn't
+	 * @throws IllegalQuestChangeException thrown if error occurred during quest state change
 	 */
-	public void trigger()
+	public void trigger() throws IllegalAdventureChangeException, DatabaseException, IllegalQuestChangeException
 	{
-		if (this.adventureState.equals(AdventureStateEnum.HIDDEN))
-		{
-			this.adventureState = AdventureStateEnum.PENDING;
-		}
+		changeState(AdventureStateEnum.PENDING, false);
 	}
 
 	/**
@@ -120,23 +122,20 @@ public class AdventureState
 	 * 
 	 * @throws DatabaseException
 	 *             if the datasource fails
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 */
-	public void complete() throws DatabaseException
+	public void complete() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException
 	{
-		if (this.adventureState.equals(AdventureStateEnum.PENDING))
-		{
-			this.adventureState = AdventureStateEnum.COMPLETED;
-			this.needingNotification = true;
-			
-			PlayerManager.getSingleton()
-					.getPlayerFromID(this.parentQuestState.getPlayerID())
-					.addExperiencePoints(
-							QuestManager.getSingleton()
-									.getAdventure(this.parentQuestState.getID(),
-											adventureID)
-									.getExperiencePointsGained());
-			this.parentQuestState.checkForFulfillment();
-		}
+		changeState(AdventureStateEnum.COMPLETED, true);
+		PlayerManager.getSingleton()
+				.getPlayerFromID(this.parentQuestState.getPlayerID())
+				.addExperiencePoints(
+						QuestManager.getSingleton()
+								.getAdventure(this.parentQuestState.getID(),
+										adventureID)
+								.getExperiencePointsGained());
+		this.parentQuestState.checkForFulfillment();
 	}
 
 	/**
@@ -157,6 +156,39 @@ public class AdventureState
 	public boolean isNeedingNotification()
 	{
 		return needingNotification;
+	}
+
+	/**
+	 * Changes the current states state to the given state
+	 * and tells it if it needs to notify the user.
+	 * @param state state to change to
+	 * @param b whether to notify or not
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * @throws DatabaseException shouldn't
+	 * @throws IllegalQuestChangeException thrown if queststatechange error occurs
+	 */
+	protected void changeState(AdventureStateEnum state, boolean b) throws IllegalAdventureChangeException, DatabaseException, IllegalQuestChangeException 
+	{
+		if((this.adventureState.equals(AdventureStateEnum.HIDDEN) && state.equals(AdventureStateEnum.PENDING)) 
+				|| (this.adventureState.equals(AdventureStateEnum.PENDING) && state.equals(AdventureStateEnum.COMPLETED))) 
+		{
+			this.adventureState = state;
+			this.needingNotification = b;
+			
+			if(needingNotification == true)
+			{
+				QualifiedObservableConnector.getSingleton().sendReport(
+						new AdventureStateChangeReport(parentQuestState.getPlayerID(), adventureID, 
+								QuestManager.getSingleton().getAdventure(parentQuestState.getID(), 
+								adventureID).getAdventureDescription(), adventureState));
+			}
+			
+			PlayerManager.getSingleton().persistPlayer(parentQuestState.getPlayerID());
+		}
+		else
+		{
+			throw new IllegalAdventureChangeException();
+		}
 	}
 
 }
