@@ -337,23 +337,23 @@ public class QuestManagerTest
 	@Test
 	public void testPlayerTriggersQuest() throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
 	{
-		Player p = playerManager.addPlayer(1);
+		Player p = playerManager.addPlayer(2);
 		assertEquals(
-				QuestStatesForTest.PLAYER1_QUEST1.getState(),
+				QuestStatesForTest.PLAYER2_QUEST1.getState(),
 				QuestManager
 						.getSingleton()
 						.getQuestStateByID(p.getPlayerID(),
-								QuestStatesForTest.PLAYER1_QUEST1.getQuestID())
+								QuestStatesForTest.PLAYER2_QUEST1.getQuestID())
 						.getStateValue());
 
-		QuestManager.getSingleton().triggerQuest(1,
-				QuestStatesForTest.PLAYER1_QUEST1.getQuestID());
+		QuestManager.getSingleton().triggerQuest(2,
+				QuestStatesForTest.PLAYER2_QUEST1.getQuestID());
 		assertEquals(
 				QuestStateEnum.TRIGGERED,
 				QuestManager
 						.getSingleton()
 						.getQuestStateByID(p.getPlayerID(),
-								QuestStatesForTest.PLAYER1_QUEST1.getQuestID())
+								QuestStatesForTest.PLAYER2_QUEST1.getQuestID())
 						.getStateValue());
 	}
 

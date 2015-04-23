@@ -37,6 +37,7 @@ public class QuestStateTest extends DatabaseTest
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton(true);
 		QuestManager.resetSingleton();
+		QualifiedObservableConnector.resetSingleton();
 	}
 
 	/**

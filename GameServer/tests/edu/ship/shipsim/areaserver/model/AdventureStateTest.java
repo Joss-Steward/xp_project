@@ -115,21 +115,29 @@ public class AdventureStateTest extends DatabaseTest {
 	@Test
 	public void testCompleteNotFulfillingAdventure() throws DatabaseException,
 			IllegalAdventureChangeException, IllegalQuestChangeException {
-		PlayerManager.getSingleton().addPlayer(1);
+		
+		PlayerManager.getSingleton().addPlayer(2);
+		ArrayList<AdventureState> al = new ArrayList<AdventureState>();
+		AdventureState adventure = new AdventureState(
+				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.getAdventureID(),
+				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.getState(),
+				AdventureStatesForTest.PLAYER2_QUEST1_ADV1
+						.isNeedingNotification());
+		al.add(adventure);
+		QuestState qState = new QuestState(
+				QuestStatesForTest.PLAYER2_QUEST1.getQuestID(),
+				QuestStatesForTest.PLAYER2_QUEST1.getState(),
+				QuestStatesForTest.PLAYER2_QUEST1.isNeedingNotification());
 
-		questState = new QuestState(1, QuestStateEnum.TRIGGERED, false);
-
-		questState.setPlayerID(1);
-
-		AdventureState adventure = new AdventureState(1,
-				AdventureStateEnum.PENDING, false);
-		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
-		adventureList.add(adventure);
-		questState.addAdventures(adventureList);
+		qState.addAdventures(al);
+		qState.setPlayerID(2);
+		qState.trigger();
+		
 		adventure.complete();
+		
 		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
-		assertTrue(adventure.isNeedingNotification());
-		assertEquals(QuestStateEnum.TRIGGERED, questState.getStateValue());
+		assertFalse(adventure.isNeedingNotification());
+		assertEquals(QuestStateEnum.TRIGGERED, qState.getStateValue());
 	}
 
 	/**
@@ -160,7 +168,7 @@ public class AdventureStateTest extends DatabaseTest {
 
 		adventure.complete();
 		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
-		assertTrue(adventure.isNeedingNotification());
+		assertFalse(adventure.isNeedingNotification());
 		assertEquals(QuestStateEnum.FULFILLED, questState.getStateValue());
 		assertTrue(questState.isNeedingNotification());
 	}
@@ -196,7 +204,7 @@ public class AdventureStateTest extends DatabaseTest {
 
 		adventure2.complete();
 		assertEquals(AdventureStateEnum.COMPLETED, adventure2.getState());
-		assertTrue(adventure2.isNeedingNotification());
+		assertFalse(adventure2.isNeedingNotification());
 		assertEquals(QuestStateEnum.FULFILLED, questState.getStateValue());
 		assertFalse(questState.isNeedingNotification());
 	}
@@ -215,17 +223,24 @@ public class AdventureStateTest extends DatabaseTest {
 	public void testChangeStateToPending()
 			throws IllegalAdventureChangeException, DatabaseException,
 			IllegalQuestChangeException {
-		int playerID = 1;
-		AdventureState adv = new AdventureState(1, AdventureStateEnum.HIDDEN,
-				false);
+		
 		ArrayList<AdventureState> al = new ArrayList<AdventureState>();
-		al.add(adv);
-		QuestState q = new QuestState(2, QuestStateEnum.TRIGGERED, false);
-		q.addAdventures(al);
-		q.setPlayerID(playerID);
-		QuestManager.getSingleton().addQuestState(playerID, q);
-		adv.changeState(AdventureStateEnum.PENDING, true);
-		assertEquals(adv.getState(), AdventureStateEnum.PENDING);
+		AdventureState adventure = new AdventureState(
+				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.getAdventureID(),
+				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.getState(),
+				AdventureStatesForTest.PLAYER2_QUEST1_ADV1
+						.isNeedingNotification());
+		al.add(adventure);
+		QuestState qState = new QuestState(
+				QuestStatesForTest.PLAYER2_QUEST1.getQuestID(),
+				QuestStatesForTest.PLAYER2_QUEST1.getState(),
+				QuestStatesForTest.PLAYER2_QUEST1.isNeedingNotification());
+
+		qState.addAdventures(al);
+		qState.setPlayerID(2);
+		
+		adventure.changeState(AdventureStateEnum.PENDING, false);
+		assertEquals(adventure.getState(), AdventureStateEnum.PENDING);
 	}
 
 	/**
