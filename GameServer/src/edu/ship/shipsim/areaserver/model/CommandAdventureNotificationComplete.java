@@ -1,5 +1,8 @@
 package edu.ship.shipsim.areaserver.model;
 
+import datasource.DatabaseException;
+
+
 /**
  * @author Ryan
  *
@@ -25,9 +28,22 @@ public class CommandAdventureNotificationComplete extends Command
 	}
 
 	@Override
-	protected boolean execute() 
+	protected boolean execute()
 	{
-		return false;
+		try 
+		{
+			QuestManager.getSingleton().completeAdventure(playerID, questID, adventureID);
+		} catch (DatabaseException e) 
+		{
+			e.printStackTrace();
+		} catch (IllegalAdventureChangeException e) 
+		{
+			e.printStackTrace();
+		} catch (IllegalQuestChangeException e) 
+		{
+			e.printStackTrace();
+		}
+		return true;
 	}
 
 	/**
