@@ -9,6 +9,7 @@ import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -222,11 +223,15 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 * @param description
 	 *            of the adventure
 	 */
-	private void buildAdvRow(Texture state, String desc)
+	private void buildAdvRow(Texture state, String desc, Integer reward)
 	{
+		Label t_reward = new Label("XP: "+reward+" ",skin);
+		Label temp = new Label(desc+"  ",skin);
+		t_reward.setColor(Color.GREEN);
+		t_reward.setScale((float)1.1);
 		adventureTable.add(new Image(state));
-		Label temp = new Label(" "+desc+"     ",skin);
 		adventureTable.add(temp);
+		adventureTable.add(t_reward);
 		adventureTable.row();
 	}
 
@@ -271,10 +276,10 @@ public class ScreenQAs extends Group implements QualifiedObserver
 					if (a.getAdventureState().equals(
 							AdventureStateEnum.PENDING))
 					{
-						buildAdvRow(triggered, a.getAdventureDescription());
+						buildAdvRow(triggered, a.getAdventureDescription(),a.getAdventureXP());
 					} else
 					{
-						buildAdvRow(complete, a.getAdventureDescription());
+						buildAdvRow(complete, a.getAdventureDescription(),a.getAdventureXP());
 						num_left--;
 					}
 				}

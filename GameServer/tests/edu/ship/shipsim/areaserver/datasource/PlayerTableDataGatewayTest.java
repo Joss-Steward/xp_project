@@ -2,14 +2,11 @@ package edu.ship.shipsim.areaserver.datasource;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-
 import org.junit.After;
 import org.junit.Test;
 
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
-import datasource.QuestStateEnum;
 
 /**
  * An abstract class that tests the table data gateways into the Adventure table
