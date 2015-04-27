@@ -178,7 +178,7 @@ public class AdventureState
 			if(needingNotification == true)
 			{
 				QualifiedObservableConnector.getSingleton().sendReport(
-						new AdventureStateChangeReport(parentQuestState.getPlayerID(), adventureID, 
+						new AdventureStateChangeReport(parentQuestState.getPlayerID(), parentQuestState.getID(), adventureID, 
 								QuestManager.getSingleton().getAdventure(parentQuestState.getID(), 
 								adventureID).getAdventureDescription(), adventureState));
 			}

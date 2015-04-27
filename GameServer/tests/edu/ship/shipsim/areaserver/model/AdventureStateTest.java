@@ -274,6 +274,7 @@ public class AdventureStateTest extends DatabaseTest {
 		qState.addAdventures(al);
 		AdventureStateChangeReport report = new AdventureStateChangeReport(
 				AdventureStatesForTest.PLAYER1_QUEST2_ADV2.getPlayerID(),
+				AdventureStatesForTest.PLAYER1_QUEST2_ADV2.getQuestID(),
 				AdventureStatesForTest.PLAYER1_QUEST2_ADV2.getAdventureID(),
 				AdventuresForTest.FOUR.getAdventureDescription(),
 				AdventureStateEnum.COMPLETED);

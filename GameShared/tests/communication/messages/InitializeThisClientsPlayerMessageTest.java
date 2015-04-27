@@ -28,8 +28,8 @@ public class InitializeThisClientsPlayerMessageTest
 	@Test
 	public void testInitialize() 
 	{
-		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", AdventureStateEnum.HIDDEN, false);
-		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", AdventureStateEnum.HIDDEN, false);
+		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", 3, AdventureStateEnum.HIDDEN, false);
+		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", 3, AdventureStateEnum.HIDDEN, false);
 		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.HIDDEN, 42, 13);
 		q.addAdventure(adventureOne);
 		q.addAdventure(adventureTwo);

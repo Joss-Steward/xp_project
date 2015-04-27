@@ -36,6 +36,8 @@ public class QuestTest {
 		assertEquals("HappyZone",q.getMapName());
 		assertEquals(pos,q.getPos());
 		assertNotNull(q.getAdventures().contains(adventures));
+		assertEquals(4, q.getAdventureXP(42));
+		assertEquals(8, q.getAdventureXP(420));
 		assertEquals(42, q.getExperiencePointsGained());
 		assertEquals(13, q.getAdventuresForFulfillment());
 	}

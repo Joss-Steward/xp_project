@@ -11,6 +11,7 @@ import communication.handlers.ConnectMessageHandlerTest;
 import communication.handlers.DisconnectMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.TeleportationInitiationHandlerTest;
+import communication.packers.AdventureStateChangeMessagePackerTest;
 import communication.packers.ChatMessagePackerTest;
 import communication.packers.ExperienceChangedMessagePackerTest;
 import communication.packers.UpdatePlayerInformationMessagePackerTest;
@@ -84,6 +85,7 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		
 
 		// communication.packers
+		AdventureStateChangeMessagePackerTest.class,
 		ChatMessagePackerTest.class,
 		ExperienceChangedMessagePackerTest.class,
 		MapFileMessagePackerTest.class,

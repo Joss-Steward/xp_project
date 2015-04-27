@@ -135,7 +135,7 @@ public class ThisClientsPlayerTest
 		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
 		cp.addQuest(q);
 		
-		ClientPlayerAdventure a = new ClientPlayerAdventure(42, "Test Adventure ow2", AdventureStateEnum.HIDDEN, false);
+		ClientPlayerAdventure a = new ClientPlayerAdventure(42, "Test Adventure ow2", 3, AdventureStateEnum.HIDDEN, false);
 		ClientPlayerQuest qow = new ClientPlayerQuest(41, "Test Quest ow1", QuestStateEnum.HIDDEN, 42, 3);
 		
 		qow.addAdventure(a);
@@ -175,7 +175,7 @@ public class ThisClientsPlayerTest
 	{
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
 		
-		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", AdventureStateEnum.COMPLETED, true);
+		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", 0, AdventureStateEnum.COMPLETED, true);
 		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.FINISHED, 1, 2);
 		q.addAdventure(a);
 		cp.addQuest(q);
