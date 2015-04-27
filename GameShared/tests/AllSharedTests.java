@@ -34,6 +34,7 @@ import datasource.PlayerConnectionRowDataGatewayMockTest;
 import datasource.PlayerConnectionRowDataGatewayRDSTest;
 import datasource.PlayerLoginRowDataGatewayMockTest;
 import datasource.PlayerLoginRowDataGatewayRDSTest;
+import datasource.PlayerScoreRecordTest;
 import datasource.ServerRowDataGatewayMockTest;
 import datasource.ServerRowDataGatewayRDSTest;
 
@@ -96,6 +97,7 @@ import datasource.ServerRowDataGatewayRDSTest;
 		PlayerLoginRowDataGatewayMockTest.class,
 		PlayerLoginRowDataGatewayRDSTest.class,
 		//PlayerLoginDataBehaviorTest.class,
+		PlayerScoreRecordTest.class,
 		//PlayersForTest
 		ServerRowDataGatewayMockTest.class,
 		ServerRowDataGatewayRDSTest.class,
