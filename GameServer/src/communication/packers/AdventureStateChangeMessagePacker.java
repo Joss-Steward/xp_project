@@ -25,7 +25,7 @@ public class AdventureStateChangeMessagePacker extends MessagePacker
 		int playerID = rpt.getPlayerID();
 		if (this.getAccumulator().getPlayerID() == playerID)
 		{
-			msg = new AdventureStateChangeMessage(rpt.getPlayerID(), rpt.getAdventureID(),
+			msg = new AdventureStateChangeMessage(rpt.getPlayerID(), rpt.getQuestID(), rpt.getAdventureID(),
 					rpt.getAdventureDescription(), rpt.getNewState());
 		}
 		return msg;

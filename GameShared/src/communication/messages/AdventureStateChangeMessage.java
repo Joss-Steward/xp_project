@@ -16,8 +16,9 @@ public class AdventureStateChangeMessage implements Message, Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int adventureID;
 	private int playerID;
+	private int questID;
+	private int adventureID;
 	private String adventureDescription;
 	private AdventureStateEnum newState;
 
@@ -25,6 +26,8 @@ public class AdventureStateChangeMessage implements Message, Serializable
 	/**
 	 * @param playerID
 	 * 		the current player's id
+	 * @param questID 
+	 * 		the quest id
 	 * @param adventureID
 	 * 		the id of the adventure
 	 * @param adventureDescription
@@ -32,10 +35,11 @@ public class AdventureStateChangeMessage implements Message, Serializable
 	 * @param newState
 	 * 		the new state the adventure will be in 
 	 */
-	public AdventureStateChangeMessage(int playerID, int adventureID, String adventureDescription,
+	public AdventureStateChangeMessage(int playerID, int questID, int adventureID, String adventureDescription,
 			AdventureStateEnum newState)
 	{
 		this.playerID = playerID;
+		this.questID = questID;
 		this.adventureID = adventureID;
 		this.adventureDescription = adventureDescription;
 		this.newState = newState;
@@ -72,5 +76,14 @@ public class AdventureStateChangeMessage implements Message, Serializable
 	public int getPlayerID()
 	{
 		return playerID;
+	}
+	
+	/**
+	 * Get the quest's ID
+	 * @return questID
+	 */
+	public int getQuestID()
+	{
+		return questID;
 	}
 }
