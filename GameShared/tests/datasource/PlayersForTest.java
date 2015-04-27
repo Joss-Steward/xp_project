@@ -70,7 +70,13 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	MOCK_NPC3(14, "NPC3","magi", 4, 13, "", "silly.tmx", 1111, null, "silly.tmx", 0, 0);
+	MOCK_NPC3(14, "NPC3","magi", 4, 13, "", "silly.tmx", 1111, null, "silly.tmx", 0, 0),
+	
+	/**
+	 * 
+	 */
+	RYAN(15, "Ryan", "female_a", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0, 13);
+	
 	
 	private int playerID;
 
