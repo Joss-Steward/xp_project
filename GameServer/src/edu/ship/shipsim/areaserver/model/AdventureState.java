@@ -191,4 +191,12 @@ public class AdventureState
 		}
 	}
 
+	/**
+	 * Set needing notification to false
+	 */
+	public void turnOffNotification() 
+	{
+		this.needingNotification = false;
+	}
+
 }
