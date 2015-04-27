@@ -48,9 +48,10 @@ public class PlayerMapperTest extends DatabaseTest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void canFindExisting() throws DatabaseException
+	public void canFindExisting() throws DatabaseException, IllegalQuestChangeException
 	{
 		PlayerMapper pm = getMapper();
 		Player p = pm.getPlayer();
@@ -129,9 +130,11 @@ public class PlayerMapperTest extends DatabaseTest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 */
 	@Test
-	public void persists() throws DatabaseException
+	public void persists() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException
 	{
 		PlayerMapper pm = getMapper();
 		Player p = pm.getPlayer();

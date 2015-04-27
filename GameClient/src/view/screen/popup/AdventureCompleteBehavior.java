@@ -1,6 +1,7 @@
 package view.screen.popup;
 
 import edu.ship.shipsim.client.model.CommandAdventureNotificationComplete;
+import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Handles behavior for adventure being completed
@@ -34,7 +35,7 @@ public class AdventureCompleteBehavior implements PopupBehavior
 	public void clicked() 
 	{
 		CommandAdventureNotificationComplete cmd = new CommandAdventureNotificationComplete(playerID, questID, adventureID);
-		cmd.execute();
+		ModelFacade.getSingleton().queueCommand(cmd);
 	}
 	/**
 	 * @return the player's ID

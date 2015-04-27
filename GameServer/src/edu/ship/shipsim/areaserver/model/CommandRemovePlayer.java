@@ -34,7 +34,7 @@ public class CommandRemovePlayer extends Command
 		try
 		{
 			PlayerManager.getSingleton().removePlayer(playerID);
-		} catch (DatabaseException e)
+		} catch (DatabaseException | IllegalQuestChangeException e)
 		{
 			System.out.println("Had trouble disconnecting player " + playerID);
 			e.printStackTrace();

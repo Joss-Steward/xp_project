@@ -31,7 +31,7 @@ public class CommandPersistPlayer extends Command
 		try
 		{
 			return PlayerManager.getSingleton().persistPlayer(playerID);
-		} catch (DatabaseException e)
+		} catch (DatabaseException | IllegalQuestChangeException e)
 		{
 			return false;
 		}

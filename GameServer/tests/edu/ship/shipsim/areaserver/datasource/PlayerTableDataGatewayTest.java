@@ -2,11 +2,16 @@ package edu.ship.shipsim.areaserver.datasource;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.Test;
 
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
+import datasource.PlayerScoreRecord;
+import datasource.PlayersForTest;
+
 
 /**
  * An abstract class that tests the table data gateways into the Adventure table
@@ -56,6 +61,10 @@ public abstract class PlayerTableDataGatewayTest extends DatabaseTest
 	public void retrieveTopTenHighScores() throws DatabaseException
 	{
 		gateway = getGatewaySingleton();
+		ArrayList<PlayerScoreRecord> results = gateway.getTopTenList();
+		assertEquals(10, results.size());
+		assertEquals(new PlayerScoreRecord(PlayersForTest.MERLIN.getPlayerName(),PlayersForTest.MERLIN.getExperiencePoints()), results.get(0));
+		assertFalse(results.contains(new PlayerScoreRecord(PlayersForTest.LOSER.getPlayerName(),PlayersForTest.LOSER.getExperiencePoints())));
 		
 	}
 

@@ -115,8 +115,9 @@ public class PlayerMapper
 	 * 
 	 * @throws DatabaseException
 	 *             if we can't complete the write
+	 * @throws IllegalQuestChangeException shouldn't
 	 */
-	public void persist() throws DatabaseException
+	public void persist() throws DatabaseException, IllegalQuestChangeException
 	{
 		playerGateway.setAppearanceType(player.getAppearanceType());
 		playerGateway.setMapName(player.getMapName());

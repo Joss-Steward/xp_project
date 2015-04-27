@@ -8,6 +8,7 @@ import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
 import model.QualifiedObservableReport;
 import edu.ship.shipsim.areaserver.model.AdventureState;
+import edu.ship.shipsim.areaserver.model.IllegalQuestChangeException;
 import edu.ship.shipsim.areaserver.model.LevelManager;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.Quest;
@@ -33,8 +34,9 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 	 * Sets local experience points equal to player's experience points
 	 * @param player the player
 	 * @throws DatabaseException shouldn't
+	 * @throws IllegalQuestChangeException When the quest's state is changing to an illegal state
 	 */
-	public UpdatePlayerInformationReport(Player player) throws DatabaseException 
+	public UpdatePlayerInformationReport(Player player) throws DatabaseException, IllegalQuestChangeException 
 	{
 		combineQuest(QuestManager.getSingleton().getQuestList(player.getPlayerID()));
 		this.experiencePoints = player.getExperiencePoints();
@@ -46,8 +48,9 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 	 * Combines a quest description and state and
 	 * adds them to clientPlayerQuestList
 	 * @throws DatabaseException
+	 * @throws IllegalQuestChangeException shouldn't
 	 */
-	private void combineQuest(ArrayList<QuestState> questStateList) throws DatabaseException 
+	private void combineQuest(ArrayList<QuestState> questStateList) throws DatabaseException, IllegalQuestChangeException 
 	{
 		for(QuestState qs: questStateList)
 		{

@@ -63,6 +63,7 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(qList, 20, level);
 		handler.process(msg);
 		assertEquals(2, ModelFacade.getSingleton().getCommandQueueLength());
+		//TODO - wait for facade to process commands
 		CommandOverwriteQuestState cmd = (CommandOverwriteQuestState) ModelFacade.getSingleton().getNextCommand();
 		ArrayList<ClientPlayerQuest> actual = cmd.getClientPlayerQuestList();
 		assertEquals(qList, actual);
@@ -88,11 +89,11 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		LevelRecord level = new LevelRecord("One", 45);
 		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(qList, expectedPoints, level);
 		handler.process(msg);
-		
 		assertEquals(2, ModelFacade.getSingleton().getCommandQueueLength());
 		ModelFacade.getSingleton().getNextCommand();
 		CommandOverwriteExperience cmd = (CommandOverwriteExperience) ModelFacade.getSingleton().getNextCommand();
 		int actualPoints = cmd.getExperiencePoints();
 		assertEquals(expectedPoints, actualPoints);
+		//TODO Make sure the other command got there, too 
 	}
 }
