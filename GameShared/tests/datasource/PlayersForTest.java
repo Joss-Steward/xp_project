@@ -22,23 +22,23 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	NICK(3, "Nick", "magi", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0, 15),
+	NICK(3, "Nick", "magi", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0, 35),
 	/**
 	 * 
 	 */
-	JOSH(4, "Josh", "ninja", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0, 15),
+	JOSH(4, "Josh", "ninja", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0, 25),
 	/**
 	 * 
 	 */
-	MATT(5, "Matt", "male_b", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0, 15),
+	MATT(5, "Matt", "male_b", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0, 12),
 	/**
 	 * 
 	 */
-	STEVE(6, "Steve", "knight_with_straw_hat", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0, 15),
+	STEVE(6, "Steve", "knight_with_straw_hat", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0, 13),
 	/**
 	 * 
 	 */
-	FRANK(7, "Frank", "male_b", 4, 13, "pw", "current.tmx", 1441, null, "current.tmx", 0, 15),
+	FRANK(7, "Frank", "male_b", 4, 13, "pw", "current.tmx", 1441, null, "current.tmx", 0, 13),
 	/**
 	 * 
 	 */
@@ -46,26 +46,31 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	ANDY(9, "Andy", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx", 0, 15),
+	ANDY(9, "Andy", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx", 0, 33),
 	/**
 	 * 
 	 */
-	DAVE(10, "Dave", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx", 0, 15),
+	DAVE(10, "Dave", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx", 0, 12),
 	
 	/**
 	 * 
 	 */
-	MOCK_NPC(11, "NPC1","magi", 4, 13, "", "silly.tmx", 1111, null, "silly.tmx", 0, 15),
+	LOSER(11, "Loser","male_b", 4, 13, "pw", null, 1111, null, "current.tmx", 0, 3),
 	
 	/**
 	 * 
 	 */
-	QUIZBOT(12, "QuizBot","magi", 4, 13, "", "quiznasium.tmx", 1111, null, "quiznasium.tmx", 0, 15),
+	MOCK_NPC(12, "NPC1","magi", 4, 13, "", "silly.tmx", 1111, null, "silly.tmx", 0, 0),
 	
 	/**
 	 * 
 	 */
-	MOCK_NPC3(13, "NPC3","magi", 4, 13, "", "silly.tmx", 1111, null, "silly.tmx", 0, 15);
+	QUIZBOT(13, "QuizBot","magi", 4, 13, "", "quiznasium.tmx", 1111, null, "quiznasium.tmx", 0, 0),
+	
+	/**
+	 * 
+	 */
+	MOCK_NPC3(14, "NPC3","magi", 4, 13, "", "silly.tmx", 1111, null, "silly.tmx", 0, 0);
 	
 	private int playerID;
 
