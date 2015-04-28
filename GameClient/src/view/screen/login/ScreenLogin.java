@@ -68,7 +68,7 @@ public class ScreenLogin extends ScreenBasic
 		instruction.setFontScale((float) 1.5);
 		Label moveInstruction = new Label("Press Arrow Keys: Movement", skin);
 		Label qInstruction = new Label("Press Q: Quest & Adventure Screen", skin);
-		//Label hInstruction = new Label("Press H: High Score & Rank Screen", skin);
+		Label hInstruction = new Label("Press H: High Score & Rank Screen", skin);
 		Label enterInstruction = new Label("Press Enter: Activates/Deactivates Chat Window", skin);
 		
 
@@ -86,7 +86,7 @@ public class ScreenLogin extends ScreenBasic
 
 		Label flagLabel = new Label(this.flagMsg, skin);
 		initializeTableContents(nameLabel, pwLabel, connectingLabel, flagLabel);
-		initializeInstructionTableContents(instruction, moveInstruction, qInstruction, enterInstruction);
+		initializeInstructionTableContents(instruction, moveInstruction, qInstruction, hInstruction, enterInstruction);
 		stage.addActor(table);
 		stage.addActor(instructionTable);
 		
@@ -182,7 +182,7 @@ public class ScreenLogin extends ScreenBasic
 	}
 	
 	private void initializeInstructionTableContents(Label instruction, Label moveInstruction,
-			Label qInstruction, Label enterInstruction)
+			Label qInstruction, Label hInstruction, Label enterInstruction)
 			{
 				instructionTable = new Table();
 				instructionTable.setFillParent(true);
@@ -197,6 +197,9 @@ public class ScreenLogin extends ScreenBasic
 				instructionTable.row();
 				instructionTable.add(qInstruction).left();
 				
+				instructionTable.row();
+				instructionTable.add(hInstruction).left();
+		
 				instructionTable.row();
 				instructionTable.add(enterInstruction).left();
 				
