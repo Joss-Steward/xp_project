@@ -54,7 +54,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	
 	private final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
-	boolean showing = true;
+	boolean qaScreenShowing = true;
 
 	private ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
 
@@ -83,23 +83,23 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 * 
 	 * @return showing ; is there quests currently displaying on the screen
 	 */
-	public boolean isShowing()
+	public boolean isQAScreenShowing()
 	{
-		return showing;
+		return qaScreenShowing;
 	}
 
 	/**
 	 * Toggle the invisibility of the quest list
 	 */
-	public void toggleVisible()
+	public void toggleQAScreenVisible()
 	{
-		if (isShowing())
+		if (isQAScreenShowing())
 		{
-			showing = false;
+			qaScreenShowing = false;
 			this.addAction(Actions.moveTo(-this.getWidth(), 0, .3f));
 		} else
 		{
-			showing = true;
+			qaScreenShowing = true;
 			this.addAction(Actions.moveTo(0, 0, .3f));
 
 			CommandSendQuestState cmd = new CommandSendQuestState();
@@ -122,7 +122,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 		this.addActor(questTable);
 		this.addActor(adventureTable);
 		
-		toggleVisible();
+		toggleQAScreenVisible();
 	}
 
 	/**
@@ -332,14 +332,14 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	/**
 	 * Set the visibility of the QAScreen to the given boolean
 	 * 
-	 * @param statement
+	 * @param b
 	 *            boolean given for showing
 	 */
-	public void setVisibility(boolean statement)
+	public void setQAScreenVisibility(boolean b)
 	{
-		showing = statement;
+		qaScreenShowing = b;
 	}
-
+	
 	private NinePatch getNinePatch(String fileName)
 	{
 		// get the image
