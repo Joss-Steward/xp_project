@@ -49,6 +49,7 @@ import edu.ship.shipsim.client.model.reports.LoginFailedReportTest;
 import edu.ship.shipsim.client.model.reports.LoginInitiatedReportTest;
 import edu.ship.shipsim.client.model.reports.NewMapReportTest;
 import edu.ship.shipsim.client.model.reports.PlayerMovedReportTest;
+import edu.ship.shipsim.client.model.reports.QuestStateChangeReportTest;
 import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 
 /**
@@ -114,6 +115,7 @@ import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 		LoginInitiatedReportTest.class, 
 		NewMapReportTest.class,
 		PlayerMovedReportTest.class,
+		QuestStateChangeReportTest.class,
 		QuestStateReportTest.class,
 
 		// view.player
