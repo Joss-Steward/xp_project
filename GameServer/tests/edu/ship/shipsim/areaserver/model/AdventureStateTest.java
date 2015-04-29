@@ -169,7 +169,7 @@ public class AdventureStateTest extends DatabaseTest {
 		adventure.complete();
 		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
 		assertFalse(adventure.isNeedingNotification());
-		assertEquals(QuestStateEnum.FULFILLED, questState.getStateValue());
+		assertEquals(QuestStateEnum.TRIGGERED, questState.getStateValue());
 		assertTrue(questState.isNeedingNotification());
 	}
 

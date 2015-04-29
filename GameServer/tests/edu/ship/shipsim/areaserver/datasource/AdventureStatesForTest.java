@@ -26,7 +26,11 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST2_ADV2(1, 2, 2, AdventureStateEnum.PENDING, false),
+	PLAYER1_QUEST2_ADV2(1, 2, 2, AdventureStateEnum.COMPLETED, false),
+	/**
+	 * 
+	 */
+	PLAYER1_QUEST2_ADV3(1, 2, 3, AdventureStateEnum.PENDING, false),
 	/**
 	 * 
 	 */
@@ -34,9 +38,15 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
+	PLAYER1_QUEST3_ADV2(1, 3, 2, AdventureStateEnum.COMPLETED, false),
+	/**
+	 * 
+	 */
+	PLAYER1_QUEST3_ADV3(1, 3, 3, AdventureStateEnum.PENDING, false),
+	/**
+	 * 
+	 */
 	PLAYER2_QUEST1_ADV1(2, 1, 1, AdventureStateEnum.HIDDEN, false),
-
-
 	/**
 	 * 
 	 */

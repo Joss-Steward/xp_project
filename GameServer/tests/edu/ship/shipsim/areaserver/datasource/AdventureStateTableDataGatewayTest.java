@@ -77,7 +77,7 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 		 gateway = getGateway();
 		ArrayList<AdventureStateRecord> records = gateway
 				.getPendingAdventuresForPlayer(1);
-		assertEquals(2, records.size());
+		assertEquals(3, records.size());
 		AdventureStateRecord record = records.get(0);
 		// the records could be in either order
 		AdventureStatesForTest first = AdventureStatesForTest.PLAYER1_QUEST2_ADV2;
@@ -131,7 +131,7 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	{
 		gateway = getGateway();
 		ArrayList<AdventureStateRecord> records = gateway.getAdventureStates(1, 2);
-		assertEquals(2, records.size());
+		assertEquals(3, records.size());
 		AdventureStateRecord record = records.get(0);
 		// the records could be in either order
 		AdventureStatesForTest first = AdventureStatesForTest.PLAYER1_QUEST2_ADV1;
