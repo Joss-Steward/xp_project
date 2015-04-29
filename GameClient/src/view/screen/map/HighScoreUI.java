@@ -9,6 +9,7 @@ import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -35,6 +36,8 @@ public class HighScoreUI extends Group implements QualifiedObserver
 	
 	boolean HS_ScreenShowing = true;
 	
+	private Label header;
+	
 	private Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 	
 	/**
@@ -42,8 +45,8 @@ public class HighScoreUI extends Group implements QualifiedObserver
 	 */
 	public HighScoreUI()
 	{
+		this.show();
 		setUpListening();
-		setUpUI();
 	}
 	
 	/**
@@ -51,29 +54,17 @@ public class HighScoreUI extends Group implements QualifiedObserver
 	 */
 	public void setUpListening()
 	{
-		QualifiedObservableConnector cm = QualifiedObservableConnector
-				.getSingleton();
+		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
 		cm.registerObserver(this, HighScoreResponseReport.class);
 
 	}
-
+	
 	/**
-	 * set up the UI to show the top 10 players' XP points
+	 * @return the screen showing state
 	 */
-	private void setUpUI()
+	public boolean isHighScoreScreenShowing()
 	{
-		this.setSize(Gdx.graphics.getWidth()*.25f, Gdx.graphics.getHeight());
-		highScoreTable.add(new Label("Not Loaded", skin)).colspan(2).center();
-		highScoreTable.row();
-		highScoreTable = new Table();
-		highScoreTable.setFillParent(true);
-		highScoreTable.top().left();
-		
-		
-		this.addActor(highScoreTable);
-		
-		toggleHSScreenVisible();
-
+		return HS_ScreenShowing;
 	}
 	
 	/**
@@ -96,11 +87,36 @@ public class HighScoreUI extends Group implements QualifiedObserver
 	}
 
 	/**
-	 * @return the screen showing state
+	 * set up the UI to show the top 10 players' XP points
 	 */
-	public boolean isHighScoreScreenShowing()
+	public void show()
 	{
-		return HS_ScreenShowing;
+		this.setSize(Gdx.graphics.getWidth()*.25f, Gdx.graphics.getHeight());
+		
+		initializeTableContents();
+		
+		this.addActor(highScoreTable);
+		
+		toggleHSScreenVisible();
+
+	}
+	
+	private void initializeTableContents()
+	{
+		header = new Label("Top 10", skin);
+		// Table setup
+		highScoreTable = new Table();
+		highScoreTable.setFillParent(true);
+		highScoreTable.top().left();
+		highScoreTable.setBackground(new NinePatchDrawable(getNinePatch("data/backgroundHS.9.png")));
+		highScoreTable.add(header).expandX();
+		
+		// Clear table
+		highScoreTable.clearChildren();
+		
+		// Set header
+		highScoreTable.add(header).expandX();
+		highScoreTable.row();
 	}
 
 	/** (Javadoc)
@@ -114,25 +130,26 @@ public class HighScoreUI extends Group implements QualifiedObserver
 			HighScoreResponseReport rep = (HighScoreResponseReport) report;
 			
 			ArrayList<PlayerScoreRecord> list = rep.getScoreList();
-			updateHighScoreList(list);
+			updateTable(list);
 		}
 		
 		
 	}
-
-	private void updateHighScoreList(ArrayList<PlayerScoreRecord> list)
+	private void updateTable(ArrayList<PlayerScoreRecord> list)
 	{
-		highScoreTable.clearChildren();
 		highScoreTable.setBackground(new NinePatchDrawable(getNinePatch("data/backgroundHS.9.png")));
-		
-		highScoreTable.add(new Label("Top 10 List", skin)).colspan(2).center();
+		highScoreTable.clearChildren();
+		highScoreTable.add(header).colspan(3).center();
 		highScoreTable.row();
 		
 		for(int i = 1; i <= 10; i++)
 		{
-			highScoreTable.add(new Label(""+ i + ". ",skin));
-			highScoreTable.add(new Label(list.get(i-1).getPlayerName(), skin));
-			highScoreTable.add(new Label(""+list.get(i-1).getExperiencePoints(),skin));
+			String playerName = list.get(i-1).getPlayerName();
+			highScoreTable.add(new Label(i + ".",skin)).left().padRight((float) .5);
+			highScoreTable.add(new Label(playerName, skin)).padRight(1);
+			Label xp = new Label("    " + list.get(i-1).getExperiencePoints(), skin);
+			xp.setColor(Color.GREEN);
+			highScoreTable.add(xp).padRight((float) .5);
 			highScoreTable.row();
 		}
 

@@ -1,5 +1,7 @@
 package datasource;
 
+import java.io.Serializable;
+
 /**
  * A data transfer object that holds information about a player's score. Used
  * for the high score list. Comparability is based on the value of the
@@ -8,8 +10,13 @@ package datasource;
  * @author Merlin
  *
  */
-public class PlayerScoreRecord implements Comparable<PlayerScoreRecord>
+public class PlayerScoreRecord implements Comparable<PlayerScoreRecord>, Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String playerName;
 	private int experiencePoints;
 
