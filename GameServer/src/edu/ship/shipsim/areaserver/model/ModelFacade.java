@@ -32,14 +32,14 @@ public class ModelFacade
 	 */
 	public synchronized static void resetSingleton()
 	{
-		if(singleton != null)
+		if (singleton != null)
 		{
-			while (singleton.queueSize() > 0)
+			while (singleton.hasCommandsPending())
 			{
-				try 
+				try
 				{
 					Thread.sleep(100);
-				} catch (InterruptedException e) 
+				} catch (InterruptedException e)
 				{
 					e.printStackTrace();
 				}
@@ -49,7 +49,12 @@ public class ModelFacade
 	}
 
 	private InformationQueue commandQueue;
+	private boolean commandsPending;
 
+	public boolean hasCommandsPending()
+	{
+		return commandsPending;
+	}
 	/**
 	 * Make the default constructor private
 	 */
@@ -69,18 +74,25 @@ public class ModelFacade
 		@Override
 		public void run()
 		{
-			while (commandQueue.getQueueSize() > 0)
+			synchronized (commandQueue)
 			{
-				Command cmd;
-				try
+				while (commandQueue.getQueueSize() > 0)
 				{
-					cmd = (Command) commandQueue.getInfoPacket();
-					cmd.execute();
-				} catch (InterruptedException e)
-				{
-					e.printStackTrace();
-				}
+					Command cmd;
+					try
+					{
+						cmd = (Command) commandQueue.getInfoPacket();
+						cmd.execute();
+						if (commandQueue.getQueueSize() == 0)
+						{
+							commandsPending = false;
+						}
+					} catch (InterruptedException e)
+					{
+						e.printStackTrace();
+					}
 
+				}
 			}
 		}
 
@@ -94,7 +106,11 @@ public class ModelFacade
 	 */
 	public void queueCommand(Command cmd)
 	{
-		commandQueue.queueInfoPacket(cmd);
+		synchronized (commandQueue)
+		{
+			commandsPending = true;
+			commandQueue.queueInfoPacket(cmd);
+		}
 	}
 
 	/**

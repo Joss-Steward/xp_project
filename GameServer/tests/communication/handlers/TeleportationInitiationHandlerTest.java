@@ -75,7 +75,7 @@ public class TeleportationInitiationHandlerTest
 		EasyMock.replay(obs);
 		
 		handler.process(msg);
-		while (ModelFacade.getSingleton().queueSize() > 0)
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}
@@ -91,7 +91,7 @@ public class TeleportationInitiationHandlerTest
 		// make sure we queued the appropriate response
 		ArrayList<Message> queue = accum.getPendingMsgs();
 		assertEquals(1, queue.size());
-		while (ModelFacade.getSingleton().queueSize() > 0)
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}
