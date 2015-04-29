@@ -91,6 +91,10 @@ public class TeleportationInitiationHandlerTest
 		// make sure we queued the appropriate response
 		ArrayList<Message> queue = accum.getPendingMsgs();
 		assertEquals(1, queue.size());
+		while (ModelFacade.getSingleton().queueSize() > 0)
+		{
+			Thread.sleep(100);
+		}
 		TeleportationContinuationMessage response = (TeleportationContinuationMessage) queue
 				.get(0);
 		assertEquals(ServersForTest.FIRST_SERVER.getMapName(), response.getMapName());

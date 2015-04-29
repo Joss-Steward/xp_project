@@ -18,11 +18,12 @@ public class AdventureRecordTest
 	@Test
 	public void constructAnAdventureRecord()
 	{
-		AdventureRecord record = new AdventureRecord (1, 1, "Adventure Description 1", 42);
+		AdventureRecord record = new AdventureRecord (1, 1, "Adventure Description 1", 42, "Lab Instructor");
 		assertEquals(1, record.getAdventureID());
 		assertEquals("Adventure Description 1", record.getAdventureDescription());
 		assertEquals(1, record.getQuestID());
 		assertEquals(42, record.getExperiencePointsGained());
+		assertEquals("Lab Instructor", record.getSignatureSpecification());
 	}
 	
 	/**

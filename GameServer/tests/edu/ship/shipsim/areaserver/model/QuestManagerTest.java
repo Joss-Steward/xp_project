@@ -2,16 +2,19 @@ package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.OptionsManager;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import data.Position;
 import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
+import datasource.DatabaseTest;
 import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
 import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
@@ -26,7 +29,7 @@ import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
  * @author lavonnediller
  *
  */
-public class QuestManagerTest
+public class QuestManagerTest extends DatabaseTest
 {
 
 	/**
@@ -43,6 +46,18 @@ public class QuestManagerTest
 		QuestManager.getSingleton();
 	}
 
+	/**
+	 * Make sure any static information is cleaned up between tests
+	 * @throws SQLException 
+	 * @throws DatabaseException 
+	 */
+	@After
+	public void cleanup() throws DatabaseException, SQLException
+	{
+		super.tearDown();
+		QuestStateTableDataGatewayMock.getSingleton().resetData();
+	}
+	
 	/**
 	 * Test initializing a quest manager
 	 */
@@ -279,9 +294,10 @@ public class QuestManagerTest
 
 	/**
 	 * Test simple functionality of setting quests to a player.
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void testAddQuests()
+	public void testAddQuests() throws IllegalQuestChangeException
 	{
 		Player p = playerManager.addPlayer(1);
 		QuestState quest = new QuestState(15, QuestStateEnum.AVAILABLE, false);
@@ -299,9 +315,10 @@ public class QuestManagerTest
 	 * 
 	 * @throws DatabaseException
 	 *             QuestManager works with DB
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void testPlayerTriggerOnMovement() throws DatabaseException
+	public void testPlayerTriggerOnMovement() throws DatabaseException, IllegalQuestChangeException
 	{
 		Position pos1 = new Position(1, 1);
 		Position pos2 = new Position(4, 3);
@@ -328,35 +345,39 @@ public class QuestManagerTest
 
 	/**
 	 * Make sure quest is triggered within player
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException thrown if illegal state change
+	 * @throws DatabaseException the state changed illegally
 	 */
 	@Test
-	public void testPlayerTriggersQuest()
+	public void testPlayerTriggersQuest() throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
 	{
-		Player p = playerManager.addPlayer(1);
+		Player p = playerManager.addPlayer(2);
 		assertEquals(
-				QuestStatesForTest.PLAYER1_QUEST1.getState(),
+				QuestStatesForTest.PLAYER2_QUEST1.getState(),
 				QuestManager
 						.getSingleton()
 						.getQuestStateByID(p.getPlayerID(),
-								QuestStatesForTest.PLAYER1_QUEST1.getQuestID())
+								QuestStatesForTest.PLAYER2_QUEST1.getQuestID())
 						.getStateValue());
 
-		QuestManager.getSingleton().triggerQuest(1,
-				QuestStatesForTest.PLAYER1_QUEST1.getQuestID());
+		QuestManager.getSingleton().triggerQuest(2,
+				QuestStatesForTest.PLAYER2_QUEST1.getQuestID());
 		assertEquals(
 				QuestStateEnum.TRIGGERED,
 				QuestManager
 						.getSingleton()
 						.getQuestStateByID(p.getPlayerID(),
-								QuestStatesForTest.PLAYER1_QUEST1.getQuestID())
+								QuestStatesForTest.PLAYER2_QUEST1.getQuestID())
 						.getStateValue());
 	}
 
 	/**
 	 * When a player moves to the right place, we should trigger the quest
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void triggersOnPlayerMovement()
+	public void triggersOnPlayerMovement() throws IllegalQuestChangeException
 	{
 		Player p = playerManager.addPlayer(1);
 		p.setPlayerPosition(QuestsForTest.ONE_BIG_QUEST.getPosition());
@@ -397,9 +418,10 @@ public class QuestManagerTest
 	 * Should be able to change the state of a quest to fulfilled if enough 
 	 * adventures are completed.
 	 * @throws DatabaseException shouldn't
+	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 */
 	@Test
-	public void testFulfillQuest() throws DatabaseException 
+	public void testFulfillQuest() throws DatabaseException, IllegalQuestChangeException 
 	{
 		int playerID = 2;
 		int questID = 4;
@@ -413,10 +435,12 @@ public class QuestManagerTest
 	
 	/**
 	 * @throws DatabaseException shouldn't
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 * 
 	 */
 	@Test
-	public void testCompletingAdventure() throws DatabaseException
+	public void testCompletingAdventure() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException
 	{
 		int playerID = 2;
 		int questID = 4;
@@ -438,9 +462,11 @@ public class QuestManagerTest
 	
 	/**
 	 * Tests that we finishing a quest changes its state to finished
+	 * @throws IllegalQuestChangeException thrown if illegal state change
+	 * @throws DatabaseException the state changed illegally
 	 */
 	@Test
-	public void testFinishQuest()
+	public void testFinishQuest() throws IllegalQuestChangeException, DatabaseException
 	{
 		int playerID = 1;
 		int questID = 3;
@@ -455,10 +481,12 @@ public class QuestManagerTest
 	
 	/**
 	 * @throws DatabaseException shouldn't
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 *  
 	 */
 	@Test
-	public void testCompleteAdventure() throws DatabaseException
+	public void testCompleteAdventure() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException
 	{
 		int playerID = 1;
 		int questID = 3;

@@ -37,13 +37,15 @@ public class QuestStateTest extends DatabaseTest
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton(true);
 		QuestManager.resetSingleton();
+		QualifiedObservableConnector.resetSingleton();
 	}
-
+	
 	/**
 	 * Test creating a very simple quest, and retreiving its information
+	 * @throws IllegalQuestChangeException shouldn't
 	 */
 	@Test
-	public void testInitialize()
+	public void testInitialize() throws IllegalQuestChangeException
 	{
 		QuestState qs = new QuestState(1, QuestStateEnum.AVAILABLE, true);
 
@@ -73,11 +75,14 @@ public class QuestStateTest extends DatabaseTest
 
 	/**
 	 * Test the change in quest's state when triggered
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException thrown if illegal state change
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void testTriggerQuest()
+	public void testTriggerQuest() throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
 	{
-		QuestState quest = new QuestState(1, QuestStateEnum.AVAILABLE, false);
+		QuestState quest = new QuestState(1, QuestStateEnum.AVAILABLE, true);
 		quest.trigger();
 		assertEquals(QuestStateEnum.TRIGGERED, quest.getStateValue());
 		assertTrue(quest.isNeedingNotification());
@@ -85,9 +90,12 @@ public class QuestStateTest extends DatabaseTest
 
 	/**
 	 * Test to make sure you can't trigger finished quests
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException thrown if illegal state change
+	 * @throws DatabaseException shouldn't
 	 */
-	@Test
-	public void testTriggerFinishedQuest()
+	@Test(expected=IllegalQuestChangeException.class)
+	public void testTriggerFinishedQuest() throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
 	{
 		QuestState quest = new QuestState(1, QuestStateEnum.FINISHED, false);
 		quest.trigger();
@@ -97,9 +105,12 @@ public class QuestStateTest extends DatabaseTest
 
 	/**
 	 * Test that when a quest is triggered, its adventures get triggered as well
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException thrown if illegal state change
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void testTriggerQuestsAdventures()
+	public void testTriggerQuestsAdventures() throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
 	{
 		QuestState qs = new QuestState(1, QuestStateEnum.AVAILABLE, false);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
@@ -131,9 +142,10 @@ public class QuestStateTest extends DatabaseTest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
+	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 */
 	@Test
-	public void testFulfilling() throws DatabaseException
+	public void testFulfilling() throws DatabaseException, IllegalQuestChangeException
 	{
 		
 		PlayerManager.getSingleton().addPlayer(2);
@@ -185,9 +197,10 @@ public class QuestStateTest extends DatabaseTest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
+	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 */
 	@Test
-	public void testFulfillingRepeatedly() throws DatabaseException
+	public void testFulfillingRepeatedly() throws DatabaseException, IllegalQuestChangeException
 	{
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
@@ -212,5 +225,18 @@ public class QuestStateTest extends DatabaseTest
 		assertEquals(QuestStateEnum.FULFILLED, qs.getStateValue());
 		assertFalse(qs.isNeedingNotification());
 		EasyMock.verify(obs);
+	}
+	
+	/**
+	 * Test that the new change state method works as intended.
+	 * @throws IllegalQuestChangeException thrown if changing to a wrong state
+	 * @throws DatabaseException shouldn't 
+	 */
+	@Test
+	public void testChangeStateToTriggered() throws IllegalQuestChangeException, DatabaseException 
+	{
+		QuestState quest = new QuestState(1, QuestStateEnum.HIDDEN, false);
+		quest.changeState(QuestStateEnum.AVAILABLE, false);
+		assertEquals(quest.getStateValue(), QuestStateEnum.AVAILABLE);
 	}
 }

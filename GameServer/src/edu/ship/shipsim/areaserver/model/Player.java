@@ -146,8 +146,9 @@ public class Player
 	 * store the information into the data source
 	 * 
 	 * @throws DatabaseException if the data source fails to complete the persistance
+	 * @throws IllegalQuestChangeException shouldn't
 	 */
-	public void persist() throws DatabaseException
+	public void persist() throws DatabaseException, IllegalQuestChangeException
 	{
 		playerMapper.persist();
 	}

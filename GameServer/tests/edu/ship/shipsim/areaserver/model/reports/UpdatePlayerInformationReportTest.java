@@ -18,6 +18,7 @@ import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
 import edu.ship.shipsim.areaserver.datasource.LevelsForTest;
 import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
 import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
+import edu.ship.shipsim.areaserver.model.IllegalQuestChangeException;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.QuestManager;
@@ -44,9 +45,10 @@ public class UpdatePlayerInformationReportTest {
 	/**
 	 * Tests that we can combine a quest description and state
 	 * @throws DatabaseException shouldn't
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void testCombineQuestDescriptionAndState() throws DatabaseException
+	public void testCombineQuestDescriptionAndState() throws DatabaseException, IllegalQuestChangeException
 	{
 		Player john = PlayerManager.getSingleton().addPlayer(1);
 		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(john);
@@ -74,9 +76,10 @@ public class UpdatePlayerInformationReportTest {
 	/**
 	 * Tests that we can combine a quest description and state
 	 * @throws DatabaseException shouldn't
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void testCombineAdventureDescriptionAndState() throws DatabaseException
+	public void testCombineAdventureDescriptionAndState() throws DatabaseException, IllegalQuestChangeException
 	{
 		Player john = PlayerManager.getSingleton().addPlayer(1);
 		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(john);
@@ -131,9 +134,10 @@ public class UpdatePlayerInformationReportTest {
 	 * Tests that we can report a players experience points
 	 * and their levels description and the points level requires
 	 * @throws DatabaseException shouldn't
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void testExperienceAndLevelPoints() throws DatabaseException
+	public void testExperienceAndLevelPoints() throws DatabaseException, IllegalQuestChangeException
 	{
 		Player john = PlayerManager.getSingleton().addPlayer(1);
 		

@@ -2,6 +2,7 @@ package edu.ship.shipsim.areaserver.datasource;
 
 /**
  * Data Transfer Object for the Adventure Data Gateway to deliver records.
+ * 
  * @author merlin
  *
  */
@@ -10,25 +11,36 @@ public final class AdventureRecord
 	private final int adventureID;
 	private final String adventureDescription;
 	private final int questID;
-	private int experiencePointsGained;
-	
+	private final int experiencePointsGained;
+	private final String signatureSpecification;
+
 	/**
 	 * Create it
-	 * @param questID the unique ID of the quest that contains the adventure
-	 * @param adventureID the adventure's unique ID
-	 * @param adventureDescription the adventure's description
-	 * @param experiencePointsGained TODO
+	 * 
+	 * @param questID
+	 *            the unique ID of the quest that contains the adventure
+	 * @param adventureID
+	 *            the adventure's unique ID
+	 * @param adventureDescription
+	 *            the adventure's description
+	 * @param experiencePointsGained
+	 *            the number of points earned by completing this adventure
+	 * @param signatureSpecification
+	 *            the rules about who can sign for the adventure if it is an outside adventure
 	 */
-	public AdventureRecord(int questID, int adventureID, String adventureDescription, int experiencePointsGained)
+	public AdventureRecord(int questID, int adventureID, String adventureDescription,
+			int experiencePointsGained, String signatureSpecification)
 	{
 		this.adventureID = adventureID;
 		this.adventureDescription = adventureDescription;
 		this.questID = questID;
 		this.experiencePointsGained = experiencePointsGained;
+		this.signatureSpecification = signatureSpecification;
 	}
 
 	/**
 	 * retrieve the adventure's ID
+	 * 
 	 * @return adventureID the adventure's unique ID
 	 */
 	public int getAdventureID()
@@ -38,6 +50,7 @@ public final class AdventureRecord
 
 	/**
 	 * retrieve the adventures description
+	 * 
 	 * @return adventureDescription
 	 */
 	public String getAdventureDescription()
@@ -47,19 +60,21 @@ public final class AdventureRecord
 
 	/**
 	 * retrieve the quest's ID
+	 * 
 	 * @return questID the unique ID for the adventure's quest
 	 */
 	public int getQuestID()
 	{
 		return questID;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString()
 	{
-		return "Quest " + questID + ":     " + "Adventure  " + adventureID + "      " + adventureDescription;
+		return "Quest " + questID + ":     " + "Adventure  " + adventureID + "      "
+				+ adventureDescription;
 	}
 
 	/**
@@ -73,7 +88,12 @@ public final class AdventureRecord
 		result = prime * result
 				+ ((adventureDescription == null) ? 0 : adventureDescription.hashCode());
 		result = prime * result + adventureID;
+		result = prime * result + experiencePointsGained;
 		result = prime * result + questID;
+		result = prime
+				* result
+				+ ((signatureSpecification == null) ? 0 : signatureSpecification
+						.hashCode());
 		return result;
 	}
 
@@ -98,7 +118,15 @@ public final class AdventureRecord
 			return false;
 		if (adventureID != other.adventureID)
 			return false;
+		if (experiencePointsGained != other.experiencePointsGained)
+			return false;
 		if (questID != other.questID)
+			return false;
+		if (signatureSpecification == null)
+		{
+			if (other.signatureSpecification != null)
+				return false;
+		} else if (!signatureSpecification.equals(other.signatureSpecification))
 			return false;
 		return true;
 	}
@@ -109,5 +137,14 @@ public final class AdventureRecord
 	public int getExperiencePointsGained()
 	{
 		return experiencePointsGained;
+	}
+
+	/**
+	 * @return the rules about who has to sign for this if it is an outside
+	 *         adventure
+	 */
+	public String getSignatureSpecification()
+	{
+		return signatureSpecification;
 	}
 }

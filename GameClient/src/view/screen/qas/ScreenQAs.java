@@ -9,6 +9,7 @@ import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -46,11 +47,14 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	private Texture legend;
 	
 	private Label q_header;
+	private Label adv_header;
+	
 	private float fontScale = (float) 1.25;
 
+	
 	private final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
-	boolean showing = true;
+	boolean qaScreenShowing = true;
 
 	private ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
 
@@ -79,23 +83,23 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 * 
 	 * @return showing ; is there quests currently displaying on the screen
 	 */
-	public boolean isShowing()
+	public boolean isQAScreenShowing()
 	{
-		return showing;
+		return qaScreenShowing;
 	}
 
 	/**
 	 * Toggle the invisibility of the quest list
 	 */
-	public void toggleVisible()
+	public void toggleQAScreenVisible()
 	{
-		if (isShowing())
+		if (isQAScreenShowing())
 		{
-			showing = false;
+			qaScreenShowing = false;
 			this.addAction(Actions.moveTo(-this.getWidth(), 0, .3f));
 		} else
 		{
-			showing = true;
+			qaScreenShowing = true;
 			this.addAction(Actions.moveTo(0, 0, .3f));
 
 			CommandSendQuestState cmd = new CommandSendQuestState();
@@ -118,7 +122,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 		this.addActor(questTable);
 		this.addActor(adventureTable);
 		
-		toggleVisible();
+		toggleQAScreenVisible();
 	}
 
 	/**
@@ -130,8 +134,9 @@ public class ScreenQAs extends Group implements QualifiedObserver
 		// Table Setup
 		adventureTable = new Table();
 		adventureTable.setFillParent(true);
-		
-		adventureTable.center().top();
+		adv_header = new Label("", skin);
+		adv_header.setFontScale(fontScale);
+		adventureTable.right().top();
 		clearAdventureTable();
 	}
 
@@ -144,8 +149,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 */
 	public void updateTable(ArrayList<ClientPlayerQuest> quests)
 	{
-		questTable.setBackground(new NinePatchDrawable(
-				getNinePatch("data/background.9.png")));
+		questTable.setBackground(new NinePatchDrawable(getNinePatch("data/background.9.png")));
 		questTable.clearChildren();
 		questTable.add(q_header).colspan(2).center();		
 		questTable.row();
@@ -219,13 +223,15 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 * @param description
 	 *            of the adventure
 	 */
-	private void buildAdvRow(Texture state, String desc)
+	private void buildAdvRow(Texture state, String desc, Integer reward)
 	{
+		Label t_reward = new Label("XP: "+reward+" ",skin);
+		Label temp = new Label(desc+"  ",skin);
+		t_reward.setColor(Color.GREEN);
+		t_reward.setScale((float)1.1);
 		adventureTable.add(new Image(state));
-		TextButton temp = new TextButton(desc,skin);
-		//Label temp = new Label(desc,skin);
-		//temp.setFontScale(fontScale);
 		adventureTable.add(temp);
+		adventureTable.add(t_reward);
 		adventureTable.row();
 	}
 
@@ -262,18 +268,23 @@ public class ScreenQAs extends Group implements QualifiedObserver
 			@Override
 			public void clicked(InputEvent evt, float x, float y)
 			{
+				int num_left = quest.getAdventuresToFulfillment();
 				clearAdventureTable();
+				
 				for (ClientPlayerAdventure a : quest.getAdventureList())
 				{
 					if (a.getAdventureState().equals(
 							AdventureStateEnum.PENDING))
 					{
-						buildAdvRow(triggered, a.getAdventureDescription());
+						buildAdvRow(triggered, a.getAdventureDescription(),a.getAdventureXP());
 					} else
 					{
-						buildAdvRow(complete, a.getAdventureDescription());
+						buildAdvRow(complete, a.getAdventureDescription(),a.getAdventureXP());
+						num_left--;
 					}
 				}
+				q_header.setText(quest.getQuestDescription()+" XP: "+quest.getExperiencePointsGained());
+				adv_header.setText(""+num_left+ " to Fulfillment");
 			}
 		});
 
@@ -286,11 +297,9 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 */
 	private void clearAdventureTable()
 	{
-		Label header = new Label("Adventures", skin);
-		header.setFontScale(fontScale);
 		adventureTable.clearChildren();
 		// Set Header
-		adventureTable.add(header).colspan(2).center();
+		adventureTable.add(adv_header).colspan(2).center();
 		adventureTable.row();
 	}
 
@@ -299,11 +308,9 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 */
 	private void clearQuestTable()
 	{
-		Label header = new Label("Quests", skin);
-		header.setFontScale(fontScale);
 		questTable.clearChildren();
 		// Set Header
-		questTable.add(header).colspan(2).center();
+		questTable.add(q_header).colspan(2).center();
 		questTable.row();
 	}
 
@@ -325,14 +332,14 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	/**
 	 * Set the visibility of the QAScreen to the given boolean
 	 * 
-	 * @param statement
+	 * @param b
 	 *            boolean given for showing
 	 */
-	public void setVisibility(boolean statement)
+	public void setQAScreenVisibility(boolean b)
 	{
-		showing = statement;
+		qaScreenShowing = b;
 	}
-
+	
 	private NinePatch getNinePatch(String fileName)
 	{
 		// get the image

@@ -1,5 +1,8 @@
 package edu.ship.shipsim.client.model;
 
+import model.QualifiedObservableConnector;
+import edu.ship.shipsim.client.model.reports.AdventureNotifcationCompleteReport;
+
 /**
  * @author Ryan
  *
@@ -27,11 +30,9 @@ public class CommandAdventureNotificationComplete extends Command
 	 */
 	@Override
 	public boolean execute() 
-	{
-		System.out.println("Got here");
-		
-		// TODO Create a AdventureNotificationCompleteReport
-		
+	{		
+		AdventureNotifcationCompleteReport report = new AdventureNotifcationCompleteReport(playerID, questID, adventureID);
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 		return true;
 	}
 	

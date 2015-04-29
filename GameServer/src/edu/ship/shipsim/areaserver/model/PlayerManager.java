@@ -10,6 +10,9 @@ import model.PlayerConnection;
 import model.PlayerLogin;
 import model.QualifiedObservableConnector;
 import datasource.DatabaseException;
+import datasource.PlayerScoreRecord;
+import edu.ship.shipsim.areaserver.datasource.PlayerTableDataGatewayMock;
+import edu.ship.shipsim.areaserver.datasource.PlayerTableDataGatewayRDS;
 import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerLeaveReport;
@@ -102,8 +105,9 @@ public class PlayerManager
 	 * @return the player object that we added
 	 * @throws DatabaseException
 	 *             if the player's pin was not correct
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
-	public Player addPlayer(int playerID, double pin) throws DatabaseException
+	public Player addPlayer(int playerID, double pin) throws DatabaseException, IllegalQuestChangeException
 	{
 
 		PlayerMapper pm = new PlayerMapper(playerID);
@@ -234,8 +238,9 @@ public class PlayerManager
 	 * @return Success status of persistence
 	 * @throws DatabaseException
 	 *             IF we have trouble persisting to the data source
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
-	public boolean persistPlayer(int playerID) throws DatabaseException
+	public boolean persistPlayer(int playerID) throws DatabaseException, IllegalQuestChangeException
 	{
 
 		Player player = this.getPlayerFromID(playerID);
@@ -255,8 +260,9 @@ public class PlayerManager
 	 *            the ID of the player we should remove
 	 * @throws DatabaseException
 	 *             if we can't persist the player to the data source
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
-	public void removePlayer(int playerID) throws DatabaseException
+	public void removePlayer(int playerID) throws DatabaseException, IllegalQuestChangeException
 	{
 		persistPlayer(playerID);
 		Player p = this.players.remove(playerID);
@@ -284,5 +290,18 @@ public class PlayerManager
 				npc.stop();
 			}
 		}
+	}
+
+	/**
+	 * @return the players with the top ten scores sorted by score
+	 * @throws DatabaseException if the data source can't get the data for us
+	 */
+	public ArrayList<PlayerScoreRecord> getTopTenPlayers() throws DatabaseException
+	{
+		if (OptionsManager.getSingleton().isTestMode())
+		{
+			return PlayerTableDataGatewayMock.getSingleton().getTopTenList();
+		}
+		return PlayerTableDataGatewayRDS.getSingleton().getTopTenList();
 	}
 }

@@ -57,12 +57,13 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
 		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED, 42, 133); 
-		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", AdventureStateEnum.PENDING, false));
+		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", 5, AdventureStateEnum.PENDING, false));
 		qList.add(q);
 		LevelRecord level = new LevelRecord("One", 45);
 		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(qList, 20, level);
 		handler.process(msg);
 		assertEquals(2, ModelFacade.getSingleton().getCommandQueueLength());
+		//TODO - wait for facade to process commands
 		CommandOverwriteQuestState cmd = (CommandOverwriteQuestState) ModelFacade.getSingleton().getNextCommand();
 		ArrayList<ClientPlayerQuest> actual = cmd.getClientPlayerQuestList();
 		assertEquals(qList, actual);
@@ -82,17 +83,17 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
 		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED, 42, 8); 
-		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", AdventureStateEnum.PENDING, false));
+		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", 5, AdventureStateEnum.PENDING, false));
 		qList.add(q);
 		int expectedPoints = 20;
 		LevelRecord level = new LevelRecord("One", 45);
 		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(qList, expectedPoints, level);
 		handler.process(msg);
-		
 		assertEquals(2, ModelFacade.getSingleton().getCommandQueueLength());
 		ModelFacade.getSingleton().getNextCommand();
 		CommandOverwriteExperience cmd = (CommandOverwriteExperience) ModelFacade.getSingleton().getNextCommand();
 		int actualPoints = cmd.getExperiencePoints();
 		assertEquals(expectedPoints, actualPoints);
+		//TODO Make sure the other command got there, too 
 	}
 }

@@ -145,6 +145,25 @@ public class Quest
 	}
 
 	/**
+	 * Get adventure description by specific adventure id
+	 * @param adventureID id of the adventure
+	 * @return adventure description
+	 */
+	public int getAdventureXP(int adventureID)
+	{
+		for(AdventureRecord a: adventures)
+		{
+			if(a.getAdventureID() == adventureID)
+			{
+				return a.getExperiencePointsGained();
+			}
+		}
+		
+		return 0;
+		
+	}
+	
+	/**
 	 * @return the number of adventures necessary to fulfill this quest
 	 */
 	public int getAdventuresForFulfillment()

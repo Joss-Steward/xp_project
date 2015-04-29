@@ -87,7 +87,7 @@ public class BuildQuestsAndAdventures
 		for (AdventuresForTest adventure : AdventuresForTest.values())
 		{
 			AdventureTableDataGatewayRDS.createRow(adventure.getAdventureID(),
-					adventure.getAdventureDescription(), adventure.getQuestID(), adventure.getExperiencePointsGained());
+					adventure.getAdventureDescription(), adventure.getQuestID(), adventure.getExperiencePointsGained(), adventure.getSignatureSpecification());
 		}
 	}
 }

@@ -9,14 +9,17 @@ import org.junit.runners.Suite;
 import communication.handlers.ChatMessageHandlerTest;
 import communication.handlers.ConnectMessageHandlerTest;
 import communication.handlers.DisconnectMessageHandlerTest;
+import communication.handlers.HighScoreRequestMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.TeleportationInitiationHandlerTest;
+import communication.packers.AdventureStateChangeMessagePackerTest;
 import communication.packers.ChatMessagePackerTest;
 import communication.packers.ExperienceChangedMessagePackerTest;
-import communication.packers.UpdatePlayerInformationMessagePackerTest;
 import communication.packers.MapFileMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.PlayerJoinedMessagePackerTest;
+import communication.packers.UpdatePlayerInformationMessagePackerTest;
+
 import edu.ship.shipsim.areaserver.datasource.AdventureRecordTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayMockTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayRDSTest;
@@ -51,15 +54,16 @@ import edu.ship.shipsim.areaserver.model.PlayerManagerTest;
 import edu.ship.shipsim.areaserver.model.PlayerMapperTest;
 import edu.ship.shipsim.areaserver.model.PlayerTest;
 import edu.ship.shipsim.areaserver.model.QuestManagerTest;
-import edu.ship.shipsim.areaserver.model.QuestTest;
 import edu.ship.shipsim.areaserver.model.QuestStateTest;
+import edu.ship.shipsim.areaserver.model.QuestTest;
 import edu.ship.shipsim.areaserver.model.QuizBotBehaviorTest;
+import edu.ship.shipsim.areaserver.model.reports.AdventureStateChangeReportTest;
 import edu.ship.shipsim.areaserver.model.reports.ExperienceChangedReportTest;
-import edu.ship.shipsim.areaserver.model.reports.QuestNeedsFulfillmentNotificationReportTest;
-import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReportTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReportTest;
 import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReportTest;
+import edu.ship.shipsim.areaserver.model.reports.QuestStateChangeReportTest;
 import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
+import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReportTest;
 
 /**
  * All of the tests for the area servers code. Notice that the packages, and
@@ -78,11 +82,13 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		ChatMessageHandlerTest.class,
 		ConnectMessageHandlerTest.class,
 		DisconnectMessageHandlerTest.class,
+		HighScoreRequestMessageHandlerTest.class,
 		MovementMessageHandlerTest.class,
 		TeleportationInitiationHandlerTest.class,
 		
 
 		// communication.packers
+		AdventureStateChangeMessagePackerTest.class,
 		ChatMessagePackerTest.class,
 		ExperienceChangedMessagePackerTest.class,
 		MapFileMessagePackerTest.class,
@@ -149,10 +155,11 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReportTest;
 		
 		
 		// model.reports
+		AdventureStateChangeReportTest.class,
 		ExperienceChangedReportTest.class,
 		PlayerConnectionReportTest.class, 
 		PlayerMovedReportTest.class, 
-		QuestNeedsFulfillmentNotificationReportTest.class,
+		QuestStateChangeReportTest.class,
 		SendChatMessageReportTest.class,
 		UpdatePlayerInformationReportTest.class,
 		})

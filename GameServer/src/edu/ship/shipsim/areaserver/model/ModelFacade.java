@@ -32,6 +32,19 @@ public class ModelFacade
 	 */
 	public synchronized static void resetSingleton()
 	{
+		if(singleton != null)
+		{
+			while (singleton.queueSize() > 0)
+			{
+				try 
+				{
+					Thread.sleep(100);
+				} catch (InterruptedException e) 
+				{
+					e.printStackTrace();
+				}
+			}
+		}
 		singleton = new ModelFacade();
 	}
 
