@@ -24,8 +24,8 @@ public class QuestTest {
 	public void testInitialize() 
 	{
 		ArrayList<AdventureRecord> adventures = new ArrayList<AdventureRecord>();
-		adventures.add(new AdventureRecord(5, 42,"Merlin Zone",4));
-		adventures.add(new AdventureRecord(5, 420,"Library Quest",8));
+		adventures.add(new AdventureRecord(5, 42,"Merlin Zone",4, "Henry"));
+		adventures.add(new AdventureRecord(5, 420,"Library Quest",8, "Fred"));
 		
 		Position pos = new Position(33,44);
 		
@@ -50,8 +50,8 @@ public class QuestTest {
 	{
 		Quest q = new Quest(-1, null,null,null,null, 42, 45);
 		ArrayList<AdventureRecord> adventures = new ArrayList<AdventureRecord>();
-		adventures.add(new AdventureRecord(5, 42,"Merlin Zone",3));
-		adventures.add(new AdventureRecord(5, 420,"Library Quest", 2));
+		adventures.add(new AdventureRecord(5, 42,"Merlin Zone",3, "Henry"));
+		adventures.add(new AdventureRecord(5, 420,"Library Quest", 2, "Fred"));
 		Position pos = new Position(22,20);
 		
 		q.setQuestID(44);
