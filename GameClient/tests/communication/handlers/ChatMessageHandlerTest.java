@@ -49,6 +49,9 @@ public class ChatMessageHandlerTest
 		ChatMessageHandler handler = new ChatMessageHandler();
 		ChatMessage chat = new ChatMessage("name", "message", new Position(1, 1), ChatType.World);
 		handler.process(chat);
-		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
+		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());while(ModelFacade.getSingleton().hasCommandsPending())
+		{
+			Thread.sleep(100);
+		}
 	}
 }

@@ -41,15 +41,20 @@ public class AdventureStateChangeMessageHandlerTest
 	/**
 	 * Test that the handler messages handles the messages and creates
 	 * a command
+	 * @throws InterruptedException shouldn't
 	 */
 	@Test
-	public void testMessageHandling()
+	public void testMessageHandling() throws InterruptedException
 	{
 		AdventureStateChangeMessageHandler h = new AdventureStateChangeMessageHandler();
 		AdventureStateChangeMessage msg = new AdventureStateChangeMessage(1, 2, 3, "Big Adventure", AdventureStateEnum.PENDING);
 		
 		h.process(msg);
 		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
+		while(ModelFacade.getSingleton().hasCommandsPending())
+		{
+			Thread.sleep(100);
+		}
 	}
 
 }

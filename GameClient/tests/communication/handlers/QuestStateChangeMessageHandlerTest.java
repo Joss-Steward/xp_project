@@ -38,16 +38,19 @@ public class QuestStateChangeMessageHandlerTest
 	/**
 	 * Test that the handler messages handles the messages and creates
 	 * a command
+	 * @throws InterruptedException shouldn't
 	 */
 	@Test
-	public void testMessageHandling()
+	public void testMessageHandling() throws InterruptedException
 	{
 		QuestStateChangeMessageHandler h = new QuestStateChangeMessageHandler();
 		QuestStateChangeMessage msg = new QuestStateChangeMessage(1, 2, "Quest 1", QuestStateEnum.AVAILABLE);
-		
 		h.process(msg);
-		
-		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
+		assertTrue(ModelFacade.getSingleton().hasCommandsPending());
+		while(ModelFacade.getSingleton().hasCommandsPending())
+		{
+			Thread.sleep(100);
+		}
 	}
 
 }

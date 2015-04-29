@@ -50,6 +50,10 @@ public class PlayerLeaveMessageHandlerTest
 		PlayerLeaveMessageHandler handler = new PlayerLeaveMessageHandler();
 		handler.process(msg);
 		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
+		while(ModelFacade.getSingleton().hasCommandsPending())
+		{
+			Thread.sleep(100);
+		}
 	}
 
 }

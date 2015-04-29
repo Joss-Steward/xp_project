@@ -49,6 +49,10 @@ public class LoginFailedMessageHandlerTest
 		LoginFailedMessage msg = new LoginFailedMessage();
 		handler.process(msg);
 		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
+		while(ModelFacade.getSingleton().hasCommandsPending())
+		{
+			Thread.sleep(100);
+		}
 	}
 
 }

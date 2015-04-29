@@ -40,9 +40,10 @@ public class HighScoreResponseHandlerTest
 
 	/**
 	 * Tests that we queue the message to the facade.
+	 * @throws InterruptedException shouldn't
 	 */
 	@Test
-	public void handleHighScoreResponseMessage()
+	public void handleHighScoreResponseMessage() throws InterruptedException
 	{
 		reset();
 		
@@ -57,7 +58,10 @@ public class HighScoreResponseHandlerTest
 		h.process(msg);
 
 		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
-		
+		while(ModelFacade.getSingleton().hasCommandsPending())
+		{
+			Thread.sleep(100);
+		}
 		reset();
 	}
 }
