@@ -39,9 +39,7 @@ public class MovementMessageHandlerTest
 	@After
 	public void cleanUp()
 	{
-		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
-		OptionsManager.resetSingleton();
 	}
 	
 	/**

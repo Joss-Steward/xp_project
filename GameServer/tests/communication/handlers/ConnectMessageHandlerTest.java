@@ -39,8 +39,6 @@ public class ConnectMessageHandlerTest
 	@After
 	public void cleanUp()
 	{
-		OptionsManager.resetSingleton();
-		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
 	}
 	

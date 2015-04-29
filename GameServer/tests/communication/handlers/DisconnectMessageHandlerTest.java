@@ -37,9 +37,7 @@ public class DisconnectMessageHandlerTest
 	@After
 	public void cleanup()
 	{
-		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
-		OptionsManager.resetSingleton();
 	}
 	
 	/**

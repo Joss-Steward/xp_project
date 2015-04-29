@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.AdventureNotificationCompleteMessage;
-
 import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
 import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
@@ -47,15 +46,21 @@ public class AdventureNotificationCompleteMessageHandlerTest
 	
 	/**
 	 * Test that AdventureNotificationCompleteMessageHandler creates CommandAdventureNotificationComplete
+	 * @throws InterruptedException  awef
 	 */
 	@Test
-	public void testProcessCreatesCommandAdventureNotificationComplete()
+	public void testProcessCreatesCommandAdventureNotificationComplete() throws InterruptedException
 	{
 		AdventureNotificationCompleteMessage msg = new AdventureNotificationCompleteMessage(PlayersForTest.JOHN.getPlayerID(), QuestsForTest.ONE_BIG_QUEST.getQuestID(), AdventuresForTest.TWO.getAdventureID());
 		AdventureNotificationCompleteMessageHandler handler = new AdventureNotificationCompleteMessageHandler();
 		handler.process(msg);
 		
 		assertTrue(ModelFacade.getSingleton().queueSize() > 0);
+		while (ModelFacade.getSingleton().queueSize() > 0)
+		{
+			Thread.sleep(100);
+		}
+		
 	}
 
 }

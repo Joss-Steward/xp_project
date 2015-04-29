@@ -50,7 +50,7 @@ public class ChatMessageHandlerTest
 	
 	/**
 	 * Testing to see if a command is queued after receiving a message
-	 * @throws InterruptedException 
+	 * @throws InterruptedException shouldn't
 	 */
 	@Test
 	public void handleChatMessage() throws InterruptedException
