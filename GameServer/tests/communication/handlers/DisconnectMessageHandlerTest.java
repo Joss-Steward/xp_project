@@ -3,7 +3,6 @@ package communication.handlers;
 import static org.junit.Assert.*;
 import model.OptionsManager;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,15 +28,6 @@ public class DisconnectMessageHandlerTest
 		ModelFacade.resetSingleton();
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton(true);
-	}
-	
-	/**
-	 * Reset the ModelFacade
-	 */
-	@After
-	public void cleanup()
-	{
-		ModelFacade.resetSingleton();
 	}
 	
 	/**

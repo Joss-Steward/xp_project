@@ -2,7 +2,6 @@ package communication.handlers;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,15 +24,6 @@ public class ChatMessageHandlerTest
 	 */
 	@Before
 	public void reset()
-	{
-		ModelFacade.resetSingleton();
-	}
-	
-	/**
-	 * Reset the ModelFacade
-	 */
-	@After
-	public void cleanUp()
 	{
 		ModelFacade.resetSingleton();
 	}

@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import model.OptionsManager;
 import model.PlayerConnection;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,15 +29,6 @@ public class ConnectMessageHandlerTest
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton(true);
 		PlayerManager.resetSingleton();
-		ModelFacade.resetSingleton();
-	}
-
-	/**
-	 * 
-	 */
-	@After
-	public void cleanUp()
-	{
 		ModelFacade.resetSingleton();
 	}
 	
