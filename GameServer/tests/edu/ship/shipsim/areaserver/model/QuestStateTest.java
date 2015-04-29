@@ -39,7 +39,7 @@ public class QuestStateTest extends DatabaseTest
 		QuestManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 	}
-
+	
 	/**
 	 * Test creating a very simple quest, and retreiving its information
 	 * @throws IllegalQuestChangeException shouldn't

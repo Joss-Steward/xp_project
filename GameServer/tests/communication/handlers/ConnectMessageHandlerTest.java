@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import model.OptionsManager;
 import model.PlayerConnection;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,6 +33,17 @@ public class ConnectMessageHandlerTest
 		ModelFacade.resetSingleton();
 	}
 
+	/**
+	 * 
+	 */
+	@After
+	public void cleanUp()
+	{
+		OptionsManager.resetSingleton();
+		PlayerManager.resetSingleton();
+		ModelFacade.resetSingleton();
+	}
+	
 	/**
 	 * Tests that getTypeWeHandle method returns correct type.
 	 */

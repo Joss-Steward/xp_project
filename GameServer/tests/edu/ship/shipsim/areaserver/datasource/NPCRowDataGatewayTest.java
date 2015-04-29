@@ -2,6 +2,7 @@ package edu.ship.shipsim.areaserver.datasource;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.junit.After;
@@ -34,10 +35,13 @@ public abstract class NPCRowDataGatewayTest extends DatabaseTest
 
 	/**
 	 * Make sure any static information is cleaned up between tests
+	 * @throws SQLException 
+	 * @throws DatabaseException 
 	 */
 	@After
-	public void cleanup()
+	public void cleanup() throws DatabaseException, SQLException
 	{
+		super.tearDown();
 		if (gateway != null)
 		{
 			gateway.resetData();

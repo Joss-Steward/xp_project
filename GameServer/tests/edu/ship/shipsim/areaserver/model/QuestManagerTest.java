@@ -2,16 +2,19 @@ package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.OptionsManager;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import data.Position;
 import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
+import datasource.DatabaseTest;
 import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
 import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
@@ -26,7 +29,7 @@ import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
  * @author lavonnediller
  *
  */
-public class QuestManagerTest
+public class QuestManagerTest extends DatabaseTest
 {
 
 	/**
@@ -43,6 +46,18 @@ public class QuestManagerTest
 		QuestManager.getSingleton();
 	}
 
+	/**
+	 * Make sure any static information is cleaned up between tests
+	 * @throws SQLException 
+	 * @throws DatabaseException 
+	 */
+	@After
+	public void cleanup() throws DatabaseException, SQLException
+	{
+		super.tearDown();
+		QuestStateTableDataGatewayMock.getSingleton().resetData();
+	}
+	
 	/**
 	 * Test initializing a quest manager
 	 */
