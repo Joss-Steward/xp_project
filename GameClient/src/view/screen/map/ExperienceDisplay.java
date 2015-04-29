@@ -19,7 +19,7 @@ import edu.ship.shipsim.client.model.reports.ExperiencePointsChangeReport;
 public class ExperienceDisplay extends Group implements QualifiedObserver
 {
 	private int experiencePoints;
-	private int numPointsLvlRequries;
+	private int numPointsLvlRequires;
 	private String playersLevel;
 	
 	private Table experienceDisplay;
@@ -77,7 +77,7 @@ public class ExperienceDisplay extends Group implements QualifiedObserver
 	 */
 	public int getNumPointsLvlRequries()
 	{
-		return numPointsLvlRequries;
+		return numPointsLvlRequires;
 	}
 	
 	/**
@@ -86,7 +86,7 @@ public class ExperienceDisplay extends Group implements QualifiedObserver
 	 */
 	public void setNumPointsLvlRequries(int numPointsLvlRequries)
 	{
-		this.numPointsLvlRequries = numPointsLvlRequries;
+		this.numPointsLvlRequires = numPointsLvlRequries;
 	}
 	
 	/**

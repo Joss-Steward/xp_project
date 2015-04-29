@@ -72,8 +72,7 @@ public class ScreenMap extends ScreenBasic
 	private ScreenQAs qaScreen;
 	private ExperienceDisplay expDisplay;
 	private ChatUi chatArea;
-	
-	//TODO - Initialize HighScore screen
+	private HighScoreUI highScoreUI;
 	
 	@SuppressWarnings("unused")
 	private PopUpDisplay popUpDisplay;
@@ -391,8 +390,7 @@ public class ScreenMap extends ScreenBasic
 	{
 		expDisplay = new ExperienceDisplay();
 		qaScreen = new ScreenQAs();
-		
-		//TODO - Create a highscore screen
+		highScoreUI = new HighScoreUI();
 		
 		worldStage = new Stage();
 		blurBatch = new SpriteBatch();
@@ -432,6 +430,10 @@ public class ScreenMap extends ScreenBasic
 				}
 				if(keycode == Keys.Q)
 				{
+					if(highScoreUI.isHighScoreScreenShowing())
+					{
+						highScoreUI.toggleHSScreenVisible();
+					}
 					if (!(stage.getKeyboardFocus() == null))
 					{
 						qaScreen.setQAScreenVisibility(false);
@@ -445,13 +447,18 @@ public class ScreenMap extends ScreenBasic
 				}
 				if(keycode == Keys.H)
 				{
+					if(qaScreen.isQAScreenShowing())
+					{
+						qaScreen.toggleQAScreenVisible();
+					}
+					
 					if (!(stage.getKeyboardFocus() == null))
 					{
-						//TODO - Set highscore screen visibility false
+						highScoreUI.setVisible(false);
 					}
 					else
 					{
-						//TODO - Toggle highscore screen visibility
+						highScoreUI.toggleHSScreenVisible();
 					}
 					
 					return true;
@@ -459,9 +466,11 @@ public class ScreenMap extends ScreenBasic
 				return false;
 			}
 		});
-		stage.addActor(chatArea);
+		
 		stage.addActor(expDisplay);
+		stage.addActor(highScoreUI);
 		stage.addActor(qaScreen);
+		stage.addActor(chatArea);
 		
 		loadingLayer = new Group();
 		loadingLayer.setSize(stage.getWidth(), stage.getHeight());
