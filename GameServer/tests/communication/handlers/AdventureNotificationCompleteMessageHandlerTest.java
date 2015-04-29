@@ -55,8 +55,8 @@ public class AdventureNotificationCompleteMessageHandlerTest
 		AdventureNotificationCompleteMessageHandler handler = new AdventureNotificationCompleteMessageHandler();
 		handler.process(msg);
 		
-		assertTrue(ModelFacade.getSingleton().queueSize() > 0);
-		while (ModelFacade.getSingleton().queueSize() > 0)
+		assertTrue(ModelFacade.getSingleton().hasCommandsPending());
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

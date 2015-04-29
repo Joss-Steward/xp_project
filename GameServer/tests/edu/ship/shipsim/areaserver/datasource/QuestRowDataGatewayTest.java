@@ -25,7 +25,10 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 
 	private QuestRowDataGateway gateway;
 
-	
+	/**
+	 * Makes sure to reset the gateway
+	 * @throws DatabaseException shouldn't
+	 */
 	@Before
 	public void setup() throws DatabaseException
 	{

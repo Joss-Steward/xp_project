@@ -76,7 +76,7 @@ public class MovementMessageHandlerTest
 		MovementMessageHandler handler = new MovementMessageHandler();
 
 		handler.process(msg);
-		while (ModelFacade.getSingleton().queueSize() > 0)
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

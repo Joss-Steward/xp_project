@@ -10,7 +10,7 @@ import edu.ship.shipsim.areaserver.model.ModelFacade;
  * @author Ryan
  *
  */
-public class AdventureNotificationCompleteMessageHandler  extends MessageHandler
+public class AdventureNotificationCompleteMessageHandler extends MessageHandler
 {
 
 	/**
