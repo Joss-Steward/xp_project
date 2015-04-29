@@ -52,13 +52,10 @@ public class ChatMessageHandlerTest
 		ch.process(cm);
 		assertEquals(1,ModelFacade.getSingleton().queueSize());
 		
-		while (ModelFacade.getSingleton().queueSize() > 0)
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}
-		
-		assertEquals(0,ModelFacade.getSingleton().queueSize());
-		
 		reset();
 	}
 }

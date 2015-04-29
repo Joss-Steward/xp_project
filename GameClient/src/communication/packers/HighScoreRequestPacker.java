@@ -2,16 +2,17 @@ package communication.packers;
 
 import model.QualifiedObservableReport;
 
-import communication.messages.AdventureNotificationCompleteMessage;
+import communication.messages.HighScoreRequestMessage;
 import communication.messages.Message;
 
-import edu.ship.shipsim.client.model.reports.AdventureNotifcationCompleteReport;
+import edu.ship.shipsim.client.model.reports.HighScoreRequestReport;
 
 /**
+ * Packer for the high score request message
  * @author Ryan
  *
  */
-public class AdventureNotificationCompletePacker extends MessagePacker
+public class HighScoreRequestPacker extends MessagePacker
 {
 
 	/**
@@ -20,8 +21,8 @@ public class AdventureNotificationCompletePacker extends MessagePacker
 	@Override
 	public Message pack(QualifiedObservableReport object) 
 	{
-		AdventureNotifcationCompleteReport r = (AdventureNotifcationCompleteReport) object;
-		return new AdventureNotificationCompleteMessage(r.getPlayerID(), r.getQuestID(), r.getAdventureID());
+//		HighScoreRequestReport r = (HighScoreRequestReport) object;
+		return new HighScoreRequestMessage();
 	}
 
 	/**
@@ -30,7 +31,7 @@ public class AdventureNotificationCompletePacker extends MessagePacker
 	@Override
 	public Class<? extends QualifiedObservableReport> getReportTypeWePack() 
 	{
-		return AdventureNotifcationCompleteReport.class;
+		return HighScoreRequestReport.class;
 	}
 
 }
