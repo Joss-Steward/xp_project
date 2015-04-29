@@ -48,8 +48,8 @@ public class QuestManagerTest extends DatabaseTest
 
 	/**
 	 * Make sure any static information is cleaned up between tests
-	 * @throws SQLException 
-	 * @throws DatabaseException 
+	 * @throws SQLException shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@After
 	public void cleanup() throws DatabaseException, SQLException

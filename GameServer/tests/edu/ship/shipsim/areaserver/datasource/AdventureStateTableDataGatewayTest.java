@@ -24,6 +24,10 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 
 	private AdventureStateTableDataGateway gateway;
 
+	/**
+	 * Makes sure to reset gateway
+	 * @throws DatabaseException shouldn't
+	 */
 	@Before
 	public void setup() throws DatabaseException
 	{
