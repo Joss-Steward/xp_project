@@ -10,6 +10,9 @@ import model.PlayerConnection;
 import model.PlayerLogin;
 import model.QualifiedObservableConnector;
 import datasource.DatabaseException;
+import datasource.PlayerScoreRecord;
+import edu.ship.shipsim.areaserver.datasource.PlayerTableDataGatewayMock;
+import edu.ship.shipsim.areaserver.datasource.PlayerTableDataGatewayRDS;
 import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerLeaveReport;
@@ -287,5 +290,18 @@ public class PlayerManager
 				npc.stop();
 			}
 		}
+	}
+
+	/**
+	 * @return the players with the top ten scores sorted by score
+	 * @throws DatabaseException if the data source can't get the data for us
+	 */
+	public ArrayList<PlayerScoreRecord> getTopTenPlayers() throws DatabaseException
+	{
+		if (OptionsManager.getSingleton().isTestMode())
+		{
+			return PlayerTableDataGatewayMock.getSingleton().getTopTenList();
+		}
+		return PlayerTableDataGatewayRDS.getSingleton().getTopTenList();
 	}
 }

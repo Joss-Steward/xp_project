@@ -178,7 +178,7 @@ public class AdventureState
 			if(needingNotification == true)
 			{
 				QualifiedObservableConnector.getSingleton().sendReport(
-						new AdventureStateChangeReport(parentQuestState.getPlayerID(), adventureID, 
+						new AdventureStateChangeReport(parentQuestState.getPlayerID(), parentQuestState.getID(), adventureID, 
 								QuestManager.getSingleton().getAdventure(parentQuestState.getID(), 
 								adventureID).getAdventureDescription(), adventureState));
 			}
@@ -189,6 +189,14 @@ public class AdventureState
 		{
 			throw new IllegalAdventureChangeException();
 		}
+	}
+
+	/**
+	 * Set needing notification to false
+	 */
+	public void turnOffNotification() 
+	{
+		this.needingNotification = false;
 	}
 
 }

@@ -73,6 +73,8 @@ public class ScreenMap extends ScreenBasic
 	private ExperienceDisplay expDisplay;
 	private ChatUi chatArea;
 	
+	//TODO - Initialize HighScore screen
+	
 	@SuppressWarnings("unused")
 	private PopUpDisplay popUpDisplay;
 	
@@ -390,6 +392,8 @@ public class ScreenMap extends ScreenBasic
 		expDisplay = new ExperienceDisplay();
 		qaScreen = new ScreenQAs();
 		
+		//TODO - Create a highscore screen
+		
 		worldStage = new Stage();
 		blurBatch = new SpriteBatch();
 		
@@ -430,11 +434,24 @@ public class ScreenMap extends ScreenBasic
 				{
 					if (!(stage.getKeyboardFocus() == null))
 					{
-						qaScreen.setVisibility(false);
+						qaScreen.setQAScreenVisibility(false);
 					}
 					else
 					{
-						qaScreen.toggleVisible();
+						qaScreen.toggleQAScreenVisible();
+					}
+					
+					return true;
+				}
+				if(keycode == Keys.H)
+				{
+					if (!(stage.getKeyboardFocus() == null))
+					{
+						//TODO - Set highscore screen visibility false
+					}
+					else
+					{
+						//TODO - Toggle highscore screen visibility
 					}
 					
 					return true;

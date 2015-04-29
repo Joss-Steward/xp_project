@@ -6,7 +6,9 @@ import model.QualifiedObserver;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import datasource.AdventureStateEnum;
 import datasource.QuestStateEnum;
+import edu.ship.shipsim.client.model.reports.AdventureStateChangeReport;
 import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
 import edu.ship.shipsim.client.model.reports.QuestStateChangeReport;
 
@@ -39,6 +41,7 @@ public class PopUpDisplay implements QualifiedObserver
 				.getSingleton();
 		cm.registerObserver(this, AdventuresNeedingNotificationReport.class);
 		cm.registerObserver(this, QuestStateChangeReport.class);
+		cm.registerObserver(this, AdventureStateChangeReport.class);
 
 	}
 
@@ -69,6 +72,15 @@ public class PopUpDisplay implements QualifiedObserver
 				@SuppressWarnings("unused") 
 				ScreenPopUp popup = new ScreenPopUp("Quest Completed",
 						r.getQuestDescription() + " completed", this.stage, new SilentBehavior());
+			}
+		} else if (report.getClass().equals(AdventureStateChangeReport.class))
+		{
+			AdventureStateChangeReport r = (AdventureStateChangeReport) report;
+			if(r.getNewState() == AdventureStateEnum.COMPLETED)
+			{
+				@SuppressWarnings("unused") 
+				ScreenPopUp popup = new ScreenPopUp("Adventure Completed",
+						r.getAdventureDescription() + " completed", this.stage, new SilentBehavior());
 			}
 		}
 	}

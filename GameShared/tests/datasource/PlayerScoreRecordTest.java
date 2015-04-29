@@ -2,6 +2,9 @@ package datasource;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import org.junit.Test;
 
 /**
@@ -21,6 +24,19 @@ public class PlayerScoreRecordTest
 		PlayerScoreRecord actual = new PlayerScoreRecord("Me", 1492);
 		assertEquals("Me", actual.getPlayerName());
 		assertEquals(1492, actual.getExperiencePoints());
+	}
+	
+	/**
+	 * make sure things sort in the correct order
+	 */
+	@Test
+	public void comparable()
+	{
+		ArrayList<PlayerScoreRecord> data = new ArrayList<PlayerScoreRecord>();
+		data.add(new PlayerScoreRecord("Second", 14));
+		data.add(new PlayerScoreRecord("First", 15));
+		Collections.sort(data);
+		assertEquals(new PlayerScoreRecord("First", 15), data.get(0));
 	}
 
 }

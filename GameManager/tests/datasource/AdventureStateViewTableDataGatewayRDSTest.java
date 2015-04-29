@@ -30,10 +30,10 @@ public class AdventureStateViewTableDataGatewayRDSTest extends DatabaseTest
 		List<AdventureRecord> results = AdventureStateViewTableDataGatewayRDS.getPendingAdventureRecords(PlayersForTest.JOHN.getPlayerID());
 		assertEquals(2, results.size());
 		AdventureRecord expected = new AdventureRecord(AdventuresForTest.FIVE.getQuestID(), AdventuresForTest.FIVE.getAdventureID(),
-				AdventuresForTest.FIVE.getAdventureDescription(), AdventuresForTest.FIVE.getExperiencePointsGained());
+				AdventuresForTest.FIVE.getAdventureDescription(), AdventuresForTest.FIVE.getExperiencePointsGained(), AdventuresForTest.FIVE.getSignatureSpecification());
 		assertTrue(results.contains(expected));
 		assertTrue(results.contains(new AdventureRecord(AdventuresForTest.FOUR.getQuestID(), AdventuresForTest.FOUR.getAdventureID(),
-				AdventuresForTest.FOUR.getAdventureDescription(), AdventuresForTest.FOUR.getExperiencePointsGained())));
+				AdventuresForTest.FOUR.getAdventureDescription(), AdventuresForTest.FOUR.getExperiencePointsGained(), AdventuresForTest.FOUR.getSignatureSpecification())));
 	}
 
 	/**

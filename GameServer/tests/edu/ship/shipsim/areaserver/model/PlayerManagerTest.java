@@ -3,6 +3,7 @@ package edu.ship.shipsim.areaserver.model;
 import static org.junit.Assert.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import model.OptionsManager;
 import model.QualifiedObservableConnector;
@@ -14,6 +15,7 @@ import org.junit.Test;
 
 import data.Position;
 import datasource.DatabaseException;
+import datasource.PlayerScoreRecord;
 import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
@@ -163,5 +165,16 @@ public class PlayerManagerTest
 		assertNotNull(PlayerManager.getSingleton().getPlayerFromID(
 				PlayersForTest.QUIZBOT.getPlayerID()));
 
+	}
+	
+	/**
+	 * Make sure it can get the high score list
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void canGetTopTen() throws DatabaseException
+	{
+		ArrayList<PlayerScoreRecord> result = PlayerManager.getSingleton().getTopTenPlayers();
+		assertEquals(10, result.size());
 	}
 }

@@ -17,7 +17,7 @@ public class ClientPlayerAdventure implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int adventureID;
+	private int adventureID, adventureXP;
 	private String adventureDescription;
 	private AdventureStateEnum adventureState;
 	private boolean needingNotification;
@@ -29,6 +29,8 @@ public class ClientPlayerAdventure implements Serializable
 	 *            unique identifier for this adventure
 	 * @param adventureDescription
 	 *            description of the adventure
+	 * @param adventureXP
+	 *            xp reward for adventure
 	 * @param adventureState
 	 *            current state of this adventure using the AdventureStateList
 	 *            enum
@@ -36,10 +38,11 @@ public class ClientPlayerAdventure implements Serializable
 	 *            true if the player needs to be told about the state of this
 	 *            adventure
 	 */
-	public ClientPlayerAdventure(int adventureID, String adventureDescription,
+	public ClientPlayerAdventure(int adventureID, String adventureDescription, int adventureXP,
 			AdventureStateEnum adventureState, boolean needingNotification)
 	{
 		this.adventureID = adventureID;
+		this.adventureXP = adventureXP;
 		this.adventureDescription = adventureDescription;
 		this.adventureState = adventureState;
 		this.needingNotification = needingNotification;
@@ -109,6 +112,22 @@ public class ClientPlayerAdventure implements Serializable
 	public boolean isNeedingNotification()
 	{
 		return needingNotification;
+	}
+
+	/**
+	 * @return the adventureXP
+	 */
+	public int getAdventureXP()
+	{
+		return adventureXP;
+	}
+
+	/**
+	 * @param adventureXP the adventureXP to set
+	 */
+	public void setAdventureXP(int adventureXP)
+	{
+		this.adventureXP = adventureXP;
 	}
 
 }

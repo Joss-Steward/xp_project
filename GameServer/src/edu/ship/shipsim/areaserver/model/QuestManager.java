@@ -293,4 +293,20 @@ public class QuestManager implements QualifiedObserver {
 		getAdventureStateByID(playerID, questID, adventureID).complete();
 
 	}
+	
+	/**
+	 * Set needing notification to false
+	 * @param playerID the id of the player
+	 * @param questID the id of the quest
+	 * @param adventureID the id of the adventure
+	 * @throws DatabaseException
+	 *             shouldn't
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException thrown if illegal state change
+	 */
+	public void turnOffNotification(int playerID, int questID, int adventureID)
+			throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException {
+		getAdventureStateByID(playerID, questID, adventureID).turnOffNotification();
+
+	}
 }

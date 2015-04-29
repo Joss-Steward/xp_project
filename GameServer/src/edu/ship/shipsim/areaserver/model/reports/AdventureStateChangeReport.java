@@ -10,11 +10,74 @@ import datasource.AdventureStateEnum;
  */
 public final class AdventureStateChangeReport implements QualifiedObservableReport
 {
-	/** (non-Javadoc)
+	private final int playerID;
+	private final int questID;
+	private final int adventureID;
+	private final String adventureDescription;
+	private final AdventureStateEnum newState;
+
+	/**
+	 * @param id players ID
+	 * @param questID id of the quest
+	 * @param adventureID adventures ID to change state
+	 * @param adventureDescription description of adventure
+	 * @param newState new state to be changed to
+	 */
+	public AdventureStateChangeReport(int id, int questID, int adventureID, String adventureDescription, AdventureStateEnum newState) 
+	{
+		this.playerID = id;
+		this.questID = questID;
+		this.adventureID = adventureID;
+		this.adventureDescription = adventureDescription;
+		this.newState = newState;
+	}
+
+	/**
+	 * @return player ID
+	 */
+	public int getPlayerID() 
+	{
+		return playerID;
+	}
+
+	/**
+	 * @return adventure ID
+	 */
+	public int getAdventureID() 
+	{
+		return adventureID;
+	}
+
+	/**
+	 * @return adventure Description
+	 */
+	public String getAdventureDescription() 
+	{
+		return adventureDescription;
+	}
+
+	/**
+	 * @return new State
+	 */
+	public AdventureStateEnum getNewState() 
+	{
+		return newState;
+	}
+	
+	/**
+	 * @return quest id
+	 */
+	public int getQuestID()
+	{
+		return questID;		
+	}
+
+	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode() 
+	{
 		final int prime = 31;
 		int result = 1;
 		result = prime
@@ -25,19 +88,21 @@ public final class AdventureStateChangeReport implements QualifiedObservableRepo
 		result = prime * result
 				+ ((newState == null) ? 0 : newState.hashCode());
 		result = prime * result + playerID;
+		result = prime * result + questID;
 		return result;
 	}
 
-	/** (non-Javadoc)
+	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj) 
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof AdventureStateChangeReport))
+		if (getClass() != obj.getClass())
 			return false;
 		AdventureStateChangeReport other = (AdventureStateChangeReport) obj;
 		if (adventureDescription == null) {
@@ -51,54 +116,11 @@ public final class AdventureStateChangeReport implements QualifiedObservableRepo
 			return false;
 		if (playerID != other.playerID)
 			return false;
+		if (questID != other.questID)
+			return false;
 		return true;
 	}
-
-	private final int playerID;
-	private final int adventureID;
-	private final String adventureDescription;
-	private final AdventureStateEnum newState;
-
-	/**
-	 * @param i players ID
-	 * @param adventureID adventures ID to change state
-	 * @param adventureDescription desc of adventure
-	 * @param pending new state to be changed to
-	 */
-	public AdventureStateChangeReport(int i, int adventureID,
-			String adventureDescription, AdventureStateEnum pending) {
-		this.playerID = i;
-		this.adventureID = adventureID;
-		this.adventureDescription = adventureDescription;
-		this.newState = pending;
-	}
-
-	/**
-	 * @return player ID
-	 */
-	public int getPlayerID() {
-		return playerID;
-	}
-
-	/**
-	 * @return adventure ID
-	 */
-	public int getAdvetnureID() {
-		return adventureID;
-	}
-
-	/**
-	 * @return adventure Description
-	 */
-	public String getAdventureDescription() {
-		return adventureDescription;
-	}
-
-	/**
-	 * @return new State
-	 */
-	public AdventureStateEnum getNewState() {
-		return newState;
-	}
+	
+	
 
 }

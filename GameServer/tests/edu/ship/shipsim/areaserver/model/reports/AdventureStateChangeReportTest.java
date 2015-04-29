@@ -22,11 +22,12 @@ public class AdventureStateChangeReportTest
 	@Test
 	public void testInitialization() 
 	{
-		AdventureStateChangeReport report = new AdventureStateChangeReport(1, AdventuresForTest.ONE.getAdventureID(),
+		AdventureStateChangeReport report = new AdventureStateChangeReport(1, AdventuresForTest.ONE.getQuestID(), AdventuresForTest.ONE.getAdventureID(),
 				AdventuresForTest.ONE.getAdventureDescription(), AdventureStateEnum.PENDING);
 		
 		assertEquals(1, report.getPlayerID());
-		assertEquals(AdventuresForTest.ONE.getAdventureID(), report.getAdvetnureID());
+		assertEquals(AdventuresForTest.ONE.getQuestID(), report.getAdventureID());
+		assertEquals(AdventuresForTest.ONE.getAdventureID(), report.getAdventureID());
 		assertEquals(AdventuresForTest.ONE.getAdventureDescription(),report.getAdventureDescription());
 		assertEquals(AdventureStateEnum.PENDING, report.getNewState());
 	}

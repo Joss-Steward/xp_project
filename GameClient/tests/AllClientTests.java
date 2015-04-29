@@ -6,6 +6,7 @@ import view.player.PlayerSpriteTest;
 import view.screen.ScreenListenerTest;
 import view.screen.map.ScreenMapInputTest;
 import view.screen.popup.AdventureCompleteBehaviorTest;
+import communication.handlers.AdventureStateChangeMessageHandlerTest;
 import communication.handlers.ChatMessageHandlerTest;
 import communication.handlers.ExperienceChangedMessageHandlerTest;
 import communication.handlers.InitializeThisClientsPlayerMessageHandlerTest;
@@ -48,6 +49,7 @@ import edu.ship.shipsim.client.model.reports.LoginFailedReportTest;
 import edu.ship.shipsim.client.model.reports.LoginInitiatedReportTest;
 import edu.ship.shipsim.client.model.reports.NewMapReportTest;
 import edu.ship.shipsim.client.model.reports.PlayerMovedReportTest;
+import edu.ship.shipsim.client.model.reports.QuestStateChangeReportTest;
 import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 
 /**
@@ -63,6 +65,7 @@ import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 @Suite.SuiteClasses(
 {
 		// communication.handlers
+		AdventureStateChangeMessageHandlerTest.class,
 		ChatMessageHandlerTest.class,
 		ExperienceChangedMessageHandlerTest.class,
 		InitializeThisClientsPlayerMessageHandlerTest.class,
@@ -112,6 +115,7 @@ import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 		LoginInitiatedReportTest.class, 
 		NewMapReportTest.class,
 		PlayerMovedReportTest.class,
+		QuestStateChangeReportTest.class,
 		QuestStateReportTest.class,
 
 		// view.player
