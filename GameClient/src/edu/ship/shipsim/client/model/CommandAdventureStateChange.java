@@ -28,11 +28,18 @@ public class CommandAdventureStateChange extends Command
 	@Override
 	protected boolean execute()
 	{
-		
 		PlayerManager.getSingleton().getThisClientsPlayer().sendAdventureStateChangeReport(questID, adventureID, adventureDescription, adventureState);
 		return true;
 	}
-
+	
+	/**
+	 * @return the quest ID
+	 */
+	public int getQuestID()
+	{
+		return questID;
+	}
+	
 	/**
 	 * @return the adventureID
 	 */
@@ -55,6 +62,8 @@ public class CommandAdventureStateChange extends Command
 	{
 		return adventureState;
 	}
+
+	
 
 	
 
