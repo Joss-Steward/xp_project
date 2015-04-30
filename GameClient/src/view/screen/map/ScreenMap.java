@@ -454,7 +454,7 @@ public class ScreenMap extends ScreenBasic
 					
 					if (!(stage.getKeyboardFocus() == null))
 					{
-						highScoreUI.setVisible(false);
+						highScoreUI.setHighScoreScreenVisibility(false);
 					}
 					else
 					{

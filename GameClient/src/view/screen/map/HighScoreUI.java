@@ -60,6 +60,15 @@ public class HighScoreUI extends Group implements QualifiedObserver
 	}
 	
 	/**
+	 * set visibility of High Score Screen
+	 * @param b sets visibility of screen
+	 */
+	public void setHighScoreScreenVisibility(boolean b)
+	{
+		HS_ScreenShowing = b;
+	}
+	
+	/**
 	 * @return the screen showing state
 	 */
 	public boolean isHighScoreScreenShowing()
