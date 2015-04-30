@@ -184,6 +184,7 @@ public class QuestManager implements QualifiedObserver {
 	 * @return the state of the quest
 	 */
 	QuestState getQuestStateByID(int playerID, int questID) {
+		System.out.println("in get quest state by id " + this);
 		ArrayList<QuestState> questStateList = questStates.get(playerID);
 		for (QuestState q : questStateList) {
 			if (q.getID() == questID) {

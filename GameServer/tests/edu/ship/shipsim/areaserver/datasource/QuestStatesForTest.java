@@ -29,7 +29,10 @@ public enum QuestStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST2(2, 4, QuestStateEnum.FULFILLED, true);
+	PLAYER2_QUEST4(2, 4, QuestStateEnum.FULFILLED, true),
+	PLAYER4_QUEST3(4, 3, QuestStateEnum.TRIGGERED, true),
+	PLAYER4_QUEST4(4, 4, QuestStateEnum.AVAILABLE, true);
+	
 	
 	private int playerID;
 	private int questID;

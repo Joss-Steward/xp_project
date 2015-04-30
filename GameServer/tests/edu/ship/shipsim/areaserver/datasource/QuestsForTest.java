@@ -21,7 +21,7 @@ public enum QuestsForTest
 	/**
 	 * 
 	 */
-	ONE_SAME_LOCATION_QUEST(3, "Quest 3", "current.tmx", new Position(4, 14), 5, 3),
+	ONE_SAME_LOCATION_QUEST(3, "Quest 3", "current.tmx", new Position(4, 14), 3, 2),
 	/**
 	 * 
 	 */
