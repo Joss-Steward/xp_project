@@ -27,6 +27,9 @@ public class CommandAdventureNotificationComplete extends Command
 		this.adventureID = adventureID;
 	}
 
+	/**
+	 * @see edu.ship.shipsim.areaserver.model.Command#execute()
+	 */
 	@Override
 	protected boolean execute()
 	{
