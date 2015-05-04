@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
-import model.DatabaseManager;
+import datasource.DatabaseManager;
 
 /**
  * The RDS version of the gateway

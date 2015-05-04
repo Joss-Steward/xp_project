@@ -2,8 +2,6 @@ package datasource;
 
 import java.sql.SQLException;
 
-import model.DatabaseManager;
-
 import org.junit.After;
 import org.junit.Before;
 

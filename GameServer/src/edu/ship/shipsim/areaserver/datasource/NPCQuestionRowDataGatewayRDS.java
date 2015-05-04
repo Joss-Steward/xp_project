@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.DatabaseManager;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
+import datasource.DatabaseManager;
 
 /**
  * The RDS implementation of the gateway

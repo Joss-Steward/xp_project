@@ -39,6 +39,10 @@ public class OptionsManager
 		return singleton;
 	}
 
+	public boolean isRunningLocal()
+	{
+		return false;
+	}
 	/**
 	 * 
 	 * @param testMode

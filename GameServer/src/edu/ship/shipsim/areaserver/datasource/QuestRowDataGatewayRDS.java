@@ -5,10 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.DatabaseManager;
 import data.Position;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
+import datasource.DatabaseManager;
 
 /**
  * An RDS implementation of the QuestRowDataGateway interface

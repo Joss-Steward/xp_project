@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.DatabaseManager;
 import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
 import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayRDS;
 

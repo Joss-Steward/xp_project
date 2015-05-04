@@ -42,6 +42,7 @@ public class LoginServer implements Runnable
 		try
 		{
 			servSock = new ServerSocket(1871, 10);
+			OptionsManager.getSingleton(false);
 			while (true)
 			{
 				System.out.println("Login Server Listening");
