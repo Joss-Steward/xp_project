@@ -2,6 +2,7 @@ package edu.ship.shipsim.areaserver.datasource;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.junit.After;
@@ -24,10 +25,13 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 
 	/**
 	 * Make sure any static information is cleaned up between tests
+	 * @throws SQLException shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@After
-	public void cleanup()
+	public void cleanup() throws DatabaseException, SQLException
 	{
+		super.tearDown();
 		if (gateway != null)
 		{
 			gateway.resetData();

@@ -1,9 +1,9 @@
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import model.DatabaseManager;
 import model.OptionsManager;
 import datasource.DatabaseException;
+import datasource.DatabaseManager;
 import datasource.ServerRowDataGatewayRDS;
 import datasource.ServersForTest;
 import datasource.ClosingPreparedStatement;

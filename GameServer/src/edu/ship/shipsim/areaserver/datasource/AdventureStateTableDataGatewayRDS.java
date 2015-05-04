@@ -5,10 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.DatabaseManager;
 import datasource.AdventureStateEnum;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
+import datasource.DatabaseManager;
 
 /**
  * The RDS Implementation of this gateway

@@ -10,23 +10,35 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	ONE(1, "Adventure Description 1", 1, 1, "Lab Instructor"),
+	ONE(1, "Quest 1: Adventure Description 1", 1, 1, "Lab Instructor"),
 	/**
 	 * 
 	 */
-	TWO(2, "Adventure Description 2", 1, 2, "Librarian"),
+	TWO(2, "Quest 1: Adventure Description 2", 1, 2, "Librarian"),
 	/**
 	 * 
 	 */
-	THREE(1, "Another Adventure Description 1", 2, 3, null),
+	THREE(1, "Quest 2: Adventure Description 1", 2, 3, null),
 	/**
 	 * 
 	 */
-	FOUR(2, "Another Adventure Description 2", 2, 4, null),
+	FOUR(2, "Quest 2: Adventure Description 2", 2, 4, null),
 	/**
 	 * 
 	 */
-	FIVE(1, "Adventure for Quest 3", 3, 5, null),
+	QUEST_2_ADV_3(3, "Quest 2: Adventure Description 3", 2, 3, null),
+	/**
+	 * 
+	 */
+	FIVE(1, "Adventure 1 for Quest 3", 3, 5, null),
+	/**
+	 * 
+	 */
+	SIX(2, "Adventure 2 for Quest 3", 3, 5, null),
+	/**
+	 * 
+	 */
+	SEVEN(3, "Adventure 3 for Quest 3", 3, 5, null),
 	/**
 	 * 
 	 */

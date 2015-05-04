@@ -1,7 +1,10 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
+
+import communication.messages.AdventureNotificationCompleteMessage;
 import communication.messages.Message;
+
 import edu.ship.shipsim.client.model.reports.AdventureNotifcationCompleteReport;
 
 /**
@@ -17,7 +20,8 @@ public class AdventureNotificationCompletePacker extends MessagePacker
 	@Override
 	public Message pack(QualifiedObservableReport object) 
 	{
-		return null;
+		AdventureNotifcationCompleteReport r = (AdventureNotifcationCompleteReport) object;
+		return new AdventureNotificationCompleteMessage(r.getPlayerID(), r.getQuestID(), r.getAdventureID());
 	}
 
 	/**

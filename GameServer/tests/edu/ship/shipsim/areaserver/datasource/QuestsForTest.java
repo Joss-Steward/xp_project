@@ -13,19 +13,19 @@ public enum QuestsForTest
 	/**
 	 * 
 	 */
-	ONE_BIG_QUEST(1, "A Big Quest", "current.tmx", new Position(4, 14), 5, 2),
+	ONE_BIG_QUEST(1, "Quest 1", "current.tmx", new Position(4, 14), 5, 2),
 	/**
 	 * 
 	 */
-	THE_OTHER_QUEST(2, "The Other Quest", "sillymap.tmx", new Position(42, 2), 4, 1),
+	THE_OTHER_QUEST(2, "Quest 2", "sillymap.tmx", new Position(42, 2), 4, 2),
 	/**
 	 * 
 	 */
-	ONE_SAME_LOCATION_QUEST(3, "Another Quest", "current.tmx", new Position(4, 14), 5, 3),
+	ONE_SAME_LOCATION_QUEST(3, "Quest 3", "current.tmx", new Position(4, 14), 3, 2),
 	/**
 	 * 
 	 */
-	THE_LITTLE_QUEST(4, "Another another Quest", "current.tmx", new Position(2, 32), 5, 1);
+	THE_LITTLE_QUEST(4, "Quest 4", "current.tmx", new Position(2, 32), 5, 1);
 	
 	private int questID;
 	private String questDescription;

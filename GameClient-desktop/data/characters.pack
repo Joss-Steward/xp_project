@@ -1,81 +1,103 @@
 
-characters.png
+characters.pack.png
+size: 1024,512
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+Magi
+  rotate: false
+  xy: 2, 198
+  size: 130, 194
+  orig: 130, 194
+  offset: 0, 0
+  index: -1
+MattKujo
+  rotate: false
+  xy: 2, 2
+  size: 130, 194
+  orig: 130, 194
+  offset: 0, 0
+  index: -1
+Ninja
+  rotate: false
+  xy: 134, 198
+  size: 130, 194
+  orig: 130, 194
+  offset: 0, 0
+  index: -1
 andy
   rotate: false
-  xy: 0, 194
+  xy: 134, 2
   size: 130, 194
   orig: 130, 194
   offset: 0, 0
   index: -1
 dave
   rotate: false
-  xy: 0, 0
+  xy: 266, 198
   size: 130, 194
   orig: 130, 194
   offset: 0, 0
   index: -1
+female_a
+  rotate: false
+  xy: 662, 4
+  size: 128, 192
+  orig: 128, 192
+  offset: 0, 0
+  index: -1
+female_b
+  rotate: false
+  xy: 794, 200
+  size: 128, 192
+  orig: 128, 192
+  offset: 0, 0
+  index: -1
+female_c
+  rotate: false
+  xy: 792, 4
+  size: 128, 192
+  orig: 128, 192
+  offset: 0, 0
+  index: -1
 ga
   rotate: false
-  xy: 130, 194
+  xy: 266, 2
   size: 130, 194
   orig: 130, 194
   offset: 0, 0
   index: -1
 knight_with_straw_hat
   rotate: false
-  xy: 130, 0
-  size: 130, 194
-  orig: 130, 194
-  offset: 0, 0
-  index: -1
-magi
-  rotate: false
-  xy: 260, 194
+  xy: 398, 198
   size: 130, 194
   orig: 130, 194
   offset: 0, 0
   index: -1
 male_a
   rotate: false
-  xy: 260, 0
+  xy: 398, 2
   size: 130, 194
   orig: 130, 194
   offset: 0, 0
   index: -1
 male_b
   rotate: false
-  xy: 390, 194
-  size: 130, 194
-  orig: 130, 194
-  offset: 0, 0
-  index: -1
-matt_kujo
-  rotate: false
-  xy: 390, 0
+  xy: 530, 198
   size: 130, 194
   orig: 130, 194
   offset: 0, 0
   index: -1
 merlin
   rotate: false
-  xy: 520, 194
-  size: 130, 194
-  orig: 130, 194
-  offset: 0, 0
-  index: -1
-ninja
-  rotate: false
-  xy: 520, 0
+  xy: 530, 2
   size: 130, 194
   orig: 130, 194
   offset: 0, 0
   index: -1
 partyguy
   rotate: false
-  xy: 650, 194
+  xy: 662, 198
   size: 130, 194
   orig: 130, 194
   offset: 0, 0

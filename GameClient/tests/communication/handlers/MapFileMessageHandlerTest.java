@@ -52,7 +52,10 @@ public class MapFileMessageHandlerTest
 		MapFileMessage msg = new MapFileMessage("testMaps/simple.tmx");
 		MapFileMessageHandler handler = new MapFileMessageHandler();
 		handler.process(msg);
-
 		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
+		while(ModelFacade.getSingleton().hasCommandsPending())
+		{
+			Thread.sleep(100);
+		}
 	}
 }

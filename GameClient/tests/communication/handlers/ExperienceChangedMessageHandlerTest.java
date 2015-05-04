@@ -38,9 +38,10 @@ public class ExperienceChangedMessageHandlerTest {
 	
 	/**
 	 * Testing to see if a command is queued after receiving a message
+	 * @throws InterruptedException shouldn't
 	 */
 	@Test
-	public void handleExperienceChangedMessage()
+	public void handleExperienceChangedMessage() throws InterruptedException
 	{		
 		reset();
 		
@@ -51,7 +52,10 @@ public class ExperienceChangedMessageHandlerTest {
 		h.process(msg);
 
 		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
-		
+		while(ModelFacade.getSingleton().hasCommandsPending())
+		{
+			Thread.sleep(100);
+		}
 		reset();
 	}
 }

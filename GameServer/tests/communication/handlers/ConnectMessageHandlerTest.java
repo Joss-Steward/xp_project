@@ -31,7 +31,7 @@ public class ConnectMessageHandlerTest
 		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
 	}
-
+	
 	/**
 	 * Tests that getTypeWeHandle method returns correct type.
 	 */
@@ -58,7 +58,7 @@ public class ConnectMessageHandlerTest
 		handler.setConnectionManager(connectionManager);
 		ConnectMessage msg = new ConnectMessage(1, PlayerConnection.DEFAULT_PIN);
 		handler.process(msg);
-		while (ModelFacade.getSingleton().queueSize() > 0)
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}
@@ -72,13 +72,13 @@ public class ConnectMessageHandlerTest
 	 * @throws InterruptedException
 	 *             Shouldn't
 	 */
-	@Test
+	@Test 
 	public void tellsModel() throws InterruptedException
 	{
 		ConnectMessageHandler handler = new ConnectMessageHandler();
 		ConnectMessage msg = new ConnectMessage(1, PlayerConnection.DEFAULT_PIN);
 		handler.process(msg);
-		while (ModelFacade.getSingleton().queueSize() > 0)
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

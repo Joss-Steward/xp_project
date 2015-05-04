@@ -5,8 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import model.DatabaseManager;
-
 /**
  * The RDS implementation of the row data gateway
  * 

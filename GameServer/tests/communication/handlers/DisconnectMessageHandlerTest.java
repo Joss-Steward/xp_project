@@ -30,8 +30,6 @@ public class DisconnectMessageHandlerTest
 		OptionsManager.getSingleton(true);
 	}
 	
-	//PUT SET UP HERE FOR OPTIONS MANAGER
-	
 	/**
 	 * Tests that getTypeWeHandle method returns correct type.
 	 */
@@ -58,7 +56,7 @@ public class DisconnectMessageHandlerTest
 		DisconnectMessageHandler handler = new DisconnectMessageHandler();
 		DisconnectMessage msg = new DisconnectMessage(1);
 		handler.process(msg);
-		while (ModelFacade.getSingleton().queueSize() > 0)
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

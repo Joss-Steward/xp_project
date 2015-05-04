@@ -5,10 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import model.DatabaseManager;
 import data.Position;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
+import datasource.DatabaseManager;
 
 /**
  * The RDS version of the gateway

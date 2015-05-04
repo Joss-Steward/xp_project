@@ -44,7 +44,7 @@ public class Server implements Runnable
 		try
 		{
 			String hostName = InetAddress.getLocalHost().getHostName();
-			OptionsManager om = OptionsManager.getSingleton();
+			OptionsManager om = OptionsManager.getSingleton(false);
 			om.updateMapInformation(mapName, hostName, port);
 			PlayerManager.getSingleton().loadNpcs();
 			servSock = new ServerSocket(OptionsManager.getSingleton().getPortNumber(), 10);

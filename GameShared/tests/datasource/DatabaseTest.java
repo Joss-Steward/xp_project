@@ -2,7 +2,7 @@ package datasource;
 
 import java.sql.SQLException;
 
-import model.DatabaseManager;
+import model.OptionsManager;
 
 import org.junit.After;
 import org.junit.Before;
@@ -30,6 +30,7 @@ public abstract class DatabaseTest
 	public void setUp() throws DatabaseException
 	{
 		DatabaseManager.reset();
+		OptionsManager.getSingleton(true);
 		DatabaseManager.getSingleton().setTesting();
 	}
 

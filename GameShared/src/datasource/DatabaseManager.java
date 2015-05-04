@@ -1,11 +1,11 @@
-package model;
+package datasource;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import datasource.DatabaseException;
+import model.OptionsManager;
 
 /**
  * @author Merlin
@@ -34,7 +34,13 @@ public class DatabaseManager
 
 	private DatabaseManager() throws DatabaseException
 	{
-		openConnectionTo("jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players");
+		if (OptionsManager.getSingleton().isTestMode() || OptionsManager.getSingleton().isRunningLocal())
+		{
+			openConnectionTo("jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players");
+		} else
+		{
+			openConnectionTo("jdbc:mysql://production.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players");
+		}
 		testing = false;
 	}
 

@@ -15,6 +15,14 @@ public enum PlayerType
 	 */
 	male_b("male_b"),
 	/**
+	 * Female appearance, type 1
+	 */
+	female_a("female_a"),
+	/**
+	 * Female appearance, type 2
+	 */
+	female_b("female_b"),
+	/**
 	 * Knight who has a straw hat
 	 */
 	knight_with_straw_hat("knight_with_straw_hat"),

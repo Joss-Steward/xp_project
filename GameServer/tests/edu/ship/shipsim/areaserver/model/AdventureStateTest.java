@@ -19,6 +19,7 @@ import datasource.QuestStateEnum;
 import edu.ship.shipsim.areaserver.datasource.AdventureStatesForTest;
 import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
 import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
+import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
 import edu.ship.shipsim.areaserver.model.reports.AdventureStateChangeReport;
 
 /**
@@ -27,7 +28,8 @@ import edu.ship.shipsim.areaserver.model.reports.AdventureStateChangeReport;
  * @author Ryan
  *
  */
-public class AdventureStateTest extends DatabaseTest {
+public class AdventureStateTest extends DatabaseTest
+{
 
 	private QuestState questState = null;
 
@@ -35,7 +37,8 @@ public class AdventureStateTest extends DatabaseTest {
 	 * 
 	 */
 	@Before
-	public void setUp() {
+	public void setUp()
+	{
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton(true);
 		QuestManager.resetSingleton();
@@ -45,9 +48,9 @@ public class AdventureStateTest extends DatabaseTest {
 	 * Test to ensure the creation of an adventure is correct
 	 */
 	@Test
-	public void testInitialization() {
-		AdventureState adventure = new AdventureState(1,
-				AdventureStateEnum.HIDDEN, false);
+	public void testInitialization()
+	{
+		AdventureState adventure = new AdventureState(1, AdventureStateEnum.HIDDEN, false);
 
 		assertEquals(1, adventure.getID());
 		assertEquals(AdventureStateEnum.HIDDEN, adventure.getState());
@@ -67,10 +70,10 @@ public class AdventureStateTest extends DatabaseTest {
 	 */
 	@Test
 	public void testTriggerAdventure() throws IllegalAdventureChangeException,
-			DatabaseException, IllegalQuestChangeException {
+			DatabaseException, IllegalQuestChangeException
+	{
 		int playerID = 1;
-		AdventureState adv = new AdventureState(1, AdventureStateEnum.HIDDEN,
-				false);
+		AdventureState adv = new AdventureState(1, AdventureStateEnum.HIDDEN, false);
 		ArrayList<AdventureState> al = new ArrayList<AdventureState>();
 		al.add(adv);
 		QuestState q = new QuestState(2, QuestStateEnum.TRIGGERED, false);
@@ -92,11 +95,11 @@ public class AdventureStateTest extends DatabaseTest {
 	 *             thrown if changing to a wrong state
 	 */
 	@Test(expected = IllegalAdventureChangeException.class)
-	public void testTriggerNonHiddenAdventure()
-			throws IllegalAdventureChangeException, DatabaseException,
-			IllegalQuestChangeException {
-		AdventureState adventure = new AdventureState(1,
-				AdventureStateEnum.COMPLETED, false);
+	public void testTriggerNonHiddenAdventure() throws IllegalAdventureChangeException,
+			DatabaseException, IllegalQuestChangeException
+	{
+		AdventureState adventure = new AdventureState(1, AdventureStateEnum.COMPLETED,
+				false);
 		adventure.trigger();
 		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
 	}
@@ -114,15 +117,15 @@ public class AdventureStateTest extends DatabaseTest {
 	 */
 	@Test
 	public void testCompleteNotFulfillingAdventure() throws DatabaseException,
-			IllegalAdventureChangeException, IllegalQuestChangeException {
-		
+			IllegalAdventureChangeException, IllegalQuestChangeException
+	{
+
 		PlayerManager.getSingleton().addPlayer(2);
 		ArrayList<AdventureState> al = new ArrayList<AdventureState>();
 		AdventureState adventure = new AdventureState(
 				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.getAdventureID(),
 				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.getState(),
-				AdventureStatesForTest.PLAYER2_QUEST1_ADV1
-						.isNeedingNotification());
+				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.isNeedingNotification());
 		al.add(adventure);
 		QuestState qState = new QuestState(
 				QuestStatesForTest.PLAYER2_QUEST1.getQuestID(),
@@ -132,9 +135,9 @@ public class AdventureStateTest extends DatabaseTest {
 		qState.addAdventures(al);
 		qState.setPlayerID(2);
 		qState.trigger();
-		
+
 		adventure.complete();
-		
+
 		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
 		assertFalse(adventure.isNeedingNotification());
 		assertEquals(QuestStateEnum.TRIGGERED, qState.getStateValue());
@@ -153,17 +156,22 @@ public class AdventureStateTest extends DatabaseTest {
 	 */
 	@Test
 	public void testCompleteFulfillingAdventure() throws DatabaseException,
-			IllegalAdventureChangeException, IllegalQuestChangeException {
+			IllegalAdventureChangeException, IllegalQuestChangeException
+	{
 		PlayerManager.getSingleton().addPlayer(1);
 
 		questState = new QuestState(2, QuestStateEnum.TRIGGERED, false);
 
 		questState.setPlayerID(1);
 
-		AdventureState adventure = new AdventureState(1,
-				AdventureStateEnum.PENDING, false);
+		AdventureState adventure = new AdventureState(1, AdventureStateEnum.PENDING,
+				false);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
 		adventureList.add(adventure);
+		for (int i = 0; i < QuestsForTest.THE_OTHER_QUEST.getAdventuresForFulfillment() - 1; i++)
+		{
+			adventureList.add(new AdventureState(i, AdventureStateEnum.COMPLETED, false));
+		}
 		questState.addAdventures(adventureList);
 
 		adventure.complete();
@@ -184,19 +192,19 @@ public class AdventureStateTest extends DatabaseTest {
 	 *             thrown if illegal state change
 	 */
 	@Test
-	public void testCompleteAlreadyFulfilledAdventure()
-			throws DatabaseException, IllegalAdventureChangeException,
-			IllegalQuestChangeException {
+	public void testCompleteAlreadyFulfilledAdventure() throws DatabaseException,
+			IllegalAdventureChangeException, IllegalQuestChangeException
+	{
 		PlayerManager.getSingleton().addPlayer(1);
 
 		questState = new QuestState(2, QuestStateEnum.FULFILLED, false);
 
 		questState.setPlayerID(1);
 
-		AdventureState adventure = new AdventureState(1,
-				AdventureStateEnum.COMPLETED, false);
-		AdventureState adventure2 = new AdventureState(2,
-				AdventureStateEnum.PENDING, false);
+		AdventureState adventure = new AdventureState(1, AdventureStateEnum.COMPLETED,
+				false);
+		AdventureState adventure2 = new AdventureState(2, AdventureStateEnum.PENDING,
+				false);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
 		adventureList.add(adventure);
 		adventureList.add(adventure2);
@@ -220,16 +228,15 @@ public class AdventureStateTest extends DatabaseTest {
 	 *             thrown if changing to a wrong state
 	 */
 	@Test
-	public void testChangeStateToPending()
-			throws IllegalAdventureChangeException, DatabaseException,
-			IllegalQuestChangeException {
-		
+	public void testChangeStateToPending() throws IllegalAdventureChangeException,
+			DatabaseException, IllegalQuestChangeException
+	{
+
 		ArrayList<AdventureState> al = new ArrayList<AdventureState>();
 		AdventureState adventure = new AdventureState(
 				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.getAdventureID(),
 				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.getState(),
-				AdventureStatesForTest.PLAYER2_QUEST1_ADV1
-						.isNeedingNotification());
+				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.isNeedingNotification());
 		al.add(adventure);
 		QuestState qState = new QuestState(
 				QuestStatesForTest.PLAYER2_QUEST1.getQuestID(),
@@ -238,14 +245,14 @@ public class AdventureStateTest extends DatabaseTest {
 
 		qState.addAdventures(al);
 		qState.setPlayerID(2);
-		
+
 		adventure.changeState(AdventureStateEnum.PENDING, false);
 		assertEquals(adventure.getState(), AdventureStateEnum.PENDING);
 	}
 
 	/**
 	 * Makes sure that a AdventureStateChangeReport is created when the
-	 * adventures change state.
+	 * adventures change state from PENDING to COMPLETED
 	 * 
 	 * @throws IllegalQuestChangeException
 	 *             shouldn't throw this
@@ -255,16 +262,15 @@ public class AdventureStateTest extends DatabaseTest {
 	 *             shouldn't either
 	 */
 	@Test
-	public void receiveReportChangeState()
-			throws IllegalAdventureChangeException, DatabaseException,
-			IllegalQuestChangeException {
+	public void receiveReportChangeState() throws IllegalAdventureChangeException,
+			DatabaseException, IllegalQuestChangeException
+	{
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		ArrayList<AdventureState> al = new ArrayList<AdventureState>();
 		AdventureState state = new AdventureState(
 				AdventureStatesForTest.PLAYER1_QUEST2_ADV2.getAdventureID(),
-				AdventureStatesForTest.PLAYER1_QUEST2_ADV2.getState(),
-				AdventureStatesForTest.PLAYER1_QUEST2_ADV2
-						.isNeedingNotification());
+				AdventureStateEnum.PENDING,
+				AdventureStatesForTest.PLAYER1_QUEST2_ADV2.isNeedingNotification());
 		al.add(state);
 		QuestState qState = new QuestState(
 				QuestStatesForTest.PLAYER1_QUEST2.getQuestID(),

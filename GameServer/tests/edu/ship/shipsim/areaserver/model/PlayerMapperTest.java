@@ -30,11 +30,13 @@ import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
 public class PlayerMapperTest extends DatabaseTest
 {
 	/**
+	 * @throws DatabaseException shouldn't
 	 * @see datasource.DatabaseTest#setUp()
 	 */
 	@Before
-	public void setUp()
+	public void setUp() throws DatabaseException
 	{
+		super.setUp();
 		OptionsManager.getSingleton(true);
 		new PlayerRowDataGatewayMock().resetData();
 		QuestStateTableDataGatewayMock.getSingleton().resetData();

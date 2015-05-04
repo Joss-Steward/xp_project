@@ -3,9 +3,11 @@ package edu.ship.shipsim.areaserver.datasource;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import data.Position;
@@ -24,11 +26,24 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 	private QuestRowDataGateway gateway;
 
 	/**
+	 * Makes sure to reset the gateway
+	 * @throws DatabaseException shouldn't
+	 */
+	@Before
+	public void setup() throws DatabaseException
+	{
+		gateway = this.findGateway(1);
+		gateway.resetData();
+	}
+	/**
 	 * Make sure any static information is cleaned up between tests
+	 * @throws SQLException shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@After
-	public void cleanup()
+	public void cleanup() throws DatabaseException, SQLException
 	{
+		super.tearDown();
 		if (gateway != null)
 		{
 			gateway.resetData();

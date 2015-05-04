@@ -26,6 +26,10 @@ public class ModelFacade
 				{
 					cmd = (Command) commandQueue.getInfoPacket();
 					cmd.execute();
+					if (commandQueue.getQueueSize() == 0)
+					{
+						commandsPending = false;
+					}
 				} catch (InterruptedException e)
 				{
 					e.printStackTrace();
@@ -90,9 +94,18 @@ public class ModelFacade
 	}
 
 	private InformationQueue commandQueue;
-
+	private boolean commandsPending;
 	private boolean headless;
 
+	/**
+	 * Checks if commands are pending
+	 * @return if commands are pending
+	 */
+	public boolean hasCommandsPending()
+	{
+		return commandsPending;
+	}
+	
 	/**
 	 * Make the default constructor private
 	 * 
@@ -113,26 +126,33 @@ public class ModelFacade
 				@Override
 				public void run()
 				{
-					while (commandQueue.getQueueSize() > 0)
+					synchronized (commandQueue)
 					{
-						Command cmd;
-						try
+						while (commandQueue.getQueueSize() > 0)
 						{
-							cmd = (Command) commandQueue.getInfoPacket();
-							cmd.execute();
-							if (cmd.doDump())
+							Command cmd;
+							try
 							{
-								//let it clear
-								while (commandQueue.getQueueSize() > 0) 
+								cmd = (Command) commandQueue.getInfoPacket();
+								cmd.execute();
+								if (cmd.doDump())
 								{
-									commandQueue.getInfoPacket();
+									//let it clear
+									while (commandQueue.getQueueSize() > 0) 
+									{
+										commandQueue.getInfoPacket();
+									}
 								}
+								if (commandQueue.getQueueSize() == 0)
+								{
+									commandsPending = false;
+								}
+							} catch (InterruptedException e)
+							{
+								e.printStackTrace();
 							}
-						} catch (InterruptedException e)
-						{
-							e.printStackTrace();
+	
 						}
-
 					}
 				}
 
@@ -183,7 +203,11 @@ public class ModelFacade
 	 */
 	public void queueCommand(Command cmd)
 	{
-		commandQueue.queueInfoPacket(cmd);
+		synchronized (commandQueue)
+		{
+			commandsPending = true;
+			commandQueue.queueInfoPacket(cmd);
+		}
 	}
 
 	/**

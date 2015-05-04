@@ -2,6 +2,8 @@ package datasource;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
+
 import org.junit.After;
 import org.junit.Test;
 
@@ -58,16 +60,19 @@ public abstract class PlayerLoginRowDataGatewayTest extends DatabaseTest
 
 	/**
 	 * Make sure any static information is cleaned up between tests
+	 * @throws SQLException if we have trouble cleaning up the db connection
+	 * @throws DatabaseException if we have trouble cleaning up the db connection
 	 */
 	@After
-	public void cleanup()
+	public void cleanup() throws DatabaseException, SQLException
 	{
+		super.tearDown();
 		if (gateway != null)
 		{
 			gateway.resetData();
 		}
 	}
-
+	
 	/**
 	 * Make sure we can add a new user to the system
 	 * 
