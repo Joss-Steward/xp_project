@@ -34,7 +34,7 @@ public class DatabaseManager
 
 	private DatabaseManager() throws DatabaseException
 	{
-		if (OptionsManager.getSingleton().isRunningLocal())
+		if (OptionsManager.getSingleton().isTestMode() || OptionsManager.getSingleton().isRunningLocal())
 		{
 			openConnectionTo("jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players");
 		} else
