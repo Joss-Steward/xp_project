@@ -2,12 +2,17 @@ package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
 
+import java.rmi.AlreadyBoundException;
+import java.rmi.NotBoundException;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.AdventureStateChangeMessage;
 import datasource.AdventureStateEnum;
+import datasource.PlayersForTest;
 import edu.ship.shipsim.client.model.ModelFacade;
+import edu.ship.shipsim.client.model.PlayerManager;
 
 /**
  * Tests functionality of the AdventureStateChangeMessageHandler
@@ -42,10 +47,14 @@ public class AdventureStateChangeMessageHandlerTest
 	 * Test that the handler messages handles the messages and creates
 	 * a command
 	 * @throws InterruptedException shouldn't
+	 * @throws NotBoundException shouldn't
+	 * @throws AlreadyBoundException shouldn't
 	 */
 	@Test
-	public void testMessageHandling() throws InterruptedException
+	public void testMessageHandling() throws InterruptedException, AlreadyBoundException, NotBoundException
 	{
+		PlayerManager.getSingleton().initiateLogin("john", "pw");
+		PlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
 		AdventureStateChangeMessageHandler h = new AdventureStateChangeMessageHandler();
 		AdventureStateChangeMessage msg = new AdventureStateChangeMessage(1, 2, 3, "Big Adventure", AdventureStateEnum.PENDING);
 		

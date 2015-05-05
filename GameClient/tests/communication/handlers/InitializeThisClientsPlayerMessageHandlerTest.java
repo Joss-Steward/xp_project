@@ -2,6 +2,8 @@ package communication.handlers;
 
 import static org.junit.Assert.*;
 
+import java.rmi.AlreadyBoundException;
+import java.rmi.NotBoundException;
 import java.util.ArrayList;
 
 import model.ClientPlayerAdventure;
@@ -13,10 +15,12 @@ import org.junit.Test;
 import communication.messages.InitializeThisClientsPlayerMessage;
 import datasource.AdventureStateEnum;
 import datasource.LevelRecord;
+import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
 import edu.ship.shipsim.client.model.CommandOverwriteExperience;
 import edu.ship.shipsim.client.model.ModelFacade;
 import edu.ship.shipsim.client.model.CommandOverwriteQuestState;
+import edu.ship.shipsim.client.model.PlayerManager;
 
 /**
  * @author Frank Schmidt
@@ -50,10 +54,14 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 	 * 
 	 * @throws InterruptedException
 	 * 				shouldn't
+	 * @throws NotBoundException shouldn't
+	 * @throws AlreadyBoundException shouldn't
 	 */
 	@Test
-	public void test() throws InterruptedException
+	public void test() throws InterruptedException, AlreadyBoundException, NotBoundException
 	{
+		PlayerManager.getSingleton().initiateLogin("john", "pw");
+		PlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
 		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
 		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED, 42, 133); 
@@ -79,10 +87,14 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 	 * 
 	 * @throws InterruptedException
 	 * 				shouldn't
+	 * @throws NotBoundException shouldn't
+	 * @throws AlreadyBoundException shouldn't
 	 */
 	@Test
-	public void testExperiencePts() throws InterruptedException
+	public void testExperiencePts() throws InterruptedException, AlreadyBoundException, NotBoundException
 	{
+		PlayerManager.getSingleton().initiateLogin("john", "pw");
+		PlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
 		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
 		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED, 42, 8); 
@@ -97,6 +109,9 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		CommandOverwriteExperience cmd = (CommandOverwriteExperience) ModelFacade.getSingleton().getNextCommand();
 		int actualPoints = cmd.getExperiencePoints();
 		assertEquals(expectedPoints, actualPoints);
-		//TODO Make sure the other command got there, too 
+		while(ModelFacade.getSingleton().hasCommandsPending())
+		{
+			Thread.sleep(100);
+		}
 	}
 }
