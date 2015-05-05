@@ -1,3 +1,4 @@
+import model.OptionsManager;
 import datasource.DatabaseException;
 import datasource.PlayerConnectionRowDataGatewayRDS;
 import datasource.PlayerLoginRowDataGatewayRDS;
@@ -21,6 +22,7 @@ public class BuildTestDBPlayerLogin
 	 */
 	public static void main(String[] args) throws DatabaseException
 	{
+		OptionsManager.getSingleton(true);
 		createPlayerLoginTable();
 		createPlayerConnectionTable();
 	}
@@ -42,7 +44,7 @@ public class BuildTestDBPlayerLogin
 		
 		for (PlayersForTest p : PlayersForTest.values())
 		{
-			new PlayerConnectionRowDataGatewayRDS(p.getPlayerID(), p.getPin(), p.getMapNameForPin());
+			new PlayerConnectionRowDataGatewayRDS(p.getPlayerID(), p.getPin(), p.getMapName());
 			
 		}
 	}

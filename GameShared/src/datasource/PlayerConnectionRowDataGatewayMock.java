@@ -128,7 +128,7 @@ public class PlayerConnectionRowDataGatewayMock implements PlayerConnectionRowDa
 		{
 			playerConnections
 					.put(p.getPlayerID(), new ConnectionInfo(p.getPin(),
-							p.getChangedOn(), p.getMapNameForPin()));
+							p.getChangedOn(), p.getMapName()));
 		}
 	}
 
