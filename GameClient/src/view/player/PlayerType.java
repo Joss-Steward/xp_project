@@ -29,7 +29,7 @@ public enum PlayerType
 	/**
 	 * Magic guy
 	 */
-	magi("magi"),
+	Magi("Magi"),
 	/**
 	 * Ninja
 	 */
