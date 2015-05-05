@@ -37,7 +37,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 
 			stmt = new ClosingPreparedStatement(
 					connection,
-					"Create TABLE Players (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, mapName VARCHAR(80), row INTEGER, col INTEGER, " +
+					"Create TABLE Players (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  row INTEGER, col INTEGER, " +
 					"appearanceType VARCHAR(255), quizScore INTEGER, experiencePoints INTEGER)");
 			stmt.executeUpdate();
 		} catch (SQLException e)
@@ -47,7 +47,6 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	}
 
 	private int playerID;
-	private String mapName;
 	private Position position;
 	private String appearanceType;
 	private int quizScore;
@@ -75,7 +74,6 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 			stmt.setInt(1, playerID);
 			ResultSet result = stmt.executeQuery();
 			result.next();
-			this.mapName = result.getString("mapName");
 			this.position = (Position) new Position(result.getInt("row"),
 					result.getInt("col"));
 			this.appearanceType = result.getString("appearanceType");
@@ -91,18 +89,16 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	/**
 	 * create constructor
 	 * 
-	 * @param mapName
-	 *            the name of the map this player is on
 	 * @param position
 	 *            the row/column of the position the player is in
 	 * @param appearanceType
 	 *            the appearance type this player should be rendered with
 	 * @param quizScore this player's current quiz score
-	 * @param experiencePoints TODO
+	 * @param experiencePoints this player's experience points
 	 * @throws DatabaseException
 	 *             shouldn't
 	 */
-	public PlayerRowDataGatewayRDS(String mapName, Position position,
+	public PlayerRowDataGatewayRDS(Position position,
 			String appearanceType, int quizScore, int experiencePoints) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
@@ -110,14 +106,13 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
 					connection,
-					"Insert INTO Players SET mapName = ?, row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ?",
+					"Insert INTO Players SET row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ?",
 					Statement.RETURN_GENERATED_KEYS);
-			stmt.setString(1, mapName);
-			stmt.setInt(2, position.getRow());
-			stmt.setInt(3, position.getColumn());
-			stmt.setString(4, appearanceType);
-			stmt.setInt(5,  quizScore);
-			stmt.setInt(6, experiencePoints);
+			stmt.setInt(1, position.getRow());
+			stmt.setInt(2, position.getColumn());
+			stmt.setString(3, appearanceType);
+			stmt.setInt(4,  quizScore);
+			stmt.setInt(5, experiencePoints);
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next())
@@ -139,15 +134,6 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	public String getAppearanceType()
 	{
 		return appearanceType;
-	}
-
-	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#getMapName()
-	 */
-	@Override
-	public String getMapName()
-	{
-		return mapName;
 	}
 
 	/**
@@ -188,14 +174,13 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 		try
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"UPDATE Players SET mapName = ?, row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ? WHERE playerID = ?");
-			stmt.setString(1, mapName);
-			stmt.setInt(2, position.getRow());
-			stmt.setInt(3, position.getColumn());
-			stmt.setString(4, appearanceType);
-			stmt.setInt(5, quizScore);
-			stmt.setInt(6, experiencePoints);
-			stmt.setInt(7, playerID);
+					"UPDATE Players SET row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ? WHERE playerID = ?");
+			stmt.setInt(1, position.getRow());
+			stmt.setInt(2, position.getColumn());
+			stmt.setString(3, appearanceType);
+			stmt.setInt(4, quizScore);
+			stmt.setInt(5, experiencePoints);
+			stmt.setInt(6, playerID);
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -220,15 +205,6 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	public void setAppearanceType(String appearanceType)
 	{
 		this.appearanceType = appearanceType;
-	}
-
-	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#setMapName(java.lang.String)
-	 */
-	@Override
-	public void setMapName(String mapName)
-	{
-		this.mapName = mapName;
 	}
 
 	/**

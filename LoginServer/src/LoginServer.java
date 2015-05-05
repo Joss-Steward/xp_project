@@ -91,6 +91,7 @@ public class LoginServer implements Runnable
 			if(splitArg[0].equals("--localhost"))
 			{
 				OptionsManager.getSingleton(false);
+				OptionsManager.getSingleton().setRunningLocal(true);
 			}
 		}
 		LoginServer S = new LoginServer();

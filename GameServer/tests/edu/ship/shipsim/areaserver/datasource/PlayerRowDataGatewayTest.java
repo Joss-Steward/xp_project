@@ -52,7 +52,6 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 	{
 		PlayersForTest john = PlayersForTest.JOHN;
 		gateway = findGateway(john.getPlayerID());
-		assertEquals(john.getMapName(), gateway.getMapName());
 		assertEquals(john.getPlayerID(), gateway.getPlayerID());
 		assertEquals(john.getPosition(), gateway.getPosition());
 		assertEquals(john.getAppearanceType(), gateway.getAppearanceType());
@@ -71,7 +70,6 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 		gateway = createGateway("mapName", new Position(3,2), "Warrior", 2, 13);
 
 		PlayerRowDataGateway after = findGateway(gateway.getPlayerID());
-		assertEquals("mapName", after.getMapName());
 		assertEquals(new Position(3,2), after.getPosition());
 		assertEquals("Warrior", after.getAppearanceType());
 		assertEquals(2,after.getQuizScore());
@@ -84,7 +82,7 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 	 * @param position the position on the map
 	 * @param appearanceType the appearance type of the player
 	 * @param quizScore This player's quiz score
-	 * @param experiencePoints TODO
+	 * @param experiencePoints this player's experience points
 	 * @return the gateway
 	 * @throws DatabaseException if we fail to create the row
 	 */
@@ -103,21 +101,7 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 	{
 		gateway = findGateway(11111);
 	}
-	
-	/**
-	 * @throws DatabaseException
-	 *             shouldn't
-	 */
-	@Test
-	public void changeMapName() throws DatabaseException
-	{
-		gateway = findGateway(PlayersForTest.MERLIN.getPlayerID());
-		gateway.setMapName("no where");
-		gateway.persist();
-		PlayerRowDataGateway after = findGateway(PlayersForTest.MERLIN
-				.getPlayerID());
-		assertEquals("no where", after.getMapName());
-	}
+
 	
 	/**
 	 * @throws DatabaseException

@@ -12,11 +12,6 @@ public interface PlayerRowDataGateway
 {
 
 	/**
-	 * @return the map this player is currently on
-	 */
-	String getMapName();
-
-	/**
 	 * @return this player's player id
 	 */
 	int getPlayerID();
@@ -40,11 +35,6 @@ public interface PlayerRowDataGateway
 	 * For testing purposes
 	 */
 	public void resetData();
-
-	/**
-	 * @param mapName the name of the map this player is currently on
-	 */
-	void setMapName(String mapName);
 
 	/**
 	 * Store this information into the data source

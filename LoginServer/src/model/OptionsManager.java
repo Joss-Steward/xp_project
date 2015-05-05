@@ -11,7 +11,12 @@ public class OptionsManager
 	private static OptionsManager singleton;
 	
 	private boolean testMode = false;
+	private boolean runningLocal = false;
 
+	public void setRunningLocal(boolean runningLocal)
+	{
+		this.runningLocal = runningLocal;
+	}
 	/**
 	 * I'm a singleton
 	 * 
@@ -41,7 +46,7 @@ public class OptionsManager
 
 	public boolean isRunningLocal()
 	{
-		return false;
+		return runningLocal;
 	}
 	/**
 	 * 

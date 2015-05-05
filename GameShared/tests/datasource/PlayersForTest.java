@@ -22,7 +22,7 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	NICK(3, "Nick", "magi", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0, 35),
+	NICK(3, "Nick", "male_b", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0, 35),
 	/**
 	 * 
 	 */
@@ -38,7 +38,7 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	FRANK(7, "Frank", "male_b", 4, 13, "pw", "current.tmx", 1441, null, "current.tmx", 0, 13),
+	FRANK(7, "Frank", "male_c", 4, 13, "pw", "current.tmx", 1441, null, "current.tmx", 0, 13),
 	/**
 	 * 
 	 */
@@ -60,17 +60,17 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	MOCK_NPC(12, "NPC1","magi", 4, 13, "", "silly.tmx", 1111, null, "silly.tmx", 0, 0),
+	MOCK_NPC(12, "NPC1","Magi", 4, 13, "", "silly.tmx", 1111, null, "silly.tmx", 0, 0),
 	
 	/**
 	 * 
 	 */
-	QUIZBOT(13, "QuizBot","magi", 4, 13, "", "quiznasium.tmx", 1111, null, "quiznasium.tmx", 0, 0),
+	QUIZBOT(13, "QuizBot","Magi", 4, 13, "", "quiznasium.tmx", 1111, null, "quiznasium.tmx", 0, 0),
 	
 	/**
 	 * 
 	 */
-	MOCK_NPC3(14, "NPC3","magi", 4, 13, "", "silly.tmx", 1111, null, "silly.tmx", 0, 0),
+	MOCK_NPC3(14, "NPC3","Magi", 4, 13, "", "silly.tmx", 1111, null, "silly.tmx", 0, 0),
 	
 	/**
 	 * 

@@ -146,7 +146,7 @@ public class NPCRowDataGatewayRDS implements NPCRowDataGateway
 		try
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"SELECT * FROM Players INNER JOIN NPCs ON NPCs.playerID = Players.PlayerID");
+					"SELECT * FROM PlayerConnection INNER JOIN NPCs ON NPCs.playerID = PlayerConnection.playerID");
 			ResultSet result = stmt.executeQuery();
 			while (result.next())
 			{

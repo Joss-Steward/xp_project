@@ -28,7 +28,7 @@ public class PlayerRowDataGatewayRDSTest extends PlayerRowDataGatewayTest
 	PlayerRowDataGateway createGateway(String mapName, Position position,
 			String appearanceType, int quizScore, int experiencePoints) throws DatabaseException
 	{
-		return new PlayerRowDataGatewayRDS(mapName, position, appearanceType, quizScore, experiencePoints);
+		return new PlayerRowDataGatewayRDS(position, appearanceType, quizScore, experiencePoints);
 	}
 
 	

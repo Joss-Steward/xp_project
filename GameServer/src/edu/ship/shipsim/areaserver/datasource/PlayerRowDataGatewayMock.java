@@ -17,25 +17,18 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 
 	private class PlayerInfo
 	{
-		private String mapName;
 		private Position position;
 		private String appearanceType;
 		private int quizScore;
 		private int experiencePoints;
 
-		public PlayerInfo(String mapName, Position position,
-				String appearanceType, int quizScore, int experiencePoints)
+		public PlayerInfo(Position position, String appearanceType,
+				int quizScore, int experiencePoints)
 		{
-			this.mapName = mapName;
 			this.position = position;
 			this.appearanceType = appearanceType;
 			this.quizScore = quizScore;
 			this.experiencePoints = experiencePoints;
-		}
-
-		public String getMapName()
-		{
-			return mapName;
 		}
 
 		public Position getPosition()
@@ -86,13 +79,12 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	/**
 	 * Create constructor - will add the information as a new row in the data source as
 	 * the object is constructed
-	 * @param mapName the name of the map the player is playing
 	 * @param position the position of the player on the map
 	 * @param appearanceType the appearance type of the player
 	 * @param quizScore this player's current quiz score
-	 * @param experiencePoints TODO
+	 * @param experiencePoints this player's experience points
 	 */
-	public PlayerRowDataGatewayMock(String mapName, Position position,
+	public PlayerRowDataGatewayMock(Position position,
 			String appearanceType, int quizScore, int experiencePoints) 
 	{
 		if (playerInfo == null)
@@ -102,8 +94,8 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		playerID = nextKey;
 		nextKey++;
 		
-		playerInfo.put(playerID, new PlayerInfo(mapName, position,
-				appearanceType, quizScore, experiencePoints));
+		playerInfo.put(playerID, new PlayerInfo(position, appearanceType,
+				quizScore, experiencePoints));
 	}
 
 	/**
@@ -125,19 +117,10 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		{
 			playerInfo.put(
 					nextKey,
-					new PlayerInfo(p.getMapName(), p.getPosition(), p
+					new PlayerInfo(p.getPosition(), p
 							.getAppearanceType(), p.getQuizScore(), p.getExperiencePoints()));
 			nextKey++;
 		}
-	}
-
-	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#getMapName()
-	 */
-	@Override
-	public String getMapName()
-	{
-		return info.getMapName();
 	}
 
 	/**
@@ -165,15 +148,6 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	public String getAppearanceType()
 	{
 		return info.getAppearanceType();
-	}
-
-	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGateway#setMapName(java.lang.String)
-	 */
-	@Override
-	public void setMapName(String mapName)
-	{
-		info.mapName = mapName;
 	}
 
 	/**

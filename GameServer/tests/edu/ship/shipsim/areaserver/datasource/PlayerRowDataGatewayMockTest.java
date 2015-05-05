@@ -28,7 +28,7 @@ public class PlayerRowDataGatewayMockTest extends PlayerRowDataGatewayTest
 	PlayerRowDataGateway createGateway(String mapName, Position position,
 			String appearanceType, int quizScore, int experiencePoints) throws DatabaseException
 	{
-		return new PlayerRowDataGatewayMock(mapName, position, appearanceType, quizScore, experiencePoints);
+		return new PlayerRowDataGatewayMock(position, appearanceType, quizScore, experiencePoints);
 	}
 
 	

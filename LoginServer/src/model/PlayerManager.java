@@ -70,7 +70,7 @@ public class PlayerManager extends Observable
 			String server;
 			int port;
 
-			MapToServerMapping mapping = new MapToServerMapping(DEFAULT_MAP);
+			MapToServerMapping mapping = new MapToServerMapping(pp.getMapName());
 			server = mapping.getHostName();
 			port = mapping.getPortNumber();
 			// TODO remember that you removed testing stuff here in case logins

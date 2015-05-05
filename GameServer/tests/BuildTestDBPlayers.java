@@ -29,6 +29,7 @@ public class BuildTestDBPlayers
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
 		OptionsManager.getSingleton(false);
+		OptionsManager.setRunningLocal(true);
 		createPlayerTable();
 		createNpcTable();
 	}
@@ -39,7 +40,7 @@ public class BuildTestDBPlayers
 
 		for (PlayersForTest p : PlayersForTest.values())
 		{
-			new PlayerRowDataGatewayRDS(p.getMapName(),p.getPosition(), p.getAppearanceType(), p.getQuizScore(), p.getExperiencePoints());
+			new PlayerRowDataGatewayRDS(p.getPosition(), p.getAppearanceType(), p.getQuizScore(), p.getExperiencePoints());
 		}
 
 	}

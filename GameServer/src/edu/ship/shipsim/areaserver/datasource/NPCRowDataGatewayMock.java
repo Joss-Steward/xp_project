@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import datasource.DatabaseException;
+import datasource.PlayerConnectionRowDataGatewayMock;
 
 /**
  * A mock implementation for PlayerRowDataGateway
@@ -115,7 +116,7 @@ public class NPCRowDataGatewayMock implements NPCRowDataGateway
 		ArrayList<NPCRowDataGateway> result = new ArrayList<NPCRowDataGateway>();
 		for (Integer npcID:npcInfo.keySet())
 		{
-			PlayerRowDataGatewayMock playerGateway = new PlayerRowDataGatewayMock(npcID);
+			PlayerConnectionRowDataGatewayMock playerGateway = new PlayerConnectionRowDataGatewayMock(npcID);
 			if (playerGateway.getMapName().equals(mapName))
 			{
 				result.add(new NPCRowDataGatewayMock(npcID));

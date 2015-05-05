@@ -3,6 +3,9 @@ package edu.ship.shipsim.areaserver.model;
 import java.util.ArrayList;
 
 import datasource.DatabaseException;
+import datasource.PlayerConnectionRowDataGateway;
+import datasource.PlayerConnectionRowDataGatewayMock;
+import datasource.PlayerConnectionRowDataGatewayRDS;
 import model.OptionsManager;
 import model.PlayerLogin;
 import edu.ship.shipsim.areaserver.datasource.AdventureStateRecord;
@@ -30,6 +33,7 @@ public class PlayerMapper
 {
 
 	private PlayerRowDataGateway playerGateway;
+	private PlayerConnectionRowDataGateway playerConnectionGateway;
 	private QuestStateTableDataGateway questStateGateway;
 	private AdventureStateTableDataGateway adventureStateGateway;
 	/**
@@ -53,11 +57,13 @@ public class PlayerMapper
 			this.questStateGateway = QuestStateTableDataGatewayMock.getSingleton();
 			this.adventureStateGateway = AdventureStateTableDataGatewayMock
 					.getSingleton();
+			this.playerConnectionGateway = new PlayerConnectionRowDataGatewayMock(playerID);
 		} else
 		{
 			this.playerGateway = new PlayerRowDataGatewayRDS(playerID);
 			this.questStateGateway = QuestStateTableDataGatewayRDS.getSingleton();
 			this.adventureStateGateway = AdventureStateTableDataGatewayRDS.getSingleton();
+			this.playerConnectionGateway = new PlayerConnectionRowDataGatewayRDS(playerID);
 		}
 		this.player = createPlayerObject();
 		player.setAppearanceType(playerGateway.getAppearanceType());
@@ -65,9 +71,10 @@ public class PlayerMapper
 		player.setQuizScore(playerGateway.getQuizScore());
 		player.setPlayerLogin(new PlayerLogin(playerID));
 		player.setPlayerID(playerID);
-		player.setMapName(playerGateway.getMapName());
+		
 		player.setExperiencePoints(playerGateway.getExperiencePoints());
 		player.setDataMapper(this);
+		player.setMapName(playerConnectionGateway.getMapName());
 		loadQuestStates();
 	}
 
@@ -120,11 +127,12 @@ public class PlayerMapper
 	public void persist() throws DatabaseException, IllegalQuestChangeException
 	{
 		playerGateway.setAppearanceType(player.getAppearanceType());
-		playerGateway.setMapName(player.getMapName());
 		playerGateway.setPosition(player.getPlayerPosition());
 		playerGateway.setQuizScore(player.getQuizScore());
 		playerGateway.setExperiencePoints(player.getExperiencePoints());
 		playerGateway.persist();
+		playerConnectionGateway.storeMapName(player.getMapName());
+
 		ArrayList<QuestState> questList = QuestManager.getSingleton().getQuestList(
 				player.getPlayerID());
 		if (questList != null)
