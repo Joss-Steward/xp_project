@@ -36,7 +36,6 @@ public class DatabaseManager
 	{
 		if (OptionsManager.getSingleton().isTestMode() || OptionsManager.getSingleton().isRunningLocal())
 		{
-			System.out.println("Opening connection to test DB");
 			openConnectionTo("jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players");
 		} else
 		{

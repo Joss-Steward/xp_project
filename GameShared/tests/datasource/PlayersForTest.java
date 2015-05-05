@@ -26,7 +26,7 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	JOSH(4, "Josh", "ninja", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0, 25),
+	JOSH(4, "Josh", "Ninja", 4, 13, "pw", "current.tmx", 1111, null, "current.tmx", 0, 25),
 	/**
 	 * 
 	 */
