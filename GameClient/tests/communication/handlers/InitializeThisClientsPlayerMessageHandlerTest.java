@@ -1,6 +1,6 @@
 package communication.handlers;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
@@ -13,13 +13,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.InitializeThisClientsPlayerMessage;
+
 import datasource.AdventureStateEnum;
 import datasource.LevelRecord;
 import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
-import edu.ship.shipsim.client.model.CommandOverwriteExperience;
 import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.CommandOverwriteQuestState;
 import edu.ship.shipsim.client.model.PlayerManager;
 
 /**
@@ -70,16 +69,13 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		LevelRecord level = new LevelRecord("One", 45);
 		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(qList, 20, level);
 		handler.process(msg);
-		assertEquals(2, ModelFacade.getSingleton().getCommandQueueLength());
 		while(ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}
-		CommandOverwriteQuestState cmd = (CommandOverwriteQuestState) ModelFacade.getSingleton().getNextCommand();
-		ArrayList<ClientPlayerQuest> actual = cmd.getClientPlayerQuestList();
+		ArrayList<ClientPlayerQuest> actual = PlayerManager.getSingleton().getThisClientsPlayer().getQuests();
 		assertEquals(qList, actual);
-		assertEquals(42, q.getExperiencePointsGained());
-		assertEquals(133, q.getAdventuresToFulfillment());
+		
 	}
 	
 	/**
@@ -104,14 +100,11 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		LevelRecord level = new LevelRecord("One", 45);
 		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(qList, expectedPoints, level);
 		handler.process(msg);
-		assertEquals(2, ModelFacade.getSingleton().getCommandQueueLength());
-		ModelFacade.getSingleton().getNextCommand();
-		CommandOverwriteExperience cmd = (CommandOverwriteExperience) ModelFacade.getSingleton().getNextCommand();
-		int actualPoints = cmd.getExperiencePoints();
-		assertEquals(expectedPoints, actualPoints);
+		
 		while(ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}
+		assertEquals(expectedPoints, PlayerManager.getSingleton().getThisClientsPlayer().getExperiencePoints());
 	}
 }

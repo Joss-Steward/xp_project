@@ -24,11 +24,14 @@ public class ModelFacade
 				Command cmd;
 				try
 				{
-					cmd = (Command) commandQueue.getInfoPacket();
-					cmd.execute();
-					if (commandQueue.getQueueSize() == 0)
+					synchronized (commandQueue)
 					{
-						commandsPending = false;
+						cmd = (Command) commandQueue.getInfoPacket();
+						cmd.execute();
+						if (commandQueue.getQueueSize() == 0)
+						{
+							commandsPending = false;
+						}
 					}
 				} catch (InterruptedException e)
 				{
@@ -99,13 +102,14 @@ public class ModelFacade
 
 	/**
 	 * Checks if commands are pending
+	 * 
 	 * @return if commands are pending
 	 */
 	public boolean hasCommandsPending()
 	{
 		return commandsPending;
 	}
-	
+
 	/**
 	 * Make the default constructor private
 	 * 
@@ -137,8 +141,8 @@ public class ModelFacade
 								cmd.execute();
 								if (cmd.doDump())
 								{
-									//let it clear
-									while (commandQueue.getQueueSize() > 0) 
+									// let it clear
+									while (commandQueue.getQueueSize() > 0)
 									{
 										commandQueue.getInfoPacket();
 									}
@@ -151,7 +155,7 @@ public class ModelFacade
 							{
 								e.printStackTrace();
 							}
-	
+
 						}
 					}
 				}
@@ -236,7 +240,8 @@ public class ModelFacade
 
 	/**
 	 * @return the next command in the queue
-	 * @throws InterruptedException shouldn't
+	 * @throws InterruptedException
+	 *             shouldn't
 	 */
 	public Command getNextCommand() throws InterruptedException
 	{

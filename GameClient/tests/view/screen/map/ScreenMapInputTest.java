@@ -102,7 +102,7 @@ public class ScreenMapInputTest
 
 	private void pauseForCommandExecution() throws InterruptedException
 	{
-		while (ModelFacade.getSingleton().queueSize() > 0)
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

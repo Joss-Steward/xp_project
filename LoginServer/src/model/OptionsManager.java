@@ -6,27 +6,10 @@ package model;
  * @author Steve
  *
  */
-public class OptionsManager 
+public class OptionsManager
 {
 	private static OptionsManager singleton;
-	
-	private boolean testMode = false;
-	private boolean runningLocal = false;
 
-	public void setRunningLocal(boolean runningLocal)
-	{
-		this.runningLocal = runningLocal;
-	}
-	/**
-	 * I'm a singleton
-	 * 
-	 * @param testMode
-	 *            true if we are running tests false for live system
-	 */
-	private OptionsManager(boolean testMode2)
-	{
-		testMode = testMode2;
-	}
 	/**
 	 * Used to get an existing singleton (it must have already been created). If
 	 * it hasn't been created, you must use the getSingleton where you specify
@@ -44,10 +27,6 @@ public class OptionsManager
 		return singleton;
 	}
 
-	public boolean isRunningLocal()
-	{
-		return runningLocal;
-	}
 	/**
 	 * 
 	 * @param testMode
@@ -70,7 +49,6 @@ public class OptionsManager
 		return singleton;
 	}
 
-	
 	/**
 	 * Reset our instance
 	 */
@@ -78,21 +56,54 @@ public class OptionsManager
 	{
 		singleton = null;
 	}
-	
+
+	private boolean testMode = false;
+	private boolean runningLocal = false;
+
 	/**
-	 * Set this to be in localhost testing mode
+	 * I'm a singleton
+	 * 
+	 * @param testMode
+	 *            true if we are running tests false for live system
 	 */
-	public void setTestMode() 
+	private OptionsManager(boolean testMode2)
 	{
-		testMode = true;
+		testMode = testMode2;
 	}
 
 	/**
-	 * returns true if this server is running in localhost mode for testing purposes
+	 * @return true if we are running on the test DB
+	 */
+	public boolean isRunningLocal()
+	{
+		return runningLocal;
+	}
+
+	/**
+	 * returns true if this server is running in localhost mode for testing
+	 * purposes
+	 * 
 	 * @return local mode
 	 */
 	public boolean isTestMode()
 	{
 		return testMode;
+	}
+
+	/**
+	 * @param runningLocal
+	 *            true if we are running on the test DB
+	 */
+	public void setRunningLocal(boolean runningLocal)
+	{
+		this.runningLocal = runningLocal;
+	}
+
+	/**
+	 * Set this to be in localhost testing mode
+	 */
+	public void setTestMode()
+	{
+		testMode = true;
 	}
 }

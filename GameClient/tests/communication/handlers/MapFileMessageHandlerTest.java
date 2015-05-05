@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.MapFileMessage;
+
 import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
