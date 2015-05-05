@@ -235,12 +235,11 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 		{
 			String sql;
 			ClosingPreparedStatement stmt;
-			deleteRow();
-
-			sql = "INSERT INTO PlayerConnection (playerID, Pin) VALUES (?, ?)";
+			
+			sql = "UPDATE PlayerConnection SET Pin= ? where playerID = ?";
 			stmt = new ClosingPreparedStatement(connection,sql);
-			stmt.setInt(1, playerID);
-			stmt.setInt(2, pin);
+			stmt.setInt(2, playerID);
+			stmt.setInt(1, pin);
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
