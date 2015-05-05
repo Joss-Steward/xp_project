@@ -225,7 +225,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 */
 	private void buildAdvRow(Texture state, String desc, Integer reward)
 	{
-		Label t_reward = new Label("XP: "+reward+" ",skin);
+		Label t_reward = new Label(" XP: "+reward+" ",skin);
 		ArrayList<String> parts = splitString(desc);
 		Label[] temp = new Label[parts.size()];
 		for (int i=0;i<temp.length;i++)
@@ -235,13 +235,13 @@ public class ScreenQAs extends Group implements QualifiedObserver
 		t_reward.setColor(Color.GREEN);
 		t_reward.setScale((float)1.1);
 		adventureTable.add(new Image(state));
-		adventureTable.add(temp[0]);
+		adventureTable.add(temp[0]).left();
 		adventureTable.add(t_reward);
 		adventureTable.row();
 		for (int i=1;i<temp.length;i++)
 		{
 			adventureTable.add(new Label("",skin));
-			adventureTable.add(temp[i]);
+			adventureTable.add(temp[i]).left();
 			adventureTable.row();
 		}
 	}

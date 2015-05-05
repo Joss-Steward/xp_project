@@ -23,6 +23,7 @@ import communication.packers.LoginMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.TeleportationInitiationMessagePackerTest;
 import edu.ship.shipsim.client.model.ChatManagerTest;
+import edu.ship.shipsim.client.model.CommandAdventureStateChangeTest;
 import edu.ship.shipsim.client.model.CommandChatMessageReceivedTest;
 import edu.ship.shipsim.client.model.CommandChatMessageSentTest;
 import edu.ship.shipsim.client.model.CommandClearModelStateTest;
@@ -42,6 +43,7 @@ import edu.ship.shipsim.client.model.ModelFacadeTest;
 import edu.ship.shipsim.client.model.PlayerManagerTest;
 import edu.ship.shipsim.client.model.PlayerTest;
 import edu.ship.shipsim.client.model.ThisClientsPlayerTest;
+import edu.ship.shipsim.client.model.reports.AdventureStateChangeReportTest;
 import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReportTest;
 import edu.ship.shipsim.client.model.reports.AreaCollisionReportTest;
 import edu.ship.shipsim.client.model.reports.ChangeMapReportTest;
@@ -90,6 +92,7 @@ import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 
 		// model
 		ChatManagerTest.class,
+		CommandAdventureStateChangeTest.class,
 		CommandChatMessageReceivedTest.class,
 		CommandChatMessageSentTest.class,
 		CommandClearModelStateTest.class,
@@ -112,6 +115,7 @@ import edu.ship.shipsim.client.model.reports.QuestStateReportTest;
 		
 		// model.reports
 		AdventuresNeedingNotificationReportTest.class,
+		AdventureStateChangeReportTest.class,
 		AreaCollisionReportTest.class,
 		ChangeMapReportTest.class,
 		ChatSentReportTest.class,
