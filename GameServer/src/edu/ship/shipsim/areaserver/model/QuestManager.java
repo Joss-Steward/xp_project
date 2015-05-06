@@ -308,6 +308,6 @@ public class QuestManager implements QualifiedObserver {
 	public void turnOffNotification(int playerID, int questID, int adventureID)
 			throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException {
 		getAdventureStateByID(playerID, questID, adventureID).turnOffNotification();
-
+		PlayerManager.getSingleton().persistPlayer(playerID);
 	}
 }

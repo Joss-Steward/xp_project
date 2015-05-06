@@ -35,7 +35,7 @@ public class CommandAdventureNotificationComplete extends Command
 	{
 		try 
 		{
-			QuestManager.getSingleton().completeAdventure(playerID, questID, adventureID);
+			QuestManager.getSingleton().turnOffNotification(playerID, questID, adventureID);
 		} catch (DatabaseException e) 
 		{
 			e.printStackTrace();
