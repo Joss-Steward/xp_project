@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import model.OptionsManager;
 import model.PlayerID;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
@@ -46,6 +47,7 @@ public class AdventureStateManager
 	 */
 	public AdventureStateManager() throws DatabaseException
 	{
+		OptionsManager.getSingleton(false);
 		window = new JFrame("Adventure Manager");
 		window.setLayout(new BorderLayout());
 
