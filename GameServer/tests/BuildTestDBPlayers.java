@@ -29,7 +29,7 @@ public class BuildTestDBPlayers
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
 		OptionsManager.getSingleton(false);
-		OptionsManager.setRunningLocal(true);
+		OptionsManager.getSingleton().setRunningLocal(true);
 		createPlayerTable();
 		createNpcTable();
 	}

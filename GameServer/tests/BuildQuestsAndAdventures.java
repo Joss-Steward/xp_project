@@ -1,5 +1,6 @@
 import java.sql.SQLException;
 
+import model.OptionsManager;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayRDS;
 import edu.ship.shipsim.areaserver.datasource.AdventureStatesForTest;
@@ -30,6 +31,8 @@ public class BuildQuestsAndAdventures
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
+		OptionsManager.getSingleton(false);
+		OptionsManager.getSingleton().setRunningLocal(true);
 		createAdventureTable();
 		createQuestTable();
 		createQuestStateTable();

@@ -110,7 +110,7 @@ public class Server implements Runnable
 			else if(splitArg[0].equals("--localhost"))
 			{
 				OptionsManager.getSingleton(false);
-				OptionsManager.setRunningLocal(true);
+				OptionsManager.getSingleton().setRunningLocal(true);
 			}
 		}
 		if(map == null)

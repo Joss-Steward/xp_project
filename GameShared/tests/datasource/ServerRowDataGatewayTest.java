@@ -81,7 +81,7 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 	@Test
 	public void localModeDoesntUpdateHostName() throws DatabaseException
 	{
-		OptionsManager.setRunningLocal(true);
+		OptionsManager.getSingleton().setRunningLocal(true);
 		ServerRowDataGateway existing = findGateway(ServersForTest.FIRST_SERVER
 				.getMapName());
 		gateway = findGateway(ServersForTest.FIRST_SERVER.getMapName());

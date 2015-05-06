@@ -1,5 +1,6 @@
 import java.sql.SQLException;
 
+import model.OptionsManager;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.datasource.NPCQuestionRowDataGatewayRDS;
 import edu.ship.shipsim.areaserver.datasource.NPCQuestionsForTest;
@@ -24,6 +25,8 @@ public class BuildTestQuestions
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
+		OptionsManager.getSingleton(false);
+		OptionsManager.getSingleton().setRunningLocal(true);
 		createQuestionTable();
 	}
 
