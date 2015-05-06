@@ -77,6 +77,17 @@ public class ScreenQAs extends Group implements QualifiedObserver
 				.getSingleton();
 		cm.registerObserver(this, QuestStateReport.class);
 	}
+	
+	/**
+	 * Set the visibility of the QAScreen to the given boolean
+	 * 
+	 * @param b
+	 *            boolean given for showing
+	 */
+	public void setQAScreenVisibility(boolean b)
+	{
+		qaScreenShowing = b;
+	}
 
 	/**
 	 * Is the quest table on the screen
@@ -158,10 +169,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 
 		for (ClientPlayerQuest q : quests)
 		{
-			if (q.getQuestState().equals(QuestStateEnum.TRIGGERED))
-			{
-				buildQuestRow(q);
-			} else if (!q.getQuestState().equals(QuestStateEnum.AVAILABLE))
+			if (!q.getQuestState().equals(QuestStateEnum.AVAILABLE))
 			{
 				buildQuestRow(q);
 			} else
@@ -313,10 +321,18 @@ public class ScreenQAs extends Group implements QualifiedObserver
 					{
 						buildAdvRow(complete, a.getAdventureDescription(),a.getAdventureXP());
 						num_left--;
+						if(num_left > 0)
+						{
+							
+							adv_header.setText(""+num_left+ " to Fulfillment");
+						}else
+						{
+							adv_header.setText("Quest Fulfilled");
+						}
 					}
 				}
 				q_header.setText(quest.getQuestDescription()+" XP: "+quest.getExperiencePointsGained());
-				adv_header.setText(""+num_left+ " to Fulfillment");
+				
 			}
 		});
 
@@ -359,17 +375,6 @@ public class ScreenQAs extends Group implements QualifiedObserver
 			updateTable(questList);
 		}
 
-	}
-
-	/**
-	 * Set the visibility of the QAScreen to the given boolean
-	 * 
-	 * @param b
-	 *            boolean given for showing
-	 */
-	public void setQAScreenVisibility(boolean b)
-	{
-		qaScreenShowing = b;
 	}
 	
 	private NinePatch getNinePatch(String fileName)

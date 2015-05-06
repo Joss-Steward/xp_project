@@ -37,8 +37,11 @@ public enum QuestStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER4_QUEST4(4, 4, QuestStateEnum.AVAILABLE, true);
-	
+	PLAYER4_QUEST4(4, 4, QuestStateEnum.AVAILABLE, true),
+	/**
+	 * 
+	 */
+	PLAYER7_QUEST1(7, 1, QuestStateEnum.TRIGGERED, false);
 	
 	private int playerID;
 	private int questID;
