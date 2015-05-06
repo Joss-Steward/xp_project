@@ -52,16 +52,19 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 	 */
 	private void combineQuest(ArrayList<QuestState> questStateList) throws DatabaseException, IllegalQuestChangeException 
 	{
-		for(QuestState qs: questStateList)
+		if(questStateList!=null)
 		{
-			int questID = qs.getID();
-			Quest quest = QuestManager.getSingleton().getQuest(questID);
-			
-			ClientPlayerQuest clientQuest = new ClientPlayerQuest(quest.getQuestID(), quest.getDescription(), qs.getStateValue(), quest.getExperiencePointsGained()	
-					, quest.getAdventuresForFulfillment());
-			clientQuest.setAdventures(combineAdventure(quest, qs));
-			
-			clientPlayerQuestList.add(clientQuest);
+			for(QuestState qs: questStateList)
+			{
+				int questID = qs.getID();
+				Quest quest = QuestManager.getSingleton().getQuest(questID);
+				
+				ClientPlayerQuest clientQuest = new ClientPlayerQuest(quest.getQuestID(), quest.getDescription(), qs.getStateValue(), quest.getExperiencePointsGained()	
+						, quest.getAdventuresForFulfillment());
+				clientQuest.setAdventures(combineAdventure(quest, qs));
+				
+				clientPlayerQuestList.add(clientQuest);
+			}
 		}
 	}
 	
