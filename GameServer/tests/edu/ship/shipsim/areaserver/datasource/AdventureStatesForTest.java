@@ -45,16 +45,16 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1_ADV1(2, 1, 1, AdventureStateEnum.HIDDEN, false),
+	PLAYER2_QUEST1_ADV1(2, 1, 1, AdventureStateEnum.PENDING, false),
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1_ADV2(2, 1, 2, AdventureStateEnum.HIDDEN, false),
+	PLAYER2_QUEST1_ADV2(2, 1, 2, AdventureStateEnum.PENDING, false),
 
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1_ADV3(2, 1, 3, AdventureStateEnum.HIDDEN, false),
+	PLAYER2_QUEST1_ADV3(2, 1, 3, AdventureStateEnum.PENDING, false),
 
 	/**
 	 * 
@@ -81,7 +81,22 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER4_QUEST3_ADV3(4, 3, 3, AdventureStateEnum.COMPLETED, false);
+	PLAYER4_QUEST3_ADV3(4, 3, 3, AdventureStateEnum.COMPLETED, false),
+	/**
+	 * 
+	 */
+	
+	PLAYER2_QUEST4_ADV3(2, 4, 3, AdventureStateEnum.COMPLETED, false),
+
+	/**
+	 * 
+	 */
+	PLAYER2_QUEST4_ADV4(2, 4, 4, AdventureStateEnum.PENDING, false),
+	/**
+	 * 
+	 */
+	PLAYER2_QUEST4_ADV5(2, 4, 5, AdventureStateEnum.COMPLETED, false);
+
 
 	private int adventureID;
 	private int questID;
