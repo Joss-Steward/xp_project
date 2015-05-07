@@ -145,6 +145,7 @@ public class PlayerMapper
 				{
 					adventureStateGateway.updateState(player.getPlayerID(),
 							quest.getID(), a.getID(), a.getState());
+					//TODO - add persisting needing notification for adventure state
 				}
 			}
 		}
