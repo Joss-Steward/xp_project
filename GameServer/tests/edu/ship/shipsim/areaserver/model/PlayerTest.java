@@ -10,6 +10,7 @@ import model.OptionsManager;
 import model.PlayerConnection;
 import model.QualifiedObservableConnector;
 import model.QualifiedObserver;
+
 import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
@@ -46,7 +47,7 @@ public class PlayerTest extends DatabaseTest
 	public void setUp() throws DatabaseException
 	{
 		super.setUp();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		QualifiedObservableConnector.resetSingleton();
 		PlayerManager.resetSingleton();
 		playerManager = PlayerManager.getSingleton();

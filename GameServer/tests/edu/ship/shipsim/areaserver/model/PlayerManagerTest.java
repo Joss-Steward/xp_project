@@ -36,7 +36,7 @@ public class PlayerManagerTest
 	public void setUp()
 	{
 		OptionsManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		QualifiedObservableConnector.resetSingleton();
 		PlayerManager.resetSingleton();
 	}
@@ -158,7 +158,9 @@ public class PlayerManagerTest
 	@Test
 	public void testNpcsLoaded() throws DatabaseException, SQLException
 	{
-		OptionsManager.getSingleton(true).updateMapInformation(
+		OptionsManager om = OptionsManager.getSingleton();
+		om.setTestMode(true);
+		om.updateMapInformation(
 				PlayersForTest.QUIZBOT.getMapName(), "localhost", 1874);
 		PlayerManager.getSingleton().loadNpcs();
 

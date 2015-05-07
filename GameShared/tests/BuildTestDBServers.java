@@ -29,7 +29,7 @@ public class BuildTestDBServers
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
-		OptionsManager.getSingleton(false);
+		OptionsManager.getSingleton().setTestMode(false);
 		createServerTable();
 	}
 

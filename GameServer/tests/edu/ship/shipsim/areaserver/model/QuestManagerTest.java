@@ -39,7 +39,7 @@ public class QuestManagerTest extends DatabaseTest
 	@Before
 	public void setUp()
 	{
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		QualifiedObservableConnector.resetSingleton();
 		PlayerManager.resetSingleton();
 		playerManager = PlayerManager.getSingleton();
@@ -357,23 +357,23 @@ public class QuestManagerTest extends DatabaseTest
 	@Test
 	public void testPlayerTriggersQuest() throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
 	{
-		Player p = playerManager.addPlayer(2);
+		Player p = playerManager.addPlayer(7);
 		assertEquals(
-				QuestStatesForTest.PLAYER2_QUEST1.getState(),
+				QuestStateEnum.AVAILABLE,
 				QuestManager
 						.getSingleton()
 						.getQuestStateByID(p.getPlayerID(),
-								QuestStatesForTest.PLAYER2_QUEST1.getQuestID())
+								QuestStatesForTest.PLAYER7_QUEST2.getQuestID())
 						.getStateValue());
 
-		QuestManager.getSingleton().triggerQuest(2,
-				QuestStatesForTest.PLAYER2_QUEST1.getQuestID());
+		QuestManager.getSingleton().triggerQuest(7,
+				QuestStatesForTest.PLAYER7_QUEST2.getQuestID());
 		assertEquals(
 				QuestStateEnum.TRIGGERED,
 				QuestManager
 						.getSingleton()
 						.getQuestStateByID(p.getPlayerID(),
-								QuestStatesForTest.PLAYER2_QUEST1.getQuestID())
+								QuestStatesForTest.PLAYER7_QUEST2.getQuestID())
 						.getStateValue());
 	}
 
@@ -460,7 +460,7 @@ public class QuestManagerTest extends DatabaseTest
 		Player p = playerManager.addPlayer(playerID);
 		int initialExp = p.getExperiencePoints();
 		
-		AdventureState as = new AdventureState(2, AdventureStateEnum.PENDING, false);
+		AdventureState as = new AdventureState(2, AdventureStateEnum.TRIGGERED, false);
 		
 		ArrayList<AdventureState> adventures = new ArrayList<AdventureState>();
 		adventures.add(as);

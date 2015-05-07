@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import model.OptionsManager;
 
+
 /**
  * A row table gateway for the Servers table in the database. That table
  * contains the information about each area server.
@@ -183,7 +184,7 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 		}
 		try
 		{
-			if (OptionsManager.getSingleton().isRunningLocal())
+			if (OptionsManager.getSingleton().getHostName().equals("localhost"))
 			{
 				ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
 						"UPDATE Server SET portNumber = ? WHERE mapName = ?");

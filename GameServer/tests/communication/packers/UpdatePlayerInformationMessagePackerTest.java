@@ -39,7 +39,7 @@ public class UpdatePlayerInformationMessagePackerTest
 	@Before
 	public void setUp()
 	{
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		PlayerManager.resetSingleton();
 		QuestManager.resetSingleton();
 

@@ -314,7 +314,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 				for (ClientPlayerAdventure a : quest.getAdventureList())
 				{
 					if (a.getAdventureState().equals(
-							AdventureStateEnum.PENDING))
+							AdventureStateEnum.TRIGGERED))
 					{
 						buildAdvRow(triggered, a.getAdventureDescription(),a.getAdventureXP());
 					} else

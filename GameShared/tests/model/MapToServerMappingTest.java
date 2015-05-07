@@ -26,7 +26,7 @@ public class MapToServerMappingTest
 	public void setup()
 	{
 		OptionsManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 
 	

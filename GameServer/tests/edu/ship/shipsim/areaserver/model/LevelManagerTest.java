@@ -25,7 +25,7 @@ public class LevelManagerTest
 	public void setUp()
 	{
 		OptionsManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 	
 	

@@ -29,7 +29,7 @@ public class MovementMessageHandlerTest
 		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
 		OptionsManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 	
 	/**

@@ -24,7 +24,7 @@ public class CommandAdventureNotificationCompleteTest
 	public void setup()
 	{
 		PlayerManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 
 	/**

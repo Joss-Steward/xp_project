@@ -43,7 +43,7 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 	{
 		super.setUp();
 		OptionsManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 
 	/**
@@ -81,7 +81,7 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 	@Test
 	public void localModeDoesntUpdateHostName() throws DatabaseException
 	{
-		OptionsManager.getSingleton().setRunningLocal(true);
+		OptionsManager.getSingleton().setHostName("localhost");
 		ServerRowDataGateway existing = findGateway(ServersForTest.FIRST_SERVER
 				.getMapName());
 		gateway = findGateway(ServersForTest.FIRST_SERVER.getMapName());
@@ -172,6 +172,7 @@ public abstract class ServerRowDataGatewayTest extends DatabaseTest
 	@Test
 	public void editHostName() throws DatabaseException
 	{
+		OptionsManager.getSingleton().setHostName(ServersForTest.FIRST_SERVER.getHostName());
 		gateway = findGateway(ServersForTest.FIRST_SERVER.getMapName());
 		gateway.setHostName("h");
 		gateway.persist();

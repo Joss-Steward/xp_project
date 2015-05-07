@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import communication.StateAccumulator;
 import communication.messages.AdventureStateChangeMessage;
-
 import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
@@ -28,7 +27,7 @@ public class AdventureStateChangeMessagePackerTest
 	@Before
 	public void setUp()
 	{
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		QuestManager.resetSingleton();
 
 	}
@@ -54,14 +53,14 @@ public class AdventureStateChangeMessagePackerTest
 		stateAccumulator.setPlayerId(1);
 		
 		AdventureStateChangeReport report = new AdventureStateChangeReport(
-				stateAccumulator.getPlayerID(), AdventuresForTest.ONE.getQuestID(), AdventuresForTest.ONE.getAdventureID(), AdventuresForTest.ONE.getAdventureDescription(), AdventureStateEnum.PENDING);
+				stateAccumulator.getPlayerID(), AdventuresForTest.ONE.getQuestID(), AdventuresForTest.ONE.getAdventureID(), AdventuresForTest.ONE.getAdventureDescription(), AdventureStateEnum.TRIGGERED);
 		AdventureStateChangeMessagePacker packer = new AdventureStateChangeMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		
 		AdventureStateChangeMessage msg = (AdventureStateChangeMessage) packer.pack(report);
 		assertEquals(AdventuresForTest.ONE.getAdventureID(), msg.getAdventureID());
 		assertEquals(AdventuresForTest.ONE.getAdventureDescription(),msg.getAdventureDescription());
-		assertEquals(AdventureStateEnum.PENDING, msg.getNewState());
+		assertEquals(AdventureStateEnum.TRIGGERED, msg.getNewState());
 
 	}
 

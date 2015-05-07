@@ -1,7 +1,6 @@
 package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
-
 import model.OptionsManager;
 import model.QualifiedObservableConnector;
 
@@ -38,7 +37,7 @@ public class QuizBotBehaviorTest  extends DatabaseTest
 	public void setUp() throws DatabaseException
 	{
 		super.setUp();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		behavior = new QuizBotBehavior();
 		question = behavior.getQuestion();
 		QualifiedObservableConnector.resetSingleton();

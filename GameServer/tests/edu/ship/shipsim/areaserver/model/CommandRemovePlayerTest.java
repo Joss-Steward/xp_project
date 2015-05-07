@@ -21,7 +21,7 @@ public class CommandRemovePlayerTest
 	public void setup()
 	{
 		PlayerManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 
 	/**

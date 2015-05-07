@@ -40,7 +40,7 @@ public class AdventureStateTest extends DatabaseTest
 	public void setUp()
 	{
 		OptionsManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		QuestManager.resetSingleton();
 	}
 
@@ -81,7 +81,7 @@ public class AdventureStateTest extends DatabaseTest
 		q.setPlayerID(playerID);
 		QuestManager.getSingleton().addQuestState(playerID, q);
 		adv.trigger();
-		assertEquals(AdventureStateEnum.PENDING, adv.getState());
+		assertEquals(AdventureStateEnum.TRIGGERED, adv.getState());
 	}
 
 	/**
@@ -134,7 +134,6 @@ public class AdventureStateTest extends DatabaseTest
 
 		qState.addAdventures(al);
 		qState.setPlayerID(2);
-		qState.trigger();
 
 		adventure.complete();
 
@@ -164,7 +163,7 @@ public class AdventureStateTest extends DatabaseTest
 
 		questState.setPlayerID(1);
 
-		AdventureState adventure = new AdventureState(1, AdventureStateEnum.PENDING,
+		AdventureState adventure = new AdventureState(1, AdventureStateEnum.TRIGGERED,
 				false);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
 		adventureList.add(adventure);
@@ -203,7 +202,7 @@ public class AdventureStateTest extends DatabaseTest
 
 		AdventureState adventure = new AdventureState(1, AdventureStateEnum.COMPLETED,
 				false);
-		AdventureState adventure2 = new AdventureState(2, AdventureStateEnum.PENDING,
+		AdventureState adventure2 = new AdventureState(2, AdventureStateEnum.TRIGGERED,
 				false);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
 		adventureList.add(adventure);
@@ -234,20 +233,20 @@ public class AdventureStateTest extends DatabaseTest
 
 		ArrayList<AdventureState> al = new ArrayList<AdventureState>();
 		AdventureState adventure = new AdventureState(
-				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.getAdventureID(),
-				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.getState(),
-				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.isNeedingNotification());
+				AdventureStatesForTest.PLAYER7_QUEST2_ADV1.getAdventureID(),
+				AdventureStatesForTest.PLAYER7_QUEST2_ADV1.getState(),
+				AdventureStatesForTest.PLAYER7_QUEST2_ADV1.isNeedingNotification());
 		al.add(adventure);
 		QuestState qState = new QuestState(
-				QuestStatesForTest.PLAYER2_QUEST1.getQuestID(),
-				QuestStatesForTest.PLAYER2_QUEST1.getState(),
-				QuestStatesForTest.PLAYER2_QUEST1.isNeedingNotification());
+				QuestStatesForTest.PLAYER7_QUEST2.getQuestID(),
+				QuestStatesForTest.PLAYER7_QUEST2.getState(),
+				QuestStatesForTest.PLAYER7_QUEST2.isNeedingNotification());
 
 		qState.addAdventures(al);
-		qState.setPlayerID(2);
+		qState.setPlayerID(1);
 
-		adventure.changeState(AdventureStateEnum.PENDING, false);
-		assertEquals(adventure.getState(), AdventureStateEnum.PENDING);
+		adventure.changeState(AdventureStateEnum.TRIGGERED, false);
+		assertEquals(adventure.getState(), AdventureStateEnum.TRIGGERED);
 	}
 
 	/**
@@ -269,7 +268,7 @@ public class AdventureStateTest extends DatabaseTest
 		ArrayList<AdventureState> al = new ArrayList<AdventureState>();
 		AdventureState state = new AdventureState(
 				AdventureStatesForTest.PLAYER1_QUEST2_ADV2.getAdventureID(),
-				AdventureStateEnum.PENDING,
+				AdventureStateEnum.TRIGGERED,
 				AdventureStatesForTest.PLAYER1_QUEST2_ADV2.isNeedingNotification());
 		al.add(state);
 		QuestState qState = new QuestState(

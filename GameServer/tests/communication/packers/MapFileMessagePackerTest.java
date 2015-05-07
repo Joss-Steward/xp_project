@@ -68,7 +68,7 @@ public class MapFileMessagePackerTest
 	@Test
 	public void ifThePlayerIsOnThisConnection() throws DatabaseException, SQLException, IllegalQuestChangeException
 	{
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		PlayerManager.getSingleton().addPlayer(1, PlayerConnection.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);

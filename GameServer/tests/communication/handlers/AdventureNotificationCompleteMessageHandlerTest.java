@@ -31,7 +31,7 @@ public class AdventureNotificationCompleteMessageHandlerTest
 		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
 		OptionsManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 	/**
 	 * Test what message type we handle

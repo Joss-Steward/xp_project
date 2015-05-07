@@ -113,7 +113,7 @@ public class AdventureState
 	 */
 	public void trigger() throws IllegalAdventureChangeException, DatabaseException, IllegalQuestChangeException
 	{
-		changeState(AdventureStateEnum.PENDING, false);
+		changeState(AdventureStateEnum.TRIGGERED, false);
 	}
 
 	/**
@@ -169,8 +169,8 @@ public class AdventureState
 	 */
 	protected void changeState(AdventureStateEnum state, boolean b) throws IllegalAdventureChangeException, DatabaseException, IllegalQuestChangeException 
 	{
-		if((this.adventureState.equals(AdventureStateEnum.HIDDEN) && state.equals(AdventureStateEnum.PENDING)) 
-				|| (this.adventureState.equals(AdventureStateEnum.PENDING) && state.equals(AdventureStateEnum.COMPLETED))) 
+		if((this.adventureState.equals(AdventureStateEnum.HIDDEN) && state.equals(AdventureStateEnum.TRIGGERED)) 
+				|| (this.adventureState.equals(AdventureStateEnum.TRIGGERED) && state.equals(AdventureStateEnum.COMPLETED))) 
 		{
 			this.adventureState = state;
 			this.needingNotification = b;
@@ -187,7 +187,7 @@ public class AdventureState
 		}
 		else
 		{
-			throw new IllegalAdventureChangeException();
+			throw new IllegalAdventureChangeException(this.adventureState, state);
 		}
 	}
 

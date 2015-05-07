@@ -16,7 +16,7 @@ public enum AdventureStateEnum
 	/**
 	 * Adventure is ready to be completed.
 	 */
-	PENDING,
+	TRIGGERED,
 
 	/**
 	 * Player has been notified, nothing left to do.

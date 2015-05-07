@@ -29,7 +29,7 @@ public class OptionsManagerTest
 	public void setup() throws DatabaseException
 	{
 		OptionsManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		MapToServerMapping mapping = new MapToServerMapping(
 				ServersForTest.FIRST_SERVER.getMapName());
 		mapping.setHostName("holder");
@@ -48,7 +48,7 @@ public class OptionsManagerTest
 		OptionsManager pm2 = OptionsManager.getSingleton();
 		assertSame(pm1, pm2);
 		OptionsManager.resetSingleton();
-		assertNotSame(pm1, OptionsManager.getSingleton(true));
+		assertNotSame(pm1, OptionsManager.getSingleton());
 	}
 
 	/**
@@ -61,7 +61,8 @@ public class OptionsManagerTest
 	@Test
 	public void savesServerMapping() throws DatabaseException
 	{
-		OptionsManager manager = OptionsManager.getSingleton(true);
+		OptionsManager manager = OptionsManager.getSingleton();
+		manager.setTestMode(true);
 		manager.updateMapInformation(ServersForTest.FIRST_SERVER.getMapName(),
 				"ourhost.com", 1337);
 

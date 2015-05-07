@@ -3,8 +3,10 @@ package communication.packers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import model.OptionsManager;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import communication.StateAccumulator;
 import communication.messages.ExperienceChangedMessage;
 import datasource.DatabaseException;
@@ -28,7 +30,7 @@ public class ExperienceChangedMessagePackerTest
 	@Before
 	public void setUp()
 	{
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		QuestManager.resetSingleton();
 		//TODO - Need test mode of Level Manager : LevelManager.getSingleton(true);
 		

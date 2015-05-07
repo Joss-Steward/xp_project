@@ -27,7 +27,7 @@ public class ConnectMessageHandlerTest
 	public void reset()
 	{
 		OptionsManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
 	}

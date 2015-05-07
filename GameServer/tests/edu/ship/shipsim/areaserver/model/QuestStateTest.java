@@ -35,7 +35,7 @@ public class QuestStateTest extends DatabaseTest
 	public void setUp()
 	{
 		OptionsManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		QuestManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 	}
@@ -130,7 +130,7 @@ public class QuestStateTest extends DatabaseTest
 
 		for (AdventureState as : adList)
 		{
-			assertEquals(AdventureStateEnum.PENDING, as.getState());
+			assertEquals(AdventureStateEnum.TRIGGERED, as.getState());
 			assertFalse(as.isNeedingNotification());
 		}
 	}
@@ -175,7 +175,7 @@ public class QuestStateTest extends DatabaseTest
 		adList.add(as);
 		as = new AdventureState(3, AdventureStateEnum.COMPLETED, false);
 		adList.add(as);
-		as = new AdventureState(4, AdventureStateEnum.PENDING, false);
+		as = new AdventureState(4, AdventureStateEnum.TRIGGERED, false);
 		adList.add(as);
 		as = new AdventureState(5, AdventureStateEnum.COMPLETED, false);
 		adList.add(as);
@@ -215,7 +215,7 @@ public class QuestStateTest extends DatabaseTest
 		adList.add(as);
 		as = new AdventureState(3, AdventureStateEnum.COMPLETED, false);
 		adList.add(as);
-		as = new AdventureState(4, AdventureStateEnum.PENDING, false);
+		as = new AdventureState(4, AdventureStateEnum.TRIGGERED, false);
 		adList.add(as);
 		as = new AdventureState(5, AdventureStateEnum.COMPLETED, false);
 		adList.add(as);

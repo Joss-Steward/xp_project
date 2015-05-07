@@ -197,7 +197,7 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 				ArrayList<AdventureStateRecord> adventureList = data.get(new Key(playerID, questID));
 				for (AdventureStateRecord a:adventureList)
 				{
-					if (a.getState() == AdventureStateEnum.PENDING)
+					if (a.getState() == AdventureStateEnum.TRIGGERED)
 					{
 						results.add(a);
 					}

@@ -64,7 +64,7 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
 		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED, 42, 133); 
-		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", 5, AdventureStateEnum.PENDING, false));
+		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", 5, AdventureStateEnum.TRIGGERED, false));
 		qList.add(q);
 		LevelRecord level = new LevelRecord("One", 45);
 		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(qList, 20, level);
@@ -94,7 +94,7 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
 		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED, 42, 8); 
-		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", 5, AdventureStateEnum.PENDING, false));
+		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", 5, AdventureStateEnum.TRIGGERED, false));
 		qList.add(q);
 		int expectedPoints = 20;
 		LevelRecord level = new LevelRecord("One", 45);

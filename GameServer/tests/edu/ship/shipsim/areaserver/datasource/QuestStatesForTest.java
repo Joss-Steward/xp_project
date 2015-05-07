@@ -21,11 +21,16 @@ public enum QuestStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1(2, 1, QuestStateEnum.AVAILABLE, true),
+	PLAYER1_QUEST3(1, 3, QuestStateEnum.AVAILABLE, true),
+	
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST3(1, 3, QuestStateEnum.TRIGGERED, true),
+	PLAYER2_QUEST1(2, 1, QuestStateEnum.TRIGGERED, true),
+	/**
+	 * 
+	 */
+	PLAYER2_QUEST2(2, 2, QuestStateEnum.AVAILABLE, true),
 	/**
 	 * 
 	 */
@@ -41,7 +46,13 @@ public enum QuestStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER7_QUEST1(7, 1, QuestStateEnum.TRIGGERED, false);
+	PLAYER7_QUEST1(7, 1, QuestStateEnum.TRIGGERED, false),
+	/**
+	 * A quest that is ready to be triggered (with no states for the
+	 * included adventures)
+	 */
+	PLAYER7_QUEST2(7, 2, QuestStateEnum.AVAILABLE, false);
+	
 	
 	private int playerID;
 	private int questID;

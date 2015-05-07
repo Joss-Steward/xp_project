@@ -25,8 +25,8 @@ public class BuildTestQuestions
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
-		OptionsManager.getSingleton(false);
-		OptionsManager.getSingleton().setRunningLocal(true);
+		OptionsManager.getSingleton().setTestMode(false);
+		OptionsManager.getSingleton().setUsingTestDB(true);
 		createQuestionTable();
 	}
 

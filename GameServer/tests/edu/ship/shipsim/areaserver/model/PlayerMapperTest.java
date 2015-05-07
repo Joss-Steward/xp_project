@@ -14,6 +14,7 @@ import data.Position;
 import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
+import datasource.PlayerConnectionRowDataGatewayMock;
 import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayMock;
 import edu.ship.shipsim.areaserver.datasource.AdventureStatesForTest;
@@ -37,11 +38,12 @@ public class PlayerMapperTest extends DatabaseTest
 	public void setUp() throws DatabaseException
 	{
 		super.setUp();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		new PlayerRowDataGatewayMock().resetData();
 		QuestStateTableDataGatewayMock.getSingleton().resetData();
 		AdventureStateTableDataGatewayMock.getSingleton().resetData();
 		QuestManager.resetSingleton();
+		new PlayerConnectionRowDataGatewayMock(1).resetData();
 	}
 
 	/**
@@ -149,7 +151,7 @@ public class PlayerMapperTest extends DatabaseTest
 		if (p.getClass() == Player.class)
 		{
 			questState = QuestManager.getSingleton().getQuestStateByID(p.getPlayerID(),
-					QuestStatesForTest.PLAYER2_QUEST1.getQuestID());
+					QuestStatesForTest.PLAYER2_QUEST2.getQuestID());
 			questState.trigger();
 		}
 		p.persist();
@@ -169,7 +171,7 @@ public class PlayerMapperTest extends DatabaseTest
 			assertEquals(questState.getStateValue(), retrievedQuestState.getStateValue());
 			for (AdventureState a : retrievedQuestState.getAdventureList())
 			{
-				assertEquals(AdventureStateEnum.PENDING, a.getState());
+				assertEquals(AdventureStateEnum.TRIGGERED, a.getState());
 			}
 		}
 	}

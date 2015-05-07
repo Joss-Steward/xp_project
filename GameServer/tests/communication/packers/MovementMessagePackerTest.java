@@ -29,7 +29,7 @@ public class MovementMessagePackerTest
 	@Before
 	public void setUp()
 	{
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		PlayerManager.resetSingleton();
 
 		PlayerManager.getSingleton().addPlayer(1);

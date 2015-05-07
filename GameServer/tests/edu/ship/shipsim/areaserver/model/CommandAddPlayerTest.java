@@ -26,7 +26,7 @@ public class CommandAddPlayerTest
 	public void setup()
 	{
 		PlayerManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 
 	/**

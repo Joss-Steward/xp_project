@@ -36,7 +36,7 @@ public class AdventureStateViewTableDataGatewayRDS
 					connection,
 					"SELECT * FROM Adventures INNER JOIN AdventureStates ON Adventures.QuestID = AdventureStates.QuestID AND Adventures.AdventureID = AdventureStates.AdventureID"
 							+ " WHERE adventureState = ? AND playerID = ?");
-			stmt.setInt(1, AdventureStateEnum.PENDING.ordinal());
+			stmt.setInt(1, AdventureStateEnum.TRIGGERED.ordinal());
 			stmt.setInt(2, playerID);
 			ResultSet result = stmt.executeQuery();
 			while (result.next())

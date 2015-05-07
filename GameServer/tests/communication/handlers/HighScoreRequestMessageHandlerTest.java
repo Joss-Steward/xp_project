@@ -13,7 +13,6 @@ import communication.StateAccumulator;
 import communication.messages.HighScoreRequestMessage;
 import communication.messages.HighScoreResponseMessage;
 import communication.messages.Message;
-
 import datasource.DatabaseException;
 import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.model.ModelFacade;
@@ -33,7 +32,7 @@ public class HighScoreRequestMessageHandlerTest
 	public void reset()
 	{
 		OptionsManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
 	}

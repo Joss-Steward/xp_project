@@ -19,13 +19,13 @@ public class AdventureStateChangeMessageTest
 	@Test
 	public void testInit() 
 	{
-		AdventureStateChangeMessage msg = new AdventureStateChangeMessage(1, 2, 3, "Big Adventure", AdventureStateEnum.PENDING);
+		AdventureStateChangeMessage msg = new AdventureStateChangeMessage(1, 2, 3, "Big Adventure", AdventureStateEnum.TRIGGERED);
 		
 		assertEquals(1, msg.getPlayerID());
 		assertEquals(2, msg.getQuestID());
 		assertEquals(3, msg.getAdventureID());
 		assertEquals("Big Adventure", msg.getAdventureDescription());
-		assertEquals(AdventureStateEnum.PENDING, msg.getNewState());
+		assertEquals(AdventureStateEnum.TRIGGERED, msg.getNewState());
 	}
 
 }

@@ -1,7 +1,6 @@
 package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
-
 import model.OptionsManager;
 import model.QualifiedObservableConnector;
 import model.QualifiedObserver;
@@ -35,7 +34,7 @@ public class CommandMovePlayerSilentlyTest
 		PlayerManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 
 	/**

@@ -218,7 +218,7 @@ public class QuestState
 		}
 		else
 		{
-			throw new IllegalQuestChangeException();
+			throw new IllegalQuestChangeException(this.getStateValue(), state);
 		}
 	}
 }

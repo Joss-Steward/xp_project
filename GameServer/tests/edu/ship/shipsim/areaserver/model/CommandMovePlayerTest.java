@@ -33,7 +33,7 @@ public class CommandMovePlayerTest
 		PlayerManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 
 	/**

@@ -196,7 +196,7 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
 					"SELECT * FROM AdventureStates WHERE adventureState = ? and playerID = ?");
-			stmt.setInt(1, AdventureStateEnum.PENDING.ordinal());
+			stmt.setInt(1, AdventureStateEnum.TRIGGERED.ordinal());
 			stmt.setInt(2, playerID);
 			ResultSet result = stmt.executeQuery();
 

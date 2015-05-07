@@ -2,7 +2,6 @@
 import java.sql.SQLException;
 
 import model.OptionsManager;
-
 import datasource.DatabaseException;
 import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayRDS;
@@ -28,8 +27,8 @@ public class BuildTestDBPlayers
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
-		OptionsManager.getSingleton(false);
-		OptionsManager.getSingleton().setRunningLocal(true);
+		OptionsManager.getSingleton().setTestMode(false);
+		OptionsManager.getSingleton().setUsingTestDB(true);
 		createPlayerTable();
 		createNpcTable();
 	}

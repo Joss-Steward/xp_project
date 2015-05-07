@@ -28,7 +28,7 @@ public class PlayerJoinedMessagePackerTest
 	public void setUp()
 	{
 		PlayerManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		new PlayerRowDataGatewayMock().resetData();
 	}
 

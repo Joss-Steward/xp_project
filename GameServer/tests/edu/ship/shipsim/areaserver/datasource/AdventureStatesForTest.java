@@ -29,11 +29,11 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST2_ADV3(1, 2, 3, AdventureStateEnum.PENDING, false),
+	PLAYER1_QUEST2_ADV3(1, 2, 3, AdventureStateEnum.TRIGGERED, false),
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST3_ADV1(1, 3, 1, AdventureStateEnum.PENDING, false),
+	PLAYER1_QUEST3_ADV1(1, 3, 1, AdventureStateEnum.TRIGGERED, false),
 	/**
 	 * 
 	 */
@@ -41,20 +41,20 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST3_ADV3(1, 3, 3, AdventureStateEnum.PENDING, false),
+	PLAYER1_QUEST3_ADV3(1, 3, 3, AdventureStateEnum.TRIGGERED, false),
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1_ADV1(2, 1, 1, AdventureStateEnum.PENDING, false),
+	PLAYER2_QUEST1_ADV1(2, 1, 1, AdventureStateEnum.TRIGGERED, false),
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1_ADV2(2, 1, 2, AdventureStateEnum.PENDING, false),
+	PLAYER2_QUEST1_ADV2(2, 1, 2, AdventureStateEnum.TRIGGERED, false),
 
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1_ADV3(2, 1, 3, AdventureStateEnum.PENDING, false),
+	PLAYER2_QUEST1_ADV3(2, 1, 3, AdventureStateEnum.TRIGGERED, false),
 
 	/**
 	 * 
@@ -64,7 +64,7 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST4_ADV2(2, 4, 2, AdventureStateEnum.PENDING, false),
+	PLAYER2_QUEST4_ADV2(2, 4, 2, AdventureStateEnum.TRIGGERED, false),
 
 	/**
 	 * 
@@ -77,7 +77,7 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER4_QUEST3_ADV2(4, 3, 2, AdventureStateEnum.PENDING, false),
+	PLAYER4_QUEST3_ADV2(4, 3, 2, AdventureStateEnum.TRIGGERED, false),
 	/**
 	 * 
 	 */
@@ -91,7 +91,7 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST4_ADV4(2, 4, 4, AdventureStateEnum.PENDING, false),
+	PLAYER2_QUEST4_ADV4(2, 4, 4, AdventureStateEnum.TRIGGERED, false),
 	/**
 	 * 
 	 */
@@ -100,11 +100,15 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER7_QUEST1_ADV1(7, 1, 1, AdventureStateEnum.PENDING, false),
+	PLAYER7_QUEST1_ADV1(7, 1, 1, AdventureStateEnum.TRIGGERED, false),
 	/**
 	 * 
 	 */
-	PLAYER7_QUEST1_ADV2(7, 1, 2, AdventureStateEnum.COMPLETED, false);
+	PLAYER7_QUEST1_ADV2(7, 1, 2, AdventureStateEnum.COMPLETED, false),
+	/**
+	 * 
+	 */
+	PLAYER7_QUEST2_ADV1(7, 2, 1, AdventureStateEnum.HIDDEN, false);
 
 
 	private int adventureID;

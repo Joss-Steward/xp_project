@@ -47,7 +47,7 @@ public class AdventureStateManager
 	 */
 	public AdventureStateManager() throws DatabaseException
 	{
-		OptionsManager.getSingleton(false);
+		OptionsManager.getSingleton().setTestMode(false);
 		window = new JFrame("Adventure Manager");
 		window.setLayout(new BorderLayout());
 
