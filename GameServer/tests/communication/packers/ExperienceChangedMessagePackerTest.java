@@ -32,9 +32,7 @@ public class ExperienceChangedMessagePackerTest
 	{
 		OptionsManager.getSingleton().setTestMode(true);
 		QuestManager.resetSingleton();
-		//TODO - Need test mode of Level Manager : LevelManager.getSingleton(true);
 		
-
 		PlayerManager playerManager = PlayerManager.getSingleton();
 		playerManager.addPlayer(PlayersForTest.JOHN.getPlayerID());
 		playerManager.addPlayer(PlayersForTest.MERLIN.getPlayerID());

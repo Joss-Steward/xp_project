@@ -16,8 +16,8 @@ public class IllegalQuestChangeException extends Exception {
 	/**
 	 * The message thrown if you try to change to a state with 
 	 * the wrong parameters
-	 * @param from TODO
-	 * @param to TODO
+	 * @param from the state the quest is currently in
+	 * @param to the state we are trying to change to
 	 */
 	public IllegalQuestChangeException(QuestStateEnum from, QuestStateEnum to)
 	{

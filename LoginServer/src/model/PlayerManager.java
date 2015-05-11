@@ -73,8 +73,6 @@ public class PlayerManager extends Observable
 			MapToServerMapping mapping = new MapToServerMapping(pp.getMapName());
 			server = mapping.getHostName();
 			port = mapping.getPortNumber();
-			// TODO remember that you removed testing stuff here in case logins
-			// fail
 
 			LoginSuccessfulReport report = new LoginSuccessfulReport(pl.getPlayerID(),
 					server, port, pp.generatePin());

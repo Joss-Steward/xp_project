@@ -34,7 +34,7 @@ public class Server implements Runnable
 	 * @param port
 	 *            The port to listen on
 	 * @param runningLocal
-	 *            TODO
+	 *            true if we are running with a host name of localhost
 	 */
 	public Server(String map, int port, boolean runningLocal)
 	{

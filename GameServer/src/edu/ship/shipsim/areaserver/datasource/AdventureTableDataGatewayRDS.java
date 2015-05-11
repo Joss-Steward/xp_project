@@ -50,7 +50,8 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 			stmt.executeUpdate();
 			stmt.close();
 
-			stmt = new ClosingPreparedStatement(connection,
+			stmt = new ClosingPreparedStatement(
+					connection,
 					"Create TABLE Adventures (adventureID INT NOT NULL, adventureDescription VARCHAR(80), "
 							+ "questID INT NOT NULL, experiencePointsGained INT, signatureSpecification VARCHAR(80), PRIMARY KEY(questID, adventureID))");
 			stmt.executeUpdate();
@@ -100,12 +101,15 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 	 *            the quest that contains the adventure
 	 * @param experiencePointsEarned
 	 *            the number of points you get when you complete this adventure
-	 * @param signatureSpecification TODO
+	 * @param signatureSpecification
+	 *            specifies the title of the people who can sign for an out of
+	 *            game adventure
 	 * @throws DatabaseException
 	 *             if we can't talk to the RDS
 	 */
 	public static void createRow(int adventureID, String adventureDescription,
-			int questID, int experiencePointsEarned, String signatureSpecification) throws DatabaseException
+			int questID, int experiencePointsEarned, String signatureSpecification)
+			throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
@@ -117,7 +121,7 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 			stmt.setString(2, adventureDescription);
 			stmt.setInt(3, questID);
 			stmt.setInt(4, experiencePointsEarned);
-			stmt.setString(5,  signatureSpecification);
+			stmt.setString(5, signatureSpecification);
 			stmt.executeUpdate();
 
 		} catch (SQLException e)
@@ -129,10 +133,12 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 	}
 
 	/**
-	 * @see edu.ship.shipsim.areaserver.datasource.AdventureTableDataGateway#getAdventure(int, int)
+	 * @see edu.ship.shipsim.areaserver.datasource.AdventureTableDataGateway#getAdventure(int,
+	 *      int)
 	 */
 	@Override
-	public AdventureRecord getAdventure(int questID, int adventureID) throws DatabaseException
+	public AdventureRecord getAdventure(int questID, int adventureID)
+			throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
@@ -150,8 +156,8 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 			}
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Couldn't find adventure " + adventureID + " for quest ID "
-					+ questID, e);
+			throw new DatabaseException("Couldn't find adventure " + adventureID
+					+ " for quest ID " + questID, e);
 		}
 		return null;
 	}
@@ -162,7 +168,8 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 		AdventureRecord rec = new AdventureRecord(queryResult.getInt("questID"),
 				queryResult.getInt("adventureID"),
 				queryResult.getString("adventureDescription"),
-				queryResult.getInt("experiencePointsGained"), queryResult.getString("signatureSpecification"));
+				queryResult.getInt("experiencePointsGained"),
+				queryResult.getString("signatureSpecification"));
 		return rec;
 	}
 

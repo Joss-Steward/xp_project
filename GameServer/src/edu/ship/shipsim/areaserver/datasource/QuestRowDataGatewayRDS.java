@@ -97,13 +97,17 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	 *            this quest
 	 * @param triggerPosition
 	 *            the coordinates of the trigger location for this quest
-	 * @param experiencePointsGained TODO
-	 * @param adventuresForFulfillment the number of adventures this quest requires for fulfillment
+	 * @param experiencePointsGained
+	 *            the number of experience points gained for completing this
+	 *            quest
+	 * @param adventuresForFulfillment
+	 *            the number of adventures this quest requires for fulfillment
 	 * @throws DatabaseException
 	 *             if we can't talk to the RDS
 	 */
 	public QuestRowDataGatewayRDS(int questID, String questDescription,
-			String triggerMapName, Position triggerPosition, int experiencePointsGained, int adventuresForFulfillment) throws DatabaseException
+			String triggerMapName, Position triggerPosition, int experiencePointsGained,
+			int adventuresForFulfillment) throws DatabaseException
 	{
 		this.questID = questID;
 		Connection connection = DatabaseManager.getSingleton().getConnection();
@@ -111,8 +115,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
 					connection,
-					"Insert INTO Quests SET questID = ?, questDescription = ?, triggerMapname = ?, triggerRow = ?, triggerColumn = ?, " + 
-					"experiencePointsGained = ?, adventuresForFulfillment = ?");
+					"Insert INTO Quests SET questID = ?, questDescription = ?, triggerMapname = ?, triggerRow = ?, triggerColumn = ?, "
+							+ "experiencePointsGained = ?, adventuresForFulfillment = ?");
 			stmt.setInt(1, questID);
 			stmt.setString(2, questDescription);
 			stmt.setString(3, triggerMapName);

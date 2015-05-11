@@ -51,7 +51,7 @@ public enum AdventuresForTest
 	 * @param adventureID this adventure's unique ID
 	 * @param adventureDescription what the player has to do
 	 * @param questID the ID of the quest that contains this adventure
-	 * @param experiencePointsGained TODO
+	 * @param experiencePointsGained the number of experience points you gain for completing this adventure
 	 */
 	AdventuresForTest(int adventureID, String adventureDescription, int questID, int experiencePointsGained)
 	{
