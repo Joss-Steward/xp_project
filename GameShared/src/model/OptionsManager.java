@@ -167,6 +167,9 @@ public class OptionsManager
 		this.hostName = hostName;
 	}
 
+	/**
+	 * @param b if true, we will use mock data whenever possible
+	 */
 	public void setTestMode(boolean b)
 	{
 		this.testMode = b;
