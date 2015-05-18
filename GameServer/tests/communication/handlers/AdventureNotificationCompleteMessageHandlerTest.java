@@ -52,7 +52,7 @@ public class AdventureNotificationCompleteMessageHandlerTest
 	public void testProcessCreatesCommandAdventureNotificationComplete() throws InterruptedException
 	{
 		PlayerManager.getSingleton().addPlayer(1);
-		AdventureNotificationCompleteMessage msg = new AdventureNotificationCompleteMessage(PlayersForTest.JOHN.getPlayerID(), QuestsForTest.ONE_BIG_QUEST.getQuestID(), AdventuresForTest.TWO.getAdventureID());
+		AdventureNotificationCompleteMessage msg = new AdventureNotificationCompleteMessage(PlayersForTest.JOHN.getPlayerID(), QuestsForTest.ONE_BIG_QUEST.getQuestID(), AdventuresForTest.QUEST1_ADVENTURE2.getAdventureID());
 		AdventureNotificationCompleteMessageHandler handler = new AdventureNotificationCompleteMessageHandler();
 		handler.process(msg);
 		

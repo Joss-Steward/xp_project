@@ -196,7 +196,7 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 		gateway = getGateway();
 		AdventureStatesForTest adv = AdventureStatesForTest.PLAYER2_QUEST1_ADV3;
 		gateway.updateState(adv.getPlayerID(), adv.getQuestID(), adv.getAdventureID(),
-				AdventureStateEnum.COMPLETED);
+				AdventureStateEnum.COMPLETED, true);
 
 		ArrayList<AdventureStateRecord> actual = gateway.getAdventureStates(
 				adv.getPlayerID(), adv.getQuestID());
@@ -224,7 +224,7 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	public void canAddNew() throws DatabaseException
 	{
 		gateway = getGateway();
-		gateway.updateState(13, 22, 11, AdventureStateEnum.TRIGGERED);
+		gateway.updateState(13, 22, 11, AdventureStateEnum.TRIGGERED, true);
 		ArrayList<AdventureStateRecord> actual = gateway.getAdventureStates(13, 22);
 		assertEquals(1, actual.size());
 		AdventureStateRecord asRec = actual.get(0);

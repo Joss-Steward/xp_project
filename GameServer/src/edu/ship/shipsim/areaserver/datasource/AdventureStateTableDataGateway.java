@@ -37,9 +37,10 @@ public interface AdventureStateTableDataGateway
 	 * @param questID the quest the adventure is a part of
 	 * @param adventureID the adventure
 	 * @param newState the new state
+	 * @param needingNotification TODO
 	 * @throws DatabaseException if we have trouble talking to the data source
 	 */
-	void updateState(int playerID, int questID, int adventureID, AdventureStateEnum newState) throws DatabaseException;
+	void updateState(int playerID, int questID, int adventureID, AdventureStateEnum newState, boolean needingNotification) throws DatabaseException;
 
 	/**
 	 * Create the table

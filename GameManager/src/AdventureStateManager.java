@@ -146,7 +146,7 @@ public class AdventureStateManager
 				{
 					try
 					{
-						AdventureStateViewTableDataGatewayRDS.moveToNeedNotification(
+						AdventureStateViewTableDataGatewayRDS.moveToCompleted(
 								lastSelectedPlayerID.getPlayerID(), rec.getQuestID(),
 								rec.getAdventureID());
 					} catch (DatabaseException e)

@@ -62,9 +62,9 @@ public class AdventureStateViewTableDataGatewayRDS
 	 * @param adventureID the adventure
 	 * @throws DatabaseException if we fail talking to the database
 	 */
-	public static void moveToNeedNotification(int playerID, int questID, int adventureID) throws DatabaseException
+	public static void moveToCompleted(int playerID, int questID, int adventureID) throws DatabaseException
 	{
-		AdventureStateTableDataGatewayRDS.getSingleton().updateState(playerID, questID, adventureID, AdventureStateEnum.COMPLETED);
+		AdventureStateTableDataGatewayRDS.getSingleton().updateState(playerID, questID, adventureID, AdventureStateEnum.COMPLETED, true);
 		
 	}
 }

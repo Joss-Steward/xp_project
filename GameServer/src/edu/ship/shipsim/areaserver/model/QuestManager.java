@@ -72,8 +72,7 @@ public class QuestManager implements QualifiedObserver
 	private static QuestManager singleton;
 
 	/**
-	 * Gets a specific quest from the database. Creates a Quest and passes it on
-	 * the player mapper?
+	 * Gets a specific quest from the database. 
 	 * 
 	 * @param questID
 	 *            the quest to retrieve

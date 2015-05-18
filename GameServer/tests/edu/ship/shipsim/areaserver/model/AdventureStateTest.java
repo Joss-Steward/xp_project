@@ -281,7 +281,7 @@ public class AdventureStateTest extends DatabaseTest
 				AdventureStatesForTest.PLAYER1_QUEST2_ADV2.getPlayerID(),
 				AdventureStatesForTest.PLAYER1_QUEST2_ADV2.getQuestID(),
 				AdventureStatesForTest.PLAYER1_QUEST2_ADV2.getAdventureID(),
-				AdventuresForTest.FOUR.getAdventureDescription(),
+				AdventuresForTest.QUEST2_ADVENTURE2.getAdventureDescription(),
 				AdventureStateEnum.COMPLETED);
 		qState.setPlayerID(1);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,

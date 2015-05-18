@@ -114,12 +114,12 @@ public class QuestManagerTest extends DatabaseTest
 	public void testGettingOneAdventure() throws DatabaseException
 	{
 		QuestManager qm = QuestManager.getSingleton();
-		AdventuresForTest expected = AdventuresForTest.FIVE;
+		AdventuresForTest expected = AdventuresForTest.QUEST3_ADVENTURE1;
 		AdventureRecord actual = qm.getAdventure(expected.getQuestID(), expected.getAdventureID());
-		assertEquals(AdventuresForTest.FIVE.getAdventureDescription(),actual.getAdventureDescription());
-		assertEquals(AdventuresForTest.FIVE.getAdventureID(),actual.getAdventureID());
-		assertEquals(AdventuresForTest.FIVE.getExperiencePointsGained(),actual.getExperiencePointsGained());
-		assertEquals(AdventuresForTest.FIVE.getQuestID(),actual.getQuestID());
+		assertEquals(AdventuresForTest.QUEST3_ADVENTURE1.getAdventureDescription(),actual.getAdventureDescription());
+		assertEquals(AdventuresForTest.QUEST3_ADVENTURE1.getAdventureID(),actual.getAdventureID());
+		assertEquals(AdventuresForTest.QUEST3_ADVENTURE1.getExperiencePointsGained(),actual.getExperiencePointsGained());
+		assertEquals(AdventuresForTest.QUEST3_ADVENTURE1.getQuestID(),actual.getQuestID());
 	}
 	
 	/**
@@ -168,14 +168,14 @@ public class QuestManagerTest extends DatabaseTest
 		{
 			if (i == 1)
 			{
-				assertEquals(AdventuresForTest.ONE.getAdventureID(), a.getAdventureID());
-				assertEquals(AdventuresForTest.ONE.getAdventureDescription(),
+				assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureID(), a.getAdventureID());
+				assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(),
 						a.getAdventureDescription());
 			}
 			if (i == 2)
 			{
-				assertEquals(AdventuresForTest.TWO.getAdventureID(), a.getAdventureID());
-				assertEquals(AdventuresForTest.TWO.getAdventureDescription(),
+				assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getAdventureID(), a.getAdventureID());
+				assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getAdventureDescription(),
 						a.getAdventureDescription());
 			}
 			i++;
@@ -200,14 +200,14 @@ public class QuestManagerTest extends DatabaseTest
 		{
 			if (i == 1)
 			{
-				assertEquals(AdventuresForTest.ONE.getAdventureID(), a.getAdventureID());
-				assertEquals(AdventuresForTest.ONE.getAdventureDescription(),
+				assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureID(), a.getAdventureID());
+				assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(),
 						a.getAdventureDescription());
 			}
 			if (i == 2)
 			{
-				assertEquals(AdventuresForTest.TWO.getAdventureID(), a.getAdventureID());
-				assertEquals(AdventuresForTest.TWO.getAdventureDescription(),
+				assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getAdventureID(), a.getAdventureID());
+				assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getAdventureDescription(),
 						a.getAdventureDescription());
 			}
 			i++;
@@ -218,14 +218,14 @@ public class QuestManagerTest extends DatabaseTest
 		{
 			if (i == 1)
 			{
-				assertEquals(AdventuresForTest.THREE.getAdventureID(), a.getAdventureID());
-				assertEquals(AdventuresForTest.THREE.getAdventureDescription(),
+				assertEquals(AdventuresForTest.QUEST2_ADVENTURE1.getAdventureID(), a.getAdventureID());
+				assertEquals(AdventuresForTest.QUEST2_ADVENTURE1.getAdventureDescription(),
 						a.getAdventureDescription());
 			}
 			if (i == 2)
 			{
-				assertEquals(AdventuresForTest.FOUR.getAdventureID(), a.getAdventureID());
-				assertEquals(AdventuresForTest.FOUR.getAdventureDescription(),
+				assertEquals(AdventuresForTest.QUEST2_ADVENTURE2.getAdventureID(), a.getAdventureID());
+				assertEquals(AdventuresForTest.QUEST2_ADVENTURE2.getAdventureDescription(),
 						a.getAdventureDescription());
 			}
 			i++;

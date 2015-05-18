@@ -135,11 +135,11 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 
 	/**
 	 * @see edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway#updateState(int,
-	 *      int, int, datasource.AdventureStateEnum)
+	 *      int, int, datasource.AdventureStateEnum, boolean)
 	 */
 	@Override
 	public void updateState(int playerID, int questID, int adventureID,
-			AdventureStateEnum newState) throws DatabaseException
+			AdventureStateEnum newState, boolean needingNotification) throws DatabaseException
 	{
 		if (data.containsKey(new Key(playerID, questID)))
 		{
@@ -151,13 +151,13 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 						&& (asRec.getAdventureID() == adventureID))
 				{
 					asRec.setState(newState);
-					asRec.setNeedingNotification(true);
+					asRec.setNeedingNotification(needingNotification);
 				}
 			}
 		} else
 		{
 			ArrayList<AdventureStateRecord> list = new ArrayList<AdventureStateRecord>();
-			list.add(new AdventureStateRecord(playerID, questID, adventureID, newState, true));
+			list.add(new AdventureStateRecord(playerID, questID, adventureID, newState, needingNotification));
 			data.put(new Key(playerID, questID), list);
 		}
 	}
@@ -179,7 +179,7 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 	public void createRow(int playerID, int questID, int adventureID,
 			AdventureStateEnum state, boolean needingNotification) throws DatabaseException
 	{
-		updateState(playerID, questID, adventureID, state);
+		updateState(playerID, questID, adventureID, state, needingNotification);
 	}
 
 	/**

@@ -96,12 +96,12 @@ public class UpdatePlayerInformationReportTest {
 				{
 					if(j == 1)
 					{
-						assertEquals(AdventuresForTest.ONE.getAdventureDescription(), a.getAdventureDescription());
+						assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(), a.getAdventureDescription());
 						assertEquals(AdventureStatesForTest.PLAYER1_QUEST1_ADV1.getState(), a.getAdventureState());
 					}
 					if(j == 2)
 					{
-						assertEquals(AdventuresForTest.TWO.getAdventureDescription(), a.getAdventureDescription());
+						assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getAdventureDescription(), a.getAdventureDescription());
 						assertEquals(AdventureStatesForTest.PLAYER1_QUEST1_ADV2.getState(), a.getAdventureState());
 					}
 					j++;
@@ -115,12 +115,12 @@ public class UpdatePlayerInformationReportTest {
 				{
 					if(j == 1)
 					{
-						assertEquals(AdventuresForTest.THREE.getAdventureDescription(), a.getAdventureDescription());
+						assertEquals(AdventuresForTest.QUEST2_ADVENTURE1.getAdventureDescription(), a.getAdventureDescription());
 						assertEquals(AdventureStatesForTest.PLAYER1_QUEST2_ADV1.getState(), a.getAdventureState());
 					}
 					if(j == 2)
 					{
-						assertEquals(AdventuresForTest.FOUR.getAdventureDescription(), a.getAdventureDescription());
+						assertEquals(AdventuresForTest.QUEST2_ADVENTURE2.getAdventureDescription(), a.getAdventureDescription());
 						assertEquals(AdventureStatesForTest.PLAYER1_QUEST2_ADV2.getState(), a.getAdventureState());
 					}
 					j++;

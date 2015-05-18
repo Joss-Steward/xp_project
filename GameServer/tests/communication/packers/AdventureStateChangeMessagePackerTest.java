@@ -53,13 +53,13 @@ public class AdventureStateChangeMessagePackerTest
 		stateAccumulator.setPlayerId(1);
 		
 		AdventureStateChangeReport report = new AdventureStateChangeReport(
-				stateAccumulator.getPlayerID(), AdventuresForTest.ONE.getQuestID(), AdventuresForTest.ONE.getAdventureID(), AdventuresForTest.ONE.getAdventureDescription(), AdventureStateEnum.TRIGGERED);
+				stateAccumulator.getPlayerID(), AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(), AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureID(), AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(), AdventureStateEnum.TRIGGERED);
 		AdventureStateChangeMessagePacker packer = new AdventureStateChangeMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		
 		AdventureStateChangeMessage msg = (AdventureStateChangeMessage) packer.pack(report);
-		assertEquals(AdventuresForTest.ONE.getAdventureID(), msg.getAdventureID());
-		assertEquals(AdventuresForTest.ONE.getAdventureDescription(),msg.getAdventureDescription());
+		assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureID(), msg.getAdventureID());
+		assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(),msg.getAdventureDescription());
 		assertEquals(AdventureStateEnum.TRIGGERED, msg.getNewState());
 
 	}
