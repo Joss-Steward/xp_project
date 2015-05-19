@@ -42,6 +42,8 @@ public class LoginServer implements Runnable
 		try
 		{
 			servSock = new ServerSocket(1871, 10);
+			OptionsManager.getSingleton();
+			OptionsManager.getSingleton().setTestMode(false);
 			while (true)
 			{
 				System.out.println("Login Server Listening");
@@ -63,6 +65,9 @@ public class LoginServer implements Runnable
 		}
 	}
 
+	/**
+	 * @see java.lang.Object#finalize()
+	 */
 	protected void finalize()
 	{
 		try
@@ -81,12 +86,17 @@ public class LoginServer implements Runnable
 	 */
 	public static void main(String args[])
 	{
+		OptionsManager.getSingleton();
+		OptionsManager.getSingleton().setTestMode(false);
 		for(String arg: args)
 		{
 			String[] splitArg = arg.split("=");
 			if(splitArg[0].equals("--localhost"))
 			{
-				OptionsManager.getSingleton(false);
+				OptionsManager.getSingleton().setHostName("localhost");
+			} else if(splitArg[0].equals("--production"))
+			{
+				OptionsManager.getSingleton().setUsingTestDB(false);
 			}
 		}
 		LoginServer S = new LoginServer();

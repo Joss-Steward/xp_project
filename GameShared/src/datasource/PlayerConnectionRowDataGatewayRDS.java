@@ -1,12 +1,8 @@
 package datasource;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
-import model.DatabaseManager;
 
 /**
  * AN RDS Implementation of PlayerConnectionRowDataGateway
@@ -32,19 +28,19 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 		try
 		{
 			Connection connection = DatabaseManager.getSingleton().getConnection();
-			Statement stmt = connection.createStatement();
-			stmt.executeUpdate("DROP TABLE IF EXISTS PlayerConnection");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,"DROP TABLE IF EXISTS PlayerConnection");
+			stmt.executeUpdate();
 			StringBuffer sql = new StringBuffer("CREATE TABLE PlayerConnection(");
-			sql.append("PlayerID int NOT NULL, ");
+			sql.append("playerID int NOT NULL, ");
 			sql.append("Pin double NOT NULL,");
 			sql.append("changed_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,");
-			sql.append("MapName VARCHAR(30),");
+			sql.append("mapName VARCHAR(30),");
 
-			sql.append("PRIMARY KEY (PlayerID));");
+			sql.append("PRIMARY KEY (playerID));");
 			System.out.println(sql);
-			stmt.executeUpdate(new String(sql));
+			stmt.executeUpdate( sql.toString());
 			stmt.executeUpdate("ALTER TABLE PlayerConnection ENGINE = INNODB");
-			stmt.executeUpdate("ALTER TABLE PlayerConnection ADD UNIQUE (PlayerID)");
+			stmt.executeUpdate("ALTER TABLE PlayerConnection ADD UNIQUE (playerID)");
 			stmt.close();
 		} catch (SQLException e)
 		{
@@ -66,14 +62,14 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 		try
 		{
 			Connection connection = DatabaseManager.getSingleton().getConnection();
-			String sql = "SELECT * FROM PlayerConnection WHERE PlayerID = ?";
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			String sql = "SELECT * FROM PlayerConnection WHERE playerID = ?";
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,sql);
 			stmt.setInt(1, playerID);
 			ResultSet resultSet = stmt.executeQuery();
 			resultSet.next();
 			pin = resultSet.getInt("Pin");
 			changedOn = resultSet.getString("changed_on");
-			mapName = resultSet.getString("MapName");
+			mapName = resultSet.getString("mapName");
 
 		} catch (SQLException e)
 		{
@@ -102,8 +98,8 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("Insert INTO PlayerConnection SET PlayerID = ?, Pin = ?, changed_on = ?, mapName = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"Insert INTO PlayerConnection SET playerID = ?, Pin = ?, changed_on = ?, mapName = ?");
 			stmt.setInt(1, playerID);
 			stmt.setInt(2, pin);
 			stmt.setString(3, changedOn);
@@ -116,6 +112,8 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 					"Couldn't create a player connection record for player id "
 							+ playerID, e);
 		}
+		this.pin = pin;
+		this.mapName = mapName;
 	}
 
 	/**
@@ -124,13 +122,13 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 	@Override
 	public void deleteRow() throws DatabaseException
 	{
-		Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
+		Connection connection = DatabaseManager.getSingleton().getConnection();
 
-		String sql = "DELETE from PlayerConnection WHERE PlayerID = ?";
-		PreparedStatement stmt;
+		String sql = "DELETE from PlayerConnection WHERE playerID = ?";
+		ClosingPreparedStatement stmt;
 		try
 		{
-			stmt = connectionStatus.prepareStatement(sql);
+			stmt = new ClosingPreparedStatement(connection,sql);
 			stmt.setInt(1, playerID);
 			stmt.executeUpdate();
 		} catch (SQLException e)
@@ -181,14 +179,14 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 	@Override
 	public void setChangedOn(String newTime) throws DatabaseException
 	{
-		Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
+		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
 			String sql;
-			PreparedStatement stmt;
+			ClosingPreparedStatement stmt;
 
-			sql = "UPDATE PlayerConnection SET changed_On=? WHERE PlayerID = ?";
-			stmt = connectionStatus.prepareStatement(sql);
+			sql = "UPDATE PlayerConnection SET changed_On=? WHERE playerID = ?";
+			stmt = new ClosingPreparedStatement(connection,sql);
 			stmt.setString(1, newTime);
 			stmt.setInt(2, playerID);
 			stmt.executeUpdate();
@@ -197,6 +195,7 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 			throw new DatabaseException("Unable to generate pin for player id # "
 					+ playerID, e);
 		}
+		this.changedOn = newTime;
 	}
 
 	/**
@@ -207,13 +206,13 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 	{
 		try
 		{
-			Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
+			Connection connection = DatabaseManager.getSingleton().getConnection();
 
 			String sql;
-			PreparedStatement stmt;
+			ClosingPreparedStatement stmt;
 
-			sql = "UPDATE PlayerConnection SET mapName=? WHERE PlayerID = ?";
-			stmt = connectionStatus.prepareStatement(sql);
+			sql = "UPDATE PlayerConnection SET mapName=? WHERE playerID = ?";
+			stmt = new ClosingPreparedStatement(connection,sql);
 			stmt.setString(1, mapFileTitle);
 			stmt.setInt(2, playerID);
 			stmt.executeUpdate();
@@ -222,6 +221,7 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 			throw new DatabaseException(
 					"Unable to store map information for player id # " + playerID, e);
 		}
+		this.mapName = mapFileTitle;
 	}
 
 	/**
@@ -230,17 +230,16 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 	@Override
 	public void storePin(int pin) throws DatabaseException
 	{
-		Connection connectionStatus = DatabaseManager.getSingleton().getConnection();
+		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
 			String sql;
-			PreparedStatement stmt;
-			deleteRow();
-
-			sql = "INSERT INTO PlayerConnection (PlayerID, Pin) VALUES (?, ?)";
-			stmt = connectionStatus.prepareStatement(sql);
-			stmt.setInt(1, playerID);
-			stmt.setInt(2, pin);
+			ClosingPreparedStatement stmt;
+			
+			sql = "UPDATE PlayerConnection SET Pin= ? where playerID = ?";
+			stmt = new ClosingPreparedStatement(connection,sql);
+			stmt.setInt(2, playerID);
+			stmt.setInt(1, pin);
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{

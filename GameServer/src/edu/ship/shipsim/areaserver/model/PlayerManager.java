@@ -8,10 +8,12 @@ import java.util.List;
 import model.OptionsManager;
 import model.PlayerConnection;
 import model.PlayerLogin;
-import model.QualifiedObservable;
 import model.QualifiedObservableConnector;
-import model.QualifiedObservableReport;
 import datasource.DatabaseException;
+import datasource.PlayerScoreRecord;
+import edu.ship.shipsim.areaserver.datasource.PlayerTableDataGatewayMock;
+import edu.ship.shipsim.areaserver.datasource.PlayerTableDataGatewayRDS;
+import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerLeaveReport;
 
@@ -19,7 +21,7 @@ import edu.ship.shipsim.areaserver.model.reports.PlayerLeaveReport;
  * @author Merlin
  * 
  */
-public class PlayerManager extends QualifiedObservable
+public class PlayerManager
 {
 	/**
 	 * @return the only PlayerManger in the system
@@ -46,12 +48,6 @@ public class PlayerManager extends QualifiedObservable
 	{
 		if (singleton != null)
 		{
-			for (Class<? extends QualifiedObservableReport> reportType : singleton.reportTypes)
-			{
-				QualifiedObservableConnector.getSingleton()
-						.unregisterQualifiedObservable(singleton, reportType);
-			}
-
 			singleton.stopNpcs();
 			singleton = null;
 		}
@@ -64,11 +60,7 @@ public class PlayerManager extends QualifiedObservable
 
 	private PlayerManager() throws DatabaseException
 	{
-
 		players = new HashMap<Integer, Player>();
-		reportTypes.add(PlayerConnectionReport.class);
-
-		this.registerReportTypesWeNotify();
 	}
 
 	/**
@@ -81,6 +73,11 @@ public class PlayerManager extends QualifiedObservable
 	 */
 	public Player addPlayer(int playerID)
 	{
+		if (!OptionsManager.getSingleton().isTestMode())
+		{
+			throw new IllegalStateException(
+					"Trying to add a player without giving a PIN when not in test mode");
+		}
 		try
 		{
 			PlayerMapper mapper = new PlayerMapper(playerID);
@@ -88,7 +85,8 @@ public class PlayerManager extends QualifiedObservable
 			player.setPlayerLogin(new PlayerLogin(playerID));
 			players.put(playerID, player);
 
-			this.notifyObservers(new PlayerConnectionReport(player));
+			QualifiedObservableConnector.getSingleton().sendReport(
+					new PlayerConnectionReport(player));
 			return player;
 		} catch (DatabaseException e)
 		{
@@ -107,17 +105,23 @@ public class PlayerManager extends QualifiedObservable
 	 * @return the player object that we added
 	 * @throws DatabaseException
 	 *             if the player's pin was not correct
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
-	public Player addPlayer(int playerID, double pin) throws DatabaseException
+	public Player addPlayer(int playerID, double pin) throws DatabaseException, IllegalQuestChangeException
 	{
 
 		PlayerMapper pm = new PlayerMapper(playerID);
 		Player player = pm.getPlayer();
-		if (OptionsManager.getSingleton().isTestMode() || player.isPinValid(pin))
+		if (player.isPinValid(pin))
 		{
 			players.put(playerID, player);
 
-			this.notifyObservers(new PlayerConnectionReport(player));
+			QualifiedObservableConnector.getSingleton().sendReport(
+					new PlayerConnectionReport(player));
+
+			QualifiedObservableConnector.getSingleton().sendReport(
+					new UpdatePlayerInformationReport(player));
+
 			return player;
 		} else
 		{
@@ -176,7 +180,7 @@ public class PlayerManager extends QualifiedObservable
 			Player p = i.next();
 			if (p.getPlayerName().equals(playerName))
 			{
-				return p.getID();
+				return p.getPlayerID();
 			}
 		}
 		throw new PlayerNotFoundException();
@@ -213,7 +217,7 @@ public class PlayerManager extends QualifiedObservable
 		for (NPCMapper m : pendingNPCs)
 		{
 			NPC nextNPC = (NPC) m.getPlayer();
-			players.put(nextNPC.getID(), nextNPC);
+			players.put(nextNPC.getPlayerID(), nextNPC);
 			nextNPC.start();
 		}
 	}
@@ -234,12 +238,16 @@ public class PlayerManager extends QualifiedObservable
 	 * @return Success status of persistence
 	 * @throws DatabaseException
 	 *             IF we have trouble persisting to the data source
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
-	public boolean persistPlayer(int playerID) throws DatabaseException
+	public boolean persistPlayer(int playerID) throws DatabaseException, IllegalQuestChangeException
 	{
 
 		Player player = this.getPlayerFromID(playerID);
-		player.persist();
+		if (player != null)
+		{
+			player.persist();
+		}
 		return true;
 
 	}
@@ -250,24 +258,22 @@ public class PlayerManager extends QualifiedObservable
 	 * 
 	 * @param playerID
 	 *            the ID of the player we should remove
+	 * @throws DatabaseException
+	 *             if we can't persist the player to the data source
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
-	public void removePlayer(int playerID)
+	public void removePlayer(int playerID) throws DatabaseException, IllegalQuestChangeException
 	{
+		persistPlayer(playerID);
 		Player p = this.players.remove(playerID);
 		if (p != null)
 		{
-			// unregister this player from all observers
-			QualifiedObservableConnector qoc = QualifiedObservableConnector
-					.getSingleton();
-			for (Class<? extends QualifiedObservableReport> type : p
-					.getReportTypesWeSend())
-			{
-				qoc.unregisterQualifiedObservable(p, type);
-			}
+
 			System.out.println("Player " + p.getPlayerName() + " has left");
+
 			// send the disconnect message to clients
 			PlayerLeaveReport report = new PlayerLeaveReport(playerID);
-			this.notifyObservers(report);
+			QualifiedObservableConnector.getSingleton().sendReport(report);
 		}
 	}
 
@@ -284,5 +290,18 @@ public class PlayerManager extends QualifiedObservable
 				npc.stop();
 			}
 		}
+	}
+
+	/**
+	 * @return the players with the top ten scores sorted by score
+	 * @throws DatabaseException if the data source can't get the data for us
+	 */
+	public ArrayList<PlayerScoreRecord> getTopTenPlayers() throws DatabaseException
+	{
+		if (OptionsManager.getSingleton().isTestMode())
+		{
+			return PlayerTableDataGatewayMock.getSingleton().getTopTenList();
+		}
+		return PlayerTableDataGatewayRDS.getSingleton().getTopTenList();
 	}
 }

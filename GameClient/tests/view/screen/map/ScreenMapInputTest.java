@@ -65,7 +65,7 @@ public class ScreenMapInputTest
 		pm.initiateLogin("john", "pw");
 		try
 		{
-			pm.setThisClientsPlayer(1);
+			pm.finishLogin(1);
 		} catch (AlreadyBoundException | NotBoundException e)
 		{
 			e.printStackTrace();
@@ -102,7 +102,7 @@ public class ScreenMapInputTest
 
 	private void pauseForCommandExecution() throws InterruptedException
 	{
-		while (ModelFacade.getSingleton().queueSize() > 0)
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

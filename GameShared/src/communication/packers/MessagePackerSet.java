@@ -20,7 +20,7 @@ import communication.messages.Message;
 public class MessagePackerSet extends TypeDetector
 {
 
-	protected HashMap<Class<?>, ArrayList<MessagePacker>> packers;
+	private HashMap<Class<?>, ArrayList<MessagePacker>> packers;
 
 	/**
 	 * 

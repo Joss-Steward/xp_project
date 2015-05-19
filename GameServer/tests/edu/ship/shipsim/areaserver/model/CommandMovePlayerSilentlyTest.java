@@ -1,11 +1,9 @@
 package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
-
-import java.util.Observer;
-
 import model.OptionsManager;
 import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -36,7 +34,7 @@ public class CommandMovePlayerSilentlyTest
 		PlayerManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 
 	/**
@@ -71,7 +69,7 @@ public class CommandMovePlayerSilentlyTest
 	public void doesntNotifyObservers()
 	{
 		PlayerManager.getSingleton().addPlayer(1);
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerMovedReport.class);
 		EasyMock.replay(obs);
 		

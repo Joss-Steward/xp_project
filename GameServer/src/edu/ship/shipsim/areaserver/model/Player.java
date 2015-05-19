@@ -2,12 +2,12 @@ package edu.ship.shipsim.areaserver.model;
 
 import model.PlayerConnection;
 import model.PlayerLogin;
-import model.QualifiedObservable;
+import model.QualifiedObservableConnector;
 import data.Position;
 import datasource.DatabaseException;
+import edu.ship.shipsim.areaserver.model.reports.ExperienceChangedReport;
 import edu.ship.shipsim.areaserver.model.reports.PinFailedReport;
 import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
-import edu.ship.shipsim.areaserver.model.reports.QuestScreenReport;
 
 /**
  * Very simple for now . . .
@@ -15,7 +15,7 @@ import edu.ship.shipsim.areaserver.model.reports.QuestScreenReport;
  * @author Merlin
  * 
  */
-public class Player extends QualifiedObservable
+public class Player
 {
 
 	private PlayerLogin playerLogin;
@@ -31,11 +31,9 @@ public class Player extends QualifiedObservable
 	private Position playerPosition;
 
 	private String mapName;
-
-	Player()
-	{
-		registerOurReportTypes();
-	}
+	
+	private int experiencePoints;
+	
 
 	/**
 	 * Get the appearance type for how this player should be drawn
@@ -50,7 +48,7 @@ public class Player extends QualifiedObservable
 	/**
 	 * @return the id of this player
 	 */
-	public int getID()
+	public int getPlayerID()
 	{
 		return playerID;
 	}
@@ -95,6 +93,14 @@ public class Player extends QualifiedObservable
 	}
 
 	/**
+	 * Get the player's experience points
+	 * @return experience points
+	 */
+	public int getExperiencePoints()
+	{
+		return experiencePoints;
+	}
+	/**
 	 * Increment quiz score;
 	 */
 	public void incrementQuizScore()
@@ -130,7 +136,7 @@ public class Player extends QualifiedObservable
 		{
 			System.err.println("Pin is not valid for " + playerID
 					+ " because " + report.toString());
-			this.notifyObservers(report);
+			QualifiedObservableConnector.getSingleton().sendReport(report);
 			return false;
 		}
 		return true;
@@ -140,8 +146,9 @@ public class Player extends QualifiedObservable
 	 * store the information into the data source
 	 * 
 	 * @throws DatabaseException if the data source fails to complete the persistance
+	 * @throws IllegalQuestChangeException shouldn't
 	 */
-	public void persist() throws DatabaseException
+	public void persist() throws DatabaseException, IllegalQuestChangeException
 	{
 		playerMapper.persist();
 	}
@@ -203,8 +210,9 @@ public class Player extends QualifiedObservable
 	{
 		setPlayerPositionWithoutNotifying(playerPosition);
 		PlayerMovedReport report = new PlayerMovedReport(playerID,
-				this.getPlayerName(), playerPosition);
-		this.notifyObservers(report);
+				this.getPlayerName(), playerPosition, this.mapName);
+		
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 
 	/**
@@ -230,12 +238,27 @@ public class Player extends QualifiedObservable
 		this.quizScore = score;
 	}
 
-	private void registerOurReportTypes()
+	/**
+	 * Set experience points
+	 * and generates ExperienceChangedReport
+	 * @param expPoints Player's experience points
+	 * @throws DatabaseException shouldn't
+	 */
+	public void setExperiencePoints(int expPoints) throws DatabaseException
 	{
-		reportTypes.add(PlayerMovedReport.class);
-		reportTypes.add(QuestScreenReport.class);
-		reportTypes.add(PinFailedReport.class);
-
-		this.registerReportTypesWeNotify();
+		this.experiencePoints = expPoints;
+	}
+	
+	/**
+	 * Add experience points
+	 * and generates ExperienceChangedReport
+	 * @param expPoints Player's experience points
+	 * @throws DatabaseException shouldn't
+	 */
+	public void addExperiencePoints(int expPoints) throws DatabaseException
+	{
+		this.experiencePoints = experiencePoints + expPoints;
+		ExperienceChangedReport report = new ExperienceChangedReport(this.playerID, this.experiencePoints, LevelManager.getSingleton().getLevelForPoints(this.experiencePoints));
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 }

@@ -2,8 +2,12 @@ package datasource;
 
 import java.util.HashMap;
 
+import model.OptionsManager;
+
 /**
- * A mock data source that returns test data.  It is initialized with the data in ServersInDB
+ * A mock data source that returns test data. It is initialized with the data in
+ * ServersInDB
+ * 
  * @see ServersForTest
  * @author Carol
  *
@@ -19,7 +23,9 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 
 		/**
 		 * Copy Constructor
-		 * @param server the one we want to copy
+		 * 
+		 * @param server
+		 *            the one we want to copy
 		 */
 		public Server(Server server)
 		{
@@ -43,6 +49,7 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 			return portNumber;
 		}
 	}
+
 	private String mapName;
 	private Server server;
 	private String originalMapName;
@@ -61,9 +68,12 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 	}
 
 	/**
-	 * Find Constructor:  initializes itself with data in the data source
-	 * @param mapName the map we are interested in
-	 * @throws DatabaseException if we can't find data for the given map name
+	 * Find Constructor: initializes itself with data in the data source
+	 * 
+	 * @param mapName
+	 *            the map we are interested in
+	 * @throws DatabaseException
+	 *             if we can't find data for the given map name
 	 */
 	public ServerRowDataGatewayMock(String mapName) throws DatabaseException
 	{
@@ -73,8 +83,7 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 		this.mapName = mapName;
 		if (!servers.containsKey(mapName))
 		{
-			throw new DatabaseException("Couldn't find a server for map named "
-					+ mapName);
+			throw new DatabaseException("Couldn't find a server for map named " + mapName);
 		}
 		this.server = new Server(servers.get(mapName));
 
@@ -82,10 +91,15 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 
 	/**
 	 * Create constructor - data will be added as a new row in the data source
-	 * @param mapName the name of the map
-	 * @param hostName the host name serving that map
-	 * @param portNumber the port number associated with that map
-	 * @throws DatabaseException if an entry for this map already exists
+	 * 
+	 * @param mapName
+	 *            the name of the map
+	 * @param hostName
+	 *            the host name serving that map
+	 * @param portNumber
+	 *            the port number associated with that map
+	 * @throws DatabaseException
+	 *             if an entry for this map already exists
 	 */
 	public ServerRowDataGatewayMock(String mapName, String hostName, int portNumber)
 			throws DatabaseException
@@ -132,8 +146,11 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 	@Override
 	public void persist()
 	{
-		servers.remove(this.originalMapName);
-		servers.put(mapName, server);
+		if (!OptionsManager.getSingleton().getHostName().equals("localhost"))
+		{
+			servers.remove(this.originalMapName);
+			servers.put(mapName, server);
+		}
 	}
 
 	/**
@@ -144,8 +161,7 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 		servers = new HashMap<String, Server>();
 		for (ServersForTest s : ServersForTest.values())
 		{
-			servers.put(s.getMapName(),
-					new Server(s.getHostName(), s.getPortNumber()));
+			servers.put(s.getMapName(), new Server(s.getHostName(), s.getPortNumber()));
 		}
 	}
 
@@ -165,7 +181,7 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 	public void setMapName(String mapName)
 	{
 		this.mapName = mapName;
-	
+
 	}
 
 	/**

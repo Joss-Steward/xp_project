@@ -24,7 +24,7 @@ public class PlayerLoginTest extends DatabaseTest
 	@Before
 	public void setUp()
 	{
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 
 	

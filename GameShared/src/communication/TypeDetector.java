@@ -8,6 +8,7 @@ import org.reflections.Reflections;
 import com.google.common.collect.Multimap;
 
 /**
+ * Finds all of the classes in a package that extend a given type
  * @author Merlin
  * 
  */
@@ -15,6 +16,9 @@ public abstract class TypeDetector
 {
 
 	/**
+	 * Get all of the types that extend a given type in this package
+	 * @param type the type that we are detecting
+	 * @return  all of the types that extend the given type
 	 * 
 	 */
 	protected ArrayList<Class<?>> detectAllExtendersInPackage(Class<?> type)
@@ -23,6 +27,9 @@ public abstract class TypeDetector
 	}
 
 	/**
+	 * @param type the type we are interested in
+	 * @param packageName the name of the package we should search
+	 * @return  the types
 	 * 
 	 */
 	protected ArrayList<Class<?>> detectAllExtendersInPackage(Class<?> type,
@@ -55,6 +62,9 @@ public abstract class TypeDetector
 	}
 
 	/**
+	 * Detect all of the types that implement a given type within the current package
+	 * @param type  the type we are interested in
+	 * @return the types we find
 	 * 
 	 */
 	protected ArrayList<Class<?>> detectAllImplementorsInPackage(Class<?> type)

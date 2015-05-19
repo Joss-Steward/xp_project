@@ -1,7 +1,6 @@
 import model.MapToServerMappingTest;
 import model.PlayerLoginTest;
 import model.PlayerConnectionTest;
-import model.QualifiedObservableTest;
 import model.QualifiedObserverConnectorTest;
 
 import org.junit.ClassRule;
@@ -17,6 +16,9 @@ import communication.handlers.MessageHandlerSetTest;
 import communication.messages.ChatMessageTest;
 import communication.messages.ConnectionMessageTest;
 import communication.messages.DisconnectionMessageTest;
+import communication.messages.ExperienceChangedMessageTest;
+import communication.messages.InitializeThisClientsPlayerMessageTest;
+import communication.messages.PlayerLeaveMessageTest;
 import communication.messages.TeleportationInitiationMessageTest;
 import communication.messages.TeleportationContinuationMessageTest;
 import communication.messages.LoginMessageTest;
@@ -27,10 +29,12 @@ import communication.messages.MovementMessageTest;
 import communication.messages.PlayerJoinedMessageTest;
 import communication.packers.MessagePackerSetTest;
 import data.PositionTest;
+import datasource.LevelRecordTest;
 import datasource.PlayerConnectionRowDataGatewayMockTest;
 import datasource.PlayerConnectionRowDataGatewayRDSTest;
 import datasource.PlayerLoginRowDataGatewayMockTest;
 import datasource.PlayerLoginRowDataGatewayRDSTest;
+import datasource.PlayerScoreRecordTest;
 import datasource.ServerRowDataGatewayMockTest;
 import datasource.ServerRowDataGatewayRDSTest;
 
@@ -57,19 +61,22 @@ import datasource.ServerRowDataGatewayRDSTest;
 		// StubMessageHandler2.class,
 
 		// communication.messages
+		//AreaCollisionMessageTest.class,
 		ChatMessageTest.class,
 		ConnectionMessageTest.class,
 		DisconnectionMessageTest.class,
-		TeleportationContinuationMessageTest.class,
+		ExperienceChangedMessageTest.class,
+		InitializeThisClientsPlayerMessageTest.class,
 		LoginMessageTest.class,
-		TeleportationContinuationMessageTest.class,
 		LoginResponseMessageTest.class,
 		MapFileMessageTest.class,
 		MessageStructureVerifier.class, 
 		MovementMessageTest.class,
 		PlayerJoinedMessageTest.class,
+		PlayerLeaveMessageTest.class,
 		// StubMessage1.class,
 		// StubMessage2.class,
+		TeleportationContinuationMessageTest.class,
 		TeleportationInitiationMessageTest.class,
 		
 
@@ -83,12 +90,14 @@ import datasource.ServerRowDataGatewayRDSTest;
 		PositionTest.class,
 		
 		//datasource
+		LevelRecordTest.class,
 		PlayerConnectionRowDataGatewayMockTest.class,
 		PlayerConnectionRowDataGatewayRDSTest.class,
 		//PlayerConnectionRowDataGateway,
 		PlayerLoginRowDataGatewayMockTest.class,
 		PlayerLoginRowDataGatewayRDSTest.class,
 		//PlayerLoginDataBehaviorTest.class,
+		PlayerScoreRecordTest.class,
 		//PlayersForTest
 		ServerRowDataGatewayMockTest.class,
 		ServerRowDataGatewayRDSTest.class,
@@ -96,12 +105,12 @@ import datasource.ServerRowDataGatewayRDSTest;
 		//ServersInDB,
 
 		// model
+		//Tests for Adventure and Quest Classes
 		// DatabaseTest.class
 		MapToServerMappingTest.class,
 		PlayerLoginTest.class, 
 		PlayerConnectionTest.class, 
 		// PlayersInDB
-		QualifiedObservableTest.class,
 		// QualifiedObservableTestInherited,
 		QualifiedObserverConnectorTest.class,
 		// ServersInDB

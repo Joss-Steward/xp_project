@@ -27,11 +27,21 @@ public class ConnectMessageHandlerTest
 	public void reset()
 	{
 		OptionsManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
 	}
-
+	
+	/**
+	 * Tests that getTypeWeHandle method returns correct type.
+	 */
+	@Test
+	public void testTypeWeHandle()
+	{
+		ConnectMessageHandler h = new ConnectMessageHandler();
+		assertEquals(ConnectMessage.class, h.getMessageTypeWeHandle());
+	}
+	
 	/**
 	 * The incoming message should cause creation of the player in the model and
 	 * notification of the player's playerID to the state accumulator
@@ -48,7 +58,7 @@ public class ConnectMessageHandlerTest
 		handler.setConnectionManager(connectionManager);
 		ConnectMessage msg = new ConnectMessage(1, PlayerConnection.DEFAULT_PIN);
 		handler.process(msg);
-		while (ModelFacade.getSingleton().queueSize() > 0)
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}
@@ -62,13 +72,13 @@ public class ConnectMessageHandlerTest
 	 * @throws InterruptedException
 	 *             Shouldn't
 	 */
-	@Test
+	@Test 
 	public void tellsModel() throws InterruptedException
 	{
 		ConnectMessageHandler handler = new ConnectMessageHandler();
 		ConnectMessage msg = new ConnectMessage(1, PlayerConnection.DEFAULT_PIN);
 		handler.process(msg);
-		while (ModelFacade.getSingleton().queueSize() > 0)
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

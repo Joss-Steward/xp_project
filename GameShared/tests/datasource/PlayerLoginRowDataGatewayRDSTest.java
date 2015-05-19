@@ -1,6 +1,5 @@
 package datasource;
 
-
 /**
  * Tests the RDS gateway
  * 
@@ -39,4 +38,5 @@ public class PlayerLoginRowDataGatewayRDSTest extends PlayerLoginRowDataGatewayT
 	{
 		return new PlayerLoginRowDataGatewayRDS(playerID);
 	}
+
 }

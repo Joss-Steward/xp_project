@@ -3,7 +3,6 @@ package view.screen;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Observable;
 
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
@@ -59,7 +58,7 @@ public class ScreenListenerTest
 		}
 
 		@Override
-		public void update(Observable arg0, Object arg1)
+		public void receiveReport(QualifiedObservableReport report)
 		{
 			// don't need anything here
 		}

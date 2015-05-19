@@ -1,7 +1,6 @@
 package edu.ship.shipsim.areaserver.model;
 
 import java.util.ArrayList;
-import java.util.Observable;
 
 import model.QualifiedObservableReport;
 import data.ChatType;
@@ -31,52 +30,6 @@ public class QuizBotBehavior extends NPCBehavior
 		pollingInterval = 30000;
 		pullNewQuestion();
 		setUpListening();
-	}
-
-	/**
-	 * Watches SendChatMessageReports for a correct answer. On correct answer,
-	 * announce the correct answer, pull a new random question, and ask that
-	 * question.
-	 */
-	@Override
-	public void update(Observable o, Object message)
-	{
-
-		if (message instanceof SendChatMessageReport)
-		{
-			String answer = question.getAnswer().toLowerCase().replaceAll(" ", "");
-			SendChatMessageReport report = (SendChatMessageReport) message;
-			String userAnswer = report.getMessage().toLowerCase().replaceAll(" ", "");
-			System.out.println("[DEBUG] Answer is '" + answer + "' user answered '"
-					+ userAnswer + "'");
-			if (answer.equals(userAnswer))
-			{
-				try
-				{
-					int playerID = PlayerManager.getSingleton()
-							.getPlayerIDFromPlayerName(report.getSenderName());
-					Player player = PlayerManager.getSingleton()
-							.getPlayerFromID(playerID);
-
-					ChatManager.getSingleton().sendChatToClients(
-							player.getPlayerName()
-									+ " answered correctly.  The answer was "
-									+ question.getAnswer(), "Quiz Bot",
-							new Position(0, 0), ChatType.Zone);
-					player.incrementQuizScore();
-					ChatManager.getSingleton().sendChatToClients(
-							player.getPlayerName() + " score is now "
-									+ player.getQuizScore(), "Quiz Bot",
-							new Position(0, 0), ChatType.Zone);
-				} catch (PlayerNotFoundException e)
-				{
-					e.printStackTrace();
-				}
-
-				pullNewQuestion();
-				askQuestion();
-			}
-		}
 	}
 
 	/**
@@ -132,5 +85,53 @@ public class QuizBotBehavior extends NPCBehavior
 		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
 		reportTypes.add(SendChatMessageReport.class);
 		return reportTypes;
+	}
+
+	/**
+	 * Watches SendChatMessageReports for a correct answer. On correct answer,
+	 * announce the correct answer, pull a new random question, and ask that
+	 * question.
+	 * *
+	 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
+	 */
+	@Override
+	public void receiveReport(QualifiedObservableReport incomingReport)
+	{
+		if (incomingReport instanceof SendChatMessageReport)
+		{
+			String answer = question.getAnswer().toLowerCase().replaceAll(" ", "");
+			SendChatMessageReport report = (SendChatMessageReport) incomingReport;
+			String userAnswer = report.getMessage().toLowerCase().replaceAll(" ", "");
+			System.out.println("[DEBUG] Answer is '" + answer + "' user answered '"
+					+ userAnswer + "'");
+			if (answer.equals(userAnswer))
+			{
+				try
+				{
+					int playerID = PlayerManager.getSingleton()
+							.getPlayerIDFromPlayerName(report.getSenderName());
+					Player player = PlayerManager.getSingleton()
+							.getPlayerFromID(playerID);
+
+					ChatManager.getSingleton().sendChatToClients(
+							player.getPlayerName()
+									+ " answered correctly.  The answer was "
+									+ question.getAnswer(), "Quiz Bot",
+							new Position(0, 0), ChatType.Zone);
+					player.incrementQuizScore();
+					ChatManager.getSingleton().sendChatToClients(
+							player.getPlayerName() + " score is now "
+									+ player.getQuizScore(), "Quiz Bot",
+							new Position(0, 0), ChatType.Zone);
+				} catch (PlayerNotFoundException e)
+				{
+					e.printStackTrace();
+				}
+
+				pullNewQuestion();
+				askQuestion();
+			}
+		}
+		
 	}
 }

@@ -13,6 +13,9 @@ import datasource.DatabaseException;
 public class NPCRowDataGatewayRDSTest extends NPCRowDataGatewayTest
 {
 
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayTest#findGateway(int)
+	 */
 	@Override
 	NPCRowDataGateway findGateway(int playerID) throws DatabaseException
 	{

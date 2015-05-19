@@ -29,6 +29,16 @@ public class PlayerJoinedMessageHandlerTest
 	}
 
 	/**
+	 * Test the type of Message that we expect
+	 */
+	@Test
+	public void typeWeHandle()
+	{
+		PlayerJoinedMessageHandler h = new PlayerJoinedMessageHandler();
+		assertEquals(PlayerJoinedMessage.class, h.getMessageTypeWeHandle());
+	}
+	
+	/**
 	 * We should add the player to the player manager
 	 * 
 	 * @throws InterruptedException
@@ -42,6 +52,10 @@ public class PlayerJoinedMessageHandlerTest
 		PlayerJoinedMessageHandler handler = new PlayerJoinedMessageHandler();
 		handler.process(msg);
 		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
+		while(ModelFacade.getSingleton().hasCommandsPending())
+		{
+			Thread.sleep(100);
+		}
 	}
 
 }

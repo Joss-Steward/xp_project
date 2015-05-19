@@ -1,12 +1,12 @@
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import model.DatabaseManager;
 import model.OptionsManager;
 import datasource.DatabaseException;
+import datasource.DatabaseManager;
 import datasource.ServerRowDataGatewayRDS;
 import datasource.ServersForTest;
+import datasource.ClosingPreparedStatement;
 
 /**
  * Builds the Player portion of the database
@@ -29,14 +29,14 @@ public class BuildTestDBServers
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
-		OptionsManager.getSingleton(false);
+		OptionsManager.getSingleton().setTestMode(false);
 		createServerTable();
 	}
 
 	private static void createServerTable() throws SQLException, DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
-		PreparedStatement stmt = connection.prepareStatement("DELETE From Server");
+		ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,"DELETE From Server");
 		stmt.executeUpdate();
 		for (ServersForTest p : ServersForTest.values())
 		{

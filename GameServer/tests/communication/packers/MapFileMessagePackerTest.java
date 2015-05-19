@@ -13,6 +13,7 @@ import org.junit.Test;
 import communication.StateAccumulator;
 import communication.messages.MapFileMessage;
 import datasource.DatabaseException;
+import edu.ship.shipsim.areaserver.model.IllegalQuestChangeException;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
 import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 
@@ -62,11 +63,12 @@ public class MapFileMessagePackerTest
 	 * @throws DatabaseException
 	 *             shouldn't
 	 * @throws SQLException shouldn't
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void ifThePlayerIsOnThisConnection() throws DatabaseException, SQLException
+	public void ifThePlayerIsOnThisConnection() throws DatabaseException, SQLException, IllegalQuestChangeException
 	{
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		PlayerManager.getSingleton().addPlayer(1, PlayerConnection.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);

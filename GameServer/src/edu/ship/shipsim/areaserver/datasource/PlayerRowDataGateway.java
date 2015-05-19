@@ -12,11 +12,6 @@ public interface PlayerRowDataGateway
 {
 
 	/**
-	 * @return the map this player is currently on
-	 */
-	String getMapName();
-
-	/**
 	 * @return this player's player id
 	 */
 	int getPlayerID();
@@ -42,13 +37,8 @@ public interface PlayerRowDataGateway
 	public void resetData();
 
 	/**
-	 * @param mapName the name of the map this player is currently on
-	 */
-	void setMapName(String mapName);
-
-	/**
 	 * Store this information into the data source
-	 * @throws DatabaseException 
+	 * @throws DatabaseException if we can't persist the data to the data source
 	 */
 	void persist() throws DatabaseException;
 
@@ -66,4 +56,14 @@ public interface PlayerRowDataGateway
 	 * @param quizScore this player's new score
 	 */
 	void setQuizScore(int quizScore);
+
+	/**
+	 * @return the player's experience points
+	 */
+	int getExperiencePoints();
+
+	/**
+	 * @param experiencePoints this player's new experience points
+	 */
+	void setExperiencePoints(int experiencePoints);
 }

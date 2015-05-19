@@ -32,7 +32,7 @@ public class PinFailedMessageHandler extends MessageHandler
 		{
 			try 
 			{
-				connectionManager.moveToNewSocket(
+				getConnectionManager().moveToNewSocket(
 						new Socket("localhost", 1871),
 						0, 0);
 			} catch (IOException e)

@@ -11,23 +11,8 @@ import datasource.DatabaseException;
  */
 public class OptionsManager
 {
+	
 	private static OptionsManager singleton;
-	private boolean testMode;
-	private String mapName;
-	private String hostName;
-	private int portNumber;
-
-	/**
-	 * I'm a singleton
-	 * 
-	 * @param testMode
-	 *            true if we are running tests false for live system
-	 */
-	private OptionsManager(boolean testMode2)
-	{
-		testMode = testMode2;
-	}
-
 	/**
 	 * Used to get an existing singleton (it must have already been created). If
 	 * it hasn't been created, you must use the getSingleton where you specify
@@ -35,34 +20,11 @@ public class OptionsManager
 	 * 
 	 * @return the existing singleton
 	 */
-	public static OptionsManager getSingleton()
+	public static synchronized OptionsManager getSingleton()
 	{
 		if (singleton == null)
 		{
-			throw new IllegalArgumentException(
-					"No existing singleton - you must specify test mode");
-		}
-		return singleton;
-	}
-
-	/**
-	 * 
-	 * @param testMode
-	 *            true if we are running tests and false for live system
-	 * @return The instance of OptionsManager
-	 */
-	public static OptionsManager getSingleton(boolean testMode)
-	{
-		if (singleton == null)
-		{
-			singleton = new OptionsManager(testMode);
-		} else
-		{
-			if (singleton.isTestMode() != testMode)
-			{
-				throw new IllegalArgumentException(
-						"Can't change the test mode after the singleton is created");
-			}
+			singleton = new OptionsManager();
 		}
 		return singleton;
 	}
@@ -74,31 +36,37 @@ public class OptionsManager
 	{
 		singleton = null;
 	}
+	private boolean testMode;
+	private String mapName;
+	private String hostName;
+
+	private int portNumber;
+
+	private String loginHost;
+	private boolean usingTestDB = true;
 
 	/**
+	 * I'm a singleton
 	 * 
-	 * @param mapName
-	 *            The new map name
-	 * @param hostName
-	 *            The hostname of the server
-	 * @param port
-	 *            The port this server is on
-	 * @throws DatabaseException
-	 *             When the DB operation fails
-	 */
-	public void updateMapInformation(String mapName, String hostName, int port)
-			throws DatabaseException
+	 * */
+	private OptionsManager()
 	{
-		MapToServerMapping mapping;
-		this.mapName = mapName;
-		this.hostName = hostName;
-		this.portNumber = port;
-
-		mapping = new MapToServerMapping(mapName);
-		mapping.setHostName(hostName);
-		mapping.setMapName(mapName);
-		mapping.setPortNumber(port);
-		mapping.persist();
+		hostName = "";
+	}
+	/**
+	 * 
+	 * @return The host we have mapped to
+	 */
+	public String getHostName()
+	{
+		return hostName;
+	}
+	/**
+	 * @return the host that is managing logins
+	 */
+	public String getLoginHost()
+	{
+		return loginHost;
 	}
 
 	/**
@@ -112,15 +80,6 @@ public class OptionsManager
 
 	/**
 	 * 
-	 * @return The host we have mapped to
-	 */
-	public String getHostName()
-	{
-		return hostName;
-	}
-
-	/**
-	 * 
 	 * @return The port we have mapped to
 	 */
 	public int getPortNumber()
@@ -129,13 +88,90 @@ public class OptionsManager
 	}
 
 	/**
-	 * returns true if this server is running in localhost mode for testing
-	 * purposes
+	 * returns true if this server is running on mock data for testing
+	 * purposes where appropriate
 	 * 
 	 * @return local mode
 	 */
 	public boolean isTestMode()
 	{
 		return testMode;
+	}
+
+	/**
+	 * @return true if we are not supposed to use the production database
+	 */
+	public boolean isUsingTestDB()
+	{
+		return usingTestDB;
+	}
+
+	/**
+	 * @param host the host that is managing logins
+	 */
+	public synchronized void setLoginHost(String host)
+	{
+		this.loginHost = host;
+	}
+
+	/**
+	 * @param usingTestDB set to true if we are not supposed to use the production database
+	 */
+	public synchronized void setUsingTestDB(boolean usingTestDB)
+	{
+		this.usingTestDB = usingTestDB;
+	}
+
+	
+	/**
+	 * 
+	 * @param mapName
+	 *            The new map name
+	 * @param hostName
+	 *            The hostname of the server
+	 * @param port
+	 *            The port this server is on
+	 * @throws DatabaseException
+	 *             When the DB operation fails
+	 */
+	public synchronized void updateMapInformation(String mapName, String hostName, int port)
+			throws DatabaseException
+	{
+		MapToServerMapping mapping;
+		this.mapName = mapName;
+		this.hostName = hostName;
+		this.portNumber = port;
+
+		mapping = new MapToServerMapping(mapName);
+		if (!hostName.equals("localhost"))
+		{
+			mapping.setHostName(hostName);
+			mapping.setMapName(mapName);
+			mapping.setPortNumber(port);
+			mapping.persist();
+		} else
+		{
+			mapping.setHostName("localhost");
+			mapping.setMapName(mapName);
+			mapping.setPortNumber(port);
+		}
+			
+		
+	}
+	/**
+	 * Used when we are an area server
+	 * @param hostName the hostname a server is running on
+	 */
+	public synchronized void setHostName(String hostName)
+	{
+		this.hostName = hostName;
+	}
+
+	/**
+	 * @param b if true, we will use mock data whenever possible
+	 */
+	public void setTestMode(boolean b)
+	{
+		this.testMode = b;
 	}
 }

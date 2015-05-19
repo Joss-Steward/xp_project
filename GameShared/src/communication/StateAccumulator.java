@@ -1,10 +1,9 @@
 package communication;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import model.QualifiedObservableReport;
+import model.QualifiedObserver;
 import communication.messages.Message;
 import communication.packers.MessagePackerSet;
 
@@ -16,10 +15,12 @@ import communication.packers.MessagePackerSet;
  * @author merlin
  * 
  */
-public class StateAccumulator implements Observer
+public class StateAccumulator implements QualifiedObserver
 {
 
-	// need this to be visible to the tests
+	/**
+	 *  need this to be visible to the tests
+	 */
 	protected ArrayList<Message> pendingMsgs;
 	private MessagePackerSet packerSet;
 	private int playerID;
@@ -54,12 +55,11 @@ public class StateAccumulator implements Observer
 		return temp;
 	}
 
+	
 	/**
-	 * 
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
 	 */
-	@Override
-	public void update(Observable arg0, Object arg1)
+	public void receiveReport(QualifiedObservableReport arg1)
 	{
 		ArrayList<Message> msgs;
 		try

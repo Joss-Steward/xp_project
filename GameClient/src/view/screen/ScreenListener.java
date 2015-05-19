@@ -1,12 +1,11 @@
 package view.screen;
 
 import java.util.ArrayList;
-import java.util.Observer;
-
 import com.badlogic.gdx.Game;
 
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
+import model.QualifiedObserver;
 
 /**
  * There is one of these for each screen and it is responsible for listening for
@@ -15,7 +14,7 @@ import model.QualifiedObservableReport;
  * @author Merlin
  * 
  */
-public abstract class ScreenListener implements Observer
+public abstract class ScreenListener implements QualifiedObserver
 {
 
 	protected ScreenBasic screen;

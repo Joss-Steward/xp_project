@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
-import java.util.Observer;
 
 import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -58,11 +58,11 @@ public class ChatManagerTest
 	@Test
 	public void notifiesOnAreaChatReceived()
 	{
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		ChatReceivedReport report = new ChatReceivedReport("message", "sender", ChatType.Zone);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				ChatReceivedReport.class);
-		obs.update(EasyMock.eq(ChatManager.getSingleton()), EasyMock.eq(report));
+		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
 		ChatManager.getSingleton().sendChatToUI("message", "sender", new Position(0,0), ChatType.Zone);
@@ -79,14 +79,14 @@ public class ChatManagerTest
 	public void notifiesOnLocalChatReceived() throws AlreadyBoundException, NotBoundException
 	{
 		PlayerManager.getSingleton().initiateLogin("X", "X");
-		Player p = PlayerManager.getSingleton().setThisClientsPlayer(1);
+		Player p = PlayerManager.getSingleton().finishLogin(1);
 		p.setPosition(new Position(5,5));
 		
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		ChatReceivedReport report = new ChatReceivedReport("message", "sender", ChatType.Local);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				ChatReceivedReport.class);
-		obs.update(EasyMock.eq(ChatManager.getSingleton()), EasyMock.eq(report));
+		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
 		ChatManager.getSingleton().sendChatToUI("message", "sender", new Position(0,0), ChatType.Local);
@@ -103,7 +103,7 @@ public class ChatManagerTest
 	public void canReceiveLocalMessageValid() throws AlreadyBoundException, NotBoundException
 	{
 		PlayerManager.getSingleton().initiateLogin("X", "X");
-		Player p = PlayerManager.getSingleton().setThisClientsPlayer(1);
+		Player p = PlayerManager.getSingleton().finishLogin(1);
 		p.setPosition(new Position(5,5));
 		
 		assertTrue(ChatManager.getSingleton().canReceiveLocalMessage(new Position(5,5)));
@@ -125,7 +125,7 @@ public class ChatManagerTest
 	public void canReceiveLocalMessageInvalid() throws AlreadyBoundException, NotBoundException
 	{
 		PlayerManager.getSingleton().initiateLogin("X", "X");
-		Player p = PlayerManager.getSingleton().setThisClientsPlayer(1);
+		Player p = PlayerManager.getSingleton().finishLogin(1);
 		p.setPosition(new Position(5,5));
 		
 		assertFalse(ChatManager.getSingleton().canReceiveLocalMessage(new Position(0,-1)));
@@ -145,15 +145,15 @@ public class ChatManagerTest
 	public void notifiesOnSendChatToServer() throws AlreadyBoundException, NotBoundException
 	{
 		PlayerManager.getSingleton().initiateLogin("X", "X");
-		Player p = PlayerManager.getSingleton().setThisClientsPlayer(1);
+		Player p = PlayerManager.getSingleton().finishLogin(1);
 		p.setPosition(new Position(5,5));
 		p.setName("my name");
 		
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		ChatSentReport report = new ChatSentReport("message", "my name", p.getPosition(), ChatType.Local);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				ChatSentReport.class);
-		obs.update(EasyMock.eq(ChatManager.getSingleton()), EasyMock.eq(report));
+		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
 		ChatManager.getSingleton().sendChatToServer("message", ChatType.Local);

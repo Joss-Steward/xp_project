@@ -1,6 +1,5 @@
 package communication;
 
-
 import java.io.IOException;
 import java.net.Socket;
 
@@ -8,7 +7,6 @@ import communication.handlers.MessageHandlerSet;
 import communication.messages.ConnectMessage;
 import communication.messages.DisconnectMessage;
 import communication.packers.MessagePackerSet;
-
 
 /**
  * All of the pieces necessary to manage the connection between the client and
@@ -32,6 +30,9 @@ public class ConnectionManager
 	private Socket socket;
 	private MessagePackerSet messagePackerSet;
 	private MessageHandlerSet handlerSet;
+	/**
+	 * 
+	 */
 	StateAccumulator stateAccumulator;
 	private int playerID;
 
@@ -41,7 +42,8 @@ public class ConnectionManager
 	 * 
 	 * @param sock
 	 *            the socket connection we are managing
-	 * @param stateAccumulator TODO
+	 * @param stateAccumulator
+	 *            the accumulator that will send our responses
 	 * @param messageHandlerSet
 	 *            the set of MessageHandlers hat will process the incoming
 	 *            messages on this connection
@@ -52,11 +54,12 @@ public class ConnectionManager
 	 *             caused by socket issues
 	 */
 	public ConnectionManager(Socket sock, StateAccumulator stateAccumulator,
-			MessageHandlerSet messageHandlerSet, MessagePackerSet messagePackerSet) throws IOException
+			MessageHandlerSet messageHandlerSet, MessagePackerSet messagePackerSet)
+			throws IOException
 	{
 		System.out.println("Starting new ConnectionManager");
 		this.socket = sock;
-		
+
 		this.messagePackerSet = messagePackerSet;
 		this.handlerSet = messageHandlerSet;
 
@@ -73,10 +76,12 @@ public class ConnectionManager
 		// for simplictly
 		// T.setDaemon(true);
 		incomingThread.start();
-		
+
 		ConnectionListener cl = new ConnectionListener(outgoing.getStream(), 5000);
-		cl.setDisconnectionAction(new Runnable(){
-			public void run(){
+		cl.setDisconnectionAction(new Runnable()
+		{
+			public void run()
+			{
 				disconnect();
 			}
 		});
@@ -107,7 +112,7 @@ public class ConnectionManager
 	{
 		disconnect();
 		this.socket = sock;
-		
+
 		outgoing = new ConnectionOutgoing(sock, this.stateAccumulator, messagePackerSet);
 		outgoingThread = new Thread(outgoing);
 		// for simplictly
@@ -142,12 +147,11 @@ public class ConnectionManager
 			System.out.println("Trying to disconnect from our current socket");
 			socket.close();
 			handlerSet.process(new DisconnectMessage(playerID));
-		}
-		catch (IOException | CommunicationException e)
+		} catch (IOException | CommunicationException e)
 		{
 			e.printStackTrace();
 		}
-		
+
 		watcherThread.interrupt();
 		incomingThread.interrupt();
 		outgoingThread.interrupt();

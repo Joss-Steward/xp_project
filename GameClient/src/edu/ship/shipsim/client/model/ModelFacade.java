@@ -24,8 +24,15 @@ public class ModelFacade
 				Command cmd;
 				try
 				{
-					cmd = (Command) commandQueue.getInfoPacket();
-					cmd.execute();
+					synchronized (commandQueue)
+					{
+						cmd = (Command) commandQueue.getInfoPacket();
+						cmd.execute();
+						if (commandQueue.getQueueSize() == 0)
+						{
+							commandsPending = false;
+						}
+					}
 				} catch (InterruptedException e)
 				{
 					e.printStackTrace();
@@ -90,8 +97,18 @@ public class ModelFacade
 	}
 
 	private InformationQueue commandQueue;
-
+	private boolean commandsPending;
 	private boolean headless;
+
+	/**
+	 * Checks if commands are pending
+	 * 
+	 * @return if commands are pending
+	 */
+	public boolean hasCommandsPending()
+	{
+		return commandsPending;
+	}
 
 	/**
 	 * Make the default constructor private
@@ -105,15 +122,15 @@ public class ModelFacade
 		this.mockMode = mockMode;
 		setHeadless(headless);
 		commandQueue = new InformationQueue();
-		if (!mockMode)
+		if (!headless && !mockMode)
 		{
-			if (!headless)
+			com.badlogic.gdx.utils.Timer.schedule(new Task()
 			{
-				com.badlogic.gdx.utils.Timer.schedule(new Task()
-				{
 
-					@Override
-					public void run()
+				@Override
+				public void run()
+				{
+					synchronized (commandQueue)
 					{
 						while (commandQueue.getQueueSize() > 0)
 						{
@@ -124,11 +141,15 @@ public class ModelFacade
 								cmd.execute();
 								if (cmd.doDump())
 								{
-									//let it clear
-									while (commandQueue.getQueueSize() > 0) 
+									// let it clear
+									while (commandQueue.getQueueSize() > 0)
 									{
 										commandQueue.getInfoPacket();
 									}
+								}
+								if (commandQueue.getQueueSize() == 0)
+								{
+									commandsPending = false;
 								}
 							} catch (InterruptedException e)
 							{
@@ -137,13 +158,13 @@ public class ModelFacade
 
 						}
 					}
+				}
 
-				}, (float) 0.25, (float) 0.25);
-			} else
-			{
-				java.util.Timer timer = new java.util.Timer();
-				timer.schedule(new ProcessCommandQueueTask(), 0, 250);
-			}
+			}, (float) 0.25, (float) 0.25);
+		} else
+		{
+			java.util.Timer timer = new java.util.Timer();
+			timer.schedule(new ProcessCommandQueueTask(), 0, 250);
 		}
 	}
 
@@ -186,7 +207,11 @@ public class ModelFacade
 	 */
 	public void queueCommand(Command cmd)
 	{
-		commandQueue.queueInfoPacket(cmd);
+		synchronized (commandQueue)
+		{
+			commandsPending = true;
+			commandQueue.queueInfoPacket(cmd);
+		}
 	}
 
 	/**
@@ -211,6 +236,16 @@ public class ModelFacade
 	public int queueSize()
 	{
 		return commandQueue.getQueueSize();
+	}
+
+	/**
+	 * @return the next command in the queue
+	 * @throws InterruptedException
+	 *             shouldn't
+	 */
+	public Command getNextCommand() throws InterruptedException
+	{
+		return (Command) commandQueue.getInfoPacket();
 	}
 
 }

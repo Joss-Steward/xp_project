@@ -2,6 +2,7 @@ package edu.ship.shipsim.areaserver.datasource;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.junit.After;
@@ -21,14 +22,26 @@ public abstract class NPCRowDataGatewayTest extends DatabaseTest
 
 	private NPCRowDataGateway gateway;
 
+	/**
+	 * Find a gateway for a given player ID. Allows these tests to be subclassed
+	 * for each type of gateway ensuring they all work the same.
+	 * 
+	 * @param playerID
+	 *            the player's unique ID
+	 * @return the gateway
+	 * @throws DatabaseException if the playerID can't be found int the datasource
+	 */
 	abstract NPCRowDataGateway findGateway(int playerID) throws DatabaseException;
 
 	/**
 	 * Make sure any static information is cleaned up between tests
+	 * @throws SQLException shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@After
-	public void cleanup()
+	public void cleanup() throws DatabaseException, SQLException
 	{
+		super.tearDown();
 		if (gateway != null)
 		{
 			gateway.resetData();
@@ -84,9 +97,9 @@ public abstract class NPCRowDataGatewayTest extends DatabaseTest
 	{
 		// just make sure the data set is clean using a known playerID
 		findGateway(NPCsForTest.NPC1.getPlayerID()).resetData();
-		ArrayList<NPCRowDataGateway> gateways = getAllForMap("current.tmx");
+		ArrayList<NPCRowDataGateway> gateways = getAllForMap("silly.tmx");
 		assertEquals(2, gateways.size());
-		assertTrue((NPCsForTest.NPC2.getPlayerID() == gateways.get(0).getPlayerID() || NPCsForTest.NPC2
+		assertTrue((NPCsForTest.NPC1.getPlayerID() == gateways.get(0).getPlayerID() || NPCsForTest.NPC1
 				.getPlayerID() == gateways.get(1).getPlayerID()));
 		assertTrue((NPCsForTest.NPC3.getPlayerID() == gateways.get(0).getPlayerID() || NPCsForTest.NPC3
 				.getPlayerID() == gateways.get(1).getPlayerID()));

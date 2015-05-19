@@ -3,10 +3,11 @@ package edu.ship.shipsim.areaserver.model;
 import static org.junit.Assert.*;
 
 import java.sql.SQLException;
-import java.util.Observer;
+import java.util.ArrayList;
 
 import model.OptionsManager;
 import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import org.junit.Test;
 
 import data.Position;
 import datasource.DatabaseException;
+import datasource.PlayerScoreRecord;
 import datasource.PlayersForTest;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
@@ -34,13 +36,9 @@ public class PlayerManagerTest
 	public void setUp()
 	{
 		OptionsManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		QualifiedObservableConnector.resetSingleton();
 		PlayerManager.resetSingleton();
-		PlayerManager playerManager = PlayerManager.getSingleton();
-		assertEquals(0, playerManager.countObservers());
-		assertEquals(0, playerManager.countObservers(PlayerConnectionReport.class));
-
 	}
 
 	/**
@@ -65,7 +63,7 @@ public class PlayerManagerTest
 		PlayerManager.getSingleton().addPlayer(1);
 		assertEquals(1, PlayerManager.getSingleton().numberOfPlayers());
 		Player p = PlayerManager.getSingleton().getPlayerFromID(1);
-		assertEquals(1, p.getID());
+		assertEquals(1, p.getPlayerID());
 		assertTrue(PlayerManager.getSingleton().getConnectedPlayers().contains(p));
 	}
 
@@ -75,16 +73,13 @@ public class PlayerManagerTest
 	@Test
 	public void notifiesOnAddPlayer()
 	{
-		System.out.println("starting . . . . .");
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				PlayerConnectionReport.class);
-		obs.update(EasyMock.eq(PlayerManager.getSingleton()),
-				EasyMock.isA(PlayerConnectionReport.class));
+		obs.receiveReport(EasyMock.isA(PlayerConnectionReport.class));
 		EasyMock.replay(obs);
 
-		assertEquals(1,
-				PlayerManager.getSingleton().countObservers(PlayerConnectionReport.class));
+		
 		PlayerManager.getSingleton().addPlayer(2);
 		EasyMock.verify(obs);
 	}
@@ -135,14 +130,15 @@ public class PlayerManagerTest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void playerIsSaved() throws DatabaseException
+	public void playerIsSaved() throws DatabaseException, IllegalQuestChangeException
 	{
 		Player player = PlayerManager.getSingleton().addPlayer(
 				PlayersForTest.MERLIN.getPlayerID());
 		player.setPlayerPosition(new Position(100, 100));
-		assertTrue(PlayerManager.getSingleton().persistPlayer(player.getID()));
+		assertTrue(PlayerManager.getSingleton().persistPlayer(player.getPlayerID()));
 
 		PlayerManager.resetSingleton();
 
@@ -162,12 +158,25 @@ public class PlayerManagerTest
 	@Test
 	public void testNpcsLoaded() throws DatabaseException, SQLException
 	{
-		OptionsManager.getSingleton(true).updateMapInformation(
+		OptionsManager om = OptionsManager.getSingleton();
+		om.setTestMode(true);
+		om.updateMapInformation(
 				PlayersForTest.QUIZBOT.getMapName(), "localhost", 1874);
 		PlayerManager.getSingleton().loadNpcs();
 
 		assertNotNull(PlayerManager.getSingleton().getPlayerFromID(
 				PlayersForTest.QUIZBOT.getPlayerID()));
 
+	}
+	
+	/**
+	 * Make sure it can get the high score list
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void canGetTopTen() throws DatabaseException
+	{
+		ArrayList<PlayerScoreRecord> result = PlayerManager.getSingleton().getTopTenPlayers();
+		assertEquals(10, result.size());
 	}
 }

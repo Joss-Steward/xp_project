@@ -1,6 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
+import model.OptionsManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +26,18 @@ public class DisconnectMessageHandlerTest
 	{
 		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
+		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton().setTestMode(true);
+	}
+	
+	/**
+	 * Tests that getTypeWeHandle method returns correct type.
+	 */
+	@Test
+	public void testTypeWeHandle()
+	{
+		DisconnectMessageHandler h = new DisconnectMessageHandler();
+		assertEquals(DisconnectMessage.class, h.getMessageTypeWeHandle());
 	}
 	
 	/**
@@ -43,7 +56,7 @@ public class DisconnectMessageHandlerTest
 		DisconnectMessageHandler handler = new DisconnectMessageHandler();
 		DisconnectMessage msg = new DisconnectMessage(1);
 		handler.process(msg);
-		while (ModelFacade.getSingleton().queueSize() > 0)
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

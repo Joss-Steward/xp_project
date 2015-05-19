@@ -11,60 +11,72 @@ import data.Position;
 public enum PlayersForTest
 {
 	/**
-	 * 
+	 * John must be player 1 for the current quest state report tests to pass
 	 */
-	JOHN(1, "John", "male_a", 0, 8, "pw", "quiznasium.tmx", 1111, null, "current.tmx", 0),
+	JOHN(1, "John", "male_a", 0, 8, "pw", "quiznasium.tmx", 1111, null, 0, 15),
+	/**
+	 *  Merlin must be player 2 for the player mapper tests to pass.  That number maps to player 2
+	 *  in the quest and adventure states in QuestStatesForTest and AdventureStatesForTest
+	 */
+	MERLIN(2, "Merlin", "merlin", 4, 13, "pw", "current.tmx", 1111, null, 42, 45),
 	/**
 	 * 
 	 */
-	MERLIN(2, "Merlin", "merlin", 4, 13, "pw", null, 1111, null, "current.tmx", 42),
+	NICK(3, "Nick", "male_b", 4, 13, "pw", "current.tmx", 1111, null, 0, 35),
 	/**
 	 * 
 	 */
-	NICK(3, "Nick", "magi", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
+	JOSH(4, "Josh", "Ninja", 4, 13, "pw", "current.tmx", 1111, null, 0, 25),
 	/**
 	 * 
 	 */
-	JOSH(4, "Josh", "ninja", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
+	MATT(5, "Matt", "male_b", 4, 13, "pw", "current.tmx", 1111, null, 0, 12),
 	/**
 	 * 
 	 */
-	MATT(5, "Matt", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
+	STEVE(6, "Steve", "knight_with_straw_hat", 4, 13, "pw", "current.tmx", 1111, null, 0, 13),
 	/**
 	 * 
 	 */
-	STEVE(6, "Steve", "knight_with_straw_hat", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
+	FRANK(7, "Frank", "male_c", 4, 13, "pw", "current.tmx", 1441, null, 0, 13),
 	/**
 	 * 
 	 */
-	FRANK(7, "Frank", "male_b", 4, 13, "pw", null, 1441, null, "current.tmx", 0),
+	GA(8, "Ga", "male_b", 4, 13, "pw", "current.tmx", 1111, null, 0, 15),
 	/**
 	 * 
 	 */
-	GA(8, "Ga", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
+	ANDY(9, "Andy", "male_b", 4, 13, "pw", null, 1111, null, 0, 33),
 	/**
 	 * 
 	 */
-	ANDY(9, "Andy", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
-	/**
-	 * 
-	 */
-	DAVE(10, "Dave", "male_b", 4, 13, "pw", null, 1111, null, "current.tmx", 0),
+	DAVE(10, "Dave", "male_b", 4, 13, "pw", null, 1111, null, 0, 12),
 	
 	/**
 	 * 
 	 */
-	MOCK_NPC(11, "NPC1","magi", 4, 13, "", "silly.tmx", 1111, null, "silly.tmx", 0),
+	LOSER(11, "Loser","male_b", 4, 13, "pw", null, 1111, null, 0, 3),
 	
 	/**
 	 * 
 	 */
-	QUIZBOT(12, "QuizBot","magi", 4, 13, "", "quiznasium.tmx", 1111, null, "quiznasium.tmx", 0),
+	MOCK_NPC(12, "NPC1","Magi", 4, 13, "", "silly.tmx", 1111, null, 0, 0),
 	
 	/**
 	 * 
 	 */
-	MOCK_NPC3(13, "NPC3","magi", 4, 13, "", "silly.tmx", 1111, null, "silly.tmx", 0);
+	QUIZBOT(13, "QuizBot","Magi", 4, 13, "", "quiznasium.tmx", 1111, null, 0, 0),
+	
+	/**
+	 * 
+	 */
+	MOCK_NPC3(14, "NPC3","Magi", 4, 13, "", "silly.tmx", 1111, null, 0, 0),
+	
+	/**
+	 * 
+	 */
+	RYAN(15, "Ryan", "female_a", 4, 13, "pw", "current.tmx", 1111, null, 0, 13);
+	
 	
 	private int playerID;
 
@@ -102,17 +114,11 @@ public enum PlayersForTest
 		return changedOn;
 	}
 
-	/**
-	 * @return the map name the pin for the current connection is good for
-	 */
-	public String getMapNameForPin()
-	{
-		return mapNameForPin;
-	}
 
-	private String mapNameForPin;
+	
+	private int experiencePoints;
 
-	PlayersForTest(int id, String playerName, String type, int row, int col, String password, String mapName, int pin, String changedOn, String mapNameForPin, int quizScore)
+	PlayersForTest(int id, String playerName, String type, int row, int col, String password, String mapName, int pin, String changedOn, int quizScore, int experiencePoints)
 	{
 		this.playerID = id;
 		this.playerName = playerName;
@@ -123,7 +129,7 @@ public enum PlayersForTest
 		this.mapName = mapName;
 		this.pin = pin;
 		this.changedOn = changedOn;
-		this.mapNameForPin = mapNameForPin;
+		this.experiencePoints = experiencePoints;
 	}
 
 	/**
@@ -193,6 +199,14 @@ public enum PlayersForTest
 	public int getQuizScore()
 	{
 		return quizScore;
+	}
+
+	/**
+	 * @return this player's experience points
+	 */
+	public int getExperiencePoints()
+	{
+		return experiencePoints;
 	}
 
 }

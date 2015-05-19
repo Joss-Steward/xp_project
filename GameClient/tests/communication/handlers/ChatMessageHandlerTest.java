@@ -28,6 +28,16 @@ public class ChatMessageHandlerTest
 	}
 	
 	/**
+	 * Test the type of Message that we expect
+	 */
+	@Test
+	public void typeWeHandle()
+	{
+		ChatMessageHandler h = new ChatMessageHandler();
+		assertEquals(ChatMessage.class, h.getMessageTypeWeHandle());
+	}
+	
+	/**
 	 * We should add a command to the ModelFacade command queue
 	 * 
 	 * @throws InterruptedException
@@ -39,6 +49,9 @@ public class ChatMessageHandlerTest
 		ChatMessageHandler handler = new ChatMessageHandler();
 		ChatMessage chat = new ChatMessage("name", "message", new Position(1, 1), ChatType.World);
 		handler.process(chat);
-		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
+		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());while(ModelFacade.getSingleton().hasCommandsPending())
+		{
+			Thread.sleep(100);
+		}
 	}
 }

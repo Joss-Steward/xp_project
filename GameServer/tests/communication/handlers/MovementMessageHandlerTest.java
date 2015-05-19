@@ -1,6 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
+import model.OptionsManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +28,18 @@ public class MovementMessageHandlerTest
 	{
 		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
+		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton().setTestMode(true);
+	}
+	
+	/**
+	 * Tests that getTypeWeHandle method returns correct type.
+	 */
+	@Test
+	public void testTypeWeHandle()
+	{
+		MovementMessageHandler h = new MovementMessageHandler();
+		assertEquals(MovementMessage.class, h.getMessageTypeWeHandle());
 	}
 
 	/**
@@ -53,7 +66,7 @@ public class MovementMessageHandlerTest
 		MovementMessageHandler handler = new MovementMessageHandler();
 
 		handler.process(msg);
-		while (ModelFacade.getSingleton().queueSize() > 0)
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

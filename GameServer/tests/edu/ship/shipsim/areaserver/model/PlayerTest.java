@@ -9,7 +9,9 @@ import java.util.GregorianCalendar;
 import model.OptionsManager;
 import model.PlayerConnection;
 import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
 
+import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,12 +20,13 @@ import data.Position;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayersForTest;
+import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayMock;
 import edu.ship.shipsim.areaserver.model.Player;
 import edu.ship.shipsim.areaserver.model.PlayerManager;
-import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
+import edu.ship.shipsim.areaserver.model.reports.ExperienceChangedReport;
 
 /**
- * Test the Player classs
+ * Test the Player class
  * 
  * @author Merlin
  * 
@@ -44,12 +47,11 @@ public class PlayerTest extends DatabaseTest
 	public void setUp() throws DatabaseException
 	{
 		super.setUp();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		QualifiedObservableConnector.resetSingleton();
 		PlayerManager.resetSingleton();
 		playerManager = PlayerManager.getSingleton();
-		assertEquals(0, playerManager.countObservers());
-		assertEquals(0, playerManager.countObservers(PlayerConnectionReport.class));
+		QuestStateTableDataGatewayMock.getSingleton().resetData();
 	}
 
 	/**
@@ -91,9 +93,10 @@ public class PlayerTest extends DatabaseTest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void legitPin() throws DatabaseException
+	public void legitPin() throws DatabaseException, IllegalQuestChangeException
 	{
 		PlayerConnection playerPin = new PlayerConnection(1);
 		playerPin.generateTestPin();
@@ -119,7 +122,7 @@ public class PlayerTest extends DatabaseTest
 		try
 		{
 			playerManager.addPlayer(1, PlayerConnection.DEFAULT_PIN);
-		} catch (DatabaseException e)
+		} catch (DatabaseException | IllegalQuestChangeException e)
 		{
 			gotTheException = true;
 		}
@@ -146,11 +149,48 @@ public class PlayerTest extends DatabaseTest
 	 * 
 	 * @throws DatabaseException
 	 *             should
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 * 
 	 */
 	@Test(expected = DatabaseException.class)
-	public void wrongPin() throws DatabaseException
+	public void wrongPin() throws DatabaseException, IllegalQuestChangeException
 	{
 		playerManager.addPlayer(1, -1);
+	}
+
+	/**
+	 * Test that we can set Player's experience points and add to it
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void testPlayerExpPoints() throws DatabaseException
+	{
+		Player p = playerManager.addPlayer(1);
+
+		p.setExperiencePoints(34);
+		assertEquals(34, p.getExperiencePoints());
+
+		p.addExperiencePoints(3);
+		assertEquals(37, p.getExperiencePoints());
+	}
+	
+	/**
+	 * Tests that adding experience points to a player object 
+	 * generates ExperienceChangedReport
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void testAddExpPointsCreatesReport() throws DatabaseException
+	{
+		Player p = playerManager.addPlayer(1);
+		
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs,
+				ExperienceChangedReport.class);
+		obs.receiveReport(new ExperienceChangedReport(p.getPlayerID(), 30, LevelManager.getSingleton().getLevelForPoints(30)));
+		EasyMock.replay(obs);
+
+		p.addExperiencePoints(15);
+		EasyMock.verify(obs);
 	}
 }

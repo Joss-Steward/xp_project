@@ -1,5 +1,7 @@
 package communication.messages;
 
+import java.io.Serializable;
+
 /**
  * Everything that goes over the communication must implement the interface
  * Message. Yes, I know it is empty. This is an example of the [Marker Interface
@@ -55,7 +57,7 @@ package communication.messages;
  * @author merlin
  * 
  */
-public interface Message
+public interface Message extends Serializable
 {
 
 }

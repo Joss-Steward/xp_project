@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.MapFileMessage;
+
 import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
@@ -26,6 +27,16 @@ public class MapFileMessageHandlerTest
 		ModelFacade.resetSingleton();
 		ModelFacade.getSingleton(true, false);
 	}
+	
+	/**
+	 * Test the type of Message that we expect
+	 */
+	@Test
+	public void typeWeHandle()
+	{
+		MapFileMessageHandler h = new MapFileMessageHandler();
+		assertEquals(MapFileMessage.class, h.getMessageTypeWeHandle());
+	}
 
 	/**
 	 * The handler should tell the model that the new file is there. We will
@@ -42,7 +53,10 @@ public class MapFileMessageHandlerTest
 		MapFileMessage msg = new MapFileMessage("testMaps/simple.tmx");
 		MapFileMessageHandler handler = new MapFileMessageHandler();
 		handler.process(msg);
-
 		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
+		while(ModelFacade.getSingleton().hasCommandsPending())
+		{
+			Thread.sleep(100);
+		}
 	}
 }

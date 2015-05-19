@@ -4,10 +4,9 @@ import static org.junit.Assert.*;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
-import java.util.Observable;
-import java.util.Observer;
 
 import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -41,8 +40,8 @@ public class CommandRemovePlayerTest {
 	@Test
 	public void testExecution()
 	{
-		Observer obs = EasyMock.createMock(Observer.class);
-		obs.update(EasyMock.isA(Observable.class), EasyMock.isA(PlayerDisconnectedFromAreaServerReport.class));
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		obs.receiveReport(EasyMock.isA(PlayerDisconnectedFromAreaServerReport.class));
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				PlayerDisconnectedFromAreaServerReport.class);
 		EasyMock.replay(obs);
@@ -52,7 +51,7 @@ public class CommandRemovePlayerTest {
 		pm.initiateLogin("john", "pw");
 		try
 		{
-			pm.setThisClientsPlayer(1);
+			pm.finishLogin(1);
 		} catch (AlreadyBoundException | NotBoundException e)
 		{
 			e.printStackTrace();

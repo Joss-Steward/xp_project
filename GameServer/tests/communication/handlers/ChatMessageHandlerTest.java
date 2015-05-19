@@ -16,7 +16,8 @@ import edu.ship.shipsim.areaserver.model.ModelFacade;
  * @author Josh
  */
 
-public class ChatMessageHandlerTest {
+public class ChatMessageHandlerTest 
+{
 	
 	/**
 	 * Reset the ModelFacade
@@ -28,19 +29,33 @@ public class ChatMessageHandlerTest {
 	}
 	
 	/**
-	 * Testing to see if a command is queued after receiving a message
+	 * Tests that getTypeWeHandle method returns correct type.
 	 */
 	@Test
-	public void handleChatMessage()
+	public void testTypeWeHandle()
+	{
+		ChatMessageHandler h = new ChatMessageHandler();
+		assertEquals(ChatMessage.class, h.getMessageTypeWeHandle());
+	}
+	
+	/**
+	 * Testing to see if a command is queued after receiving a message
+	 * @throws InterruptedException shouldn't
+	 */
+	@Test
+	public void handleChatMessage() throws InterruptedException
 	{
 		reset();
 		
 		ChatMessage cm = new ChatMessage("Bob", "Hey", new Position(0,0), ChatType.Local);
 		ChatMessageHandler ch = new ChatMessageHandler();
 		ch.process(cm);
-		
 		assertEquals(1,ModelFacade.getSingleton().queueSize());
 		
+		while (ModelFacade.getSingleton().hasCommandsPending())
+		{
+			Thread.sleep(100);
+		}
 		reset();
 	}
 }

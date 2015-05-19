@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import communication.messages.AreaCollisionMessage;
+
 import edu.ship.shipsim.client.model.reports.AreaCollisionReport;
 
 /**

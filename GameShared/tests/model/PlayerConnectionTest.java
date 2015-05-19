@@ -33,7 +33,7 @@ public class PlayerConnectionTest extends DatabaseTest
 	@Before
 	public void setup2()
 	{
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 	
 	/**
@@ -52,7 +52,7 @@ public class PlayerConnectionTest extends DatabaseTest
 	 */
 	public static void defaultAllPins() throws DatabaseException
 	{
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		for (int userID = 1; userID < 3; userID++)
 		{
 			pc = new PlayerConnection(userID);

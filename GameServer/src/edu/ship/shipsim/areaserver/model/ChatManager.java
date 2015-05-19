@@ -1,6 +1,6 @@
 package edu.ship.shipsim.areaserver.model;
 
-import model.QualifiedObservable;
+import model.QualifiedObservableConnector;
 import data.ChatType;
 import data.Position;
 import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReport;
@@ -10,7 +10,7 @@ import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReport;
  *
  * Handles broadcasting chat from one client out to everyone.
  */
-public class ChatManager extends QualifiedObservable
+public class ChatManager
 {
 	private static ChatManager me;
 	
@@ -19,8 +19,7 @@ public class ChatManager extends QualifiedObservable
 	 */
 	private ChatManager()
 	{
-		reportTypes.add(SendChatMessageReport.class);
-		registerReportTypesWeNotify();
+
 	}
 	
 	
@@ -60,6 +59,6 @@ public class ChatManager extends QualifiedObservable
 	{
 		SendChatMessageReport report = new SendChatMessageReport(message, senderName, pos, type);
 		
-		this.notifyObservers(report);
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 }

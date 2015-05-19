@@ -27,6 +27,16 @@ public class LoginFailedMessageHandlerTest
 	}
 	
 	/**
+	 * Test the type of Message that we expect
+	 */
+	@Test
+	public void typeWeHandle()
+	{
+		LoginFailedMessageHandler h = new LoginFailedMessageHandler();
+		assertEquals(LoginFailedMessage.class, h.getMessageTypeWeHandle());
+	}
+	
+	/**
 	 * We should add a command to the ModelFacade command queue
 	 * 
 	 * @throws InterruptedException
@@ -39,6 +49,10 @@ public class LoginFailedMessageHandlerTest
 		LoginFailedMessage msg = new LoginFailedMessage();
 		handler.process(msg);
 		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
+		while(ModelFacade.getSingleton().hasCommandsPending())
+		{
+			Thread.sleep(100);
+		}
 	}
 
 }

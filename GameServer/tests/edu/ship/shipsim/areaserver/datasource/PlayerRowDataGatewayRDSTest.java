@@ -12,17 +12,23 @@ import datasource.DatabaseException;
 public class PlayerRowDataGatewayRDSTest extends PlayerRowDataGatewayTest
 {
 
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayTest#findGateway(int)
+	 */
 	@Override
 	PlayerRowDataGateway findGateway(int playerID) throws DatabaseException
 	{
 		return new PlayerRowDataGatewayRDS(playerID);
 	}
 
+	/**
+	 * @see edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayTest#createGateway(java.lang.String, data.Position, java.lang.String, int, int)
+	 */
 	@Override
 	PlayerRowDataGateway createGateway(String mapName, Position position,
-			String appearanceType) throws DatabaseException
+			String appearanceType, int quizScore, int experiencePoints) throws DatabaseException
 	{
-		return new PlayerRowDataGatewayRDS(mapName, position, appearanceType);
+		return new PlayerRowDataGatewayRDS(position, appearanceType, quizScore, experiencePoints);
 	}
 
 	

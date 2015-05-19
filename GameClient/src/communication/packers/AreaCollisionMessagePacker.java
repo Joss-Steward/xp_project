@@ -10,8 +10,8 @@ import edu.ship.shipsim.client.model.reports.AreaCollisionReport;
  * @author nhydock
  *
  */
-public class AreaCollisionMessagePacker extends MessagePacker {
-
+public class AreaCollisionMessagePacker extends MessagePacker 
+{
 	/**
 	 * 
 	 */

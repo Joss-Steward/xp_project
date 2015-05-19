@@ -3,6 +3,7 @@ package runners;
 import java.io.IOException;
 import java.net.Socket;
 
+import model.OptionsManager;
 import view.screen.ScreenBasic;
 import view.screen.Screens;
 
@@ -14,7 +15,6 @@ import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
 import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.OptionsManager;
 
 /**
  * The most basic gui!
@@ -59,6 +59,12 @@ public class GameLibGDX extends Game
 		ScreenBasic screen = Screens.LOGIN_SCREEN.getScreen();
 		this.setScreen(screen);
 		Gdx.input.setInputProcessor(screen.getStage());
+		
+//		// start QAs screen
+//		ScreenBasic qa = Screens.QAS_SCREEN.getScreen();
+//		this.setScreen(qa);
+//		Gdx.input.setInputProcessor(qa.getStage());
+		
 	}
 
 	/**

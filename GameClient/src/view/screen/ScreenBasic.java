@@ -22,5 +22,4 @@ public abstract class ScreenBasic implements Screen
 	{
 		return stage;
 	}
-
 }

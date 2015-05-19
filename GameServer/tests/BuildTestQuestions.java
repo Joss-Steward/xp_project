@@ -1,11 +1,12 @@
 import java.sql.SQLException;
 
+import model.OptionsManager;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.datasource.NPCQuestionRowDataGatewayRDS;
 import edu.ship.shipsim.areaserver.datasource.NPCQuestionsForTest;
 
 /**
- * Builds the Player portion of the database
+ * Builds the Question portion of the database for the quizbot
  * 
  * @author Merlin
  * 
@@ -24,6 +25,8 @@ public class BuildTestQuestions
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
+		OptionsManager.getSingleton().setTestMode(false);
+		OptionsManager.getSingleton().setUsingTestDB(true);
 		createQuestionTable();
 	}
 

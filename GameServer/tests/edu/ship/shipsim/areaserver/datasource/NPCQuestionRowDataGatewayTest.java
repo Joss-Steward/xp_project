@@ -3,6 +3,8 @@ package edu.ship.shipsim.areaserver.datasource;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.sql.SQLException;
+
 import org.junit.After;
 import org.junit.Test;
 
@@ -22,10 +24,13 @@ public abstract class NPCQuestionRowDataGatewayTest extends DatabaseTest
 
 	/**
 	 * Make sure any static information is cleaned up between tests
+	 * @throws SQLException shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@After
-	public void cleanup()
+	public void cleanup() throws DatabaseException, SQLException
 	{
+		super.tearDown();
 		if (gateway != null)
 		{
 			gateway.resetData();
@@ -81,5 +86,11 @@ public abstract class NPCQuestionRowDataGatewayTest extends DatabaseTest
 		assertNotNull(gateway);
 	}
 
-	abstract NPCQuestionRowDataGateway findGateway(int playerID) throws DatabaseException;
+	/**
+	 * get a gateway for a given question
+	 * @param questionID the unique ID of the question we are interested in
+	 * @return the gateway
+	 * @throws DatabaseException if we couldn't find the ID in the data source
+	 */
+	abstract NPCQuestionRowDataGateway findGateway(int questionID) throws DatabaseException;
 }

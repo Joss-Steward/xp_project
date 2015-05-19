@@ -28,6 +28,9 @@ public class ConnectionManager
 	private Socket socket;
 	private MessagePackerSet messagePackerSet;
 	private MessageHandlerSet handlerSet;
+	/**
+	 * 
+	 */
 	StateAccumulator stateAccumulator;
 	private int playerID;
 
@@ -37,7 +40,8 @@ public class ConnectionManager
 	 * 
 	 * @param sock
 	 *            the socket connection we are managing
-	 * @param stateAccumulator TODO
+	 * @param stateAccumulator
+	 *            the accumulator connecting us to the rest of the system
 	 * @param messageHandlerSet
 	 *            the set of MessageHandlers hat will process the incoming
 	 *            messages on this connection
@@ -48,7 +52,8 @@ public class ConnectionManager
 	 *             caused by socket issues
 	 */
 	public ConnectionManager(Socket sock, StateAccumulator stateAccumulator,
-			MessageHandlerSet messageHandlerSet, MessagePackerSet messagePackerSet) throws IOException
+			MessageHandlerSet messageHandlerSet, MessagePackerSet messagePackerSet)
+			throws IOException
 	{
 		System.out.println("Starting new ConnectionManager");
 		this.socket = sock;
@@ -95,7 +100,7 @@ public class ConnectionManager
 
 		disconnect();
 		this.socket = sock;
-		
+
 		outgoing = new ConnectionOutgoing(sock, this.stateAccumulator, messagePackerSet);
 		outgoingThread = new Thread(outgoing);
 		// for simplictly
@@ -118,7 +123,7 @@ public class ConnectionManager
 	 */
 	public StateAccumulator getStateAccumulator()
 	{
-		return outgoing.stateAccumulator;
+		return outgoing.getStateAccumulator();
 	}
 
 	/**

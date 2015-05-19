@@ -1,12 +1,9 @@
 package datasource;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import model.DatabaseManager;
 
 /**
  * The RDS implementation of the row data gateway
@@ -22,18 +19,22 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 	private String password;
 	private Connection connection;
 
+	
+	
 	/**
 	 * Drop and re-create the PlayerLogin table this gateway manages
-	 * @throws DatabaseException if we can't talk to the RDS
+	 * 
+	 * @throws DatabaseException
+	 *             if we can't talk to the RDS
 	 */
 	public static void createPlayerLoginTable() throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			Statement stmt = connection.createStatement();
-
-			stmt.executeUpdate("DROP TABLE IF EXISTS PlayerLogins");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"DROP TABLE IF EXISTS PlayerLogins");
+			stmt.executeUpdate();
 			StringBuffer sql = new StringBuffer("CREATE TABLE PlayerLogins(");
 			sql.append("playerID int NOT NULL AUTO_INCREMENT, ");
 			sql.append("playerName VARCHAR(30) NOT NULL,");
@@ -69,8 +70,8 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 		this.playerName = playerName;
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("SELECT * FROM PlayerLogins WHERE playerName = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT * FROM PlayerLogins WHERE playerName = ?");
 			stmt.setString(1, playerName);
 			ResultSet result = stmt.executeQuery();
 			result.next();
@@ -101,7 +102,7 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			PreparedStatement stmt = connection.prepareStatement(
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
 					"Insert INTO PlayerLogins SET playerName = ?, password = ?",
 					Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, playerName);
@@ -135,8 +136,8 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 		this.playerID = playerID;
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("SELECT * FROM PlayerLogins WHERE playerID = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT * FROM PlayerLogins WHERE playerID = ?");
 			stmt.setInt(1, playerID);
 			ResultSet result = stmt.executeQuery();
 			result.next();
@@ -186,8 +187,8 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 
 		try
 		{
-			PreparedStatement stmt = connection
-					.prepareStatement("UPDATE PlayerLogins SET password = ? WHERE playerID = ?");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"UPDATE PlayerLogins SET password = ? WHERE playerID = ?");
 			stmt.setString(1, password);
 			stmt.setInt(2, playerID);
 			stmt.executeUpdate();

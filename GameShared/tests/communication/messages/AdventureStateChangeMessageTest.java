@@ -1,0 +1,31 @@
+package communication.messages;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import datasource.AdventureStateEnum;
+
+/**
+ * @author Ryan
+ *
+ */
+public class AdventureStateChangeMessageTest 
+{
+
+	/**
+	 * Test initialization of message
+	 */
+	@Test
+	public void testInit() 
+	{
+		AdventureStateChangeMessage msg = new AdventureStateChangeMessage(1, 2, 3, "Big Adventure", AdventureStateEnum.TRIGGERED);
+		
+		assertEquals(1, msg.getPlayerID());
+		assertEquals(2, msg.getQuestID());
+		assertEquals(3, msg.getAdventureID());
+		assertEquals("Big Adventure", msg.getAdventureDescription());
+		assertEquals(AdventureStateEnum.TRIGGERED, msg.getNewState());
+	}
+
+}

@@ -31,7 +31,7 @@ public class LoginMessageHandlerTest
 	public void setup()
 	{
 		OptionsManager.resetSingleton();
-		OptionsManager.getSingleton(true);
+		OptionsManager.getSingleton().setTestMode(true);
 		PlayerManager.resetSingleton();
 	}
 

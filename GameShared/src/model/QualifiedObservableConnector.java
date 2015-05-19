@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Observer;
 
 /**
  * 
@@ -27,25 +26,6 @@ import java.util.Observer;
  * QualifiedObservableConnector.getSingleton().registerObserver(this,
  * 		ThisPlayerMovedReport.class);
  * </pre>
- * <p>
- * Each place in the Model that reports a given state change, registers itself
- * as a QualifiedObservable for that message type. For example, registering that
- * you will report that the current player has moved is done like this:
- * <p>
- * 
- * <pre>
- * QualifiedObservableConnector.getSingleton().registerQualifiedObservable(this,
- * 		ThisPlayerMovedReport.class);
- * </pre>
- * <p>
- * The QualifiedObservableConnector creates the required observable/observer
- * relationships to satisfy both types of registration requests regardless of
- * whether the observer or the observable registers first.
- * <p>
- * <em>** NOTE **</em> it is important that any QualifiedObservables or
- * Observables that register themselves with the QualifiedObservableConnector
- * MUST unregister themselves when they are no longer interested. If this is not
- * done, those objects will never be garbage collected!!!!
  * 
  * @author Merlin
  * 
@@ -55,17 +35,15 @@ public class QualifiedObservableConnector
 
 	private static QualifiedObservableConnector singleton;
 
-	private HashMap<Class<? extends QualifiedObservableReport>, ArrayList<QualifiedObservable>> observables;
-	private HashMap<Class<? extends QualifiedObservableReport>, ArrayList<Observer>> observers;
+	private HashMap<Class<? extends QualifiedObservableReport>, ArrayList<QualifiedObserver>> observers;
 
 	private QualifiedObservableConnector()
 	{
-		observables = new HashMap<Class<? extends QualifiedObservableReport>, ArrayList<QualifiedObservable>>();
-		observers = new HashMap<Class<? extends QualifiedObservableReport>, ArrayList<Observer>>();
+		observers = new HashMap<Class<? extends QualifiedObservableReport>, ArrayList<QualifiedObserver>>();
 	}
 
 	/**
-	 * @return the only one of these in the syste
+	 * @return the only one of these in the system
 	 */
 	public synchronized static QualifiedObservableConnector getSingleton()
 	{
@@ -85,53 +63,19 @@ public class QualifiedObservableConnector
 	}
 
 	/**
-	 * This is used by an observable to tell the world that he will report a
-	 * given report type
-	 * 
-	 * @param observable
-	 *            the object who wants to be observed
-	 * @param reportType
-	 *            the type of message it will report
+	 * Distributes a given report to everyone who is interested in reports of that type
+	 * @param report the report
 	 */
-	public void registerQualifiedObservable(QualifiedObservable observable,
-			Class<? extends QualifiedObservableReport> reportType)
+	public void sendReport(QualifiedObservableReport report)
 	{
-		if (rememberObservable(observable, reportType))
+		ArrayList<QualifiedObserver> relevantObservers = observers.get(report.getClass());
+		if (relevantObservers != null)
 		{
-			ArrayList<Observer> relevantObservers = observers.get(reportType);
-			if (relevantObservers != null)
+			for (QualifiedObserver a : relevantObservers)
 			{
-				for (Observer observer : relevantObservers)
-				{
-					observable.addObserver(observer, reportType);
-				}
+				a.receiveReport(report);
 			}
 		}
-	}
-
-	/**
-	 * @param observable
-	 *            the observable we should remember
-	 * @param reportType
-	 *            the report type it is interested in
-	 * @return true if this was a new observable for this type and false if it
-	 *         was a duplicate
-	 */
-	private boolean rememberObservable(QualifiedObservable observable,
-			Class<? extends QualifiedObservableReport> reportType)
-	{
-		ArrayList<QualifiedObservable> relevantObservables = observables.get(reportType);
-		if (relevantObservables == null)
-		{
-			relevantObservables = new ArrayList<QualifiedObservable>();
-			observables.put(reportType, relevantObservables);
-		}
-		if (!relevantObservables.contains(observable))
-		{
-			relevantObservables.add(observable);
-			return true;
-		}
-		return false;
 	}
 
 	/**
@@ -142,21 +86,10 @@ public class QualifiedObservableConnector
 	 * @param reportType
 	 *            the report type the observer wants to receive
 	 */
-	public void registerObserver(Observer observer,
+	public void registerObserver(QualifiedObserver observer,
 			Class<? extends QualifiedObservableReport> reportType)
 	{
-		if (rememberObserver(observer, reportType))
-		{
-			ArrayList<QualifiedObservable> relevantObservables = observables
-					.get(reportType);
-			if (relevantObservables != null)
-			{
-				for (QualifiedObservable observable : relevantObservables)
-				{
-					observable.addObserver(observer, reportType);
-				}
-			}
-		}
+		rememberObserver(observer, reportType);
 	}
 
 	/**
@@ -167,13 +100,13 @@ public class QualifiedObservableConnector
 	 * @return true if this is a new observer for this report type and false if
 	 *         it was a duplicate request
 	 */
-	private boolean rememberObserver(Observer observer,
+	private boolean rememberObserver(QualifiedObserver observer,
 			Class<? extends QualifiedObservableReport> reportType)
 	{
-		ArrayList<Observer> relevantObservers = observers.get(reportType);
+		ArrayList<QualifiedObserver> relevantObservers = observers.get(reportType);
 		if (relevantObservers == null)
 		{
-			relevantObservers = new ArrayList<Observer>();
+			relevantObservers = new ArrayList<QualifiedObserver>();
 			observers.put(reportType, relevantObservers);
 		}
 		if (!relevantObservers.contains(observer))
@@ -185,49 +118,6 @@ public class QualifiedObservableConnector
 	}
 
 	/**
-	 * This is used when a qualified observable no longer wants to report a
-	 * given report type
-	 * 
-	 * @param observable
-	 *            the observable that is going quiet
-	 * @param reportType
-	 *            the report type that will no longer be reported
-	 */
-	public void unregisterQualifiedObservable(QualifiedObservable observable,
-			Class<? extends QualifiedObservableReport> reportType)
-	{
-		disconnectObserversFrom(observable, reportType);
-
-		ArrayList<QualifiedObservable> relevantObservables = observables.get(reportType);
-		if (relevantObservables != null)
-		{
-			relevantObservables.remove(observable);
-		}
-	}
-
-	/**
-	 * Disconnects all of the observers we have attached to a given observable
-	 * for a given report type
-	 * 
-	 * @param observable
-	 *            the observable we are disconnecting
-	 * @param reportType
-	 *            the report type that should not longer be reported
-	 */
-	private void disconnectObserversFrom(QualifiedObservable observable,
-			Class<? extends QualifiedObservableReport> reportType)
-	{
-		ArrayList<Observer> relevantObservers = observers.get(reportType);
-		if (relevantObservers != null)
-		{
-			for (Observer observer : relevantObservers)
-			{
-				observable.deleteObserver(observer, reportType);
-			}
-		}
-	}
-
-	/**
 	 * This is called when an observer no longer wants to receive reports of a
 	 * given type
 	 * 
@@ -236,35 +126,14 @@ public class QualifiedObservableConnector
 	 * @param reportType
 	 *            the report types they no longer want to receive
 	 */
-	public void unregisterObserver(Observer observer, Class<? extends QualifiedObservableReport> reportType)
+	public void unregisterObserver(QualifiedObserver observer,
+			Class<? extends QualifiedObservableReport> reportType)
 	{
 
-		disconnectFromObservables(observer, reportType);
-		ArrayList<Observer> observerList = observers.get(reportType);
+		ArrayList<QualifiedObserver> observerList = observers.get(reportType);
 		if (observerList != null)
 		{
 			observerList.remove(observer);
-		}
-	}
-
-	/**
-	 * Disconnect an observer from all of the observables that are reporting a
-	 * given report type
-	 * 
-	 * @param observer
-	 *            the observer we want to disconnect
-	 * @param reportType
-	 *            the report type that should no longer be reported
-	 */
-	private void disconnectFromObservables(Observer observer, Class<? extends QualifiedObservableReport> reportType)
-	{
-		ArrayList<QualifiedObservable> relevantObservables = observables.get(reportType);
-		if (relevantObservables != null)
-		{
-			for (QualifiedObservable observable : relevantObservables)
-			{
-				observable.deleteObserver(observer, reportType);
-			}
 		}
 	}
 
@@ -278,10 +147,11 @@ public class QualifiedObservableConnector
 	 *            the report type
 	 * @return true if the observer is hooked up for that report type
 	 */
-	public boolean doIObserve(Observer obs, Class<? extends QualifiedObservableReport> reportType)
+	public boolean doIObserve(QualifiedObserver obs,
+			Class<? extends QualifiedObservableReport> reportType)
 	{
 
-		ArrayList<Observer> relavantObservers = observers.get(reportType);
+		ArrayList<QualifiedObserver> relavantObservers = observers.get(reportType);
 		if (relavantObservers == null)
 		{
 			return false;

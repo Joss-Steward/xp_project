@@ -91,7 +91,7 @@ public abstract class PlayerConnectionRowDataGatewayTest extends DatabaseTest
 	{
 		gateway = findRowDataGateway(PlayersForTest.FRANK.getPlayerID());
 		assertEquals(PlayersForTest.FRANK.getPin(), gateway.getPin());
-		assertEquals(PlayersForTest.FRANK.getMapNameForPin(), gateway.getMapName());
+		assertEquals(PlayersForTest.FRANK.getMapName(), gateway.getMapName());
 	}
 
 	/**

@@ -67,7 +67,7 @@ public class MovementMessagePackerTest
 	{
 		PlayerManager.resetSingleton();
 		PlayerManager.getSingleton().initiateLogin("john", "pw");
-		PlayerManager.getSingleton().setThisClientsPlayer(1);
+		PlayerManager.getSingleton().finishLogin(1);
 	}
 
 }

@@ -2,9 +2,8 @@ package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
 
-import java.util.Observer;
-
 import model.QualifiedObservableConnector;
+import model.QualifiedObserver;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -50,14 +49,14 @@ public class ChatManagerTest
 	@Test
 	public void testNotifiesObservers()
 	{
-		Observer obs = EasyMock.createMock(Observer.class);
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		
 		SendChatMessageReport report = new SendChatMessageReport("message", "sender", new Position(1,1), ChatType.Local);
 		
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				SendChatMessageReport.class);
 		
-		obs.update(EasyMock.eq(ChatManager.getSingleton()), EasyMock.eq(report));
+		obs.receiveReport(EasyMock.eq(report));
 		
 		EasyMock.replay(obs);
 		

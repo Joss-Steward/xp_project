@@ -64,6 +64,7 @@ public class ScreenMapInput implements InputProcessor
 				cm = new CommandMovePlayer(cp.getID(), to);
 				right = true;
 				break;
+				
 		}
 
 		if (cm != null && sprite.doneWalking()) 
@@ -97,6 +98,7 @@ public class ScreenMapInput implements InputProcessor
 			case Keys.RIGHT:
 				right = false;
 				break;
+		
 		}
 		return false;
 	}

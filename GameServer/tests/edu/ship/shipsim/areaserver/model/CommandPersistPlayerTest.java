@@ -31,14 +31,15 @@ public class CommandPersistPlayerTest
 	/**
 	 * Test that persistence happens
 	 * @throws DatabaseException shouldn't
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
-	public void testPersists() throws DatabaseException
+	public void testPersists() throws DatabaseException, IllegalQuestChangeException
 	{
 		Player player = PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
 		player.setPlayerPositionWithoutNotifying(new Position(101, 101));
 		player.setAppearanceType("appearance");
-		PlayerManager.getSingleton().persistPlayer(player.getID());
+		PlayerManager.getSingleton().persistPlayer(player.getPlayerID());
 		
 		PlayerManager.resetSingleton();
 		

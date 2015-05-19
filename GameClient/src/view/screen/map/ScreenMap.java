@@ -1,17 +1,16 @@
 package view.screen.map;
 
-//import model.CommandQuestScreenOpen;
-//import model.ModelFacade;
-
+import static view.screen.Screens.DEFAULT_RES;
 import view.player.PlayerSprite;
 import view.player.PlayerSpriteFactory;
 import view.player.PlayerType;
 import view.screen.ScreenBasic;
+import view.screen.popup.PopUpDisplay;
+import view.screen.qas.ScreenQAs;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
-//import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -37,12 +36,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.IntMap;
+import com.badlogic.gdx.utils.IntMap.Entry;
 import com.badlogic.gdx.utils.Sort;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import data.ChatType;
 import data.Position;
-import static view.screen.Screens.DEFAULT_RES;
 
 /**
  * A basic screen that, for now, just displays the map
@@ -68,7 +67,15 @@ public class ScreenMap extends ScreenBasic
 	private OrthographicCamera camera;
 	private final float unitScale;
 	private ScreenMapInput mapInput;
+	
+	//GUIs that get displayed on the map
+	private ScreenQAs qaScreen;
+	private ExperienceDisplay expDisplay;
 	private ChatUi chatArea;
+	private HighScoreUI highScoreUI;
+	
+	@SuppressWarnings("unused")
+	private PopUpDisplay popUpDisplay;
 	
 	//tile size that we will be moving in according to the collision masking tileset
 	private Vector2 tileSize;
@@ -99,6 +106,9 @@ public class ScreenMap extends ScreenBasic
 	 */
 	public ScreenMap()
 	{
+		
+		//super.setUpListening();
+		
 		// unitScale = 1 / 32f;
 		unitScale = 1f;
 		characters = new IntMap<PlayerSprite>();
@@ -151,7 +161,7 @@ public class ScreenMap extends ScreenBasic
 		
 		camera.update();
 		stage.act();
-
+		
 		if (!loading)
 		{
 			Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, 1);
@@ -206,6 +216,8 @@ public class ScreenMap extends ScreenBasic
 			//render the ui buffer
 			uiBuffer.begin();
 			{
+				Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, 0);
+				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 				stage.draw();
 			}
 			uiBuffer.end();
@@ -311,6 +323,10 @@ public class ScreenMap extends ScreenBasic
 		if (tiledMap == null)
 		{
 			System.out.println("clearing tile map");
+			for (Entry<PlayerSprite> c:characters)
+			{
+				c.value.remove();
+			}
 			characters.clear();
 			this.mySprite = null;
 			mapInput.setSprite(null);
@@ -372,10 +388,19 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void show()
 	{
+		expDisplay = new ExperienceDisplay();
+		qaScreen = new ScreenQAs();
+		highScoreUI = new HighScoreUI();
+		
 		worldStage = new Stage();
 		blurBatch = new SpriteBatch();
 		
 		stage = new Stage(new ExtendViewport(DEFAULT_RES[0], DEFAULT_RES[1]));
+		
+
+		popUpDisplay = new PopUpDisplay(stage);
+		
+		Gdx.input.setInputProcessor(stage);
 		defaultCamera = (OrthographicCamera)stage.getCamera();
 		worldStage = new Stage(new ExtendViewport(DEFAULT_RES[0], DEFAULT_RES[1]));
 		worldCamera = (OrthographicCamera)worldStage.getCamera();
@@ -403,9 +428,48 @@ public class ScreenMap extends ScreenBasic
 						return true;
 					}
 				}
+				if(keycode == Keys.Q)
+				{
+					if(highScoreUI.isHighScoreScreenShowing())
+					{
+						highScoreUI.toggleHSScreenVisible();
+					}
+					if (!(stage.getKeyboardFocus() == null))
+					{
+						qaScreen.setQAScreenVisibility(false);
+					}
+					else
+					{
+						qaScreen.toggleQAScreenVisible();
+					}
+					
+					return true;
+				}
+				if(keycode == Keys.H)
+				{
+					if(qaScreen.isQAScreenShowing())
+					{
+						qaScreen.toggleQAScreenVisible();
+					}
+					
+					if (!(stage.getKeyboardFocus() == null))
+					{
+						highScoreUI.setHighScoreScreenVisibility(false);
+					}
+					else
+					{
+						highScoreUI.toggleHSScreenVisible();
+					}
+					
+					return true;
+				}
 				return false;
 			}
 		});
+		
+		stage.addActor(expDisplay);
+		stage.addActor(highScoreUI);
+		stage.addActor(qaScreen);
 		stage.addActor(chatArea);
 		
 		loadingLayer = new Group();
@@ -521,7 +585,9 @@ public class ScreenMap extends ScreenBasic
 	 * @param playerID
 	 *  the player's unique identifying code
 	 */
-	public void removePlayer(int playerID) {
+	public void removePlayer(int playerID) 
+	{
 		characterDequeue.add(playerID);
 	}
+
 }
