@@ -44,26 +44,26 @@ public abstract class AdventureTableDataGatewayTest
 		assertEquals(3, records.size());
 		AdventureRecord record = records.get(0);
 		// the records could be in either order
-		if (record.getAdventureID() == AdventuresForTest.ONE.getAdventureID())
+		if (record.getAdventureID() == AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureID())
 		{
-			assertEquals(AdventuresForTest.ONE.getAdventureDescription(), record.getAdventureDescription());
-			assertEquals(AdventuresForTest.ONE.getQuestID(), record.getQuestID());
-			assertEquals(AdventuresForTest.ONE.getExperiencePointsGained(), record.getExperiencePointsGained());
-			assertEquals(AdventuresForTest.ONE.getSignatureSpecification(), record.getSignatureSpecification());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(), record.getAdventureDescription());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(), record.getQuestID());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getExperiencePointsGained(), record.getExperiencePointsGained());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getSignatureSpecification(), record.getSignatureSpecification());
 			record = records.get(1);
-			assertEquals(AdventuresForTest.TWO.getAdventureDescription(), record.getAdventureDescription());
-			assertEquals(AdventuresForTest.TWO.getQuestID(), record.getQuestID());
-			assertEquals(AdventuresForTest.TWO.getExperiencePointsGained(), record.getExperiencePointsGained());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getAdventureDescription(), record.getAdventureDescription());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getQuestID(), record.getQuestID());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getExperiencePointsGained(), record.getExperiencePointsGained());
 		} else
 		{
-			assertEquals(AdventuresForTest.TWO.getAdventureID(), record.getAdventureID());
-			assertEquals(AdventuresForTest.TWO.getAdventureDescription(), record.getAdventureDescription());
-			assertEquals(AdventuresForTest.TWO.getQuestID(), record.getQuestID());
-			assertEquals(AdventuresForTest.TWO.getExperiencePointsGained(), record.getExperiencePointsGained());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getAdventureID(), record.getAdventureID());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getAdventureDescription(), record.getAdventureDescription());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getQuestID(), record.getQuestID());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getExperiencePointsGained(), record.getExperiencePointsGained());
 			record = records.get(1);
-			assertEquals(AdventuresForTest.ONE.getAdventureDescription(), record.getAdventureDescription());
-			assertEquals(AdventuresForTest.ONE.getQuestID(), record.getQuestID());
-			assertEquals(AdventuresForTest.ONE.getExperiencePointsGained(), record.getExperiencePointsGained());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(), record.getAdventureDescription());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(), record.getQuestID());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getExperiencePointsGained(), record.getExperiencePointsGained());
 			
 		}
 	}
@@ -77,11 +77,11 @@ public abstract class AdventureTableDataGatewayTest
 	public void canGetSingleAdventure() throws DatabaseException
 	{
 		AdventureTableDataGateway gateway = getGateway();
-		AdventureRecord record = gateway.getAdventure(AdventuresForTest.ONE.getQuestID(),AdventuresForTest.ONE.getAdventureID());
-		assertEquals(AdventuresForTest.ONE.getAdventureDescription(),record.getAdventureDescription());
-		assertEquals(AdventuresForTest.ONE.getAdventureID(),record.getAdventureID());
-		assertEquals(AdventuresForTest.ONE.getExperiencePointsGained(),record.getExperiencePointsGained());
-		assertEquals(AdventuresForTest.ONE.getQuestID(),record.getQuestID());
+		AdventureRecord record = gateway.getAdventure(AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(),AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureID());
+		assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(),record.getAdventureDescription());
+		assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureID(),record.getAdventureID());
+		assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getExperiencePointsGained(),record.getExperiencePointsGained());
+		assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(),record.getQuestID());
 	}
 	
 	/**

@@ -22,7 +22,7 @@ public class NPCMapper extends PlayerMapper
 	/**
 	 * Finds all of the NPCs on a given map and creates mappers for them all
 	 * 
-	 * @param string
+	 * @param mapName
 	 *            the name of the map
 	 * @return mappers for all of the MPCs on the given map
 	 * @throws DatabaseException

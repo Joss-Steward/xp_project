@@ -24,7 +24,7 @@ public class QuestState
 
 	/**
 	 * Constructs the QuestState
-	 * 
+	 * @param playerID the player whose state this represents
 	 * @param questID
 	 *            unique ID for the quest in the system
 	 * @param questStateList
@@ -33,8 +33,9 @@ public class QuestState
 	 * @param needingNotification
 	 *            true if the player should be notified about the quest's state
 	 */
-	public QuestState(int questID, QuestStateEnum questStateList, boolean needingNotification)
+	public QuestState(int playerID, int questID, QuestStateEnum questStateList, boolean needingNotification)
 	{
+		this.playerID = playerID;
 		this.questID = questID;
 		this.questState = questStateList;
 		this.needingNotification = needingNotification;
@@ -147,9 +148,8 @@ public class QuestState
 	 * Returns the quest's state
 	 * 
 	 * @return questState the state of the quest for a player
-	 * @throws IllegalQuestChangeException if it changes illegally
 	 */
-	public QuestStateEnum getStateValue() throws IllegalQuestChangeException
+	public QuestStateEnum getStateValue()
 	{
 		return questState;
 	}
@@ -214,7 +214,7 @@ public class QuestState
 								.getSingleton().getQuest(questID).getDescription(),
 								questState));
 			}
-			PlayerManager.getSingleton().persistPlayer(playerID);
+			
 		}
 		else
 		{

@@ -10,47 +10,47 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	ONE(1, "Quest 1: Adventure Description 1", 1, 1, "Lab Instructor"),
+	QUEST1_ADVENTURE_1(1, "Quest 1: Adventure Description 1", 1, 1, "Lab Instructor"),
 	/**
 	 * 
 	 */
-	TWO(2, "Quest 1: Adventure Description 2", 1, 2, "Librarian"),
+	QUEST1_ADVENTURE2(2, "Quest 1: Adventure Description 2", 1, 2, "Librarian"),
 	/**
 	 * 
 	 */
-	THREE(1, "Quest 2: Adventure Description 1", 2, 3, null),
+	QUEST2_ADVENTURE1(1, "Quest 2: Adventure Description 1", 2, 3, null),
 	/**
 	 * 
 	 */
-	FOUR(2, "Quest 2: Adventure Description 2", 2, 4, null),
+	QUEST2_ADVENTURE2(2, "Quest 2: Adventure Description 2", 2, 4, null),
 	/**
 	 * 
 	 */
-	QUEST_2_ADV_3(3, "Quest 2: Adventure Description 3", 2, 3, null),
+	QUEST2_ADVENTURE3(3, "Quest 2: Adventure Description 3", 2, 3, null),
 	/**
 	 * 
 	 */
-	FIVE(1, "Adventure 1 for Quest 3", 3, 5, null),
+	QUEST3_ADVENTURE1(1, "Adventure 1 for Quest 3", 3, 5, null),
 	/**
 	 * 
 	 */
-	SIX(2, "Adventure 2 for Quest 3", 3, 5, null),
+	QUEST3_ADVENTURE2(2, "Adventure 2 for Quest 3", 3, 5, null),
 	/**
 	 * 
 	 */
-	SEVEN(3, "Adventure 3 for Quest 3", 3, 5, null),
+	QUEST3_ADVENTURE3(3, "Adventure 3 for Quest 3", 3, 5, null),
 	/**
 	 * 
 	 */
-	ANOTHER_FOR_QUEST_1(3, "One more Adventure", 1, 3, null),
+	QUEST1_ADVENTURE3(3, "One more Adventure", 1, 3, null),
 	/**
 	 * 
 	 */
-	QUEST_4_ADVENTURE_1(1, "Quest 4 Adventure", 4, 5, null),
+	QUEST4_ADVENTURE1(1, "Quest 4 Adventure", 4, 5, null),
 	/**
 	 * 
 	 */
-	QUEST_4_ADVENTURE_2(2, "Quest 4 Adventure", 4, 5, null);
+	QUEST4_ADVENTURE2(2, "Quest 4 Adventure", 4, 5, null);
 	
 	
 	private int adventureID;

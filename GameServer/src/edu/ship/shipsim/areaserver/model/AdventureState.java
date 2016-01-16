@@ -127,7 +127,7 @@ public class AdventureState
 	 */
 	public void complete() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException
 	{
-		changeState(AdventureStateEnum.COMPLETED, false);
+		changeState(AdventureStateEnum.COMPLETED, true);
 		PlayerManager.getSingleton()
 				.getPlayerFromID(this.parentQuestState.getPlayerID())
 				.addExperiencePoints(
@@ -136,6 +136,7 @@ public class AdventureState
 										adventureID)
 								.getExperiencePointsGained());
 		this.parentQuestState.checkForFulfillment();
+		
 	}
 
 	/**
@@ -182,8 +183,6 @@ public class AdventureState
 								QuestManager.getSingleton().getAdventure(parentQuestState.getID(), 
 								adventureID).getAdventureDescription(), adventureState));
 			}
-			
-			PlayerManager.getSingleton().persistPlayer(parentQuestState.getPlayerID());
 		}
 		else
 		{

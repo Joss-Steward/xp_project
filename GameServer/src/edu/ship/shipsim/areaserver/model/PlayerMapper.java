@@ -84,7 +84,7 @@ public class PlayerMapper
 				.getQuestStates(player.getPlayerID());
 		for (QuestStateRecord qsRec : questStateRecords)
 		{
-			QuestState questState = new QuestState(qsRec.getQuestID(), qsRec.getState(), qsRec.isNeedingNotification());
+			QuestState questState = new QuestState(player.getPlayerID(), qsRec.getQuestID(), qsRec.getState(), qsRec.isNeedingNotification());
 			ArrayList<AdventureStateRecord> adventureStateRecords = adventureStateGateway
 					.getAdventureStates(player.getPlayerID(), qsRec.getQuestID());
 			ArrayList<AdventureState> adventureStates = new ArrayList<AdventureState>();
