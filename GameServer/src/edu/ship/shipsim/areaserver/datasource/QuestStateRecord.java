@@ -115,4 +115,12 @@ public class QuestStateRecord
 		this.state = state;
 	}
 
+	/**
+	 * @param needingNotification value to save
+	 */
+	public void setNeedingNotification(boolean needingNotification)
+	{
+		this.needingNotification = needingNotification;
+	}
+
 }

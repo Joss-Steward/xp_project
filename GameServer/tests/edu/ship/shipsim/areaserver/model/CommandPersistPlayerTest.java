@@ -1,6 +1,7 @@
 package edu.ship.shipsim.areaserver.model;
 
 import static org.junit.Assert.*;
+import model.OptionsManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +27,8 @@ public class CommandPersistPlayerTest
 	public void setUp()
 	{
 		PlayerManager.resetSingleton();
+		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 
 	/**

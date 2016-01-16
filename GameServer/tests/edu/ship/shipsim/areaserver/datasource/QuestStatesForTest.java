@@ -26,7 +26,7 @@ public enum QuestStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1(2, 1, QuestStateEnum.TRIGGERED, true),
+	PLAYER2_QUEST1(2, 1, QuestStateEnum.TRIGGERED, false),
 	/**
 	 * 
 	 */
@@ -57,6 +57,7 @@ public enum QuestStatesForTest
 	private int playerID;
 	private int questID;
 	private QuestStateEnum questState;
+	private boolean needingNotification;
 
 	/**
 	 * Constructor for Quest State Enum
@@ -73,6 +74,7 @@ public enum QuestStatesForTest
 		this.playerID = playerID;
 		this.questID = questID;
 		this.questState = questState;
+		this.needingNotification = needingNotification;
 	}
 
 	/**
@@ -104,7 +106,7 @@ public enum QuestStatesForTest
 	 */
 	public boolean isNeedingNotification()
 	{
-		return true;
+		return needingNotification;
 	}
 
 }

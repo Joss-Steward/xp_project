@@ -47,8 +47,9 @@ public class QuestStateTest extends DatabaseTest
 	@Test
 	public void testInitialize() throws IllegalQuestChangeException
 	{
-		QuestState qs = new QuestState(1, QuestStateEnum.AVAILABLE, true);
+		QuestState qs = new QuestState(2, 1, QuestStateEnum.AVAILABLE, true);
 
+		assertEquals(2, qs.getPlayerID());
 		assertEquals(1, qs.getID());
 		assertEquals(QuestStateEnum.AVAILABLE, qs.getStateValue());
 		assertTrue(qs.isNeedingNotification());
@@ -60,7 +61,7 @@ public class QuestStateTest extends DatabaseTest
 	@Test
 	public void testAddAdventures()
 	{
-		QuestState qs = new QuestState(1, QuestStateEnum.HIDDEN, true);
+		QuestState qs = new QuestState(2, 1, QuestStateEnum.HIDDEN, true);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
 		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN, false);
 		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN, false);
@@ -82,7 +83,7 @@ public class QuestStateTest extends DatabaseTest
 	@Test
 	public void testTriggerQuest() throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
 	{
-		QuestState quest = new QuestState(1, QuestStateEnum.AVAILABLE, true);
+		QuestState quest = new QuestState(2, 1, QuestStateEnum.AVAILABLE, true);
 		quest.trigger();
 		assertEquals(QuestStateEnum.TRIGGERED, quest.getStateValue());
 		assertTrue(quest.isNeedingNotification());
@@ -97,7 +98,7 @@ public class QuestStateTest extends DatabaseTest
 	@Test(expected=IllegalQuestChangeException.class)
 	public void testTriggerFinishedQuest() throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
 	{
-		QuestState quest = new QuestState(1, QuestStateEnum.FINISHED, false);
+		QuestState quest = new QuestState(2, 1, QuestStateEnum.FINISHED, false);
 		quest.trigger();
 		assertEquals(QuestStateEnum.FINISHED, quest.getStateValue());
 		assertFalse(quest.isNeedingNotification());
@@ -112,7 +113,7 @@ public class QuestStateTest extends DatabaseTest
 	@Test
 	public void testTriggerQuestsAdventures() throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
 	{
-		QuestState qs = new QuestState(1, QuestStateEnum.AVAILABLE, false);
+		QuestState qs = new QuestState(2, 1, QuestStateEnum.AVAILABLE, false);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
 
 		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN, false);
@@ -160,13 +161,10 @@ public class QuestStateTest extends DatabaseTest
 				QuestStateEnum.FULFILLED);
 		obs.receiveReport(rpt);
 		EasyMock.replay(obs);
-		QuestState qs = new QuestState(QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(), QuestStateEnum.TRIGGERED, false);
-		qs.setPlayerID(1);
+		QuestState qs = new QuestState(2, QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(), QuestStateEnum.TRIGGERED, false);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
 
-		@SuppressWarnings("unused")
-		Player p = PlayerManager.getSingleton().addPlayer(2);
-		qs.setPlayerID(2);
+		PlayerManager.getSingleton().addPlayer(2);
 		
 		AdventureState as = new AdventureState(1, AdventureStateEnum.COMPLETED, true);
 		adList.add(as);
@@ -206,7 +204,7 @@ public class QuestStateTest extends DatabaseTest
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				QuestStateChangeReport.class);
 		EasyMock.replay(obs);
-		QuestState qs = new QuestState(3, QuestStateEnum.FULFILLED, false);
+		QuestState qs = new QuestState(1, 3, QuestStateEnum.FULFILLED, false);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
 
 		AdventureState as = new AdventureState(1, AdventureStateEnum.COMPLETED, false);
@@ -235,7 +233,7 @@ public class QuestStateTest extends DatabaseTest
 	@Test
 	public void testChangeStateToTriggered() throws IllegalQuestChangeException, DatabaseException 
 	{
-		QuestState quest = new QuestState(1, QuestStateEnum.HIDDEN, false);
+		QuestState quest = new QuestState(2, 1, QuestStateEnum.HIDDEN, false);
 		quest.changeState(QuestStateEnum.AVAILABLE, false);
 		assertEquals(quest.getStateValue(), QuestStateEnum.AVAILABLE);
 	}

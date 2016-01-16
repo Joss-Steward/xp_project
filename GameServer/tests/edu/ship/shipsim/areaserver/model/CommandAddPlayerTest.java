@@ -40,7 +40,9 @@ public class CommandAddPlayerTest
 	{
 		CommandAddPlayer cmd = new CommandAddPlayer(1, PlayerConnection.DEFAULT_PIN);
 		cmd.execute();
-		assertNotNull(PlayerManager.getSingleton().getPlayerFromID(1));
+		Player player = PlayerManager.getSingleton().getPlayerFromID(1);
+		assertNotNull(player);
+		assertEquals("John", player.getPlayerName());
 	}
 
 }

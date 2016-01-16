@@ -114,12 +114,17 @@ public class QuestManagerTest extends DatabaseTest
 	public void testGettingOneAdventure() throws DatabaseException
 	{
 		QuestManager qm = QuestManager.getSingleton();
-		AdventuresForTest expected = AdventuresForTest.FIVE;
-		AdventureRecord actual = qm.getAdventure(expected.getQuestID(), expected.getAdventureID());
-		assertEquals(AdventuresForTest.FIVE.getAdventureDescription(),actual.getAdventureDescription());
-		assertEquals(AdventuresForTest.FIVE.getAdventureID(),actual.getAdventureID());
-		assertEquals(AdventuresForTest.FIVE.getExperiencePointsGained(),actual.getExperiencePointsGained());
-		assertEquals(AdventuresForTest.FIVE.getQuestID(),actual.getQuestID());
+		AdventuresForTest expected = AdventuresForTest.QUEST3_ADVENTURE1;
+		AdventureRecord actual = qm.getAdventure(expected.getQuestID(),
+				expected.getAdventureID());
+		assertEquals(AdventuresForTest.QUEST3_ADVENTURE1.getAdventureDescription(),
+				actual.getAdventureDescription());
+		assertEquals(AdventuresForTest.QUEST3_ADVENTURE1.getAdventureID(),
+				actual.getAdventureID());
+		assertEquals(AdventuresForTest.QUEST3_ADVENTURE1.getExperiencePointsGained(),
+				actual.getExperiencePointsGained());
+		assertEquals(AdventuresForTest.QUEST3_ADVENTURE1.getQuestID(),
+				actual.getQuestID());
 	}
 	
 	/**
@@ -168,14 +173,18 @@ public class QuestManagerTest extends DatabaseTest
 		{
 			if (i == 1)
 			{
-				assertEquals(AdventuresForTest.ONE.getAdventureID(), a.getAdventureID());
-				assertEquals(AdventuresForTest.ONE.getAdventureDescription(),
+				assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureID(),
+						a.getAdventureID());
+				assertEquals(
+						AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(),
 						a.getAdventureDescription());
 			}
 			if (i == 2)
 			{
-				assertEquals(AdventuresForTest.TWO.getAdventureID(), a.getAdventureID());
-				assertEquals(AdventuresForTest.TWO.getAdventureDescription(),
+				assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getAdventureID(),
+						a.getAdventureID());
+				assertEquals(
+						AdventuresForTest.QUEST1_ADVENTURE2.getAdventureDescription(),
 						a.getAdventureDescription());
 			}
 			i++;
@@ -200,14 +209,18 @@ public class QuestManagerTest extends DatabaseTest
 		{
 			if (i == 1)
 			{
-				assertEquals(AdventuresForTest.ONE.getAdventureID(), a.getAdventureID());
-				assertEquals(AdventuresForTest.ONE.getAdventureDescription(),
+				assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureID(),
+						a.getAdventureID());
+				assertEquals(
+						AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(),
 						a.getAdventureDescription());
 			}
 			if (i == 2)
 			{
-				assertEquals(AdventuresForTest.TWO.getAdventureID(), a.getAdventureID());
-				assertEquals(AdventuresForTest.TWO.getAdventureDescription(),
+				assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getAdventureID(),
+						a.getAdventureID());
+				assertEquals(
+						AdventuresForTest.QUEST1_ADVENTURE2.getAdventureDescription(),
 						a.getAdventureDescription());
 			}
 			i++;
@@ -218,14 +231,18 @@ public class QuestManagerTest extends DatabaseTest
 		{
 			if (i == 1)
 			{
-				assertEquals(AdventuresForTest.THREE.getAdventureID(), a.getAdventureID());
-				assertEquals(AdventuresForTest.THREE.getAdventureDescription(),
+				assertEquals(AdventuresForTest.QUEST2_ADVENTURE1.getAdventureID(),
+						a.getAdventureID());
+				assertEquals(
+						AdventuresForTest.QUEST2_ADVENTURE1.getAdventureDescription(),
 						a.getAdventureDescription());
 			}
 			if (i == 2)
 			{
-				assertEquals(AdventuresForTest.FOUR.getAdventureID(), a.getAdventureID());
-				assertEquals(AdventuresForTest.FOUR.getAdventureDescription(),
+				assertEquals(AdventuresForTest.QUEST2_ADVENTURE2.getAdventureID(),
+						a.getAdventureID());
+				assertEquals(
+						AdventuresForTest.QUEST2_ADVENTURE2.getAdventureDescription(),
 						a.getAdventureDescription());
 			}
 			i++;
@@ -302,7 +319,7 @@ public class QuestManagerTest extends DatabaseTest
 	public void testAddQuests() throws IllegalQuestChangeException
 	{
 		Player p = playerManager.addPlayer(1);
-		QuestState quest = new QuestState(15, QuestStateEnum.AVAILABLE, false);
+		QuestState quest = new QuestState(1, 15, QuestStateEnum.AVAILABLE, false);
 		QuestManager.getSingleton().addQuestState(p.getPlayerID(), quest);
 
 		QuestState questStateByID = QuestManager.getSingleton()
@@ -325,7 +342,7 @@ public class QuestManagerTest extends DatabaseTest
 		Position pos1 = new Position(1, 1);
 		Position pos2 = QuestsForTest.THE_LITTLE_QUEST.getPosition();
 		Player p = playerManager.addPlayer(4);
-		p.setMapName("current.tmx");
+		p.setMapName(QuestsForTest.THE_LITTLE_QUEST.getMapName());
 		p.setPlayerPosition(pos1);
 		QuestManager one = QuestManager.getSingleton();
 		assertEquals(
@@ -402,7 +419,7 @@ public class QuestManagerTest extends DatabaseTest
 	@Test
 	public void setPlayerIDWhenQuestStateAdded()
 	{
-		QuestState questState = new QuestState(1,QuestStateEnum.AVAILABLE, false);
+		QuestState questState = new QuestState(4, 1, QuestStateEnum.AVAILABLE, false);
 		QuestManager.getSingleton().addQuestState(4, questState);
 		assertEquals(4, questState.getPlayerID());
 	}
@@ -413,7 +430,8 @@ public class QuestManagerTest extends DatabaseTest
 	@Test
 	public void canRemoveAPlayersQuestStates()
 	{
-		QuestManager.getSingleton().addQuestState(4, new QuestState(1,QuestStateEnum.AVAILABLE, false));
+		QuestManager.getSingleton().addQuestState(4,
+				new QuestState(4, 1, QuestStateEnum.AVAILABLE, false));
 		QuestManager.getSingleton().removeQuestStatesForPlayer(4);
 		assertNull(QuestManager.getSingleton().getQuestList(4));
 	}
@@ -464,8 +482,7 @@ public class QuestManagerTest extends DatabaseTest
 		
 		ArrayList<AdventureState> adventures = new ArrayList<AdventureState>();
 		adventures.add(as);
-		QuestState qs = new QuestState(questID, QuestStateEnum.FULFILLED, false);
-		qs.setPlayerID(playerID);
+		QuestState qs = new QuestState(playerID, questID, QuestStateEnum.FULFILLED, false);
 		qs.addAdventures(adventures);
 		QuestManager.getSingleton().addQuestState(playerID, qs);
 		int expGain = QuestManager.getSingleton().getQuest(questID).getAdventures().get(1).getExperiencePointsGained();

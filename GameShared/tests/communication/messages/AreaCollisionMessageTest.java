@@ -19,10 +19,10 @@ public class AreaCollisionMessageTest
 	 *             shouldn't
 	 */
 	@Test
-	public void testToString() throws Exception
+	public void testConstructor() throws Exception
 	{
 		AreaCollisionMessage msg = new AreaCollisionMessage(1, "test");
-		assertEquals("1", msg.getPlayerID());
+		assertEquals(1, msg.getPlayerID());
 		assertEquals("test", msg.getAreaName());
 	}
 

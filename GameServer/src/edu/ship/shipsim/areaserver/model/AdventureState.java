@@ -38,6 +38,7 @@ public class AdventureState
 	{
 		this.adventureID = id;
 		this.adventureState = state;
+		this.needingNotification = needingNotification;
 	}
 
 	/**
@@ -136,7 +137,6 @@ public class AdventureState
 										adventureID)
 								.getExperiencePointsGained());
 		this.parentQuestState.checkForFulfillment();
-		
 	}
 
 	/**

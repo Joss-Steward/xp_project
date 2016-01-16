@@ -1,6 +1,7 @@
 package edu.ship.shipsim.areaserver.model.reports;
 
 import static org.junit.Assert.*;
+import model.OptionsManager;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Before;
@@ -28,6 +29,7 @@ public class PlayerConnectionReportTest
 	{
 		PlayerManager.resetSingleton();
 		new PlayerRowDataGatewayMock().resetData();
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 
 	/**

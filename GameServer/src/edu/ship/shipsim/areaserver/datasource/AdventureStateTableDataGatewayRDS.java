@@ -145,22 +145,23 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 
 	/**
 	 * @see edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway#updateState(int,
-	 *      int, int, datasource.AdventureStateEnum)
+	 *      int, int, datasource.AdventureStateEnum, boolean)
 	 */
 	@Override
 	public void updateState(int playerID, int questID, int adventureID,
-			AdventureStateEnum newState) throws DatabaseException
+			AdventureStateEnum newState, boolean needingNotification) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
 					connection,
-					"UPDATE AdventureStates SET adventureState = ?, needingNotification = true WHERE  playerID = ? and questID = ? and adventureID = ?");
+					"UPDATE AdventureStates SET adventureState = ?, needingNotification = ? WHERE  playerID = ? and questID = ? and adventureID = ?");
 			stmt.setInt(1, newState.ordinal());
-			stmt.setInt(2, playerID);
-			stmt.setInt(3, questID);
-			stmt.setInt(4, adventureID);
+			stmt.setBoolean(2, needingNotification);
+			stmt.setInt(3, playerID);
+			stmt.setInt(4, questID);
+			stmt.setInt(5, adventureID);
 			int count = stmt.executeUpdate();
 			if (count == 0)
 			{

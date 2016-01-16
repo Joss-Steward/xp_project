@@ -28,12 +28,14 @@ public class AdventureStateViewTableDataGatewayRDSTest extends DatabaseTest
 	public void getPendingAdventures() throws DatabaseException
 	{
 		List<AdventureRecord> results = AdventureStateViewTableDataGatewayRDS.getPendingAdventureRecords(PlayersForTest.JOHN.getPlayerID());
-		assertEquals(2, results.size());
-		AdventureRecord expected = new AdventureRecord(AdventuresForTest.FIVE.getQuestID(), AdventuresForTest.FIVE.getAdventureID(),
-				AdventuresForTest.FIVE.getAdventureDescription(), AdventuresForTest.FIVE.getExperiencePointsGained(), AdventuresForTest.FIVE.getSignatureSpecification());
+		assertEquals(3, results.size());
+		AdventureRecord expected = new AdventureRecord(AdventuresForTest.QUEST3_ADVENTURE1.getQuestID(), AdventuresForTest.QUEST3_ADVENTURE1.getAdventureID(),
+				AdventuresForTest.QUEST3_ADVENTURE1.getAdventureDescription(), AdventuresForTest.QUEST3_ADVENTURE1.getExperiencePointsGained(), AdventuresForTest.QUEST3_ADVENTURE1.getSignatureSpecification());
 		assertTrue(results.contains(expected));
-		assertTrue(results.contains(new AdventureRecord(AdventuresForTest.FOUR.getQuestID(), AdventuresForTest.FOUR.getAdventureID(),
-				AdventuresForTest.FOUR.getAdventureDescription(), AdventuresForTest.FOUR.getExperiencePointsGained(), AdventuresForTest.FOUR.getSignatureSpecification())));
+		assertTrue(results.contains(new AdventureRecord(AdventuresForTest.QUEST3_ADVENTURE3.getQuestID(), AdventuresForTest.QUEST3_ADVENTURE3.getAdventureID(),
+				AdventuresForTest.QUEST3_ADVENTURE3.getAdventureDescription(), AdventuresForTest.QUEST3_ADVENTURE3.getExperiencePointsGained(), AdventuresForTest.QUEST3_ADVENTURE3.getSignatureSpecification())));
+		assertTrue(results.contains(new AdventureRecord(AdventuresForTest.QUEST2_ADVENTURE3.getQuestID(), AdventuresForTest.QUEST2_ADVENTURE3.getAdventureID(),
+				AdventuresForTest.QUEST2_ADVENTURE3.getAdventureDescription(), AdventuresForTest.QUEST2_ADVENTURE3.getExperiencePointsGained(), AdventuresForTest.QUEST2_ADVENTURE3.getSignatureSpecification())));
 	}
 
 	/**
@@ -44,7 +46,7 @@ public class AdventureStateViewTableDataGatewayRDSTest extends DatabaseTest
 	public void canCompleteAnAdventure() throws DatabaseException
 	{
 		List<AdventureRecord> initial = AdventureStateViewTableDataGatewayRDS.getPendingAdventureRecords(PlayersForTest.JOHN.getPlayerID());
-		AdventureStateViewTableDataGatewayRDS.moveToNeedNotification(PlayersForTest.JOHN.getPlayerID(), initial.get(0).getQuestID(),initial.get(0).getAdventureID());
+		AdventureStateViewTableDataGatewayRDS.moveToCompleted(PlayersForTest.JOHN.getPlayerID(), initial.get(0).getQuestID(),initial.get(0).getAdventureID());
 		ArrayList<AdventureStateRecord> all = AdventureStateTableDataGatewayRDS.getSingleton().getAdventureStates(PlayersForTest.JOHN.getPlayerID(), initial.get(0).getQuestID());
 		for (AdventureStateRecord rec:all)
 		{

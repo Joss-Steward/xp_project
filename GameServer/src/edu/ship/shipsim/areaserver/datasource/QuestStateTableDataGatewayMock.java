@@ -136,6 +136,7 @@ private static QuestStateTableDataGateway singleton;
 			{
 				updated = true;
 				qsRec.setState(newState);
+				qsRec.setNeedingNotification(needingNotification);
 			}
 		}
 		if (!updated)

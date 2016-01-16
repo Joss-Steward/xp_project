@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import model.OptionsManager;
 import datasource.DatabaseException;
 import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGateway;
-import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayFactory;
+import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayMock;
+import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayRDS;
 import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGateway;
 import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayMock;
 import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayRDS;
@@ -32,12 +33,12 @@ public class QuestStateUnitOfWork
 		if (OptionsManager.getSingleton().isTestMode())
 		{
 			this.questStateGateway = QuestStateTableDataGatewayMock.getSingleton();
+			this.adventureStateGateway = AdventureStateTableDataGatewayMock.getSingleton();
 		} else
 		{
 			this.questStateGateway = QuestStateTableDataGatewayRDS.getSingleton();
-			
+			this.adventureStateGateway = AdventureStateTableDataGatewayRDS.getSingleton();
 		}
-		this.adventureStateGateway = AdventureStateTableDataGatewayFactory.getGateway();
 	}
 
 	/**

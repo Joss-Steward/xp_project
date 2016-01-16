@@ -42,6 +42,7 @@ public class AdventureStateTest extends DatabaseTest
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton().setTestMode(true);
 		QuestManager.resetSingleton();
+		QualifiedObservableConnector.resetSingleton();
 	}
 
 	/**
@@ -54,7 +55,7 @@ public class AdventureStateTest extends DatabaseTest
 
 		assertEquals(1, adventure.getID());
 		assertEquals(AdventureStateEnum.HIDDEN, adventure.getState());
-		assertTrue(adventure.isNeedingNotification());
+		assertFalse(adventure.isNeedingNotification());
 
 	}
 
@@ -131,14 +132,15 @@ public class AdventureStateTest extends DatabaseTest
 				2,
 				QuestStatesForTest.PLAYER2_QUEST1.getQuestID(),
 				QuestStatesForTest.PLAYER2_QUEST1.getState(), QuestStatesForTest.PLAYER2_QUEST1.isNeedingNotification());
-
+		assertFalse(qState.isNeedingNotification());
 		qState.addAdventures(al);
 
 		adventure.complete();
 
 		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
-		assertFalse(adventure.isNeedingNotification());
+		assertTrue(adventure.isNeedingNotification());
 		assertEquals(QuestStateEnum.TRIGGERED, qState.getStateValue());
+		assertFalse(qState.isNeedingNotification());
 	}
 
 	/**
@@ -172,7 +174,7 @@ public class AdventureStateTest extends DatabaseTest
 
 		adventure.complete();
 		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
-		assertFalse(adventure.isNeedingNotification());
+		assertTrue(adventure.isNeedingNotification());
 		assertEquals(QuestStateEnum.FULFILLED, questState.getStateValue());
 		assertTrue(questState.isNeedingNotification());
 	}
@@ -206,7 +208,7 @@ public class AdventureStateTest extends DatabaseTest
 
 		adventure2.complete();
 		assertEquals(AdventureStateEnum.COMPLETED, adventure2.getState());
-		assertFalse(adventure2.isNeedingNotification());
+		assertTrue(adventure2.isNeedingNotification());
 		assertEquals(QuestStateEnum.FULFILLED, questState.getStateValue());
 		assertFalse(questState.isNeedingNotification());
 	}
