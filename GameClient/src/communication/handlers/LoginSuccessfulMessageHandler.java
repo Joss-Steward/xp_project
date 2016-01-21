@@ -23,8 +23,6 @@ import communication.messages.Message;
 public class LoginSuccessfulMessageHandler extends MessageHandler
 {
 
-	public static final String HOST_FOR_SEQUENTIAL_TESTS = "TESTZZTEST";
-
 	/**
 	 * 
 	 * @see MessageHandler#process(Message)

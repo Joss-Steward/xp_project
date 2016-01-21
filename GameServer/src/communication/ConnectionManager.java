@@ -184,9 +184,4 @@ public class ConnectionManager
 			stateAccumulator.setPlayerId(playerID);
 		}
 	}
-
-	public MessageHandlerSet getMessageHandlerSet()
-	{
-		return this.handlerSet;
-	}
 }

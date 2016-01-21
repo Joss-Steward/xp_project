@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import model.CommandMovePlayer;
-import model.ClientModelFacade;
+import model.ModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.MovementMessage;
@@ -28,7 +28,7 @@ public class MovementMessageHandler extends MessageHandler
 			MovementMessage mMsg = (MovementMessage) msg;
 			CommandMovePlayer cmd = new CommandMovePlayer(mMsg.getPlayerID(),
 					mMsg.getPosition());
-			ClientModelFacade.getSingleton().queueCommand(cmd);
+			ModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

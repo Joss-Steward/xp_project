@@ -3,7 +3,7 @@ package communication.handlers;
 import model.CommandMovePlayerSilently;
 import model.CommandPersistPlayer;
 import model.MapToServerMapping;
-import model.ClientModelFacade;
+import model.ModelFacade;
 import model.PlayerManager;
 import communication.messages.Message;
 import communication.messages.TeleportationContinuationMessage;
@@ -34,10 +34,10 @@ public class TeleportationInitiationHandler extends MessageHandler
 		{
 			CommandMovePlayerSilently command = new CommandMovePlayerSilently(
 					currentMsg.getMapName(), currentMsg.getPlayerId(), currentMsg.getPosition());
-			ClientModelFacade.getSingleton().queueCommand(command);
+			ModelFacade.getSingleton().queueCommand(command);
 
 			CommandPersistPlayer persistCommand = new CommandPersistPlayer(currentMsg.getPlayerId());
-			ClientModelFacade.getSingleton().queueCommand(persistCommand);
+			ModelFacade.getSingleton().queueCommand(persistCommand);
 			
 			MapToServerMapping mapping = new MapToServerMapping(currentMsg
 					.getMapName());

@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
-import model.ClientModelFacade;
+import model.ModelFacade;
 import model.OptionsManager;
 import model.PlayerManager;
 
@@ -25,7 +25,7 @@ public class DisconnectMessageHandlerTest
 	public void reset()
 	{
 		PlayerManager.resetSingleton();
-		ClientModelFacade.resetSingleton();
+		ModelFacade.resetSingleton();
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton().setTestMode(true);
 	}
@@ -56,7 +56,7 @@ public class DisconnectMessageHandlerTest
 		DisconnectMessageHandler handler = new DisconnectMessageHandler();
 		DisconnectMessage msg = new DisconnectMessage(1);
 		handler.process(msg);
-		while (ClientModelFacade.getSingleton().hasCommandsPending())
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

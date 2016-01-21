@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import model.CommandRemovePlayer;
-import model.ClientModelFacade;
+import model.ModelFacade;
 import communication.messages.DisconnectMessage;
 import communication.messages.Message;
 
@@ -26,7 +26,7 @@ public class DisconnectMessageHandler extends MessageHandler
 			
 			CommandRemovePlayer cmd = new CommandRemovePlayer(cMsg.getPlayerID());
 			
-			ClientModelFacade.getSingleton().queueCommand(cmd);
+			ModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

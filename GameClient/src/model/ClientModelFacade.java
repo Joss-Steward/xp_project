@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Timer;
+
 import model.InformationQueue;
 
 import com.badlogic.gdx.utils.Timer.Task;
@@ -66,6 +68,7 @@ public class ClientModelFacade
 		return getSingleton(false, false);
 	}
 
+	
 	/**
 	 * @param headless
 	 *            true if we are running libgdx headless
@@ -103,6 +106,8 @@ public class ClientModelFacade
 	private InformationQueue commandQueue;
 	private boolean commandsPending;
 	private boolean headless;
+
+	private Timer timer;
 
 	/**
 	 * Checks if commands are pending
@@ -166,11 +171,21 @@ public class ClientModelFacade
 			}, (float) 0.25, (float) 0.25);
 		} else
 		{
-			java.util.Timer timer = new java.util.Timer();
+			timer = new java.util.Timer();
 			timer.schedule(new ProcessCommandQueueTask(), 0, 250);
 		}
 	}
 
+	/**
+	 * If we have created the thread that processes things, kill it
+	 */
+	public synchronized static void killThreads()
+	{
+		if (singleton!=null)
+		{
+			singleton.timer.cancel();
+		}
+	}
 	/**
 	 * Get how many commands are waiting to be queued
 	 * 

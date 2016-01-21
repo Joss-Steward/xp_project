@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
-import model.ClientModelFacade;
+import model.ModelFacade;
 import model.OptionsManager;
 import model.PlayerConnection;
 import model.PlayerManager;
@@ -29,7 +29,7 @@ public class ConnectMessageHandlerTest
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton().setTestMode(true);
 		PlayerManager.resetSingleton();
-		ClientModelFacade.resetSingleton();
+		ModelFacade.resetSingleton();
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public class ConnectMessageHandlerTest
 		handler.setConnectionManager(connectionManager);
 		ConnectMessage msg = new ConnectMessage(1, PlayerConnection.DEFAULT_PIN);
 		handler.process(msg);
-		while (ClientModelFacade.getSingleton().hasCommandsPending())
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}
@@ -78,7 +78,7 @@ public class ConnectMessageHandlerTest
 		ConnectMessageHandler handler = new ConnectMessageHandler();
 		ConnectMessage msg = new ConnectMessage(1, PlayerConnection.DEFAULT_PIN);
 		handler.process(msg);
-		while (ClientModelFacade.getSingleton().hasCommandsPending())
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

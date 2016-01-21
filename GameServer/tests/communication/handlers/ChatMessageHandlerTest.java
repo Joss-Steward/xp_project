@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
-import model.ClientModelFacade;
+import model.ModelFacade;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class ChatMessageHandlerTest
 	@Before
 	public void reset()
 	{
-		ClientModelFacade.resetSingleton();
+		ModelFacade.resetSingleton();
 	}
 	
 	/**
@@ -50,9 +50,9 @@ public class ChatMessageHandlerTest
 		ChatMessage cm = new ChatMessage("Bob", "Hey", new Position(0,0), ChatType.Local);
 		ChatMessageHandler ch = new ChatMessageHandler();
 		ch.process(cm);
-		assertEquals(1,ClientModelFacade.getSingleton().queueSize());
+		assertEquals(1,ModelFacade.getSingleton().queueSize());
 		
-		while (ClientModelFacade.getSingleton().hasCommandsPending())
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

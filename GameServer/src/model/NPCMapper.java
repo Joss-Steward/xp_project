@@ -28,16 +28,16 @@ public class NPCMapper extends PlayerMapper
 	 * @throws DatabaseException
 	 *             if the data source layer cannot answer the request
 	 */
-	public static ArrayList<NPCMapper> findNPCsOnMap(String string)
+	public static ArrayList<NPCMapper> findNPCsOnMap(String mapName)
 			throws DatabaseException
 	{
 		ArrayList<NPCRowDataGateway> gateways;
 		if (OptionsManager.getSingleton().isTestMode())
 		{
-			gateways = NPCRowDataGatewayMock.getNPCsForMap(string);
+			gateways = NPCRowDataGatewayMock.getNPCsForMap(mapName);
 		} else
 		{
-			gateways = NPCRowDataGatewayRDS.getNPCsForMap(string);
+			gateways = NPCRowDataGatewayRDS.getNPCsForMap(mapName);
 		}
 		ArrayList<NPCMapper> mappers = new ArrayList<NPCMapper>();
 		for (NPCRowDataGateway gateway : gateways)

@@ -25,7 +25,6 @@ public class PlayerJoinedMessageHandler extends MessageHandler
 	@Override
 	public void process(Message msg)
 	{
-		System.out.println("received " + msg);
 		PlayerJoinedMessage playerJoinedMessage = (PlayerJoinedMessage) msg;
 		CommandInitializePlayer cmd = new CommandInitializePlayer(
 				playerJoinedMessage.getPlayerID(), playerJoinedMessage.getPlayerName(),

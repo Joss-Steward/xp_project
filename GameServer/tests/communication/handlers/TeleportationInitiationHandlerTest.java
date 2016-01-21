@@ -15,7 +15,7 @@ import communication.messages.Message;
 import data.Position;
 import datasource.PlayersForTest;
 import datasource.ServersForTest;
-import model.ClientModelFacade;
+import model.ModelFacade;
 import model.OptionsManager;
 import model.Player;
 import model.PlayerManager;
@@ -40,7 +40,7 @@ public class TeleportationInitiationHandlerTest
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton().setTestMode(true);
 		PlayerManager.resetSingleton();
-		ClientModelFacade.resetSingleton();
+		ModelFacade.resetSingleton();
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class TeleportationInitiationHandlerTest
 		EasyMock.replay(obs);
 		
 		handler.process(msg);
-		while (ClientModelFacade.getSingleton().hasCommandsPending())
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}
@@ -91,7 +91,7 @@ public class TeleportationInitiationHandlerTest
 		// make sure we queued the appropriate response
 		ArrayList<Message> queue = accum.getPendingMsgs();
 		assertEquals(1, queue.size());
-		while (ClientModelFacade.getSingleton().hasCommandsPending())
+		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

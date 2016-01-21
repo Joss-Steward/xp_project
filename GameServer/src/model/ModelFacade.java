@@ -11,19 +11,19 @@ import model.InformationQueue;
  * @author Merlin
  * 
  */
-public class ClientModelFacade
+public class ModelFacade
 {
 
-	private static ClientModelFacade singleton;
+	private static ModelFacade singleton;
 
 	/**
 	 * @return the only one of these there is
 	 */
-	public synchronized static ClientModelFacade getSingleton()
+	public synchronized static ModelFacade getSingleton()
 	{
 		if (singleton == null)
 		{
-			singleton = new ClientModelFacade();
+			singleton = new ModelFacade();
 		}
 		return singleton;
 	}
@@ -47,20 +47,13 @@ public class ClientModelFacade
 				}
 			}
 		}
-		singleton = new ClientModelFacade();
+		singleton = new ModelFacade();
 	}
 
 	private InformationQueue commandQueue;
 	private boolean commandsPending;
 	private Timer timer;
 
-	public static void killThreads()
-	{
-		if (singleton!=null)
-		{
-			singleton.timer.cancel();
-		}
-	}
 	/**
 	 * Checks if commands are pending
 	 * @return if commands are pending
@@ -72,7 +65,7 @@ public class ClientModelFacade
 	/**
 	 * Make the default constructor private
 	 */
-	private ClientModelFacade()
+	private ModelFacade()
 	{
 		commandQueue = new InformationQueue();
 

@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 
 import model.OptionsManager;
+
 import communication.handlers.MessageHandlerSet;
-import communication.messages.ConnectMessage;
 import communication.packers.MessagePackerSet;
 
 /**
