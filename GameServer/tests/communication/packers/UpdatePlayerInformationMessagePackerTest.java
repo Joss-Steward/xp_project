@@ -5,7 +5,12 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import model.ClientPlayerQuest;
+import model.IllegalQuestChangeException;
 import model.OptionsManager;
+import model.Player;
+import model.PlayerManager;
+import model.QuestManager;
+import model.reports.UpdatePlayerInformationReport;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,11 +19,6 @@ import communication.StateAccumulator;
 import communication.messages.InitializeThisClientsPlayerMessage;
 import datasource.DatabaseException;
 import datasource.PlayersForTest;
-import edu.ship.shipsim.areaserver.model.IllegalQuestChangeException;
-import edu.ship.shipsim.areaserver.model.Player;
-import edu.ship.shipsim.areaserver.model.PlayerManager;
-import edu.ship.shipsim.areaserver.model.QuestManager;
-import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReport;
 
 /**
  * 

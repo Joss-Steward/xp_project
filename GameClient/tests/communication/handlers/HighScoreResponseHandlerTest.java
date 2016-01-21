@@ -4,12 +4,13 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import model.ModelFacade;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.HighScoreResponseMessage;
 import datasource.PlayerScoreRecord;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * @author nk3668

@@ -3,11 +3,11 @@ package communication.handlers;
 import java.io.IOException;
 import java.net.Socket;
 
+import model.CommandPinFailed;
+import model.ModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.PinFailedMessage;
-import edu.ship.shipsim.client.model.CommandPinFailed;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Should process an incoming LoginFailedMessage. 

@@ -3,6 +3,8 @@ package communication.packers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import model.OptionsManager;
+import model.QuestManager;
+import model.reports.QuestStateChangeReport;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,9 +13,7 @@ import communication.StateAccumulator;
 import communication.messages.QuestStateChangeMessage;
 import datasource.DatabaseException;
 import datasource.QuestStateEnum;
-import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
-import edu.ship.shipsim.areaserver.model.QuestManager;
-import edu.ship.shipsim.areaserver.model.reports.QuestStateChangeReport;
+import datasource.QuestsForTest;
 
 /**
  * 

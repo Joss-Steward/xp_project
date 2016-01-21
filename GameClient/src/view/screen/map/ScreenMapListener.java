@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import view.player.PlayerType;
 import view.screen.ScreenListener;
 import data.Position;
-import edu.ship.shipsim.client.model.reports.*;
 import model.QualifiedObservableReport;
+import model.reports.*;
 
 /**
  * Not much for now!

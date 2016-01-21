@@ -5,15 +5,15 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+import model.CommandLogin;
+import model.CommandMovePlayer;
+import model.ModelFacade;
+import model.PlayerManager;
 import communication.ConnectionManager;
 import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
 import data.Position;
-import edu.ship.shipsim.client.model.CommandLogin;
-import edu.ship.shipsim.client.model.CommandMovePlayer;
-import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.PlayerManager;
 
 /**
  * Temporary to play with communication protocols. Will eventually start a

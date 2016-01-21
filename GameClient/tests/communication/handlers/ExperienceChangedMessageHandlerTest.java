@@ -1,6 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
+import model.ModelFacade;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +9,6 @@ import org.junit.Test;
 import communication.messages.ExperienceChangedMessage;
 import datasource.LevelRecord;
 import datasource.PlayersForTest;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * @author Ryan

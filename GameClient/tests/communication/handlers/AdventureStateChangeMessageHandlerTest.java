@@ -5,14 +5,15 @@ import static org.junit.Assert.assertEquals;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
+import model.ModelFacade;
+import model.PlayerManager;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.AdventureStateChangeMessage;
 import datasource.AdventureStateEnum;
 import datasource.PlayersForTest;
-import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.PlayerManager;
 
 /**
  * Tests functionality of the AdventureStateChangeMessageHandler

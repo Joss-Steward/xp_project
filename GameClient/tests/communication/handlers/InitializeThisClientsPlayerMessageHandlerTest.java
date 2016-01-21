@@ -8,18 +8,17 @@ import java.util.ArrayList;
 
 import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
+import model.ModelFacade;
+import model.PlayerManager;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.InitializeThisClientsPlayerMessage;
-
 import datasource.AdventureStateEnum;
 import datasource.LevelRecord;
 import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
-import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.PlayerManager;
 
 /**
  * @author Frank Schmidt

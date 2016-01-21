@@ -1,9 +1,9 @@
 package communication.handlers;
 
+import model.CommandHighScoreResponse;
+import model.ModelFacade;
 import communication.messages.HighScoreResponseMessage;
 import communication.messages.Message;
-import edu.ship.shipsim.client.model.CommandHighScoreResponse;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Receives a message High Score Response

@@ -1,10 +1,9 @@
 package communication.handlers;
 
+import model.CommandOverwriteExperience;
+import model.ModelFacade;
 import communication.messages.ExperienceChangedMessage;
 import communication.messages.Message;
-
-import edu.ship.shipsim.client.model.CommandOverwriteExperience;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * @author Ryan

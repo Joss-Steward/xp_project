@@ -3,6 +3,11 @@ package view.screen.map;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
+import model.MapManager;
+import model.ModelFacade;
+import model.PlayerManager;
+import model.ThisClientsPlayer;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,10 +17,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
 import data.Position;
-import edu.ship.shipsim.client.model.MapManager;
-import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.PlayerManager;
-import edu.ship.shipsim.client.model.ThisClientsPlayer;
 import static org.junit.Assert.*;
 
 /**

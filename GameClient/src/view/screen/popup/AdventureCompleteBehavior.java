@@ -1,7 +1,7 @@
 package view.screen.popup;
 
-import edu.ship.shipsim.client.model.CommandAdventureNotificationComplete;
-import edu.ship.shipsim.client.model.ModelFacade;
+import model.CommandAdventureNotificationComplete;
+import model.ModelFacade;
 
 /**
  * Handles behavior for adventure being completed

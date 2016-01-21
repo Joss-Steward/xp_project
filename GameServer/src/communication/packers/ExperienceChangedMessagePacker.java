@@ -1,11 +1,9 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
-
+import model.reports.ExperienceChangedReport;
 import communication.messages.ExperienceChangedMessage;
 import communication.messages.Message;
-
-import edu.ship.shipsim.areaserver.model.reports.ExperienceChangedReport;
 
 /**
  * @author Ryan

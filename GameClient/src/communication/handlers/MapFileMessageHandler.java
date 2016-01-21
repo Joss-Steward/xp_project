@@ -5,10 +5,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import model.CommandNewMap;
+import model.ModelFacade;
 import communication.messages.MapFileMessage;
 import communication.messages.Message;
-import edu.ship.shipsim.client.model.CommandNewMap;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Should process an incoming LoginResponseMessage. This means that we should

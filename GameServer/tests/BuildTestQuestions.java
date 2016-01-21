@@ -2,8 +2,8 @@ import java.sql.SQLException;
 
 import model.OptionsManager;
 import datasource.DatabaseException;
-import edu.ship.shipsim.areaserver.datasource.NPCQuestionRowDataGatewayRDS;
-import edu.ship.shipsim.areaserver.datasource.NPCQuestionsForTest;
+import datasource.NPCQuestionRowDataGatewayRDS;
+import datasource.NPCQuestionsForTest;
 
 /**
  * Builds the Question portion of the database for the quizbot

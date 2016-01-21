@@ -1,9 +1,9 @@
 package communication.handlers;
 
+import model.CommandQuestStateChange;
+import model.ModelFacade;
 import communication.messages.Message;
 import communication.messages.QuestStateChangeMessage;
-import edu.ship.shipsim.client.model.CommandQuestStateChange;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Handles the QuestStateChange Message

@@ -5,16 +5,16 @@ import static org.junit.Assert.assertEquals;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
+import model.MapManager;
+import model.ModelFacade;
+import model.PlayerManager;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.MovementMessage;
-
 import data.Position;
 import datasource.PlayersForTest;
-import edu.ship.shipsim.client.model.MapManager;
-import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.PlayerManager;
 
 /**
  * @author Andrew

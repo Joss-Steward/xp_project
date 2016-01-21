@@ -1,9 +1,9 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
+import model.reports.AreaCollisionReport;
 import communication.messages.AreaCollisionMessage;
 import communication.messages.Message;
-import edu.ship.shipsim.client.model.reports.AreaCollisionReport;
 
 /**
  * 

@@ -2,7 +2,11 @@ package communication.packers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import model.LevelManager;
 import model.OptionsManager;
+import model.PlayerManager;
+import model.QuestManager;
+import model.reports.ExperienceChangedReport;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,10 +16,6 @@ import communication.messages.ExperienceChangedMessage;
 import datasource.DatabaseException;
 import datasource.LevelRecord;
 import datasource.PlayersForTest;
-import edu.ship.shipsim.areaserver.model.LevelManager;
-import edu.ship.shipsim.areaserver.model.PlayerManager;
-import edu.ship.shipsim.areaserver.model.QuestManager;
-import edu.ship.shipsim.areaserver.model.reports.ExperienceChangedReport;
 /**
  * @author Ryan
  *

@@ -1,10 +1,9 @@
 package communication.handlers;
 
+import model.CommandAdventureStateChange;
+import model.ModelFacade;
 import communication.messages.AdventureStateChangeMessage;
 import communication.messages.Message;
-
-import edu.ship.shipsim.client.model.CommandAdventureStateChange;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Handles the Adventure State Change Message

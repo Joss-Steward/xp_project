@@ -1,12 +1,11 @@
 package communication.packers;
 
 import static org.junit.Assert.assertEquals;
+import model.reports.AreaCollisionReport;
 
 import org.junit.Test;
 
 import communication.messages.AreaCollisionMessage;
-
-import edu.ship.shipsim.client.model.reports.AreaCollisionReport;
 
 /**
  * @author Dave

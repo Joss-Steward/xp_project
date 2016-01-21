@@ -1,9 +1,9 @@
 package communication.handlers;
 
+import model.CommandChatMessageReceived;
+import model.ModelFacade;
 import communication.messages.ChatMessage;
 import communication.messages.Message;
-import edu.ship.shipsim.client.model.CommandChatMessageReceived;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Should process an incoming ChatMessage that is reporting that a message was sent by a Player

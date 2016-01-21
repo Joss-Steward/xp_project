@@ -1,13 +1,13 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
+import model.ModelFacade;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.QuestStateChangeMessage;
 import datasource.QuestStateEnum;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * @author Ryan

@@ -1,10 +1,9 @@
 package communication.packers;
 
 import static org.junit.Assert.*;
+import model.reports.AdventureNotifcationCompleteReport;
 
 import org.junit.Test;
-
-import edu.ship.shipsim.client.model.reports.AdventureNotifcationCompleteReport;
 
 /**
  * Test for AdventureNotificationCompletePacker

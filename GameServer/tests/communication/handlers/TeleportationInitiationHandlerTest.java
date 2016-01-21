@@ -15,13 +15,13 @@ import communication.messages.Message;
 import data.Position;
 import datasource.PlayersForTest;
 import datasource.ServersForTest;
-import edu.ship.shipsim.areaserver.model.ModelFacade;
-import edu.ship.shipsim.areaserver.model.Player;
-import edu.ship.shipsim.areaserver.model.PlayerManager;
-import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
+import model.ModelFacade;
 import model.OptionsManager;
+import model.Player;
+import model.PlayerManager;
 import model.QualifiedObservableConnector;
 import model.QualifiedObserver;
+import model.reports.PlayerMovedReport;
 
 /**
  * Test the handler for GetServerInfoMessages

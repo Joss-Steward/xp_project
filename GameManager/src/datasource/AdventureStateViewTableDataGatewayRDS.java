@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
-import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayRDS;
+import datasource.AdventureRecord;
+import datasource.AdventureStateTableDataGatewayRDS;
 
 /**
  * A table data gateway that feels like it is a gateway into a view (for now it

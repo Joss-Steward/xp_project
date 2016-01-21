@@ -3,14 +3,13 @@ package view.screen.map;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
+import model.reports.ExperiencePointsChangeReport;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-
-import edu.ship.shipsim.client.model.reports.ExperiencePointsChangeReport;
 
 /**
  * @author ck4124

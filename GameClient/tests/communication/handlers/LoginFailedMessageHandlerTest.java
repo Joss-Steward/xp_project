@@ -1,12 +1,12 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
+import model.ModelFacade;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.LoginFailedMessage;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * @author Matt and Andy

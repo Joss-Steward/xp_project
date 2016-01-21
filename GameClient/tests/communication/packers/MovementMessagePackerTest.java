@@ -6,13 +6,14 @@ import static org.junit.Assert.assertNull;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
+import model.PlayerManager;
+import model.reports.PlayerMovedReport;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.MovementMessage;
 import data.Position;
-import edu.ship.shipsim.client.model.PlayerManager;
-import edu.ship.shipsim.client.model.reports.PlayerMovedReport;
 
 /**
  * 

@@ -1,10 +1,10 @@
 package communication.handlers;
 
+import model.PlayerManager;
 import communication.messages.HighScoreRequestMessage;
 import communication.messages.HighScoreResponseMessage;
 import communication.messages.Message;
 import datasource.DatabaseException;
-import edu.ship.shipsim.areaserver.model.PlayerManager;
 
 /**
  * This should just echo back a response that contains the top ten high scores

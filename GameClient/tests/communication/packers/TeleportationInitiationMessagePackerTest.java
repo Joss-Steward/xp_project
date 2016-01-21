@@ -1,12 +1,12 @@
 package communication.packers;
 
 import static org.junit.Assert.*;
+import model.reports.ChangeMapReport;
 
 import org.junit.Test;
 
 import communication.messages.TeleportationInitiationMessage;
 import data.Position;
-import edu.ship.shipsim.client.model.reports.ChangeMapReport;
 
 /**
  * @author Matt

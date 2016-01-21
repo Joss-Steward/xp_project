@@ -1,5 +1,8 @@
 package view.screen.map;
 
+import model.CommandChatMessageSent;
+import model.ModelFacade;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
@@ -23,8 +26,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 
 import data.ChatType;
-import edu.ship.shipsim.client.model.CommandChatMessageSent;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * 

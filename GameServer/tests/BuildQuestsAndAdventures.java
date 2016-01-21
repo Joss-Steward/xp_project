@@ -1,15 +1,15 @@
 import java.sql.SQLException;
 
 import model.OptionsManager;
+import datasource.AdventureStateTableDataGatewayRDS;
+import datasource.AdventureStatesForTest;
+import datasource.AdventureTableDataGatewayRDS;
+import datasource.AdventuresForTest;
 import datasource.DatabaseException;
-import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayRDS;
-import edu.ship.shipsim.areaserver.datasource.AdventureStatesForTest;
-import edu.ship.shipsim.areaserver.datasource.AdventureTableDataGatewayRDS;
-import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
-import edu.ship.shipsim.areaserver.datasource.QuestRowDataGatewayRDS;
-import edu.ship.shipsim.areaserver.datasource.QuestStateTableDataGatewayRDS;
-import edu.ship.shipsim.areaserver.datasource.QuestStatesForTest;
-import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
+import datasource.QuestRowDataGatewayRDS;
+import datasource.QuestStateTableDataGatewayRDS;
+import datasource.QuestStatesForTest;
+import datasource.QuestsForTest;
 
 /**
  * Builds the Quests and Adventures portion of the database

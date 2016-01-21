@@ -9,7 +9,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
+import datasource.AdventureRecord;
 
 /**
  * Creates a window containing a list of Pending Adventures

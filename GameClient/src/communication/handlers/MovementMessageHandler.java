@@ -1,10 +1,10 @@
 package communication.handlers;
 
+import model.CommandMovePlayer;
+import model.ModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.MovementMessage;
-import edu.ship.shipsim.client.model.CommandMovePlayer;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Should process an incoming MovementMessage that is reporting that someone

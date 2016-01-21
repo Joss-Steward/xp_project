@@ -1,10 +1,10 @@
 package communication.handlers;
 
+import model.CommandOverwriteExperience;
+import model.CommandOverwriteQuestState;
+import model.ModelFacade;
 import communication.messages.InitializeThisClientsPlayerMessage;
 import communication.messages.Message;
-import edu.ship.shipsim.client.model.CommandOverwriteExperience;
-import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.CommandOverwriteQuestState;
 
 /**
  * Handles the CurrentQuestState message

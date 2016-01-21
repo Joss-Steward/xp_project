@@ -3,14 +3,14 @@ package view.screen.popup;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
+import model.reports.AdventureStateChangeReport;
+import model.reports.AdventuresNeedingNotificationReport;
+import model.reports.QuestStateChangeReport;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import datasource.AdventureStateEnum;
 import datasource.QuestStateEnum;
-import edu.ship.shipsim.client.model.reports.AdventureStateChangeReport;
-import edu.ship.shipsim.client.model.reports.AdventuresNeedingNotificationReport;
-import edu.ship.shipsim.client.model.reports.QuestStateChangeReport;
 
 /**
  * @author Cody/Scott Sends popup data to constructor from reports observed
