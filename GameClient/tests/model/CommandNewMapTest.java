@@ -6,8 +6,8 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
 import model.CommandNewMap;
-import model.ModelFacade;
-import model.PlayerManager;
+import model.ClientModelFacade;
+import model.ClientPlayerManager;
 import model.QualifiedObservableConnector;
 import model.QualifiedObserver;
 import model.reports.NewMapReport;
@@ -29,8 +29,8 @@ public class CommandNewMapTest
 	@Before
 	public void setup()
 	{
-		ModelFacade.resetSingleton();
-		ModelFacade.getSingleton(true, true);
+		ClientModelFacade.resetSingleton();
+		ClientModelFacade.getSingleton(true, true);
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class CommandNewMapTest
 		EasyMock.replay(obs);
 
 		// setup the player
-		PlayerManager pm = PlayerManager.getSingleton();
+		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
 		pm.initiateLogin("john", "pw");
 		try
 		{

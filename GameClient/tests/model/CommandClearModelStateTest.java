@@ -3,7 +3,7 @@ package model;
 import static org.junit.Assert.*;
 import model.CommandClearModelState;
 import model.MapManager;
-import model.PlayerManager;
+import model.ClientPlayerManager;
 
 import org.junit.After;
 import org.junit.Before;
@@ -24,7 +24,7 @@ public class CommandClearModelStateTest
 	public void cleanup()
 	{
 		MapManager.resetSingleton();
-		PlayerManager.resetSingleton();
+		ClientPlayerManager.resetSingleton();
 	}
 	
 	/**
@@ -33,12 +33,12 @@ public class CommandClearModelStateTest
 	@Test
 	public void testDoesResetPlayers()
 	{
-		PlayerManager original = PlayerManager.getSingleton();
+		ClientPlayerManager original = ClientPlayerManager.getSingleton();
 		
 		CommandClearModelState cms = new CommandClearModelState();
 		assertTrue(cms.execute());
 
-		assertNotEquals(original, PlayerManager.getSingleton());
+		assertNotEquals(original, ClientPlayerManager.getSingleton());
 	}
 	
 	/**

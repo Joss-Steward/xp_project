@@ -13,7 +13,7 @@ import data.Position;
  * @author merlin
  * 
  */
-public class Player extends Observable
+public class ClientPlayer extends Observable
 {
 
 	protected final int id;
@@ -27,7 +27,7 @@ public class Player extends Observable
 	 * @param playerID
 	 *            the unique ID of this player
 	 */
-	public Player(int playerID)
+	public ClientPlayer(int playerID)
 	{
 		this.id = playerID;
 		this.position = new Position(0, 0);
@@ -57,9 +57,9 @@ public class Player extends Observable
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Player))
+		if (!(obj instanceof ClientPlayer))
 			return false;
-		Player other = (Player) obj;
+		ClientPlayer other = (ClientPlayer) obj;
 		if (id != other.id)
 			return false;
 		return true;

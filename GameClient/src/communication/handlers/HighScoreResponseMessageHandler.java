@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import model.CommandHighScoreResponse;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import communication.messages.HighScoreResponseMessage;
 import communication.messages.Message;
 
@@ -32,7 +32,7 @@ public class HighScoreResponseMessageHandler extends MessageHandler
 		{
 			HighScoreResponseMessage message = (HighScoreResponseMessage) msg;
 			CommandHighScoreResponse cmd = new CommandHighScoreResponse(message.getScoreReports());
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

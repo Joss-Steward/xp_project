@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
 import model.CommandSendQuestState;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
@@ -115,7 +115,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 
 			CommandSendQuestState cmd = new CommandSendQuestState();
 
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

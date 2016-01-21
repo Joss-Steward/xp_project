@@ -45,7 +45,7 @@ public class CommandOverwriteExperience extends Command
 	@Override
 	protected boolean execute() 
 	{
-		ThisClientsPlayer thisClientsPlayer = PlayerManager.getSingleton().getThisClientsPlayer();
+		ThisClientsPlayer thisClientsPlayer = ClientPlayerManager.getSingleton().getThisClientsPlayer();
 		thisClientsPlayer.overwriteExperiencePoints(experience, record);
 		return true;
 	}

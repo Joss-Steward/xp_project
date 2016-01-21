@@ -45,6 +45,10 @@ public class MapManager extends Observable
 	 */
 	private MapManager()
 	{
+		if (OptionsManager.getSingleton().isTestMode())
+		{
+			headless = true;
+		}
 	}
 
 	/**

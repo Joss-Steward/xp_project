@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import model.CommandAdventureStateChange;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import communication.messages.AdventureStateChangeMessage;
 import communication.messages.Message;
 
@@ -21,7 +21,7 @@ public class AdventureStateChangeMessageHandler  extends MessageHandler
 	{
 		AdventureStateChangeMessage ourMsg = (AdventureStateChangeMessage)msg;
 		CommandAdventureStateChange cmd = new CommandAdventureStateChange(ourMsg);
-		ModelFacade.getSingleton().queueCommand(cmd);
+		ClientModelFacade.getSingleton().queueCommand(cmd);
 	}
 
 	/**

@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
-import model.ModelFacade;
-import model.PlayerManager;
+import model.ClientModelFacade;
+import model.ClientPlayerManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,8 +29,8 @@ public class AdventureStateChangeMessageHandlerTest
 	@Before
 	public void setUp()
 	{
-		ModelFacade.resetSingleton();
-		ModelFacade.getSingleton(true, false);
+		ClientModelFacade.resetSingleton();
+		ClientModelFacade.getSingleton(true, false);
 	}
 	
 	/**
@@ -54,14 +54,14 @@ public class AdventureStateChangeMessageHandlerTest
 	@Test
 	public void testMessageHandling() throws InterruptedException, AlreadyBoundException, NotBoundException
 	{
-		PlayerManager.getSingleton().initiateLogin("john", "pw");
-		PlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
+		ClientPlayerManager.getSingleton().initiateLogin("john", "pw");
+		ClientPlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
 		AdventureStateChangeMessageHandler h = new AdventureStateChangeMessageHandler();
 		AdventureStateChangeMessage msg = new AdventureStateChangeMessage(1, 2, 3, "Big Adventure", AdventureStateEnum.TRIGGERED);
 		
 		h.process(msg);
-		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
-		while(ModelFacade.getSingleton().hasCommandsPending())
+		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
+		while(ClientModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

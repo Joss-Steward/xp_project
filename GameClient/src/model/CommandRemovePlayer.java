@@ -25,7 +25,7 @@ public class CommandRemovePlayer extends Command {
 	 */
 	@Override
 	protected boolean execute() {
-		PlayerManager.getSingleton().removePlayer(playerID);
+		ClientPlayerManager.getSingleton().removePlayer(playerID);
 		return true;
 	}
 

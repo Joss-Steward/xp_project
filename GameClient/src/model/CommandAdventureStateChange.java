@@ -28,7 +28,7 @@ public class CommandAdventureStateChange extends Command
 	@Override
 	protected boolean execute()
 	{
-		PlayerManager.getSingleton().getThisClientsPlayer().sendAdventureStateChangeReport(questID, adventureID, adventureDescription, adventureState);
+		ClientPlayerManager.getSingleton().getThisClientsPlayer().sendAdventureStateChangeReport(questID, adventureID, adventureDescription, adventureState);
 		return true;
 	}
 	

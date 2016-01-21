@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
-import model.Player;
-import model.PlayerManager;
+import model.ClientPlayer;
+import model.ClientPlayerManager;
 import model.QualifiedObservableConnector;
 import model.QualifiedObserver;
 import model.reports.LoginInitiatedReport;
@@ -34,7 +34,7 @@ public class PlayerManagerTest
 	@Before
 	public void reset()
 	{
-		PlayerManager.resetSingleton();
+		ClientPlayerManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 	}
 
@@ -44,10 +44,10 @@ public class PlayerManagerTest
 	@Test
 	public void testSingleton()
 	{
-		PlayerManager player1 = PlayerManager.getSingleton();
-		assertSame(player1, PlayerManager.getSingleton());
-		PlayerManager.resetSingleton();
-		assertNotSame(player1, PlayerManager.getSingleton());
+		ClientPlayerManager player1 = ClientPlayerManager.getSingleton();
+		assertSame(player1, ClientPlayerManager.getSingleton());
+		ClientPlayerManager.resetSingleton();
+		assertNotSame(player1, ClientPlayerManager.getSingleton());
 	}
 
 	/**
@@ -57,10 +57,10 @@ public class PlayerManagerTest
 	public void canAddAndRetrievePlayers()
 	{
 		Position pos = new Position(1, 2);
-		PlayerManager pm = PlayerManager.getSingleton();
-		Player p1 = new Player(1);
-		Player p2 = new Player(2);
-		Player p3 = new Player(3);
+		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
+		ClientPlayer p1 = new ClientPlayer(1);
+		ClientPlayer p2 = new ClientPlayer(2);
+		ClientPlayer p3 = new ClientPlayer(3);
 		pm.initializePlayer(1, "Player 1", "Player 1 Type", pos);
 		assertEquals(p1, pm.getPlayerFromID(1));
 		pm.initializePlayer(2, "Player 2", "Player 2 Type", pos);
@@ -78,7 +78,7 @@ public class PlayerManagerTest
 	@Test
 	public void canStartToLogin()
 	{
-		PlayerManager p = PlayerManager.getSingleton();
+		ClientPlayerManager p = ClientPlayerManager.getSingleton();
 		assertFalse(p.isLoginInProgress());
 		p.initiateLogin("Fred", "mommy");
 		assertTrue(p.isLoginInProgress());
@@ -98,7 +98,7 @@ public class PlayerManagerTest
 		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
-		PlayerManager.getSingleton().initiateLogin("Fred", "daddy");
+		ClientPlayerManager.getSingleton().initiateLogin("Fred", "daddy");
 
 		EasyMock.verify(obs);
 	}
@@ -110,7 +110,7 @@ public class PlayerManagerTest
 	@Test
 	public void testSettingThisClientsPlayer()
 	{
-		PlayerManager pm = PlayerManager.getSingleton();
+		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
 
 		// test setting player without having tried logging in
 		try
@@ -149,7 +149,7 @@ public class PlayerManagerTest
 	@Test
 	public void testInitializePlayerFiresReport()
 	{
-		PlayerManager pm = PlayerManager.getSingleton();
+		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
 		Position pos = new Position(1, 2);
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(

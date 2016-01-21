@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import model.ClientPlayerQuest;
 import model.CommandOverwriteQuestState;
-import model.PlayerManager;
+import model.ClientPlayerManager;
 import model.ThisClientsPlayer;
 
 import org.junit.Test;
@@ -48,7 +48,7 @@ public class CommandOverwriteQuestStateTest
 	@Test
 	public void testExecutes()
 	{
-		PlayerManager pm = PlayerManager.getSingleton();
+		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
 		PlayersForTest john = PlayersForTest.JOHN;
 		pm.initiateLogin(john.getPlayerName(), john.getPlayerPassword());
 		
@@ -72,7 +72,7 @@ public class CommandOverwriteQuestStateTest
 		CommandOverwriteQuestState x = new CommandOverwriteQuestState(new InitializeThisClientsPlayerMessage(expected, 20, level));
 		x.execute();
 		
-		ThisClientsPlayer player = PlayerManager.getSingleton().getThisClientsPlayer();
+		ThisClientsPlayer player = ClientPlayerManager.getSingleton().getThisClientsPlayer();
 		assertEquals(expected, player.getQuests());
 	}
 

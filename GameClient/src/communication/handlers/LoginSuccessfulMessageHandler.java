@@ -5,8 +5,10 @@ import java.net.Socket;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
-import model.PlayerManager;
+import model.ClientPlayerManager;
+import model.OptionsManager;
 import communication.handlers.MessageHandler;
+import communication.messages.ConnectMessage;
 import communication.messages.LoginSuccessfulMessage;
 import communication.messages.Message;
 
@@ -21,6 +23,8 @@ import communication.messages.Message;
 public class LoginSuccessfulMessageHandler extends MessageHandler
 {
 
+	public static final String HOST_FOR_SEQUENTIAL_TESTS = "TESTZZTEST";
+
 	/**
 	 * 
 	 * @see MessageHandler#process(Message)
@@ -34,16 +38,22 @@ public class LoginSuccessfulMessageHandler extends MessageHandler
 			LoginSuccessfulMessage rMsg = (LoginSuccessfulMessage) msg;
 			try
 			{
-				getConnectionManager().moveToNewSocket(
-						new Socket(rMsg.getHostName(), rMsg.getPortNumber()),
-						rMsg.getPlayerID(), rMsg.getPin());
+				Socket socket = null;
+				if (!OptionsManager.getSingleton().isTestMode())
+				{
+					socket = new Socket(rMsg.getHostName(), rMsg.getPortNumber());
+					getConnectionManager().moveToNewSocket(socket);
+				}
+				
 				try
 				{
-					PlayerManager.getSingleton().finishLogin(rMsg.getPlayerID());
+					ClientPlayerManager.getSingleton().finishLogin(rMsg.getPlayerID());
 				} catch (AlreadyBoundException | NotBoundException e)
 				{
 					e.printStackTrace();
 				}
+				this.getStateAccumulator().queueMessage(new ConnectMessage(rMsg.getPlayerID(),
+						rMsg.getPin()));
 			} catch (IOException e)
 			{
 				e.printStackTrace();

@@ -4,8 +4,8 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
 import model.MapManager;
-import model.ModelFacade;
-import model.PlayerManager;
+import model.ClientModelFacade;
+import model.ClientPlayerManager;
 import model.ThisClientsPlayer;
 
 import org.junit.Before;
@@ -31,7 +31,7 @@ public class ScreenMapInputTest
 	@Before
 	public void setup()
 	{
-		PlayerManager.resetSingleton();
+		ClientPlayerManager.resetSingleton();
 
 		boolean[][] passability =
 		{
@@ -59,10 +59,10 @@ public class ScreenMapInputTest
 		// Make the model facade be headless, but not mocked so we can make sure
 		// that the movement commands generated when we hit a key cause the
 		// appropriate change in position
-		ModelFacade.resetSingleton();
-		ModelFacade.getSingleton(true, false);
+		ClientModelFacade.resetSingleton();
+		ClientModelFacade.getSingleton(true, false);
 		// setup initial player for testing
-		PlayerManager pm = PlayerManager.getSingleton();
+		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
 		pm.initiateLogin("john", "pw");
 		try
 		{
@@ -72,7 +72,7 @@ public class ScreenMapInputTest
 			e.printStackTrace();
 			fail("We have had trouble setting up this client's player for testing");
 		}
-		ThisClientsPlayer testPlayer = PlayerManager.getSingleton()
+		ThisClientsPlayer testPlayer = ClientPlayerManager.getSingleton()
 				.getThisClientsPlayer();
 		assertEquals(new Position(0, 0), testPlayer.getPosition());
 
@@ -103,7 +103,7 @@ public class ScreenMapInputTest
 
 	private void pauseForCommandExecution() throws InterruptedException
 	{
-		while (ModelFacade.getSingleton().hasCommandsPending())
+		while (ClientModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

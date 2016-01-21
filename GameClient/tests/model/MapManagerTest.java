@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.Observable;
 
 import model.MapManager;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import model.QualifiedObservableConnector;
 import model.QualifiedObserver;
 import model.TeleportHotSpot;
@@ -35,8 +35,8 @@ public class MapManagerTest
 	public void setup()
 	{
 		QualifiedObservableConnector.resetSingleton();
-		ModelFacade.resetSingleton();
-		ModelFacade.getSingleton(true, false);
+		ClientModelFacade.resetSingleton();
+		ClientModelFacade.getSingleton(true, false);
 	}
 
 	/**

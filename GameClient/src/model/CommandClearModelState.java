@@ -15,7 +15,7 @@ public class CommandClearModelState extends Command
 	 */
 	protected boolean execute() 
 	{
-		PlayerManager.resetSingleton();
+		ClientPlayerManager.resetSingleton();
 		MapManager.resetSingleton();
 		return true;
 	}

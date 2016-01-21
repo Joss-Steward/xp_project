@@ -6,7 +6,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import model.CommandNewMap;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import communication.messages.MapFileMessage;
 import communication.messages.Message;
 
@@ -47,7 +47,7 @@ public class MapFileMessageHandler extends MessageHandler
 			String mapFile = (new URL(decodedPath, "../" + mapFileMessage.getMapFileName() )).toURI()
 					.getSchemeSpecificPart();
 
-			ModelFacade.getSingleton().queueCommand(new CommandNewMap(mapFile));
+			ClientModelFacade.getSingleton().queueCommand(new CommandNewMap(mapFile));
 		} catch (MalformedURLException | URISyntaxException e)
 		{
 			e.printStackTrace();

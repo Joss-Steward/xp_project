@@ -1,7 +1,7 @@
 package view.screen.login;
 
 import model.CommandLogin;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import view.screen.ScreenBasic;
 import view.screen.Screens;
 
@@ -132,7 +132,7 @@ public class ScreenLogin extends ScreenBasic
 					// Create the login command to allow the player to login
 					CommandLogin lc = new CommandLogin(loginField.getText(), pwField
 							.getText());
-					ModelFacade.getSingleton().queueCommand(lc);
+					ClientModelFacade.getSingleton().queueCommand(lc);
 					return true;
 				}
 			}

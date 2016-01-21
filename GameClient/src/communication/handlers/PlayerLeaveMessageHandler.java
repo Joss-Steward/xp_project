@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import model.CommandRemovePlayer;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.PlayerLeaveMessage;
@@ -30,7 +30,7 @@ public class PlayerLeaveMessageHandler extends MessageHandler
 		{
 			PlayerLeaveMessage realMsg = (PlayerLeaveMessage) msg;
 			CommandRemovePlayer cmd = new CommandRemovePlayer(realMsg.getPlayerID());
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 		
 	}

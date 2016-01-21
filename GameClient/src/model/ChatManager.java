@@ -84,7 +84,7 @@ public class ChatManager extends Observable
 	 */
 	public void sendChatToServer(String message, ChatType type) 
 	{
-		Player thisPlayer = PlayerManager.getSingleton().getThisClientsPlayer();
+		ClientPlayer thisPlayer = ClientPlayerManager.getSingleton().getThisClientsPlayer();
 		ChatSentReport report = new ChatSentReport(message,
 				thisPlayer.getName(), thisPlayer.getPosition(), type);
 		QualifiedObservableConnector.getSingleton().sendReport(report);
@@ -98,7 +98,7 @@ public class ChatManager extends Observable
 	 */
 	protected boolean canReceiveLocalMessage(Position position) 
 	{
-		Position myPosition = PlayerManager.getSingleton()
+		Position myPosition = ClientPlayerManager.getSingleton()
 				.getThisClientsPlayer().getPosition();
 		
 		return Math.abs(myPosition.getColumn() - position.getColumn()) <= LOCAL_CHAT_RADIUS

@@ -6,8 +6,8 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
 import model.MapManager;
-import model.ModelFacade;
-import model.PlayerManager;
+import model.ClientModelFacade;
+import model.ClientPlayerManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,8 +29,8 @@ public class MovementMessageHandlerTest
 	@Before
 	public void setUp()
 	{
-		ModelFacade.resetSingleton();
-		ModelFacade.getSingleton(true, true);
+		ClientModelFacade.resetSingleton();
+		ClientModelFacade.getSingleton(true, true);
 	}
 	
 	/**
@@ -55,18 +55,18 @@ public class MovementMessageHandlerTest
 	public void engineNotified() throws InterruptedException, AlreadyBoundException, NotBoundException
 	{
 		MapManager.getSingleton().changeToNewFile("testmaps/simple.tmx");
-		PlayerManager.getSingleton().initiateLogin(PlayersForTest.MATT.getPlayerName(), PlayersForTest.MATT.getPlayerPassword());
-		PlayerManager.getSingleton().finishLogin(PlayersForTest.MATT.getPlayerID());
+		ClientPlayerManager.getSingleton().initiateLogin(PlayersForTest.MATT.getPlayerName(), PlayersForTest.MATT.getPlayerPassword());
+		ClientPlayerManager.getSingleton().finishLogin(PlayersForTest.MATT.getPlayerID());
 		Position p = new Position(1, 1);
 		MovementMessage msg = new MovementMessage(PlayersForTest.MATT.getPlayerID(), p);
 		MovementMessageHandler handler = new MovementMessageHandler();
 		handler.process(msg);
-		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
-		while(ModelFacade.getSingleton().hasCommandsPending())
+		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
+		while(ClientModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}
-		assertEquals(p,PlayerManager.getSingleton().getThisClientsPlayer().getPosition());
+		assertEquals(p,ClientPlayerManager.getSingleton().getThisClientsPlayer().getPosition());
 	}
 
 }

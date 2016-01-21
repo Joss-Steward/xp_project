@@ -7,7 +7,7 @@ import java.rmi.NotBoundException;
 
 import model.ClientPlayerQuest;
 import model.CommandQuestStateChange;
-import model.PlayerManager;
+import model.ClientPlayerManager;
 
 import org.junit.Test;
 
@@ -48,18 +48,18 @@ public class CommandQuestStateChangeTest
 		ClientPlayerQuest q = new ClientPlayerQuest(questID, "silly quest", QuestStateEnum.TRIGGERED, 3, 0);
 		
 		Position pos = new Position(1, 2);
-		PlayerManager pm = PlayerManager.getSingleton();
+		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
 		pm.initializePlayer(playerID, "Player 1", "Player 1 Type", pos);
 
 		pm.initiateLogin("john", "pw");
 		pm.finishLogin(playerID);
 
-		PlayerManager.getSingleton().getThisClientsPlayer().addQuest(q);
+		ClientPlayerManager.getSingleton().getThisClientsPlayer().addQuest(q);
 		
 		CommandQuestStateChange x = new CommandQuestStateChange(new QuestStateChangeMessage(playerID, questID, "silly quest", QuestStateEnum.FINISHED));
 		x.execute();
 		
-		for(ClientPlayerQuest quest : PlayerManager.getSingleton().getThisClientsPlayer().getQuests())
+		for(ClientPlayerQuest quest : ClientPlayerManager.getSingleton().getThisClientsPlayer().getQuests())
 		{
 			if(quest.getQuestID() == questID)
 			{

@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import model.CommandAddPlayer;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import model.Player;
 import model.PlayerManager;
 import communication.handlers.MessageHandler;
@@ -36,7 +36,7 @@ public class ConnectMessageHandler extends MessageHandler
 			}
 			CommandAddPlayer cmd = new CommandAddPlayer(cMsg.getPlayerID(), cMsg.getPin());
 			
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 			
 			for (Player p : PlayerManager.getSingleton().getConnectedPlayers())
 			{

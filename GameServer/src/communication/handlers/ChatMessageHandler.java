@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import model.CommandChatMessageReceived;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import communication.messages.ChatMessage;
 import communication.messages.Message;
 
@@ -34,7 +34,7 @@ public class ChatMessageHandler extends MessageHandler
 					cMsg.getPosition(), 
 					cMsg.getType());
 			
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

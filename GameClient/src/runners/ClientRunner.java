@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 import model.CommandLogin;
 import model.CommandMovePlayer;
-import model.ModelFacade;
-import model.PlayerManager;
+import model.ClientModelFacade;
+import model.ClientPlayerManager;
 import communication.ConnectionManager;
 import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
@@ -41,7 +41,7 @@ public class ClientRunner
 		
 		ConnectionManager cm = new ConnectionManager(socket, stateAccumulator,
 				new MessageHandlerSet(stateAccumulator), messagePackerSet);
-		ModelFacade modelFacade = ModelFacade.getSingleton(true, false);
+		ClientModelFacade modelFacade = ClientModelFacade.getSingleton(true, false);
 
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("input?");
@@ -52,13 +52,13 @@ public class ClientRunner
 			if (tokens[0].equalsIgnoreCase("move"))
 			{
 				String[] positionParts = tokens[1].split(",");
-				CommandMovePlayer command = new CommandMovePlayer(PlayerManager
+				CommandMovePlayer command = new CommandMovePlayer(ClientPlayerManager
 						.getSingleton().getThisClientsPlayer().getID(), new Position(
 						Integer.parseInt(positionParts[0]),
 						Integer.parseInt(positionParts[1])));
 				modelFacade.queueCommand(command);
 				System.out.println("player moved "
-						+ PlayerManager.getSingleton().getThisClientsPlayer().getID()
+						+ ClientPlayerManager.getSingleton().getThisClientsPlayer().getID()
 						+ " to " + positionParts[0] + ", " + positionParts[1]);
 			} else if (tokens[0].equalsIgnoreCase("login"))
 			{

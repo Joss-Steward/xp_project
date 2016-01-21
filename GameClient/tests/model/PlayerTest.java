@@ -1,7 +1,7 @@
 package model;
 
 import static org.junit.Assert.*;
-import model.Player;
+import model.ClientPlayer;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class PlayerTest
 	@Test
 	public void initialization()
 	{
-		Player p = new Player(1);
+		ClientPlayer p = new ClientPlayer(1);
 		assertEquals(1, p.getID());
 	}
 
@@ -34,7 +34,7 @@ public class PlayerTest
 	@Test
 	public void testSettersGetters()
 	{
-		Player p = new Player(1);
+		ClientPlayer p = new ClientPlayer(1);
 		p.setName("name");
 		p.setAppearanceType("type");
 
@@ -48,7 +48,7 @@ public class PlayerTest
 	@Test
 	public void equalsContract()
 	{
-		EqualsVerifier.forClass(Player.class).verify();
+		EqualsVerifier.forClass(ClientPlayer.class).verify();
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class PlayerTest
 	@Test
 	public void testPlayerPosition() throws DatabaseException
 	{
-		Player p = new Player(1);
+		ClientPlayer p = new ClientPlayer(1);
 		Position pos = new Position(3, 3);
 		p.move(pos);
 		assertEquals(pos, p.getPosition());

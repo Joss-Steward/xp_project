@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import model.OptionsManager;
 import model.Player;
 import model.PlayerManager;
@@ -27,7 +27,7 @@ public class MovementMessageHandlerTest
 	public void reset()
 	{
 		PlayerManager.resetSingleton();
-		ModelFacade.resetSingleton();
+		ClientModelFacade.resetSingleton();
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton().setTestMode(true);
 	}
@@ -66,7 +66,7 @@ public class MovementMessageHandlerTest
 		MovementMessageHandler handler = new MovementMessageHandler();
 
 		handler.process(msg);
-		while (ModelFacade.getSingleton().hasCommandsPending())
+		while (ClientModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

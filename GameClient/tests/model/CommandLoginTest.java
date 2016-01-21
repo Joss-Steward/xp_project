@@ -2,7 +2,7 @@ package model;
 
 import static org.junit.Assert.*;
 import model.CommandLogin;
-import model.PlayerManager;
+import model.ClientPlayerManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class CommandLoginTest
 	@Before
 	public void setup()
 	{
-		PlayerManager.resetSingleton();
+		ClientPlayerManager.resetSingleton();
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class CommandLoginTest
 	{
 		CommandLogin cmd = new CommandLogin("Fred", "pw");
 		cmd.execute();
-		PlayerManager p = PlayerManager.getSingleton();
+		ClientPlayerManager p = ClientPlayerManager.getSingleton();
 		assertTrue(p.isLoginInProgress());
 
 	}

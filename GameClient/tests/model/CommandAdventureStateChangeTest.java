@@ -8,7 +8,7 @@ import java.rmi.NotBoundException;
 import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
 import model.CommandAdventureStateChange;
-import model.PlayerManager;
+import model.ClientPlayerManager;
 
 import org.junit.Test;
 
@@ -57,19 +57,19 @@ public class CommandAdventureStateChangeTest
 		q.getAdventureList().add(a1);
 		
 		Position pos = new Position(1, 2);
-		PlayerManager pm = PlayerManager.getSingleton();
+		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
 		pm.initializePlayer(playerID, "Player 1", "Player 1 Type", pos);
 
 		pm.initiateLogin("john", "pw");
 		pm.finishLogin(playerID);
 
-		PlayerManager.getSingleton().getThisClientsPlayer().addQuest(q);
+		ClientPlayerManager.getSingleton().getThisClientsPlayer().addQuest(q);
 		
 		CommandAdventureStateChange x = new CommandAdventureStateChange
 				(new AdventureStateChangeMessage(playerID, questID,adventureID, "adventure 1", AdventureStateEnum.COMPLETED));
 		x.execute();
 		
-		for(ClientPlayerQuest quest : PlayerManager.getSingleton().getThisClientsPlayer().getQuests())
+		for(ClientPlayerQuest quest : ClientPlayerManager.getSingleton().getThisClientsPlayer().getQuests())
 		{
 			if(quest.getQuestID() == questID)
 			{

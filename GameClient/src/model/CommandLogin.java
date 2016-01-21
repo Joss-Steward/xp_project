@@ -29,7 +29,7 @@ public class CommandLogin extends Command
 	@Override
 	protected boolean execute()
 	{
-		PlayerManager p = PlayerManager.getSingleton();
+		ClientPlayerManager p = ClientPlayerManager.getSingleton();
 		p.initiateLogin(name, password);
 		return true;
 	}

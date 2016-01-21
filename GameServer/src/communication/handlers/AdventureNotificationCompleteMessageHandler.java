@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import model.CommandAdventureNotificationComplete;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import communication.messages.AdventureNotificationCompleteMessage;
 import communication.messages.Message;
 
@@ -22,7 +22,7 @@ public class AdventureNotificationCompleteMessageHandler extends MessageHandler
 		{
 			AdventureNotificationCompleteMessage aMsg = (AdventureNotificationCompleteMessage) msg;
 			CommandAdventureNotificationComplete cmd = new CommandAdventureNotificationComplete(aMsg.getPlayerID(), aMsg.getQuestID(), aMsg.getAdventureID());
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

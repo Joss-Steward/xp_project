@@ -3,6 +3,7 @@ package communication;
 import java.io.IOException;
 import java.net.Socket;
 
+import model.OptionsManager;
 import communication.handlers.MessageHandlerSet;
 import communication.messages.ConnectMessage;
 import communication.packers.MessagePackerSet;
@@ -88,32 +89,30 @@ public class ConnectionManager
 	 * 
 	 * @param sock
 	 *            the new socket
-	 * @param playerID
-	 *            the playerID we were given to connect
-	 * @param pin
-	 *            the pin we were given to connect
 	 * @throws IOException
 	 *             shouldn't
 	 */
-	public void moveToNewSocket(Socket sock, int playerID, double pin) throws IOException
+	public void moveToNewSocket(Socket sock) throws IOException
 	{
+		if (!OptionsManager.getSingleton().isTestMode())
+		{
+			disconnect();
+			this.socket = sock;
 
-		disconnect();
-		this.socket = sock;
+			outgoing = new ConnectionOutgoing(sock, this.stateAccumulator,
+					messagePackerSet);
+			outgoingThread = new Thread(outgoing);
+			// for simplictly
+			// T.setDaemon(true);
+			outgoingThread.start();
 
-		outgoing = new ConnectionOutgoing(sock, this.stateAccumulator, messagePackerSet);
-		outgoingThread = new Thread(outgoing);
-		// for simplictly
-		// T.setDaemon(true);
-		outgoingThread.start();
-		stateAccumulator.queueMessage(new ConnectMessage(playerID, pin));
-
-		incoming = new ConnectionIncoming(sock, handlerSet);
-		incomingThread = new Thread(incoming);
-		// for simplictly
-		// T.setDaemon(true);
-		incomingThread.start();
-
+			incoming = new ConnectionIncoming(sock, handlerSet);
+			incomingThread = new Thread(incoming);
+			// for simplictly
+			// T.setDaemon(true);
+			incomingThread.start();
+		}
+		
 	}
 
 	/**

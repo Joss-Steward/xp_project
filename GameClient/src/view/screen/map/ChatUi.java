@@ -1,7 +1,7 @@
 package view.screen.map;
 
 import model.CommandChatMessageSent;
-import model.ModelFacade;
+import model.ClientModelFacade;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -226,7 +226,7 @@ public class ChatUi extends Group
 			}
 		}
 		CommandChatMessageSent cmd = new CommandChatMessageSent(message);
-		ModelFacade.getSingleton().queueCommand(cmd);
+		ClientModelFacade.getSingleton().queueCommand(cmd);
 		
 		messageBox.setText("");
 	}

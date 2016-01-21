@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import model.CommandInitializePlayer;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.PlayerJoinedMessage;
@@ -31,7 +31,7 @@ public class PlayerJoinedMessageHandler extends MessageHandler
 				playerJoinedMessage.getPlayerID(), playerJoinedMessage.getPlayerName(),
 				playerJoinedMessage.getAppearanceType(),
 				playerJoinedMessage.getPosition());
-		ModelFacade.getSingleton().queueCommand(cmd);
+		ClientModelFacade.getSingleton().queueCommand(cmd);
 	}
 
 	/**

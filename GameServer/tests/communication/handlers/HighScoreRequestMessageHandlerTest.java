@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import model.ModelFacade;
+import model.ClientModelFacade;
 import model.OptionsManager;
 import model.PlayerManager;
 
@@ -34,7 +34,7 @@ public class HighScoreRequestMessageHandlerTest
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton().setTestMode(true);
 		PlayerManager.resetSingleton();
-		ModelFacade.resetSingleton();
+		ClientModelFacade.resetSingleton();
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class HighScoreRequestMessageHandlerTest
 		handler.process(msg);
 
 		// nothing should be queued to the model
-		assertEquals(0, ModelFacade.getSingleton().queueSize());
+		assertEquals(0, ClientModelFacade.getSingleton().queueSize());
 
 		// make sure we queued the appropriate response
 		ArrayList<Message> queue = accum.getPendingMsgs();

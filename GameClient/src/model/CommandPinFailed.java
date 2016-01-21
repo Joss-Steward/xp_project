@@ -25,7 +25,7 @@ public class CommandPinFailed extends Command
 	@Override
 	protected boolean execute()
 	{
-		PlayerManager.getSingleton().pinFailed(err);
+		ClientPlayerManager.getSingleton().pinFailed(err);
 
 		return true;
 	}

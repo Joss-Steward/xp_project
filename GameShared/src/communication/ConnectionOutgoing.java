@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 
+import model.OptionsManager;
 import communication.messages.Message;
 import communication.packers.MessagePackerSet;
 
@@ -64,24 +65,26 @@ public class ConnectionOutgoing implements Runnable
 					Thread.sleep(100);
 					continue;
 				}
-				System.out.println("starting to write");
-				if (ostream != null)
+				if (!OptionsManager.getSingleton().isTestMode())
 				{
-					for (Message msg : msgs)
+					System.out.println("starting to write");
+					if (ostream != null)
 					{
-						System.out.println(this + " Writing " + msg);
-						try
+						for (Message msg : msgs)
 						{
-							this.ostream.writeObject(msg);
-						} catch (SocketException e)
-						{
-							System.out.println("Write failed");
-							cleanUpAndExit();
-							done = true;
+							System.out.println(this + " Writing " + msg);
+							try
+							{
+								this.ostream.writeObject(msg);
+							} catch (SocketException e)
+							{
+								System.out.println("Write failed");
+								cleanUpAndExit();
+								done = true;
+							}
 						}
 					}
 				}
-
 			}
 		} catch (InterruptedException E)
 		{

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Timer;
+
 import model.InformationQueue;
 
 /**
@@ -9,19 +11,19 @@ import model.InformationQueue;
  * @author Merlin
  * 
  */
-public class ModelFacade
+public class ClientModelFacade
 {
 
-	private static ModelFacade singleton;
+	private static ClientModelFacade singleton;
 
 	/**
 	 * @return the only one of these there is
 	 */
-	public synchronized static ModelFacade getSingleton()
+	public synchronized static ClientModelFacade getSingleton()
 	{
 		if (singleton == null)
 		{
-			singleton = new ModelFacade();
+			singleton = new ClientModelFacade();
 		}
 		return singleton;
 	}
@@ -45,12 +47,20 @@ public class ModelFacade
 				}
 			}
 		}
-		singleton = new ModelFacade();
+		singleton = new ClientModelFacade();
 	}
 
 	private InformationQueue commandQueue;
 	private boolean commandsPending;
+	private Timer timer;
 
+	public static void killThreads()
+	{
+		if (singleton!=null)
+		{
+			singleton.timer.cancel();
+		}
+	}
 	/**
 	 * Checks if commands are pending
 	 * @return if commands are pending
@@ -62,11 +72,11 @@ public class ModelFacade
 	/**
 	 * Make the default constructor private
 	 */
-	private ModelFacade()
+	private ClientModelFacade()
 	{
 		commandQueue = new InformationQueue();
 
-		java.util.Timer timer = new java.util.Timer();
+		timer = new java.util.Timer();
 		timer.schedule(new ProcessCommandQueueTask(), 0, 250);
 	}
 

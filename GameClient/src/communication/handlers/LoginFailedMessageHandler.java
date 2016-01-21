@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import model.CommandLoginFailed;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.LoginFailedMessage;
 import communication.messages.Message;
@@ -28,7 +28,7 @@ public class LoginFailedMessageHandler extends MessageHandler
 		if (msg.getClass().equals(LoginFailedMessage.class))
 		{
 			CommandLoginFailed cmd = new CommandLoginFailed();
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

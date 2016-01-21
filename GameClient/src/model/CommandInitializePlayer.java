@@ -44,7 +44,7 @@ public class CommandInitializePlayer extends Command
 	@Override
 	protected boolean execute()
 	{
-		PlayerManager.getSingleton().initializePlayer(playerID, playerName,
+		ClientPlayerManager.getSingleton().initializePlayer(playerID, playerName,
 				appearanceType, position);
 		return true;
 	}

@@ -27,7 +27,7 @@ public class CommandQuestStateChange extends Command
 	@Override
 	protected boolean execute() 
 	{
-		PlayerManager.getSingleton().getThisClientsPlayer().sendQuestStateChangeReport(questID, questDescription, questState);
+		ClientPlayerManager.getSingleton().getThisClientsPlayer().sendQuestStateChangeReport(questID, questDescription, questState);
 		return true;
 	}
 

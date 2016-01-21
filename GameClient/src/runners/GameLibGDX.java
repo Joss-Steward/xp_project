@@ -3,7 +3,7 @@ package runners;
 import java.io.IOException;
 import java.net.Socket;
 
-import model.ModelFacade;
+import model.ClientModelFacade;
 import model.OptionsManager;
 import view.screen.ScreenBasic;
 import view.screen.Screens;
@@ -52,7 +52,7 @@ public class GameLibGDX extends Game
 		}
 
 		// tell the model to initialize itself
-		ModelFacade.getSingleton();
+		ClientModelFacade.getSingleton();
 		Screens.LOGIN_SCREEN.setGame(this);
 
 		// start at the login screen

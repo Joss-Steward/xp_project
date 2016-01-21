@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
 import model.ClientPlayerQuestTest;
-import model.PlayerManager;
+import model.ClientPlayerManager;
 import model.QualifiedObservableConnector;
 import model.QualifiedObserver;
 import model.ThisClientsPlayer;
@@ -43,7 +43,7 @@ public class ThisClientsPlayerTest
 	@Before
 	public void setup()
 	{
-		PlayerManager.resetSingleton();
+		ClientPlayerManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 	}
 
@@ -107,7 +107,7 @@ public class ThisClientsPlayerTest
 
 	static ThisClientsPlayer setUpThisClientsPlayerAsNumberOne()
 	{
-		PlayerManager pm = PlayerManager.getSingleton();
+		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
 		PlayersForTest john = PlayersForTest.JOHN;
 		pm.initiateLogin(john.getPlayerName(), john.getPlayerPassword());
 		ThisClientsPlayer cp = null;

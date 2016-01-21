@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
-import model.ModelFacade;
+import model.ClientModelFacade;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,8 +23,8 @@ public class ChatMessageHandlerTest
 	@Before
 	public void setUp()
 	{
-		ModelFacade.resetSingleton();
-		ModelFacade.getSingleton(true, false);
+		ClientModelFacade.resetSingleton();
+		ClientModelFacade.getSingleton(true, false);
 	}
 	
 	/**
@@ -49,7 +49,7 @@ public class ChatMessageHandlerTest
 		ChatMessageHandler handler = new ChatMessageHandler();
 		ChatMessage chat = new ChatMessage("name", "message", new Position(1, 1), ChatType.World);
 		handler.process(chat);
-		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());while(ModelFacade.getSingleton().hasCommandsPending())
+		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());while(ClientModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

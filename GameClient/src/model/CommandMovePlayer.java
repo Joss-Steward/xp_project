@@ -37,7 +37,7 @@ public class CommandMovePlayer extends Command
 	{
 		boolean moved = false;
 
-		ThisClientsPlayer thisClientsPlayer = PlayerManager.getSingleton()
+		ThisClientsPlayer thisClientsPlayer = ClientPlayerManager.getSingleton()
 				.getThisClientsPlayer();
 		if (thisClientsPlayer.getID() == thePlayerID)
 		{
@@ -54,7 +54,7 @@ public class CommandMovePlayer extends Command
 			}
 		} else
 		{
-			PlayerManager.getSingleton().getPlayerFromID(thePlayerID)
+			ClientPlayerManager.getSingleton().getPlayerFromID(thePlayerID)
 					.move(thePosition);
 			moved = true;
 		}

@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import model.CommandQuestStateChange;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import communication.messages.Message;
 import communication.messages.QuestStateChangeMessage;
 
@@ -22,7 +22,7 @@ public class QuestStateChangeMessageHandler extends MessageHandler
 	{
 		QuestStateChangeMessage ourMsg = (QuestStateChangeMessage)msg;
 		CommandQuestStateChange cmd = new CommandQuestStateChange(ourMsg);
-		ModelFacade.getSingleton().queueCommand(cmd);
+		ClientModelFacade.getSingleton().queueCommand(cmd);
 	}
 
 	/**

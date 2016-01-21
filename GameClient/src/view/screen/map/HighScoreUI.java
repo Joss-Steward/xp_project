@@ -5,7 +5,7 @@ package view.screen.map;
 import java.util.ArrayList;
 
 import model.CommandHighScoreRequest;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
@@ -91,7 +91,7 @@ public class HighScoreUI extends Group implements QualifiedObserver
 			this.addAction(Actions.moveTo(0, 0, .3f));
 			
 			CommandHighScoreRequest cmd = new CommandHighScoreRequest();
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

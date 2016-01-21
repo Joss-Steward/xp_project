@@ -2,7 +2,7 @@ package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import model.OptionsManager;
 import model.PlayerManager;
 
@@ -29,7 +29,7 @@ public class AdventureNotificationCompleteMessageHandlerTest
 	public void reset()
 	{
 		PlayerManager.resetSingleton();
-		ModelFacade.resetSingleton();
+		ClientModelFacade.resetSingleton();
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton().setTestMode(true);
 	}
@@ -56,8 +56,8 @@ public class AdventureNotificationCompleteMessageHandlerTest
 		AdventureNotificationCompleteMessageHandler handler = new AdventureNotificationCompleteMessageHandler();
 		handler.process(msg);
 		
-		assertTrue(ModelFacade.getSingleton().hasCommandsPending());
-		while (ModelFacade.getSingleton().hasCommandsPending())
+		assertTrue(ClientModelFacade.getSingleton().hasCommandsPending());
+		while (ClientModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

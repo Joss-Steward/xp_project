@@ -2,7 +2,7 @@ package model;
 
 import static org.junit.Assert.*;
 import model.MapManager;
-import model.ModelFacade;
+import model.ClientModelFacade;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class ModelFacadeTest
 	@Before
 	public void setup()
 	{
-		ModelFacade.resetSingleton();
+		ClientModelFacade.resetSingleton();
 		MapManager.resetSingleton();
 	}
 
@@ -30,11 +30,11 @@ public class ModelFacadeTest
 	@Test
 	public void isResetableSingleton()
 	{
-		ModelFacade facade1 = ModelFacade.getSingleton(true, true);
-		ModelFacade facade2 = ModelFacade.getSingleton(true, true);
+		ClientModelFacade facade1 = ClientModelFacade.getSingleton(true, true);
+		ClientModelFacade facade2 = ClientModelFacade.getSingleton(true, true);
 		assertSame(facade1, facade2);
-		ModelFacade.resetSingleton();
-		assertNotSame(facade1, ModelFacade.getSingleton(true, true));
+		ClientModelFacade.resetSingleton();
+		assertNotSame(facade1, ClientModelFacade.getSingleton(true, true));
 	}
 
 	/**
@@ -45,22 +45,22 @@ public class ModelFacadeTest
 	public void cantChangeModes()
 	{
 		boolean sawException = false;
-		ModelFacade.getSingleton(true, true);
+		ClientModelFacade.getSingleton(true, true);
 		try
 		{
-			ModelFacade.getSingleton(true, false);
+			ClientModelFacade.getSingleton(true, false);
 		} catch (IllegalArgumentException e)
 		{
 			sawException = true;
 		}
 		assertTrue(sawException);
 
-		ModelFacade.resetSingleton();
-		ModelFacade.getSingleton(true, true);
+		ClientModelFacade.resetSingleton();
+		ClientModelFacade.getSingleton(true, true);
 
 		try
 		{
-			ModelFacade.getSingleton(false, true);
+			ClientModelFacade.getSingleton(false, true);
 		} catch (IllegalArgumentException e)
 		{
 			sawException = true;

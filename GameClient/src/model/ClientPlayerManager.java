@@ -21,18 +21,18 @@ import model.reports.PlayerDisconnectedFromAreaServerReport;
  * @author merlin
  * 
  */
-public class PlayerManager extends Observable
+public class ClientPlayerManager extends Observable
 {
 
-	private static PlayerManager singleton;
-	private IntMap<Player> playerList;
+	private static ClientPlayerManager singleton;
+	private IntMap<ClientPlayer> playerList;
 
 	private boolean loginInProgress;
 
-	private PlayerManager()
+	private ClientPlayerManager()
 	{
 		thisClientsPlayer = null;
-		playerList = new IntMap<Player>();
+		playerList = new IntMap<ClientPlayer>();
 		
 	}
 
@@ -41,11 +41,11 @@ public class PlayerManager extends Observable
 	 * 
 	 * @return the only player
 	 */
-	public static synchronized PlayerManager getSingleton()
+	public static synchronized ClientPlayerManager getSingleton()
 	{
 		if (singleton == null)
 		{
-			singleton = new PlayerManager();
+			singleton = new ClientPlayerManager();
 		}
 		return singleton;
 	}
@@ -77,7 +77,7 @@ public class PlayerManager extends Observable
 	 *            the unique player id of the player in which we are interested
 	 * @return the appropriate Player object or null if no such player exists
 	 */
-	public Player getPlayerFromID(int playerID)
+	public ClientPlayer getPlayerFromID(int playerID)
 	{
 		return playerList.get(playerID);
 	}
@@ -157,13 +157,13 @@ public class PlayerManager extends Observable
 	 *            The position of this player
 	 * @return Player The player updated
 	 */
-	public Player initializePlayer(int playerID, String playerName,
+	public ClientPlayer initializePlayer(int playerID, String playerName,
 			String appearanceType, Position position)
 	{
-		Player player = this.getPlayerFromID(playerID);
+		ClientPlayer player = this.getPlayerFromID(playerID);
 		if (player == null)
 		{
-			player = new Player(playerID);
+			player = new ClientPlayer(playerID);
 			playerList.put(playerID, player);
 		}
 		boolean isThisClientsPlayer = false;
@@ -189,7 +189,7 @@ public class PlayerManager extends Observable
 	 */
 	public void removePlayer(int playerID)
 	{
-		Player player = this.playerList.remove(playerID);
+		ClientPlayer player = this.playerList.remove(playerID);
 		if (player != null)
 		{	
 			PlayerDisconnectedFromAreaServerReport report = new PlayerDisconnectedFromAreaServerReport(playerID);

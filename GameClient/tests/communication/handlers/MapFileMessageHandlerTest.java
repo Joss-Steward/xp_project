@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
-import model.ModelFacade;
+import model.ClientModelFacade;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,8 +24,8 @@ public class MapFileMessageHandlerTest
 	@Before
 	public void setUp()
 	{
-		ModelFacade.resetSingleton();
-		ModelFacade.getSingleton(true, false);
+		ClientModelFacade.resetSingleton();
+		ClientModelFacade.getSingleton(true, false);
 	}
 	
 	/**
@@ -53,8 +53,8 @@ public class MapFileMessageHandlerTest
 		MapFileMessage msg = new MapFileMessage("testMaps/simple.tmx");
 		MapFileMessageHandler handler = new MapFileMessageHandler();
 		handler.process(msg);
-		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
-		while(ModelFacade.getSingleton().hasCommandsPending())
+		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
+		while(ClientModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

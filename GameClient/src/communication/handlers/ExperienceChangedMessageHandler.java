@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import model.CommandOverwriteExperience;
-import model.ModelFacade;
+import model.ClientModelFacade;
 import communication.messages.ExperienceChangedMessage;
 import communication.messages.Message;
 
@@ -23,7 +23,7 @@ public class ExperienceChangedMessageHandler extends MessageHandler
 			ExperienceChangedMessage experienceChangedMessage = (ExperienceChangedMessage) msg;
 			CommandOverwriteExperience cmd = new CommandOverwriteExperience(experienceChangedMessage.getPlayerID(),experienceChangedMessage.getExperiencePoints(),
 					experienceChangedMessage.getLevel());
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 		
 	}

@@ -18,7 +18,7 @@ public class CommandLoginFailed extends Command
 	protected boolean execute() 
 	{
 
-		PlayerManager.getSingleton().loginFailed();
+		ClientPlayerManager.getSingleton().loginFailed();
 		
 		return true;
 	}

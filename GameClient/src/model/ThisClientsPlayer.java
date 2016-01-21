@@ -23,7 +23,7 @@ import datasource.QuestStateEnum;
  * @author merlin
  * 
  */
-public class ThisClientsPlayer extends Player
+public class ThisClientsPlayer extends ClientPlayer
 {
 	ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
 	
@@ -87,7 +87,7 @@ public class ThisClientsPlayer extends Player
 			{
 				if(a.isNeedingNotification())
 				{
-					AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(PlayerManager.getSingleton().getThisClientsPlayer().getID(), q.getQuestID(), a.getAdventureID(), a.getAdventureDescription());
+					AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(ClientPlayerManager.getSingleton().getThisClientsPlayer().getID(), q.getQuestID(), a.getAdventureID(), a.getAdventureDescription());
 					QualifiedObservableConnector.getSingleton().sendReport(report);
 				}
 			}

@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
-import model.ModelFacade;
+import model.ClientModelFacade;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +21,8 @@ public class QuestStateChangeMessageHandlerTest
 	@Before
 	public void setUp()
 	{
-		ModelFacade.resetSingleton();
-		ModelFacade.getSingleton(true, false);
+		ClientModelFacade.resetSingleton();
+		ClientModelFacade.getSingleton(true, false);
 	}
 	
 	/**
@@ -46,8 +46,8 @@ public class QuestStateChangeMessageHandlerTest
 		QuestStateChangeMessageHandler h = new QuestStateChangeMessageHandler();
 		QuestStateChangeMessage msg = new QuestStateChangeMessage(1, 2, "Quest 1", QuestStateEnum.AVAILABLE);
 		h.process(msg);
-		assertTrue(ModelFacade.getSingleton().hasCommandsPending());
-		while(ModelFacade.getSingleton().hasCommandsPending())
+		assertTrue(ClientModelFacade.getSingleton().hasCommandsPending());
+		while(ClientModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

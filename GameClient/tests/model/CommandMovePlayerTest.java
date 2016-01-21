@@ -7,8 +7,8 @@ import java.rmi.NotBoundException;
 
 import model.CommandMovePlayer;
 import model.MapManager;
-import model.Player;
-import model.PlayerManager;
+import model.ClientPlayer;
+import model.ClientPlayerManager;
 
 import org.junit.After;
 import org.junit.Before;
@@ -44,7 +44,7 @@ public class CommandMovePlayerTest
 	public void cleanup()
 	{
 		MapManager.resetSingleton();
-		PlayerManager.resetSingleton();
+		ClientPlayerManager.resetSingleton();
 	}
 
 	/**
@@ -58,14 +58,14 @@ public class CommandMovePlayerTest
 			NotBoundException
 	{
 		Position pos = new Position(1, 2);
-		PlayerManager.getSingleton().initiateLogin("1", "1");
-		PlayerManager.getSingleton().finishLogin(1);
-		PlayerManager.getSingleton().getThisClientsPlayer().setPosition(pos);
-		assertEquals(new Position(1, 2), PlayerManager.getSingleton().getThisClientsPlayer().getPosition());
+		ClientPlayerManager.getSingleton().initiateLogin("1", "1");
+		ClientPlayerManager.getSingleton().finishLogin(1);
+		ClientPlayerManager.getSingleton().getThisClientsPlayer().setPosition(pos);
+		assertEquals(new Position(1, 2), ClientPlayerManager.getSingleton().getThisClientsPlayer().getPosition());
 
 		CommandMovePlayer cm = new CommandMovePlayer(1, new Position(1, 0));
 		assertTrue(cm.execute());
-		assertEquals(new Position(1, 0), PlayerManager.getSingleton().getThisClientsPlayer().getPosition());
+		assertEquals(new Position(1, 0), ClientPlayerManager.getSingleton().getThisClientsPlayer().getPosition());
 	}
 
 	/**
@@ -78,10 +78,10 @@ public class CommandMovePlayerTest
 			NotBoundException
 	{
 		Position pos = new Position(1, 2);
-		Player someGuy = PlayerManager.getSingleton().initializePlayer(2, "1",
+		ClientPlayer someGuy = ClientPlayerManager.getSingleton().initializePlayer(2, "1",
 				"1", pos);
-		PlayerManager.getSingleton().initiateLogin("1", "1");
-		PlayerManager.getSingleton().finishLogin(1);
+		ClientPlayerManager.getSingleton().initiateLogin("1", "1");
+		ClientPlayerManager.getSingleton().finishLogin(1);
 		assertEquals(new Position(1, 2), someGuy.getPosition());
 
 		CommandMovePlayer cm = new CommandMovePlayer(someGuy.getID(),
@@ -101,10 +101,10 @@ public class CommandMovePlayerTest
 			NotBoundException
 	{
 		Position pos = new Position(1, 2);
-		Player me = PlayerManager.getSingleton().initializePlayer(1, "1", "1",
+		ClientPlayer me = ClientPlayerManager.getSingleton().initializePlayer(1, "1", "1",
 				pos);
-		PlayerManager.getSingleton().initiateLogin("1", "1");
-		PlayerManager.getSingleton().finishLogin(1);
+		ClientPlayerManager.getSingleton().initiateLogin("1", "1");
+		ClientPlayerManager.getSingleton().finishLogin(1);
 		assertEquals(new Position(1, 2), me.getPosition());
 
 		CommandMovePlayer cm = new CommandMovePlayer(me.getID(), new Position(

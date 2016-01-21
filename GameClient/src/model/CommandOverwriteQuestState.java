@@ -34,8 +34,8 @@ public class CommandOverwriteQuestState extends Command
 	@Override
 	protected boolean execute()
 	{
-		PlayerManager.getSingleton().getThisClientsPlayer().overwriteQuestList(clientPlayerQuestList);
-		PlayerManager.getSingleton().getThisClientsPlayer().setLevelInfo(record, expPoints);
+		ClientPlayerManager.getSingleton().getThisClientsPlayer().overwriteQuestList(clientPlayerQuestList);
+		ClientPlayerManager.getSingleton().getThisClientsPlayer().setLevelInfo(record, expPoints);
 		return true;
 	}
 

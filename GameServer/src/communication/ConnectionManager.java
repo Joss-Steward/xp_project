@@ -3,6 +3,7 @@ package communication;
 import java.io.IOException;
 import java.net.Socket;
 
+import model.OptionsManager;
 import communication.handlers.MessageHandlerSet;
 import communication.messages.ConnectMessage;
 import communication.messages.DisconnectMessage;
@@ -144,8 +145,11 @@ public class ConnectionManager
 	{
 		try
 		{
-			System.out.println("Trying to disconnect from our current socket");
-			socket.close();
+			if (!OptionsManager.getSingleton().isTestMode())
+			{
+				System.out.println("Trying to disconnect from our current socket");
+				socket.close();
+			}
 			handlerSet.process(new DisconnectMessage(playerID));
 		} catch (IOException | CommunicationException e)
 		{
@@ -179,5 +183,10 @@ public class ConnectionManager
 		{
 			stateAccumulator.setPlayerId(playerID);
 		}
+	}
+
+	public MessageHandlerSet getMessageHandlerSet()
+	{
+		return this.handlerSet;
 	}
 }

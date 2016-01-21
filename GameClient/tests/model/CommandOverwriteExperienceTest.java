@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import model.ClientPlayerQuest;
 import model.CommandOverwriteExperience;
-import model.PlayerManager;
+import model.ClientPlayerManager;
 import model.ThisClientsPlayer;
 
 import org.junit.Test;
@@ -50,7 +50,7 @@ public class CommandOverwriteExperienceTest
 	@Test
 	public void testExecutes()
 	{
-		PlayerManager pm = PlayerManager.getSingleton();
+		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
 		PlayersForTest john = PlayersForTest.JOHN;
 		pm.initiateLogin(john.getPlayerName(), john.getPlayerPassword());
 
@@ -74,7 +74,7 @@ public class CommandOverwriteExperienceTest
 				new InitializeThisClientsPlayerMessage(quests, expectedExperience, level));
 		x.execute();
 
-		ThisClientsPlayer player = PlayerManager.getSingleton().getThisClientsPlayer();
+		ThisClientsPlayer player = ClientPlayerManager.getSingleton().getThisClientsPlayer();
 		assertEquals(expectedExperience, player.getExperiencePoints());
 		assertEquals(level, player.getLevelRecord());
 	}

@@ -6,8 +6,8 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
 import model.ChatManager;
-import model.Player;
-import model.PlayerManager;
+import model.ClientPlayer;
+import model.ClientPlayerManager;
 import model.QualifiedObservableConnector;
 import model.QualifiedObserver;
 import model.reports.ChatReceivedReport;
@@ -34,7 +34,7 @@ public class ChatManagerTest
 	@Before
 	public void reset()
 	{
-		PlayerManager.resetSingleton();
+		ClientPlayerManager.resetSingleton();
 		ChatManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 	}
@@ -78,8 +78,8 @@ public class ChatManagerTest
 	@Test
 	public void notifiesOnLocalChatReceived() throws AlreadyBoundException, NotBoundException
 	{
-		PlayerManager.getSingleton().initiateLogin("X", "X");
-		Player p = PlayerManager.getSingleton().finishLogin(1);
+		ClientPlayerManager.getSingleton().initiateLogin("X", "X");
+		ClientPlayer p = ClientPlayerManager.getSingleton().finishLogin(1);
 		p.setPosition(new Position(5,5));
 		
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
@@ -102,8 +102,8 @@ public class ChatManagerTest
 	@Test
 	public void canReceiveLocalMessageValid() throws AlreadyBoundException, NotBoundException
 	{
-		PlayerManager.getSingleton().initiateLogin("X", "X");
-		Player p = PlayerManager.getSingleton().finishLogin(1);
+		ClientPlayerManager.getSingleton().initiateLogin("X", "X");
+		ClientPlayer p = ClientPlayerManager.getSingleton().finishLogin(1);
 		p.setPosition(new Position(5,5));
 		
 		assertTrue(ChatManager.getSingleton().canReceiveLocalMessage(new Position(5,5)));
@@ -124,8 +124,8 @@ public class ChatManagerTest
 	@Test
 	public void canReceiveLocalMessageInvalid() throws AlreadyBoundException, NotBoundException
 	{
-		PlayerManager.getSingleton().initiateLogin("X", "X");
-		Player p = PlayerManager.getSingleton().finishLogin(1);
+		ClientPlayerManager.getSingleton().initiateLogin("X", "X");
+		ClientPlayer p = ClientPlayerManager.getSingleton().finishLogin(1);
 		p.setPosition(new Position(5,5));
 		
 		assertFalse(ChatManager.getSingleton().canReceiveLocalMessage(new Position(0,-1)));
@@ -144,8 +144,8 @@ public class ChatManagerTest
 	@Test
 	public void notifiesOnSendChatToServer() throws AlreadyBoundException, NotBoundException
 	{
-		PlayerManager.getSingleton().initiateLogin("X", "X");
-		Player p = PlayerManager.getSingleton().finishLogin(1);
+		ClientPlayerManager.getSingleton().initiateLogin("X", "X");
+		ClientPlayer p = ClientPlayerManager.getSingleton().finishLogin(1);
 		p.setPosition(new Position(5,5));
 		p.setName("my name");
 		

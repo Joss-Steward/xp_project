@@ -16,7 +16,7 @@ public class CommandSendQuestState extends Command
 	@Override
 	protected boolean execute()
 	{
-		PlayerManager.getSingleton().getThisClientsPlayer().sendCurrentQuestStateReport();
+		ClientPlayerManager.getSingleton().getThisClientsPlayer().sendCurrentQuestStateReport();
 		
 		System.out.println("Cmd execute");
 		
