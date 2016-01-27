@@ -9,23 +9,23 @@ import datasource.DatabaseException;
  * @author Merlin
  * 
  */
-public class PlayerManager extends Observable
+public class LoginPlayerManager extends Observable
 {
 	/**
 	 * 
 	 */
 	final String DEFAULT_MAP = "current.tmx";
 
-	private static PlayerManager singleton;
+	private static LoginPlayerManager singleton;
 
 	/**
 	 * @return the only PlayerManger in the system
 	 */
-	public synchronized static PlayerManager getSingleton()
+	public synchronized static LoginPlayerManager getSingleton()
 	{
 		if (singleton == null)
 		{
-			singleton = new PlayerManager();
+			singleton = new LoginPlayerManager();
 		}
 		return singleton;
 	}
@@ -40,7 +40,7 @@ public class PlayerManager extends Observable
 
 	private int numberOfPlayers;
 
-	private PlayerManager()
+	private LoginPlayerManager()
 	{
 
 	}

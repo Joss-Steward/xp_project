@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import model.OptionsManager;
-import model.PlayerManager;
+import model.LoginPlayerManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +32,7 @@ public class LoginMessageHandlerTest
 	{
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton().setTestMode(true);
-		PlayerManager.resetSingleton();
+		LoginPlayerManager.resetSingleton();
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class LoginMessageHandlerTest
 		handler.setAccumulator(accum);
 		handler.process(new LoginMessage(PlayersForTest.MERLIN.getPlayerName(),
 				PlayersForTest.MERLIN.getPlayerPassword()));
-		assertEquals(1, PlayerManager.getSingleton().getNumberOfPlayers());
+		assertEquals(1, LoginPlayerManager.getSingleton().getNumberOfPlayers());
 	}
 	
 	/**

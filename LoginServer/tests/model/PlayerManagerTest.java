@@ -25,7 +25,7 @@ public class PlayerManagerTest
 	{
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton().setTestMode(true);
-		PlayerManager.resetSingleton();
+		LoginPlayerManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 	}
 
@@ -35,11 +35,11 @@ public class PlayerManagerTest
 	@Test
 	public void isSingleton()
 	{
-		PlayerManager pm1 = PlayerManager.getSingleton();
-		PlayerManager pm2 = PlayerManager.getSingleton();
+		LoginPlayerManager pm1 = LoginPlayerManager.getSingleton();
+		LoginPlayerManager pm2 = LoginPlayerManager.getSingleton();
 		assertSame(pm1, pm2);
-		PlayerManager.resetSingleton();
-		assertNotSame(pm1, PlayerManager.getSingleton());
+		LoginPlayerManager.resetSingleton();
+		assertNotSame(pm1, LoginPlayerManager.getSingleton());
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class PlayerManagerTest
 	@Test
 	public void respondsOnSuccessfulLogin() throws LoginFailedException
 	{
-		PlayerManager pm = PlayerManager.getSingleton();
+		LoginPlayerManager pm = LoginPlayerManager.getSingleton();
 		LoginSuccessfulReport expected = new LoginSuccessfulReport(PlayersForTest.MERLIN.getPlayerID(), "localhost", 1872,
 				0);
 		
@@ -66,7 +66,7 @@ public class PlayerManagerTest
 	@Test (expected = LoginFailedException.class)
 	public void notifiesOnFailedLogin() throws LoginFailedException
 	{
-		PlayerManager pm = PlayerManager.getSingleton();
+		LoginPlayerManager pm = LoginPlayerManager.getSingleton();
 		pm.login(PlayersForTest.MERLIN.getPlayerName(),
 				PlayersForTest.MERLIN.getPlayerPassword() + "Z");
 	}
