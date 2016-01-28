@@ -34,7 +34,7 @@ public class LoginSequenceTest extends SequenceTest
 							ServersForTest.CURRENT.getHostName(),
 							ServersForTest.CURRENT.getPortNumber(), 33)),
 			new MessageFlow(ServerType.THIS_PLAYER_CLIENT, ServerType.AREA_SERVER,
-					new ConnectMessage(PlayersForTest.MERLIN.getPlayerID(), 33)),
+					new ConnectMessage(PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.MERLIN.getPin())),
 			new MessageFlow(ServerType.AREA_SERVER, ServerType.THIS_PLAYER_CLIENT,
 					new PlayerJoinedMessage(PlayersForTest.MERLIN.getPlayerID(),
 							PlayersForTest.MERLIN.getPlayerName(),
@@ -90,5 +90,21 @@ public class LoginSequenceTest extends SequenceTest
 	public ServerType getInitiatingServerType()
 	{
 		return ServerType.THIS_PLAYER_CLIENT;
+	}
+
+	/**
+	 * @see model.SequenceTest#getInitiatingPlayerID()
+	 */
+	@Override
+	public int getInitiatingPlayerID()
+	{
+		return PlayersForTest.MERLIN.getPlayerID();
+	}
+
+	@Override
+	public void setUpServer()
+	{
+		OptionsManager.getSingleton().setHostName(PlayersForTest.MERLIN.getMapName());
+		
 	}
 }

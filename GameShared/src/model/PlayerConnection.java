@@ -134,7 +134,12 @@ public class PlayerConnection
 		GregorianCalendar expirationTime;
 		try
 		{
-			expirationTime = parseTimeString(gateway.getChangedOn());
+			String changedOn = gateway.getChangedOn();
+			if (changedOn==null)
+			{
+				return false;
+			}
+			expirationTime = parseTimeString(changedOn);
 		} catch (DatabaseException e)
 		{
 			return true;

@@ -13,6 +13,52 @@ import data.Position;
 public class PlayerJoinedMessage implements Message, Serializable
 {
 
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((appearanceType == null) ? 0 : appearanceType.hashCode());
+		result = prime * result + playerID;
+		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
+		result = prime * result + ((position == null) ? 0 : position.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PlayerJoinedMessage other = (PlayerJoinedMessage) obj;
+		if (appearanceType == null)
+		{
+			if (other.appearanceType != null)
+				return false;
+		} else if (!appearanceType.equals(other.appearanceType))
+			return false;
+		if (playerID != other.playerID)
+			return false;
+		if (playerName == null)
+		{
+			if (other.playerName != null)
+				return false;
+		} else if (!playerName.equals(other.playerName))
+			return false;
+		if (position == null)
+		{
+			if (other.position != null)
+				return false;
+		} else if (!position.equals(other.position))
+			return false;
+		return true;
+	}
+
 	/**
 	 * 
 	 */

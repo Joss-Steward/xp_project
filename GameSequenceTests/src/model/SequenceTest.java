@@ -23,4 +23,13 @@ public abstract class SequenceTest
 	 */
 	public abstract MessageFlow[] getMessageSequence();
 
+	/**
+	 * @return the player ID of the player that is initiating this sequence
+	 */
+	public abstract int getInitiatingPlayerID();
+	
+	/**
+	 * Set up anything in the singletons (like OptionsManager) that is required by this test
+	 */
+	public abstract void setUpServer();
 }

@@ -112,4 +112,9 @@ public class StateAccumulator implements QualifiedObserver
 		return playerID;
 	}
 
+	public Message getFirstMessage()
+	{
+		return pendingMsgs.remove(0);
+	}
+
 }
