@@ -38,8 +38,6 @@ public class ConnectMessage implements Message, Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		ConnectMessage other = (ConnectMessage) obj;
-		if (Double.doubleToLongBits(pin) != Double.doubleToLongBits(other.pin))
-			return false;
 		if (playerID != other.playerID)
 			return false;
 		return true;

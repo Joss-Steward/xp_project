@@ -17,11 +17,12 @@ public class ClientPlayerAdventure implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private int adventureID, adventureXP;
+
 	private String adventureDescription;
 	private AdventureStateEnum adventureState;
 	private boolean needingNotification;
-
 	/**
 	 * Basic constructor for ClientPlayerAdventure
 	 * 
@@ -47,15 +48,34 @@ public class ClientPlayerAdventure implements Serializable
 		this.adventureState = adventureState;
 		this.needingNotification = needingNotification;
 	}
-
 	/**
-	 * Retrieve the adventure's ID
-	 * 
-	 * @return adventureID ; the adventure's unique identifier
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public int getAdventureID()
+	@Override
+	public boolean equals(Object obj)
 	{
-		return adventureID;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ClientPlayerAdventure other = (ClientPlayerAdventure) obj;
+		if (adventureDescription == null)
+		{
+			if (other.adventureDescription != null)
+				return false;
+		} else if (!adventureDescription.equals(other.adventureDescription))
+			return false;
+		if (adventureID != other.adventureID)
+			return false;
+		if (adventureState != other.adventureState)
+			return false;
+		if (adventureXP != other.adventureXP)
+			return false;
+		if (needingNotification != other.needingNotification)
+			return false;
+		return true;
 	}
 
 	/**
@@ -66,6 +86,16 @@ public class ClientPlayerAdventure implements Serializable
 	public String getAdventureDescription()
 	{
 		return adventureDescription;
+	}
+
+	/**
+	 * Retrieve the adventure's ID
+	 * 
+	 * @return adventureID ; the adventure's unique identifier
+	 */
+	public int getAdventureID()
+	{
+		return adventureID;
 	}
 
 	/**
@@ -80,21 +110,37 @@ public class ClientPlayerAdventure implements Serializable
 	}
 
 	/**
-	 * @param adventureState
-	 *            the adventureState to set
+	 * @return the adventureXP
 	 */
-	public void setAdventureState(AdventureStateEnum adventureState)
+	public int getAdventureXP()
 	{
-		this.adventureState = adventureState;
+		return adventureXP;
 	}
 
 	/**
-	 * @param adventureID
-	 *            the adventureID to set
+	 * @see java.lang.Object#hashCode()
 	 */
-	public void setAdventureID(int adventureID)
+	@Override
+	public int hashCode()
 	{
-		this.adventureID = adventureID;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((adventureDescription == null) ? 0 : adventureDescription.hashCode());
+		result = prime * result + adventureID;
+		result = prime * result
+				+ ((adventureState == null) ? 0 : adventureState.hashCode());
+		result = prime * result + adventureXP;
+		result = prime * result + (needingNotification ? 1231 : 1237);
+		return result;
+	}
+
+	/**
+	 * @return true if we should notify the player about this adventure's state
+	 */
+	public boolean isNeedingNotification()
+	{
+		return needingNotification;
 	}
 
 	/**
@@ -107,19 +153,21 @@ public class ClientPlayerAdventure implements Serializable
 	}
 
 	/**
-	 * @return true if we should notify the player about this adventure's state
+	 * @param adventureID
+	 *            the adventureID to set
 	 */
-	public boolean isNeedingNotification()
+	public void setAdventureID(int adventureID)
 	{
-		return needingNotification;
+		this.adventureID = adventureID;
 	}
 
 	/**
-	 * @return the adventureXP
+	 * @param adventureState
+	 *            the adventureState to set
 	 */
-	public int getAdventureXP()
+	public void setAdventureState(AdventureStateEnum adventureState)
 	{
-		return adventureXP;
+		this.adventureState = adventureState;
 	}
 
 	/**

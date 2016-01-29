@@ -32,7 +32,8 @@ public class MapFileMessagePacker extends MessagePacker
 			if (this.getAccumulator().getPlayerID() == playerID)
 			{
 				//send this server's map file back to the client when they connect to the server
-				String mapName = OptionsManager.getSingleton().getMapName();
+				OptionsManager optionsManager = OptionsManager.getSingleton();
+				String mapName = optionsManager.getMapName();
 				MapFileMessage msg = new MapFileMessage(DIRECTORY_PREFIX + mapName);
 				return msg;
 			}

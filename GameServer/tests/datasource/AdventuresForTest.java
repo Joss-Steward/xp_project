@@ -30,6 +30,10 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
+	QUEST2_ADVENTURE4(4, "Quest 2: Adventure Description 4", 2, 33, null),
+	/**
+	 * 
+	 */
 	QUEST3_ADVENTURE1(1, "Adventure 1 for Quest 3", 3, 5, null),
 	/**
 	 * 
@@ -50,7 +54,15 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	QUEST4_ADVENTURE2(2, "Quest 4 Adventure", 4, 5, null);
+	QUEST4_ADVENTURE2(2, "Quest 4 Adventure 2", 4, 5, null),
+	/**
+	 * 
+	 */
+	QUEST4_ADVENTURE3(3, "Quest 4 Adventure 3", 4, 5, null),
+	/**
+	 * 
+	 */
+	QUEST4_ADVENTURE4(4, "Quest 4 Adventure 4", 4, 5, null);
 	
 	
 	private int adventureID;

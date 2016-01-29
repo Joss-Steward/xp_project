@@ -9,10 +9,23 @@ import communication.messages.LoginMessage;
 import communication.messages.LoginSuccessfulMessage;
 import communication.messages.MapFileMessage;
 import communication.messages.PlayerJoinedMessage;
+import communication.packers.MapFileMessagePacker;
 
+import datasource.AdventureRecord;
+import datasource.AdventureStateRecord;
+import datasource.AdventureStateTableDataGateway;
+import datasource.AdventureStateTableDataGatewayMock;
+import datasource.AdventureTableDataGateway;
+import datasource.AdventureTableDataGatewayMock;
+import datasource.DatabaseException;
 import datasource.LevelRecord;
 import datasource.LevelsForTest;
 import datasource.PlayersForTest;
+import datasource.QuestRowDataGateway;
+import datasource.QuestRowDataGatewayMock;
+import datasource.QuestStateRecord;
+import datasource.QuestStateTableDataGateway;
+import datasource.QuestStateTableDataGatewayMock;
 import datasource.ServersForTest;
 
 /**
@@ -34,7 +47,8 @@ public class LoginSequenceTest extends SequenceTest
 							ServersForTest.CURRENT.getHostName(),
 							ServersForTest.CURRENT.getPortNumber(), 33)),
 			new MessageFlow(ServerType.THIS_PLAYER_CLIENT, ServerType.AREA_SERVER,
-					new ConnectMessage(PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.MERLIN.getPin())),
+					new ConnectMessage(PlayersForTest.MERLIN.getPlayerID(),
+							PlayersForTest.MERLIN.getPin())),
 			new MessageFlow(ServerType.AREA_SERVER, ServerType.THIS_PLAYER_CLIENT,
 					new PlayerJoinedMessage(PlayersForTest.MERLIN.getPlayerID(),
 							PlayersForTest.MERLIN.getPlayerName(),
@@ -46,12 +60,11 @@ public class LoginSequenceTest extends SequenceTest
 							PlayersForTest.MERLIN.getAppearanceType(),
 							PlayersForTest.MERLIN.getPosition())),
 			new MessageFlow(ServerType.AREA_SERVER, ServerType.THIS_PLAYER_CLIENT,
-					new MapFileMessage(ServersForTest.CURRENT.getMapName())),
-			// TODO I need to put merlin's quest/adventure state into the
-			// message 
+					new MapFileMessage(MapFileMessagePacker.DIRECTORY_PREFIX
+							+ ServersForTest.CURRENT.getMapName())),
 			new MessageFlow(ServerType.AREA_SERVER, ServerType.THIS_PLAYER_CLIENT,
 					new InitializeThisClientsPlayerMessage(
-							new ArrayList<ClientPlayerQuest>(),
+							getPlayersQuest(PlayersForTest.MERLIN.getPlayerID()),
 							PlayersForTest.MERLIN.getExperiencePoints(), new LevelRecord(
 									LevelsForTest.TWO.getDescription(),
 									LevelsForTest.TWO.getLevelUpPoints()))) };
@@ -63,6 +76,53 @@ public class LoginSequenceTest extends SequenceTest
 	public LoginSequenceTest() throws IOException
 	{
 
+	}
+
+	private ArrayList<ClientPlayerQuest> getPlayersQuest(int playerID)
+	{
+		ArrayList<ClientPlayerQuest> result = new ArrayList<ClientPlayerQuest>();
+		QuestStateTableDataGateway qsGateway = QuestStateTableDataGatewayMock
+				.getSingleton();
+		try
+		{
+			for (QuestStateRecord q : qsGateway.getQuestStates(playerID))
+			{
+				result.add(createClientPlayerQuestFor(q));
+			}
+		} catch (DatabaseException e)
+		{
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	private ClientPlayerQuest createClientPlayerQuestFor(QuestStateRecord q)
+			throws DatabaseException
+	{
+		QuestRowDataGateway qGateway = new QuestRowDataGatewayMock(q.getQuestID());
+		ClientPlayerQuest cpq = new ClientPlayerQuest(q.getQuestID(),
+				qGateway.getQuestDescription(), q.getState(),
+				qGateway.getExperiencePointsGained(),
+				qGateway.getAdventuresForFulfillment());
+		AdventureStateTableDataGateway asGateway = AdventureStateTableDataGatewayMock
+				.getSingleton();
+		ArrayList<AdventureStateRecord> adventuresForPlayer = asGateway
+				.getAdventureStates(q.getPlayerID(), q.getQuestID());
+		for (AdventureStateRecord adv : adventuresForPlayer)
+		{
+
+			AdventureTableDataGateway aGateway = AdventureTableDataGatewayMock
+					.getSingleton();
+			AdventureRecord adventureRecord = aGateway.getAdventure(q.getQuestID(),
+					adv.getAdventureID());
+
+			cpq.addAdventure(new ClientPlayerAdventure(adv.getAdventureID(),
+					adventureRecord.getAdventureDescription(), adventureRecord
+							.getExperiencePointsGained(), adv.getState(), adv
+							.isNeedingNotification()));
+
+		}
+		return cpq;
 	}
 
 	/**
@@ -101,10 +161,13 @@ public class LoginSequenceTest extends SequenceTest
 		return PlayersForTest.MERLIN.getPlayerID();
 	}
 
+	/**
+	 * @see model.SequenceTest#setUpServer()
+	 */
 	@Override
 	public void setUpServer()
 	{
-		OptionsManager.getSingleton().setHostName(PlayersForTest.MERLIN.getMapName());
-		
+		OptionsManager.getSingleton().setMapName(PlayersForTest.MERLIN.getMapName());
+
 	}
 }

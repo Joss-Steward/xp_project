@@ -13,19 +13,37 @@ import data.Position;
 public class PlayerJoinedMessage implements Message, Serializable
 {
 
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((appearanceType == null) ? 0 : appearanceType.hashCode());
-		result = prime * result + playerID;
-		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
-		result = prime * result + ((position == null) ? 0 : position.hashCode());
-		return result;
-	}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
+	private final String playerName;
+
+	private int playerID;
+	private String appearanceType;
+	private Position position;
+	/**
+	 * @param playerID
+	 *            the unique ID of the player
+	 * @param playerName
+	 *            the name of the new player
+	 * @param position
+	 *            where this player is on the map on this server
+	 * @param appearanceType
+	 *            the way the player should be drawn on the screen
+	 */
+	public PlayerJoinedMessage(int playerID, String playerName, String appearanceType,
+			Position position)
+	{
+		this.playerID = playerID;
+		this.playerName = playerName;
+		this.appearanceType = appearanceType;
+		this.position = position;
+	}
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -60,31 +78,13 @@ public class PlayerJoinedMessage implements Message, Serializable
 	}
 
 	/**
+	 * Get the appearance type that shows how this player wants to be displayed
 	 * 
+	 * @return the appearance type
 	 */
-	private static final long serialVersionUID = 1L;
-	private final String playerName;
-	private int playerID;
-	private String appearanceType;
-	private Position position;
-
-	/**
-	 * @param playerID
-	 *            the unique ID of the player
-	 * @param playerName
-	 *            the name of the new player
-	 * @param position
-	 *            where this player is on the map on this server
-	 * @param appearanceType
-	 *            the way the player should be drawn on the screen
-	 */
-	public PlayerJoinedMessage(int playerID, String playerName, String appearanceType,
-			Position position)
+	public String getAppearanceType()
 	{
-		this.playerID = playerID;
-		this.playerName = playerName;
-		this.appearanceType = appearanceType;
-		this.position = position;
+		return appearanceType;
 	}
 
 	/**
@@ -106,25 +106,6 @@ public class PlayerJoinedMessage implements Message, Serializable
 	}
 
 	/**
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString()
-	{
-		return "PlayerJoined Message: playerName = " + playerName;
-	}
-
-	/**
-	 * Get the appearance type that shows how this player wants to be displayed
-	 * 
-	 * @return the appearance type
-	 */
-	public String getAppearanceType()
-	{
-		return appearanceType;
-	}
-
-	/**
 	 * Get the position this player is in
 	 * 
 	 * @return the position
@@ -132,5 +113,30 @@ public class PlayerJoinedMessage implements Message, Serializable
 	public Position getPosition()
 	{
 		return position;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((appearanceType == null) ? 0 : appearanceType.hashCode());
+		result = prime * result + playerID;
+		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
+		result = prime * result + ((position == null) ? 0 : position.hashCode());
+		return result;
+	}
+
+	/**
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString()
+	{
+		return "PlayerJoined Message: playerName = " + playerName;
 	}
 }

@@ -65,7 +65,16 @@ public enum AdventureStatesForTest
 	 * 
 	 */
 	PLAYER2_QUEST4_ADV2(2, 4, 2, AdventureStateEnum.TRIGGERED, false),
+	
+	/**
+	 * 
+	 */
+	PLAYER2_QUEST4_ADV3(2, 4, 3, AdventureStateEnum.COMPLETED, false),
 
+	/**
+	 * 
+	 */
+	PLAYER2_QUEST4_ADV4(2, 4, 4, AdventureStateEnum.TRIGGERED, false),
 	/**
 	 * 
 	 */
@@ -82,20 +91,7 @@ public enum AdventureStatesForTest
 	 * 
 	 */
 	PLAYER4_QUEST3_ADV3(4, 3, 3, AdventureStateEnum.COMPLETED, false),
-	/**
-	 * 
-	 */
 	
-	PLAYER2_QUEST4_ADV3(2, 4, 3, AdventureStateEnum.COMPLETED, false),
-
-	/**
-	 * 
-	 */
-	PLAYER2_QUEST4_ADV4(2, 4, 4, AdventureStateEnum.TRIGGERED, false),
-	/**
-	 * 
-	 */
-	PLAYER2_QUEST4_ADV5(2, 4, 5, AdventureStateEnum.COMPLETED, false),
 
 	/**
 	 * 

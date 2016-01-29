@@ -1,7 +1,6 @@
 package model;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import communication.CommunicationException;
 import communication.StateAccumulator;
@@ -38,6 +37,7 @@ public class SequenceTestRunner
 	{
 		this.testcase = test;
 		OptionsManager.getSingleton().setTestMode(true);
+		testcase.setUpServer();
 		messagePackerSet = new MessagePackerSet();
 		stateAccumulator = new StateAccumulator(messagePackerSet);
 		stateAccumulator.setPlayerId(test.getInitiatingPlayerID());

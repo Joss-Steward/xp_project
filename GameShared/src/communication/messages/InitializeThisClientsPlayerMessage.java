@@ -17,10 +17,11 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private ArrayList<ClientPlayerQuest> clientPlayerQuestList;
+
 	private int experiencePts;
 	private LevelRecord level;
-
 	/**
 	 * Constructor for Quest State Message
 	 * @param clientPlayerQuestList players quest list
@@ -33,6 +34,35 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 		this.experiencePts = experiencePts;
 		this.level = level;
 	}
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		InitializeThisClientsPlayerMessage other = (InitializeThisClientsPlayerMessage) obj;
+		if (clientPlayerQuestList == null)
+		{
+			if (other.clientPlayerQuestList != null)
+				return false;
+		} else if (!clientPlayerQuestList.equals(other.clientPlayerQuestList))
+			return false;
+		if (experiencePts != other.experiencePts)
+			return false;
+		if (level == null)
+		{
+			if (other.level != null)
+				return false;
+		} else if (!level.equals(other.level))
+			return false;
+		return true;
+	}
 
 	/**
 	 * Return current players quest List
@@ -42,7 +72,7 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 	{
 		return clientPlayerQuestList;
 	}
-	
+
 	/**
 	 * Get experience points of this client's player
 	 * @return experience pts
@@ -51,7 +81,7 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 	{
 		return experiencePts;
 	}
-
+	
 	/**
 	 * Get level of this client's player
 	 * @return level
@@ -59,6 +89,22 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 	public LevelRecord getLevel() 
 	{
 		return level;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((clientPlayerQuestList == null) ? 0 : clientPlayerQuestList.hashCode());
+		result = prime * result + experiencePts;
+		result = prime * result + ((level == null) ? 0 : level.hashCode());
+		return result;
 	}
 
 }

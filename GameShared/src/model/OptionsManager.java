@@ -12,7 +12,6 @@ import datasource.DatabaseException;
 public class OptionsManager
 {
 	
-	private static OptionsManager singleton;
 	/**
 	 * Used to get an existing singleton (it must have already been created). If
 	 * it hasn't been created, you must use the getSingleton where you specify
@@ -28,7 +27,6 @@ public class OptionsManager
 		}
 		return singleton;
 	}
-
 	/**
 	 * Reset our instance
 	 */
@@ -36,15 +34,16 @@ public class OptionsManager
 	{
 		singleton = null;
 	}
+
+	private static OptionsManager singleton;
 	private boolean testMode;
 	private String mapName;
 	private String hostName;
-
 	private int portNumber;
 
 	private String loginHost;
-	private boolean usingTestDB = true;
 
+	private boolean usingTestDB = true;
 	/**
 	 * I'm a singleton
 	 * 
@@ -53,6 +52,7 @@ public class OptionsManager
 	{
 		hostName = "";
 	}
+
 	/**
 	 * 
 	 * @return The host we have mapped to
@@ -68,7 +68,6 @@ public class OptionsManager
 	{
 		return loginHost;
 	}
-
 	/**
 	 * 
 	 * @return Our current map name
@@ -107,6 +106,15 @@ public class OptionsManager
 	}
 
 	/**
+	 * Used when we are an area server
+	 * @param hostName the hostname a server is running on
+	 */
+	public synchronized void setHostName(String hostName)
+	{
+		this.hostName = hostName;
+	}
+
+	/**
 	 * @param host the host that is managing logins
 	 */
 	public synchronized void setLoginHost(String host)
@@ -115,6 +123,22 @@ public class OptionsManager
 	}
 
 	/**
+	 * @param mapName the name of the map file this server should manage
+	 */
+	public void setMapName(String mapName)
+	{
+		this.mapName = mapName;
+	}
+
+	
+	/**
+	 * @param b if true, we will use mock data whenever possible
+	 */
+	public void setTestMode(boolean b)
+	{
+		this.testMode = b;
+	}
+	/**
 	 * @param usingTestDB set to true if we are not supposed to use the production database
 	 */
 	public synchronized void setUsingTestDB(boolean usingTestDB)
@@ -122,7 +146,6 @@ public class OptionsManager
 		this.usingTestDB = usingTestDB;
 	}
 
-	
 	/**
 	 * 
 	 * @param mapName
@@ -157,21 +180,5 @@ public class OptionsManager
 		}
 			
 		
-	}
-	/**
-	 * Used when we are an area server
-	 * @param hostName the hostname a server is running on
-	 */
-	public synchronized void setHostName(String hostName)
-	{
-		this.hostName = hostName;
-	}
-
-	/**
-	 * @param b if true, we will use mock data whenever possible
-	 */
-	public void setTestMode(boolean b)
-	{
-		this.testMode = b;
 	}
 }
