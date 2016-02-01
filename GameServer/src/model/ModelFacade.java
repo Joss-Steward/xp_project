@@ -106,6 +106,16 @@ public class ModelFacade
 	}
 
 	/**
+	 * If we have created the thread that processes things, kill it
+	 */
+	public synchronized static void killThreads()
+	{
+		if (singleton!=null)
+		{
+			singleton.timer.cancel();
+		}
+	}
+	/**
 	 * Queue a command for the model to process
 	 * 
 	 * @param cmd

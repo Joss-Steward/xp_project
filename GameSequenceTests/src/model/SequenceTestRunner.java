@@ -78,6 +78,7 @@ public class SequenceTestRunner
 		ServerType serverToTest = (ServerType.values())[Integer.parseInt(args[1])];
 		System.out.println(runner.run(serverToTest));
 		ClientModelFacade.killThreads();
+		ModelFacade.killThreads();
 	}
 
 	private String run(ServerType sType) throws CommunicationException
