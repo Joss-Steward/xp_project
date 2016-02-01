@@ -34,7 +34,7 @@ import datasource.ServersForTest;
  * @author Merlin
  *
  */
-public class LoginSequenceTest extends SequenceTest
+public class LoginSuccessSequenceTest extends SequenceTest
 {
 
 	private MessageFlow[] messageSequence =
@@ -73,7 +73,7 @@ public class LoginSequenceTest extends SequenceTest
 	 * @throws IOException
 	 *             shouldn't
 	 */
-	public LoginSequenceTest() throws IOException
+	public LoginSuccessSequenceTest() throws IOException
 	{
 
 	}

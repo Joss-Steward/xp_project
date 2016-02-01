@@ -1,6 +1,7 @@
 package model;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import communication.CommunicationException;
 import communication.StateAccumulator;
@@ -19,12 +20,16 @@ import communication.packers.MessagePackerSet;
  */
 public class SequenceTestRunner
 {
+	/**
+	 * the message returned by the test if everything passes
+	 */
+	static final String SUCCESS_MSG = "Success!!";
 	private SequenceTest testcase;
 	private StateAccumulator stateAccumulator;
 	private MessageHandlerSet messageHandlerSet;
 	private MessagePackerSet messagePackerSet;
 	private StateAccumulator secondStateAccumulator;
-//	private MessageHandlerSet secondMessageHandlerSet;
+	// private MessageHandlerSet secondMessageHandlerSet;
 	private MessagePackerSet secondMessagePackerSet;
 
 	/**
@@ -42,9 +47,6 @@ public class SequenceTestRunner
 		stateAccumulator = new StateAccumulator(messagePackerSet);
 		stateAccumulator.setPlayerId(test.getInitiatingPlayerID());
 		messageHandlerSet = new MessageHandlerSet(stateAccumulator);
-		secondMessagePackerSet = new MessagePackerSet();
-		secondStateAccumulator = new StateAccumulator(secondMessagePackerSet);
-//		secondMessageHandlerSet = new MessageHandlerSet(secondStateAccumulator);
 
 	}
 
@@ -70,7 +72,7 @@ public class SequenceTestRunner
 			testClass = Class.forName("model." + args[0]);
 		} catch (ClassNotFoundException e)
 		{
-			System.out.println("Can't find a class with that name");
+			System.out.println("Can't find a class with that name " + "model." + args[0]);
 			System.exit(1);
 		}
 		SequenceTest testcase = (SequenceTest) testClass.newInstance();
@@ -81,8 +83,22 @@ public class SequenceTestRunner
 		ModelFacade.killThreads();
 	}
 
-	private String run(ServerType sType) throws CommunicationException
+	/**
+	 * @param sType
+	 *            the type of server we want to run this test on
+	 * @return true if everything went OK
+	 * @throws CommunicationException
+	 *             shouldn't
+	 */
+	protected String run(ServerType sType) throws CommunicationException
 	{
+		if (sType.supportsOneToManyConnections())
+		{
+			secondMessagePackerSet = new MessagePackerSet();
+			secondStateAccumulator = new StateAccumulator(secondMessagePackerSet);
+			// secondMessageHandlerSet = new
+			// MessageHandlerSet(secondStateAccumulator);
+		}
 		if (sType == testcase.getInitiatingServerType())
 		{
 			testcase.getInitiatingCommand().execute();
@@ -121,7 +137,31 @@ public class SequenceTestRunner
 
 			}
 		}
-		return "Success!!";
+		String extraMessagesError = checkForExtraMessages();
+		if (extraMessagesError != null)
+		{
+			return extraMessagesError;
+		}
+		return SUCCESS_MSG;
+	}
+
+	private String checkForExtraMessages()
+	{
+		if (secondStateAccumulator != null)
+		{
+			ArrayList<Message> secondPendingMsgs = secondStateAccumulator
+					.getPendingMsgs();
+			if (!secondPendingMsgs.isEmpty())
+			{
+				return "Second accumulator had messages pending";
+			}
+		}
+		ArrayList<Message> pendingMsgs = stateAccumulator.getPendingMsgs();
+		if (!pendingMsgs.isEmpty())
+		{
+			return "Second accumulator had messages pending";
+		}
+		return null;
 	}
 
 	private void waitForCommandComplete()
