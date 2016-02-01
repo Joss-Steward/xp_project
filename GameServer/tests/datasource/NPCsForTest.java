@@ -15,17 +15,17 @@ public enum NPCsForTest
 	 * 
 	 */
 	NPC1(PlayersForTest.MOCK_NPC.getPlayerID(),
-			"edu.ship.shipsim.areaserver.model.NPCMockBehavior"),
+			"model.NPCMockBehavior"),
 	/**
 	 * 
 	 */
 	NPC2(PlayersForTest.QUIZBOT.getPlayerID(),
-			"edu.ship.shipsim.areaserver.model.QuizBotBehavior"),
+			"model.QuizBotBehavior"),
 	/**
 	 * 
 	 */
 	NPC3(PlayersForTest.MOCK_NPC3.getPlayerID(),
-			"edu.ship.shipsim.areaserver.model.NPCMockBehavior");
+			"model.NPCMockBehavior");
 
 	private String behaviorClass;
 	private int playerID;
