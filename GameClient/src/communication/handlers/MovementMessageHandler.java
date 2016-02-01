@@ -1,10 +1,10 @@
 package communication.handlers;
 
+import model.CommandMovePlayer;
+import model.ClientModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.MovementMessage;
-import edu.ship.shipsim.client.model.CommandMovePlayer;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Should process an incoming MovementMessage that is reporting that someone
@@ -28,7 +28,7 @@ public class MovementMessageHandler extends MessageHandler
 			MovementMessage movementMessage = (MovementMessage) msg;
 			CommandMovePlayer cmd = new CommandMovePlayer(movementMessage.getPlayerID(),
 					movementMessage.getPosition());
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

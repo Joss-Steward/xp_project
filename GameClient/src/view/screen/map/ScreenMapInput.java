@@ -1,5 +1,9 @@
 package view.screen.map;
 
+import model.CommandMovePlayer;
+import model.ClientModelFacade;
+import model.ClientPlayerManager;
+import model.ThisClientsPlayer;
 import view.player.Direction;
 import view.player.PlayerSprite;
 
@@ -7,10 +11,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
 import data.Position;
-import edu.ship.shipsim.client.model.CommandMovePlayer;
-import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.PlayerManager;
-import edu.ship.shipsim.client.model.ThisClientsPlayer;
 import static view.player.Direction.*;
 
 /**
@@ -36,7 +36,7 @@ public class ScreenMapInput implements InputProcessor
 		
 		//System.out.println("Key down received: " + keycode);
 		CommandMovePlayer cm = null;
-		ThisClientsPlayer cp = PlayerManager.getSingleton().getThisClientsPlayer();
+		ThisClientsPlayer cp = ClientPlayerManager.getSingleton().getThisClientsPlayer();
 		Position position = cp.getPosition();
 		Position to;
 		switch (keycode)
@@ -69,7 +69,7 @@ public class ScreenMapInput implements InputProcessor
 
 		if (cm != null && sprite.doneWalking()) 
 		{
-			ModelFacade.getSingleton().queueCommand(cm);
+			ClientModelFacade.getSingleton().queueCommand(cm);
 		}
 
 		return false;
@@ -170,7 +170,7 @@ public class ScreenMapInput implements InputProcessor
 			if (delay > PlayerSprite.MOVESPEED)
 			{
 				CommandMovePlayer cm = null;
-				ThisClientsPlayer cp = PlayerManager.getSingleton().getThisClientsPlayer();
+				ThisClientsPlayer cp = ClientPlayerManager.getSingleton().getThisClientsPlayer();
 				Position position = cp.getPosition();
 				Position to;
 				if (up)
@@ -195,7 +195,7 @@ public class ScreenMapInput implements InputProcessor
 				}
 				
 				if (cm != null)
-					ModelFacade.getSingleton().queueCommand(cm);
+					ClientModelFacade.getSingleton().queueCommand(cm);
 				
 				delay = 0f;
 			}

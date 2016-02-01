@@ -11,6 +11,41 @@ public class MapFileMessage implements Message, Serializable
 {
 
 	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((mapFileName == null) ? 0 : mapFileName.hashCode());
+		return result;
+	}
+
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MapFileMessage other = (MapFileMessage) obj;
+		if (mapFileName == null)
+		{
+			if (other.mapFileName != null)
+				return false;
+		} else if (!mapFileName.equals(other.mapFileName))
+			return false;
+		return true;
+	}
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;

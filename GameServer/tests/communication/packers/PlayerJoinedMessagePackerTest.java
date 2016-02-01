@@ -2,6 +2,8 @@ package communication.packers;
 
 import static org.junit.Assert.assertEquals;
 import model.OptionsManager;
+import model.PlayerManager;
+import model.reports.PlayerConnectionReport;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,10 +11,8 @@ import org.junit.Test;
 import communication.StateAccumulator;
 import communication.messages.PlayerJoinedMessage;
 import datasource.DatabaseException;
+import datasource.PlayerRowDataGatewayMock;
 import datasource.PlayersForTest;
-import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayMock;
-import edu.ship.shipsim.areaserver.model.PlayerManager;
-import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 
 /**
  * @author Merlin

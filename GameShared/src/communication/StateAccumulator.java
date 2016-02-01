@@ -19,7 +19,7 @@ public class StateAccumulator implements QualifiedObserver
 {
 
 	/**
-	 *  need this to be visible to the tests
+	 * need this to be visible to the tests
 	 */
 	protected ArrayList<Message> pendingMsgs;
 	private MessagePackerSet packerSet;
@@ -55,7 +55,6 @@ public class StateAccumulator implements QualifiedObserver
 		return temp;
 	}
 
-	
 	/**
 	 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
 	 */
@@ -110,6 +109,17 @@ public class StateAccumulator implements QualifiedObserver
 	public int getPlayerID()
 	{
 		return playerID;
+	}
+
+	/**
+	 * Delete and return the first message in the accumulator (used for message
+	 * sequence testing only)
+	 * 
+	 * @return the first message
+	 */
+	public Message getFirstMessage()
+	{
+		return pendingMsgs.remove(0);
 	}
 
 }

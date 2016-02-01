@@ -20,10 +20,10 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.TextFilterator;
 import ca.odell.glazedlists.swing.AutoCompleteSupport;
+import datasource.AdventureRecord;
 import datasource.AdventureStateViewTableDataGatewayRDS;
 import datasource.DatabaseException;
 import datasource.PlayerLoginTableDataGatewayRDS;
-import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
 
 /**
  * A stand alone app that manages data in the database

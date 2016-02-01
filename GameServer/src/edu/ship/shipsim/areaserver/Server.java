@@ -6,11 +6,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import model.OptionsManager;
+import model.PlayerManager;
 import communication.ConnectionManager;
 import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
-import edu.ship.shipsim.areaserver.model.PlayerManager;
 
 /**
  * A daemon that resides on the server listening to the gigabuds and to client

@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import model.OptionsManager;
 import model.QualifiedObservableReport;
+import model.reports.PlayerConnectionReport;
 import communication.messages.MapFileMessage;
 import communication.messages.Message;
-import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 
 /**
  * @author Merlin
@@ -32,7 +32,8 @@ public class MapFileMessagePacker extends MessagePacker
 			if (this.getAccumulator().getPlayerID() == playerID)
 			{
 				//send this server's map file back to the client when they connect to the server
-				String mapName = OptionsManager.getSingleton().getMapName();
+				OptionsManager optionsManager = OptionsManager.getSingleton();
+				String mapName = optionsManager.getMapName();
 				MapFileMessage msg = new MapFileMessage(DIRECTORY_PREFIX + mapName);
 				return msg;
 			}

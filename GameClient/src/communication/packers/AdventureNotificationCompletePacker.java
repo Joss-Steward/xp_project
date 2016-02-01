@@ -1,11 +1,9 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
-
+import model.reports.AdventureNotifcationCompleteReport;
 import communication.messages.AdventureNotificationCompleteMessage;
 import communication.messages.Message;
-
-import edu.ship.shipsim.client.model.reports.AdventureNotifcationCompleteReport;
 
 /**
  * @author Ryan

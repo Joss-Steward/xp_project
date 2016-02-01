@@ -1,6 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
+import model.ClientModelFacade;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +9,6 @@ import org.junit.Test;
 import communication.messages.ExperienceChangedMessage;
 import datasource.LevelRecord;
 import datasource.PlayersForTest;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * @author Ryan
@@ -22,8 +22,8 @@ public class ExperienceChangedMessageHandlerTest {
 	@Before
 	public void reset()
 	{
-		ModelFacade.resetSingleton();
-		ModelFacade.getSingleton(true, false);
+		ClientModelFacade.resetSingleton();
+		ClientModelFacade.getSingleton(true, false);
 	}
 	
 	/**
@@ -51,8 +51,8 @@ public class ExperienceChangedMessageHandlerTest {
 		ExperienceChangedMessageHandler h = new ExperienceChangedMessageHandler();
 		h.process(msg);
 
-		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
-		while(ModelFacade.getSingleton().hasCommandsPending())
+		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
+		while(ClientModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

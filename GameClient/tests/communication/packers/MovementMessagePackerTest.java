@@ -6,13 +6,14 @@ import static org.junit.Assert.assertNull;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
+import model.ClientPlayerManager;
+import model.reports.PlayerMovedReport;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.MovementMessage;
 import data.Position;
-import edu.ship.shipsim.client.model.PlayerManager;
-import edu.ship.shipsim.client.model.reports.PlayerMovedReport;
 
 /**
  * 
@@ -65,9 +66,9 @@ public class MovementMessagePackerTest
 	@Before
 	public void setup() throws AlreadyBoundException, NotBoundException
 	{
-		PlayerManager.resetSingleton();
-		PlayerManager.getSingleton().initiateLogin("john", "pw");
-		PlayerManager.getSingleton().finishLogin(1);
+		ClientPlayerManager.resetSingleton();
+		ClientPlayerManager.getSingleton().initiateLogin("john", "pw");
+		ClientPlayerManager.getSingleton().finishLogin(1);
 	}
 
 }

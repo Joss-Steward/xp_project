@@ -4,9 +4,12 @@ import java.util.ArrayList;
 
 import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
+import model.CommandSendQuestState;
+import model.ClientModelFacade;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
+import model.reports.QuestStateReport;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -26,9 +29,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 import datasource.AdventureStateEnum;
 import datasource.QuestStateEnum;
-import edu.ship.shipsim.client.model.CommandSendQuestState;
-import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.reports.QuestStateReport;
 
 /**
  * A basic screen that displays the quests and adventure states.
@@ -115,7 +115,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 
 			CommandSendQuestState cmd = new CommandSendQuestState();
 
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

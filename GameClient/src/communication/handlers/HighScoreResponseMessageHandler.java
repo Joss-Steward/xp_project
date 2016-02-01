@@ -1,9 +1,9 @@
 package communication.handlers;
 
+import model.CommandHighScoreResponse;
+import model.ClientModelFacade;
 import communication.messages.HighScoreResponseMessage;
 import communication.messages.Message;
-import edu.ship.shipsim.client.model.CommandHighScoreResponse;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Receives a message High Score Response
@@ -32,7 +32,7 @@ public class HighScoreResponseMessageHandler extends MessageHandler
 		{
 			HighScoreResponseMessage message = (HighScoreResponseMessage) msg;
 			CommandHighScoreResponse cmd = new CommandHighScoreResponse(message.getScoreReports());
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

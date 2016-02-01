@@ -8,11 +8,11 @@ import java.util.List;
 
 import org.junit.Test;
 
+import datasource.AdventureRecord;
+import datasource.AdventureStateRecord;
+import datasource.AdventureStateTableDataGatewayRDS;
+import datasource.AdventuresForTest;
 import datasource.PlayersForTest;
-import edu.ship.shipsim.areaserver.datasource.AdventureRecord;
-import edu.ship.shipsim.areaserver.datasource.AdventureStateRecord;
-import edu.ship.shipsim.areaserver.datasource.AdventureStateTableDataGatewayRDS;
-import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
 
 /**
  * @author Merlin

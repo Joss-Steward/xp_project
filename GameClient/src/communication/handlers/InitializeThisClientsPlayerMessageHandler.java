@@ -1,10 +1,10 @@
 package communication.handlers;
 
+import model.CommandOverwriteExperience;
+import model.CommandOverwriteQuestState;
+import model.ClientModelFacade;
 import communication.messages.InitializeThisClientsPlayerMessage;
 import communication.messages.Message;
-import edu.ship.shipsim.client.model.CommandOverwriteExperience;
-import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.CommandOverwriteQuestState;
 
 /**
  * Handles the CurrentQuestState message
@@ -25,8 +25,8 @@ public class InitializeThisClientsPlayerMessageHandler extends MessageHandler
 		InitializeThisClientsPlayerMessage ourMsg = (InitializeThisClientsPlayerMessage)msg;
 		CommandOverwriteQuestState cmd = new CommandOverwriteQuestState(ourMsg);
 		CommandOverwriteExperience cmdExperiencePts = new CommandOverwriteExperience(ourMsg);
-		ModelFacade.getSingleton().queueCommand(cmd);
-		ModelFacade.getSingleton().queueCommand(cmdExperiencePts);
+		ClientModelFacade.getSingleton().queueCommand(cmd);
+		ClientModelFacade.getSingleton().queueCommand(cmdExperiencePts);
 	}
 
 	/**

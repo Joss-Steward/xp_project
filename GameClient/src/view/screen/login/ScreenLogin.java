@@ -1,5 +1,7 @@
 package view.screen.login;
 
+import model.CommandLogin;
+import model.ClientModelFacade;
 import view.screen.ScreenBasic;
 import view.screen.Screens;
 
@@ -17,9 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import edu.ship.shipsim.client.model.CommandLogin;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * First screen the player sees to start playing.
@@ -133,7 +132,7 @@ public class ScreenLogin extends ScreenBasic
 					// Create the login command to allow the player to login
 					CommandLogin lc = new CommandLogin(loginField.getText(), pwField
 							.getText());
-					ModelFacade.getSingleton().queueCommand(lc);
+					ClientModelFacade.getSingleton().queueCommand(lc);
 					return true;
 				}
 			}

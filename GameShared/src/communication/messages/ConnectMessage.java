@@ -1,5 +1,6 @@
 package communication.messages;
 
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +9,39 @@ import java.io.Serializable;
  */
 public class ConnectMessage implements Message, Serializable
 {
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(pin);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + playerID;
+		return result;
+	}
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ConnectMessage other = (ConnectMessage) obj;
+		if (playerID != other.playerID)
+			return false;
+		return true;
+	}
 
 	/**
 	 * 

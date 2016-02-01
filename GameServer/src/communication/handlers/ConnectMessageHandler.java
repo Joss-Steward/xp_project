@@ -1,13 +1,13 @@
 package communication.handlers;
 
+import model.CommandAddPlayer;
+import model.ModelFacade;
+import model.Player;
+import model.PlayerManager;
 import communication.handlers.MessageHandler;
 import communication.messages.ConnectMessage;
 import communication.messages.Message;
 import communication.messages.PlayerJoinedMessage;
-import edu.ship.shipsim.areaserver.model.CommandAddPlayer;
-import edu.ship.shipsim.areaserver.model.ModelFacade;
-import edu.ship.shipsim.areaserver.model.Player;
-import edu.ship.shipsim.areaserver.model.PlayerManager;
 
 /**
  * Handles a message that the player is connecting to this area server

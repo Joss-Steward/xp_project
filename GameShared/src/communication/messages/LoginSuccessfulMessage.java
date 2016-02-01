@@ -17,11 +17,12 @@ public class LoginSuccessfulMessage implements Message, Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private int playerID;
+
 	private String hostName;
 	private int portNumber;
 	private double pin;
-
 	/**
 	 * 
 	 * @param playerID
@@ -43,6 +44,41 @@ public class LoginSuccessfulMessage implements Message, Serializable
 		this.portNumber = portNumber;
 		this.pin = pin;
 	}
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LoginSuccessfulMessage other = (LoginSuccessfulMessage) obj;
+		if (hostName == null)
+		{
+			if (other.hostName != null)
+				return false;
+		} else if (!hostName.equals(other.hostName))
+			return false;
+		if (playerID != other.playerID)
+			return false;
+		if (portNumber != other.portNumber)
+			return false;
+		return true;
+	}
+
+	/**
+	 * 
+	 * @return the host name of the area server where this player should start
+	 *         playing
+	 */
+	public String getHostName()
+	{
+		return hostName;
+	}
 
 	/**
 	 * @return the pin
@@ -63,22 +99,29 @@ public class LoginSuccessfulMessage implements Message, Serializable
 
 	/**
 	 * 
-	 * @return the host name of the area server where this player should start
-	 *         playing
-	 */
-	public String getHostName()
-	{
-		return hostName;
-	}
-
-	/**
-	 * 
 	 * @return the port number of the area server where this player should start
 	 *         playing
 	 */
 	public int getPortNumber()
 	{
 		return portNumber;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((hostName == null) ? 0 : hostName.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(pin);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + playerID;
+		result = prime * result + portNumber;
+		return result;
 	}
 
 	/**

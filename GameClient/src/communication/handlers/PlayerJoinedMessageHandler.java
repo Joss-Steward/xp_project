@@ -1,10 +1,10 @@
 package communication.handlers;
 
+import model.CommandInitializePlayer;
+import model.ClientModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.PlayerJoinedMessage;
-import edu.ship.shipsim.client.model.CommandInitializePlayer;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Should process an incoming PlayerJoinedMessage that is reporting that someone
@@ -25,13 +25,12 @@ public class PlayerJoinedMessageHandler extends MessageHandler
 	@Override
 	public void process(Message msg)
 	{
-		System.out.println("received " + msg);
 		PlayerJoinedMessage playerJoinedMessage = (PlayerJoinedMessage) msg;
 		CommandInitializePlayer cmd = new CommandInitializePlayer(
 				playerJoinedMessage.getPlayerID(), playerJoinedMessage.getPlayerName(),
 				playerJoinedMessage.getAppearanceType(),
 				playerJoinedMessage.getPosition());
-		ModelFacade.getSingleton().queueCommand(cmd);
+		ClientModelFacade.getSingleton().queueCommand(cmd);
 	}
 
 	/**

@@ -2,8 +2,8 @@ import java.sql.SQLException;
 
 import model.OptionsManager;
 import datasource.DatabaseException;
-import edu.ship.shipsim.areaserver.datasource.LevelTableDataGatewayRDS;
-import edu.ship.shipsim.areaserver.datasource.LevelsForTest;
+import datasource.LevelTableDataGatewayRDS;
+import datasource.LevelsForTest;
 
 /**
  * Builds the Level portion of the database

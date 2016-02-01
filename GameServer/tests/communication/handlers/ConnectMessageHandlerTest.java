@@ -1,16 +1,16 @@
 package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
+import model.ModelFacade;
 import model.OptionsManager;
 import model.PlayerConnection;
+import model.PlayerManager;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.ConnectionManager;
 import communication.messages.ConnectMessage;
-import edu.ship.shipsim.areaserver.model.ModelFacade;
-import edu.ship.shipsim.areaserver.model.PlayerManager;
 
 /**
  * 

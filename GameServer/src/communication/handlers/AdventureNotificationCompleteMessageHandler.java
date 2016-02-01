@@ -1,10 +1,9 @@
 package communication.handlers;
 
+import model.CommandAdventureNotificationComplete;
+import model.ModelFacade;
 import communication.messages.AdventureNotificationCompleteMessage;
 import communication.messages.Message;
-
-import edu.ship.shipsim.areaserver.model.CommandAdventureNotificationComplete;
-import edu.ship.shipsim.areaserver.model.ModelFacade;
 
 /**
  * @author Ryan

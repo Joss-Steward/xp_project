@@ -18,7 +18,7 @@ public enum PlayersForTest
 	 *  Merlin must be player 2 for the player mapper tests to pass.  That number maps to player 2
 	 *  in the quest and adventure states in QuestStatesForTest and AdventureStatesForTest
 	 */
-	MERLIN(2, "Merlin", "merlin", 4, 13, "pw", "current.tmx", 1111, null, 42, 45),
+	MERLIN(2, "Merlin", "merlin", 4, 13, "pw", "current.tmx", 1111, null, 42, 46),
 	/**
 	 * 
 	 */

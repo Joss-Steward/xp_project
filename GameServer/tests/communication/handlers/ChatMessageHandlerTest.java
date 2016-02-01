@@ -1,6 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
+import model.ModelFacade;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +9,6 @@ import org.junit.Test;
 import communication.messages.ChatMessage;
 import data.ChatType;
 import data.Position;
-import edu.ship.shipsim.areaserver.model.ModelFacade;
 
 /**
  * Testing the ChatMessageHandler

@@ -3,6 +3,7 @@ package runners;
 import java.io.IOException;
 import java.net.Socket;
 
+import model.ClientModelFacade;
 import model.OptionsManager;
 import view.screen.ScreenBasic;
 import view.screen.Screens;
@@ -14,7 +15,6 @@ import communication.ConnectionManager;
 import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * The most basic gui!
@@ -52,7 +52,7 @@ public class GameLibGDX extends Game
 		}
 
 		// tell the model to initialize itself
-		ModelFacade.getSingleton();
+		ClientModelFacade.getSingleton();
 		Screens.LOGIN_SCREEN.setGame(this);
 
 		// start at the login screen

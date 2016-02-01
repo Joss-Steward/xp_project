@@ -1,13 +1,13 @@
 package communication.packers;
 
 import static org.junit.Assert.assertEquals;
+import model.reports.SendChatMessageReport;
 
 import org.junit.Test;
 
 import communication.messages.ChatMessage;
 import data.ChatType;
 import data.Position;
-import edu.ship.shipsim.areaserver.model.reports.SendChatMessageReport;
 
 /**
  * @author Dave

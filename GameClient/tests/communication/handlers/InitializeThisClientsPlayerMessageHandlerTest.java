@@ -8,18 +8,17 @@ import java.util.ArrayList;
 
 import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
+import model.ClientModelFacade;
+import model.ClientPlayerManager;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.InitializeThisClientsPlayerMessage;
-
 import datasource.AdventureStateEnum;
 import datasource.LevelRecord;
 import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
-import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.PlayerManager;
 
 /**
  * @author Frank Schmidt
@@ -34,8 +33,8 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 	@Before
 	public void setUp()
 	{
-		ModelFacade.resetSingleton();
-		ModelFacade.getSingleton(true, false);
+		ClientModelFacade.resetSingleton();
+		ClientModelFacade.getSingleton(true, false);
 	}
 	
 	/**
@@ -59,8 +58,8 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 	@Test
 	public void test() throws InterruptedException, AlreadyBoundException, NotBoundException
 	{
-		PlayerManager.getSingleton().initiateLogin("john", "pw");
-		PlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
+		ClientPlayerManager.getSingleton().initiateLogin("john", "pw");
+		ClientPlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
 		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
 		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED, 42, 133); 
@@ -69,11 +68,11 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		LevelRecord level = new LevelRecord("One", 45);
 		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(qList, 20, level);
 		handler.process(msg);
-		while(ModelFacade.getSingleton().hasCommandsPending())
+		while(ClientModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}
-		ArrayList<ClientPlayerQuest> actual = PlayerManager.getSingleton().getThisClientsPlayer().getQuests();
+		ArrayList<ClientPlayerQuest> actual = ClientPlayerManager.getSingleton().getThisClientsPlayer().getQuests();
 		assertEquals(qList, actual);
 		
 	}
@@ -89,8 +88,8 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 	@Test
 	public void testExperiencePts() throws InterruptedException, AlreadyBoundException, NotBoundException
 	{
-		PlayerManager.getSingleton().initiateLogin("john", "pw");
-		PlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
+		ClientPlayerManager.getSingleton().initiateLogin("john", "pw");
+		ClientPlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
 		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
 		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED, 42, 8); 
@@ -101,10 +100,10 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(qList, expectedPoints, level);
 		handler.process(msg);
 		
-		while(ModelFacade.getSingleton().hasCommandsPending())
+		while(ClientModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}
-		assertEquals(expectedPoints, PlayerManager.getSingleton().getThisClientsPlayer().getExperiencePoints());
+		assertEquals(expectedPoints, ClientPlayerManager.getSingleton().getThisClientsPlayer().getExperiencePoints());
 	}
 }

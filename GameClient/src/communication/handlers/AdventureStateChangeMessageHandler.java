@@ -1,10 +1,9 @@
 package communication.handlers;
 
+import model.CommandAdventureStateChange;
+import model.ClientModelFacade;
 import communication.messages.AdventureStateChangeMessage;
 import communication.messages.Message;
-
-import edu.ship.shipsim.client.model.CommandAdventureStateChange;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Handles the Adventure State Change Message
@@ -22,7 +21,7 @@ public class AdventureStateChangeMessageHandler  extends MessageHandler
 	{
 		AdventureStateChangeMessage ourMsg = (AdventureStateChangeMessage)msg;
 		CommandAdventureStateChange cmd = new CommandAdventureStateChange(ourMsg);
-		ModelFacade.getSingleton().queueCommand(cmd);
+		ClientModelFacade.getSingleton().queueCommand(cmd);
 	}
 
 	/**

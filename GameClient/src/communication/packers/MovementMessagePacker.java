@@ -1,11 +1,11 @@
 package communication.packers;
 
+import model.ClientPlayerManager;
 import model.QualifiedObservableReport;
+import model.reports.PlayerMovedReport;
 import communication.messages.Message;
 import communication.messages.MovementMessage;
 import communication.packers.MessagePacker;
-import edu.ship.shipsim.client.model.PlayerManager;
-import edu.ship.shipsim.client.model.reports.PlayerMovedReport;
 
 /**
  * Takes the information given to us when MovementNotifier updates and
@@ -26,7 +26,7 @@ public class MovementMessagePacker extends MessagePacker
 	{
 		PlayerMovedReport movementReport = (PlayerMovedReport) object;
 		int playerID = movementReport.getID();
-		if (PlayerManager.getSingleton().getThisClientsPlayer().getID() == playerID)
+		if (ClientPlayerManager.getSingleton().getThisClientsPlayer().getID() == playerID)
 		{
 			Message msg = new MovementMessage(playerID, movementReport.getNewPosition());
 			return msg;

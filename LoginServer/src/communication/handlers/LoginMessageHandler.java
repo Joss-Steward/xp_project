@@ -1,7 +1,7 @@
 package communication.handlers;
 
 import model.LoginFailedException;
-import model.PlayerManager;
+import model.LoginPlayerManager;
 import model.reports.LoginSuccessfulReport;
 import communication.handlers.MessageHandler;
 import communication.messages.LoginFailedMessage;
@@ -31,7 +31,7 @@ public class LoginMessageHandler extends MessageHandler
 		LoginMessage loginMsg = (LoginMessage) msg;
 		try
 		{
-			LoginSuccessfulReport report = PlayerManager.getSingleton().login(loginMsg.getPlayerName(),
+			LoginSuccessfulReport report = LoginPlayerManager.getSingleton().login(loginMsg.getPlayerName(),
 					loginMsg.getPassword());
 			LoginSuccessfulMessage response = new LoginSuccessfulMessage(report.getPlayerID(),
 					report.getHostname(), report.getPort(), report.getPin());

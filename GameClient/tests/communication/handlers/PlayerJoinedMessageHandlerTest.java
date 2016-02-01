@@ -1,13 +1,13 @@
 package communication.handlers;
 
 import static org.junit.Assert.*;
+import model.ClientModelFacade;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.PlayerJoinedMessage;
 import datasource.PlayersForTest;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Make sure the message is handled properly
@@ -24,8 +24,8 @@ public class PlayerJoinedMessageHandlerTest
 	@Before
 	public void reset()
 	{
-		ModelFacade.resetSingleton();
-		ModelFacade.getSingleton(true, false);
+		ClientModelFacade.resetSingleton();
+		ClientModelFacade.getSingleton(true, false);
 	}
 
 	/**
@@ -51,8 +51,8 @@ public class PlayerJoinedMessageHandlerTest
 				PlayersForTest.MERLIN.getAppearanceType(), PlayersForTest.MERLIN.getPosition());
 		PlayerJoinedMessageHandler handler = new PlayerJoinedMessageHandler();
 		handler.process(msg);
-		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
-		while(ModelFacade.getSingleton().hasCommandsPending())
+		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
+		while(ClientModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

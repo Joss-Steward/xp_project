@@ -1,3 +1,5 @@
+import model.ClientPlayerAdventureTest;
+import model.ClientPlayerQuestTest;
 import model.MapToServerMappingTest;
 import model.PlayerLoginTest;
 import model.PlayerConnectionTest;
@@ -13,6 +15,9 @@ import communication.ConnectionIncomingTest;
 import communication.ConnectionManagerTest;
 import communication.StateAccumulatorTest;
 import communication.handlers.MessageHandlerSetTest;
+import communication.messages.AdventureNotificationCompleteMessageTest;
+import communication.messages.AdventureStateChangeMessageTest;
+import communication.messages.AreaCollisionMessageTest;
 import communication.messages.ChatMessageTest;
 import communication.messages.ConnectionMessageTest;
 import communication.messages.DisconnectionMessageTest;
@@ -61,7 +66,9 @@ import datasource.ServerRowDataGatewayRDSTest;
 		// StubMessageHandler2.class,
 
 		// communication.messages
-		//AreaCollisionMessageTest.class,
+		AdventureNotificationCompleteMessageTest.class,
+		AdventureStateChangeMessageTest.class,
+		AreaCollisionMessageTest.class,
 		ChatMessageTest.class,
 		ConnectionMessageTest.class,
 		DisconnectionMessageTest.class,
@@ -90,6 +97,7 @@ import datasource.ServerRowDataGatewayRDSTest;
 		PositionTest.class,
 		
 		//datasource
+		//DatabaseTest.class,
 		LevelRecordTest.class,
 		PlayerConnectionRowDataGatewayMockTest.class,
 		PlayerConnectionRowDataGatewayRDSTest.class,
@@ -101,19 +109,16 @@ import datasource.ServerRowDataGatewayRDSTest;
 		//PlayersForTest
 		ServerRowDataGatewayMockTest.class,
 		ServerRowDataGatewayRDSTest.class,
-		//ServerDataBehaviorTest,
-		//ServersInDB,
+		//ServerRowDataGatewayTest.class,
+		//ServersForTest
 
 		// model
-		//Tests for Adventure and Quest Classes
-		// DatabaseTest.class
+		ClientPlayerAdventureTest.class,
+		ClientPlayerQuestTest.class,
 		MapToServerMappingTest.class,
-		PlayerLoginTest.class, 
 		PlayerConnectionTest.class, 
-		// PlayersInDB
-		// QualifiedObservableTestInherited,
+		PlayerLoginTest.class, 
 		QualifiedObserverConnectorTest.class,
-		// ServersInDB
 
 		// model.reports
 		// StubQualifiedObservableReport1.class,

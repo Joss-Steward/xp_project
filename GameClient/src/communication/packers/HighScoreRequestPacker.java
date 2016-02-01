@@ -1,11 +1,9 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
-
+import model.reports.HighScoreRequestReport;
 import communication.messages.HighScoreRequestMessage;
 import communication.messages.Message;
-
-import edu.ship.shipsim.client.model.reports.HighScoreRequestReport;
 
 /**
  * Packer for the high score request message

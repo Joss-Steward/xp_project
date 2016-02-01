@@ -4,12 +4,13 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import model.ClientModelFacade;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.HighScoreResponseMessage;
 import datasource.PlayerScoreRecord;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * @author nk3668
@@ -24,8 +25,8 @@ public class HighScoreResponseHandlerTest
 	@Before
 	public void reset()
 	{
-		ModelFacade.resetSingleton();
-		ModelFacade.getSingleton(true, false);
+		ClientModelFacade.resetSingleton();
+		ClientModelFacade.getSingleton(true, false);
 	}
 	
 	/**
@@ -57,8 +58,8 @@ public class HighScoreResponseHandlerTest
 		HighScoreResponseMessageHandler h = new HighScoreResponseMessageHandler();
 		h.process(msg);
 
-		assertEquals(1, ModelFacade.getSingleton().getCommandQueueLength());
-		while(ModelFacade.getSingleton().hasCommandsPending())
+		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
+		while(ClientModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}

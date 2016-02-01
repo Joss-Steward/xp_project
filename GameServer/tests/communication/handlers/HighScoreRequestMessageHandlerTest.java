@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
+import model.ModelFacade;
 import model.OptionsManager;
+import model.PlayerManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,8 +17,6 @@ import communication.messages.HighScoreResponseMessage;
 import communication.messages.Message;
 import datasource.DatabaseException;
 import datasource.PlayersForTest;
-import edu.ship.shipsim.areaserver.model.ModelFacade;
-import edu.ship.shipsim.areaserver.model.PlayerManager;
 
 /**
  * Make sure the right response gets queued back to the player

@@ -1,9 +1,9 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
+import model.reports.QuestStateChangeReport;
 import communication.messages.Message;
 import communication.messages.QuestStateChangeMessage;
-import edu.ship.shipsim.areaserver.model.reports.QuestStateChangeReport;
 
 /**
  * If our player quest state has changed, we need to send a message so that the

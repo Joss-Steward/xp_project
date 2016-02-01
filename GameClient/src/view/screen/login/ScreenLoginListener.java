@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import view.screen.ScreenListener;
 import view.screen.Screens;
-import edu.ship.shipsim.client.model.reports.LoginFailedReport;
-import edu.ship.shipsim.client.model.reports.LoginInitiatedReport;
-import edu.ship.shipsim.client.model.reports.PinFailedReport;
 import model.QualifiedObservableReport;
+import model.reports.LoginFailedReport;
+import model.reports.LoginInitiatedReport;
+import model.reports.PinFailedReport;
 
 /**
  * Every screen has one of these and it is responsible for listening for the

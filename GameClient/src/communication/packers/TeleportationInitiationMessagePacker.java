@@ -1,9 +1,9 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
+import model.reports.ChangeMapReport;
 import communication.messages.Message;
 import communication.messages.TeleportationInitiationMessage;
-import edu.ship.shipsim.client.model.reports.ChangeMapReport;
 
 /**
  * @author Matthew Kujawski and Frank

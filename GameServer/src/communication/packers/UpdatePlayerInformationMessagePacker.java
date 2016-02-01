@@ -1,9 +1,9 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
+import model.reports.UpdatePlayerInformationReport;
 import communication.messages.InitializeThisClientsPlayerMessage;
 import communication.messages.Message;
-import edu.ship.shipsim.areaserver.model.reports.UpdatePlayerInformationReport;
 
 /**
  * @author Merlin

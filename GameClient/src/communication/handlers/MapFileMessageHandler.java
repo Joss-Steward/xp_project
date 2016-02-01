@@ -5,10 +5,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import model.CommandNewMap;
+import model.ClientModelFacade;
 import communication.messages.MapFileMessage;
 import communication.messages.Message;
-import edu.ship.shipsim.client.model.CommandNewMap;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Should process an incoming LoginResponseMessage. This means that we should
@@ -47,7 +47,7 @@ public class MapFileMessageHandler extends MessageHandler
 			String mapFile = (new URL(decodedPath, "../" + mapFileMessage.getMapFileName() )).toURI()
 					.getSchemeSpecificPart();
 
-			ModelFacade.getSingleton().queueCommand(new CommandNewMap(mapFile));
+			ClientModelFacade.getSingleton().queueCommand(new CommandNewMap(mapFile));
 		} catch (MalformedURLException | URISyntaxException e)
 		{
 			e.printStackTrace();

@@ -4,9 +4,12 @@ package view.screen.map;
 
 import java.util.ArrayList;
 
+import model.CommandHighScoreRequest;
+import model.ClientModelFacade;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
+import model.reports.HighScoreResponseReport;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -21,9 +24,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 import datasource.PlayerScoreRecord;
-import edu.ship.shipsim.client.model.CommandHighScoreRequest;
-import edu.ship.shipsim.client.model.ModelFacade;
-import edu.ship.shipsim.client.model.reports.HighScoreResponseReport;
 
 /**
  * @author ck4124, Scott
@@ -91,7 +91,7 @@ public class HighScoreUI extends Group implements QualifiedObserver
 			this.addAction(Actions.moveTo(0, 0, .3f));
 			
 			CommandHighScoreRequest cmd = new CommandHighScoreRequest();
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

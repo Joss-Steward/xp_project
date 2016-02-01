@@ -1,10 +1,10 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
+import model.reports.PinFailedReport;
 import communication.messages.Message;
 import communication.messages.PinFailedMessage;
 import communication.packers.MessagePacker;
-import edu.ship.shipsim.areaserver.model.reports.PinFailedReport;
 
 /**
  * Takes the information given to us and

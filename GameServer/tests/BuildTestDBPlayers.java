@@ -3,10 +3,10 @@ import java.sql.SQLException;
 
 import model.OptionsManager;
 import datasource.DatabaseException;
+import datasource.NPCRowDataGatewayRDS;
+import datasource.NPCsForTest;
+import datasource.PlayerRowDataGatewayRDS;
 import datasource.PlayersForTest;
-import edu.ship.shipsim.areaserver.datasource.NPCRowDataGatewayRDS;
-import edu.ship.shipsim.areaserver.datasource.NPCsForTest;
-import edu.ship.shipsim.areaserver.datasource.PlayerRowDataGatewayRDS;
 
 /**
  * Builds the Player portion of the database

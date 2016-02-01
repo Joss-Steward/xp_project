@@ -2,6 +2,8 @@ package communication.packers;
 
 import static org.junit.Assert.*;
 import model.OptionsManager;
+import model.PlayerManager;
+import model.reports.PlayerMovedReport;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,8 +11,6 @@ import org.junit.Test;
 import communication.StateAccumulator;
 import communication.messages.MovementMessage;
 import data.Position;
-import edu.ship.shipsim.areaserver.model.PlayerManager;
-import edu.ship.shipsim.areaserver.model.reports.PlayerMovedReport;
 
 /**
  * 

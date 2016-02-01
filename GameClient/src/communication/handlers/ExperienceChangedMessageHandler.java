@@ -1,10 +1,9 @@
 package communication.handlers;
 
+import model.CommandOverwriteExperience;
+import model.ClientModelFacade;
 import communication.messages.ExperienceChangedMessage;
 import communication.messages.Message;
-
-import edu.ship.shipsim.client.model.CommandOverwriteExperience;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * @author Ryan
@@ -24,7 +23,7 @@ public class ExperienceChangedMessageHandler extends MessageHandler
 			ExperienceChangedMessage experienceChangedMessage = (ExperienceChangedMessage) msg;
 			CommandOverwriteExperience cmd = new CommandOverwriteExperience(experienceChangedMessage.getPlayerID(),experienceChangedMessage.getExperiencePoints(),
 					experienceChangedMessage.getLevel());
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 		
 	}

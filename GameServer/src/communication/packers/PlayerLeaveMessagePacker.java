@@ -1,10 +1,10 @@
 package communication.packers;
 
 import model.QualifiedObservableReport;
+import model.reports.PlayerLeaveReport;
 import communication.messages.Message;
 import communication.messages.PlayerLeaveMessage;
 import communication.packers.MessagePacker;
-import edu.ship.shipsim.areaserver.model.reports.PlayerLeaveReport;
 
 /**
  * Packs a message telling clients that a player has left this area server

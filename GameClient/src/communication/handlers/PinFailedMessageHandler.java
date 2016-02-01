@@ -3,11 +3,11 @@ package communication.handlers;
 import java.io.IOException;
 import java.net.Socket;
 
+import model.CommandPinFailed;
+import model.ClientModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.PinFailedMessage;
-import edu.ship.shipsim.client.model.CommandPinFailed;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Should process an incoming LoginFailedMessage. 
@@ -33,14 +33,13 @@ public class PinFailedMessageHandler extends MessageHandler
 			try 
 			{
 				getConnectionManager().moveToNewSocket(
-						new Socket("localhost", 1871),
-						0, 0);
+						new Socket("localhost", 1871));
 			} catch (IOException e)
 			{
 				e.printStackTrace();
 			}
 			CommandPinFailed cmd = new CommandPinFailed(msg.toString());
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

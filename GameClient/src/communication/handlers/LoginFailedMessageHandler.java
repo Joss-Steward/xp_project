@@ -1,10 +1,10 @@
 package communication.handlers;
 
+import model.CommandLoginFailed;
+import model.ClientModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.LoginFailedMessage;
 import communication.messages.Message;
-import edu.ship.shipsim.client.model.CommandLoginFailed;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Should process an incoming LoginFailedMessage. 
@@ -28,7 +28,7 @@ public class LoginFailedMessageHandler extends MessageHandler
 		if (msg.getClass().equals(LoginFailedMessage.class))
 		{
 			CommandLoginFailed cmd = new CommandLoginFailed();
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
 

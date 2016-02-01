@@ -1,10 +1,10 @@
 package communication.handlers;
 
+import model.CommandRemovePlayer;
+import model.ClientModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.PlayerLeaveMessage;
-import edu.ship.shipsim.client.model.CommandRemovePlayer;
-import edu.ship.shipsim.client.model.ModelFacade;
 
 /**
  * Should process an incoming PlayerJoinedMessage that is reporting that someone
@@ -30,7 +30,7 @@ public class PlayerLeaveMessageHandler extends MessageHandler
 		{
 			PlayerLeaveMessage realMsg = (PlayerLeaveMessage) msg;
 			CommandRemovePlayer cmd = new CommandRemovePlayer(realMsg.getPlayerID());
-			ModelFacade.getSingleton().queueCommand(cmd);
+			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 		
 	}

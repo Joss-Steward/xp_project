@@ -2,17 +2,17 @@ package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import model.ModelFacade;
 import model.OptionsManager;
+import model.PlayerManager;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.AdventureNotificationCompleteMessage;
+import datasource.AdventuresForTest;
 import datasource.PlayersForTest;
-import edu.ship.shipsim.areaserver.datasource.AdventuresForTest;
-import edu.ship.shipsim.areaserver.datasource.QuestsForTest;
-import edu.ship.shipsim.areaserver.model.ModelFacade;
-import edu.ship.shipsim.areaserver.model.PlayerManager;
+import datasource.QuestsForTest;
 
 /**
  * Test for AdventureNotificationCompleteMessageHandler

@@ -4,8 +4,11 @@ import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 
+import model.IllegalQuestChangeException;
 import model.OptionsManager;
 import model.PlayerConnection;
+import model.PlayerManager;
+import model.reports.PlayerConnectionReport;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,9 +16,6 @@ import org.junit.Test;
 import communication.StateAccumulator;
 import communication.messages.MapFileMessage;
 import datasource.DatabaseException;
-import edu.ship.shipsim.areaserver.model.IllegalQuestChangeException;
-import edu.ship.shipsim.areaserver.model.PlayerManager;
-import edu.ship.shipsim.areaserver.model.reports.PlayerConnectionReport;
 
 /**
  * @author Merlin
@@ -31,6 +31,8 @@ public class MapFileMessagePackerTest
 	public void setUp()
 	{
 		PlayerManager.resetSingleton();
+		OptionsManager.resetSingleton();
+		OptionsManager.getSingleton().setTestMode(true);
 	}
 
 	/**
@@ -68,7 +70,6 @@ public class MapFileMessagePackerTest
 	@Test
 	public void ifThePlayerIsOnThisConnection() throws DatabaseException, SQLException, IllegalQuestChangeException
 	{
-		OptionsManager.getSingleton().setTestMode(true);
 		PlayerManager.getSingleton().addPlayer(1, PlayerConnection.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
