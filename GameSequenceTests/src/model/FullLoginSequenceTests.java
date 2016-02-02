@@ -9,7 +9,6 @@ import org.junit.Test;
 import communication.CommunicationException;
 
 import datasource.DatabaseException;
-import datasource.PlayerConnectionRowDataGatewayMock;
 
 /**
  * Runs all of the login sequence tests as JUnit tests
@@ -41,7 +40,6 @@ public class FullLoginSequenceTests
 			System.out.println(i);
 			assertEquals(SequenceTestRunner.SUCCESS_MSG,
 					testToRun.run((ServerType.values())[i]));
-			resetDataGateways();
 		}
 		ClientModelFacade.killThreads();
 		ModelFacade.killThreads();
@@ -65,10 +63,8 @@ public class FullLoginSequenceTests
 				new LoginBadPWSequenceTest());
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
 				testToRun.run(ServerType.THIS_PLAYER_CLIENT));
-		resetDataGateways();
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
 				testToRun.run(ServerType.LOGIN_SERVER));
-		resetDataGateways();
 		ClientModelFacade.killThreads();
 		ModelFacade.killThreads();
 	}
@@ -92,10 +88,8 @@ public class FullLoginSequenceTests
 				new LoginBadPlayerNameSequenceTest());
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
 				testToRun.run(ServerType.THIS_PLAYER_CLIENT));
-		resetDataGateways();
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
 				testToRun.run(ServerType.LOGIN_SERVER));
-		resetDataGateways();
 		ClientModelFacade.killThreads();
 		ModelFacade.killThreads();
 	}
@@ -119,17 +113,13 @@ public class FullLoginSequenceTests
 				new LoginBadPinSequenceTest());
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
 				testToRun.run(ServerType.THIS_PLAYER_CLIENT));
-		resetDataGateways();
+		
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
 				testToRun.run(ServerType.AREA_SERVER));
-		resetDataGateways();
 		ClientModelFacade.killThreads();
 		ModelFacade.killThreads();
 	}
 
-	private void resetDataGateways() throws DatabaseException
-	{
-		(new PlayerConnectionRowDataGatewayMock(2)).resetData();
-	}
+	
 
 }

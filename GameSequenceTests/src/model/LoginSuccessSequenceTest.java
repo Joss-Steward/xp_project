@@ -10,7 +10,6 @@ import communication.messages.LoginSuccessfulMessage;
 import communication.messages.MapFileMessage;
 import communication.messages.PlayerJoinedMessage;
 import communication.packers.MapFileMessagePacker;
-
 import datasource.AdventureRecord;
 import datasource.AdventureStateRecord;
 import datasource.AdventureStateTableDataGateway;
@@ -20,6 +19,7 @@ import datasource.AdventureTableDataGatewayMock;
 import datasource.DatabaseException;
 import datasource.LevelRecord;
 import datasource.LevelsForTest;
+import datasource.PlayerConnectionRowDataGatewayMock;
 import datasource.PlayersForTest;
 import datasource.QuestRowDataGateway;
 import datasource.QuestRowDataGatewayMock;
@@ -163,6 +163,20 @@ public class LoginSuccessSequenceTest extends SequenceTest
 	public void setUpServer()
 	{
 		OptionsManager.getSingleton().setMapName(PlayersForTest.MERLIN.getMapName());
-
+	}
+	
+	/**
+	 * @see model.SequenceTest#resetDataGateways()
+	 */
+	public void resetDataGateways()
+	{
+		try
+		{
+			(new PlayerConnectionRowDataGatewayMock(2)).resetData();
+		} catch (DatabaseException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

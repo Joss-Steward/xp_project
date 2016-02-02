@@ -45,4 +45,10 @@ public abstract class SequenceTest
 	 * by this test
 	 */
 	public abstract void setUpServer();
+
+	/**
+	 * Reset any gateways this test has changed so that more tests can be run
+	 */
+	public abstract void resetDataGateways();
+
 }

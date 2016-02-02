@@ -4,7 +4,8 @@ import java.io.IOException;
 
 import communication.messages.ConnectMessage;
 import communication.messages.PinFailedMessage;
-
+import datasource.DatabaseException;
+import datasource.PlayerConnectionRowDataGatewayMock;
 import datasource.PlayersForTest;
 
 /**
@@ -70,6 +71,20 @@ public class LoginBadPinSequenceTest extends SequenceTest
 	public void setUpServer()
 	{
 		OptionsManager.getSingleton().setMapName(PlayersForTest.MERLIN.getMapName());
+	}
 
+	/**
+	 * @see model.SequenceTest#resetDataGateways()
+	 */
+	public void resetDataGateways()
+	{
+		try
+		{
+			(new PlayerConnectionRowDataGatewayMock(2)).resetData();
+		} catch (DatabaseException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

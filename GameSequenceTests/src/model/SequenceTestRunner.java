@@ -139,6 +139,7 @@ public class SequenceTestRunner
 		{
 			return extraMessagesError;
 		}
+		testcase.resetDataGateways();
 		return SUCCESS_MSG;
 	}
 
