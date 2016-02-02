@@ -16,7 +16,7 @@ import datasource.DatabaseException;
  * @author Merlin
  *
  */
-public class FullLoginSequenceTests
+public class JUnitLoginSequenceTests
 {
 
 	/**
