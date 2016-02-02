@@ -99,11 +99,8 @@ public class SequenceTestRunner
 			// secondMessageHandlerSet = new
 			// MessageHandlerSet(secondStateAccumulator);
 		}
-		if (sType == testcase.getInitiatingServerType())
-		{
-			testcase.getInitiatingCommand().execute();
-		}
-		MessageFlow[] messages = testcase.getMessageSequence();
+		ArrayList<MessageFlow> messages = testcase.getMessageSequence();
+		initiateTheSequence(sType, messages);
 		for (MessageFlow msgFlow : messages)
 		{
 			Message message = msgFlow.getMessage();
@@ -143,6 +140,31 @@ public class SequenceTestRunner
 			return extraMessagesError;
 		}
 		return SUCCESS_MSG;
+	}
+
+	/**
+	 * There are two ways the sequence can be initiated: by the execution of a command or by 
+	 * sending an initial message.  If the test specifies a command, execute it if we are the
+	 * machine that should execute it.  If the test doesn't specify a command and we are the 
+	 * machine that should source the first message, just ignore that message (it is there to cause 
+	 * things to happen on other machines)
+	 * @param sType the type of machine we are testing
+	 * @param messages the sequence of messages we are supposed to execute
+	 */
+	private void initiateTheSequence(ServerType sType, ArrayList<MessageFlow> messages)
+	{
+		if (testcase.getInitiatingCommand() == null)
+		{
+			MessageFlow firstMsgFlow = messages.get(0);
+			if (firstMsgFlow.getSource() == sType)
+			{
+				messages.remove(0);
+			}
+		} else
+		if (sType == testcase.getInitiatingServerType())		
+		{
+			testcase.getInitiatingCommand().execute();
+		}
 	}
 
 	private String checkForExtraMessages()

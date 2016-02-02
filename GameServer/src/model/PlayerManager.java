@@ -9,6 +9,7 @@ import model.OptionsManager;
 import model.PlayerConnection;
 import model.PlayerLogin;
 import model.QualifiedObservableConnector;
+import model.reports.PinFailedReport;
 import model.reports.PlayerConnectionReport;
 import model.reports.PlayerLeaveReport;
 import model.reports.UpdatePlayerInformationReport;
@@ -125,9 +126,12 @@ public class PlayerManager
 			return player;
 		} else
 		{
-			throw new DatabaseException("Pin is not valid");
+			PinFailedReport report = new PinFailedReport(playerID);
+			System.err.println("Pin is not valid for " + playerID
+					+ " because " + report.toString());
+			QualifiedObservableConnector.getSingleton().sendReport(report);
 		}
-
+		return null;
 	}
 
 	/**

@@ -7,8 +7,8 @@ import communication.messages.PinFailedMessage;
 import communication.packers.MessagePacker;
 
 /**
- * Takes the information given to us and
- * translates it to the appropriate PinFailedMessage. 
+ * Takes the information given to us and translates it to the appropriate
+ * PinFailedMessage.
  * 
  * @author Matt and Andy
  */
@@ -23,12 +23,16 @@ public class PinFailedMessagePacker extends MessagePacker
 	@Override
 	public Message pack(QualifiedObservableReport object)
 	{
+		PinFailedReport report = (PinFailedReport) object;
 		if (object.getClass().equals(PinFailedReport.class))
 		{
-			PinFailedReport report = (PinFailedReport) object;
-			String err = report.toString();
-			PinFailedMessage msg = new PinFailedMessage(err);
-			return msg;	
+			int playerID = report.getPlayerID();
+			if (this.getAccumulator().getPlayerID() == playerID)
+			{
+				PinFailedMessage msg = new PinFailedMessage(playerID);
+				return msg;
+			}
+
 		}
 		return null;
 	}

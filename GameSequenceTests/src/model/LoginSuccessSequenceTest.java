@@ -37,7 +37,7 @@ import datasource.ServersForTest;
 public class LoginSuccessSequenceTest extends SequenceTest
 {
 
-	private MessageFlow[] messageSequence =
+	private MessageFlow[] sequence =
 	{
 			new MessageFlow(ServerType.THIS_PLAYER_CLIENT, ServerType.LOGIN_SERVER,
 					new LoginMessage(PlayersForTest.MERLIN.getPlayerName(),
@@ -75,7 +75,10 @@ public class LoginSuccessSequenceTest extends SequenceTest
 	 */
 	public LoginSuccessSequenceTest() throws IOException
 	{
-
+		for (MessageFlow mf:sequence)
+		{
+			messageSequence.add(mf);
+		}
 	}
 
 	private ArrayList<ClientPlayerQuest> getPlayersQuest(int playerID)
@@ -134,15 +137,7 @@ public class LoginSuccessSequenceTest extends SequenceTest
 				PlayersForTest.MERLIN.getPlayerPassword());
 	}
 
-	/**
-	 * @see model.SequenceTest#getMessageSequence()
-	 */
-	@Override
-	public MessageFlow[] getMessageSequence()
-	{
-		return messageSequence;
-	}
-
+	
 	/**
 	 * @see model.SequenceTest#getInitiatingServerType()
 	 */

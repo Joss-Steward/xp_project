@@ -99,6 +99,33 @@ public class FullLoginSequenceTests
 		ClientModelFacade.killThreads();
 		ModelFacade.killThreads();
 	}
+	
+	/**
+	 * Runs the sequences for when the user enters an unknown player name. This
+	 * only has to run on the initiating player's client and the login server
+	 * 
+	 * @throws IOException
+	 *             shouldn't
+	 * @throws CommunicationException
+	 *             shouldn't
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	@Test
+	public void testBadPinName() throws IOException, CommunicationException,
+			DatabaseException
+	{
+		SequenceTestRunner testToRun = new SequenceTestRunner(
+				new LoginBadPinSequenceTest());
+		assertEquals(SequenceTestRunner.SUCCESS_MSG,
+				testToRun.run(ServerType.THIS_PLAYER_CLIENT));
+		resetDataGateways();
+		assertEquals(SequenceTestRunner.SUCCESS_MSG,
+				testToRun.run(ServerType.AREA_SERVER));
+		resetDataGateways();
+		ClientModelFacade.killThreads();
+		ModelFacade.killThreads();
+	}
 
 	private void resetDataGateways() throws DatabaseException
 	{

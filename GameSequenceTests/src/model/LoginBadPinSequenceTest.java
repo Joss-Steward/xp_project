@@ -2,36 +2,36 @@ package model;
 
 import java.io.IOException;
 
-import communication.messages.LoginFailedMessage;
-import communication.messages.LoginMessage;
+import communication.messages.ConnectMessage;
+import communication.messages.PinFailedMessage;
 
 import datasource.PlayersForTest;
 
 /**
- * Defines the protocol for a successful login sequence
+ * Defines the protocol for what happens when the client tries to connect to an
+ * area server giving an invalid pin
  * 
  * @author Merlin
  *
  */
-public class LoginBadPlayerNameSequenceTest extends SequenceTest
+public class LoginBadPinSequenceTest extends SequenceTest
 {
 
 	private MessageFlow[] sequence =
 	{
-			new MessageFlow(ServerType.THIS_PLAYER_CLIENT, ServerType.LOGIN_SERVER,
-					new LoginMessage(PlayersForTest.MERLIN.getPlayerName()+"Z",
-							PlayersForTest.MERLIN.getPlayerPassword())),
-			new MessageFlow(ServerType.LOGIN_SERVER, ServerType.THIS_PLAYER_CLIENT,
-					new LoginFailedMessage())
-			 };
+			new MessageFlow(ServerType.THIS_PLAYER_CLIENT, ServerType.AREA_SERVER,
+					new ConnectMessage(PlayersForTest.MERLIN.getPlayerID(),
+							PlayersForTest.MERLIN.getPin() + 3)),
+			new MessageFlow(ServerType.AREA_SERVER, ServerType.THIS_PLAYER_CLIENT,
+					new PinFailedMessage(PlayersForTest.MERLIN.getPlayerID())) };
 
 	/**
 	 * @throws IOException
 	 *             shouldn't
 	 */
-	public LoginBadPlayerNameSequenceTest() throws IOException
+	public LoginBadPinSequenceTest() throws IOException
 	{
-		for (MessageFlow mf:sequence)
+		for (MessageFlow mf : sequence)
 		{
 			messageSequence.add(mf);
 		}
@@ -42,8 +42,7 @@ public class LoginBadPlayerNameSequenceTest extends SequenceTest
 	 */
 	public Command getInitiatingCommand()
 	{
-		return new CommandLogin(PlayersForTest.MERLIN.getPlayerName()+"Z",
-				PlayersForTest.MERLIN.getPlayerPassword());
+		return null;
 	}
 
 	/**

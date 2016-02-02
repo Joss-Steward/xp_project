@@ -1,10 +1,6 @@
 package model;
 
-import model.PlayerConnection;
-import model.PlayerLogin;
-import model.QualifiedObservableConnector;
 import model.reports.ExperienceChangedReport;
-import model.reports.PinFailedReport;
 import model.reports.PlayerMovedReport;
 import data.Position;
 import datasource.DatabaseException;
@@ -122,21 +118,8 @@ public class Player
 	public boolean isPinValid(double pinToCheck) throws DatabaseException
 	{
 		PlayerConnection pl = new PlayerConnection(playerID);
-		PinFailedReport report = null;
-
-		if (!pl.isPinValid(pinToCheck))
+		if (!pl.isPinValid(pinToCheck) || pl.isExpired())
 		{
-			report = new PinFailedReport(PlayerConnection.ERROR_PIN_NOT_EXIST);
-		} else if (pl.isExpired())
-		{
-			report = new PinFailedReport(PlayerConnection.ERROR_PIN_EXPIRED);
-		}
-
-		if (report != null)
-		{
-			System.err.println("Pin is not valid for " + playerID
-					+ " because " + report.toString());
-			QualifiedObservableConnector.getSingleton().sendReport(report);
 			return false;
 		}
 		return true;

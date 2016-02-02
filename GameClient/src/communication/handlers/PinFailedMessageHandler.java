@@ -5,14 +5,15 @@ import java.net.Socket;
 
 import model.CommandPinFailed;
 import model.ClientModelFacade;
+import model.OptionsManager;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
 import communication.messages.PinFailedMessage;
 
 /**
- * Should process an incoming LoginFailedMessage. 
+ * Should process an incoming LoginFailedMessage.
  * 
- * Creates the CommandPinFailed and queues it into the ModelFacade singleton. 
+ * Creates the CommandPinFailed and queues it into the ModelFacade singleton.
  * 
  * @author Andy and Matt
  * 
@@ -27,13 +28,16 @@ public class PinFailedMessageHandler extends MessageHandler
 	@Override
 	public void process(Message msg)
 	{
-		System.out.println("received " + msg + " of class " + msg.getClass().getCanonicalName());
+		System.out.println("received " + msg + " of class "
+				+ msg.getClass().getCanonicalName());
 		if (msg.getClass().equals(PinFailedMessage.class))
 		{
-			try 
+			try
 			{
-				getConnectionManager().moveToNewSocket(
-						new Socket("localhost", 1871));
+				if (!OptionsManager.getSingleton().isTestMode())
+				{
+					getConnectionManager().moveToNewSocket(new Socket("localhost", 1871));
+				}
 			} catch (IOException e)
 			{
 				e.printStackTrace();

@@ -16,7 +16,7 @@ import datasource.PlayersForTest;
 public class LoginBadPWSequenceTest extends SequenceTest
 {
 
-	private MessageFlow[] messageSequence =
+	private MessageFlow[] sequence =
 	{
 			new MessageFlow(ServerType.THIS_PLAYER_CLIENT, ServerType.LOGIN_SERVER,
 					new LoginMessage(PlayersForTest.MERLIN.getPlayerName(),
@@ -31,7 +31,10 @@ public class LoginBadPWSequenceTest extends SequenceTest
 	 */
 	public LoginBadPWSequenceTest() throws IOException
 	{
-
+		for (MessageFlow mf:sequence)
+		{
+			messageSequence.add(mf);
+		}
 	}
 
 	/**
@@ -43,14 +46,7 @@ public class LoginBadPWSequenceTest extends SequenceTest
 				PlayersForTest.MERLIN.getPlayerPassword()+"Z");
 	}
 
-	/**
-	 * @see model.SequenceTest#getMessageSequence()
-	 */
-	@Override
-	public MessageFlow[] getMessageSequence()
-	{
-		return messageSequence;
-	}
+	
 
 	/**
 	 * @see model.SequenceTest#getInitiatingServerType()
