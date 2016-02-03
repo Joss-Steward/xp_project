@@ -69,16 +69,16 @@ public class SequenceTestRunner
 		Class<?> testClass = null;
 		try
 		{
-			testClass = Class.forName("model." + args[0]);
+			testClass = Class.forName(args[0]);
 		} catch (ClassNotFoundException e)
 		{
-			System.out.println("Can't find a class with that name " + "model." + args[0]);
+			System.out.println("Can't find a class with that name " + args[0]);
 			System.exit(1);
 		}
 		SequenceTest testcase = (SequenceTest) testClass.newInstance();
 		SequenceTestRunner runner = new SequenceTestRunner(testcase);
 		ServerType serverToTest = (ServerType.values())[Integer.parseInt(args[1])];
-		System.out.println(runner.run(serverToTest));
+		System.out.println(runner.run(serverToTest, true));
 		ClientModelFacade.killThreads();
 		ModelFacade.killThreads();
 	}
@@ -86,11 +86,13 @@ public class SequenceTestRunner
 	/**
 	 * @param sType
 	 *            the type of server we want to run this test on
-	 * @return true if everything went OK
+	 * @param verbose
+	 *            true if you want output showing the sequence of things the test is looking at
+	 * @return A message describing what happened - SUCCESS_MSG if the test passed
 	 * @throws CommunicationException
 	 *             shouldn't
 	 */
-	public String run(ServerType sType) throws CommunicationException
+	public String run(ServerType sType, boolean verbose) throws CommunicationException
 	{
 		if (sType.supportsOneToManyConnections())
 		{
@@ -106,7 +108,10 @@ public class SequenceTestRunner
 			Message message = msgFlow.getMessage();
 			if (msgFlow.getSource().equals(sType))
 			{
-				System.out.println("Checking that I sourced " + msgFlow.getMessage());
+				if (verbose)
+				{
+					System.out.println("Checking that I sourced " + msgFlow.getMessage());
+				}
 				Message msgInAccumulator;
 				if (msgFlow.getDestination().equals(ServerType.OTHER_CLIENT))
 				{
@@ -124,8 +129,10 @@ public class SequenceTestRunner
 			}
 			if (msgFlow.getDestination().equals(sType))
 			{
-				System.out.println("I am receiving " + msgFlow.getMessage());
-
+				if (verbose)
+				{
+					System.out.println("I am receiving " + msgFlow.getMessage());
+				}
 				messageHandlerSet.process(message);
 				if (sType == ServerType.AREA_SERVER)
 				{
@@ -144,13 +151,17 @@ public class SequenceTestRunner
 	}
 
 	/**
-	 * There are two ways the sequence can be initiated: by the execution of a command or by 
-	 * sending an initial message.  If the test specifies a command, execute it if we are the
-	 * machine that should execute it.  If the test doesn't specify a command and we are the 
-	 * machine that should source the first message, just ignore that message (it is there to cause 
-	 * things to happen on other machines)
-	 * @param sType the type of machine we are testing
-	 * @param messages the sequence of messages we are supposed to execute
+	 * There are two ways the sequence can be initiated: by the execution of a
+	 * command or by sending an initial message. If the test specifies a
+	 * command, execute it if we are the machine that should execute it. If the
+	 * test doesn't specify a command and we are the machine that should source
+	 * the first message, just ignore that message (it is there to cause things
+	 * to happen on other machines)
+	 * 
+	 * @param sType
+	 *            the type of machine we are testing
+	 * @param messages
+	 *            the sequence of messages we are supposed to execute
 	 */
 	private void initiateTheSequence(ServerType sType, ArrayList<MessageFlow> messages)
 	{
@@ -161,8 +172,7 @@ public class SequenceTestRunner
 			{
 				messages.remove(0);
 			}
-		} else
-		if (sType == testcase.getInitiatingServerType())		
+		} else if (sType == testcase.getInitiatingServerType())
 		{
 			testcase.getInitiatingCommand().execute();
 		}

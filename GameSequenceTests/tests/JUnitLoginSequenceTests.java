@@ -40,9 +40,8 @@ public class JUnitLoginSequenceTests
 				new LoginSuccessSequenceTest());
 		for (int i = 0; i < 4; i++)
 		{
-			System.out.println(i);
 			assertEquals(SequenceTestRunner.SUCCESS_MSG,
-					testToRun.run((ServerType.values())[i]));
+					testToRun.run((ServerType.values())[i], false));
 		}
 		ClientModelFacade.killThreads();
 		ModelFacade.killThreads();
@@ -65,9 +64,9 @@ public class JUnitLoginSequenceTests
 		SequenceTestRunner testToRun = new SequenceTestRunner(
 				new LoginBadPWSequenceTest());
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
-				testToRun.run(ServerType.THIS_PLAYER_CLIENT));
+				testToRun.run(ServerType.THIS_PLAYER_CLIENT, false));
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
-				testToRun.run(ServerType.LOGIN_SERVER));
+				testToRun.run(ServerType.LOGIN_SERVER, false));
 		ClientModelFacade.killThreads();
 		ModelFacade.killThreads();
 	}
@@ -90,9 +89,9 @@ public class JUnitLoginSequenceTests
 		SequenceTestRunner testToRun = new SequenceTestRunner(
 				new LoginBadPlayerNameSequenceTest());
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
-				testToRun.run(ServerType.THIS_PLAYER_CLIENT));
+				testToRun.run(ServerType.THIS_PLAYER_CLIENT, false));
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
-				testToRun.run(ServerType.LOGIN_SERVER));
+				testToRun.run(ServerType.LOGIN_SERVER, false));
 		ClientModelFacade.killThreads();
 		ModelFacade.killThreads();
 	}
@@ -115,10 +114,10 @@ public class JUnitLoginSequenceTests
 		SequenceTestRunner testToRun = new SequenceTestRunner(
 				new LoginBadPinSequenceTest());
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
-				testToRun.run(ServerType.THIS_PLAYER_CLIENT));
+				testToRun.run(ServerType.THIS_PLAYER_CLIENT, false));
 		
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
-				testToRun.run(ServerType.AREA_SERVER));
+				testToRun.run(ServerType.AREA_SERVER, false));
 		ClientModelFacade.killThreads();
 		ModelFacade.killThreads();
 	}
