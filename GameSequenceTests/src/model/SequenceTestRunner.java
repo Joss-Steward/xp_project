@@ -23,7 +23,7 @@ public class SequenceTestRunner
 	/**
 	 * the message returned by the test if everything passes
 	 */
-	static final String SUCCESS_MSG = "Success!!";
+	public static final String SUCCESS_MSG = "Success!!";
 	private SequenceTest testcase;
 	private StateAccumulator stateAccumulator;
 	private MessageHandlerSet messageHandlerSet;
@@ -90,7 +90,7 @@ public class SequenceTestRunner
 	 * @throws CommunicationException
 	 *             shouldn't
 	 */
-	protected String run(ServerType sType) throws CommunicationException
+	public String run(ServerType sType) throws CommunicationException
 	{
 		if (sType.supportsOneToManyConnections())
 		{

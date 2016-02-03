@@ -1,8 +1,11 @@
-package model;
-
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
+
+import model.ClientModelFacade;
+import model.ModelFacade;
+import model.SequenceTestRunner;
+import model.ServerType;
 
 import org.junit.Test;
 

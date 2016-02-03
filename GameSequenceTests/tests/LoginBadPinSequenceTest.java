@@ -1,7 +1,12 @@
-package model;
+
 
 import java.io.IOException;
 
+import model.Command;
+import model.MessageFlow;
+import model.OptionsManager;
+import model.SequenceTest;
+import model.ServerType;
 import communication.messages.ConnectMessage;
 import communication.messages.PinFailedMessage;
 import datasource.DatabaseException;
@@ -83,7 +88,6 @@ public class LoginBadPinSequenceTest extends SequenceTest
 			(new PlayerConnectionRowDataGatewayMock(2)).resetData();
 		} catch (DatabaseException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

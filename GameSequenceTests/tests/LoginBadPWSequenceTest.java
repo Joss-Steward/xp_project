@@ -1,7 +1,13 @@
-package model;
+
 
 import java.io.IOException;
 
+import model.Command;
+import model.CommandLogin;
+import model.MessageFlow;
+import model.OptionsManager;
+import model.SequenceTest;
+import model.ServerType;
 import communication.messages.LoginFailedMessage;
 import communication.messages.LoginMessage;
 import datasource.DatabaseException;
@@ -86,7 +92,6 @@ public class LoginBadPWSequenceTest extends SequenceTest
 			(new PlayerConnectionRowDataGatewayMock(2)).resetData();
 		} catch (DatabaseException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
