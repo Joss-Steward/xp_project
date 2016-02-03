@@ -22,7 +22,7 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	NICK(3, "Nick", "male_b", 4, 13, "pw", "current.tmx", 1111, null, 0, 35),
+	NICK(3, "Nick", "male_b", 4, 13, "pw", "homework.tmx", 1111, null, 0, 35),
 	/**
 	 * 
 	 */

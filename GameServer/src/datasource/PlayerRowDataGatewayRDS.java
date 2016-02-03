@@ -40,6 +40,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 					"Create TABLE Players (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  row INTEGER, col INTEGER, " +
 					"appearanceType VARCHAR(255), quizScore INTEGER, experiencePoints INTEGER)");
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e)
 		{
 			throw new DatabaseException("Unable to create the player table", e);

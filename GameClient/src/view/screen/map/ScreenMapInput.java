@@ -31,7 +31,7 @@ public class ScreenMapInput implements InputProcessor
 	public boolean keyDown(int keycode)
 	{
 		if (sprite == null) {
-			return false;
+//			return false;
 		}
 		
 		//System.out.println("Key down received: " + keycode);
@@ -67,7 +67,7 @@ public class ScreenMapInput implements InputProcessor
 				
 		}
 
-		if (cm != null && sprite.doneWalking()) 
+		if (cm != null )//&& sprite != null && sprite.doneWalking()) 
 		{
 			ClientModelFacade.getSingleton().queueCommand(cm);
 		}

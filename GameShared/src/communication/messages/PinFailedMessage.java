@@ -29,18 +29,6 @@ public class PinFailedMessage implements Message, Serializable
 	}
 
 	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + playerID;
-		return result;
-	}
-
-	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -56,6 +44,26 @@ public class PinFailedMessage implements Message, Serializable
 		if (playerID != other.playerID)
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the unique ID of the player whose pin was invalid
+	 */
+	public int getPlayerID()
+	{
+		return playerID;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + playerID;
+		return result;
 	}
 
 	/**

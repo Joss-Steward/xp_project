@@ -1,19 +1,9 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
 
-import model.IllegalQuestChangeException;
-import model.LevelManager;
-import model.OptionsManager;
-import model.Player;
-import model.PlayerConnection;
-import model.PlayerManager;
-import model.QualifiedObservableConnector;
-import model.QualifiedObserver;
 import model.reports.ExperienceChangedReport;
 
 import org.easymock.EasyMock;
@@ -106,32 +96,6 @@ public class PlayerTest extends DatabaseTest
 	}
 
 	/**
-	 * Make sure an expired PIN throws the appropriate exception
-	 * 
-	 * @throws DatabaseException
-	 *             shouldn't (exception checked in the test)
-	 */
-	@Test
-	public void oldPin() throws DatabaseException
-	{
-		PlayerConnection playerPin = new PlayerConnection(1);
-		GregorianCalendar cal = new GregorianCalendar();
-		cal.add(PlayerConnection.EXPIRATION_TIME_UNITS, -1 * PlayerConnection.EXPIRATION_TIME_QUANTITY
-				- 1);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		playerPin.setChangedOn(sdf.format(cal.getTime()));
-		boolean gotTheException = false;
-		try
-		{
-			playerManager.addPlayer(1, PlayerConnection.DEFAULT_PIN);
-		} catch (DatabaseException | IllegalQuestChangeException e)
-		{
-			gotTheException = true;
-		}
-		assertTrue(gotTheException);
-	}
-
-	/**
 	 * Sets the players position and checks it
 	 * 
 	 * @throws DatabaseException
@@ -146,20 +110,7 @@ public class PlayerTest extends DatabaseTest
 		assertEquals(pos, p.getPlayerPosition());
 	}
 
-	/**
-	 * Make sure it complains if we give it the wrong PIN
-	 * 
-	 * @throws DatabaseException
-	 *             should
-	 * @throws IllegalQuestChangeException the state changed illegally
-	 * 
-	 */
-	@Test(expected = DatabaseException.class)
-	public void wrongPin() throws DatabaseException, IllegalQuestChangeException
-	{
-		playerManager.addPlayer(1, -1);
-	}
-
+	
 	/**
 	 * Test that we can set Player's experience points and add to it
 	 * @throws DatabaseException shouldn't
