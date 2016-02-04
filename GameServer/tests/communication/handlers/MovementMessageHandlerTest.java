@@ -9,7 +9,7 @@ import model.PlayerManager;
 import org.junit.Before;
 import org.junit.Test;
 
-import communication.messages.MovementMessage;
+import communication.messages.PlayerMovedMessage;
 import data.Position;
 
 /**
@@ -39,7 +39,7 @@ public class MovementMessageHandlerTest
 	public void testTypeWeHandle()
 	{
 		MovementMessageHandler h = new MovementMessageHandler();
-		assertEquals(MovementMessage.class, h.getMessageTypeWeHandle());
+		assertEquals(PlayerMovedMessage.class, h.getMessageTypeWeHandle());
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class MovementMessageHandlerTest
 
 		assertEquals(startPosition, p.getPlayerPosition());
 
-		MovementMessage msg = new MovementMessage(playerID, newPosition);
+		PlayerMovedMessage msg = new PlayerMovedMessage(playerID, newPosition);
 		MovementMessageHandler handler = new MovementMessageHandler();
 
 		handler.process(msg);

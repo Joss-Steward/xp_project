@@ -12,7 +12,7 @@ import model.reports.PlayerMovedReport;
 import org.junit.Before;
 import org.junit.Test;
 
-import communication.messages.MovementMessage;
+import communication.messages.PlayerMovedMessage;
 import data.Position;
 
 /**
@@ -30,7 +30,7 @@ public class MovementMessagePackerTest
 	public void test()
 	{
 		MovementMessagePacker packer = new MovementMessagePacker();
-		MovementMessage msg = (MovementMessage) packer.pack(new PlayerMovedReport(1,
+		PlayerMovedMessage msg = (PlayerMovedMessage) packer.pack(new PlayerMovedReport(1,
 				new Position(4, 3)));
 		assertEquals(1, msg.getPlayerID());
 		assertEquals(new Position(4, 3), msg.getPosition());
@@ -50,7 +50,7 @@ public class MovementMessagePackerTest
 	{
 		setup();
 		MovementMessagePacker packer = new MovementMessagePacker();
-		MovementMessage msg = (MovementMessage) packer.pack(new PlayerMovedReport(2,
+		PlayerMovedMessage msg = (PlayerMovedMessage) packer.pack(new PlayerMovedReport(2,
 				new Position(4, 3)));
 		assertNull(msg);
 	}

@@ -4,7 +4,7 @@ import model.CommandMovePlayer;
 import model.ClientModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
-import communication.messages.MovementMessage;
+import communication.messages.PlayerMovedMessage;
 
 /**
  * Should process an incoming MovementMessage that is reporting that someone
@@ -23,9 +23,9 @@ public class MovementMessageHandler extends MessageHandler
 	@Override
 	public void process(Message msg)
 	{
-		if (msg.getClass().equals(MovementMessage.class))
+		if (msg.getClass().equals(PlayerMovedMessage.class))
 		{
-			MovementMessage movementMessage = (MovementMessage) msg;
+			PlayerMovedMessage movementMessage = (PlayerMovedMessage) msg;
 			CommandMovePlayer cmd = new CommandMovePlayer(movementMessage.getPlayerID(),
 					movementMessage.getPosition());
 			ClientModelFacade.getSingleton().queueCommand(cmd);
@@ -38,7 +38,7 @@ public class MovementMessageHandler extends MessageHandler
 	@Override
 	public Class<?> getMessageTypeWeHandle()
 	{
-		return MovementMessage.class;
+		return PlayerMovedMessage.class;
 	}
 
 }

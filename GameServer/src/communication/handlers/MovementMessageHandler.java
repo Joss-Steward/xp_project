@@ -4,7 +4,7 @@ import model.CommandMovePlayer;
 import model.ModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
-import communication.messages.MovementMessage;
+import communication.messages.PlayerMovedMessage;
 
 /**
  * Handles a report of a player moving
@@ -23,9 +23,9 @@ public class MovementMessageHandler extends MessageHandler
 	@Override
 	public void process(Message msg)
 	{
-		if (msg.getClass().equals(MovementMessage.class))
+		if (msg.getClass().equals(PlayerMovedMessage.class))
 		{
-			MovementMessage mMsg = (MovementMessage) msg;
+			PlayerMovedMessage mMsg = (PlayerMovedMessage) msg;
 			CommandMovePlayer cmd = new CommandMovePlayer(mMsg.getPlayerID(),
 					mMsg.getPosition());
 			ModelFacade.getSingleton().queueCommand(cmd);
@@ -38,6 +38,6 @@ public class MovementMessageHandler extends MessageHandler
 	@Override
 	public Class<?> getMessageTypeWeHandle()
 	{
-		return MovementMessage.class;
+		return PlayerMovedMessage.class;
 	}
 }

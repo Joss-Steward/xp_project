@@ -10,7 +10,7 @@ import data.Position;
  * @author merlin
  * 
  */
-public class MovementMessage implements Message, Serializable
+public class PlayerMovedMessage implements Message, Serializable
 {
 	/**
 	 * 
@@ -26,7 +26,7 @@ public class MovementMessage implements Message, Serializable
 	 * @param p
 	 *            Where the player moved to
 	 */
-	public MovementMessage(int playerID, Position p)
+	public PlayerMovedMessage(int playerID, Position p)
 	{
 		this.playerID = playerID;
 		this.position = p;
@@ -65,9 +65,9 @@ public class MovementMessage implements Message, Serializable
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof MovementMessage))
+		if (!(obj instanceof PlayerMovedMessage))
 			return false;
-		MovementMessage other = (MovementMessage) obj;
+		PlayerMovedMessage other = (PlayerMovedMessage) obj;
 		if (playerID != other.playerID)
 		{
 			return false;

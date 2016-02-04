@@ -4,7 +4,7 @@ import model.ClientPlayerManager;
 import model.QualifiedObservableReport;
 import model.reports.PlayerMovedReport;
 import communication.messages.Message;
-import communication.messages.MovementMessage;
+import communication.messages.PlayerMovedMessage;
 import communication.packers.MessagePacker;
 
 /**
@@ -28,7 +28,7 @@ public class MovementMessagePacker extends MessagePacker
 		int playerID = movementReport.getID();
 		if (ClientPlayerManager.getSingleton().getThisClientsPlayer().getID() == playerID)
 		{
-			Message msg = new MovementMessage(playerID, movementReport.getNewPosition());
+			Message msg = new PlayerMovedMessage(playerID, movementReport.getNewPosition());
 			return msg;
 		}
 		return null;

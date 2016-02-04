@@ -3,7 +3,7 @@ package communication.packers;
 import model.QualifiedObservableReport;
 import model.reports.PlayerMovedReport;
 import communication.messages.Message;
-import communication.messages.MovementMessage;
+import communication.messages.PlayerMovedMessage;
 import communication.packers.MessagePacker;
 
 /**
@@ -32,7 +32,7 @@ public class MovementMessagePacker extends MessagePacker
 			int playerID = report.getPlayerID();
 			if (this.getAccumulator().getPlayerID() != playerID)
 			{
-				MovementMessage msg = new MovementMessage(playerID,
+				PlayerMovedMessage msg = new PlayerMovedMessage(playerID,
 						report.getNewPosition());
 				return msg;
 			}

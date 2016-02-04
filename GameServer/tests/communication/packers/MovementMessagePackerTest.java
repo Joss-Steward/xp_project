@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.StateAccumulator;
-import communication.messages.MovementMessage;
+import communication.messages.PlayerMovedMessage;
 import data.Position;
 
 /**
@@ -62,7 +62,7 @@ public class MovementMessagePackerTest
 		MovementMessagePacker packer = new MovementMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 
-		MovementMessage message = (MovementMessage) packer.pack(report);
+		PlayerMovedMessage message = (PlayerMovedMessage) packer.pack(report);
 		assertNull(message);
 	}
 
@@ -78,7 +78,7 @@ public class MovementMessagePackerTest
 		MovementMessagePacker packer = new MovementMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 
-		MovementMessage message = (MovementMessage) packer.pack(report);
+		PlayerMovedMessage message = (PlayerMovedMessage) packer.pack(report);
 		assertEquals(-1, message.getPlayerID());
 		assertEquals(position, message.getPosition());
 	}

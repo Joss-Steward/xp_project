@@ -12,7 +12,7 @@ import model.ClientPlayerManager;
 import org.junit.Before;
 import org.junit.Test;
 
-import communication.messages.MovementMessage;
+import communication.messages.PlayerMovedMessage;
 import data.Position;
 import datasource.PlayersForTest;
 
@@ -40,7 +40,7 @@ public class MovementMessageHandlerTest
 	public void typeWeHandle()
 	{
 		MovementMessageHandler h = new MovementMessageHandler();
-		assertEquals(MovementMessage.class, h.getMessageTypeWeHandle());
+		assertEquals(PlayerMovedMessage.class, h.getMessageTypeWeHandle());
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class MovementMessageHandlerTest
 		ClientPlayerManager.getSingleton().initiateLogin(PlayersForTest.MATT.getPlayerName(), PlayersForTest.MATT.getPlayerPassword());
 		ClientPlayerManager.getSingleton().finishLogin(PlayersForTest.MATT.getPlayerID());
 		Position p = new Position(1, 1);
-		MovementMessage msg = new MovementMessage(PlayersForTest.MATT.getPlayerID(), p);
+		PlayerMovedMessage msg = new PlayerMovedMessage(PlayersForTest.MATT.getPlayerID(), p);
 		MovementMessageHandler handler = new MovementMessageHandler();
 		handler.process(msg);
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
