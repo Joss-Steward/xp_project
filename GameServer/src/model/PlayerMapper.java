@@ -150,4 +150,12 @@ public class PlayerMapper
 		}
 	}
 
+	/**
+	 * Removes the player from data areas other than the PlayerManager
+	 */
+	public void removePlayer()
+	{
+		QuestManager.getSingleton().removeQuestStatesForPlayer(player.getPlayerID());
+	}
+
 }

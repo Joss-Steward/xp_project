@@ -4,13 +4,13 @@ import java.io.IOException;
 
 import model.ClientModelFacade;
 import model.ModelFacade;
+import model.PlayerManager;
 import model.SequenceTestRunner;
 import model.ServerType;
 
 import org.junit.Test;
 
 import communication.CommunicationException;
-
 import datasource.DatabaseException;
 
 /**
@@ -40,11 +40,12 @@ public class JUnitLoginSequenceTests
 				new LoginSuccessSequenceTest());
 		for (int i = 0; i < 4; i++)
 		{
+			System.out.println("Starting #"+i);
 			assertEquals(SequenceTestRunner.SUCCESS_MSG,
 					testToRun.run((ServerType.values())[i], false));
 		}
-		ClientModelFacade.killThreads();
-		ModelFacade.killThreads();
+//		ClientModelFacade.killThreads();
+//		ModelFacade.killThreads();
 	}
 
 	/**
@@ -67,8 +68,8 @@ public class JUnitLoginSequenceTests
 				testToRun.run(ServerType.THIS_PLAYER_CLIENT, false));
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
 				testToRun.run(ServerType.LOGIN_SERVER, false));
-		ClientModelFacade.killThreads();
-		ModelFacade.killThreads();
+//		ClientModelFacade.killThreads();
+//		ModelFacade.killThreads();
 	}
 
 	/**
@@ -92,8 +93,8 @@ public class JUnitLoginSequenceTests
 				testToRun.run(ServerType.THIS_PLAYER_CLIENT, false));
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
 				testToRun.run(ServerType.LOGIN_SERVER, false));
-		ClientModelFacade.killThreads();
-		ModelFacade.killThreads();
+//		ClientModelFacade.killThreads();
+//		ModelFacade.killThreads();
 	}
 	
 	/**
@@ -108,7 +109,7 @@ public class JUnitLoginSequenceTests
 	 *             shouldn't
 	 */
 	@Test
-	public void testBadPinName() throws IOException, CommunicationException,
+	public void testBadPin() throws IOException, CommunicationException,
 			DatabaseException
 	{
 		SequenceTestRunner testToRun = new SequenceTestRunner(
@@ -118,8 +119,9 @@ public class JUnitLoginSequenceTests
 		
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
 				testToRun.run(ServerType.AREA_SERVER, false));
-		ClientModelFacade.killThreads();
-		ModelFacade.killThreads();
+		PlayerManager pm = PlayerManager.getSingleton();
+//		ClientModelFacade.killThreads();
+//		ModelFacade.killThreads();
 	}
 
 	

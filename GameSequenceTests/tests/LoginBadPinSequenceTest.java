@@ -7,8 +7,10 @@ import model.MessageFlow;
 import model.OptionsManager;
 import model.SequenceTest;
 import model.ServerType;
+
 import communication.messages.ConnectMessage;
 import communication.messages.PinFailedMessage;
+
 import datasource.DatabaseException;
 import datasource.PlayerConnectionRowDataGatewayMock;
 import datasource.PlayersForTest;
@@ -27,9 +29,9 @@ public class LoginBadPinSequenceTest extends SequenceTest
 	{
 			new MessageFlow(ServerType.THIS_PLAYER_CLIENT, ServerType.AREA_SERVER,
 					new ConnectMessage(PlayersForTest.MERLIN.getPlayerID(),
-							PlayersForTest.MERLIN.getPin() + 3)),
+							PlayersForTest.MERLIN.getPin() + 3), false),
 			new MessageFlow(ServerType.AREA_SERVER, ServerType.THIS_PLAYER_CLIENT,
-					new PinFailedMessage(PlayersForTest.MERLIN.getPlayerID())) };
+					new PinFailedMessage(PlayersForTest.MERLIN.getPlayerID()), true) };
 
 	/**
 	 * @throws IOException

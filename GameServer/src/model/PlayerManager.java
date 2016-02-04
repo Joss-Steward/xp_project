@@ -126,6 +126,7 @@ public class PlayerManager
 			return player;
 		} else
 		{
+			pm.removePlayer();
 			PinFailedReport report = new PinFailedReport(playerID);
 			System.err.println("Pin is not valid for " + playerID
 					+ " because " + report.toString());

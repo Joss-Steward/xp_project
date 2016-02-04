@@ -87,8 +87,10 @@ public class SequenceTestRunner
 	 * @param sType
 	 *            the type of server we want to run this test on
 	 * @param verbose
-	 *            true if you want output showing the sequence of things the test is looking at
-	 * @return A message describing what happened - SUCCESS_MSG if the test passed
+	 *            true if you want output showing the sequence of things the
+	 *            test is looking at
+	 * @return A message describing what happened - SUCCESS_MSG if the test
+	 *         passed
 	 * @throws CommunicationException
 	 *             shouldn't
 	 */
@@ -101,12 +103,13 @@ public class SequenceTestRunner
 			// secondMessageHandlerSet = new
 			// MessageHandlerSet(secondStateAccumulator);
 		}
+//		ModelFacade lookHere = ModelFacade.getSingleton();
 		ArrayList<MessageFlow> messages = testcase.getMessageSequence();
 		initiateTheSequence(sType, messages);
 		for (MessageFlow msgFlow : messages)
 		{
 			Message message = msgFlow.getMessage();
-			if (msgFlow.getSource().equals(sType))
+			if (msgFlow.getSource().equals(sType) && msgFlow.isReaction())
 			{
 				if (verbose)
 				{
@@ -165,16 +168,13 @@ public class SequenceTestRunner
 	 */
 	private void initiateTheSequence(ServerType sType, ArrayList<MessageFlow> messages)
 	{
-		if (testcase.getInitiatingCommand() == null)
+		if (sType == testcase.getInitiatingServerType())
 		{
-			MessageFlow firstMsgFlow = messages.get(0);
-			if (firstMsgFlow.getSource() == sType)
+			Command initiatingCommand = testcase.getInitiatingCommand();
+			if (initiatingCommand != null)
 			{
-				messages.remove(0);
+				testcase.getInitiatingCommand().execute();
 			}
-		} else if (sType == testcase.getInitiatingServerType())
-		{
-			testcase.getInitiatingCommand().execute();
 		}
 	}
 

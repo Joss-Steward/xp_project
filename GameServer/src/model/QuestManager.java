@@ -7,6 +7,7 @@ import model.OptionsManager;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
+import model.reports.PlayerLeaveReport;
 import model.reports.PlayerMovedReport;
 import data.Position;
 import datasource.AdventureRecord;
@@ -48,6 +49,8 @@ public class QuestManager implements QualifiedObserver
 	{
 		QualifiedObservableConnector.getSingleton().registerObserver(this,
 				PlayerMovedReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(this,
+				PlayerLeaveReport.class);
 		questStates = new HashMap<Integer, ArrayList<QuestState>>();
 		if (OptionsManager.getSingleton().isTestMode())
 		{
@@ -157,6 +160,18 @@ public class QuestManager implements QualifiedObserver
 	 */
 	@Override
 	public void receiveReport(QualifiedObservableReport report)
+	{
+		if (report.getClass() == PlayerMovedReport.class)
+		{
+			handlePlayerMovement(report);
+		} else if (report.getClass() == PlayerLeaveReport.class)
+		{
+			PlayerLeaveReport myReport = (PlayerLeaveReport) report;
+			removeQuestStatesForPlayer(myReport.getPlayerID());
+		}
+	}
+
+	private void handlePlayerMovement(QualifiedObservableReport report)
 	{
 		PlayerMovedReport myReport = (PlayerMovedReport) report;
 		try

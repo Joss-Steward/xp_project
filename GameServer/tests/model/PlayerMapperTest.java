@@ -1,6 +1,8 @@
 package model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -120,6 +122,18 @@ public class PlayerMapperTest extends DatabaseTest
 	protected PlayerMapper getMapper() throws DatabaseException
 	{
 		return new PlayerMapper(getPlayerWeAreTesting().getPlayerID());
+	}
+	
+	/**
+	 * When we tell a mapper to remove a player, its quests should be removed from the quest manager
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void cleansUpQuestManager() throws DatabaseException
+	{
+		PlayerMapper pm = getMapper();
+		pm.removePlayer();
+		assertNull(QuestManager.getSingleton().getQuestList(getPlayerWeAreTesting().getPlayerID()));
 	}
 
 	/**

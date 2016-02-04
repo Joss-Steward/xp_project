@@ -15,6 +15,7 @@ import model.QualifiedObservableConnector;
 import model.Quest;
 import model.QuestManager;
 import model.QuestState;
+import model.reports.PlayerLeaveReport;
 
 import org.junit.After;
 import org.junit.Before;
@@ -445,6 +446,17 @@ public class QuestManagerTest extends DatabaseTest
 	}
 	
 	
+	/**
+	 * We should be able to clear out all of the quest states for a given player
+	 */
+	@Test
+	public void removeAPlayersQuestStatesWhenLeaves()
+	{
+		QuestManager.getSingleton().addQuestState(4,
+				new QuestState(4, 1, QuestStateEnum.AVAILABLE, false));
+		QualifiedObservableConnector.getSingleton().sendReport(new PlayerLeaveReport(4));
+		assertNull(QuestManager.getSingleton().getQuestList(4));
+	}
 	/**
 	 * Should be able to change the state of a quest to fulfilled if enough 
 	 * adventures are completed. Player 4 quest 3 in the mock data has enough

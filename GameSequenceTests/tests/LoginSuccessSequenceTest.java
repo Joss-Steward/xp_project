@@ -49,33 +49,33 @@ public class LoginSuccessSequenceTest extends SequenceTest
 	{
 			new MessageFlow(ServerType.THIS_PLAYER_CLIENT, ServerType.LOGIN_SERVER,
 					new LoginMessage(PlayersForTest.MERLIN.getPlayerName(),
-							PlayersForTest.MERLIN.getPlayerPassword())),
+							PlayersForTest.MERLIN.getPlayerPassword()), true),
 			new MessageFlow(ServerType.LOGIN_SERVER, ServerType.THIS_PLAYER_CLIENT,
 					new LoginSuccessfulMessage(PlayersForTest.MERLIN.getPlayerID(),
 							ServersForTest.CURRENT.getHostName(),
-							ServersForTest.CURRENT.getPortNumber(), 33)),
+							ServersForTest.CURRENT.getPortNumber(), 33), true),
 			new MessageFlow(ServerType.THIS_PLAYER_CLIENT, ServerType.AREA_SERVER,
 					new ConnectMessage(PlayersForTest.MERLIN.getPlayerID(),
-							PlayersForTest.MERLIN.getPin())),
+							PlayersForTest.MERLIN.getPin()), true),
 			new MessageFlow(ServerType.AREA_SERVER, ServerType.THIS_PLAYER_CLIENT,
 					new PlayerJoinedMessage(PlayersForTest.MERLIN.getPlayerID(),
 							PlayersForTest.MERLIN.getPlayerName(),
 							PlayersForTest.MERLIN.getAppearanceType(),
-							PlayersForTest.MERLIN.getPosition())),
+							PlayersForTest.MERLIN.getPosition()), true),
 			new MessageFlow(ServerType.AREA_SERVER, ServerType.OTHER_CLIENT,
 					new PlayerJoinedMessage(PlayersForTest.MERLIN.getPlayerID(),
 							PlayersForTest.MERLIN.getPlayerName(),
 							PlayersForTest.MERLIN.getAppearanceType(),
-							PlayersForTest.MERLIN.getPosition())),
+							PlayersForTest.MERLIN.getPosition()), true),
 			new MessageFlow(ServerType.AREA_SERVER, ServerType.THIS_PLAYER_CLIENT,
 					new MapFileMessage(MapFileMessagePacker.DIRECTORY_PREFIX
-							+ ServersForTest.CURRENT.getMapName())),
+							+ ServersForTest.CURRENT.getMapName()), true),
 			new MessageFlow(ServerType.AREA_SERVER, ServerType.THIS_PLAYER_CLIENT,
 					new InitializeThisClientsPlayerMessage(
 							getPlayersQuest(PlayersForTest.MERLIN.getPlayerID()),
 							PlayersForTest.MERLIN.getExperiencePoints(), new LevelRecord(
 									LevelsForTest.TWO.getDescription(),
-									LevelsForTest.TWO.getLevelUpPoints()))) };
+									LevelsForTest.TWO.getLevelUpPoints())), true) };
 
 	/**
 	 * @throws IOException
