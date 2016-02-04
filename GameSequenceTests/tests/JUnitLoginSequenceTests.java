@@ -2,15 +2,13 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
-import model.ClientModelFacade;
-import model.ModelFacade;
-import model.PlayerManager;
 import model.SequenceTestRunner;
 import model.ServerType;
 
 import org.junit.Test;
 
 import communication.CommunicationException;
+
 import datasource.DatabaseException;
 
 /**
@@ -44,8 +42,6 @@ public class JUnitLoginSequenceTests
 			assertEquals(SequenceTestRunner.SUCCESS_MSG,
 					testToRun.run((ServerType.values())[i], false));
 		}
-//		ClientModelFacade.killThreads();
-//		ModelFacade.killThreads();
 	}
 
 	/**
@@ -68,8 +64,6 @@ public class JUnitLoginSequenceTests
 				testToRun.run(ServerType.THIS_PLAYER_CLIENT, false));
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
 				testToRun.run(ServerType.LOGIN_SERVER, false));
-//		ClientModelFacade.killThreads();
-//		ModelFacade.killThreads();
 	}
 
 	/**
@@ -93,8 +87,6 @@ public class JUnitLoginSequenceTests
 				testToRun.run(ServerType.THIS_PLAYER_CLIENT, false));
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
 				testToRun.run(ServerType.LOGIN_SERVER, false));
-//		ClientModelFacade.killThreads();
-//		ModelFacade.killThreads();
 	}
 	
 	/**
@@ -119,9 +111,6 @@ public class JUnitLoginSequenceTests
 		
 		assertEquals(SequenceTestRunner.SUCCESS_MSG,
 				testToRun.run(ServerType.AREA_SERVER, false));
-		PlayerManager pm = PlayerManager.getSingleton();
-//		ClientModelFacade.killThreads();
-//		ModelFacade.killThreads();
 	}
 
 	

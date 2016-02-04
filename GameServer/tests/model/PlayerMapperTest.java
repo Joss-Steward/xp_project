@@ -1,20 +1,10 @@
 package model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-
-import model.AdventureState;
-import model.IllegalAdventureChangeException;
-import model.IllegalQuestChangeException;
-import model.OptionsManager;
-import model.Player;
-import model.PlayerMapper;
-import model.QuestManager;
-import model.QuestState;
 
 import org.junit.Before;
 import org.junit.Test;
