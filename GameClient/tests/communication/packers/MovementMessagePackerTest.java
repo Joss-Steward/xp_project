@@ -7,7 +7,7 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
 import model.ClientPlayerManager;
-import model.reports.PlayerMovedReport;
+import model.reports.ThisClientsPlayerMovedReport;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,8 +29,8 @@ public class MovementMessagePackerTest
 	@Test
 	public void test()
 	{
-		MovementMessagePacker packer = new MovementMessagePacker();
-		PlayerMovedMessage msg = (PlayerMovedMessage) packer.pack(new PlayerMovedReport(1,
+		PlayerMovedMessagePacker packer = new PlayerMovedMessagePacker();
+		PlayerMovedMessage msg = (PlayerMovedMessage) packer.pack(new ThisClientsPlayerMovedReport(1,
 				new Position(4, 3)));
 		assertEquals(1, msg.getPlayerID());
 		assertEquals(new Position(4, 3), msg.getPosition());
@@ -49,8 +49,8 @@ public class MovementMessagePackerTest
 	public void onlySendIfThisPlayer() throws AlreadyBoundException, NotBoundException
 	{
 		setup();
-		MovementMessagePacker packer = new MovementMessagePacker();
-		PlayerMovedMessage msg = (PlayerMovedMessage) packer.pack(new PlayerMovedReport(2,
+		PlayerMovedMessagePacker packer = new PlayerMovedMessagePacker();
+		PlayerMovedMessage msg = (PlayerMovedMessage) packer.pack(new ThisClientsPlayerMovedReport(2,
 				new Position(4, 3)));
 		assertNull(msg);
 	}

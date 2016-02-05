@@ -1,10 +1,10 @@
 package communication.handlers;
 
-import model.CommandMovePlayer;
+import model.CommandClientMovePlayer;
 import model.ClientModelFacade;
 import communication.handlers.MessageHandler;
 import communication.messages.Message;
-import communication.messages.PlayerMovedMessage;
+import communication.messages.OtherPlayerMovedMessage;
 
 /**
  * Should process an incoming MovementMessage that is reporting that someone
@@ -13,7 +13,7 @@ import communication.messages.PlayerMovedMessage;
  * @author merlin
  * 
  */
-public class MovementMessageHandler extends MessageHandler
+public class OtherPlayerMovedMessageHandler extends MessageHandler
 {
 	/**
 	 * 
@@ -23,10 +23,10 @@ public class MovementMessageHandler extends MessageHandler
 	@Override
 	public void process(Message msg)
 	{
-		if (msg.getClass().equals(PlayerMovedMessage.class))
+		if (msg.getClass().equals(OtherPlayerMovedMessage.class))
 		{
-			PlayerMovedMessage movementMessage = (PlayerMovedMessage) msg;
-			CommandMovePlayer cmd = new CommandMovePlayer(movementMessage.getPlayerID(),
+			OtherPlayerMovedMessage movementMessage = (OtherPlayerMovedMessage) msg;
+			CommandClientMovePlayer cmd = new CommandClientMovePlayer(movementMessage.getPlayerID(),
 					movementMessage.getPosition());
 			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
@@ -38,7 +38,7 @@ public class MovementMessageHandler extends MessageHandler
 	@Override
 	public Class<?> getMessageTypeWeHandle()
 	{
-		return PlayerMovedMessage.class;
+		return OtherPlayerMovedMessage.class;
 	}
 
 }

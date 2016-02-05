@@ -33,9 +33,9 @@ public class ScreenMapListener extends ScreenListener
 		ScreenMap map = (ScreenMap) this.screen;
 
 		// adds your player's sprite to this client
-		if (arg.getClass().equals(PlayerMovedReport.class))
+		if (arg.getClass().equals(ThisClientsPlayerMovedReport.class))
 		{
-			PlayerMovedReport report = (PlayerMovedReport) arg;
+			ThisClientsPlayerMovedReport report = (ThisClientsPlayerMovedReport) arg;
 			map.movePlayer(report.getID(), report.getNewPosition());
 		}
 		// moves the player to a new position
@@ -77,7 +77,7 @@ public class ScreenMapListener extends ScreenListener
 		ArrayList<Class<? extends QualifiedObservableReport>> reportTypes = new ArrayList<Class<? extends QualifiedObservableReport>>();
 		reportTypes.add(PlayerConnectedToAreaServerReport.class);
 		reportTypes.add(PlayerDisconnectedFromAreaServerReport.class);
-		reportTypes.add(PlayerMovedReport.class);
+		reportTypes.add(ThisClientsPlayerMovedReport.class);
 		reportTypes.add(ChatReceivedReport.class);
 		reportTypes.add(NewMapReport.class);
 		reportTypes.add(ChangeMapReport.class);

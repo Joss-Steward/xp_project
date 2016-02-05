@@ -9,7 +9,7 @@ import model.QualifiedObservableReport;
  * @author Matt Kujawski
  * 
  */
-public final class PlayerMovedReport implements QualifiedObservableReport
+public final class ThisClientsPlayerMovedReport implements QualifiedObservableReport
 {
 	private final int playerID;
 	private final Position thePosition;
@@ -20,7 +20,7 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 	 * @param position
 	 *            the position he moved to
 	 */
-	public PlayerMovedReport(int playerID, Position position)
+	public ThisClientsPlayerMovedReport(int playerID, Position position)
 	{
 		thePosition = position;
 		this.playerID = playerID;
@@ -38,7 +38,7 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PlayerMovedReport other = (PlayerMovedReport) obj;
+		ThisClientsPlayerMovedReport other = (ThisClientsPlayerMovedReport) obj;
 		if (thePosition == null)
 		{
 			if (other.thePosition != null)

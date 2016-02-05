@@ -4,12 +4,14 @@ import java.rmi.NotBoundException;
 
 import model.ClientPlayerManager;
 import model.Command;
-import model.CommandMovePlayer;
+import model.CommandClientMovePlayer;
+import model.MapManager;
 import model.MessageFlow;
 import model.OptionsManager;
 import model.PlayerManager;
 import model.SequenceTest;
 import model.ServerType;
+import communication.messages.OtherPlayerMovedMessage;
 import communication.messages.PlayerMovedMessage;
 import data.Position;
 import datasource.DatabaseException;
@@ -33,7 +35,7 @@ public class MovementBasicSequenceTest extends SequenceTest
 									PlayersForTest.MATT.getPosition().getColumn() + 1)),
 					true),
 			new MessageFlow(ServerType.AREA_SERVER, ServerType.OTHER_CLIENT,
-					new PlayerMovedMessage(PlayersForTest.MATT.getPlayerID(),
+					new OtherPlayerMovedMessage(PlayersForTest.MATT.getPlayerID(),
 							new Position(PlayersForTest.MATT.getPosition().getRow(),
 									PlayersForTest.MATT.getPosition().getColumn() + 1)),
 					true) };
@@ -55,7 +57,7 @@ public class MovementBasicSequenceTest extends SequenceTest
 	 */
 	public Command getInitiatingCommand()
 	{
-		return new CommandMovePlayer(PlayersForTest.MATT.getPlayerID(), new Position(
+		return new CommandClientMovePlayer(PlayersForTest.MATT.getPlayerID(), new Position(
 				PlayersForTest.MATT.getPosition().getRow(), PlayersForTest.MATT
 						.getPosition().getColumn() + 1));
 	}
@@ -84,20 +86,17 @@ public class MovementBasicSequenceTest extends SequenceTest
 	@Override
 	public void setUpServer()
 	{
-//		try
-//		{
+		try
+		{
+			MapManager.getSingleton().changeToNewFile(PlayersForTest.MATT.getMapName());
 			ClientPlayerManager clientPlayerManager = ClientPlayerManager.getSingleton();
+			clientPlayerManager.initiateLogin(PlayersForTest.MATT.getPlayerName(), PlayersForTest.MATT.getPlayerPassword());
+			clientPlayerManager.finishLogin(PlayersForTest.MATT.getPlayerID());
 			PlayerManager.getSingleton().addPlayer(PlayersForTest.MATT.getPlayerID());
-//			clientPlayerManager.finishLogin(PlayersForTest.MATT.getPlayerID());
-//		} catch (AlreadyBoundException | NotBoundException e)
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		.initializePlayer(
-//				PlayersForTest.MATT.getPlayerID(), PlayersForTest.MATT.getPlayerName(),
-//				PlayersForTest.MATT.getAppearanceType(),
-//				PlayersForTest.MATT.getPosition());
+		} catch (AlreadyBoundException | NotBoundException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -105,13 +104,6 @@ public class MovementBasicSequenceTest extends SequenceTest
 	 */
 	public void resetDataGateways()
 	{
-		try
-		{
-			(new PlayerConnectionRowDataGatewayMock(2)).resetData();
-		} catch (DatabaseException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		PlayerManager.resetSingleton();
 	}
 }

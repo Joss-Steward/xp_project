@@ -4,7 +4,7 @@ import data.Position;
 /**
  * @author Matt Kujawski
  */
-public class CommandMovePlayer extends Command
+public class CommandClientMovePlayer extends Command
 {
 	private int thePlayerID;
 	private Position thePosition;
@@ -16,7 +16,7 @@ public class CommandMovePlayer extends Command
 	 * @param position
 	 *            is the position of the player
 	 */
-	public CommandMovePlayer(int playerID, Position position)
+	public CommandClientMovePlayer(int playerID, Position position)
 	{
 		thePlayerID = playerID;
 		thePosition = position;

@@ -4,7 +4,7 @@ import java.util.Observable;
 
 import model.QualifiedObservableConnector;
 import model.reports.ChangeMapReport;
-import model.reports.PlayerMovedReport;
+import model.reports.ThisClientsPlayerMovedReport;
 import data.Position;
 
 /**
@@ -125,7 +125,7 @@ public class ClientPlayer extends Observable
 	public void move(Position playerPosition)
 	{
 		this.position = playerPosition;
-		QualifiedObservableConnector.getSingleton().sendReport(new PlayerMovedReport(this.id, playerPosition));
+		QualifiedObservableConnector.getSingleton().sendReport(new ThisClientsPlayerMovedReport(this.id, playerPosition));
 	}
 
 	/**

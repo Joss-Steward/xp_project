@@ -39,7 +39,7 @@ public class MovementMessageHandlerTest
 	@Test
 	public void typeWeHandle()
 	{
-		MovementMessageHandler h = new MovementMessageHandler();
+		OtherPlayerMovedMessageHandler h = new OtherPlayerMovedMessageHandler();
 		assertEquals(PlayerMovedMessage.class, h.getMessageTypeWeHandle());
 	}
 
@@ -59,7 +59,7 @@ public class MovementMessageHandlerTest
 		ClientPlayerManager.getSingleton().finishLogin(PlayersForTest.MATT.getPlayerID());
 		Position p = new Position(1, 1);
 		PlayerMovedMessage msg = new PlayerMovedMessage(PlayersForTest.MATT.getPlayerID(), p);
-		MovementMessageHandler handler = new MovementMessageHandler();
+		OtherPlayerMovedMessageHandler handler = new OtherPlayerMovedMessageHandler();
 		handler.process(msg);
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
 		while(ClientModelFacade.getSingleton().hasCommandsPending())

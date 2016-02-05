@@ -2,9 +2,9 @@ package communication.packers;
 
 import model.QualifiedObservableReport;
 import model.reports.PlayerMovedReport;
+
 import communication.messages.Message;
-import communication.messages.PlayerMovedMessage;
-import communication.packers.MessagePacker;
+import communication.messages.OtherPlayerMovedMessage;
 
 /**
  * Takes the information given to us when MovementNotifier updates and
@@ -14,7 +14,7 @@ import communication.packers.MessagePacker;
  * @author merlin
  * 
  */
-public class MovementMessagePacker extends MessagePacker
+public class OtherPlayerMovedMessagePacker extends MessagePacker
 {
 
 	/**
@@ -32,7 +32,7 @@ public class MovementMessagePacker extends MessagePacker
 			int playerID = report.getPlayerID();
 			if (this.getAccumulator().getPlayerID() != playerID)
 			{
-				PlayerMovedMessage msg = new PlayerMovedMessage(playerID,
+				OtherPlayerMovedMessage msg = new OtherPlayerMovedMessage(playerID,
 						report.getNewPosition());
 				return msg;
 			}

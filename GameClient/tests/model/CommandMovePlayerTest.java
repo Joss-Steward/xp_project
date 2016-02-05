@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
-import model.CommandMovePlayer;
+import model.CommandClientMovePlayer;
 import model.MapManager;
 import model.ClientPlayer;
 import model.ClientPlayerManager;
@@ -63,7 +63,7 @@ public class CommandMovePlayerTest
 		ClientPlayerManager.getSingleton().getThisClientsPlayer().setPosition(pos);
 		assertEquals(new Position(1, 2), ClientPlayerManager.getSingleton().getThisClientsPlayer().getPosition());
 
-		CommandMovePlayer cm = new CommandMovePlayer(1, new Position(1, 0));
+		CommandClientMovePlayer cm = new CommandClientMovePlayer(1, new Position(1, 0));
 		assertTrue(cm.execute());
 		assertEquals(new Position(1, 0), ClientPlayerManager.getSingleton().getThisClientsPlayer().getPosition());
 	}
@@ -84,7 +84,7 @@ public class CommandMovePlayerTest
 		ClientPlayerManager.getSingleton().finishLogin(1);
 		assertEquals(new Position(1, 2), someGuy.getPosition());
 
-		CommandMovePlayer cm = new CommandMovePlayer(someGuy.getID(),
+		CommandClientMovePlayer cm = new CommandClientMovePlayer(someGuy.getID(),
 				new Position(1, 1));
 		assertTrue(cm.execute());
 		assertEquals(new Position(1, 1), someGuy.getPosition());
@@ -107,7 +107,7 @@ public class CommandMovePlayerTest
 		ClientPlayerManager.getSingleton().finishLogin(1);
 		assertEquals(new Position(1, 2), me.getPosition());
 
-		CommandMovePlayer cm = new CommandMovePlayer(me.getID(), new Position(
+		CommandClientMovePlayer cm = new CommandClientMovePlayer(me.getID(), new Position(
 				1, 1));
 		assertFalse(cm.execute());
 		assertEquals(new Position(1, 2), me.getPosition());

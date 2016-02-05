@@ -15,7 +15,7 @@ import model.QualifiedObserver;
 import model.ThisClientsPlayer;
 import model.reports.AdventuresNeedingNotificationReport;
 import model.reports.ExperiencePointsChangeReport;
-import model.reports.PlayerMovedReport;
+import model.reports.ThisClientsPlayerMovedReport;
 import model.reports.QuestStateReport;
 
 import org.easymock.EasyMock;
@@ -55,8 +55,8 @@ public class ThisClientsPlayerTest
 	public void notifiesOnMove()
 	{
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerMovedReport.class);
-		PlayerMovedReport report = new PlayerMovedReport(1, new Position(3, 4));
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, ThisClientsPlayerMovedReport.class);
+		ThisClientsPlayerMovedReport report = new ThisClientsPlayerMovedReport(1, new Position(3, 4));
 		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 

@@ -45,7 +45,7 @@ public class MovementMessagePackerTest
 	@Test
 	public void testReportTypeWePack()
 	{
-		MovementMessagePacker packer = new MovementMessagePacker();
+		OtherPlayerMovedMessagePacker packer = new OtherPlayerMovedMessagePacker();
 		assertEquals(PlayerMovedReport.class, packer.getReportTypeWePack());
 	}
 
@@ -59,7 +59,7 @@ public class MovementMessagePackerTest
 		Position position = new Position(1, 2);
 		PlayerMovedReport report = new PlayerMovedReport(stateAccumulator.getPlayerID(),
 				"fred", position, "mapName");
-		MovementMessagePacker packer = new MovementMessagePacker();
+		OtherPlayerMovedMessagePacker packer = new OtherPlayerMovedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 
 		PlayerMovedMessage message = (PlayerMovedMessage) packer.pack(report);
@@ -75,7 +75,7 @@ public class MovementMessagePackerTest
 	{
 		Position position = new Position(1, 2);
 		PlayerMovedReport report = new PlayerMovedReport(-1, "fred", position, "mapName");
-		MovementMessagePacker packer = new MovementMessagePacker();
+		OtherPlayerMovedMessagePacker packer = new OtherPlayerMovedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 
 		PlayerMovedMessage message = (PlayerMovedMessage) packer.pack(report);
