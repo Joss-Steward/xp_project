@@ -22,6 +22,10 @@ public enum QuestStatesForTest
 	 * 
 	 */
 	PLAYER1_QUEST3(1, 3, QuestStateEnum.AVAILABLE, true),
+	/**
+	 * 
+	 */
+	PLAYER5_QUEST4(5, 4, QuestStateEnum.AVAILABLE, true),
 	
 	/**
 	 * 
