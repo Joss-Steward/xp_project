@@ -2,7 +2,7 @@ package communication.messages;
 
 import java.util.ArrayList;
 
-import datasource.PlayerScoreRecord;
+import data.PlayerScoreRecord;
 
 /**
  * Contains the top ten high scores in order

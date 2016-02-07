@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
-import datasource.PlayersForTest;
 
 /**
  * Tests the functionality required during a login

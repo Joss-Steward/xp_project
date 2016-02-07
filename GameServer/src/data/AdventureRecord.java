@@ -1,4 +1,4 @@
-package datasource;
+package data;
 
 /**
  * Data Transfer Object for the Adventure Data Gateway to deliver records.

@@ -2,18 +2,16 @@
 
 import java.io.IOException;
 
+import testData.PlayersForTest;
 import model.Command;
 import model.MessageFlow;
 import model.OptionsManager;
 import model.SequenceTest;
 import model.ServerType;
-
 import communication.messages.ConnectMessage;
 import communication.messages.PinFailedMessage;
-
 import datasource.DatabaseException;
 import datasource.PlayerConnectionRowDataGatewayMock;
-import datasource.PlayersForTest;
 
 /**
  * Defines the protocol for what happens when the client tries to connect to an

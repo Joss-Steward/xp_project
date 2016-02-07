@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import org.junit.After;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import data.Position;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayerRowDataGateway;
-import datasource.PlayersForTest;
 
 /**
  * Tests required of all player gateways

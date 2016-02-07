@@ -9,17 +9,17 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.AdventureStatesForTest;
+import testData.PlayersForTest;
+import testData.QuestStatesForTest;
 import data.Position;
 import datasource.AdventureStateEnum;
 import datasource.AdventureStateTableDataGatewayMock;
-import datasource.AdventureStatesForTest;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayerConnectionRowDataGatewayMock;
 import datasource.PlayerRowDataGatewayMock;
-import datasource.PlayersForTest;
 import datasource.QuestStateTableDataGatewayMock;
-import datasource.QuestStatesForTest;
 
 /**
  * Tests the PlayerMapper class

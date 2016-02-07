@@ -7,9 +7,9 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.QuestsForTest;
 import datasource.DatabaseException;
 import datasource.QuestStateEnum;
-import datasource.QuestsForTest;
 
 /**
  * @author Merlin

@@ -11,10 +11,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import data.Position;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
-import datasource.PlayersForTest;
 import datasource.QuestStateTableDataGatewayMock;
 
 /**

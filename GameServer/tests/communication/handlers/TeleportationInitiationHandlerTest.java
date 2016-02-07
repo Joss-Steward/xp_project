@@ -8,13 +8,13 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
+import testData.ServersForTest;
 import communication.StateAccumulator;
 import communication.messages.TeleportationInitiationMessage;
 import communication.messages.TeleportationContinuationMessage;
 import communication.messages.Message;
 import data.Position;
-import datasource.PlayersForTest;
-import datasource.ServersForTest;
 import model.ModelFacade;
 import model.OptionsManager;
 import model.Player;

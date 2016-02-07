@@ -1,8 +1,8 @@
+import testData.PlayersForTest;
 import model.OptionsManager;
 import datasource.DatabaseException;
 import datasource.PlayerConnectionRowDataGatewayRDS;
 import datasource.PlayerLoginRowDataGatewayRDS;
-import datasource.PlayersForTest;
 
 /**
  * Builds the login portion of the database

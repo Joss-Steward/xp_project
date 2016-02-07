@@ -3,9 +3,10 @@ package datasource;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import testData.QuestStatesForTest;
+import data.QuestStateRecord;
 import datasource.DatabaseException;
 import datasource.QuestStateEnum;
-import datasource.QuestStatesForTest;
 
 /**
  * A mock implementation of the gateway

@@ -9,10 +9,10 @@ import model.QuestManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.AdventureStatesForTest;
+import testData.PlayersForTest;
 import datasource.AdventureStateEnum;
-import datasource.AdventureStatesForTest;
 import datasource.DatabaseException;
-import datasource.PlayersForTest;
 
 /**
  * @author Ryan

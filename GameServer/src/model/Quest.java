@@ -2,8 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import data.AdventureRecord;
 import data.Position;
-import datasource.AdventureRecord;
 
 /**
  * The class that hold the functionality for Quest

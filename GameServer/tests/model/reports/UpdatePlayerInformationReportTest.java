@@ -16,13 +16,13 @@ import model.reports.UpdatePlayerInformationReport;
 import org.junit.Before;
 import org.junit.Test;
 
-import datasource.AdventureStatesForTest;
-import datasource.AdventuresForTest;
+import testData.AdventureStatesForTest;
+import testData.AdventuresForTest;
+import testData.PlayersForTest;
+import testData.QuestStatesForTest;
+import testData.QuestsForTest;
 import datasource.DatabaseException;
 import datasource.LevelsForTest;
-import datasource.PlayersForTest;
-import datasource.QuestStatesForTest;
-import datasource.QuestsForTest;
 
 /**
  * Test the CurrentQuestStateReport

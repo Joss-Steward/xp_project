@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import datasource.ServersForTest;
+import testData.ServersForTest;
 
 /**
  * Tests a login message

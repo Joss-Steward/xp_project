@@ -3,7 +3,8 @@ package datasource;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import datasource.AdventuresForTest;
+import testData.AdventuresForTest;
+import data.AdventureRecord;
 
 /**
  * Mock version of the gateway to the table of adventures.

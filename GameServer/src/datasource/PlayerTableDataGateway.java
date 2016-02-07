@@ -2,8 +2,8 @@ package datasource;
 
 import java.util.ArrayList;
 
+import data.PlayerScoreRecord;
 import datasource.DatabaseException;
-import datasource.PlayerScoreRecord;
 
 /**
  * Defines the behavior required for Player table data gateways

@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.Test;
 
+import testData.PlayersForTest;
+
 /**
  * Tests for all of our gateways
  * 

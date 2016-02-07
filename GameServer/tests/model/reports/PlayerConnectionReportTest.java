@@ -10,9 +10,9 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import datasource.DatabaseException;
 import datasource.PlayerRowDataGatewayMock;
-import datasource.PlayersForTest;
 
 /**
  * @author Merlin

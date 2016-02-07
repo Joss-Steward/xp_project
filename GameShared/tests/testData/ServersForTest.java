@@ -1,4 +1,4 @@
-package datasource;
+package testData;
 
 /**
  * Used to initialize the database to have dummy data for map to server mappings

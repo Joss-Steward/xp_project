@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import testData.ServersForTest;
 import data.Position;
-import datasource.ServersForTest;
 
 /**
  * Tests a login message

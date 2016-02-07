@@ -15,10 +15,10 @@ import model.reports.UpdatePlayerInformationReport;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import communication.StateAccumulator;
 import communication.messages.InitializeThisClientsPlayerMessage;
 import datasource.DatabaseException;
-import datasource.PlayersForTest;
 
 /**
  * 

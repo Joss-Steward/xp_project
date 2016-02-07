@@ -1,12 +1,12 @@
 
 import java.sql.SQLException;
 
+import testData.NPCsForTest;
+import testData.PlayersForTest;
 import model.OptionsManager;
 import datasource.DatabaseException;
 import datasource.NPCRowDataGatewayRDS;
-import datasource.NPCsForTest;
 import datasource.PlayerRowDataGatewayRDS;
-import datasource.PlayersForTest;
 
 /**
  * Builds the Player portion of the database

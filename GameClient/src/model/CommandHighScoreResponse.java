@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import model.QualifiedObservableConnector;
 import model.reports.HighScoreResponseReport;
-import datasource.PlayerScoreRecord;
+import data.PlayerScoreRecord;
 
 /**
  * @author nk3668

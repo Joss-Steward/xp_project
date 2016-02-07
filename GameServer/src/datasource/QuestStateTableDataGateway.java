@@ -2,6 +2,7 @@ package datasource;
 
 import java.util.ArrayList;
 
+import data.QuestStateRecord;
 import datasource.DatabaseException;
 import datasource.QuestStateEnum;
 

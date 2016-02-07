@@ -8,11 +8,11 @@ import model.reports.PlayerConnectionReport;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import communication.StateAccumulator;
 import communication.messages.PlayerJoinedMessage;
 import datasource.DatabaseException;
 import datasource.PlayerRowDataGatewayMock;
-import datasource.PlayersForTest;
 
 /**
  * @author Merlin

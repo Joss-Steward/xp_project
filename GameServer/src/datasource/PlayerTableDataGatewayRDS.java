@@ -5,10 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import data.PlayerScoreRecord;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
 import datasource.DatabaseManager;
-import datasource.PlayerScoreRecord;
 
 /**
  * The RDS implementation of the gateway

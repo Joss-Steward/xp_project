@@ -12,7 +12,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
-import datasource.PlayerScoreRecord;
+import data.PlayerScoreRecord;
 
 /**
  * @author nk3668

@@ -2,7 +2,7 @@ package model.reports;
 
 import java.util.ArrayList;
 
-import datasource.PlayerScoreRecord;
+import data.PlayerScoreRecord;
 import model.QualifiedObservableReport;
 
 /**

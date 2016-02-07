@@ -6,9 +6,9 @@ import model.ClientModelFacade;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import communication.messages.ExperienceChangedMessage;
 import datasource.LevelRecord;
-import datasource.PlayersForTest;
 
 /**
  * @author Ryan

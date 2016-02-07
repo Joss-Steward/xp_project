@@ -2,6 +2,7 @@
 
 import java.io.IOException;
 
+import testData.PlayersForTest;
 import model.Command;
 import model.CommandLogin;
 import model.MessageFlow;
@@ -12,7 +13,6 @@ import communication.messages.LoginFailedMessage;
 import communication.messages.LoginMessage;
 import datasource.DatabaseException;
 import datasource.PlayerConnectionRowDataGatewayMock;
-import datasource.PlayersForTest;
 
 /**
  * Defines the protocol for a successful login sequence

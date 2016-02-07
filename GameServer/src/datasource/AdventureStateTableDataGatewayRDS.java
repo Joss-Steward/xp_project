@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import data.AdventureStateRecord;
 import datasource.AdventureStateEnum;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;

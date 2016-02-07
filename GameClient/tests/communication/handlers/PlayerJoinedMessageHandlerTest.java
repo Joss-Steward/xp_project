@@ -6,8 +6,8 @@ import model.ClientModelFacade;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import communication.messages.PlayerJoinedMessage;
-import datasource.PlayersForTest;
 
 /**
  * Make sure the message is handled properly

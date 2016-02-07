@@ -6,7 +6,8 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import datasource.AdventureRecord;
+import testData.AdventuresForTest;
+import data.AdventureRecord;
 import datasource.AdventureTableDataGateway;
 import datasource.DatabaseException;
 

@@ -1,6 +1,5 @@
-package datasource;
+package testData;
 
-import datasource.PlayersForTest;
 
 /**
  * The players that are in the test database

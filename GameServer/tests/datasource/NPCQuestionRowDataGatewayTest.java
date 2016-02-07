@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import org.junit.After;
 import org.junit.Test;
 
+import testData.NPCQuestionsForTest;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.NPCQuestionRowDataGateway;

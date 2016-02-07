@@ -22,10 +22,10 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import data.Position;
 import datasource.AdventureStateEnum;
 import datasource.LevelRecord;
-import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
 
 /**

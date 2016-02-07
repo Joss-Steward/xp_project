@@ -8,7 +8,7 @@ import model.reports.LoginSuccessfulReport;
 import org.junit.Before;
 import org.junit.Test;
 
-import datasource.PlayersForTest;
+import testData.PlayersForTest;
 
 /**
  * @author Merlin

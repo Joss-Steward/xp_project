@@ -2,8 +2,8 @@ package datasource;
 
 import java.util.HashMap;
 
+import testData.NPCQuestionsForTest;
 import datasource.DatabaseException;
-import datasource.NPCQuestionsForTest;
 
 /**
  * A mock implementation for PlayerRowDataGateway

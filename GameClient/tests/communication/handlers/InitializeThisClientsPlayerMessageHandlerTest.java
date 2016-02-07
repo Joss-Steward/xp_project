@@ -14,10 +14,10 @@ import model.ClientPlayerManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import communication.messages.InitializeThisClientsPlayerMessage;
 import datasource.AdventureStateEnum;
 import datasource.LevelRecord;
-import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
 
 /**

@@ -19,14 +19,14 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.AdventureStatesForTest;
+import testData.AdventuresForTest;
+import testData.QuestStatesForTest;
+import testData.QuestsForTest;
 import datasource.AdventureStateEnum;
-import datasource.AdventureStatesForTest;
-import datasource.AdventuresForTest;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.QuestStateEnum;
-import datasource.QuestStatesForTest;
-import datasource.QuestsForTest;
 
 /**
  * Test class for AdventureState

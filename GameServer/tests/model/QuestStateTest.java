@@ -19,11 +19,11 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.QuestsForTest;
 import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.QuestStateEnum;
-import datasource.QuestsForTest;
 
 /**
  * Test for the QuestState Class

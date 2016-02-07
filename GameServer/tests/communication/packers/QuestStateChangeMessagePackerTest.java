@@ -9,11 +9,11 @@ import model.reports.QuestStateChangeReport;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.QuestsForTest;
 import communication.StateAccumulator;
 import communication.messages.QuestStateChangeMessage;
 import datasource.DatabaseException;
 import datasource.QuestStateEnum;
-import datasource.QuestsForTest;
 
 /**
  * 

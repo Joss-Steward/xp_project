@@ -8,10 +8,10 @@ import model.reports.AdventureStateChangeReport;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.AdventuresForTest;
 import communication.StateAccumulator;
 import communication.messages.AdventureStateChangeMessage;
 import datasource.AdventureStateEnum;
-import datasource.AdventuresForTest;
 import datasource.DatabaseException;
 
 /**

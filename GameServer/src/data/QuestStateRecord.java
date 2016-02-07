@@ -1,4 +1,4 @@
-package datasource;
+package data;
 
 import datasource.QuestStateEnum;
 

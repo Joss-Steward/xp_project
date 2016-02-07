@@ -5,7 +5,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
-import datasource.AdventureRecord;
+import data.AdventureRecord;
 
 /**
  * Tests a simple data transfer object that contains the information about one adventure

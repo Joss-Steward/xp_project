@@ -3,6 +3,8 @@
 import java.io.IOException;
 import java.util.ArrayList;
 
+import testData.PlayersForTest;
+import testData.ServersForTest;
 import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
 import model.Command;
@@ -18,8 +20,9 @@ import communication.messages.LoginSuccessfulMessage;
 import communication.messages.MapFileMessage;
 import communication.messages.PlayerJoinedMessage;
 import communication.packers.MapFileMessagePacker;
-import datasource.AdventureRecord;
-import datasource.AdventureStateRecord;
+import data.AdventureRecord;
+import data.AdventureStateRecord;
+import data.QuestStateRecord;
 import datasource.AdventureStateTableDataGateway;
 import datasource.AdventureStateTableDataGatewayMock;
 import datasource.AdventureTableDataGateway;
@@ -28,13 +31,10 @@ import datasource.DatabaseException;
 import datasource.LevelRecord;
 import datasource.LevelsForTest;
 import datasource.PlayerConnectionRowDataGatewayMock;
-import datasource.PlayersForTest;
 import datasource.QuestRowDataGateway;
 import datasource.QuestRowDataGatewayMock;
-import datasource.QuestStateRecord;
 import datasource.QuestStateTableDataGateway;
 import datasource.QuestStateTableDataGatewayMock;
-import datasource.ServersForTest;
 
 /**
  * Defines the protocol for a successful login sequence

@@ -11,9 +11,9 @@ import model.ClientPlayerManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import communication.messages.AdventureStateChangeMessage;
 import datasource.AdventureStateEnum;
-import datasource.PlayersForTest;
 
 /**
  * Tests functionality of the AdventureStateChangeMessageHandler

@@ -8,11 +8,11 @@ import java.util.List;
 
 import org.junit.Test;
 
-import datasource.AdventureRecord;
-import datasource.AdventureStateRecord;
+import testData.AdventuresForTest;
+import testData.PlayersForTest;
+import data.AdventureRecord;
+import data.AdventureStateRecord;
 import datasource.AdventureStateTableDataGatewayRDS;
-import datasource.AdventuresForTest;
-import datasource.PlayersForTest;
 
 /**
  * @author Merlin

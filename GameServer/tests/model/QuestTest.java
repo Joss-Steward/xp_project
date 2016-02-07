@@ -7,8 +7,8 @@ import model.Quest;
 
 import org.junit.Test;
 
+import data.AdventureRecord;
 import data.Position;
-import datasource.AdventureRecord;
 
 /**
  * This class holds the tests for the Quest class

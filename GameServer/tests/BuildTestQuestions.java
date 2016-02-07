@@ -1,9 +1,9 @@
 import java.sql.SQLException;
 
+import testData.NPCQuestionsForTest;
 import model.OptionsManager;
 import datasource.DatabaseException;
 import datasource.NPCQuestionRowDataGatewayRDS;
-import datasource.NPCQuestionsForTest;
 
 /**
  * Builds the Question portion of the database for the quizbot

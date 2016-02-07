@@ -14,9 +14,9 @@ import model.ThisClientsPlayer;
 
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import communication.messages.InitializeThisClientsPlayerMessage;
 import datasource.LevelRecord;
-import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
 
 /**

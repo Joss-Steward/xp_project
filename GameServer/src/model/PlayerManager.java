@@ -13,8 +13,8 @@ import model.reports.PinFailedReport;
 import model.reports.PlayerConnectionReport;
 import model.reports.PlayerLeaveReport;
 import model.reports.UpdatePlayerInformationReport;
+import data.PlayerScoreRecord;
 import datasource.DatabaseException;
-import datasource.PlayerScoreRecord;
 import datasource.PlayerTableDataGatewayMock;
 import datasource.PlayerTableDataGatewayRDS;
 

@@ -12,9 +12,9 @@ import model.ClientPlayerManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import communication.messages.PlayerMovedMessage;
 import data.Position;
-import datasource.PlayersForTest;
 
 /**
  * @author Andrew

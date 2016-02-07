@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.HighScoreResponseMessage;
-import datasource.PlayerScoreRecord;
+import data.PlayerScoreRecord;
 
 /**
  * @author nk3668

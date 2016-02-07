@@ -21,17 +21,17 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.AdventuresForTest;
+import testData.PlayersForTest;
+import testData.QuestStatesForTest;
+import testData.QuestsForTest;
+import data.AdventureRecord;
 import data.Position;
-import datasource.AdventureRecord;
 import datasource.AdventureStateEnum;
-import datasource.AdventuresForTest;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
-import datasource.PlayersForTest;
 import datasource.QuestStateEnum;
 import datasource.QuestStateTableDataGatewayMock;
-import datasource.QuestStatesForTest;
-import datasource.QuestsForTest;
 
 /**
  * Test for the quest manager getting quests and adventures from database

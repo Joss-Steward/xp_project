@@ -20,7 +20,7 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.TextFilterator;
 import ca.odell.glazedlists.swing.AutoCompleteSupport;
-import datasource.AdventureRecord;
+import data.AdventureRecord;
 import datasource.AdventureStateViewTableDataGatewayRDS;
 import datasource.DatabaseException;
 import datasource.PlayerLoginTableDataGatewayRDS;

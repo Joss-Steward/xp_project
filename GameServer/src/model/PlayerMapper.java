@@ -2,7 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
-import datasource.AdventureStateRecord;
+import data.AdventureStateRecord;
+import data.QuestStateRecord;
 import datasource.AdventureStateTableDataGateway;
 import datasource.AdventureStateTableDataGatewayMock;
 import datasource.AdventureStateTableDataGatewayRDS;
@@ -13,7 +14,6 @@ import datasource.PlayerConnectionRowDataGatewayRDS;
 import datasource.PlayerRowDataGateway;
 import datasource.PlayerRowDataGatewayMock;
 import datasource.PlayerRowDataGatewayRDS;
-import datasource.QuestStateRecord;
 import datasource.QuestStateTableDataGateway;
 import datasource.QuestStateTableDataGatewayMock;
 import datasource.QuestStateTableDataGatewayRDS;

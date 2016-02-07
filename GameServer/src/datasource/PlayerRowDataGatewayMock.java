@@ -2,9 +2,9 @@ package datasource;
 
 import java.util.HashMap;
 
+import testData.PlayersForTest;
 import data.Position;
 import datasource.DatabaseException;
-import datasource.PlayersForTest;
 
 /**
  * A mock implementation for PlayerRowDataGateway

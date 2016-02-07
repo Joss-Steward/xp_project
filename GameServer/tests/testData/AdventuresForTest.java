@@ -1,4 +1,4 @@
-package datasource;
+package testData;
 
 /**
  * Creates adventures for the DB

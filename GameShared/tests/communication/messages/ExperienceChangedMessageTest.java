@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import datasource.LevelRecord;
-import datasource.PlayersForTest;
 
 /**
  * Tests that the ExperienceChangeMessage class functionality

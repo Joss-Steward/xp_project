@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
+import testData.PlayersForTest;
 import model.ClientPlayerManager;
 import model.Command;
 import model.CommandClientMovePlayer;
@@ -10,12 +11,9 @@ import model.MessageFlow;
 import model.PlayerManager;
 import model.SequenceTest;
 import model.ServerType;
-
 import communication.messages.OtherPlayerMovedMessage;
 import communication.messages.PlayerMovedMessage;
-
 import data.Position;
-import datasource.PlayersForTest;
 
 /**
  * Defines the protocol for a successful login sequence
