@@ -12,6 +12,7 @@ import model.Command;
 import model.CommandLogin;
 import model.MessageFlow;
 import model.OptionsManager;
+import model.PlayerManager;
 import model.SequenceTest;
 import model.ServerType;
 import communication.messages.ConnectMessage;
@@ -171,6 +172,8 @@ public class LoginSuccessSequenceTest extends SequenceTest
 	public void setUpServer()
 	{
 		OptionsManager.getSingleton().setMapName(PlayersForTest.MERLIN.getMapName());
+		PlayerManager.resetSingleton();
+		
 	}
 	
 	/**
@@ -180,10 +183,10 @@ public class LoginSuccessSequenceTest extends SequenceTest
 	{
 		try
 		{
+			PlayerManager.resetSingleton();
 			(new PlayerConnectionRowDataGatewayMock(2)).resetData();
 		} catch (DatabaseException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

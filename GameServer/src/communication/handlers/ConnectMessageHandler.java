@@ -38,12 +38,6 @@ public class ConnectMessageHandler extends MessageHandler
 			
 			ModelFacade.getSingleton().queueCommand(cmd);
 			
-			for (Player p : PlayerManager.getSingleton().getConnectedPlayers())
-			{
-				PlayerJoinedMessage pMsg = new PlayerJoinedMessage(
-						p.getPlayerID(), p.getPlayerName(), p.getAppearanceType(), p.getPlayerPosition());
-				this.getStateAccumulator().queueMessage(pMsg);
-			}
 		}
 	}
 

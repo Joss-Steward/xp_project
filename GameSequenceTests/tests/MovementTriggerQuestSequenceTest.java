@@ -10,11 +10,14 @@ import model.CommandClientMovePlayer;
 import model.MapManager;
 import model.MessageFlow;
 import model.PlayerManager;
+import model.QuestManager;
 import model.SequenceTest;
 import model.ServerType;
 import communication.messages.OtherPlayerMovedMessage;
 import communication.messages.PlayerMovedMessage;
 import communication.messages.QuestStateChangeMessage;
+import datasource.DatabaseException;
+import datasource.PlayerConnectionRowDataGatewayMock;
 import datasource.QuestStateEnum;
 
 /**
@@ -105,5 +108,13 @@ public class MovementTriggerQuestSequenceTest extends SequenceTest
 	public void resetDataGateways()
 	{
 		PlayerManager.resetSingleton();
+		QuestManager.resetSingleton();
+		try
+		{
+			(new PlayerConnectionRowDataGatewayMock(2)).resetData();
+		} catch (DatabaseException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

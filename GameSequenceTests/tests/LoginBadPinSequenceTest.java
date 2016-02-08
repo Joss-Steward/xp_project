@@ -6,6 +6,7 @@ import testData.PlayersForTest;
 import model.Command;
 import model.MessageFlow;
 import model.OptionsManager;
+import model.PlayerManager;
 import model.SequenceTest;
 import model.ServerType;
 import communication.messages.ConnectMessage;
@@ -85,6 +86,7 @@ public class LoginBadPinSequenceTest extends SequenceTest
 	{
 		try
 		{
+			PlayerManager.resetSingleton();
 			(new PlayerConnectionRowDataGatewayMock(2)).resetData();
 		} catch (DatabaseException e)
 		{

@@ -7,6 +7,7 @@ import model.Command;
 import model.CommandLogin;
 import model.MessageFlow;
 import model.OptionsManager;
+import model.PlayerManager;
 import model.SequenceTest;
 import model.ServerType;
 import communication.messages.LoginFailedMessage;
@@ -87,6 +88,7 @@ public class LoginBadPlayerNameSequenceTest extends SequenceTest
 	{
 		try
 		{
+			PlayerManager.resetSingleton();
 			(new PlayerConnectionRowDataGatewayMock(2)).resetData();
 		} catch (DatabaseException e)
 		{
