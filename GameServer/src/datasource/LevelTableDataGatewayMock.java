@@ -3,9 +3,9 @@ package datasource;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import testData.LevelsForTest;
 import datasource.DatabaseException;
 import datasource.LevelRecord;
-import datasource.LevelsForTest;
 
 /**
  * The mock version of LevelTableDataGatewas

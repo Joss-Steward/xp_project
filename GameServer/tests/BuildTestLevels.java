@@ -1,9 +1,9 @@
 import java.sql.SQLException;
 
+import testData.LevelsForTest;
 import model.OptionsManager;
 import datasource.DatabaseException;
 import datasource.LevelTableDataGatewayRDS;
-import datasource.LevelsForTest;
 
 /**
  * Builds the Level portion of the database

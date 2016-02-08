@@ -9,9 +9,9 @@ import model.OptionsManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.LevelsForTest;
 import datasource.DatabaseException;
 import datasource.LevelRecord;
-import datasource.LevelsForTest;
 
 /**
  * @author Merlin

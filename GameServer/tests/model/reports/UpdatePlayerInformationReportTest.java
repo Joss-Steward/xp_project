@@ -18,11 +18,11 @@ import org.junit.Test;
 
 import testData.AdventureStatesForTest;
 import testData.AdventuresForTest;
+import testData.LevelsForTest;
 import testData.PlayersForTest;
 import testData.QuestStatesForTest;
 import testData.QuestsForTest;
 import datasource.DatabaseException;
-import datasource.LevelsForTest;
 
 /**
  * Test the CurrentQuestStateReport

@@ -3,6 +3,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
 
+import testData.LevelsForTest;
 import testData.PlayersForTest;
 import testData.ServersForTest;
 import model.ClientPlayerAdventure;
@@ -29,7 +30,6 @@ import datasource.AdventureTableDataGateway;
 import datasource.AdventureTableDataGatewayMock;
 import datasource.DatabaseException;
 import datasource.LevelRecord;
-import datasource.LevelsForTest;
 import datasource.PlayerConnectionRowDataGatewayMock;
 import datasource.QuestRowDataGateway;
 import datasource.QuestRowDataGatewayMock;

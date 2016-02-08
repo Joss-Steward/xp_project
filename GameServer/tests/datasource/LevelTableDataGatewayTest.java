@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import testData.LevelsForTest;
 import datasource.DatabaseException;
 import datasource.LevelRecord;
 import datasource.LevelTableDataGateway;
-import datasource.LevelsForTest;
 
 /**
  * An abstract class that tests the table data gateways into the Level table
