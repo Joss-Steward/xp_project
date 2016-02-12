@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import model.QualifiedObservableConnector;
 import model.reports.QuestStateChangeReport;
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 import datasource.DatabaseException;
 import datasource.QuestStateEnum;
 

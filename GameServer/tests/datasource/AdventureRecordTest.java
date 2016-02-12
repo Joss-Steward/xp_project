@@ -5,7 +5,9 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
+import data.AdventureCompletionType;
 import data.AdventureRecord;
+import data.CriteriaString;
 
 /**
  * Tests a simple data transfer object that contains the information about one adventure
@@ -20,12 +22,13 @@ public class AdventureRecordTest
 	@Test
 	public void constructAnAdventureRecord()
 	{
-		AdventureRecord record = new AdventureRecord (1, 1, "Adventure Description 1", 42, "Lab Instructor");
+		AdventureRecord record = new AdventureRecord (1, 1, "Adventure Description 1", 42, AdventureCompletionType.CHAT,new CriteriaString("Lab Instructor"));
 		assertEquals(1, record.getAdventureID());
 		assertEquals("Adventure Description 1", record.getAdventureDescription());
 		assertEquals(1, record.getQuestID());
 		assertEquals(42, record.getExperiencePointsGained());
-		assertEquals("Lab Instructor", record.getSignatureSpecification());
+		assertEquals(AdventureCompletionType.CHAT, record.getCompletionType());
+		assertEquals(new CriteriaString("Lab Instructor"), record.getCompletionCriteria());
 	}
 	
 	/**

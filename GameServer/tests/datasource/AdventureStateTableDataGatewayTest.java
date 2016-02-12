@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import testData.AdventureStatesForTest;
+import data.AdventureStateEnum;
 import data.AdventureStateRecord;
-import datasource.AdventureStateEnum;
 import datasource.AdventureStateTableDataGateway;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;

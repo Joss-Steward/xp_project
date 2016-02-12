@@ -16,7 +16,7 @@ import org.junit.Test;
 
 import testData.PlayersForTest;
 import communication.messages.InitializeThisClientsPlayerMessage;
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 import datasource.LevelRecord;
 import datasource.QuestStateEnum;
 

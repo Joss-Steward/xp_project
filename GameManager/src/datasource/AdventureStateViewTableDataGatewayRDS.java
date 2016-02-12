@@ -6,7 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import data.AdventureCompletionCriteria;
+import data.AdventureCompletionType;
 import data.AdventureRecord;
+import data.AdventureStateEnum;
 import datasource.AdventureStateTableDataGatewayRDS;
 
 /**
@@ -36,7 +39,7 @@ public class AdventureStateViewTableDataGatewayRDS
 					connection,
 					"SELECT * FROM Adventures INNER JOIN AdventureStates ON Adventures.QuestID = AdventureStates.QuestID AND Adventures.AdventureID = AdventureStates.AdventureID"
 							+ " WHERE adventureState = ? AND playerID = ?");
-			stmt.setInt(1, AdventureStateEnum.TRIGGERED.ordinal());
+			stmt.setInt(1, AdventureStateEnum.TRIGGERED.getID());
 			stmt.setInt(2, playerID);
 			ResultSet result = stmt.executeQuery();
 			while (result.next())
@@ -44,7 +47,8 @@ public class AdventureStateViewTableDataGatewayRDS
 				records.add(new AdventureRecord(
 						result.getInt("AdventureStates.questID"), result
 								.getInt("AdventureStates.adventureID"), result
-								.getString("Adventures.adventureDescription"), result.getInt("Adventures.experiencePointsGained"), result.getString("Adventures.signatureSpecification")));
+								.getString("Adventures.adventureDescription"), result.getInt("Adventures.experiencePointsGained"), AdventureCompletionType.values()[result.getInt("Adventures.completionType")],
+								(AdventureCompletionCriteria)result.getObject("Adventures.completionCriteria")));
 
 			}
 

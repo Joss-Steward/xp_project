@@ -2,8 +2,8 @@ package datasource;
 
 import java.util.ArrayList;
 
+import data.AdventureStateEnum;
 import data.AdventureStateRecord;
-import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
 
 /**

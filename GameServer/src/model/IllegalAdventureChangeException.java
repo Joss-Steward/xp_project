@@ -1,6 +1,6 @@
 package model;
 
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 
 /**
  * Throw an exception if you try to change to a non-legal state.

@@ -56,7 +56,8 @@ public class BuildQuestsAndAdventures
 		{
 			AdventureStateTableDataGatewayRDS.getSingleton().createRow(
 					adventure.getPlayerID(), adventure.getQuestID(),
-					adventure.getAdventureID(), adventure.getState(), adventure.isNeedingNotification());
+					adventure.getAdventureID(), adventure.getState(),
+					adventure.isNeedingNotification());
 		}
 	}
 
@@ -89,8 +90,10 @@ public class BuildQuestsAndAdventures
 		AdventureTableDataGatewayRDS.createTable();
 		for (AdventuresForTest adventure : AdventuresForTest.values())
 		{
-			AdventureTableDataGatewayRDS.createRow(adventure.getAdventureID(),
-					adventure.getAdventureDescription(), adventure.getQuestID(), adventure.getExperiencePointsGained(), adventure.getSignatureSpecification());
+			AdventureTableDataGatewayRDS.createRow(adventure.getAdventureID(), adventure
+					.getAdventureDescription(), adventure.getQuestID(), adventure
+					.getExperiencePointsGained(), adventure.getCompletionType(),
+					adventure.getCompletionCriteria());
 		}
 	}
 }

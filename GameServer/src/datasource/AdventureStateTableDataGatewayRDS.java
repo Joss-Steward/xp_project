@@ -5,8 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import data.AdventureStateEnum;
 import data.AdventureStateRecord;
-import datasource.AdventureStateEnum;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
 import datasource.DatabaseManager;
@@ -132,7 +132,7 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 			stmt.setInt(1, questID);
 			stmt.setInt(2, adventureID);
 			stmt.setInt(3, playerID);
-			stmt.setInt(4, adventureState.ordinal());
+			stmt.setInt(4, adventureState.getID());
 			stmt.setBoolean(5, needingNotification);
 			stmt.executeUpdate();
 
@@ -146,7 +146,7 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 
 	/**
 	 * @see datasource.AdventureStateTableDataGateway#updateState(int,
-	 *      int, int, datasource.AdventureStateEnum, boolean)
+	 *      int, int, data.AdventureStateEnum, boolean)
 	 */
 	@Override
 	public void updateState(int playerID, int questID, int adventureID,
@@ -158,7 +158,7 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
 					connection,
 					"UPDATE AdventureStates SET adventureState = ?, needingNotification = ? WHERE  playerID = ? and questID = ? and adventureID = ?");
-			stmt.setInt(1, newState.ordinal());
+			stmt.setInt(1, newState.getID());
 			stmt.setBoolean(2, needingNotification);
 			stmt.setInt(3, playerID);
 			stmt.setInt(4, questID);
@@ -198,7 +198,7 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
 					"SELECT * FROM AdventureStates WHERE adventureState = ? and playerID = ?");
-			stmt.setInt(1, AdventureStateEnum.TRIGGERED.ordinal());
+			stmt.setInt(1, AdventureStateEnum.TRIGGERED.getID());
 			stmt.setInt(2, playerID);
 			ResultSet result = stmt.executeQuery();
 

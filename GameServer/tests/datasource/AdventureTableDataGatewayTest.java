@@ -52,7 +52,8 @@ public abstract class AdventureTableDataGatewayTest
 			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(), record.getAdventureDescription());
 			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(), record.getQuestID());
 			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getExperiencePointsGained(), record.getExperiencePointsGained());
-			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getSignatureSpecification(), record.getSignatureSpecification());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getCompletionType(), record.getCompletionType());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getCompletionCriteria(), record.getCompletionCriteria());
 			record = records.get(1);
 			assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getAdventureDescription(), record.getAdventureDescription());
 			assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getQuestID(), record.getQuestID());

@@ -62,7 +62,7 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 	public void finder() throws DatabaseException
 	{
 		QuestsForTest quest = QuestsForTest.ONE_BIG_QUEST;
-		gateway = findGateway(QuestsForTest.ONE_BIG_QUEST.ordinal() + 1);
+		gateway = findGateway(QuestsForTest.ONE_BIG_QUEST.getQuestID());
 		assertEquals(quest.getQuestID(), gateway.getQuestID());
 		assertEquals(quest.getQuestDescription(), gateway.getQuestDescription());
 		assertEquals(quest.getMapName(), gateway.getTriggerMapName());

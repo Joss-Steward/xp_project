@@ -23,8 +23,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import testData.PlayersForTest;
+import data.AdventureStateEnum;
 import data.Position;
-import datasource.AdventureStateEnum;
 import datasource.LevelRecord;
 import datasource.QuestStateEnum;
 

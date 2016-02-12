@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import testData.PlayersForTest;
 import communication.messages.AdventureStateChangeMessage;
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 
 /**
  * Tests functionality of the AdventureStateChangeMessageHandler

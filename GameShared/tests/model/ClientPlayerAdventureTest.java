@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 
 /**
  * Tests the basic ClientPlayerAdventure class and its functionality. 

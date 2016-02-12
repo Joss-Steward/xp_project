@@ -125,6 +125,7 @@ public class Quest
 		this.position = pos;
 	}
 	
+	//TODO these things that are getting information about adventures are pretty gross
 	/**
 	 * Get adventure description by specific adventure id
 	 * @param adventureID id of the adventure

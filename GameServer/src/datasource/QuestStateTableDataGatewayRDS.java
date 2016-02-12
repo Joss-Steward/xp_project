@@ -90,7 +90,7 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 					"Insert INTO QuestStates SET playerID = ?, questID = ?, questState = ?, needingNotification = ?");
 			stmt.setInt(1, playerID);
 			stmt.setInt(2, questID);
-			stmt.setInt(3, state.ordinal());
+			stmt.setInt(3, state.getID());
 			stmt.setBoolean(4, needingNotification);
 			stmt.executeUpdate();
 
@@ -183,7 +183,7 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
 					connection,
 					"UPDATE QuestStates SET questState = ?, needingNotification = ? WHERE  playerID = ? and questID = ?");
-			stmt.setInt(1, newState.ordinal());
+			stmt.setInt(1, newState.getID());
 			stmt.setBoolean(2, needingNotification);
 			stmt.setInt(3, playerID);
 			stmt.setInt(4, questID);

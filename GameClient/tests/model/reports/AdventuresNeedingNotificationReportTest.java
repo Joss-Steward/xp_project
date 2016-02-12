@@ -10,7 +10,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 
 /**
  * @author nk3668

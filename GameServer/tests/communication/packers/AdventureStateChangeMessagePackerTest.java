@@ -11,7 +11,7 @@ import org.junit.Test;
 import testData.AdventuresForTest;
 import communication.StateAccumulator;
 import communication.messages.AdventureStateChangeMessage;
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 import datasource.DatabaseException;
 
 /**

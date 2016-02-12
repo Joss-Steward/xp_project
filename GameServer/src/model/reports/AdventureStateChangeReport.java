@@ -1,7 +1,7 @@
 package model.reports;
 
 import model.QualifiedObservableReport;
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 
 /**
  * Report to the client that an adventure state change had occured.

@@ -1,6 +1,6 @@
 package model;
 
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 import communication.messages.AdventureStateChangeMessage;
 
 /**

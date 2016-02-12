@@ -27,5 +27,10 @@ public enum QuestStateEnum
 	/**
 	 * The player has completed all of the adventures within this quest
 	 */
-	FINISHED, 
+	FINISHED,;
+
+	public int getID()
+	{
+		return this.ordinal();
+	} 
 }

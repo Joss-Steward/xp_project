@@ -1,4 +1,4 @@
-package datasource;
+package data;
 
 /**
  * A list of the states an adventure can be in
@@ -21,6 +21,11 @@ public enum AdventureStateEnum
 	/**
 	 * Player has been notified, nothing left to do.
 	 */
-	COMPLETED
+	COMPLETED;
+
+	public int getID()
+	{
+		return this.ordinal();
+	}
 
 }

@@ -9,7 +9,7 @@ import model.reports.QuestStateChangeReport;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 import datasource.QuestStateEnum;
 
 /**

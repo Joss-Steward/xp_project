@@ -41,7 +41,8 @@ public class AdventureTableDataGatewayMock implements AdventureTableDataGateway
 		for (AdventuresForTest a : AdventuresForTest.values())
 		{
 			AdventureRecord rec = new AdventureRecord(a.getQuestID(), a.getAdventureID(),
-					a.getAdventureDescription(), a.getExperiencePointsGained(), a.getSignatureSpecification());
+					a.getAdventureDescription(), a.getExperiencePointsGained(), a
+							.getCompletionType(), a.getCompletionCriteria());
 
 			if (data.containsKey(a.getQuestID()))
 			{
@@ -66,8 +67,7 @@ public class AdventureTableDataGatewayMock implements AdventureTableDataGateway
 	}
 
 	/**
-	 * @see datasource.AdventureTableDataGateway#getAdventure(int,
-	 *      int)
+	 * @see datasource.AdventureTableDataGateway#getAdventure(int, int)
 	 */
 	@Override
 	public AdventureRecord getAdventure(int questID, int adventureID)

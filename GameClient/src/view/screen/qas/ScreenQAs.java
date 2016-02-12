@@ -27,7 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 import datasource.QuestStateEnum;
 
 /**

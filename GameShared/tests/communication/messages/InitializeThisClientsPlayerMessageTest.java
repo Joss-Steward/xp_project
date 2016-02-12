@@ -9,7 +9,7 @@ import model.ClientPlayerQuest;
 
 import org.junit.Test;
 
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 import datasource.LevelRecord;
 import datasource.QuestStateEnum;
 

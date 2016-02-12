@@ -13,8 +13,8 @@ import model.ClientPlayerManager;
 import org.junit.Test;
 
 import communication.messages.AdventureStateChangeMessage;
+import data.AdventureStateEnum;
 import data.Position;
-import datasource.AdventureStateEnum;
 import datasource.QuestStateEnum;
 
 /**

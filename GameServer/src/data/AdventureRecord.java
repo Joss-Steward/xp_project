@@ -12,7 +12,8 @@ public final class AdventureRecord
 	private final String adventureDescription;
 	private final int questID;
 	private final int experiencePointsGained;
-	private final String signatureSpecification;
+	private final AdventureCompletionCriteria completionCriteria;
+	private AdventureCompletionType completionType;
 
 	/**
 	 * Create it
@@ -25,17 +26,30 @@ public final class AdventureRecord
 	 *            the adventure's description
 	 * @param experiencePointsGained
 	 *            the number of points earned by completing this adventure
-	 * @param signatureSpecification
-	 *            the rules about who can sign for the adventure if it is an outside adventure
+	 * @param completionType
+	 *            the type of action the player must do to complete this
+	 *            adventure
+	 * @param completionCriteria
+	 *            the criteria for satisfying this adventure
 	 */
 	public AdventureRecord(int questID, int adventureID, String adventureDescription,
-			int experiencePointsGained, String signatureSpecification)
+			int experiencePointsGained, AdventureCompletionType completionType,
+			AdventureCompletionCriteria completionCriteria)
 	{
 		this.adventureID = adventureID;
 		this.adventureDescription = adventureDescription;
 		this.questID = questID;
 		this.experiencePointsGained = experiencePointsGained;
-		this.signatureSpecification = signatureSpecification;
+		this.completionType = completionType;
+		this.completionCriteria = completionCriteria;
+	}
+
+	/**
+	 * @return the type of action the player must do to complete this adventure
+	 */
+	public AdventureCompletionType getCompletionType()
+	{
+		return completionType;
 	}
 
 	/**
@@ -90,10 +104,8 @@ public final class AdventureRecord
 		result = prime * result + adventureID;
 		result = prime * result + experiencePointsGained;
 		result = prime * result + questID;
-		result = prime
-				* result
-				+ ((signatureSpecification == null) ? 0 : signatureSpecification
-						.hashCode());
+		result = prime * result
+				+ ((completionCriteria == null) ? 0 : completionCriteria.hashCode());
 		return result;
 	}
 
@@ -122,11 +134,11 @@ public final class AdventureRecord
 			return false;
 		if (questID != other.questID)
 			return false;
-		if (signatureSpecification == null)
+		if (completionCriteria == null)
 		{
-			if (other.signatureSpecification != null)
+			if (other.completionCriteria != null)
 				return false;
-		} else if (!signatureSpecification.equals(other.signatureSpecification))
+		} else if (!completionCriteria.equals(other.completionCriteria))
 			return false;
 		return true;
 	}
@@ -140,11 +152,10 @@ public final class AdventureRecord
 	}
 
 	/**
-	 * @return the rules about who has to sign for this if it is an outside
-	 *         adventure
+	 * @return the criteria for completing this adventure
 	 */
-	public String getSignatureSpecification()
+	public AdventureCompletionCriteria getCompletionCriteria()
 	{
-		return signatureSpecification;
+		return completionCriteria;
 	}
 }

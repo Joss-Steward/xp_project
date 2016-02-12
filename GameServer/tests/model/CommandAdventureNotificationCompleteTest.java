@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import testData.AdventureStatesForTest;
 import testData.PlayersForTest;
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 import datasource.DatabaseException;
 
 /**

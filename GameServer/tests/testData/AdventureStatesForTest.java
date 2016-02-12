@@ -1,6 +1,6 @@
 package testData;
 
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 
 /**
  * Creates adventures for the DB

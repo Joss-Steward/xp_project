@@ -23,7 +23,7 @@ import testData.AdventureStatesForTest;
 import testData.AdventuresForTest;
 import testData.QuestStatesForTest;
 import testData.QuestsForTest;
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.QuestStateEnum;

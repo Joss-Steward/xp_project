@@ -20,7 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import testData.QuestsForTest;
-import datasource.AdventureStateEnum;
+import data.AdventureStateEnum;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.QuestStateEnum;

@@ -49,7 +49,7 @@ public abstract class NPCQuestionRowDataGatewayTest extends DatabaseTest
 	public void finder() throws DatabaseException
 	{
 		NPCQuestionsForTest question = NPCQuestionsForTest.ONE;
-		gateway = findGateway(NPCQuestionsForTest.ONE.ordinal() + 1);
+		gateway = findGateway(NPCQuestionsForTest.ONE.getQuestionID());
 		assertEquals(question.getQ(), gateway.getQuestionStatement());
 		assertEquals(question.getA(), gateway.getAnswer());
 	}

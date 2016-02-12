@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import testData.AdventureStatesForTest;
+import data.AdventureStateEnum;
 import data.AdventureStateRecord;
-import datasource.AdventureStateEnum;
 import datasource.DatabaseException;
 
 /**
@@ -137,7 +137,7 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 
 	/**
 	 * @see datasource.AdventureStateTableDataGateway#updateState(int,
-	 *      int, int, datasource.AdventureStateEnum, boolean)
+	 *      int, int, data.AdventureStateEnum, boolean)
 	 */
 	@Override
 	public void updateState(int playerID, int questID, int adventureID,
@@ -175,7 +175,7 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 
 	/**
 	 * @see datasource.AdventureStateTableDataGateway#createRow(int,
-	 *      int, int, datasource.AdventureStateEnum, boolean)
+	 *      int, int, data.AdventureStateEnum, boolean)
 	 */
 	@Override
 	public void createRow(int playerID, int questID, int adventureID,
