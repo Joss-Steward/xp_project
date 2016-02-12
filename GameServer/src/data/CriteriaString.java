@@ -2,22 +2,28 @@ package data;
 
 /**
  * Wraps a string so it can be the criteria for completing an adventure
+ * 
  * @author Merlin
  *
  */
 public class CriteriaString implements AdventureCompletionCriteria
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String string;
 
 	/**
-	 * @param string the string that is the criteria
+	 * @param string
+	 *            the string that is the criteria
 	 */
 	public CriteriaString(String string)
 	{
 		this.string = string;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */

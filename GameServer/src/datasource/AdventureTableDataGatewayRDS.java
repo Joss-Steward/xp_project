@@ -107,6 +107,11 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 	 *            the quest that contains the adventure
 	 * @param experiencePointsEarned
 	 *            the number of points you get when you complete this adventure
+	 * @param completionType
+	 *            the type of action the player must do to complete this
+	 *            adventure
+	 * @param completionCriteria
+	 *            the criteria for completing this adventure
 	 * @throws DatabaseException
 	 *             if we can't talk to the RDS
 	 */
@@ -172,30 +177,32 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 	{
 		try
 		{
-		AdventureCompletionType completionType = AdventureCompletionType
-				.findByID(queryResult.getInt("completionType"));
-		AdventureCompletionCriteria completionCriteria = extractCompletionCriteria(
-				queryResult, completionType);
+			AdventureCompletionType completionType = AdventureCompletionType
+					.findByID(queryResult.getInt("completionType"));
+			AdventureCompletionCriteria completionCriteria = extractCompletionCriteria(
+					queryResult, completionType);
 
-		AdventureRecord rec = new AdventureRecord(queryResult.getInt("questID"),
-				queryResult.getInt("adventureID"),
-				queryResult.getString("adventureDescription"),
-				queryResult.getInt("experiencePointsGained"), completionType,
-				completionCriteria);
-		return rec;
-		}
-		catch(SQLException e)
+			AdventureRecord rec = new AdventureRecord(queryResult.getInt("questID"),
+					queryResult.getInt("adventureID"),
+					queryResult.getString("adventureDescription"),
+					queryResult.getInt("experiencePointsGained"), completionType,
+					completionCriteria);
+			return rec;
+		} catch (SQLException e)
 		{
-			throw new DatabaseException("Exception trying to parse the results of reading an adventure", e);
+			throw new DatabaseException(
+					"Exception trying to parse the results of reading an adventure", e);
 		}
 	}
 
 	private AdventureCompletionCriteria extractCompletionCriteria(ResultSet queryResult,
-			AdventureCompletionType completionType) throws SQLException,DatabaseException
+			AdventureCompletionType completionType) throws SQLException,
+			DatabaseException
 	{
 		Class<? extends AdventureCompletionCriteria> completionCriteriaClass = completionType
 				.getCompletionCriteriaType();
-		ByteArrayInputStream baip = new ByteArrayInputStream((byte[])queryResult.getObject("completionCriteria"));
+		ByteArrayInputStream baip = new ByteArrayInputStream(
+				(byte[]) queryResult.getObject("completionCriteria"));
 		AdventureCompletionCriteria completionCriteria = null;
 		try
 		{
@@ -203,7 +210,8 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 			completionCriteria = completionCriteriaClass.cast(x);
 		} catch (ClassNotFoundException | IOException e)
 		{
-			throw new DatabaseException("Couldn't convert blob to completion criteria ",e);
+			throw new DatabaseException("Couldn't convert blob to completion criteria ",
+					e);
 		}
 		return completionCriteria;
 	}

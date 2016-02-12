@@ -15,7 +15,7 @@ public enum AdventureCompletionType
 	/**
 	 * 
 	 */
-	MOVEMENT(MapLocation.class),
+	MOVEMENT(GameLocation.class),
 
 	/**
 	 * 
@@ -45,6 +45,9 @@ public enum AdventureCompletionType
 		this.completionCriteriaType = completionCriteriaType;
 	}
 	
+	/**
+	 * @return the class of the adventure completion criteria
+	 */
 	public Class<? extends AdventureCompletionCriteria> getCompletionCriteriaType()
 	{
 		return completionCriteriaType;

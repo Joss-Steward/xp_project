@@ -11,7 +11,7 @@ import org.junit.Test;
 import data.AdventureCompletionType;
 import data.AdventureRecord;
 import data.CriteriaString;
-import data.MapLocation;
+import data.GameLocation;
 import data.Position;
 
 /**
@@ -33,7 +33,7 @@ public class QuestTest
 		adventures.add(new AdventureRecord(5, 42, "Merlin Zone", 4,
 				AdventureCompletionType.CHAT, new CriteriaString("Henry")));
 		adventures.add(new AdventureRecord(5, 420, "Library Quest", 8,
-				AdventureCompletionType.MOVEMENT, new MapLocation("current.tmx",
+				AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",
 						new Position(42, 3))));
 
 		Position pos = new Position(33, 44);
@@ -60,7 +60,7 @@ public class QuestTest
 			} else if (a.getAdventureID() == 420)
 			{
 				assertEquals(AdventureCompletionType.MOVEMENT, a.getCompletionType());
-				assertEquals(new MapLocation("current.tmx", new Position(42, 3)),
+				assertEquals(new GameLocation("current.tmx", new Position(42, 3)),
 						a.getCompletionCriteria());
 			} else
 			{
@@ -81,7 +81,7 @@ public class QuestTest
 		adventures.add(new AdventureRecord(5, 42, "Merlin Zone", 4,
 				AdventureCompletionType.CHAT, new CriteriaString("Henry")));
 		adventures.add(new AdventureRecord(5, 420, "Library Quest", 8,
-				AdventureCompletionType.MOVEMENT, new MapLocation("current.tmx",
+				AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",
 						new Position(42, 3))));
 		Position pos = new Position(22, 20);
 

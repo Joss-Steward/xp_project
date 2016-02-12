@@ -29,6 +29,9 @@ public enum QuestStateEnum
 	 */
 	FINISHED,;
 
+	/**
+	 * @return the unique id of the enum object
+	 */
 	public int getID()
 	{
 		return this.ordinal();

@@ -23,6 +23,9 @@ public enum AdventureStateEnum
 	 */
 	COMPLETED;
 
+	/**
+	 * @return the unique id of the enum
+	 */
 	public int getID()
 	{
 		return this.ordinal();
