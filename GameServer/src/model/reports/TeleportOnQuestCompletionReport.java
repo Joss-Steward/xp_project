@@ -7,7 +7,7 @@ import model.QualifiedObservableReport;
  * @author Chris Hersh, Zach Thompson
  *
  */
-public class TeleportOnQuestFinishReport implements QualifiedObservableReport
+public class TeleportOnQuestCompletionReport implements QualifiedObservableReport
 {
     
     private final int playerID;
@@ -25,7 +25,7 @@ public class TeleportOnQuestFinishReport implements QualifiedObservableReport
      * @param hostName name of the host
      * @param port port the client should connect to
      */
-    public TeleportOnQuestFinishReport(int id, int questID, String mapName, String hostName, int port) 
+    public TeleportOnQuestCompletionReport(int id, int questID, String mapName, String hostName, int port) 
     {
         this.playerID = id;
         this.questID = questID;
@@ -104,7 +104,7 @@ public class TeleportOnQuestFinishReport implements QualifiedObservableReport
             return false;
         if (getClass() != obj.getClass())
             return false;
-        TeleportOnQuestFinishReport other = (TeleportOnQuestFinishReport) obj;
+        TeleportOnQuestCompletionReport other = (TeleportOnQuestCompletionReport) obj;
         if (playerID != other.getPlayerID())
             return false;
         if (questID != other.getQuestID())

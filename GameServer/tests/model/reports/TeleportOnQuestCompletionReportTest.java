@@ -14,7 +14,7 @@ import data.AdventureStateEnum;
  * @author Chris Hersh, Zach Thompson, Abdul
  *
  */
-public class TeleportOnQuestFinishReportTest
+public class TeleportOnQuestCompletionReportTest
 {
 
     /** 
@@ -25,7 +25,7 @@ public class TeleportOnQuestFinishReportTest
     {
         String host = "hostname";
         int port = 22;
-        TeleportOnQuestFinishReport report = new TeleportOnQuestFinishReport(1, AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(), MapAreasForTest.ONE_MAP_AREA.getAreaName(),
+        TeleportOnQuestCompletionReport report = new TeleportOnQuestCompletionReport(1, AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(), MapAreasForTest.ONE_MAP_AREA.getAreaName(),
                 host, port);
         
         assertEquals(1, report.getPlayerID());
