@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import data.AdventureCompletionCriteria;
 import data.AdventureCompletionType;
 import data.AdventureRecord;
+import data.GameLocation;
+import data.Position;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
 import datasource.DatabaseManager;
@@ -214,6 +216,39 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 					e);
 		}
 		return completionCriteria;
+	}
+
+	/**
+	 * @see datasource.AdventureTableDataGateway#findAdventuresCompletedForMapLocation(String, Position)
+	 */
+	@Override
+	public ArrayList<AdventureRecord> findAdventuresCompletedForMapLocation(String mapName, Position pos) throws DatabaseException 
+	{
+		ArrayList<AdventureRecord> results = new ArrayList<AdventureRecord>();
+
+		Connection connection = DatabaseManager.getSingleton().getConnection();		
+		try
+		{
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT * FROM Adventures WHERE completionType = ?");
+			stmt.setInt(1, AdventureCompletionType.MOVEMENT.getID());
+			ResultSet queryResult = stmt.executeQuery();
+
+			while (queryResult.next())
+			{
+				AdventureRecord rec = buildAdventureRecord(queryResult);
+				GameLocation thisLocation = (GameLocation)rec.getCompletionCriteria();
+				if (thisLocation.getPosition().equals(pos) && thisLocation.getMapName().equals(mapName))
+				{
+					results.add(rec);
+				}
+				return results;
+			}
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Couldn't find adventures for location at " + mapName + " " + pos.toString(), e);
+		}
+		return null;
 	}
 
 }
