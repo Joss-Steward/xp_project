@@ -44,7 +44,7 @@ public class QuestStateChangeMessagePackerTest
 	{
 		QuestStateChangeMessagePacker packer = new QuestStateChangeMessagePacker();
 		assertEquals(QuestStateChangeReport.class,
-				packer.getReportTypeWePack());
+				packer.getReportTypesWePack());
 	}
 
 	/**

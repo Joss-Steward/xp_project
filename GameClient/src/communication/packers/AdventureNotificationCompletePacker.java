@@ -1,5 +1,7 @@
 package communication.packers;
 
+import java.util.ArrayList;
+
 import model.QualifiedObservableReport;
 import model.reports.AdventureNotifcationCompleteReport;
 import communication.messages.AdventureNotificationCompleteMessage;
@@ -23,12 +25,15 @@ public class AdventureNotificationCompletePacker extends MessagePacker
 	}
 
 	/**
-	 * @see communication.packers.MessagePacker#getReportTypeWePack()
+	 * @see communication.packers.MessagePacker#getReportTypesWePack()
 	 */
 	@Override
-	public Class<? extends QualifiedObservableReport> getReportTypeWePack() 
+	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack() 
 	{
-		return AdventureNotifcationCompleteReport.class;
+		ArrayList<Class<? extends QualifiedObservableReport>> result = 
+				new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add( AdventureNotifcationCompleteReport.class);
+		return result;
 	}
 
 }

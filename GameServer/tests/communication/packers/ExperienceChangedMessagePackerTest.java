@@ -47,7 +47,7 @@ public class ExperienceChangedMessagePackerTest
 	{
 		ExperienceChangedMessagePacker packer = new ExperienceChangedMessagePacker();
 		
-		assertEquals(ExperienceChangedReport.class, packer.getReportTypeWePack());
+		assertEquals(ExperienceChangedReport.class, packer.getReportTypesWePack().get(0));
 	}
 	
 	/**

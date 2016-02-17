@@ -21,7 +21,7 @@ public class AdventureNotificationCompletePackerTest
 	{
 		AdventureNotificationCompletePacker packer = new AdventureNotificationCompletePacker();
 		
-		assertEquals(AdventureNotifcationCompleteReport.class, packer.getReportTypeWePack());
+		assertEquals(AdventureNotifcationCompleteReport.class, packer.getReportTypesWePack());
 	}
 
 }
