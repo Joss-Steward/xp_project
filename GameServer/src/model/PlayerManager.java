@@ -9,6 +9,7 @@ import model.OptionsManager;
 import model.PlayerConnection;
 import model.PlayerLogin;
 import model.QualifiedObservableConnector;
+import model.reports.AddExistingPlayerReport;
 import model.reports.PinFailedReport;
 import model.reports.PlayerConnectionReport;
 import model.reports.PlayerLeaveReport;
@@ -106,9 +107,11 @@ public class PlayerManager
 	 * @return the player object that we added
 	 * @throws DatabaseException
 	 *             if the player's pin was not correct
-	 * @throws IllegalQuestChangeException the state changed illegally
+	 * @throws IllegalQuestChangeException
+	 *             the state changed illegally
 	 */
-	public Player addPlayer(int playerID, double pin) throws DatabaseException, IllegalQuestChangeException
+	public Player addPlayer(int playerID, double pin) throws DatabaseException,
+			IllegalQuestChangeException
 	{
 
 		PlayerMapper pm = new PlayerMapper(playerID);
@@ -122,17 +125,32 @@ public class PlayerManager
 
 			QualifiedObservableConnector.getSingleton().sendReport(
 					new UpdatePlayerInformationReport(player));
+			tellNewPlayerAboutEveryoneElse(player);
 
 			return player;
 		} else
 		{
 			pm.removePlayer();
 			PinFailedReport report = new PinFailedReport(playerID);
-			System.err.println("Pin is not valid for " + playerID
-					+ " because " + report.toString());
+			System.err.println("Pin is not valid for " + playerID + " because "
+					+ report.toString());
 			QualifiedObservableConnector.getSingleton().sendReport(report);
 		}
 		return null;
+	}
+
+	private void tellNewPlayerAboutEveryoneElse(Player player)
+	{
+		Collection<Player> currentPlayers = players.values();
+		for (Player existingPlayer : currentPlayers)
+		{
+			AddExistingPlayerReport report = new AddExistingPlayerReport(
+					player.getPlayerID(), existingPlayer.getPlayerID(),
+					existingPlayer.getPlayerName(), existingPlayer.getAppearanceType(),
+					existingPlayer.getPlayerPosition());
+			QualifiedObservableConnector.getSingleton().sendReport(report);
+		}
+
 	}
 
 	/**
@@ -243,9 +261,11 @@ public class PlayerManager
 	 * @return Success status of persistence
 	 * @throws DatabaseException
 	 *             IF we have trouble persisting to the data source
-	 * @throws IllegalQuestChangeException the state changed illegally
+	 * @throws IllegalQuestChangeException
+	 *             the state changed illegally
 	 */
-	public boolean persistPlayer(int playerID) throws DatabaseException, IllegalQuestChangeException
+	public boolean persistPlayer(int playerID) throws DatabaseException,
+			IllegalQuestChangeException
 	{
 
 		Player player = this.getPlayerFromID(playerID);
@@ -265,9 +285,11 @@ public class PlayerManager
 	 *            the ID of the player we should remove
 	 * @throws DatabaseException
 	 *             if we can't persist the player to the data source
-	 * @throws IllegalQuestChangeException the state changed illegally
+	 * @throws IllegalQuestChangeException
+	 *             the state changed illegally
 	 */
-	public void removePlayer(int playerID) throws DatabaseException, IllegalQuestChangeException
+	public void removePlayer(int playerID) throws DatabaseException,
+			IllegalQuestChangeException
 	{
 		persistPlayer(playerID);
 		Player p = this.players.remove(playerID);
@@ -299,7 +321,8 @@ public class PlayerManager
 
 	/**
 	 * @return the players with the top ten scores sorted by score
-	 * @throws DatabaseException if the data source can't get the data for us
+	 * @throws DatabaseException
+	 *             if the data source can't get the data for us
 	 */
 	public ArrayList<PlayerScoreRecord> getTopTenPlayers() throws DatabaseException
 	{
