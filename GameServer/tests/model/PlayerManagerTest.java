@@ -86,8 +86,11 @@ public class PlayerManagerTest
 		EasyMock.verify(obs);
 	}
 
+	/**
+	 * When a player is added, we need to send it reports about all of the other players in the system
+	 */
 	@Test
-	public void notifiesAboutExistingPlayersOnAddPlayer() throws DatabaseException
+	public void notifiesAboutExistingPlayersOnAddPlayer()
 	{
 		PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
 		

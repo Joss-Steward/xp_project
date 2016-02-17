@@ -1,9 +1,7 @@
 package model.reports;
 
-import data.Position;
-import datasource.DatabaseException;
-import model.Player;
 import model.QualifiedObservableReport;
+import data.Position;
 
 /**
  * This report is sent when a player successfully connects to this area server
@@ -20,12 +18,13 @@ public final class AddExistingPlayerReport implements QualifiedObservableReport
 	private final Position position;
 	private int recipientPlayerID;
 
+
 	/**
-	 * @param p
-	 *            the player who connected to this server
-	 * @throws DatabaseException
-	 *             only of something is badly broken at the database - the
-	 *             player should be there, so we should be able to retrieve this
+	 * @param recipientID the playerID of the player who needs to be told about this information
+	 * @param playerID the id of player we are telling them about
+	 * @param playerName the name of player we are telling them about
+	 * @param appearanceType the appearanceType of player we are telling them about
+	 * @param position the position of player we are telling them about
 	 */
 	public AddExistingPlayerReport(int recipientID, int playerID, String playerName, String appearanceType, Position position) 
 	{
@@ -38,6 +37,9 @@ public final class AddExistingPlayerReport implements QualifiedObservableReport
 
 	
 
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode()
 	{
@@ -54,6 +56,9 @@ public final class AddExistingPlayerReport implements QualifiedObservableReport
 
 
 
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{
