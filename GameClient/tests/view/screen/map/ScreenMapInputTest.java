@@ -9,6 +9,7 @@ import model.ClientPlayerManager;
 import model.ThisClientsPlayer;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import view.screen.map.ScreenMapInput;
@@ -50,7 +51,7 @@ public class ScreenMapInputTest
 	 *             when thread used to allow model facade command processing
 	 *             interrupts
 	 */
-	@Test
+	@Test @Ignore
 	public void testMovementCommandIssuing() throws InterruptedException
 	{
 		InputProcessor input = new ScreenMapInput();

@@ -99,16 +99,19 @@ public class MessagePackerSet extends TypeDetector
 	 */
 	public void registerPacker(MessagePacker packer)
 	{
-		Class<?> reportWePack = packer.getReportTypeWePack();
+		ArrayList<Class<? extends QualifiedObservableReport>> reportsWePack = packer
+				.getReportTypesWePack();
 
-		ArrayList<MessagePacker> relevantPackers = packers.get(reportWePack);
-		if (relevantPackers == null)
+		for (Class<? extends QualifiedObservableReport> reportWePack : reportsWePack)
 		{
-			relevantPackers = new ArrayList<MessagePacker>();
-			packers.put(reportWePack, relevantPackers);
+			ArrayList<MessagePacker> relevantPackers = packers.get(reportWePack);
+			if (relevantPackers == null)
+			{
+				relevantPackers = new ArrayList<MessagePacker>();
+				packers.put(reportWePack, relevantPackers);
+			}
+			relevantPackers.add(packer);
 		}
-		relevantPackers.add(packer);
-
 	}
 
 	/**
@@ -125,8 +128,13 @@ public class MessagePackerSet extends TypeDetector
 		{
 			for (MessagePacker packer : packerList)
 			{
-				QualifiedObservableConnector.getSingleton().registerObserver(obs,
-						packer.getReportTypeWePack());
+				ArrayList<Class<? extends QualifiedObservableReport>> reportTypesWePack = packer
+						.getReportTypesWePack();
+				for (Class<? extends QualifiedObservableReport> reportType : reportTypesWePack)
+				{
+					QualifiedObservableConnector.getSingleton().registerObserver(obs,
+							reportType);
+				}
 				packer.setAccumulator(obs);
 			}
 		}

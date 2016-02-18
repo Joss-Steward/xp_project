@@ -47,7 +47,7 @@ public class MovementMessagePackerTest
 	public void testReportTypeWePack()
 	{
 		OtherPlayerMovedMessagePacker packer = new OtherPlayerMovedMessagePacker();
-		assertEquals(PlayerMovedReport.class, packer.getReportTypeWePack());
+		assertEquals(PlayerMovedReport.class, packer.getReportTypesWePack().get(0));
 	}
 
 	/**

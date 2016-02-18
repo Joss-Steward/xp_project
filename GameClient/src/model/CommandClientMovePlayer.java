@@ -1,6 +1,7 @@
 package model;
 
 import data.Position;
+
 /**
  * @author Matt Kujawski
  */
@@ -54,8 +55,12 @@ public class CommandClientMovePlayer extends Command
 			}
 		} else
 		{
-			ClientPlayerManager.getSingleton().getPlayerFromID(thePlayerID)
-					.move(thePosition);
+			ClientPlayer playerFromID = ClientPlayerManager.getSingleton()
+					.getPlayerFromID(thePlayerID);
+			if (playerFromID != null)
+			{
+				playerFromID.move(thePosition);
+			}
 			moved = true;
 		}
 		return moved;

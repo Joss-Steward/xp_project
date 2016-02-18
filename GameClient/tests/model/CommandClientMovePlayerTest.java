@@ -20,7 +20,7 @@ import data.Position;
  * @author Josh
  * 
  */
-public class CommandMovePlayerTest
+public class CommandClientMovePlayerTest
 {
 	/**
 	 * Create the passability map to simulate a map being loaded in.

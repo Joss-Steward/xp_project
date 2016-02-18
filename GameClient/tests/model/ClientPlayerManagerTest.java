@@ -25,7 +25,7 @@ import data.Position;
  * @author merlin
  * 
  */
-public class PlayerManagerTest
+public class ClientPlayerManagerTest
 {
 
 	/**

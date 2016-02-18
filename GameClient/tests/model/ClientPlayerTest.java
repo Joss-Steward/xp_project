@@ -15,7 +15,7 @@ import datasource.DatabaseException;
  * @author merlin
  * 
  */
-public class PlayerTest
+public class ClientPlayerTest
 {
 
 	/**

@@ -39,7 +39,7 @@ public class AdventureStateChangeMessagePackerTest
 	public void testReportTypeWePack()
 	{
 		AdventureStateChangeMessagePacker packer = new AdventureStateChangeMessagePacker();
-		assertEquals(AdventureStateChangeReport.class, packer.getReportTypeWePack());
+		assertEquals(AdventureStateChangeReport.class, packer.getReportTypesWePack().get(0));
 	}
 	
 	/**

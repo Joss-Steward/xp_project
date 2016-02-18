@@ -122,6 +122,11 @@ public class MessagePackerSetTest
 	{
 
 	}
+	
+	private class TestReport2 implements QualifiedObservableReport
+	{
+
+	}
 
 	private class MockMessagePacker extends MessagePacker
 	{
@@ -136,12 +141,17 @@ public class MessagePackerSetTest
 		}
 
 		/**
-		 * @see communication.packers.MessagePacker#getReportTypeWePack()
+		 * @see communication.packers.MessagePacker#getReportTypesWePack()
 		 */
 		@Override
-		public Class<? extends QualifiedObservableReport> getReportTypeWePack()
+		public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 		{
-			return TestReport1.class;
+			ArrayList<Class<? extends QualifiedObservableReport>> result = 
+					new ArrayList<Class<? extends QualifiedObservableReport>>();
+			
+			result.add( TestReport1.class);
+			result.add( TestReport2.class);
+			return result;
 		}
 
 	}

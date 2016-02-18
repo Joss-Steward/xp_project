@@ -5,15 +5,17 @@ import static org.junit.Assert.assertEquals;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
-import model.MapManager;
 import model.ClientModelFacade;
 import model.ClientPlayerManager;
+import model.MapManager;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import testData.PlayersForTest;
-import communication.messages.PlayerMovedMessage;
+
+import communication.messages.OtherPlayerMovedMessage;
+
 import data.Position;
 
 /**
@@ -21,7 +23,7 @@ import data.Position;
  * 
  *         Test to see if MovementMessagHandler properly works.
  */
-public class MovementMessageHandlerTest
+public class OtherPlayerMovedMessageHandlerTest
 {
 	/**
 	 * reset the singletons and tell the model we are running headless
@@ -32,7 +34,7 @@ public class MovementMessageHandlerTest
 		ClientModelFacade.resetSingleton();
 		ClientModelFacade.getSingleton(true, true);
 	}
-	
+
 	/**
 	 * Test the type of Message that we expect
 	 */
@@ -40,7 +42,7 @@ public class MovementMessageHandlerTest
 	public void typeWeHandle()
 	{
 		OtherPlayerMovedMessageHandler h = new OtherPlayerMovedMessageHandler();
-		assertEquals(PlayerMovedMessage.class, h.getMessageTypeWeHandle());
+		assertEquals(OtherPlayerMovedMessage.class, h.getMessageTypeWeHandle());
 	}
 
 	/**
@@ -48,25 +50,37 @@ public class MovementMessageHandlerTest
 	 * 
 	 * @throws InterruptedException
 	 *             shouldn't
-	 * @throws NotBoundException shouldn't
-	 * @throws AlreadyBoundException shouldn't
+	 * @throws NotBoundException
+	 *             shouldn't
+	 * @throws AlreadyBoundException
+	 *             shouldn't
 	 */
 	@Test
-	public void engineNotified() throws InterruptedException, AlreadyBoundException, NotBoundException
+	public void engineNotified() throws InterruptedException, AlreadyBoundException,
+			NotBoundException
 	{
 		MapManager.getSingleton().changeToNewFile("testmaps/simple.tmx");
-		ClientPlayerManager.getSingleton().initiateLogin(PlayersForTest.MATT.getPlayerName(), PlayersForTest.MATT.getPlayerPassword());
+		ClientPlayerManager.getSingleton().initiateLogin(
+				PlayersForTest.MATT.getPlayerName(),
+				PlayersForTest.MATT.getPlayerPassword());
 		ClientPlayerManager.getSingleton().finishLogin(PlayersForTest.MATT.getPlayerID());
+		ClientPlayerManager.getSingleton().initializePlayer(
+				PlayersForTest.MERLIN.getPlayerID(),
+				PlayersForTest.MERLIN.getPlayerName(),
+				PlayersForTest.MERLIN.getAppearanceType(),
+				PlayersForTest.MERLIN.getPosition());
 		Position p = new Position(1, 1);
-		PlayerMovedMessage msg = new PlayerMovedMessage(PlayersForTest.MATT.getPlayerID(), p);
+		OtherPlayerMovedMessage msg = new OtherPlayerMovedMessage(
+				PlayersForTest.MATT.getPlayerID(), p);
 		OtherPlayerMovedMessageHandler handler = new OtherPlayerMovedMessageHandler();
 		handler.process(msg);
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
-		while(ClientModelFacade.getSingleton().hasCommandsPending())
+		while (ClientModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}
-		assertEquals(p,ClientPlayerManager.getSingleton().getThisClientsPlayer().getPosition());
+		assertEquals(p, ClientPlayerManager.getSingleton().getThisClientsPlayer()
+				.getPosition());
 	}
 
 }

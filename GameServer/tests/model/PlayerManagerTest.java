@@ -12,6 +12,7 @@ import model.PlayerManager;
 import model.PlayerNotFoundException;
 import model.QualifiedObservableConnector;
 import model.QualifiedObserver;
+import model.reports.AddExistingPlayerReport;
 import model.reports.PlayerConnectionReport;
 
 import org.easymock.EasyMock;
@@ -85,6 +86,24 @@ public class PlayerManagerTest
 		EasyMock.verify(obs);
 	}
 
+	/**
+	 * When a player is added, we need to send it reports about all of the other players in the system
+	 */
+	@Test
+	public void notifiesAboutExistingPlayersOnAddPlayer()
+	{
+		PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
+		
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs,
+				AddExistingPlayerReport.class);
+		AddExistingPlayerReport expected = new AddExistingPlayerReport(PlayersForTest.MATT.getPlayerID(),
+				PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.MERLIN.getPlayerName(), PlayersForTest.MERLIN.getAppearanceType(), PlayersForTest.MERLIN.getPosition());
+		obs.receiveReport(expected);
+		EasyMock.replay(obs);
+		
+		PlayerManager.getSingleton().addPlayer(PlayersForTest.MATT.getPlayerID());
+	}
 	/**
 	 * Make sure that we can get a players id from the player name
 	 * 

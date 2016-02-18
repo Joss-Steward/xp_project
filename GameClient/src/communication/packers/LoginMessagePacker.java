@@ -1,5 +1,7 @@
 package communication.packers;
 
+import java.util.ArrayList;
+
 import model.QualifiedObservableReport;
 import model.reports.LoginInitiatedReport;
 import communication.messages.LoginMessage;
@@ -34,12 +36,15 @@ public class LoginMessagePacker extends MessagePacker
 	}
 
 	/**
-	 * @see communication.packers.MessagePacker#getReportTypeWePack()
+	 * @see communication.packers.MessagePacker#getReportTypesWePack()
 	 */
 	@Override
-	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
+	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 	{
-		return LoginInitiatedReport.class;
+		ArrayList<Class<? extends QualifiedObservableReport>> result = 
+				new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add( LoginInitiatedReport.class);
+		return result;
 	}
 
 }

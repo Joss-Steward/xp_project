@@ -75,8 +75,12 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	RYAN(15, "Ryan", "female_a", 4, 13, "pw", "current.tmx", 1111, null, 0, 13);
+	RYAN(15, "Ryan", "female_a", 4, 13, "pw", "current.tmx", 1111, null, 0, 13),
 	
+	/**
+	 * 
+	 */
+	NEWBIE(16, "Newbie", "male_b", 4, 14, "pw", "sortingRoom.tmx", 1111, null, 0, 0);
 	
 	private int playerID;
 
