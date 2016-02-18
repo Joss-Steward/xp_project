@@ -16,7 +16,7 @@ import model.CommandRemovePlayerTest;
 import model.CommandSendQuestStateTest;
 import model.MapManagerTest;
 import model.ModelFacadeTest;
-import model.PlayerManagerTest;
+import model.ClientPlayerManagerTest;
 import model.ClientPlayerTest;
 import model.ThisClientsPlayerTest;
 import model.reports.AdventureStateChangeReportTest;
@@ -110,7 +110,7 @@ import communication.packers.TeleportationInitiationMessagePackerTest;
 		CommandSendQuestStateTest.class,
 		MapManagerTest.class, 
 		ModelFacadeTest.class,
-		PlayerManagerTest.class, 
+		ClientPlayerManagerTest.class, 
 		ClientPlayerTest.class,
 		ThisClientsPlayerTest.class,
 		

@@ -3,6 +3,7 @@ package communication.packers;
 import java.util.ArrayList;
 
 import model.QualifiedObservableReport;
+import model.reports.AddExistingPlayerReport;
 import model.reports.PlayerConnectionReport;
 import communication.messages.Message;
 import communication.messages.PlayerJoinedMessage;
@@ -31,6 +32,16 @@ public class PlayerJoinedMessagePacker extends MessagePacker
 					report.getPlayerName(), report.getAppearanceType(),
 					report.getPosition());
 			return msg;
+		} else if (object.getClass().equals(AddExistingPlayerReport.class))
+		{
+			AddExistingPlayerReport report = (AddExistingPlayerReport) object;
+			if (report.getRecipientPlayerID() == getAccumulator().getPlayerID())
+			{
+				PlayerJoinedMessage msg = new PlayerJoinedMessage(report.getPlayerID(),
+						report.getPlayerName(), report.getAppearanceType(),
+						report.getPosition());
+				return msg;
+			}
 		}
 		return null;
 	}
@@ -41,9 +52,8 @@ public class PlayerJoinedMessagePacker extends MessagePacker
 	@Override
 	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 	{
-		ArrayList<Class<? extends QualifiedObservableReport>> result = 
-				new ArrayList<Class<? extends QualifiedObservableReport>>();
-		result.add( PlayerConnectionReport.class);
+		ArrayList<Class<? extends QualifiedObservableReport>> result = new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add(PlayerConnectionReport.class);
 		return result;
 	}
 

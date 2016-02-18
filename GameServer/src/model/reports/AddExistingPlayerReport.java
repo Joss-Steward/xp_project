@@ -16,7 +16,7 @@ public final class AddExistingPlayerReport implements QualifiedObservableReport
 	private final String playerName;
 	private final String appearanceType;
 	private final Position position;
-	private int recipientPlayerID;
+	private final int recipientPlayerID;
 
 
 	/**
@@ -33,25 +33,6 @@ public final class AddExistingPlayerReport implements QualifiedObservableReport
 		this.playerName = playerName;
 		this.appearanceType = appearanceType;
 		this.position = position;
-	}
-
-	
-
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((appearanceType == null) ? 0 : appearanceType.hashCode());
-		result = prime * result + playerID;
-		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
-		result = prime * result + ((position == null) ? 0 : position.hashCode());
-		result = prime * result + recipientPlayerID;
-		return result;
 	}
 
 
@@ -94,7 +75,7 @@ public final class AddExistingPlayerReport implements QualifiedObservableReport
 		return true;
 	}
 
-
+	
 
 	/**
 	 * @return the appearance type for this player
@@ -104,6 +85,8 @@ public final class AddExistingPlayerReport implements QualifiedObservableReport
 		return appearanceType;
 	}
 
+
+
 	/**
 	 * @return the player's unique ID
 	 */
@@ -111,6 +94,8 @@ public final class AddExistingPlayerReport implements QualifiedObservableReport
 	{
 		return playerID;
 	}
+
+
 
 	/**
 	 * @return the player's name
@@ -128,6 +113,31 @@ public final class AddExistingPlayerReport implements QualifiedObservableReport
 	public Position getPosition()
 	{
 		return position;
+	}
+
+	/**
+	 * @return the player ID of the player who needs to see this message
+	 */
+	public int getRecipientPlayerID()
+	{
+		return recipientPlayerID;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((appearanceType == null) ? 0 : appearanceType.hashCode());
+		result = prime * result + playerID;
+		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
+		result = prime * result + ((position == null) ? 0 : position.hashCode());
+		result = prime * result + recipientPlayerID;
+		return result;
 	}
 }
 
