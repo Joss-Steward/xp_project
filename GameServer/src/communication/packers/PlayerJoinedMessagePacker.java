@@ -54,6 +54,7 @@ public class PlayerJoinedMessagePacker extends MessagePacker
 	{
 		ArrayList<Class<? extends QualifiedObservableReport>> result = new ArrayList<Class<? extends QualifiedObservableReport>>();
 		result.add(PlayerConnectionReport.class);
+		result.add(AddExistingPlayerReport.class);
 		return result;
 	}
 
