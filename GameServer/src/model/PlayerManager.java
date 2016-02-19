@@ -328,11 +328,15 @@ public class PlayerManager
 		Collection<Player> currentPlayers = players.values();
 		for (Player existingPlayer : currentPlayers)
 		{
-			AddExistingPlayerReport report = new AddExistingPlayerReport(
-					player.getPlayerID(), existingPlayer.getPlayerID(),
-					existingPlayer.getPlayerName(), existingPlayer.getAppearanceType(),
-					existingPlayer.getPlayerPosition(), existingPlayer.getCrew());
-			QualifiedObservableConnector.getSingleton().sendReport(report);
+			if (existingPlayer.getPlayerID() != player.getPlayerID())
+			{
+				AddExistingPlayerReport report = new AddExistingPlayerReport(
+						player.getPlayerID(), existingPlayer.getPlayerID(),
+						existingPlayer.getPlayerName(),
+						existingPlayer.getAppearanceType(),
+						existingPlayer.getPlayerPosition(), existingPlayer.getCrew());
+				QualifiedObservableConnector.getSingleton().sendReport(report);
+			}
 		}
 	}
 }
