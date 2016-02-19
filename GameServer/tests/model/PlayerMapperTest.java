@@ -13,6 +13,7 @@ import testData.AdventureStatesForTest;
 import testData.PlayersForTest;
 import testData.QuestStatesForTest;
 import data.AdventureStateEnum;
+import data.Crew;
 import data.Position;
 import datasource.AdventureStateTableDataGatewayMock;
 import datasource.DatabaseException;
@@ -65,6 +66,7 @@ public class PlayerMapperTest extends DatabaseTest
 		assertEquals(testPlayer.getQuizScore(), p.getQuizScore());
 		assertEquals(testPlayer.getMapName(), p.getMapName());
 		assertEquals(testPlayer.getExperiencePoints(), p.getExperiencePoints());
+		assertEquals(testPlayer.getCrew(), p.getCrew());
 
 		for (QuestStatesForTest qs : QuestStatesForTest.values())
 		{
@@ -158,6 +160,7 @@ public class PlayerMapperTest extends DatabaseTest
 		p.setQuizScore(666);
 		p.setMapName("sillyMap");
 		p.setExperiencePoints(424);
+		p.setCrew(Crew.NULL_POINTER);
 		QuestState questState = null;
 		if (p.getClass() == Player.class)
 		{
@@ -174,6 +177,7 @@ public class PlayerMapperTest extends DatabaseTest
 		assertEquals(p.getQuizScore(), p2.getQuizScore());
 		assertEquals(p.getMapName(), p2.getMapName());
 		assertEquals(p.getExperiencePoints(), p2.getExperiencePoints());
+		assertEquals(p.getCrew(), p2.getCrew());
 		if (p.getClass() == Player.class)
 		{
 			QuestState retrievedQuestState = QuestManager.getSingleton()

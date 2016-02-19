@@ -2,6 +2,7 @@ package model;
 
 import model.reports.ExperienceChangedReport;
 import model.reports.PlayerMovedReport;
+import data.Crew;
 import data.Position;
 import datasource.DatabaseException;
 
@@ -29,7 +30,22 @@ public class Player
 	private String mapName;
 	
 	private int experiencePoints;
+
+	private Crew crew;
 	
+
+	/**
+	 * Add experience points
+	 * and generates ExperienceChangedReport
+	 * @param expPoints Player's experience points
+	 * @throws DatabaseException shouldn't
+	 */
+	public void addExperiencePoints(int expPoints) throws DatabaseException
+	{
+		this.experiencePoints = experiencePoints + expPoints;
+		ExperienceChangedReport report = new ExperienceChangedReport(this.playerID, this.experiencePoints, LevelManager.getSingleton().getLevelForPoints(this.experiencePoints));
+		QualifiedObservableConnector.getSingleton().sendReport(report);
+	}
 
 	/**
 	 * Get the appearance type for how this player should be drawn
@@ -42,11 +58,20 @@ public class Player
 	}
 
 	/**
-	 * @return the id of this player
+	 * @return the crew to which this player belongs
 	 */
-	public int getPlayerID()
+	public Crew getCrew()
 	{
-		return playerID;
+		return crew;
+	}
+
+	/**
+	 * Get the player's experience points
+	 * @return experience points
+	 */
+	public int getExperiencePoints()
+	{
+		return experiencePoints;
 	}
 
 	/**
@@ -55,6 +80,14 @@ public class Player
 	public String getMapName()
 	{
 		return mapName;
+	}
+
+	/**
+	 * @return the id of this player
+	 */
+	public int getPlayerID()
+	{
+		return playerID;
 	}
 
 	/**
@@ -77,7 +110,6 @@ public class Player
 	{
 		return playerPosition;
 	}
-
 	/**
 	 * Get the quizScore
 	 * 
@@ -88,14 +120,6 @@ public class Player
 		return this.quizScore;
 	}
 
-	/**
-	 * Get the player's experience points
-	 * @return experience points
-	 */
-	public int getExperiencePoints()
-	{
-		return experiencePoints;
-	}
 	/**
 	 * Increment quiz score;
 	 */
@@ -148,11 +172,30 @@ public class Player
 	}
 
 	/**
+	 * @param crew the crew to which this player should belong
+	 */
+	public void setCrew(Crew crew)
+	{
+		this.crew = crew;
+	}
+
+	/**
 	 * @param playerMapper the mapper that will be used to persist this player
 	 */
 	public void setDataMapper(PlayerMapper playerMapper)
 	{
 		this.playerMapper = playerMapper;
+	}
+
+	/**
+	 * Set experience points
+	 * and generates ExperienceChangedReport
+	 * @param expPoints Player's experience points
+	 * @throws DatabaseException shouldn't
+	 */
+	public void setExperiencePoints(int expPoints) throws DatabaseException
+	{
+		this.experiencePoints = expPoints;
 	}
 
 	/**
@@ -197,7 +240,7 @@ public class Player
 		
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
-
+	
 	/**
 	 * Move a player without notifying the other players (used when moving from
 	 * one map to another
@@ -219,29 +262,5 @@ public class Player
 	public void setQuizScore(int score)
 	{
 		this.quizScore = score;
-	}
-
-	/**
-	 * Set experience points
-	 * and generates ExperienceChangedReport
-	 * @param expPoints Player's experience points
-	 * @throws DatabaseException shouldn't
-	 */
-	public void setExperiencePoints(int expPoints) throws DatabaseException
-	{
-		this.experiencePoints = expPoints;
-	}
-	
-	/**
-	 * Add experience points
-	 * and generates ExperienceChangedReport
-	 * @param expPoints Player's experience points
-	 * @throws DatabaseException shouldn't
-	 */
-	public void addExperiencePoints(int expPoints) throws DatabaseException
-	{
-		this.experiencePoints = experiencePoints + expPoints;
-		ExperienceChangedReport report = new ExperienceChangedReport(this.playerID, this.experiencePoints, LevelManager.getSingleton().getLevelForPoints(this.experiencePoints));
-		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 }

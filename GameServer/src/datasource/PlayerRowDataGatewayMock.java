@@ -227,4 +227,13 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		return info.crew;
 	}
 
+	/**
+	 * @see datasource.PlayerRowDataGateway#setCrew(data.Crew)
+	 */
+	@Override
+	public void setCrew(Crew crew)
+	{
+		info.crew = crew;
+	}
+
 }

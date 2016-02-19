@@ -143,6 +143,24 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	}
 
 	/**
+	 * @see datasource.PlayerRowDataGateway#getCrew()
+	 */
+	@Override
+	public Crew getCrew()
+	{
+		return crew;
+	}
+
+	/**
+	 * @see datasource.PlayerRowDataGateway#getExperiencePoints()
+	 */
+	@Override
+	public int getExperiencePoints()
+	{
+		return experiencePoints;
+	}
+
+	/**
 	 * @see datasource.PlayerRowDataGateway#getPlayerID()
 	 */
 	@Override
@@ -215,6 +233,23 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	}
 
 	/**
+	 * @see datasource.PlayerRowDataGateway#setCrew(data.Crew)
+	 */
+	public void setCrew(Crew crew)
+	{
+		this.crew = crew;
+	}
+
+	/**
+	 * @see datasource.PlayerRowDataGateway#setExperiencePoints(int)
+	 */
+	@Override
+	public void setExperiencePoints(int experiencePoints)
+	{
+		this.experiencePoints = experiencePoints;
+	}
+
+	/**
 	 * @see datasource.PlayerRowDataGateway#setPosition(data.Position)
 	 */
 	@Override
@@ -230,33 +265,6 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	public void setQuizScore(int quizScore)
 	{
 		this.quizScore = quizScore;
-	}
-
-	/**
-	 * @see datasource.PlayerRowDataGateway#getExperiencePoints()
-	 */
-	@Override
-	public int getExperiencePoints()
-	{
-		return experiencePoints;
-	}
-
-	/**
-	 * @see datasource.PlayerRowDataGateway#setExperiencePoints(int)
-	 */
-	@Override
-	public void setExperiencePoints(int experiencePoints)
-	{
-		this.experiencePoints = experiencePoints;
-	}
-
-	/**
-	 * @see datasource.PlayerRowDataGateway#getCrew()
-	 */
-	@Override
-	public Crew getCrew()
-	{
-		return crew;
 	}
 
 }
