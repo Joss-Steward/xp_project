@@ -1,5 +1,6 @@
 package datasource;
 
+import data.Crew;
 import data.Position;
 import datasource.DatabaseException;
 import datasource.PlayerRowDataGateway;
@@ -24,13 +25,13 @@ public class PlayerRowDataGatewayRDSTest extends PlayerRowDataGatewayTest
 	}
 
 	/**
-	 * @see datasource.PlayerRowDataGatewayTest#createGateway(java.lang.String, data.Position, java.lang.String, int, int)
+	 * @see datasource.PlayerRowDataGatewayTest#createGateway(java.lang.String, data.Position, java.lang.String, int, int, data.Crew)
 	 */
 	@Override
 	PlayerRowDataGateway createGateway(String mapName, Position position,
-			String appearanceType, int quizScore, int experiencePoints) throws DatabaseException
+			String appearanceType, int quizScore, int experiencePoints, Crew crew) throws DatabaseException
 	{
-		return new PlayerRowDataGatewayRDS(position, appearanceType, quizScore, experiencePoints);
+		return new PlayerRowDataGatewayRDS(position, appearanceType, quizScore, experiencePoints, crew);
 	}
 
 	

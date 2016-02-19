@@ -3,6 +3,7 @@ package datasource;
 import java.util.HashMap;
 
 import testData.PlayersForTest;
+import data.Crew;
 import data.Position;
 import datasource.DatabaseException;
 
@@ -21,14 +22,16 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		private String appearanceType;
 		private int quizScore;
 		private int experiencePoints;
+		private Crew crew;
 
 		public PlayerInfo(Position position, String appearanceType,
-				int quizScore, int experiencePoints)
+				int quizScore, int experiencePoints, Crew crew)
 		{
 			this.position = position;
 			this.appearanceType = appearanceType;
 			this.quizScore = quizScore;
 			this.experiencePoints = experiencePoints;
+			this.crew = crew;
 		}
 
 		public Position getPosition()
@@ -83,9 +86,10 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	 * @param appearanceType the appearance type of the player
 	 * @param quizScore this player's current quiz score
 	 * @param experiencePoints this player's experience points
+	 * @param crew the crew to which this player belongs
 	 */
 	public PlayerRowDataGatewayMock(Position position,
-			String appearanceType, int quizScore, int experiencePoints) 
+			String appearanceType, int quizScore, int experiencePoints, Crew crew) 
 	{
 		if (playerInfo == null)
 		{
@@ -95,7 +99,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		nextKey++;
 		
 		playerInfo.put(playerID, new PlayerInfo(position, appearanceType,
-				quizScore, experiencePoints));
+				quizScore, experiencePoints, crew));
 	}
 
 	/**
@@ -118,7 +122,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 			playerInfo.put(
 					nextKey,
 					new PlayerInfo(p.getPosition(), p
-							.getAppearanceType(), p.getQuizScore(), p.getExperiencePoints()));
+							.getAppearanceType(), p.getQuizScore(), p.getExperiencePoints(), p.getCrew()));
 			nextKey++;
 		}
 	}
@@ -212,6 +216,15 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	public void setExperiencePoints(int experiencePoints)
 	{
 		info.experiencePoints = experiencePoints;		
+	}
+
+	/**
+	 * @see datasource.PlayerRowDataGateway#getCrew()
+	 */
+	@Override
+	public Crew getCrew()
+	{
+		return info.crew;
 	}
 
 }

@@ -1,5 +1,6 @@
 package datasource;
 
+import data.Crew;
 import data.Position;
 import datasource.DatabaseException;
 
@@ -66,4 +67,9 @@ public interface PlayerRowDataGateway
 	 * @param experiencePoints this player's new experience points
 	 */
 	void setExperiencePoints(int experiencePoints);
+
+	/**
+	 * @return the crew to which this player belongs
+	 */
+	Crew getCrew();
 }
