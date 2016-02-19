@@ -1,5 +1,6 @@
 package model.reports;
 
+import data.Crew;
 import data.Position;
 import model.QualifiedObservableReport;
 
@@ -17,6 +18,7 @@ public class PlayerConnectedToAreaServerReport implements QualifiedObservableRep
 	private String appearanceType;
 	private Position position;
 	private boolean isThisClientsPlayer;
+	private Crew crew;
 
 	/**
 	 * 
@@ -28,30 +30,79 @@ public class PlayerConnectedToAreaServerReport implements QualifiedObservableRep
 	 *            the type of the player
 	 * @param position
 	 *            the position of the player
+	 * @param crew
+	 *            the crew to which this player belongs
 	 * @param isThisClientsPlayer
 	 *            statement saying if the player connected was the one
 	 *            controlled by the client
 	 * @see view.player.PlayerType
 	 */
 	public PlayerConnectedToAreaServerReport(int playerID, String playerName,
-			String appearanceType, Position position, boolean isThisClientsPlayer)
+			String appearanceType, Position position, Crew crew,
+			boolean isThisClientsPlayer)
 	{
 		this.playerID = playerID;
 		this.playerName = playerName;
 		this.appearanceType = appearanceType;
 		this.position = position;
 		this.isThisClientsPlayer = isThisClientsPlayer;
+		this.crew = crew;
 	}
 
+
+
 	/**
-	 * Report the name this player used to login to the system
-	 * 
-	 * @return the name
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public String getPlayerName()
+	@Override
+	public boolean equals(Object obj)
 	{
-		return playerName;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PlayerConnectedToAreaServerReport other = (PlayerConnectedToAreaServerReport) obj;
+		if (appearanceType == null)
+		{
+			if (other.appearanceType != null)
+				return false;
+		} else if (!appearanceType.equals(other.appearanceType))
+			return false;
+		if (crew != other.crew)
+			return false;
+		if (isThisClientsPlayer != other.isThisClientsPlayer)
+			return false;
+		if (playerID != other.playerID)
+			return false;
+		if (playerName == null)
+		{
+			if (other.playerName != null)
+				return false;
+		} else if (!playerName.equals(other.playerName))
+			return false;
+		if (position == null)
+		{
+			if (other.position != null)
+				return false;
+		} else if (!position.equals(other.position))
+			return false;
+		return true;
 	}
+
+
+
+	/**
+	 * 
+	 * @return the crew to which this player belongs
+	 */
+	public Crew getCrew()
+	{
+		return crew;
+	}
+
+
 
 	/**
 	 * Report the player type which reflects how this player should be
@@ -74,6 +125,16 @@ public class PlayerConnectedToAreaServerReport implements QualifiedObservableRep
 	}
 
 	/**
+	 * Report the name this player used to login to the system
+	 * 
+	 * @return the name
+	 */
+	public String getPlayerName()
+	{
+		return playerName;
+	}
+
+	/**
 	 * @return the player's position
 	 */
 	public Position getPlayerPosition()
@@ -82,33 +143,28 @@ public class PlayerConnectedToAreaServerReport implements QualifiedObservableRep
 	}
 
 	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((appearanceType == null) ? 0 : appearanceType.hashCode());
+		result = prime * result + ((crew == null) ? 0 : crew.hashCode());
+		result = prime * result + (isThisClientsPlayer ? 1231 : 1237);
+		result = prime * result + playerID;
+		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
+		result = prime * result + ((position == null) ? 0 : position.hashCode());
+		return result;
+	}
+
+	/**
 	 * @return if the player connected was the client's player
 	 */
 	public boolean isThisClientsPlayer()
 	{
 		return isThisClientsPlayer;
-	}
-
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PlayerConnectedToAreaServerReport other = (PlayerConnectedToAreaServerReport) obj;
-		boolean result = true;
-		result = result && this.getPlayerID() == other.getPlayerID();
-		result = result
-				&& this.getPlayerAppearanceType().equals(other.getPlayerAppearanceType());
-		result = result && this.getPlayerName().equals(other.getPlayerName());
-		result = result && this.getPlayerPosition().equals(other.getPlayerPosition());
-		result = result && this.isThisClientsPlayer() == other.isThisClientsPlayer();
-		return result;
 	}
 }

@@ -1,5 +1,6 @@
 package model;
 
+import data.Crew;
 import data.Position;
 
 /**
@@ -16,6 +17,7 @@ public class CommandInitializePlayer extends Command
 	private String playerName;
 	private String appearanceType;
 	private Position position;
+	private Crew crew;
 
 	/**
 	 * For now, we just know his name
@@ -28,14 +30,17 @@ public class CommandInitializePlayer extends Command
 	 *            The appearance type of this player
 	 * @param position
 	 *            The position of this player
+	 * @param crew
+	 *            the crew to which this player belongs
 	 */
 	public CommandInitializePlayer(int playerID, String playerName,
-			String appearanceType, Position position)
+			String appearanceType, Position position, Crew crew)
 	{
 		this.playerID = playerID;
 		this.playerName = playerName;
 		this.appearanceType = appearanceType;
 		this.position = position;
+		this.crew = crew;
 	}
 
 	/**
@@ -45,7 +50,7 @@ public class CommandInitializePlayer extends Command
 	protected boolean execute()
 	{
 		ClientPlayerManager.getSingleton().initializePlayer(playerID, playerName,
-				appearanceType, position);
+				appearanceType, position, crew);
 		return true;
 	}
 

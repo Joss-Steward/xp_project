@@ -14,6 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import data.Crew;
 import data.Position;
 
 /**
@@ -79,7 +80,7 @@ public class CommandClientMovePlayerTest
 	{
 		Position pos = new Position(1, 2);
 		ClientPlayer someGuy = ClientPlayerManager.getSingleton().initializePlayer(2, "1",
-				"1", pos);
+				"1", pos, Crew.NULL_POINTER);
 		ClientPlayerManager.getSingleton().initiateLogin("1", "1");
 		ClientPlayerManager.getSingleton().finishLogin(1);
 		assertEquals(new Position(1, 2), someGuy.getPosition());
@@ -102,7 +103,7 @@ public class CommandClientMovePlayerTest
 	{
 		Position pos = new Position(1, 2);
 		ClientPlayer me = ClientPlayerManager.getSingleton().initializePlayer(1, "1", "1",
-				pos);
+				pos, Crew.OUT_OF_BOUNDS);
 		ClientPlayerManager.getSingleton().initiateLogin("1", "1");
 		ClientPlayerManager.getSingleton().finishLogin(1);
 		assertEquals(new Position(1, 2), me.getPosition());

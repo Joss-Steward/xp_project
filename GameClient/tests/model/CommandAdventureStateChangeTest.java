@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import communication.messages.AdventureStateChangeMessage;
 import data.AdventureStateEnum;
+import data.Crew;
 import data.Position;
 import datasource.QuestStateEnum;
 
@@ -58,7 +59,7 @@ public class CommandAdventureStateChangeTest
 		
 		Position pos = new Position(1, 2);
 		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
-		pm.initializePlayer(playerID, "Player 1", "Player 1 Type", pos);
+		pm.initializePlayer(playerID, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER);
 
 		pm.initiateLogin("john", "pw");
 		pm.finishLogin(playerID);

@@ -16,6 +16,7 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
+import data.Crew;
 import data.Position;
 
 /**
@@ -58,18 +59,21 @@ public class ClientPlayerManagerTest
 	{
 		Position pos = new Position(1, 2);
 		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
-		ClientPlayer p1 = new ClientPlayer(1);
-		ClientPlayer p2 = new ClientPlayer(2);
-		ClientPlayer p3 = new ClientPlayer(3);
-		pm.initializePlayer(1, "Player 1", "Player 1 Type", pos);
-		assertEquals(p1, pm.getPlayerFromID(1));
-		pm.initializePlayer(2, "Player 2", "Player 2 Type", pos);
-		assertEquals(p1, pm.getPlayerFromID(1));
-		assertEquals(p2, pm.getPlayerFromID(2));
-		pm.initializePlayer(3, "Player 3", "Player 3 Type", pos);
-		assertEquals(p1, pm.getPlayerFromID(1));
-		assertEquals(p2, pm.getPlayerFromID(2));
-		assertEquals(p3, pm.getPlayerFromID(3));
+		pm.initializePlayer(1, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER);
+		ClientPlayer player = pm.getPlayerFromID(1);
+		assertEquals("Player 1", player.getName() );
+		assertEquals("Player 1 Type", player.getAppearanceType());
+		assertEquals(pos, player.getPosition());
+		assertEquals(Crew.NULL_POINTER, player.getCrew());
+		
+		//triangulate
+		pm.initializePlayer(2, "Player 2", "Player 2 Type", new Position(2,3), Crew.OFF_BY_ONE);
+		player = pm.getPlayerFromID(2);
+		assertEquals("Player 2", player.getName() );
+		assertEquals("Player 2 Type", player.getAppearanceType());
+		assertEquals(new Position(2,3), player.getPosition());
+		assertEquals(Crew.OFF_BY_ONE, player.getCrew());;
+		
 	}
 
 	/**
@@ -153,12 +157,12 @@ public class ClientPlayerManagerTest
 		Position pos = new Position(1, 2);
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(
-				1, "Player 1", "Player 1 Type", pos, false);
+				1, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER, false);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerConnectedToAreaServerReport.class);
 		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
-		pm.initializePlayer(1, "Player 1", "Player 1 Type", pos);
+		pm.initializePlayer(1, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER);
 
 		EasyMock.verify(obs);
 	}
