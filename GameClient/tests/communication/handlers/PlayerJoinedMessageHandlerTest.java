@@ -48,7 +48,7 @@ public class PlayerJoinedMessageHandlerTest
 	public void test() throws InterruptedException
 	{
 		PlayerJoinedMessage msg = new PlayerJoinedMessage(2, PlayersForTest.MERLIN.name(),
-				PlayersForTest.MERLIN.getAppearanceType(), PlayersForTest.MERLIN.getPosition());
+				PlayersForTest.MERLIN.getAppearanceType(), PlayersForTest.MERLIN.getPosition(), PlayersForTest.MERLIN.getCrew());
 		PlayerJoinedMessageHandler handler = new PlayerJoinedMessageHandler();
 		handler.process(msg);
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
