@@ -63,6 +63,7 @@ public class PlayerJoinedMessagePackerTest
 		assertEquals(PlayersForTest.JOHN.getAppearanceType(), msg.getAppearanceType());
 		assertEquals(PlayersForTest.JOHN.getPlayerID(), msg.getPlayerID());
 		assertEquals(PlayersForTest.JOHN.getPosition(), msg.getPosition());
+		assertEquals(PlayersForTest.JOHN.getCrew(), msg.getCrew());
 	}
 
 	/**
@@ -94,6 +95,7 @@ public class PlayerJoinedMessagePackerTest
 		assertEquals(PlayersForTest.JOHN.getAppearanceType(), msg.getAppearanceType());
 		assertEquals(PlayersForTest.JOHN.getPlayerID(), msg.getPlayerID());
 		assertEquals(PlayersForTest.JOHN.getPosition(), msg.getPosition());
+		assertEquals(PlayersForTest.JOHN.getCrew(), msg.getCrew());
 	}
 
 	/**

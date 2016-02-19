@@ -30,7 +30,7 @@ public class PlayerJoinedMessagePacker extends MessagePacker
 
 			PlayerJoinedMessage msg = new PlayerJoinedMessage(report.getPlayerID(),
 					report.getPlayerName(), report.getAppearanceType(),
-					report.getPosition());
+					report.getPosition(), report.getCrew());
 			return msg;
 		} else if (object.getClass().equals(AddExistingPlayerReport.class))
 		{
@@ -39,7 +39,7 @@ public class PlayerJoinedMessagePacker extends MessagePacker
 			{
 				PlayerJoinedMessage msg = new PlayerJoinedMessage(report.getPlayerID(),
 						report.getPlayerName(), report.getAppearanceType(),
-						report.getPosition());
+						report.getPosition(), report.getCrew());
 				return msg;
 			}
 		}
