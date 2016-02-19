@@ -3,6 +3,7 @@ package communication.packers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import model.OptionsManager;
+import model.Player;
 import model.PlayerManager;
 import model.reports.AddExistingPlayerReport;
 import model.reports.PlayerConnectionReport;
@@ -49,8 +50,12 @@ public class PlayerJoinedMessagePackerTest
 		stateAccumulator.setPlayerId(PlayersForTest.MERLIN.getPlayerID());
 		playerManager.addPlayer(PlayersForTest.JOHN.getPlayerID());
 
+		Player playerFromID = playerManager.getPlayerFromID(PlayersForTest.JOHN
+				.getPlayerID());
 		PlayerConnectionReport report = new PlayerConnectionReport(
-				playerManager.getPlayerFromID(PlayersForTest.JOHN.getPlayerID()));
+				playerFromID.getPlayerID(), playerFromID.getPlayerName(),
+				playerFromID.getAppearanceType(), playerFromID.getPlayerPosition(),
+				playerFromID.getCrew());
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);
@@ -81,7 +86,7 @@ public class PlayerJoinedMessagePackerTest
 				PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.JOHN.getPlayerID(),
 				PlayersForTest.JOHN.getPlayerName(),
 				PlayersForTest.JOHN.getAppearanceType(),
-				PlayersForTest.JOHN.getPosition());
+				PlayersForTest.JOHN.getPosition(), PlayersForTest.JOHN.getCrew());
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);
@@ -111,7 +116,7 @@ public class PlayerJoinedMessagePackerTest
 				PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.JOHN.getPlayerID(),
 				PlayersForTest.JOHN.getPlayerName(),
 				PlayersForTest.JOHN.getAppearanceType(),
-				PlayersForTest.JOHN.getPosition());
+				PlayersForTest.JOHN.getPosition(), PlayersForTest.JOHN.getCrew());
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);

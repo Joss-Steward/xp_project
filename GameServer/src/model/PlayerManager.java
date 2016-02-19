@@ -88,7 +88,9 @@ public class PlayerManager
 			players.put(playerID, player);
 
 			QualifiedObservableConnector.getSingleton().sendReport(
-					new PlayerConnectionReport(player));
+					new PlayerConnectionReport(playerID, player.getPlayerName(), player
+							.getAppearanceType(), player.getPlayerPosition(), player
+							.getCrew()));
 			return player;
 		} catch (DatabaseException e)
 		{
@@ -121,7 +123,9 @@ public class PlayerManager
 			players.put(playerID, player);
 
 			QualifiedObservableConnector.getSingleton().sendReport(
-					new PlayerConnectionReport(player));
+					new PlayerConnectionReport(player.getPlayerID(), player
+							.getPlayerName(), player.getAppearanceType(), player
+							.getPlayerPosition(), player.getCrew()));
 
 			QualifiedObservableConnector.getSingleton().sendReport(
 					new UpdatePlayerInformationReport(player));
@@ -137,20 +141,6 @@ public class PlayerManager
 			QualifiedObservableConnector.getSingleton().sendReport(report);
 		}
 		return null;
-	}
-
-	private void tellNewPlayerAboutEveryoneElse(Player player)
-	{
-		Collection<Player> currentPlayers = players.values();
-		for (Player existingPlayer : currentPlayers)
-		{
-			AddExistingPlayerReport report = new AddExistingPlayerReport(
-					player.getPlayerID(), existingPlayer.getPlayerID(),
-					existingPlayer.getPlayerName(), existingPlayer.getAppearanceType(),
-					existingPlayer.getPlayerPosition());
-			QualifiedObservableConnector.getSingleton().sendReport(report);
-		}
-
 	}
 
 	/**
@@ -207,6 +197,20 @@ public class PlayerManager
 			}
 		}
 		throw new PlayerNotFoundException();
+	}
+
+	/**
+	 * @return the players with the top ten scores sorted by score
+	 * @throws DatabaseException
+	 *             if the data source can't get the data for us
+	 */
+	public ArrayList<PlayerScoreRecord> getTopTenPlayers() throws DatabaseException
+	{
+		if (OptionsManager.getSingleton().isTestMode())
+		{
+			return PlayerTableDataGatewayMock.getSingleton().getTopTenList();
+		}
+		return PlayerTableDataGatewayRDS.getSingleton().getTopTenList();
 	}
 
 	/**
@@ -319,17 +323,16 @@ public class PlayerManager
 		}
 	}
 
-	/**
-	 * @return the players with the top ten scores sorted by score
-	 * @throws DatabaseException
-	 *             if the data source can't get the data for us
-	 */
-	public ArrayList<PlayerScoreRecord> getTopTenPlayers() throws DatabaseException
+	private void tellNewPlayerAboutEveryoneElse(Player player)
 	{
-		if (OptionsManager.getSingleton().isTestMode())
+		Collection<Player> currentPlayers = players.values();
+		for (Player existingPlayer : currentPlayers)
 		{
-			return PlayerTableDataGatewayMock.getSingleton().getTopTenList();
+			AddExistingPlayerReport report = new AddExistingPlayerReport(
+					player.getPlayerID(), existingPlayer.getPlayerID(),
+					existingPlayer.getPlayerName(), existingPlayer.getAppearanceType(),
+					existingPlayer.getPlayerPosition(), existingPlayer.getCrew());
+			QualifiedObservableConnector.getSingleton().sendReport(report);
 		}
-		return PlayerTableDataGatewayRDS.getSingleton().getTopTenList();
 	}
 }

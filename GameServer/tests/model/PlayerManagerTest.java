@@ -81,29 +81,34 @@ public class PlayerManagerTest
 		obs.receiveReport(EasyMock.isA(PlayerConnectionReport.class));
 		EasyMock.replay(obs);
 
-		
 		PlayerManager.getSingleton().addPlayer(2);
 		EasyMock.verify(obs);
 	}
 
 	/**
-	 * When a player is added, we need to send it reports about all of the other players in the system
+	 * When a player is added, we need to send it reports about all of the other
+	 * players in the system
 	 */
 	@Test
 	public void notifiesAboutExistingPlayersOnAddPlayer()
 	{
 		PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
-		
+
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				AddExistingPlayerReport.class);
-		AddExistingPlayerReport expected = new AddExistingPlayerReport(PlayersForTest.MATT.getPlayerID(),
-				PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.MERLIN.getPlayerName(), PlayersForTest.MERLIN.getAppearanceType(), PlayersForTest.MERLIN.getPosition());
+		AddExistingPlayerReport expected = new AddExistingPlayerReport(
+				PlayersForTest.MATT.getPlayerID(), PlayersForTest.MERLIN.getPlayerID(),
+				PlayersForTest.MERLIN.getPlayerName(),
+				PlayersForTest.MERLIN.getAppearanceType(),
+				PlayersForTest.MERLIN.getPosition(), PlayersForTest.MERLIN.getCrew());
+		;
 		obs.receiveReport(expected);
 		EasyMock.replay(obs);
-		
+
 		PlayerManager.getSingleton().addPlayer(PlayersForTest.MATT.getPlayerID());
 	}
+
 	/**
 	 * Make sure that we can get a players id from the player name
 	 * 
@@ -150,7 +155,8 @@ public class PlayerManagerTest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
-	 * @throws IllegalQuestChangeException the state changed illegally
+	 * @throws IllegalQuestChangeException
+	 *             the state changed illegally
 	 */
 	@Test
 	public void playerIsSaved() throws DatabaseException, IllegalQuestChangeException
@@ -180,23 +186,25 @@ public class PlayerManagerTest
 	{
 		OptionsManager om = OptionsManager.getSingleton();
 		om.setTestMode(true);
-		om.updateMapInformation(
-				PlayersForTest.QUIZBOT.getMapName(), "localhost", 1874);
+		om.updateMapInformation(PlayersForTest.QUIZBOT.getMapName(), "localhost", 1874);
 		PlayerManager.getSingleton().loadNpcs();
 
 		assertNotNull(PlayerManager.getSingleton().getPlayerFromID(
 				PlayersForTest.QUIZBOT.getPlayerID()));
 
 	}
-	
+
 	/**
 	 * Make sure it can get the high score list
-	 * @throws DatabaseException shouldn't
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
 	public void canGetTopTen() throws DatabaseException
 	{
-		ArrayList<PlayerScoreRecord> result = PlayerManager.getSingleton().getTopTenPlayers();
+		ArrayList<PlayerScoreRecord> result = PlayerManager.getSingleton()
+				.getTopTenPlayers();
 		assertEquals(10, result.size());
 	}
 }

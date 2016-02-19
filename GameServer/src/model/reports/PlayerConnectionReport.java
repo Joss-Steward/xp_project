@@ -1,9 +1,8 @@
 package model.reports;
 
-import data.Position;
-import datasource.DatabaseException;
-import model.Player;
 import model.QualifiedObservableReport;
+import data.Crew;
+import data.Position;
 
 /**
  * This report is sent when a player successfully connects to this area server
@@ -18,20 +17,23 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 	private final String playerName;
 	private final String appearanceType;
 	private final Position position;
+	private Crew crew;
 
 	/**
-	 * @param p
-	 *            the player who connected to this server
-	 * @throws DatabaseException
-	 *             only of something is badly broken at the database - the
-	 *             player should be there, so we should be able to retrieve this
+	 * Information about a player who has just joined this server
+	 * @param playerID the player's ID
+	 * @param playerName the player's name
+	 * @param appearanceType the player's appearance type
+	 * @param position where the player is standing
+	 * @param crew the crew to which the player belongs
 	 */
-	public PlayerConnectionReport(Player p) throws DatabaseException
+	public PlayerConnectionReport(int playerID, String playerName, String appearanceType, Position position, Crew crew)
 	{
-		this.playerID = p.getPlayerID();
-		this.playerName = p.getPlayerName();
-		this.appearanceType = p.getAppearanceType();
-		this.position = p.getPlayerPosition();
+		this.playerID = playerID;
+		this.playerName = playerName;
+		this.appearanceType = appearanceType;
+		this.position = position;
+		this.crew = crew;
 	}
 
 	/**
@@ -77,6 +79,14 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 	public String getAppearanceType()
 	{
 		return appearanceType;
+	}
+
+	/**
+	 * @return the crew to which this player belongs
+	 */
+	public Crew getCrew()
+	{
+		return crew;
 	}
 
 	/**
