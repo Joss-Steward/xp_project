@@ -129,6 +129,19 @@ public class QuestManager implements QualifiedObserver
 			return QuestRowDataGatewayRDS.findQuestsForMapLocation(mapName, pos);
 		}
 	}
+	
+	/**
+	 * Returns a list of AdventureRecord objects based on completion at specified map and position
+	 * @param pos - the position of the adventure
+	 * @param mapName - the map that the adventure is on
+	 * @return an array list of AdventureRecords at this position
+	 * @throws DatabaseException shouldn't
+	 */
+	public ArrayList<AdventureRecord> getAdventuresByPosition(Position pos, String mapName) throws DatabaseException
+	{
+		return adventureGateway.findAdventuresCompletedForMapLocation(mapName, pos);
+	}
+	
 
 	/**
 	 * Trigger a quest for a given player

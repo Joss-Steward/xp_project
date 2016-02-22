@@ -1,6 +1,9 @@
 package testData;
 
+import data.GameLocation;
 import data.Position;
+import data.QuestCompletionActionParameter;
+import data.QuestCompletionActionType;
 
 /**
  * Creates adventures for the DB
@@ -13,26 +16,35 @@ public enum QuestsForTest
 	/**
 	 * 
 	 */
-	ONE_BIG_QUEST(1, "Quest 1", "current.tmx", new Position(4, 14), 5, 2),
+	ONE_BIG_QUEST(1, "Quest 1", "current.tmx", new Position(4, 14), 5, 2,
+			QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
+					new Position(3, 3))),
 	/**
 	 * 
 	 */
-	THE_OTHER_QUEST(2, "Quest 2", "sillymap.tmx", new Position(42, 2), 4, 2),
+	THE_OTHER_QUEST(2, "Quest 2", "sillymap.tmx", new Position(42, 2), 4, 2,
+			QuestCompletionActionType.NO_ACTION, null),
 	/**
 	 * 
 	 */
-	ONE_SAME_LOCATION_QUEST(3, "Quest 3", "current.tmx", new Position(4, 14), 3, 2),
+	ONE_SAME_LOCATION_QUEST(3, "Quest 3", "current.tmx", new Position(4, 14), 3, 2,
+			QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
+					new Position(3, 3))),
 	/**
 	 * 
 	 */
-	THE_LITTLE_QUEST(4, "Quest 4", "current.tmx", new Position(2, 32), 5, 1);
-	
+	THE_LITTLE_QUEST(4, "Quest 4", "current.tmx", new Position(2, 32), 5, 1,
+			QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
+					new Position(3, 3)));
+
 	private int questID;
 	private String questDescription;
 	private String mapName;
 	private Position position;
 	private int adventuresForFulfillment;
 	private int experienceGained;
+	private QuestCompletionActionType completionActionType;
+	private QuestCompletionActionParameter completionActionParameter;
 
 	/**
 	 * Constructor for Quests Enum
@@ -47,9 +59,16 @@ public enum QuestsForTest
 	 * @param adventuresForFulfillment
 	 *            the number of adventures you must complete to fulfill the
 	 *            quest
+	 * @param completionActionType
+	 *            TThe type of action that should be taken when this quest
+	 *            complete
+	 * @param completionActionParam
+	 *            The parameter for the completion action
 	 */
 	QuestsForTest(int questID, String adventureDescription, String mapName,
-			Position position, int experienceGained, int adventuresForFulfillment)
+			Position position, int experienceGained, int adventuresForFulfillment,
+			QuestCompletionActionType completionActionType,
+			QuestCompletionActionParameter completionActionParam)
 	{
 		this.questID = questID;
 		this.questDescription = adventureDescription;
@@ -57,6 +76,8 @@ public enum QuestsForTest
 		this.position = position;
 		this.experienceGained = experienceGained;
 		this.adventuresForFulfillment = adventuresForFulfillment;
+		this.completionActionType = completionActionType;
+		this.completionActionParameter = completionActionParam;
 	}
 
 	/**
@@ -106,6 +127,24 @@ public enum QuestsForTest
 	public int getQuestID()
 	{
 		return questID;
+	}
+
+	/**
+	 * @return the completion action type for this quest
+	 */
+	public QuestCompletionActionType getCompletionActionType()
+	{
+		return completionActionType;
+	}
+
+	/**
+	 * 
+	 * @return the parameter describing the details of the completion action for
+	 *         this quest
+	 */
+	public QuestCompletionActionParameter getCompletionActionParameter()
+	{
+		return completionActionParameter;
 	}
 
 }

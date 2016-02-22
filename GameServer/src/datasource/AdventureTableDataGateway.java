@@ -40,4 +40,5 @@ public interface AdventureTableDataGateway
 	 */
 	ArrayList<AdventureRecord> findAdventuresCompletedForMapLocation(String mapName, Position pos) throws DatabaseException;
 
+
 }
