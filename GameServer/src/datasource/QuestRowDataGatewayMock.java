@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import testData.QuestsForTest;
 import data.Position;
+import data.QuestCompletionActionParameter;
+import data.QuestCompletionActionType;
 import datasource.DatabaseException;
 
 /**
@@ -30,9 +32,14 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 
 		private int adventuresForFulfillment;
 
+		private QuestCompletionActionType completionActionType;
+
+		private QuestCompletionActionParameter completionActionParameter;
+
 		public QuestData(int questID, String questDescription, String mapName,
 				Position position, int experiencePointsGained,
-				int adventuresForFulfillment)
+				int adventuresForFulfillment, QuestCompletionActionType completionActionType,
+				QuestCompletionActionParameter completionActionParam)
 		{
 			this.questDescription = questDescription;
 			this.mapName = mapName;
@@ -40,6 +47,8 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 			this.questID = questID;
 			this.experiencePointsGained = experiencePointsGained;
 			this.adventuresForFulfillment = adventuresForFulfillment;
+			this.completionActionType = completionActionType;
+			this.completionActionParameter = completionActionParam;
 		}
 
 		public int getExperiencePointsGained()
@@ -70,6 +79,16 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		public int getQuestID()
 		{
 			return questID;
+		}
+
+		public QuestCompletionActionParameter getCompletionActionParameter()
+		{
+			return completionActionParameter;
+		}
+
+		public QuestCompletionActionType getCompletionActionType()
+		{
+			return completionActionType;
 		}
 
 	}
@@ -116,6 +135,8 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 	private Position triggerPosition;
 	private int experiencePointsGained;
 	private int adventuresForFulfillment;
+	private QuestCompletionActionType completionActionType;
+	private QuestCompletionActionParameter completionActionParameter;
 
 	/**
 	 * Get the row data gateway object for an existing quest
@@ -140,6 +161,8 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 			this.questID = questID;
 			this.experiencePointsGained = questData.getExperiencePointsGained();
 			this.adventuresForFulfillment = questData.getAdventuresForFulfillment();
+			this.completionActionType = questData.getCompletionActionType();
+			this.completionActionParameter = questData.getCompletionActionParameter();
 		} else
 		{
 			throw new DatabaseException("Couldn't find quest with ID " + questID);
@@ -195,7 +218,8 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 					p.getQuestID(),
 					new QuestData(p.getQuestID(), p.getQuestDescription(),
 							p.getMapName(), p.getPosition(), p.getExperienceGained(), p
-									.getAdventuresForFulfillment()));
+									.getAdventuresForFulfillment(), p.getCompletionActionType(),
+									p.getCompletionActionParameter()));
 		}
 	}
 
@@ -215,6 +239,24 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 	public int getExperiencePointsGained()
 	{
 		return experiencePointsGained;
+	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getCompletionActionType()
+	 */
+	@Override
+	public QuestCompletionActionType getCompletionActionType()
+	{
+		return completionActionType;
+	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getCompletionActionParameter()
+	 */
+	@Override
+	public QuestCompletionActionParameter getCompletionActionParameter()
+	{
+		return completionActionParameter;
 	}
 
 }

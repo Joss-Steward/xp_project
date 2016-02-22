@@ -74,7 +74,8 @@ public class BuildQuestsAndAdventures
 		{
 			new QuestRowDataGatewayRDS(quest.getQuestID(), quest.getQuestDescription(),
 					quest.getMapName(), quest.getPosition(), quest.getExperienceGained(),
-					quest.getAdventuresForFulfillment());
+					quest.getAdventuresForFulfillment(), quest.getCompletionActionType(),
+					quest.getCompletionActionParameter());
 			;
 		}
 	}
@@ -90,9 +91,9 @@ public class BuildQuestsAndAdventures
 		AdventureTableDataGatewayRDS.createTable();
 		for (AdventuresForTest adventure : AdventuresForTest.values())
 		{
-			AdventureTableDataGatewayRDS.createRow(adventure.getAdventureID(), adventure
-					.getAdventureDescription(), adventure.getQuestID(), adventure
-					.getExperiencePointsGained(), adventure.getCompletionType(),
+			AdventureTableDataGatewayRDS.createRow(adventure.getAdventureID(),
+					adventure.getAdventureDescription(), adventure.getQuestID(),
+					adventure.getExperiencePointsGained(), adventure.getCompletionType(),
 					adventure.getCompletionCriteria());
 		}
 	}

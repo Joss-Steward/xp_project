@@ -1,14 +1,16 @@
 package datasource;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import data.Position;
-import datasource.ClosingPreparedStatement;
-import datasource.DatabaseException;
-import datasource.DatabaseManager;
+import data.QuestCompletionActionParameter;
+import data.QuestCompletionActionType;
 
 /**
  * An RDS implementation of the QuestRowDataGateway interface
@@ -38,7 +40,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 			stmt = new ClosingPreparedStatement(
 					connection,
 					"Create TABLE Quests (questID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questDescription VARCHAR(80), triggerMapName VARCHAR(80),"
-							+ " triggerRow INT, triggerColumn INT, experiencePointsGained INT, adventuresForFulfillment INT)");
+							+ " triggerRow INT, triggerColumn INT, experiencePointsGained INT, adventuresForFulfillment INT, "
+							+ " completionActionType INT, completionActionParameter BLOB)");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -53,6 +56,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	private Connection connection;
 	private int experiencePointsGained;
 	private int adventuresForFulfillment;
+	private QuestCompletionActionParameter completionActionParameter;
+	private QuestCompletionActionType completionActionType;
 
 	/**
 	 * Finder constructor
@@ -79,10 +84,35 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 					result.getInt("triggerColumn"));
 			this.experiencePointsGained = result.getInt("experiencePointsGained");
 			this.adventuresForFulfillment = result.getInt("adventuresForFulfillment");
+			this.completionActionType = QuestCompletionActionType.findByID(result
+					.getInt("completionActionType"));
+			completionActionParameter = extractCompletionActionParameter(result,
+					completionActionType);
 		} catch (SQLException e)
 		{
 			throw new DatabaseException("Couldn't find a quest with ID " + questID, e);
 		}
+	}
+
+	private QuestCompletionActionParameter extractCompletionActionParameter(
+			ResultSet result, QuestCompletionActionType completionActionType)
+			throws SQLException, DatabaseException
+	{
+		Class<? extends QuestCompletionActionParameter> completionActionParameterType = completionActionType
+				.getCompletionActionParameterType();
+		ByteArrayInputStream baip = new ByteArrayInputStream(
+				(byte[]) result.getObject("completionActionParameter"));
+		QuestCompletionActionParameter completionActionParameter = null;
+		try
+		{
+			Object x = new ObjectInputStream(baip).readObject();
+			completionActionParameter = completionActionParameterType.cast(x);
+		} catch (ClassNotFoundException | IOException e)
+		{
+			throw new DatabaseException(
+					"Couldn't convert blob to completion action parameter ", e);
+		}
+		return completionActionParameter;
 	}
 
 	/**
@@ -102,12 +132,20 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	 *            quest
 	 * @param adventuresForFulfillment
 	 *            the number of adventures this quest requires for fulfillment
+	 * @param completionActionType
+	 *            the type of action that should be taken when this quest is
+	 *            completed
+	 * @param completionActionParameter
+	 *            data describing the details of the action taken when this
+	 *            quest is completed
 	 * @throws DatabaseException
 	 *             if we can't talk to the RDS
 	 */
 	public QuestRowDataGatewayRDS(int questID, String questDescription,
 			String triggerMapName, Position triggerPosition, int experiencePointsGained,
-			int adventuresForFulfillment) throws DatabaseException
+			int adventuresForFulfillment, QuestCompletionActionType completionActionType,
+			QuestCompletionActionParameter completionActionParameter)
+			throws DatabaseException
 	{
 		this.questID = questID;
 		Connection connection = DatabaseManager.getSingleton().getConnection();
@@ -116,7 +154,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
 					connection,
 					"Insert INTO Quests SET questID = ?, questDescription = ?, triggerMapname = ?, triggerRow = ?, triggerColumn = ?, "
-							+ "experiencePointsGained = ?, adventuresForFulfillment = ?");
+							+ "experiencePointsGained = ?, adventuresForFulfillment = ?,"
+							+ " completionActionType = ?, completionActionParameter = ?");
 			stmt.setInt(1, questID);
 			stmt.setString(2, questDescription);
 			stmt.setString(3, triggerMapName);
@@ -124,6 +163,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 			stmt.setInt(5, triggerPosition.getColumn());
 			stmt.setInt(6, experiencePointsGained);
 			stmt.setInt(7, adventuresForFulfillment);
+			stmt.setInt(8, completionActionType.getID());
+			stmt.setObject(9, completionActionParameter);
 			stmt.executeUpdate();
 
 			this.questDescription = questDescription;
@@ -237,6 +278,24 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	public int getExperiencePointsGained()
 	{
 		return experiencePointsGained;
+	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getCompletionActionType()
+	 */
+	@Override
+	public QuestCompletionActionType getCompletionActionType()
+	{
+		return completionActionType;
+	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getCompletionActionParameter()
+	 */
+	@Override
+	public QuestCompletionActionParameter getCompletionActionParameter()
+	{
+		return completionActionParameter;
 	}
 
 }
