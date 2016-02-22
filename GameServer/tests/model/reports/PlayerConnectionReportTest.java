@@ -42,11 +42,14 @@ public class PlayerConnectionReportTest
 	public void creation() throws DatabaseException
 	{
 		Player john = PlayerManager.getSingleton().addPlayer(1);
-		PlayerConnectionReport report = new PlayerConnectionReport(john);
+		PlayerConnectionReport report = new PlayerConnectionReport(john.getPlayerID(),
+				john.getPlayerName(), john.getAppearanceType(), john.getPlayerPosition(),
+				john.getCrew());
 		assertEquals(1, report.getPlayerID());
 		assertEquals(PlayersForTest.JOHN.getPlayerName(), report.getPlayerName());
 		assertEquals(PlayersForTest.JOHN.getAppearanceType(), report.getAppearanceType());
 		assertEquals(PlayersForTest.JOHN.getPosition(), report.getPosition());
+		assertEquals(PlayersForTest.JOHN.getCrew(), report.getCrew());
 	}
 
 	/**

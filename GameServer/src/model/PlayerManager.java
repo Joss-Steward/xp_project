@@ -9,6 +9,7 @@ import model.OptionsManager;
 import model.PlayerConnection;
 import model.PlayerLogin;
 import model.QualifiedObservableConnector;
+import model.reports.AddExistingPlayerReport;
 import model.reports.PinFailedReport;
 import model.reports.PlayerConnectionReport;
 import model.reports.PlayerLeaveReport;
@@ -87,7 +88,9 @@ public class PlayerManager
 			players.put(playerID, player);
 
 			QualifiedObservableConnector.getSingleton().sendReport(
-					new PlayerConnectionReport(player));
+					new PlayerConnectionReport(playerID, player.getPlayerName(), player
+							.getAppearanceType(), player.getPlayerPosition(), player
+							.getCrew()));
 			return player;
 		} catch (DatabaseException e)
 		{
@@ -106,9 +109,11 @@ public class PlayerManager
 	 * @return the player object that we added
 	 * @throws DatabaseException
 	 *             if the player's pin was not correct
-	 * @throws IllegalQuestChangeException the state changed illegally
+	 * @throws IllegalQuestChangeException
+	 *             the state changed illegally
 	 */
-	public Player addPlayer(int playerID, double pin) throws DatabaseException, IllegalQuestChangeException
+	public Player addPlayer(int playerID, double pin) throws DatabaseException,
+			IllegalQuestChangeException
 	{
 
 		PlayerMapper pm = new PlayerMapper(playerID);
@@ -118,18 +123,21 @@ public class PlayerManager
 			players.put(playerID, player);
 
 			QualifiedObservableConnector.getSingleton().sendReport(
-					new PlayerConnectionReport(player));
+					new PlayerConnectionReport(player.getPlayerID(), player
+							.getPlayerName(), player.getAppearanceType(), player
+							.getPlayerPosition(), player.getCrew()));
 
 			QualifiedObservableConnector.getSingleton().sendReport(
 					new UpdatePlayerInformationReport(player));
+			tellNewPlayerAboutEveryoneElse(player);
 
 			return player;
 		} else
 		{
 			pm.removePlayer();
 			PinFailedReport report = new PinFailedReport(playerID);
-			System.err.println("Pin is not valid for " + playerID
-					+ " because " + report.toString());
+			System.err.println("Pin is not valid for " + playerID + " because "
+					+ report.toString());
 			QualifiedObservableConnector.getSingleton().sendReport(report);
 		}
 		return null;
@@ -192,6 +200,20 @@ public class PlayerManager
 	}
 
 	/**
+	 * @return the players with the top ten scores sorted by score
+	 * @throws DatabaseException
+	 *             if the data source can't get the data for us
+	 */
+	public ArrayList<PlayerScoreRecord> getTopTenPlayers() throws DatabaseException
+	{
+		if (OptionsManager.getSingleton().isTestMode())
+		{
+			return PlayerTableDataGatewayMock.getSingleton().getTopTenList();
+		}
+		return PlayerTableDataGatewayRDS.getSingleton().getTopTenList();
+	}
+
+	/**
 	 * Load the npcs that belong on this map, add them to player manager, and
 	 * start them
 	 * 
@@ -243,9 +265,11 @@ public class PlayerManager
 	 * @return Success status of persistence
 	 * @throws DatabaseException
 	 *             IF we have trouble persisting to the data source
-	 * @throws IllegalQuestChangeException the state changed illegally
+	 * @throws IllegalQuestChangeException
+	 *             the state changed illegally
 	 */
-	public boolean persistPlayer(int playerID) throws DatabaseException, IllegalQuestChangeException
+	public boolean persistPlayer(int playerID) throws DatabaseException,
+			IllegalQuestChangeException
 	{
 
 		Player player = this.getPlayerFromID(playerID);
@@ -265,9 +289,11 @@ public class PlayerManager
 	 *            the ID of the player we should remove
 	 * @throws DatabaseException
 	 *             if we can't persist the player to the data source
-	 * @throws IllegalQuestChangeException the state changed illegally
+	 * @throws IllegalQuestChangeException
+	 *             the state changed illegally
 	 */
-	public void removePlayer(int playerID) throws DatabaseException, IllegalQuestChangeException
+	public void removePlayer(int playerID) throws DatabaseException,
+			IllegalQuestChangeException
 	{
 		persistPlayer(playerID);
 		Player p = this.players.remove(playerID);
@@ -297,16 +323,20 @@ public class PlayerManager
 		}
 	}
 
-	/**
-	 * @return the players with the top ten scores sorted by score
-	 * @throws DatabaseException if the data source can't get the data for us
-	 */
-	public ArrayList<PlayerScoreRecord> getTopTenPlayers() throws DatabaseException
+	private void tellNewPlayerAboutEveryoneElse(Player player)
 	{
-		if (OptionsManager.getSingleton().isTestMode())
+		Collection<Player> currentPlayers = players.values();
+		for (Player existingPlayer : currentPlayers)
 		{
-			return PlayerTableDataGatewayMock.getSingleton().getTopTenList();
+			if (existingPlayer.getPlayerID() != player.getPlayerID())
+			{
+				AddExistingPlayerReport report = new AddExistingPlayerReport(
+						player.getPlayerID(), existingPlayer.getPlayerID(),
+						existingPlayer.getPlayerName(),
+						existingPlayer.getAppearanceType(),
+						existingPlayer.getPlayerPosition(), existingPlayer.getCrew());
+				QualifiedObservableConnector.getSingleton().sendReport(report);
+			}
 		}
-		return PlayerTableDataGatewayRDS.getSingleton().getTopTenList();
 	}
 }

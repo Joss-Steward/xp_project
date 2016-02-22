@@ -1,5 +1,7 @@
 package communication.packers;
 
+import java.util.ArrayList;
+
 import model.QualifiedObservableReport;
 import model.reports.ChangeMapReport;
 import communication.messages.Message;
@@ -38,9 +40,12 @@ public class TeleportationInitiationMessagePacker extends MessagePacker
 	 * The packer listens for ChangeMapReport.
 	 */
 	@Override
-	public Class<? extends QualifiedObservableReport> getReportTypeWePack() 
+	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack() 
 	{
-		return ChangeMapReport.class;
+		ArrayList<Class<? extends QualifiedObservableReport>> result = 
+				new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add( ChangeMapReport.class);
+		return result;
 	}
 
 }

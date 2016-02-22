@@ -1,5 +1,7 @@
 package communication.packers;
 
+import java.util.ArrayList;
+
 import model.QualifiedObservableReport;
 import model.reports.StubQualifiedObservableReport2;
 import communication.messages.StubMessage1;
@@ -27,12 +29,15 @@ public class StubMessagePacker2 extends MessagePacker
 	}
 
 	/**
-	 * @see communication.packers.MessagePacker#getReportTypeWePack()
+	 * @see communication.packers.MessagePacker#getReportTypesWePack()
 	 */
 	@Override
-	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
+	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 	{
-		return StubQualifiedObservableReport2.class;
+		ArrayList<Class<? extends QualifiedObservableReport>> result = 
+				new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add(StubQualifiedObservableReport2.class);
+		return result;
 	}
 
 }

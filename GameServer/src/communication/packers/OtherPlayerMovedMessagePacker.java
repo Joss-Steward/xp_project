@@ -1,8 +1,9 @@
 package communication.packers;
 
+import java.util.ArrayList;
+
 import model.QualifiedObservableReport;
 import model.reports.PlayerMovedReport;
-
 import communication.messages.Message;
 import communication.messages.OtherPlayerMovedMessage;
 
@@ -41,12 +42,15 @@ public class OtherPlayerMovedMessagePacker extends MessagePacker
 	}
 
 	/**
-	 * @see communication.packers.MessagePacker#getReportTypeWePack()
+	 * @see communication.packers.MessagePacker#getReportTypesWePack()
 	 */
 	@Override
-	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
+	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 	{
-		return PlayerMovedReport.class;
+		ArrayList<Class<? extends QualifiedObservableReport>> result = 
+				new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add( PlayerMovedReport.class);
+		return result;
 	}
 
 }

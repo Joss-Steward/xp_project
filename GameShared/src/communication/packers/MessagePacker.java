@@ -1,5 +1,7 @@
 package communication.packers;
 
+import java.util.ArrayList;
+
 import model.QualifiedObservableReport;
 import communication.StateAccumulator;
 import communication.messages.Message;
@@ -30,7 +32,7 @@ public abstract class MessagePacker
 	 * 
 	 * @return the type of report we pack
 	 */
-	public abstract Class<? extends QualifiedObservableReport> getReportTypeWePack();
+	public abstract ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack();
 
 	/**
 	 * @return the StateAccumulator attached to this packer

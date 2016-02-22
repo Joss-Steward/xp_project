@@ -69,6 +69,8 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 		assertEquals(quest.getPosition(), gateway.getTriggerPosition());
 		assertEquals(quest.getAdventuresForFulfillment(), gateway.getAdventuresForFulfillment());
 		assertEquals(quest.getExperienceGained(), gateway.getExperiencePointsGained());
+		assertEquals(quest.getCompletionActionType(), gateway.getCompletionActionType());
+		assertEquals(quest.getCompletionActionParameter(), gateway.getCompletionActionParameter());
 	}
 
 	/**

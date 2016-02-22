@@ -57,7 +57,7 @@ public class UpdatePlayerInformationMessagePackerTest
 	public void testReportTypeWePack()
 	{
 		UpdatePlayerInformationMessagePacker packer = new UpdatePlayerInformationMessagePacker();
-		assertEquals(UpdatePlayerInformationReport.class, packer.getReportTypeWePack());
+		assertEquals(UpdatePlayerInformationReport.class, packer.getReportTypesWePack().get(0));
 	}
 
 	/**

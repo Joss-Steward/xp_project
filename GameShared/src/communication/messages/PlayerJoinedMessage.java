@@ -2,6 +2,7 @@ package communication.messages;
 
 import java.io.Serializable;
 
+import data.Crew;
 import data.Position;
 
 /**
@@ -23,6 +24,8 @@ public class PlayerJoinedMessage implements Message, Serializable
 	private int playerID;
 	private String appearanceType;
 	private Position position;
+	private Crew crew;
+
 	/**
 	 * @param playerID
 	 *            the unique ID of the player
@@ -32,15 +35,19 @@ public class PlayerJoinedMessage implements Message, Serializable
 	 *            where this player is on the map on this server
 	 * @param appearanceType
 	 *            the way the player should be drawn on the screen
+	 * @param crew
+	 *            the crew to which this player belongs
 	 */
 	public PlayerJoinedMessage(int playerID, String playerName, String appearanceType,
-			Position position)
+			Position position, Crew crew)
 	{
 		this.playerID = playerID;
 		this.playerName = playerName;
 		this.appearanceType = appearanceType;
 		this.position = position;
+		this.crew = crew;
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -85,6 +92,14 @@ public class PlayerJoinedMessage implements Message, Serializable
 	public String getAppearanceType()
 	{
 		return appearanceType;
+	}
+
+	/**
+	 * @return the crew this player belongs to
+	 */
+	public Crew getCrew()
+	{
+		return crew;
 	}
 
 	/**

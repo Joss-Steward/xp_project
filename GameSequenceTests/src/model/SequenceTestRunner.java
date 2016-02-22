@@ -192,7 +192,7 @@ public class SequenceTestRunner
 		ArrayList<Message> pendingMsgs = stateAccumulator.getPendingMsgs();
 		if (!pendingMsgs.isEmpty())
 		{
-			return "Second accumulator had messages pending";
+			return "First accumulator had messages pending";
 		}
 		return null;
 	}

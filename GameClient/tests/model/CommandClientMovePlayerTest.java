@@ -14,13 +14,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import data.Crew;
 import data.Position;
 
 /**
  * @author Josh
  * 
  */
-public class CommandMovePlayerTest
+public class CommandClientMovePlayerTest
 {
 	/**
 	 * Create the passability map to simulate a map being loaded in.
@@ -79,7 +80,7 @@ public class CommandMovePlayerTest
 	{
 		Position pos = new Position(1, 2);
 		ClientPlayer someGuy = ClientPlayerManager.getSingleton().initializePlayer(2, "1",
-				"1", pos);
+				"1", pos, Crew.NULL_POINTER);
 		ClientPlayerManager.getSingleton().initiateLogin("1", "1");
 		ClientPlayerManager.getSingleton().finishLogin(1);
 		assertEquals(new Position(1, 2), someGuy.getPosition());
@@ -102,7 +103,7 @@ public class CommandMovePlayerTest
 	{
 		Position pos = new Position(1, 2);
 		ClientPlayer me = ClientPlayerManager.getSingleton().initializePlayer(1, "1", "1",
-				pos);
+				pos, Crew.OUT_OF_BOUNDS);
 		ClientPlayerManager.getSingleton().initiateLogin("1", "1");
 		ClientPlayerManager.getSingleton().finishLogin(1);
 		assertEquals(new Position(1, 2), me.getPosition());

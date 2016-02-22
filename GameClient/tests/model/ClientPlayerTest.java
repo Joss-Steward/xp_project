@@ -3,9 +3,11 @@ package model;
 import static org.junit.Assert.*;
 import model.ClientPlayer;
 import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 
 import org.junit.Test;
 
+import data.Crew;
 import data.Position;
 import datasource.DatabaseException;
 
@@ -15,7 +17,7 @@ import datasource.DatabaseException;
  * @author merlin
  * 
  */
-public class PlayerTest
+public class ClientPlayerTest
 {
 
 	/**
@@ -37,9 +39,11 @@ public class PlayerTest
 		ClientPlayer p = new ClientPlayer(1);
 		p.setName("name");
 		p.setAppearanceType("type");
+		p.setCrew(Crew.NULL_POINTER);
 
 		assertEquals("name", p.getName());
 		assertEquals("type", p.getAppearanceType());
+		assertEquals(Crew.NULL_POINTER, p.getCrew());
 	}
 
 	/**
@@ -48,7 +52,7 @@ public class PlayerTest
 	@Test
 	public void equalsContract()
 	{
-		EqualsVerifier.forClass(ClientPlayer.class).verify();
+		EqualsVerifier.forClass(ClientPlayer.class).suppress(Warning.NONFINAL_FIELDS).verify();
 	}
 
 	/**

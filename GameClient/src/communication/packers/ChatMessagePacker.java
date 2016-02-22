@@ -1,5 +1,7 @@
 package communication.packers;
 
+import java.util.ArrayList;
+
 import model.QualifiedObservableReport;
 import model.reports.ChatSentReport;
 import communication.messages.ChatMessage;
@@ -39,9 +41,12 @@ public class ChatMessagePacker extends MessagePacker
 	 * This packer listens for ChatSentReports
 	 */
 	@Override
-	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
+	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 	{
-		return ChatSentReport.class;
+		ArrayList<Class<? extends QualifiedObservableReport>> result = 
+				new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add( ChatSentReport.class);
+		return result;
 	}
 
 }

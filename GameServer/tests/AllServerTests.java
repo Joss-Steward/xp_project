@@ -3,6 +3,7 @@ import model.AdventureStateTest;
 import model.ChatManagerTest;
 import model.ChatMessageReceivedCommandTest;
 import model.CommandAddPlayerTest;
+import model.CommandKeyInputMessageReceivedTest;
 import model.CommandMovePlayerSilentlyTest;
 import model.CommandMovePlayerTest;
 import model.CommandPersistPlayerTest;
@@ -22,6 +23,7 @@ import model.QuestTest;
 import model.QuizBotBehaviorTest;
 import model.reports.AdventureStateChangeReportTest;
 import model.reports.ExperienceChangedReportTest;
+import model.reports.KeyInputRecievedReportTest;
 import model.reports.PlayerConnectionReportTest;
 import model.reports.PlayerMovedReportTest;
 import model.reports.QuestStateChangeReportTest;
@@ -37,6 +39,7 @@ import communication.handlers.ChatMessageHandlerTest;
 import communication.handlers.ConnectMessageHandlerTest;
 import communication.handlers.DisconnectMessageHandlerTest;
 import communication.handlers.HighScoreRequestMessageHandlerTest;
+import communication.handlers.KeyInputMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.TeleportationInitiationHandlerTest;
 import communication.packers.AdventureStateChangeMessagePackerTest;
@@ -46,6 +49,7 @@ import communication.packers.MapFileMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.PlayerJoinedMessagePackerTest;
 import communication.packers.UpdatePlayerInformationMessagePackerTest;
+
 import datasource.AdventureRecordTest;
 import datasource.AdventureStateTableDataGatewayMockTest;
 import datasource.AdventureStateTableDataGatewayRDSTest;
@@ -82,6 +86,7 @@ import datasource.QuestStateTableDataGatewayRDSTest;
 		ConnectMessageHandlerTest.class,
 		DisconnectMessageHandlerTest.class,
 		HighScoreRequestMessageHandlerTest.class,
+		KeyInputMessageHandlerTest.class,
 		MovementMessageHandlerTest.class,
 		TeleportationInitiationHandlerTest.class,
 		
@@ -137,6 +142,7 @@ import datasource.QuestStateTableDataGatewayRDSTest;
 		CommandAddPlayerTest.class, 
 		CommandMovePlayerSilentlyTest.class,
 		CommandMovePlayerTest.class, 
+		CommandKeyInputMessageReceivedTest.class,
 		CommandPersistPlayerTest.class,
 		CommandRemovePlayerTest.class,
 		LevelManagerTest.class,
@@ -156,6 +162,7 @@ import datasource.QuestStateTableDataGatewayRDSTest;
 		// model.reports
 		AdventureStateChangeReportTest.class,
 		ExperienceChangedReportTest.class,
+		KeyInputRecievedReportTest.class,
 		PlayerConnectionReportTest.class, 
 		PlayerMovedReportTest.class, 
 		QuestStateChangeReportTest.class,

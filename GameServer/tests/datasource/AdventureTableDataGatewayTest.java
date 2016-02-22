@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import testData.AdventuresForTest;
 import data.AdventureRecord;
+import data.GameLocation;
+import data.Position;
 import datasource.AdventureTableDataGateway;
 import datasource.DatabaseException;
 
@@ -99,4 +101,21 @@ public abstract class AdventureTableDataGatewayTest
 		AdventureRecord record = gateway.getAdventure(42, 16);
 		assertNull(record);	
 	}
+	
+	/**
+	 * We should be able to receive a list of all quests completed at a location
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void canGetCompleteByLocationAdventures() throws DatabaseException
+	{
+		GameLocation location = (GameLocation)(AdventuresForTest.QUEST2_ADVENTURE2.getCompletionCriteria());
+		String mapName = location.getMapName();
+		Position pos = location.getPosition();
+		AdventureTableDataGateway gateway = getGateway();
+		ArrayList<AdventuresForTest> adventure = new ArrayList<AdventuresForTest>();
+		adventure.add(AdventuresForTest.QUEST2_ADVENTURE2);
+		assertEquals(adventure.get(0).getAdventureDescription(), gateway.findAdventuresCompletedForMapLocation(mapName, pos).get(0).getAdventureDescription());
+	}
+	
 }
