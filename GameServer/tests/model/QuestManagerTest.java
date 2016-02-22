@@ -27,6 +27,7 @@ import testData.QuestStatesForTest;
 import testData.QuestsForTest;
 import data.AdventureRecord;
 import data.AdventureStateEnum;
+import data.GameLocation;
 import data.Position;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
@@ -419,6 +420,23 @@ public class QuestManagerTest extends DatabaseTest
 						.getQuestStateByID(p.getPlayerID(),
 								QuestStatesForTest.PLAYER1_QUEST1.getQuestID())
 						.getStateValue());
+	}
+	
+	/**
+	 * When a player moves to the right place, we should get a list of adventures
+	 * completed at that location
+	 * @throws IllegalQuestChangeException the state changed illegally
+	 * @throws DatabaseException the state changed illegally 
+	 */
+	@Test
+	public void getCompletedAdventuresOnPlayerMovement() throws IllegalQuestChangeException, DatabaseException
+	{
+		GameLocation location = (GameLocation)(AdventuresForTest.QUEST2_ADVENTURE2.getCompletionCriteria());
+		String mapName = location.getMapName();
+		Position pos = location.getPosition();
+		
+		ArrayList<AdventureRecord> list = QuestManager.getSingleton().getAdventuresByPosition(pos, mapName);
+		assertEquals(AdventuresForTest.QUEST2_ADVENTURE2.getAdventureDescription(),list.get(0).getAdventureDescription());
 	}
 	
 	/**
