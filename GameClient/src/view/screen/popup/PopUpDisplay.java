@@ -67,7 +67,7 @@ public class PopUpDisplay implements QualifiedObserver
 			
 			QuestCompleteBehavior behavior = new QuestCompleteBehavior(r.getPlayerID(), r.getQuestID());
 			QuestStateEnum state = r.getState();
-			new ScreenPopUp("Adventure " + state.getDescription(),
+			new ScreenPopUp("Quest " + state.getDescription(),
 					r.getQuestDescription() + " completed", this.stage, behavior);
 		} else if (report.getClass().equals(QuestStateChangeReport.class))
 		{
