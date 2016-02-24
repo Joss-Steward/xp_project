@@ -5,8 +5,6 @@ import model.ModelFacade;
 import model.OptionsManager;
 import model.PlayerManager;
 import model.QuestManager;
-import model.reports.AdventureStateChangeReport;
-import model.reports.QuestStateChangeReport;
 import model.reports.TeleportOnQuestCompletionReport;
 
 import org.junit.Before;
@@ -15,9 +13,7 @@ import org.junit.Test;
 import testData.AdventuresForTest;
 import testData.MapAreasForTest;
 import communication.StateAccumulator;
-import communication.messages.AdventureStateChangeMessage;
 import communication.messages.TeleportationContinuationMessage;
-import data.AdventureStateEnum;
 import datasource.DatabaseException;
 
 /**
@@ -51,7 +47,8 @@ public class TeleportOnQuestCompletionPackerTest
     {
         TeleportOnQuestCompletionPacker packer = new TeleportOnQuestCompletionPacker();
         assertEquals(TeleportOnQuestCompletionReport.class,
-                packer.getReportTypeWePack());
+                packer.getReportTypesWePack().get(0));
+        assertEquals(1, packer.getReportTypesWePack().size());
     }
 
     
