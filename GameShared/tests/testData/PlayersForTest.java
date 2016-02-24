@@ -66,7 +66,7 @@ public enum PlayersForTest
 	MOCK_NPC(12, "NPC1", "Magi", 4, 13, "", "silly.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
 
 	/**
-	 * 
+	 * Necessary for the game
 	 */
 	QUIZBOT(13, "QuizBot", "Magi", 4, 13, "", "quiznasium.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
 
@@ -83,7 +83,12 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	NEWBIE(16, "Newbie", "male_b", 4, 14, "pw", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS);
+	NEWBIE(16, "Newbie", "male_b", 4, 14, "pw", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
+	
+	/**
+	 * 
+	 */
+	RED_HAT(17, "Red Hat", "RedHat", 4,12, "", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS);
 
 	private int playerID;
 	private String appearanceType;

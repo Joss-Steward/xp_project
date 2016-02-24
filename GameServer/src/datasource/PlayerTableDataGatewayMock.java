@@ -13,7 +13,7 @@ import data.PlayerScoreRecord;
  * @author Merlin
  *
  */
-public class PlayerTableDataGatewayMock implements PlayerTableDataGateway
+public class PlayerTableDataGatewayMock extends PlayerTableDataGateway
 {
 
 	private static PlayerTableDataGateway singleton;

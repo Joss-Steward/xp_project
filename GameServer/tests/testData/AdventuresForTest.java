@@ -5,7 +5,6 @@ import data.AdventureCompletionType;
 import data.CriteriaString;
 import data.GameLocation;
 import data.Position;
-
 /**
  * Creates adventures for the DB
  * @author merlin
@@ -68,7 +67,37 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	QUEST4_ADVENTURE4(4, "Quest 4 Adventure 4", 4, 5, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor"));
+	QUEST4_ADVENTURE4(4, "Quest 4 Adventure 4", 4, 5, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
+	
+	/****************************************************/
+	/* Onramping Adventures                             */
+	/****************************************************/
+	
+	/**
+	 * See quests and adventures
+	 */
+	ONRAMPING_PRESS_Q(1, "Press the Q key to see your active quests and adventures", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.KEYSTROKE, new CriteriaString("q")),
+	/**
+	 * 
+	 */
+	ONRAMPING_MOVE_FORWARD(2, "Press up arrow to move forward", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.KEYSTROKE, new CriteriaString("\u2191")),
+	/**
+	 * 
+	 */
+	ONRAMPING_MOVE_BACKWARD(3, "Press down arrow to move backward", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.KEYSTROKE, new CriteriaString("\u2193")),
+	/**
+	 * 
+	 */
+	ONRAMPING_MOVE_LEFT(4, "Press left arrow to move left", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.KEYSTROKE, new CriteriaString("\u2190")),
+	/**
+	 * 
+	 */
+	ONRAMPING_MOVE_RIGHT(5, "Press right arrow to move right", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.KEYSTROKE, new CriteriaString("\u2192")),
+	
+	/**
+	 * 
+	 */
+	ONRAMPING_CHAT_WITH_SORTING_HAT(6, "Use the chat window to say something to the Red Hat", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.CHAT, new CriteriaString("RED HAT"));
 	
 	
 	private int adventureID;
