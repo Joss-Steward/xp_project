@@ -1,6 +1,8 @@
 package datasource;
 
 import data.Position;
+import data.QuestCompletionActionParameter;
+import data.QuestCompletionActionType;
 
 /**
  * A row data gateway for the quest table
@@ -46,5 +48,15 @@ public interface QuestRowDataGateway
 	 * @return the number of experience points you gain when you fulfill this quest
 	 */
 	int getExperiencePointsGained();
+
+	/**
+	 * @return the type of action that should be taken when this quest is complete
+	 */
+	public QuestCompletionActionType getCompletionActionType();
+
+	/**
+	 * @return an object describing the details of the completion action for this quest
+	 */
+	public QuestCompletionActionParameter getCompletionActionParameter();
 
 }

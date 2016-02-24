@@ -9,7 +9,7 @@ import datasource.NPCQuestionRowDataGatewayMock;
 import datasource.NPCQuestionRowDataGatewayRDS;
 
 /**
- * NPCQuestion class that utilizes ORMLite's DAO to store and retrieve NPCQuestions from the database.
+ * NPCQuestion class that modeling the questions for the quiz bot
  * 
  * Will return a random question from the database with getRandomQuestion()
  * 

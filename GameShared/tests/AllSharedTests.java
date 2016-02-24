@@ -1,8 +1,8 @@
 import model.ClientPlayerAdventureTest;
 import model.ClientPlayerQuestTest;
 import model.MapToServerMappingTest;
-import model.PlayerLoginTest;
 import model.PlayerConnectionTest;
+import model.PlayerLoginTest;
 import model.QualifiedObserverConnectorTest;
 
 import org.junit.ClassRule;
@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import tmxfiles.TMXMapReaderTest;
+
 import communication.ConnectionIncomingTest;
 import communication.ConnectionManagerTest;
 import communication.StateAccumulatorTest;
@@ -23,16 +24,18 @@ import communication.messages.ConnectionMessageTest;
 import communication.messages.DisconnectionMessageTest;
 import communication.messages.ExperienceChangedMessageTest;
 import communication.messages.InitializeThisClientsPlayerMessageTest;
-import communication.messages.PlayerLeaveMessageTest;
-import communication.messages.TeleportationInitiationMessageTest;
-import communication.messages.TeleportationContinuationMessageTest;
+import communication.messages.KeyInputMessageTest;
 import communication.messages.LoginMessageTest;
 import communication.messages.LoginResponseMessageTest;
 import communication.messages.MapFileMessageTest;
 import communication.messages.MessageStructureVerifier;
 import communication.messages.MovementMessageTest;
 import communication.messages.PlayerJoinedMessageTest;
+import communication.messages.PlayerLeaveMessageTest;
+import communication.messages.TeleportationContinuationMessageTest;
+import communication.messages.TeleportationInitiationMessageTest;
 import communication.packers.MessagePackerSetTest;
+
 import data.PositionTest;
 import datasource.LevelRecordTest;
 import datasource.PlayerConnectionRowDataGatewayMockTest;
@@ -74,6 +77,7 @@ import datasource.ServerRowDataGatewayRDSTest;
 		DisconnectionMessageTest.class,
 		ExperienceChangedMessageTest.class,
 		InitializeThisClientsPlayerMessageTest.class,
+		KeyInputMessageTest.class,
 		LoginMessageTest.class,
 		LoginResponseMessageTest.class,
 		MapFileMessageTest.class,

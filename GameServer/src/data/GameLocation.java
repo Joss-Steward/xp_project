@@ -5,7 +5,7 @@ package data;
  * @author Merlin
  *
  */
-public class GameLocation implements AdventureCompletionCriteria
+public class GameLocation implements AdventureCompletionCriteria, QuestCompletionActionParameter
 {
 
 	/**

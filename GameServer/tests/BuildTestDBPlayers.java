@@ -39,7 +39,7 @@ public class BuildTestDBPlayers
 
 		for (PlayersForTest p : PlayersForTest.values())
 		{
-			new PlayerRowDataGatewayRDS(p.getPosition(), p.getAppearanceType(), p.getQuizScore(), p.getExperiencePoints());
+			new PlayerRowDataGatewayRDS(p.getPosition(), p.getAppearanceType(), p.getQuizScore(), p.getExperiencePoints(), p.getCrew());
 		}
 
 	}

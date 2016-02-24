@@ -1,41 +1,34 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import model.AdventureState;
-import model.IllegalAdventureChangeException;
-import model.IllegalQuestChangeException;
-import model.OptionsManager;
-import model.Player;
-import model.PlayerManager;
-import model.QualifiedObservableConnector;
-import model.Quest;
-import model.QuestManager;
-import model.QuestState;
-import model.reports.PlayerLeaveReport;
-import model.reports.SendChatMessageReport;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import testData.AdventuresForTest;
-import testData.PlayersForTest;
-import testData.QuestStatesForTest;
-import testData.QuestsForTest;
-import data.AdventureCompletionType;
 import data.AdventureRecord;
 import data.AdventureStateEnum;
 import data.ChatType;
-import data.CriteriaString;
+import data.GameLocation;
 import data.Position;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.QuestStateEnum;
 import datasource.QuestStateTableDataGatewayMock;
+import model.reports.PlayerLeaveReport;
+import model.reports.SendChatMessageReport;
+import testData.AdventuresForTest;
+import testData.PlayersForTest;
+import testData.QuestStatesForTest;
+import testData.QuestsForTest;
 
 /**
  * Test for the quest manager getting quests and adventures from database
@@ -342,12 +335,20 @@ public class QuestManagerTest extends DatabaseTest
 
 	}
 	
-//	QUEST1_ADVENTURE2(2, "Quest 1: Adventure Description 2", 1, 2, AdventureCompletionType.CHAT, new CriteriaString("QuizBot")),
 	
+	/**
+	 * Completes an adventure that has the completion criteria of talking to a NPC.
+	 * @throws DatabaseException
+	 * 			shouldn't
+	 * @throws IllegalAdventureChangeException
+	 * 			Adventure state changed when it shouldn't have
+	 * @throws IllegalQuestChangeException
+	 * 			Quest state changed when it shouldn't have
+	 */
 	@Test
 	public void testCompleteAdventureByChatting() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException 
 	{
-		int playerToTest = PlayersForTest.JOHN.getPlayerID();		
+		int playerToTest = PlayersForTest.MARTY.getPlayerID();		
 		Player playerOne = playerManager.addPlayer(playerToTest);
 
 		Player toTalkTo = playerManager.addPlayer(PlayersForTest.QUIZBOT.getPlayerID());
@@ -358,46 +359,35 @@ public class QuestManagerTest extends DatabaseTest
 		
 		QualifiedObservableConnector.getSingleton().sendReport(csmr);
 		
-		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton().getQuestStateByID(1, 5).getAdventureList().get(0).getState());
-
-		/**
-		 * TODO: Extract code to methods. write a few tests.
-		 */
+		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton().getQuestStateByID(playerToTest, 5).getAdventureList().get(0).getState());
 	}
 	
 	
 	/**
-	 * Chat type is zone and its needs to be local to the adventure should not be completed and should
-	 * remain triggered
+	 * Adventure isn't completed because the person is outside the range of who they are supposed to talk to
+	 * @throws DatabaseException
+	 * 			shouldn't
+	 * @throws IllegalAdventureChangeException
+	 * 			Adventure state changed when it shouldn't have
+	 * @throws IllegalQuestChangeException
+	 * 			Quest state changed when it shouldn't have
 	 */
-	/**@Test
-	public void testNotCompleteAdventureByChatting_NotLocal() 
+	@Test
+	public void testNotCompleteAdventureByChattingOutsideOfRange() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException 
 	{
-		int playerToTest = PlayersForTest.JOHN.getPlayerID();
-		
+		int playerToTest = PlayersForTest.MARTY.getPlayerID();		
 		Player playerOne = playerManager.addPlayer(playerToTest);
-		
-		AdventureState as = new AdventureState(2, AdventureStateEnum.TRIGGERED, false);
-		as.setCompletionType(AdventureCompletionType.CHAT);
-		
-		ArrayList<AdventureState> adventures = new ArrayList<AdventureState>();
-		adventures.add(as);
-		
-		QuestState quest = new QuestState(playerToTest, 1, QuestStateEnum.TRIGGERED, false);
-		quest.addAdventures(adventures);
-		QuestManager.getSingleton().removeQuestStatesForPlayer(playerToTest);
-		QuestManager.getSingleton().addQuestState(playerToTest, quest);
-		
+
 		Player toTalkTo = playerManager.addPlayer(PlayersForTest.QUIZBOT.getPlayerID());
-		Position playerOnePosition  = new Position(toTalkTo.getPlayerPosition().getRow()+1, toTalkTo.getPlayerPosition().getColumn() + 1);
+		Position playerOnePosition  = new Position(toTalkTo.getPlayerPosition().getRow()+6, toTalkTo.getPlayerPosition().getColumn() + 6);
 		playerOne.setPlayerPosition(playerOnePosition);
 	
-		SendChatMessageReport csmr = new SendChatMessageReport("Hello", playerOne.getPlayerName(), playerOne.getPlayerPosition(), ChatType.Zone );
+		SendChatMessageReport csmr = new SendChatMessageReport("Hello", playerOne.getPlayerName(), playerOne.getPlayerPosition(), ChatType.Local );
+		
 		QualifiedObservableConnector.getSingleton().sendReport(csmr);
-		System.out.println(QuestManager.getSingleton().getAdventureStateByID(playerToTest, 1, 2).getState());
-		assertEquals(AdventureStateEnum.TRIGGERED,QuestManager.getSingleton().getAdventureStateByID(playerToTest, 1, 2).getState());		
+		
+		assertEquals(AdventureStateEnum.TRIGGERED, QuestManager.getSingleton().getQuestStateByID(playerToTest, 5).getAdventureList().get(0).getState());
 	}
-	*/
 
 	/**
 	 * Make sure quest is triggered if it walks onto a location that has a quest
@@ -480,6 +470,23 @@ public class QuestManagerTest extends DatabaseTest
 						.getQuestStateByID(p.getPlayerID(),
 								QuestStatesForTest.PLAYER1_QUEST1.getQuestID())
 						.getStateValue());
+	}
+	
+	/**
+	 * When a player moves to the right place, we should get a list of adventures
+	 * completed at that location
+	 * @throws IllegalQuestChangeException the state changed illegally
+	 * @throws DatabaseException the state changed illegally 
+	 */
+	@Test
+	public void getCompletedAdventuresOnPlayerMovement() throws IllegalQuestChangeException, DatabaseException
+	{
+		GameLocation location = (GameLocation)(AdventuresForTest.QUEST2_ADVENTURE2.getCompletionCriteria());
+		String mapName = location.getMapName();
+		Position pos = location.getPosition();
+		
+		ArrayList<AdventureRecord> list = QuestManager.getSingleton().getAdventuresByPosition(pos, mapName);
+		assertEquals(AdventuresForTest.QUEST2_ADVENTURE2.getAdventureDescription(),list.get(0).getAdventureDescription());
 	}
 	
 	/**

@@ -6,6 +6,7 @@ import java.util.Observable;
 
 import com.badlogic.gdx.utils.IntMap;
 
+import data.Crew;
 import data.Position;
 import model.QualifiedObservableConnector;
 import model.reports.LoginFailedReport;
@@ -33,7 +34,7 @@ public class ClientPlayerManager extends Observable
 	{
 		thisClientsPlayer = null;
 		playerList = new IntMap<ClientPlayer>();
-		
+
 	}
 
 	/**
@@ -94,8 +95,8 @@ public class ClientPlayerManager extends Observable
 	 *             when the player has not yet been set because login has not be
 	 *             called
 	 */
-	public ThisClientsPlayer finishLogin(int playerID)
-			throws AlreadyBoundException, NotBoundException
+	public ThisClientsPlayer finishLogin(int playerID) throws AlreadyBoundException,
+			NotBoundException
 	{
 		if (this.loginInProgress)
 		{
@@ -140,7 +141,8 @@ public class ClientPlayerManager extends Observable
 	public void initiateLogin(String name, String password)
 	{
 		loginInProgress = true;
-		QualifiedObservableConnector.getSingleton().sendReport(new LoginInitiatedReport(name, password));
+		QualifiedObservableConnector.getSingleton().sendReport(
+				new LoginInitiatedReport(name, password));
 	}
 
 	/**
@@ -155,10 +157,12 @@ public class ClientPlayerManager extends Observable
 	 *            The appearance type of the player
 	 * @param position
 	 *            The position of this player
+	 * @param crew
+	 *            The crew to which this player belongs
 	 * @return Player The player updated
 	 */
 	public ClientPlayer initializePlayer(int playerID, String playerName,
-			String appearanceType, Position position)
+			String appearanceType, Position position, Crew crew)
 	{
 		ClientPlayer player = this.getPlayerFromID(playerID);
 		if (player == null)
@@ -172,18 +176,20 @@ public class ClientPlayerManager extends Observable
 			isThisClientsPlayer = playerID == thisClientsPlayer.getID();
 		}
 		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(
-				playerID, playerName, appearanceType, position, isThisClientsPlayer);
+				playerID, playerName, appearanceType, position, crew, isThisClientsPlayer);
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 
 		player.setName(playerName);
 		player.setAppearanceType(appearanceType);
 		player.setPosition(position);
+		player.setCrew(crew);
 
 		return player;
 	}
-	
+
 	/**
 	 * Removes a player from being managed by this manager
+	 * 
 	 * @param playerID
 	 *            The id of the player
 	 */
@@ -191,25 +197,29 @@ public class ClientPlayerManager extends Observable
 	{
 		ClientPlayer player = this.playerList.remove(playerID);
 		if (player != null)
-		{	
-			PlayerDisconnectedFromAreaServerReport report = new PlayerDisconnectedFromAreaServerReport(playerID);
+		{
+			PlayerDisconnectedFromAreaServerReport report = new PlayerDisconnectedFromAreaServerReport(
+					playerID);
 			QualifiedObservableConnector.getSingleton().sendReport(report);
 		}
 	}
-	
+
 	/**
 	 * Report when a login has failed
 	 */
 	public void loginFailed()
 	{
-		LoginFailedReport report = new LoginFailedReport("Invalid Login - Incorrect Username/Password");
+		LoginFailedReport report = new LoginFailedReport(
+				"Invalid Login - Incorrect Username/Password");
 		loginInProgress = false;
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 
 	/**
 	 * Report when a pin has failed
-	 * @param err is the error message from a pin failure
+	 * 
+	 * @param err
+	 *            is the error message from a pin failure
 	 */
 	public void pinFailed(String err)
 	{

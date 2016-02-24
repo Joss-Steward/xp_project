@@ -1,5 +1,4 @@
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -62,12 +61,14 @@ public class LoginSuccessSequenceTest extends SequenceTest
 					new PlayerJoinedMessage(PlayersForTest.MERLIN.getPlayerID(),
 							PlayersForTest.MERLIN.getPlayerName(),
 							PlayersForTest.MERLIN.getAppearanceType(),
-							PlayersForTest.MERLIN.getPosition()), true),
+							PlayersForTest.MERLIN.getPosition(),
+							PlayersForTest.MERLIN.getCrew()), true),
 			new MessageFlow(ServerType.AREA_SERVER, ServerType.OTHER_CLIENT,
 					new PlayerJoinedMessage(PlayersForTest.MERLIN.getPlayerID(),
 							PlayersForTest.MERLIN.getPlayerName(),
 							PlayersForTest.MERLIN.getAppearanceType(),
-							PlayersForTest.MERLIN.getPosition()), true),
+							PlayersForTest.MERLIN.getPosition(),
+							PlayersForTest.MERLIN.getCrew()), true),
 			new MessageFlow(ServerType.AREA_SERVER, ServerType.THIS_PLAYER_CLIENT,
 					new MapFileMessage(MapFileMessagePacker.DIRECTORY_PREFIX
 							+ ServersForTest.CURRENT.getMapName()), true),
@@ -84,7 +85,7 @@ public class LoginSuccessSequenceTest extends SequenceTest
 	 */
 	public LoginSuccessSequenceTest() throws IOException
 	{
-		for (MessageFlow mf:sequence)
+		for (MessageFlow mf : sequence)
 		{
 			messageSequence.add(mf);
 		}
@@ -146,7 +147,6 @@ public class LoginSuccessSequenceTest extends SequenceTest
 				PlayersForTest.MERLIN.getPlayerPassword());
 	}
 
-	
 	/**
 	 * @see model.SequenceTest#getInitiatingServerType()
 	 */
@@ -173,9 +173,9 @@ public class LoginSuccessSequenceTest extends SequenceTest
 	{
 		OptionsManager.getSingleton().setMapName(PlayersForTest.MERLIN.getMapName());
 		PlayerManager.resetSingleton();
-		
+
 	}
-	
+
 	/**
 	 * @see model.SequenceTest#resetDataGateways()
 	 */

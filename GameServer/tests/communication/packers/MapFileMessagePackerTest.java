@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import model.IllegalQuestChangeException;
 import model.OptionsManager;
+import model.Player;
 import model.PlayerConnection;
 import model.PlayerManager;
 import model.reports.PlayerConnectionReport;
@@ -50,8 +51,11 @@ public class MapFileMessagePackerTest
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
 
-		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager
-				.getSingleton().getPlayerFromID(2));
+		Player playerFromID = PlayerManager.getSingleton().getPlayerFromID(2);
+		PlayerConnectionReport report = new PlayerConnectionReport(
+				playerFromID.getPlayerID(), playerFromID.getPlayerName(),
+				playerFromID.getAppearanceType(), playerFromID.getPlayerPosition(),
+				playerFromID.getCrew());
 		MapFileMessagePacker packer = new MapFileMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		MapFileMessage msg = (MapFileMessage) packer.pack(report);
@@ -64,23 +68,30 @@ public class MapFileMessagePackerTest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
-	 * @throws SQLException shouldn't
-	 * @throws IllegalQuestChangeException the state changed illegally
+	 * @throws SQLException
+	 *             shouldn't
+	 * @throws IllegalQuestChangeException
+	 *             the state changed illegally
 	 */
 	@Test
-	public void ifThePlayerIsOnThisConnection() throws DatabaseException, SQLException, IllegalQuestChangeException
+	public void ifThePlayerIsOnThisConnection() throws DatabaseException, SQLException,
+			IllegalQuestChangeException
 	{
 		PlayerManager.getSingleton().addPlayer(1, PlayerConnection.DEFAULT_PIN);
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
 
-		PlayerConnectionReport report = new PlayerConnectionReport(PlayerManager
-				.getSingleton().getPlayerFromID(1));
+		Player playerFromID = PlayerManager.getSingleton().getPlayerFromID(1);
+		PlayerConnectionReport report = new PlayerConnectionReport(
+				playerFromID.getPlayerID(), playerFromID.getPlayerName(),
+				playerFromID.getAppearanceType(), playerFromID.getPlayerPosition(),
+				playerFromID.getCrew());
 		MapFileMessagePacker packer = new MapFileMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		OptionsManager.getSingleton().updateMapInformation("current.tmx", "", 1);
 		MapFileMessage msg = (MapFileMessage) packer.pack(report);
-		assertEquals(MapFileMessagePacker.DIRECTORY_PREFIX + "current.tmx", msg.getMapFileName());
+		assertEquals(MapFileMessagePacker.DIRECTORY_PREFIX + "current.tmx",
+				msg.getMapFileName());
 		OptionsManager.resetSingleton();
 	}
 

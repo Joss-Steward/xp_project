@@ -42,10 +42,7 @@ public enum AdventureStatesForTest
 	 * 
 	 */
 	PLAYER1_QUEST3_ADV3(1, 3, 3, AdventureStateEnum.TRIGGERED, false),
-	/**
-	 * 
-	 */
-	PLAYER1_QUEST5_ADV1(1, 5, 1, AdventureStateEnum.TRIGGERED, false),
+	
 	/**
 	 * 
 	 */
@@ -69,7 +66,7 @@ public enum AdventureStatesForTest
 	 * 
 	 */
 	PLAYER2_QUEST4_ADV2(2, 4, 2, AdventureStateEnum.TRIGGERED, false),
-	
+
 	/**
 	 * 
 	 */
@@ -95,7 +92,6 @@ public enum AdventureStatesForTest
 	 * 
 	 */
 	PLAYER4_QUEST3_ADV3(4, 3, 3, AdventureStateEnum.COMPLETED, false),
-	
 
 	/**
 	 * 
@@ -108,8 +104,55 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER7_QUEST2_ADV1(7, 2, 1, AdventureStateEnum.HIDDEN, false);
+	PLAYER7_QUEST2_ADV1(7, 2, 1, AdventureStateEnum.HIDDEN, false),
+	/**
+	 * 
+	 */
+	MARTY_QUEST5_ADV1(PlayersForTest.MARTY.getPlayerID(), 5, 1, AdventureStateEnum.TRIGGERED, false),
 
+	// ----------------------------------------------------------------------------------------//
+	// NEWBIE's onramping adventures //
+	// ----------------------------------------------------------------------------------------//
+
+	/**
+	 * 
+	 */
+	NEWBIE_ONRAMPING_Q(PlayersForTest.NEWBIE.getPlayerID(),
+			AdventuresForTest.ONRAMPING_PRESS_Q.getQuestID(),
+			AdventuresForTest.ONRAMPING_PRESS_Q.getAdventureID(),
+			AdventureStateEnum.TRIGGERED, false),
+
+	/**
+	 * 
+	 */
+	NEWBIE_ONRAMPING_MOVE_UP(PlayersForTest.NEWBIE.getPlayerID(),
+			AdventuresForTest.ONRAMPING_MOVE_FORWARD.getQuestID(),
+			AdventuresForTest.ONRAMPING_MOVE_FORWARD.getAdventureID(),
+			AdventureStateEnum.TRIGGERED, false),
+
+	/**
+	 * 
+	 */
+	NEWBIE_ONRAMPING_MOVE_DOWN(PlayersForTest.NEWBIE.getPlayerID(),
+			AdventuresForTest.ONRAMPING_MOVE_BACKWARD.getQuestID(),
+			AdventuresForTest.ONRAMPING_MOVE_BACKWARD.getAdventureID(),
+			AdventureStateEnum.TRIGGERED, false),
+
+	/**
+	 * 
+	 */
+	NEWBIE_ONRAMPING_MOVE_RIGHT(PlayersForTest.NEWBIE.getPlayerID(),
+			AdventuresForTest.ONRAMPING_MOVE_RIGHT.getQuestID(),
+			AdventuresForTest.ONRAMPING_MOVE_RIGHT.getAdventureID(),
+			AdventureStateEnum.TRIGGERED, false),
+
+	/**
+	 * 
+	 */
+	NEWBIE_ONRAMPING_MOVE_LEFT(PlayersForTest.NEWBIE.getPlayerID(),
+			AdventuresForTest.ONRAMPING_MOVE_LEFT.getQuestID(),
+			AdventuresForTest.ONRAMPING_MOVE_LEFT.getAdventureID(),
+			AdventureStateEnum.TRIGGERED, false);
 
 	private int adventureID;
 	private int questID;

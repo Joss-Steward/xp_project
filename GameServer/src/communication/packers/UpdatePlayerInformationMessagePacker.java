@@ -1,5 +1,7 @@
 package communication.packers;
 
+import java.util.ArrayList;
+
 import model.QualifiedObservableReport;
 import model.reports.UpdatePlayerInformationReport;
 import communication.messages.InitializeThisClientsPlayerMessage;
@@ -13,11 +15,14 @@ public class UpdatePlayerInformationMessagePacker extends MessagePacker
 {
 
 	/**
-	 * @see communication.packers.MessagePacker#getReportTypeWePack()
+	 * @see communication.packers.MessagePacker#getReportTypesWePack()
 	 */
-	public Class<? extends QualifiedObservableReport> getReportTypeWePack()
+	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 	{
-		return UpdatePlayerInformationReport.class;
+		ArrayList<Class<? extends QualifiedObservableReport>> result = 
+				new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add( UpdatePlayerInformationReport.class);
+		return result;
 	}
 
 	/**

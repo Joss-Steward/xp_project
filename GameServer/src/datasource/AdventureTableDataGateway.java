@@ -3,6 +3,7 @@ package datasource;
 import java.util.ArrayList;
 
 import data.AdventureRecord;
+import data.Position;
 import datasource.DatabaseException;
 
 /**
@@ -29,6 +30,15 @@ public interface AdventureTableDataGateway
 	 * @throws DatabaseException if we have trouble talking to the data source
 	 */
 	AdventureRecord getAdventure(int questID, int adventureID) throws DatabaseException;
+	
+	/**
+	 * Returns a list of all adventures that are completed at the specified location.
+	 * @param mapName the map where the user is located
+	 * @param pos the position of the player
+	 * @return null if there aren't any
+	 * @throws DatabaseException if we have trouble talking to the data source
+	 */
+	ArrayList<AdventureRecord> findAdventuresCompletedForMapLocation(String mapName, Position pos) throws DatabaseException;
 
 
 }

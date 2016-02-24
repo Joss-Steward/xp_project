@@ -72,7 +72,7 @@ public class StateAccumulatorTest
 		StateAccumulator accum = new StateAccumulator(packerSet);
 		accum.receiveReport(new StubQualifiedObservableReport1());
 		ArrayList<Message> pending = accum.pendingMsgs;
-		assertEquals(1, pending.size());
+		assertEquals(2, pending.size());
 	}
 
 	/**

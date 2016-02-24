@@ -24,7 +24,12 @@ public enum NPCsForTest
 	 * 
 	 */
 	NPC3(PlayersForTest.MOCK_NPC3.getPlayerID(),
-			"model.NPCMockBehavior");
+			"model.NPCMockBehavior"),
+	
+	/**
+	 * 
+	 */
+	REDHAT(PlayersForTest.RED_HAT.getPlayerID(),"model.RedHatBehaior");
 
 	private String behaviorClass;
 	private int playerID;

@@ -16,7 +16,7 @@ import datasource.DatabaseManager;
  * @author Merlin
  *
  */
-public class PlayerTableDataGatewayRDS implements PlayerTableDataGateway
+public class PlayerTableDataGatewayRDS extends PlayerTableDataGateway
 {
 	private static PlayerTableDataGateway singleton;
 
