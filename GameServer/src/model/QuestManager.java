@@ -102,7 +102,9 @@ public class QuestManager implements QualifiedObserver
 				questGateway.getTriggerPosition(),
 				adventureGateway.getAdventuresForQuest(questID),
 				questGateway.getExperiencePointsGained(),
-				questGateway.getAdventuresForFulfillment());
+				questGateway.getAdventuresForFulfillment(),
+				questGateway.getCompletionActionType(),
+				questGateway.getCompletionActionParameter());
 
 		return quest;
 	}

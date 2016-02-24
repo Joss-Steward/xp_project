@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import data.AdventureRecord;
 import data.Position;
+import data.QuestCompletionActionParameter;
+import data.QuestCompletionActionType;
 
 /**
  * The class that hold the functionality for Quest
@@ -20,6 +22,8 @@ public class Quest
 	private Position position;
 	private int experiencePointsGained;
 	private int adventuresForFulfillment;
+    private QuestCompletionActionType completionActionType;
+    private QuestCompletionActionParameter completionActionParameter;
 
 	/**
 	 * Creates a Quest Object
@@ -30,8 +34,10 @@ public class Quest
 	 * @param adventures the list of adventures
 	 * @param experiencePointsGained the number of points we get when we fulfill this quest
 	 * @param adventuresForFulfillment the number of adventures we have to complete to fulfill this quest
+	 * @param completionActionType the type of action to do on completing a quest
+	 * @param completionActionParameter parameter for the action type
 	 */
-	public Quest(int id, String desc, String map, Position pos, ArrayList<AdventureRecord> adventures, int experiencePointsGained, int adventuresForFulfillment) 
+	public Quest(int id, String desc, String map, Position pos, ArrayList<AdventureRecord> adventures, int experiencePointsGained, int adventuresForFulfillment, QuestCompletionActionType completionActionType, QuestCompletionActionParameter completionActionParameter) 
 	{
 		this.questID = id;
 		this.description = desc;
@@ -40,6 +46,8 @@ public class Quest
 		this.adventures = adventures;
 		this.experiencePointsGained = experiencePointsGained;
 		this.adventuresForFulfillment = adventuresForFulfillment;
+		this.completionActionType = completionActionType;
+		this.completionActionParameter = completionActionParameter;
 	}
 
 	/**
@@ -179,5 +187,21 @@ public class Quest
 	{
 		return experiencePointsGained;
 	}
-	
+
+    /**
+     * @return the type of action to do on completing a quest
+     */
+    public QuestCompletionActionType getCompletionActionType()
+    {
+        return completionActionType;
+    }
+
+    /**
+     * @return parameter for the action type
+     */
+    public QuestCompletionActionParameter getCompletionActionParameter()
+    {
+        return completionActionParameter;
+    }
+
 }
