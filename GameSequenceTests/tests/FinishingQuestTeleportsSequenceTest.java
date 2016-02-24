@@ -23,6 +23,13 @@ import model.SequenceTest;
 import model.ServerType;
 
 
+/**
+ * 
+ * Test the sequence of messages that should flow when completing a test forces teleportation to
+ * another server
+ * @author Chris Hersh and Zach Thompson
+ *
+ */
 public class FinishingQuestTeleportsSequenceTest extends SequenceTest
 {
 

@@ -39,7 +39,6 @@ import org.junit.runners.Suite;
 
 import communication.handlers.AdventureNotificationCompleteMessageHandlerTest;
 import communication.handlers.ChatMessageHandlerTest;
-import communication.handlers.ConnectMessageHandlerTest;
 import communication.handlers.DisconnectMessageHandlerTest;
 import communication.handlers.HighScoreRequestMessageHandlerTest;
 import communication.handlers.KeyInputMessageHandlerTest;
@@ -54,6 +53,7 @@ import communication.packers.PlayerJoinedMessagePackerTest;
 import communication.packers.QuestStateChangeMessagePackerTest;
 import communication.packers.TeleportOnQuestCompletionPackerTest;
 import communication.packers.UpdatePlayerInformationMessagePackerTest;
+
 import datasource.AdventureRecordTest;
 import datasource.AdventureStateTableDataGatewayMockTest;
 import datasource.AdventureStateTableDataGatewayRDSTest;

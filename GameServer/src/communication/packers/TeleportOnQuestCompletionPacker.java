@@ -1,11 +1,14 @@
 package communication.packers;
 
+import java.util.ArrayList;
+
 import model.PlayerManager;
 import model.QualifiedObservableReport;
-import model.reports.ExperienceChangedReport;
 import model.reports.TeleportOnQuestCompletionReport;
+
 import communication.messages.Message;
 import communication.messages.TeleportationContinuationMessage;
+
 import datasource.DatabaseException;
 
 /**
@@ -41,12 +44,14 @@ public class TeleportOnQuestCompletionPacker extends MessagePacker
     }
 
     /** 
-     * @see communication.packers.MessagePacker#getReportTypeWePack()
+     * @see communication.packers.MessagePacker#getReportTypesWePack()
      */
     @Override
-    public Class<? extends QualifiedObservableReport> getReportTypeWePack()
+    public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
     {
-        return TeleportOnQuestCompletionReport.class;
+    	ArrayList<Class<? extends QualifiedObservableReport>> result = new ArrayList<Class<? extends QualifiedObservableReport>>();
+    	result.add(TeleportOnQuestCompletionReport.class);
+        return result;
     }
 
 }

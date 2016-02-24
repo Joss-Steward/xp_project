@@ -1,15 +1,14 @@
 package model;
 
-import static org.junit.Assert.*;
-import model.CommandAddPlayer;
-import model.OptionsManager;
-import model.Player;
-import model.PlayerConnection;
-import model.PlayerManager;
-import model.PlayerNotFoundException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import testData.PlayersForTest;
+import datasource.DatabaseException;
+import datasource.PlayerConnectionRowDataGatewayMock;
 
 /**
  * 
@@ -27,6 +26,14 @@ public class CommandAddPlayerTest
 	{
 		PlayerManager.resetSingleton();
 		OptionsManager.getSingleton().setTestMode(true);
+		try
+		{
+			(new PlayerConnectionRowDataGatewayMock(1)).resetData();
+		} catch (DatabaseException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -38,7 +45,7 @@ public class CommandAddPlayerTest
 	@Test
 	public void test() throws PlayerNotFoundException
 	{
-		CommandAddPlayer cmd = new CommandAddPlayer(1, PlayerConnection.DEFAULT_PIN);
+		CommandAddPlayer cmd = new CommandAddPlayer(PlayersForTest.JOHN.getPlayerID(), PlayersForTest.JOHN.getPin());
 		cmd.execute();
 		Player player = PlayerManager.getSingleton().getPlayerFromID(1);
 		assertNotNull(player);

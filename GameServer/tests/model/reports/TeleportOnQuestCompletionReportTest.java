@@ -1,13 +1,11 @@
 package model.reports;
 
-import static org.junit.Assert.*;
-import nl.jqno.equalsverifier.EqualsVerifier;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import testData.AdventuresForTest;
 import testData.MapAreasForTest;
-import data.AdventureStateEnum;
 
 /**
  * Test to make sure the TeleportOnQuestFinishReport works
