@@ -25,7 +25,14 @@ public enum QuestsForTest
 	/**
 	 * 
 	 */
-	THE_LITTLE_QUEST(4, "Quest 4", "current.tmx", new Position(2, 32), 5, 1);
+	THE_LITTLE_QUEST(4, "Quest 4", "current.tmx", new Position(2, 32), 5, 1),
+	/**
+	 * 
+	 */
+	CHAT_TO_AN_NPC_QUEST(5, "Quest 5", "current.tmx", new Position(0,0), 5, 1);
+	/**
+	 * 
+	 */
 	
 	private int questID;
 	private String questDescription;

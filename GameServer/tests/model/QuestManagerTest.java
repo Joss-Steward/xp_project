@@ -16,6 +16,7 @@ import model.Quest;
 import model.QuestManager;
 import model.QuestState;
 import model.reports.PlayerLeaveReport;
+import model.reports.SendChatMessageReport;
 
 import org.junit.After;
 import org.junit.Before;
@@ -25,8 +26,11 @@ import testData.AdventuresForTest;
 import testData.PlayersForTest;
 import testData.QuestStatesForTest;
 import testData.QuestsForTest;
+import data.AdventureCompletionType;
 import data.AdventureRecord;
 import data.AdventureStateEnum;
+import data.ChatType;
+import data.CriteriaString;
 import data.Position;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
@@ -269,7 +273,7 @@ public class QuestManagerTest extends DatabaseTest
 	public void testQuestDoesNotExits() throws DatabaseException
 	{
 		QuestManager qm = QuestManager.getSingleton();
-		Quest quest1 = qm.getQuest(5);
+		Quest quest1 = qm.getQuest(6);
 	}
 
 	/**
@@ -337,6 +341,63 @@ public class QuestManagerTest extends DatabaseTest
 		assertFalse(questStateByID.isNeedingNotification());
 
 	}
+	
+//	QUEST1_ADVENTURE2(2, "Quest 1: Adventure Description 2", 1, 2, AdventureCompletionType.CHAT, new CriteriaString("QuizBot")),
+	
+	@Test
+	public void testCompleteAdventureByChatting() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException 
+	{
+		int playerToTest = PlayersForTest.JOHN.getPlayerID();		
+		Player playerOne = playerManager.addPlayer(playerToTest);
+
+		Player toTalkTo = playerManager.addPlayer(PlayersForTest.QUIZBOT.getPlayerID());
+		Position playerOnePosition  = new Position(toTalkTo.getPlayerPosition().getRow()+1, toTalkTo.getPlayerPosition().getColumn() + 1);
+		playerOne.setPlayerPosition(playerOnePosition);
+	
+		SendChatMessageReport csmr = new SendChatMessageReport("Hello", playerOne.getPlayerName(), playerOne.getPlayerPosition(), ChatType.Local );
+		
+		QualifiedObservableConnector.getSingleton().sendReport(csmr);
+		
+		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton().getQuestStateByID(1, 5).getAdventureList().get(0).getState());
+
+		/**
+		 * TODO: Extract code to methods. write a few tests.
+		 */
+	}
+	
+	
+	/**
+	 * Chat type is zone and its needs to be local to the adventure should not be completed and should
+	 * remain triggered
+	 */
+	/**@Test
+	public void testNotCompleteAdventureByChatting_NotLocal() 
+	{
+		int playerToTest = PlayersForTest.JOHN.getPlayerID();
+		
+		Player playerOne = playerManager.addPlayer(playerToTest);
+		
+		AdventureState as = new AdventureState(2, AdventureStateEnum.TRIGGERED, false);
+		as.setCompletionType(AdventureCompletionType.CHAT);
+		
+		ArrayList<AdventureState> adventures = new ArrayList<AdventureState>();
+		adventures.add(as);
+		
+		QuestState quest = new QuestState(playerToTest, 1, QuestStateEnum.TRIGGERED, false);
+		quest.addAdventures(adventures);
+		QuestManager.getSingleton().removeQuestStatesForPlayer(playerToTest);
+		QuestManager.getSingleton().addQuestState(playerToTest, quest);
+		
+		Player toTalkTo = playerManager.addPlayer(PlayersForTest.QUIZBOT.getPlayerID());
+		Position playerOnePosition  = new Position(toTalkTo.getPlayerPosition().getRow()+1, toTalkTo.getPlayerPosition().getColumn() + 1);
+		playerOne.setPlayerPosition(playerOnePosition);
+	
+		SendChatMessageReport csmr = new SendChatMessageReport("Hello", playerOne.getPlayerName(), playerOne.getPlayerPosition(), ChatType.Zone );
+		QualifiedObservableConnector.getSingleton().sendReport(csmr);
+		System.out.println(QuestManager.getSingleton().getAdventureStateByID(playerToTest, 1, 2).getState());
+		assertEquals(AdventureStateEnum.TRIGGERED,QuestManager.getSingleton().getAdventureStateByID(playerToTest, 1, 2).getState());		
+	}
+	*/
 
 	/**
 	 * Make sure quest is triggered if it walks onto a location that has a quest

@@ -16,7 +16,8 @@ import org.junit.runners.Suite;
 
 	JUnitLoginSequenceTests.class, 
 	JUnitMovementSequenceTests.class,
-	JUnitQuestSequenceTests.class 
+	JUnitQuestSequenceTests.class,
+	JUnitAdventureNotificationComplete.class
 })
 
 

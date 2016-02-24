@@ -45,6 +45,10 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
+	PLAYER1_QUEST5_ADV1(1, 5, 1, AdventureStateEnum.TRIGGERED, false),
+	/**
+	 * 
+	 */
 	PLAYER2_QUEST1_ADV1(2, 1, 1, AdventureStateEnum.TRIGGERED, false),
 	/**
 	 * 

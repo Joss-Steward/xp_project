@@ -68,7 +68,14 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	QUEST4_ADVENTURE4(4, "Quest 4 Adventure 4", 4, 5, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor"));
+	QUEST4_ADVENTURE4(4, "Quest 4 Adventure 4", 4, 5, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
+	/**
+	 * 
+	 */
+	QUEST5_ADVENTURE1(1, "Quest 5 Adventure 1", 5, 1, AdventureCompletionType.CHAT, new CriteriaString("QuizBot"));
+	/**
+	 * 
+	 */
 	
 	
 	private int adventureID;
