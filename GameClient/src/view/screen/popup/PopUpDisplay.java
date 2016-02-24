@@ -56,8 +56,8 @@ public class PopUpDisplay implements QualifiedObserver
 			AdventuresNeedingNotificationReport r = (AdventuresNeedingNotificationReport) report;
 			
 			AdventureCompleteBehavior behavior = new AdventureCompleteBehavior(r.getPlayerID(), r.getQuestID(), r.getAdventureID());
-			@SuppressWarnings("unused")
-			ScreenPopUp popup = new ScreenPopUp("Adventure Completed",
+			AdventureStateEnum state = r.getState();
+			new ScreenPopUp("Adventure " + state.getDescription(),
 					r.getAdventureDescription() + " completed", this.stage, behavior);
 		} else if (report.getClass().equals(QuestStateChangeReport.class))
 		{

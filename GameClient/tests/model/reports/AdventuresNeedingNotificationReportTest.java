@@ -28,7 +28,7 @@ public class AdventuresNeedingNotificationReportTest
 		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure", 3, AdventureStateEnum.COMPLETED, true);
 		ArrayList<String> adventureList = new ArrayList<String>();
 		adventureList.add(a.getAdventureDescription());
-		AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(1, 2, 1, "Silly Adventure");
+		AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(1, 2, 1, "Silly Adventure", AdventureStateEnum.COMPLETED);
 		assertEquals(1, report.getPlayerID());
 		assertEquals(2, report.getQuestID());
 		assertEquals(1, report.getAdventureID());

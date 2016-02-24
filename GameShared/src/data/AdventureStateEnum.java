@@ -12,17 +12,30 @@ public enum AdventureStateEnum
 	 * This adventure isn't yet available to the players.
 	 * When this adventure's quest has yet to be triggered.
 	 */
-	HIDDEN,
+	HIDDEN(""),
 	/**
 	 * Adventure is ready to be completed.
 	 */
-	TRIGGERED,
+	TRIGGERED("has triggered"),
 
 	/**
 	 * Player has been notified, nothing left to do.
 	 */
-	COMPLETED;
+	COMPLETED("is completed");
 
+	private String description;
+	
+	/**
+	 * @return the English description of this adventure state
+	 */
+	public String getDescription()
+	{
+		return description;
+	}
+	AdventureStateEnum(String description)
+	{
+		this.description = description;
+	}
 	/**
 	 * @return the unique id of the enum
 	 */

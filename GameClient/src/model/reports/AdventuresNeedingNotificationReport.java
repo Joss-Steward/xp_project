@@ -1,5 +1,6 @@
 package model.reports;
 
+import data.AdventureStateEnum;
 import model.QualifiedObservableReport;
 
 /**
@@ -16,6 +17,7 @@ public final class AdventuresNeedingNotificationReport implements QualifiedObser
 	private final int adventureID;
 	private final int playerID;
 	private final String adventureDescription;
+	private AdventureStateEnum state;
 	
 	/**
 	 * Constructor
@@ -23,63 +25,15 @@ public final class AdventuresNeedingNotificationReport implements QualifiedObser
 	 * @param questID id of the quest
 	 * @param adventureID id of the adventure
 	 * @param adventureDescription the description of the adventure
+	 * @param state the state of the adventure for this player
 	 */
-	public AdventuresNeedingNotificationReport(int playerID, int questID, int adventureID, String adventureDescription) 
+	public AdventuresNeedingNotificationReport(int playerID, int questID, int adventureID, String adventureDescription, AdventureStateEnum state) 
 	{
 		this.playerID = playerID;
 		this.questID = questID;
 		this.adventureID = adventureID;
 		this.adventureDescription = adventureDescription;
-	}
-
-	/**
-	 * @return id of the quest
-	 */
-	public int getQuestID() 
-	{
-		return questID;
-	}
-
-	/**
-	 * @return id of the adventure
-	 */
-	public int getAdventureID() 
-	{
-		return adventureID;
-	}
-
-	/**
-	 * @return id of the player
-	 */
-	public int getPlayerID() 
-	{
-		return playerID;
-	}
-	
-	/**
-	 * @return description of adventure
-	 */
-	public String getAdventureDescription() 
-	{
-		return adventureDescription;
-	}
-
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() 
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime
-				* result
-				+ ((adventureDescription == null) ? 0 : adventureDescription
-						.hashCode());
-		result = prime * result + adventureID;
-		result = prime * result + playerID;
-		result = prime * result + questID;
-		return result;
+		this.state = state;
 	}
 
 	/**
@@ -107,5 +61,63 @@ public final class AdventuresNeedingNotificationReport implements QualifiedObser
 		if (questID != other.questID)
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return description of adventure
+	 */
+	public String getAdventureDescription() 
+	{
+		return adventureDescription;
+	}
+
+	/**
+	 * @return id of the adventure
+	 */
+	public int getAdventureID() 
+	{
+		return adventureID;
+	}
+
+	/**
+	 * @return id of the player
+	 */
+	public int getPlayerID() 
+	{
+		return playerID;
+	}
+	
+	/**
+	 * @return id of the quest
+	 */
+	public int getQuestID() 
+	{
+		return questID;
+	}
+
+	/**
+	 * @return the state of this adventure for this player
+	 */
+	public AdventureStateEnum getState()
+	{
+		return state;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() 
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((adventureDescription == null) ? 0 : adventureDescription
+						.hashCode());
+		result = prime * result + adventureID;
+		result = prime * result + playerID;
+		result = prime * result + questID;
+		return result;
 	}
 }

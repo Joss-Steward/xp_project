@@ -185,7 +185,7 @@ public class ThisClientsPlayerTest
 		
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, AdventuresNeedingNotificationReport.class);
-		AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(cp.getID(), q.getQuestID(), a.getAdventureID(), a.getAdventureDescription());
+		AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(cp.getID(), q.getQuestID(), a.getAdventureID(), a.getAdventureDescription(), a.getAdventureState());
 		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
