@@ -15,6 +15,8 @@ import communication.messages.TeleportationInitiationMessage;
 import communication.messages.TeleportationContinuationMessage;
 import communication.messages.Message;
 import data.Position;
+import datasource.DatabaseException;
+import datasource.DatabaseManager;
 import model.ModelFacade;
 import model.OptionsManager;
 import model.Player;
@@ -82,6 +84,7 @@ public class TeleportationInitiationHandlerTest
 		// Reset the singleton and re-add the player to make sure that the player is refreshed from the DB
 		PlayerManager.resetSingleton();
 		PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
+		
 
 		// make sure we moved the player without notifying observers
 		Player p = PlayerManager.getSingleton().getPlayerFromID(PlayersForTest.MERLIN.getPlayerID());
