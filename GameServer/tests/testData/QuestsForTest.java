@@ -43,9 +43,9 @@ public enum QuestsForTest
 	 * The real opening quest
 	 */
 	ONRAMPING_QUEST(100, "Welcome!  For your first quest, you need to learn a little bit about this world.  Press Q to see what you need to do", 
-			PlayerTableDataGateway.INITIAL_GAME_LOCATION, 5, 1,
+			PlayerTableDataGateway.INITIAL_GAME_LOCATION, 6, 5,
 							QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
-									new Position(3, 3)));
+									new Position(10, 10)));
 	
 	private int questID;
 	private String questDescription;

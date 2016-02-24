@@ -84,16 +84,20 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	ONRAMPING_MOVE_BACKWARD(2, "Press down arrow to move backward", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.KEYSTROKE, new CriteriaString("\u2193")),
+	ONRAMPING_MOVE_BACKWARD(3, "Press down arrow to move backward", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.KEYSTROKE, new CriteriaString("\u2193")),
 	/**
 	 * 
 	 */
-	ONRAMPING_MOVE_LEFT(2, "Press left arrow to move left", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.KEYSTROKE, new CriteriaString("\u2190")),
+	ONRAMPING_MOVE_LEFT(4, "Press left arrow to move left", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.KEYSTROKE, new CriteriaString("\u2190")),
 	/**
 	 * 
 	 */
-	ONRAMPING_MOVE_RIGHT(2, "Press right arrow to move right", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.KEYSTROKE, new CriteriaString("\u2192"));
+	ONRAMPING_MOVE_RIGHT(5, "Press right arrow to move right", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.KEYSTROKE, new CriteriaString("\u2192")),
 	
+	/**
+	 * 
+	 */
+	ONRAMPING_CHAT_WITH_SORTING_HAT(6, "Use the chat window to say something to the Red Hat", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.CHAT, new CriteriaString("RED HAT"));
 	
 	
 	private int adventureID;
