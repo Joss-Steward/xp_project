@@ -16,9 +16,9 @@ import model.ServerType;
 import communication.messages.OtherPlayerMovedMessage;
 import communication.messages.PlayerMovedMessage;
 import communication.messages.QuestStateChangeMessage;
+import data.QuestStateEnum;
 import datasource.DatabaseException;
 import datasource.PlayerConnectionRowDataGatewayMock;
-import datasource.QuestStateEnum;
 
 /**
  * Defines the protocol for a successful login sequence

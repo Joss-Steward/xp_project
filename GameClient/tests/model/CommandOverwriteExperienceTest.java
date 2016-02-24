@@ -18,8 +18,8 @@ import org.junit.Test;
 
 import testData.PlayersForTest;
 import communication.messages.InitializeThisClientsPlayerMessage;
+import data.QuestStateEnum;
 import datasource.LevelRecord;
-import datasource.QuestStateEnum;
 
 /**
  * @author nk3668
@@ -65,7 +65,7 @@ public class CommandOverwriteExperienceTest
 
 		ArrayList<ClientPlayerQuest> quests = new ArrayList<ClientPlayerQuest>();
 		ClientPlayerQuest q = new ClientPlayerQuest(42, "silly",
-				QuestStateEnum.AVAILABLE, 42, 4);
+				QuestStateEnum.AVAILABLE, 42, 4, false);
 		quests.add(q);
 		LevelRecord level = new LevelRecord("One", 15);
 		int expectedExperience = 100;

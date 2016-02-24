@@ -1,5 +1,6 @@
 package model.reports;
 
+import data.AdventureStateEnum;
 import model.QualifiedObservableReport;
 
 /**
@@ -9,13 +10,14 @@ import model.QualifiedObservableReport;
  * 
  * @author nk3668 & ew4344
  */
-public final class AdventuresNeedingNotificationReport implements QualifiedObservableReport
+public final class AdventureNeedingNotificationReport implements QualifiedObservableReport
 {
 
 	private final int questID;
 	private final int adventureID;
 	private final int playerID;
 	private final String adventureDescription;
+	private AdventureStateEnum state;
 	
 	/**
 	 * Constructor
@@ -23,21 +25,50 @@ public final class AdventuresNeedingNotificationReport implements QualifiedObser
 	 * @param questID id of the quest
 	 * @param adventureID id of the adventure
 	 * @param adventureDescription the description of the adventure
+	 * @param state the state of the adventure for this player
 	 */
-	public AdventuresNeedingNotificationReport(int playerID, int questID, int adventureID, String adventureDescription) 
+	public AdventureNeedingNotificationReport(int playerID, int questID, int adventureID, String adventureDescription, AdventureStateEnum state) 
 	{
 		this.playerID = playerID;
 		this.questID = questID;
 		this.adventureID = adventureID;
 		this.adventureDescription = adventureDescription;
+		this.state = state;
 	}
 
 	/**
-	 * @return id of the quest
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public int getQuestID() 
+	@Override
+	public boolean equals(Object obj) 
 	{
-		return questID;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AdventureNeedingNotificationReport other = (AdventureNeedingNotificationReport) obj;
+		if (adventureDescription == null) {
+			if (other.adventureDescription != null)
+				return false;
+		} else if (!adventureDescription.equals(other.adventureDescription))
+			return false;
+		if (adventureID != other.adventureID)
+			return false;
+		if (playerID != other.playerID)
+			return false;
+		if (questID != other.questID)
+			return false;
+		return true;
+	}
+
+	/**
+	 * @return description of adventure
+	 */
+	public String getAdventureDescription() 
+	{
+		return adventureDescription;
 	}
 
 	/**
@@ -57,11 +88,19 @@ public final class AdventuresNeedingNotificationReport implements QualifiedObser
 	}
 	
 	/**
-	 * @return description of adventure
+	 * @return id of the quest
 	 */
-	public String getAdventureDescription() 
+	public int getQuestID() 
 	{
-		return adventureDescription;
+		return questID;
+	}
+
+	/**
+	 * @return the state of this adventure for this player
+	 */
+	public AdventureStateEnum getState()
+	{
+		return state;
 	}
 
 	/**
@@ -80,32 +119,5 @@ public final class AdventuresNeedingNotificationReport implements QualifiedObser
 		result = prime * result + playerID;
 		result = prime * result + questID;
 		return result;
-	}
-
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) 
-	{
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AdventuresNeedingNotificationReport other = (AdventuresNeedingNotificationReport) obj;
-		if (adventureDescription == null) {
-			if (other.adventureDescription != null)
-				return false;
-		} else if (!adventureDescription.equals(other.adventureDescription))
-			return false;
-		if (adventureID != other.adventureID)
-			return false;
-		if (playerID != other.playerID)
-			return false;
-		if (questID != other.questID)
-			return false;
-		return true;
 	}
 }

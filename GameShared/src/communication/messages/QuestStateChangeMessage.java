@@ -2,7 +2,7 @@ package communication.messages;
 
 import java.io.Serializable;
 
-import datasource.QuestStateEnum;
+import data.QuestStateEnum;
 
 /**
  * A message from an area server to a client telling the client to notify the

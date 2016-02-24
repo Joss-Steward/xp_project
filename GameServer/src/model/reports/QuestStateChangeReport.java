@@ -1,6 +1,6 @@
 package model.reports;
 
-import datasource.QuestStateEnum;
+import data.QuestStateEnum;
 import model.QualifiedObservableReport;
 
 /**

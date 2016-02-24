@@ -39,7 +39,7 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 
 			stmt = new ClosingPreparedStatement(
 					connection,
-					"Create TABLE Quests (questID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questDescription VARCHAR(80), triggerMapName VARCHAR(80),"
+					"Create TABLE Quests (questID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questDescription VARCHAR(200), triggerMapName VARCHAR(80),"
 							+ " triggerRow INT, triggerColumn INT, experiencePointsGained INT, adventuresForFulfillment INT, "
 							+ " completionActionType INT, completionActionParameter BLOB)");
 			stmt.executeUpdate();

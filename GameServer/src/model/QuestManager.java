@@ -186,6 +186,10 @@ public class QuestManager implements QualifiedObserver
 		}
 	}
 
+	/**
+	 * @TODO
+	 * @param report
+	 */
 	private void handlePlayerMovement(QualifiedObservableReport report)
 	{
 		PlayerMovedReport myReport = (PlayerMovedReport) report;
@@ -200,12 +204,20 @@ public class QuestManager implements QualifiedObserver
 			{
 				this.triggerQuest(myReport.getPlayerID(), q);
 			}
+			
+			ArrayList<AdventureRecord> adventures = getAdventuresByPosition(myReport.getNewPosition(), myReport.getMapName());
+			for (AdventureRecord a : adventures)
+			{
+				this.completeAdventure(myReport.getPlayerID(), a.getQuestID(), a.getAdventureID());
+			}
+			
 		} catch (DatabaseException | IllegalAdventureChangeException
 				| IllegalQuestChangeException e)
 		{
 			e.printStackTrace();
 		}
 	}
+
 
 	/**
 	 * Add a quest to the player's questList

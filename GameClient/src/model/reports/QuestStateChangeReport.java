@@ -1,7 +1,7 @@
 package model.reports;
 
 import model.QualifiedObservableReport;
-import datasource.QuestStateEnum;
+import data.QuestStateEnum;
 
 /**
  * @author sl6469, Cody

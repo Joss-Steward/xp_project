@@ -10,8 +10,8 @@ import model.ClientPlayerQuest;
 import org.junit.Test;
 
 import data.AdventureStateEnum;
+import data.QuestStateEnum;
 import datasource.LevelRecord;
-import datasource.QuestStateEnum;
 
 /**
  * Tests the InitializeThisClientsPlayerMessage class
@@ -30,7 +30,7 @@ public class InitializeThisClientsPlayerMessageTest
 	{
 		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", 3, AdventureStateEnum.HIDDEN, false);
 		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", 3, AdventureStateEnum.HIDDEN, false);
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.HIDDEN, 42, 13);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.HIDDEN, 42, 13, true);
 		q.addAdventure(adventureOne);
 		q.addAdventure(adventureTwo);
 		ArrayList<ClientPlayerQuest> list = new ArrayList<ClientPlayerQuest>();
@@ -43,5 +43,6 @@ public class InitializeThisClientsPlayerMessageTest
 		assertEquals(1, message.getClientPlayerQuestList().size());
 		assertEquals(42, message.getClientPlayerQuestList().get(0).getExperiencePointsGained());
 		assertEquals(13, message.getClientPlayerQuestList().get(0).getAdventuresToFulfillment());
+		assertTrue(message.getClientPlayerQuestList().get(0).isNeedingNotification());
 	}
 }
