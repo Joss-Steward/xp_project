@@ -110,6 +110,11 @@ public enum AdventureStatesForTest
 	 */
 	MARTY_QUEST5_ADV1(PlayersForTest.MARTY.getPlayerID(), 5, 1, AdventureStateEnum.TRIGGERED, false),
 
+	
+	/**
+	 * 
+	 */
+	PLAYER8_QUEST2_ADV2(8, 2, 2, AdventureStateEnum.TRIGGERED , false),
 	// ----------------------------------------------------------------------------------------//
 	// NEWBIE's onramping adventures //
 	// ----------------------------------------------------------------------------------------//

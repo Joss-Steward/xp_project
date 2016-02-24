@@ -1,6 +1,5 @@
 package data;
 
-import datasource.QuestStateEnum;
 
 /**
  * A data transfer object that contains the state of a quest for a player

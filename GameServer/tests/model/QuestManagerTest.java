@@ -19,9 +19,9 @@ import data.AdventureStateEnum;
 import data.ChatType;
 import data.GameLocation;
 import data.Position;
+import data.QuestStateEnum;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
-import datasource.QuestStateEnum;
 import datasource.QuestStateTableDataGatewayMock;
 import model.reports.PlayerLeaveReport;
 import model.reports.SendChatMessageReport;
@@ -56,8 +56,11 @@ public class QuestManagerTest extends DatabaseTest
 
 	/**
 	 * Make sure any static information is cleaned up between tests
-	 * @throws SQLException shouldn't
-	 * @throws DatabaseException shouldn't
+	 * 
+	 * @throws SQLException
+	 *             shouldn't
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@After
 	public void cleanup() throws DatabaseException, SQLException
@@ -65,7 +68,7 @@ public class QuestManagerTest extends DatabaseTest
 		super.tearDown();
 		QuestStateTableDataGatewayMock.getSingleton().resetData();
 	}
-	
+
 	/**
 	 * Test initializing a quest manager
 	 */
@@ -108,13 +111,16 @@ public class QuestManagerTest extends DatabaseTest
 		assertEquals(expected.getQuestID(), actual.getQuestID());
 		assertEquals(expected.getQuestDescription(), actual.getDescription());
 		assertEquals(expected.getMapName(), actual.getMapName());
-		assertEquals(expected.getAdventuresForFulfillment(), actual.getAdventuresForFulfillment());
+		assertEquals(expected.getAdventuresForFulfillment(),
+				actual.getAdventuresForFulfillment());
 		assertEquals(expected.getExperienceGained(), actual.getExperiencePointsGained());
 	}
 
 	/**
 	 * We should be able to retrieve data about a specific adventure
-	 * @throws DatabaseException shouldn't
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
 	public void testGettingOneAdventure() throws DatabaseException
@@ -132,18 +138,21 @@ public class QuestManagerTest extends DatabaseTest
 		assertEquals(AdventuresForTest.QUEST3_ADVENTURE1.getQuestID(),
 				actual.getQuestID());
 	}
-	
+
 	/**
 	 * If we ask for an adventure that doesn't exist, we should get null
-	 * @throws DatabaseException shouldn't
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@Test
 	public void testGettingMissingAdventure() throws DatabaseException
 	{
 		QuestManager qm = QuestManager.getSingleton();
-		AdventureRecord actual = qm.getAdventure(42,16);
+		AdventureRecord actual = qm.getAdventure(42, 16);
 		assertNull(actual);
 	}
+
 	/**
 	 * Test getting two quests from the database
 	 * 
@@ -156,10 +165,12 @@ public class QuestManagerTest extends DatabaseTest
 		QuestManager qm = QuestManager.getSingleton();
 
 		assertEquals(1, qm.getQuest(1).getQuestID());
-		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestDescription(), qm.getQuest(1).getDescription());
+		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestDescription(), qm.getQuest(1)
+				.getDescription());
 
 		assertEquals(2, qm.getQuest(2).getQuestID());
-		assertEquals(QuestsForTest.THE_OTHER_QUEST.getQuestDescription(), qm.getQuest(2).getDescription());
+		assertEquals(QuestsForTest.THE_OTHER_QUEST.getQuestDescription(), qm.getQuest(2)
+				.getDescription());
 	}
 
 	/**
@@ -319,7 +330,9 @@ public class QuestManagerTest extends DatabaseTest
 
 	/**
 	 * Test simple functionality of setting quests to a player.
-	 * @throws IllegalQuestChangeException the state changed illegally
+	 * 
+	 * @throws IllegalQuestChangeException
+	 *             the state changed illegally
 	 */
 	@Test
 	public void testAddQuests() throws IllegalQuestChangeException
@@ -328,8 +341,7 @@ public class QuestManagerTest extends DatabaseTest
 		QuestState quest = new QuestState(1, 15, QuestStateEnum.AVAILABLE, false);
 		QuestManager.getSingleton().addQuestState(p.getPlayerID(), quest);
 
-		QuestState questStateByID = QuestManager.getSingleton()
-				.getQuestStateByID(1, 15);
+		QuestState questStateByID = QuestManager.getSingleton().getQuestStateByID(1, 15);
 		assertEquals(QuestStateEnum.AVAILABLE, questStateByID.getStateValue());
 		assertFalse(questStateByID.isNeedingNotification());
 
@@ -394,10 +406,12 @@ public class QuestManagerTest extends DatabaseTest
 	 * 
 	 * @throws DatabaseException
 	 *             QuestManager works with DB
-	 * @throws IllegalQuestChangeException the state changed illegally
+	 * @throws IllegalQuestChangeException
+	 *             the state changed illegally
 	 */
 	@Test
-	public void testPlayerTriggerOnMovement() throws DatabaseException, IllegalQuestChangeException
+	public void testPlayerTriggerOnMovement() throws DatabaseException,
+			IllegalQuestChangeException
 	{
 		Position pos1 = new Position(1, 1);
 		Position pos2 = QuestsForTest.THE_LITTLE_QUEST.getPosition();
@@ -409,13 +423,14 @@ public class QuestManagerTest extends DatabaseTest
 				QuestStatesForTest.PLAYER4_QUEST4.getState(),
 				QuestManager
 						.getSingleton()
-						.getQuestStateByID(p.getPlayerID(),QuestsForTest.THE_LITTLE_QUEST.getQuestID())
+						.getQuestStateByID(p.getPlayerID(),
+								QuestsForTest.THE_LITTLE_QUEST.getQuestID())
 						.getStateValue());
 		QuestManager two = QuestManager.getSingleton();
-		assertSame(one,two);
+		assertSame(one, two);
 		System.out.println(one);
 		p.setPlayerPosition(pos2);
-		
+
 		assertEquals(
 				QuestStateEnum.TRIGGERED,
 				QuestManager
@@ -427,12 +442,17 @@ public class QuestManagerTest extends DatabaseTest
 
 	/**
 	 * Make sure quest is triggered within player
-	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
-	 * @throws IllegalQuestChangeException thrown if illegal state change
-	 * @throws DatabaseException the state changed illegally
+	 * 
+	 * @throws IllegalAdventureChangeException
+	 *             thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException
+	 *             thrown if illegal state change
+	 * @throws DatabaseException
+	 *             the state changed illegally
 	 */
 	@Test
-	public void testPlayerTriggersQuest() throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
+	public void testPlayerTriggersQuest() throws IllegalAdventureChangeException,
+			IllegalQuestChangeException, DatabaseException
 	{
 		Player p = playerManager.addPlayer(7);
 		assertEquals(
@@ -456,7 +476,9 @@ public class QuestManagerTest extends DatabaseTest
 
 	/**
 	 * When a player moves to the right place, we should trigger the quest
-	 * @throws IllegalQuestChangeException the state changed illegally
+	 * 
+	 * @throws IllegalQuestChangeException
+	 *             the state changed illegally
 	 */
 	@Test
 	public void triggersOnPlayerMovement() throws IllegalQuestChangeException
@@ -471,24 +493,31 @@ public class QuestManagerTest extends DatabaseTest
 								QuestStatesForTest.PLAYER1_QUEST1.getQuestID())
 						.getStateValue());
 	}
-	
+
 	/**
-	 * When a player moves to the right place, we should get a list of adventures
-	 * completed at that location
-	 * @throws IllegalQuestChangeException the state changed illegally
-	 * @throws DatabaseException the state changed illegally 
+	 * When a player moves to the right place, we should get a list of
+	 * adventures completed at that location
+	 * 
+	 * @throws IllegalQuestChangeException
+	 *             the state changed illegally
+	 * @throws DatabaseException
+	 *             the state changed illegally
 	 */
 	@Test
-	public void getCompletedAdventuresOnPlayerMovement() throws IllegalQuestChangeException, DatabaseException
+	public void getCompletedAdventuresOnPlayerMovement()
+			throws IllegalQuestChangeException, DatabaseException
 	{
-		GameLocation location = (GameLocation)(AdventuresForTest.QUEST2_ADVENTURE2.getCompletionCriteria());
+		GameLocation location = (GameLocation) (AdventuresForTest.QUEST2_ADVENTURE2
+				.getCompletionCriteria());
 		String mapName = location.getMapName();
 		Position pos = location.getPosition();
-		
-		ArrayList<AdventureRecord> list = QuestManager.getSingleton().getAdventuresByPosition(pos, mapName);
-		assertEquals(AdventuresForTest.QUEST2_ADVENTURE2.getAdventureDescription(),list.get(0).getAdventureDescription());
+
+		ArrayList<AdventureRecord> list = QuestManager.getSingleton()
+				.getAdventuresByPosition(pos, mapName);
+		assertEquals(AdventuresForTest.QUEST2_ADVENTURE2.getAdventureDescription(), list
+				.get(0).getAdventureDescription());
 	}
-	
+
 	/**
 	 * When we add a quest state to a player, we should tell it which player it
 	 * belongs to
@@ -512,8 +541,7 @@ public class QuestManagerTest extends DatabaseTest
 		QuestManager.getSingleton().removeQuestStatesForPlayer(4);
 		assertNull(QuestManager.getSingleton().getQuestList(4));
 	}
-	
-	
+
 	/**
 	 * We should be able to clear out all of the quest states for a given player
 	 */
@@ -525,63 +553,78 @@ public class QuestManagerTest extends DatabaseTest
 		QualifiedObservableConnector.getSingleton().sendReport(new PlayerLeaveReport(4));
 		assertNull(QuestManager.getSingleton().getQuestList(4));
 	}
+
 	/**
-	 * Should be able to change the state of a quest to fulfilled if enough 
+	 * Should be able to change the state of a quest to fulfilled if enough
 	 * adventures are completed. Player 4 quest 3 in the mock data has enough
-	 * adventures to be fulfilled, but still looks pending.  We just want to test
-	 * the behavior of checking for fulfillment (without an associated adventure 
+	 * adventures to be fulfilled, but still looks pending. We just want to test
+	 * the behavior of checking for fulfillment (without an associated adventure
 	 * state change)
-	 * @throws DatabaseException shouldn't
-	 * @throws IllegalQuestChangeException thrown if illegal state change
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
+	 * @throws IllegalQuestChangeException
+	 *             thrown if illegal state change
 	 */
 	@Test
-	public void testFulfillQuest() throws DatabaseException, IllegalQuestChangeException 
+	public void testFulfillQuest() throws DatabaseException, IllegalQuestChangeException
 	{
 		int playerID = PlayersForTest.JOSH.getPlayerID();
 		int questID = 3;
 		Player p = playerManager.addPlayer(playerID);
 		int initialExp = p.getExperiencePoints();
 		assertEquals(initialExp, PlayersForTest.JOSH.getExperiencePoints());
-		int expGain = QuestManager.getSingleton().getQuest(questID).getExperiencePointsGained();
-		
+		int expGain = QuestManager.getSingleton().getQuest(questID)
+				.getExperiencePointsGained();
+
 		QuestState x = QuestManager.getSingleton().getQuestStateByID(playerID, questID);
 		x.checkForFulfillment();
 		assertEquals(QuestStateEnum.FULFILLED, x.getStateValue());
 		assertEquals(initialExp + expGain, p.getExperiencePoints());
 	}
-	
+
 	/**
-	 * This test makes sure that, at the moment an adventure completes, the quest state
-	 * changes to fulfilled and the experience points are updated when that is appropriate
-	 * @throws DatabaseException shouldn't
-	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
-	 * @throws IllegalQuestChangeException thrown if illegal state change
+	 * This test makes sure that, at the moment an adventure completes, the
+	 * quest state changes to fulfilled and the experience points are updated
+	 * when that is appropriate
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
+	 * @throws IllegalAdventureChangeException
+	 *             thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException
+	 *             thrown if illegal state change
 	 * 
 	 */
 	@Test
-	public void testCompletingAdventure() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException
+	public void testCompletingAdventure() throws DatabaseException,
+			IllegalAdventureChangeException, IllegalQuestChangeException
 	{
 		int playerID = PlayersForTest.JOSH.getPlayerID();
 		int questID = 4;
 		Player p = playerManager.addPlayer(playerID);
 		int initialExp = p.getExperiencePoints();
-		
+
 		AdventureState as = new AdventureState(2, AdventureStateEnum.TRIGGERED, false);
-		
+
 		ArrayList<AdventureState> adventures = new ArrayList<AdventureState>();
 		adventures.add(as);
 		QuestState qs = new QuestState(playerID, questID, QuestStateEnum.FULFILLED, false);
 		qs.addAdventures(adventures);
 		QuestManager.getSingleton().addQuestState(playerID, qs);
-		int expGain = QuestManager.getSingleton().getQuest(questID).getAdventures().get(1).getExperiencePointsGained();
+		int expGain = QuestManager.getSingleton().getQuest(questID).getAdventures()
+				.get(1).getExperiencePointsGained();
 		as.complete();
-		assertEquals(initialExp+expGain, p.getExperiencePoints());
+		assertEquals(initialExp + expGain, p.getExperiencePoints());
 	}
-	
+
 	/**
 	 * Tests that we finishing a quest changes its state to finished
-	 * @throws IllegalQuestChangeException thrown if illegal state change
-	 * @throws DatabaseException the state changed illegally
+	 * 
+	 * @throws IllegalQuestChangeException
+	 *             thrown if illegal state change
+	 * @throws DatabaseException
+	 *             the state changed illegally
 	 */
 	@Test
 	public void testFinishQuest() throws IllegalQuestChangeException, DatabaseException
@@ -591,41 +634,74 @@ public class QuestManagerTest extends DatabaseTest
 		Player p = playerManager.addPlayer(playerID);
 		QuestState qs = QuestManager.getSingleton().getQuestStateByID(playerID, questID);
 		qs.setPlayerID(playerID);
-		
+
 		QuestManager.getSingleton().finishQuest(p.getPlayerID(), qs.getID());
-		
+
 		assertEquals(QuestStateEnum.FINISHED, qs.getStateValue());
 	}
-	
+
 	/**
-	 * @throws DatabaseException shouldn't
-	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
-	 * @throws IllegalQuestChangeException thrown if illegal state change
-	 *  
+	 * @throws DatabaseException
+	 *             shouldn't
+	 * @throws IllegalAdventureChangeException
+	 *             thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException
+	 *             thrown if illegal state change
+	 * 
 	 */
 	@Test
-	public void testCompleteAdventure() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException
+	public void testCompleteAdventure() throws DatabaseException,
+			IllegalAdventureChangeException, IllegalQuestChangeException
 	{
 		int playerID = 1;
 		int questID = 3;
 		int adventureID = 1;
-		
+
 		Player p = playerManager.addPlayer(playerID);
-		QuestState qs = QuestManager.getSingleton().getQuestStateByID(p.getPlayerID(), questID);
-		
-		AdventureState as = QuestManager.getSingleton().getAdventureStateByID(p.getPlayerID(), questID, adventureID);
-		
+		QuestState qs = QuestManager.getSingleton().getQuestStateByID(p.getPlayerID(),
+				questID);
+
+		AdventureState as = QuestManager.getSingleton().getAdventureStateByID(
+				p.getPlayerID(), questID, adventureID);
+
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
-		
+
 		adventureList.add(as);
-		
+
 		qs.addAdventures(adventureList);
-		
+
 		qs.setPlayerID(playerID);
-		
+
 		QuestManager.getSingleton().completeAdventure(playerID, questID, adventureID);
-		
-		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton().getAdventureStateByID(playerID, questID, adventureID).getState());
+
+		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton()
+				.getAdventureStateByID(playerID, questID, adventureID).getState());
 	}
-	
+
+	/**
+	 * When a player moves to the right place, should complete adventure
+	 * 
+	 * @throws IllegalQuestChangeException
+	 *             the state changed illegally
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	@Test
+	public void completeAdventureOnPlayerMovement() throws IllegalQuestChangeException,
+			DatabaseException
+	{
+		// We need to add a quest and adventure that are triggered on location
+		// but not already completed
+		int questID = AdventuresForTest.QUEST2_ADVENTURE2.getQuestID();
+		int advID = AdventuresForTest.QUEST2_ADVENTURE2.getAdventureID();
+
+		GameLocation location = (GameLocation) (AdventuresForTest.QUEST2_ADVENTURE2
+				.getCompletionCriteria());
+		Position pos = location.getPosition();
+		Player paul = playerManager.addPlayer(8);
+		paul.setPlayerPosition(pos);
+		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton()
+				.getAdventureStateByID(paul.getPlayerID(), questID, advID).getState());
+	}
+
 }

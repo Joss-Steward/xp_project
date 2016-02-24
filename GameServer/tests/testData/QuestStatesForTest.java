@@ -1,6 +1,6 @@
 package testData;
 
-import datasource.QuestStateEnum;
+import data.QuestStateEnum;
 
 /**
  * Creates adventures for the DB
@@ -61,6 +61,10 @@ public enum QuestStatesForTest
 	 * 
 	 */
 	MARTY_QUEST5(PlayersForTest.MARTY.getPlayerID(), 5, QuestStateEnum.TRIGGERED, false),
+	/**
+	 * 
+	 */
+	PLAYER8_QUEST2(8, 2, QuestStateEnum.TRIGGERED, false),
 	/**
 	 * Newbie should have the first quest already triggered
 	 */
