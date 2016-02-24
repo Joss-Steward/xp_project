@@ -27,7 +27,7 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	QUEST2_ADVENTURE2(2, "Quest 2: Adventure Description 2", 2, 4, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(42,3))),
+	QUEST2_ADVENTURE2(2, "Quest 2: Adventure Description 2", 2, 4, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(4, 15))),
 	/**
 	 * 
 	 */

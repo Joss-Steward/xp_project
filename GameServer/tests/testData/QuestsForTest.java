@@ -24,7 +24,7 @@ public enum QuestsForTest
 	/**
 	 * 
 	 */
-	THE_OTHER_QUEST(2, "Quest 2", new GameLocation("sillymap.tmx", new Position(42, 2)), 4, 2,
+	THE_OTHER_QUEST(2, "Quest 2", new GameLocation("current.tmx", new Position(4, 14)), 4, 2,
 			QuestCompletionActionType.NO_ACTION, null),
 	/**
 	 * 
