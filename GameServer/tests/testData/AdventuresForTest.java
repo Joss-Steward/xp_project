@@ -5,8 +5,6 @@ import data.AdventureCompletionType;
 import data.CriteriaString;
 import data.GameLocation;
 import data.Position;
-import datasource.PlayerTableDataGateway;
-
 /**
  * Creates adventures for the DB
  * @author merlin
@@ -122,11 +120,6 @@ public enum AdventuresForTest
 		this.experiencePointsGained = experiencePointsGained;
 		this.completionType = completionType;
 		this.completionCriteria = signatureSpecification;
-	}
-
-	private static Position move(Position position, int rowOffset, int columnOffset)
-	{
-		return new Position(position.getRow()+rowOffset, position.getColumn()+columnOffset);
 	}
 
 	/**
