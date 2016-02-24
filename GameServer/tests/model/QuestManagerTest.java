@@ -29,9 +29,9 @@ import data.AdventureRecord;
 import data.AdventureStateEnum;
 import data.GameLocation;
 import data.Position;
+import data.QuestStateEnum;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
-import datasource.QuestStateEnum;
 import datasource.QuestStateTableDataGatewayMock;
 
 /**

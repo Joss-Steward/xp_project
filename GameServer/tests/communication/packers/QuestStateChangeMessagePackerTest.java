@@ -12,8 +12,8 @@ import org.junit.Test;
 import testData.QuestsForTest;
 import communication.StateAccumulator;
 import communication.messages.QuestStateChangeMessage;
+import data.QuestStateEnum;
 import datasource.DatabaseException;
-import datasource.QuestStateEnum;
 
 /**
  * 

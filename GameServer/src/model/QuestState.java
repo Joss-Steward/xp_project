@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import model.QualifiedObservableConnector;
 import model.reports.QuestStateChangeReport;
 import data.AdventureStateEnum;
+import data.QuestStateEnum;
 import datasource.DatabaseException;
-import datasource.QuestStateEnum;
 
 /**
  * Stores the states of all the quests for an individual player on the server

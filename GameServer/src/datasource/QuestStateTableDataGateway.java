@@ -2,9 +2,9 @@ package datasource;
 
 import java.util.ArrayList;
 
+import data.QuestStateEnum;
 import data.QuestStateRecord;
 import datasource.DatabaseException;
-import datasource.QuestStateEnum;
 
 /**
  * Requirements for all implementations of the table gateway into the quest state data source

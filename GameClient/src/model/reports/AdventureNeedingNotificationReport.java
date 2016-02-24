@@ -10,7 +10,7 @@ import model.QualifiedObservableReport;
  * 
  * @author nk3668 & ew4344
  */
-public final class AdventuresNeedingNotificationReport implements QualifiedObservableReport
+public final class AdventureNeedingNotificationReport implements QualifiedObservableReport
 {
 
 	private final int questID;
@@ -27,7 +27,7 @@ public final class AdventuresNeedingNotificationReport implements QualifiedObser
 	 * @param adventureDescription the description of the adventure
 	 * @param state the state of the adventure for this player
 	 */
-	public AdventuresNeedingNotificationReport(int playerID, int questID, int adventureID, String adventureDescription, AdventureStateEnum state) 
+	public AdventureNeedingNotificationReport(int playerID, int questID, int adventureID, String adventureDescription, AdventureStateEnum state) 
 	{
 		this.playerID = playerID;
 		this.questID = questID;
@@ -48,7 +48,7 @@ public final class AdventuresNeedingNotificationReport implements QualifiedObser
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AdventuresNeedingNotificationReport other = (AdventuresNeedingNotificationReport) obj;
+		AdventureNeedingNotificationReport other = (AdventureNeedingNotificationReport) obj;
 		if (adventureDescription == null) {
 			if (other.adventureDescription != null)
 				return false;

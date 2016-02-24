@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.QuestStateChangeMessage;
-import datasource.QuestStateEnum;
+import data.QuestStateEnum;
 
 /**
  * @author Ryan

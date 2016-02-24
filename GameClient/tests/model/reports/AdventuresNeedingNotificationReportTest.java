@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import model.ClientPlayerAdventure;
-import model.reports.AdventuresNeedingNotificationReport;
+import model.reports.AdventureNeedingNotificationReport;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class AdventuresNeedingNotificationReportTest
 		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure", 3, AdventureStateEnum.COMPLETED, true);
 		ArrayList<String> adventureList = new ArrayList<String>();
 		adventureList.add(a.getAdventureDescription());
-		AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(1, 2, 1, "Silly Adventure", AdventureStateEnum.COMPLETED);
+		AdventureNeedingNotificationReport report = new AdventureNeedingNotificationReport(1, 2, 1, "Silly Adventure", AdventureStateEnum.COMPLETED);
 		assertEquals(1, report.getPlayerID());
 		assertEquals(2, report.getQuestID());
 		assertEquals(1, report.getAdventureID());
@@ -41,6 +41,6 @@ public class AdventuresNeedingNotificationReportTest
 	@Test
 	public void testEqualsContract()
 	{
-		EqualsVerifier.forClass(AdventuresNeedingNotificationReport.class).verify();
+		EqualsVerifier.forClass(AdventureNeedingNotificationReport.class).verify();
 	}
 }

@@ -28,7 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 import data.AdventureStateEnum;
-import datasource.QuestStateEnum;
+import data.QuestStateEnum;
 
 /**
  * A basic screen that displays the quests and adventure states.

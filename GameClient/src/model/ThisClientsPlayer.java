@@ -6,16 +6,15 @@ import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
 import model.QualifiedObservableConnector;
 import model.reports.AdventureStateChangeReport;
-import model.reports.AdventuresNeedingNotificationReport;
+import model.reports.AdventureNeedingNotificationReport;
 import model.reports.ExperiencePointsChangeReport;
 import model.reports.QuestStateChangeReport;
 import model.reports.QuestStateReport;
+import model.reports.QuestNeedingNotificationReport;
 import data.AdventureStateEnum;
 import data.Position;
+import data.QuestStateEnum;
 import datasource.LevelRecord;
-import datasource.QuestStateEnum;
-//import datasource.QuestStateEnum;
-//import edu.ship.shipsim.client.model.reports.QuestStateChangeReport;
 
 /**
  * The player who is playing the game
@@ -90,11 +89,18 @@ public class ThisClientsPlayer extends ClientPlayer
 
 		for (ClientPlayerQuest q : questList)
 		{
+			if (q.isNeedingNotification())
+			{
+				QuestNeedingNotificationReport report = new QuestNeedingNotificationReport(
+						ClientPlayerManager.getSingleton().getThisClientsPlayer()
+						.getID(), q.getQuestID(), q.getQuestDescription(), q.getQuestState());
+				QualifiedObservableConnector.getSingleton().sendReport(report);
+			}
 			for (ClientPlayerAdventure a : q.getAdventureList())
 			{
 				if (a.isNeedingNotification())
 				{
-					AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(
+					AdventureNeedingNotificationReport report = new AdventureNeedingNotificationReport(
 							ClientPlayerManager.getSingleton().getThisClientsPlayer()
 									.getID(), q.getQuestID(), a.getAdventureID(),
 							a.getAdventureDescription(), a.getAdventureState());
