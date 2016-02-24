@@ -112,10 +112,13 @@ public abstract class AdventureTableDataGatewayTest
 		GameLocation location = (GameLocation)(AdventuresForTest.QUEST2_ADVENTURE2.getCompletionCriteria());
 		String mapName = location.getMapName();
 		Position pos = location.getPosition();
+//		System.out.println(mapName);
+//		System.out.println(pos.getRow() + ", " + pos.getColumn());
 		AdventureTableDataGateway gateway = getGateway();
 		ArrayList<AdventuresForTest> adventure = new ArrayList<AdventuresForTest>();
 		adventure.add(AdventuresForTest.QUEST2_ADVENTURE2);
-		assertEquals(adventure.get(0).getAdventureDescription(), gateway.findAdventuresCompletedForMapLocation(mapName, pos).get(0).getAdventureDescription());
+		ArrayList<AdventureRecord> adventuresFound = gateway.findAdventuresCompletedForMapLocation(mapName, pos);
+		assertEquals(adventure.get(0).getAdventureDescription(), adventuresFound.get(0).getAdventureDescription());
 	}
 	
 }

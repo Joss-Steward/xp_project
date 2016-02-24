@@ -87,7 +87,7 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 	}
 
 	/**
-	 * There are two quests in QuestsForTest that are on the same location.  Make sure we get them both
+	 * There are three quests in QuestsForTest that are on the same location.  Make sure we get them all
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
@@ -95,7 +95,7 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 	{
 		QuestsForTest q = QuestsForTest.ONE_BIG_QUEST;
 		ArrayList<Integer> questIDs = findQuestsForMapLocation(q.getMapName(),q.getPosition());
-		assertEquals(2, questIDs.size());
+		assertEquals(3, questIDs.size());
 		assertTrue(questIDs.contains(q.getQuestID()));
 		assertTrue(questIDs.contains(QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID()));
 	}
