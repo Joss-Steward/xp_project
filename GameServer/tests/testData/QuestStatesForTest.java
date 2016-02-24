@@ -55,7 +55,12 @@ public enum QuestStatesForTest
 	 * A quest that is ready to be triggered (with no states for the
 	 * included adventures)
 	 */
-	PLAYER7_QUEST2(7, 2, QuestStateEnum.AVAILABLE, false);
+	PLAYER7_QUEST2(7, 2, QuestStateEnum.AVAILABLE, false),
+	
+	/**
+	 * Newbie should have the first quest already triggered
+	 */
+	NEWBIE_ONRAMPING(PlayersForTest.NEWBIE.getPlayerID(), QuestsForTest.ONRAMPING_QUEST.getQuestID(), QuestStateEnum.TRIGGERED, true);
 	
 	
 	private int playerID;
