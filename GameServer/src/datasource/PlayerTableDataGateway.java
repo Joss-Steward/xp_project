@@ -2,7 +2,9 @@ package datasource;
 
 import java.util.ArrayList;
 
+import data.GameLocation;
 import data.PlayerScoreRecord;
+import data.Position;
 import datasource.DatabaseException;
 
 /**
@@ -10,8 +12,14 @@ import datasource.DatabaseException;
  * @author Merlin
  *
  */
-public interface PlayerTableDataGateway
+public abstract class PlayerTableDataGateway
 {
+	
+	/**
+	 * the game location where new players should start
+	 */
+	public static final GameLocation INITIAL_GAME_LOCATION =  new GameLocation("StartingRoom.tmx", new Position(2, 32));
+	
 
 	/**
 	 * Used for testing to set the data back to a known state

@@ -4,6 +4,7 @@ import data.GameLocation;
 import data.Position;
 import data.QuestCompletionActionParameter;
 import data.QuestCompletionActionType;
+import datasource.PlayerTableDataGateway;
 
 /**
  * Creates adventures for the DB
@@ -13,6 +14,7 @@ import data.QuestCompletionActionType;
  */
 public enum QuestsForTest
 {
+	
 	/**
 	 * 
 	 */
@@ -35,8 +37,16 @@ public enum QuestsForTest
 	 */
 	THE_LITTLE_QUEST(4, "Quest 4", "current.tmx", new Position(2, 32), 5, 1,
 			QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
-					new Position(3, 3)));
+					new Position(3, 3))),
 
+	/**
+	 * The real opening quest
+	 */
+	ONRAMPING_QUEST(100, "Welcome!  For your first quest, you need to learn a little bit about this world.  Press Q to see what you need to do", 
+			PlayerTableDataGateway.INITIAL_GAME_LOCATION.getMapName(), PlayerTableDataGateway.INITIAL_GAME_LOCATION.getPosition(), 5, 1,
+							QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
+									new Position(3, 3)));
+	
 	private int questID;
 	private String questDescription;
 	private String mapName;
