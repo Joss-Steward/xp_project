@@ -51,7 +51,8 @@ public enum QuestsForTest
 	/**
 	 * The real opening quest
 	 */
-	ONRAMPING_QUEST(100, "Welcome!  For your first quest, you need to learn a little bit about this world.  Press Q to see what you need to do", 
+	ONRAMPING_QUEST(100, "Welcome!  For your first quest, you need to learn a little bit about this world.  Press Q to see what you need to do.  "
+			+ "Double clicking on a quest in the quest screen will show you its adventures.", 
 			PlayerTableDataGateway.INITIAL_GAME_LOCATION, 6, 5,
 							QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
 									new Position(10, 10)));

@@ -60,7 +60,7 @@ public class PopUpDisplay implements QualifiedObserver
 			AdventureCompleteBehavior behavior = new AdventureCompleteBehavior(r.getPlayerID(), r.getQuestID(), r.getAdventureID());
 			AdventureStateEnum state = r.getState();
 			new ScreenPopUp("Adventure " + state.getDescription(),
-					r.getAdventureDescription() + " completed", this.stage, behavior);
+					r.getAdventureDescription(), this.stage, behavior);
 		} else if (report.getClass().equals(QuestNeedingNotificationReport.class))
 		{
 			QuestNeedingNotificationReport r = (QuestNeedingNotificationReport) report;
@@ -68,7 +68,7 @@ public class PopUpDisplay implements QualifiedObserver
 			QuestCompleteBehavior behavior = new QuestCompleteBehavior(r.getPlayerID(), r.getQuestID());
 			QuestStateEnum state = r.getState();
 			new ScreenPopUp("Quest " + state.getDescription(),
-					r.getQuestDescription() + " completed", this.stage, behavior);
+					r.getQuestDescription(), this.stage, behavior);
 		} else if (report.getClass().equals(QuestStateChangeReport.class))
 		{
 			QuestStateChangeReport r = (QuestStateChangeReport) report;
