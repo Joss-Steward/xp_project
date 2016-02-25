@@ -1,23 +1,15 @@
 package model;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import model.OptionsManager;
-import model.QualifiedObservableConnector;
-import model.QualifiedObservableReport;
-import model.QualifiedObserver;
 import model.reports.PlayerLeaveReport;
 import model.reports.PlayerMovedReport;
 import model.reports.SendChatMessageReport;
-import data.AdventureCompletionCriteria;
 import data.AdventureCompletionType;
 import data.AdventureRecord;
 import data.AdventureStateEnum;
 import data.ChatType;
-import data.CriteriaString;
 import data.Position;
 import datasource.AdventureTableDataGateway;
 import datasource.AdventureTableDataGatewayMock;
