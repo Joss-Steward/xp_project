@@ -30,7 +30,7 @@ public class TeleportOnQuestCompletionPacker extends MessagePacker
             TeleportOnQuestCompletionReport report = (TeleportOnQuestCompletionReport)object;
             try
             {
-               TeleportationContinuationMessage msg = new  TeleportationContinuationMessage(report.getMapName(), report.getHostName(),
+               TeleportationContinuationMessage msg = new  TeleportationContinuationMessage(report.getLocation().getMapName(), report.getHostName(),
                         report.getPortNumber(), report.getPlayerID(), PlayerManager.getSingleton().getNewPinFor(report.getPlayerID()));
                 return msg;
             }

@@ -1,5 +1,6 @@
 package model.reports;
 
+import data.GameLocation;
 import model.QualifiedObservableReport;
 
 /**
@@ -13,7 +14,7 @@ public class TeleportOnQuestCompletionReport implements QualifiedObservableRepor
     private final int playerID;
     private final int questID;
     
-    private final String mapName;
+    private final GameLocation location;
     private final String hostName;
     private final int portNumber;
     
@@ -21,15 +22,15 @@ public class TeleportOnQuestCompletionReport implements QualifiedObservableRepor
      * 
      * @param id id of the player
      * @param questID id of the quest
-     * @param mapName name of the map
+     * @param gl location to teleport
      * @param hostName name of the host
      * @param port port the client should connect to
      */
-    public TeleportOnQuestCompletionReport(int id, int questID, String mapName, String hostName, int port) 
+    public TeleportOnQuestCompletionReport(int id, int questID, GameLocation gl, String hostName, int port) 
     {
         this.playerID = id;
         this.questID = questID;
-        this.mapName = mapName;
+        this.location = gl;
         this.hostName = hostName;
         this.portNumber = port;
     }
@@ -53,9 +54,9 @@ public class TeleportOnQuestCompletionReport implements QualifiedObservableRepor
     /**
      * @return map name
      */
-    public String getMapName()
+    public GameLocation getLocation()
     {
-        return mapName;
+        return location;
     }
 
     /**
@@ -83,7 +84,7 @@ public class TeleportOnQuestCompletionReport implements QualifiedObservableRepor
         final int prime = 31;
         int result = 1;
         result = prime * result
-                + ((mapName == null) ? 0 : mapName.hashCode());
+                + ((location == null) ? 0 : location.hashCode());
         result = prime * result
                 + ((hostName == null) ? 0 : hostName.hashCode());
         result = prime * result + portNumber;
@@ -111,7 +112,7 @@ public class TeleportOnQuestCompletionReport implements QualifiedObservableRepor
             return false;
         if (portNumber != other.getPortNumber())
             return false;
-        if (!mapName.equals(other.getMapName()))
+        if (!location.equals(other.getLocation()))
             return false;
         if (!hostName.equals(other.getHostName()))
             return false;

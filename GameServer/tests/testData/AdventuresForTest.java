@@ -15,7 +15,7 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	QUEST1_ADVENTURE_1(1, "Quest 1: Adventure Description 1", 1, 1, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
+	QUEST1_ADVENTURE_1(1, "Quest 1: Adventure 1: MOVE!!!!", 1, 1, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(PlayersForTest.MERLIN.getPosition().getRow()+1,PlayersForTest.MERLIN.getPosition().getColumn()))),
 	/**
 	 * 
 	 */

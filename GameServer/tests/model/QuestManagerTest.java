@@ -10,6 +10,7 @@ import static org.junit.Assert.assertSame;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +26,7 @@ import datasource.DatabaseTest;
 import datasource.QuestStateTableDataGatewayMock;
 import model.reports.PlayerLeaveReport;
 import model.reports.SendChatMessageReport;
+import model.reports.TeleportOnQuestCompletionReport;
 import testData.AdventuresForTest;
 import testData.PlayersForTest;
 import testData.QuestStatesForTest;
@@ -634,10 +636,25 @@ public class QuestManagerTest extends DatabaseTest
 		Player p = playerManager.addPlayer(playerID);
 		QuestState qs = QuestManager.getSingleton().getQuestStateByID(playerID, questID);
 		qs.setPlayerID(playerID);
+		
+		GameLocation gl = (GameLocation) QuestsForTest.THE_LITTLE_QUEST.getCompletionActionParameter();
+		MapToServerMapping mapping = new MapToServerMapping(gl.getMapName());
+		
+		TeleportOnQuestCompletionReport report = new TeleportOnQuestCompletionReport(playerID, questID,
+                gl, mapping.getHostName(), mapping.getPortNumber());
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		
+		QualifiedObservableConnector.getSingleton().registerObserver(obs,
+                TeleportOnQuestCompletionReport.class);
 
+		obs.receiveReport(EasyMock.eq(report));
+        EasyMock.replay(obs);
+		
 		QuestManager.getSingleton().finishQuest(p.getPlayerID(), qs.getID());
 
 		assertEquals(QuestStateEnum.FINISHED, qs.getStateValue());
+		
+		EasyMock.verify(obs);
 	}
 
 	/**

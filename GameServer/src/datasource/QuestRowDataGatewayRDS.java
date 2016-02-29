@@ -100,17 +100,24 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	{
 		Class<? extends QuestCompletionActionParameter> completionActionParameterType = completionActionType
 				.getCompletionActionParameterType();
-		ByteArrayInputStream baip = new ByteArrayInputStream(
-				(byte[]) result.getObject("completionActionParameter"));
-		QuestCompletionActionParameter completionActionParameter = null;
-		try
+		if (completionActionType != QuestCompletionActionType.NO_ACTION)
 		{
-			Object x = new ObjectInputStream(baip).readObject();
-			completionActionParameter = completionActionParameterType.cast(x);
-		} catch (ClassNotFoundException | IOException e)
+			ByteArrayInputStream baip = new ByteArrayInputStream(
+					(byte[]) result.getObject("completionActionParameter"));
+			completionActionParameter = null;
+			try
+			{
+				Object x = new ObjectInputStream(baip).readObject();
+				completionActionParameter = completionActionParameterType.cast(x);
+			} catch (ClassNotFoundException | IOException e)
+			{
+				throw new DatabaseException(
+						"Couldn't convert blob to completion action parameter ", e);
+			}
+		}
+		else
 		{
-			throw new DatabaseException(
-					"Couldn't convert blob to completion action parameter ", e);
+			completionActionParameter = null;
 		}
 		return completionActionParameter;
 	}

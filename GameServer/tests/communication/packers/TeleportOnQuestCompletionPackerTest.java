@@ -11,9 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import testData.AdventuresForTest;
-import testData.MapAreasForTest;
 import communication.StateAccumulator;
 import communication.messages.TeleportationContinuationMessage;
+import data.GameLocation;
 import datasource.DatabaseException;
 
 /**
@@ -64,14 +64,16 @@ public class TeleportOnQuestCompletionPackerTest
      
         String host = "hostname";
         int port = 22;
+        GameLocation gl = new GameLocation("current.tmx", null);
+        
         TeleportOnQuestCompletionReport report = new TeleportOnQuestCompletionReport(1, AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(),
-                MapAreasForTest.ONE_MAP_AREA.getAreaName(),host, port);
+                gl, host, port);
         
         TeleportOnQuestCompletionPacker packer = new TeleportOnQuestCompletionPacker();
         packer.setAccumulator(stateAccumulator);
         
         TeleportationContinuationMessage msg = (TeleportationContinuationMessage) packer.pack(report);
-        assertEquals(MapAreasForTest.ONE_MAP_AREA.getAreaName(), msg.getMapName());
+        assertEquals(gl.getMapName(), msg.getMapName());
         assertEquals(host,msg.getHostName());
         assertEquals(port, msg.getPortNumber());
         assertEquals(1, msg.getPlayerID());
