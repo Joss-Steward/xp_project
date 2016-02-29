@@ -1,6 +1,12 @@
 package view.screen.map;
 
 import static view.screen.Screens.DEFAULT_RES;
+
+import java.awt.event.KeyEvent;
+
+import model.ClientModelFacade;
+import model.CommandHighScoreRequest;
+import model.CommandKeyInputSent;
 import view.player.PlayerSprite;
 import view.player.PlayerSpriteFactory;
 import view.player.PlayerType;
@@ -415,6 +421,8 @@ public class ScreenMap extends ScreenBasic
 			@Override
 			public boolean keyDown(InputEvent event, int keycode)
 			{
+				CommandKeyInputSent cmd = new CommandKeyInputSent("" + event.getCharacter());
+				ClientModelFacade.getSingleton().queueCommand(cmd);
 				if (keycode == Keys.ENTER)
 				{
 					if (stage.getKeyboardFocus() == null)
@@ -442,7 +450,6 @@ public class ScreenMap extends ScreenBasic
 					{
 						qaScreen.toggleQAScreenVisible();
 					}
-					
 					return true;
 				}
 				if(keycode == Keys.H)

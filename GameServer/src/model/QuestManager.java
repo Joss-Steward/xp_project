@@ -12,6 +12,7 @@ import model.reports.PlayerLeaveReport;
 import model.reports.PlayerMovedReport;
 import data.AdventureCompletionType;
 import data.AdventureRecord;
+import data.AdventureStateEnum;
 import data.CriteriaString;
 import data.Position;
 import datasource.AdventureTableDataGateway;
@@ -225,7 +226,8 @@ public class QuestManager implements QualifiedObserver
 		try
 		{
 			AdventureRecord ar = getAdventure(questId, adventureId);
-			if (ar.getCompletionType() == AdventureCompletionType.KEYSTROKE)
+			if (ar.getCompletionType() == AdventureCompletionType.KEYSTROKE && 
+					qm.getAdventureStateByID(playerId, questId, adventureId).getState() == AdventureStateEnum.TRIGGERED)
 			{
 				CriteriaString cs = (CriteriaString) ar.getCompletionCriteria();
 				if (cs.toString().equalsIgnoreCase(input))
