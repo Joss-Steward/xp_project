@@ -531,7 +531,7 @@ public class QuestManagerTest extends DatabaseTest
 		QuestManager.getSingleton().addQuestState(4, questState);
 		assertEquals(4, questState.getPlayerID());
 	}
-
+	QuestManager qm = QuestManager.getSingleton();
 	/**
 	 * We should be able to clear out all of the quest states for a given player
 	 */
@@ -620,6 +620,27 @@ public class QuestManagerTest extends DatabaseTest
 		assertEquals(initialExp + expGain, p.getExperiencePoints());
 	}
 
+	/**
+	 * Tests completing an adventure by user input
+	 */
+	@Test
+	public void testCompletingAdventureByInput()
+	{
+		int playerID = PlayersForTest.NEWBIE.getPlayerID();
+		int questID = 100;
+		int adventureID = 1;
+		
+		Player p = playerManager.addPlayer(playerID);
+		QuestState qs = QuestManager.getSingleton().getQuestStateByID(p.getPlayerID(), questID);
+		qs.setPlayerID(playerID);
+		
+		assertEquals(AdventureStateEnum.TRIGGERED, QuestManager.getSingleton().getAdventureStateByID(playerID, questID, adventureID).getState());
+		CommandKeyInputMessageReceived command = new CommandKeyInputMessageReceived("q", playerID);
+		command.execute();		
+
+		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton().getAdventureStateByID(playerID, questID, adventureID).getState());
+	}
+	
 	/**
 	 * Tests that we finishing a quest changes its state to finished
 	 * 

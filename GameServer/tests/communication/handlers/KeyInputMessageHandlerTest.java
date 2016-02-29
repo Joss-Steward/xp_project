@@ -12,7 +12,8 @@ import communication.messages.KeyInputMessage;
  * @author Ian Keefer & TJ Renninger
  *
  */
-public class KeyInputMessageHandlerTest {
+public class KeyInputMessageHandlerTest
+{
 
 	/**
 	 * Tests the creation and process of a key input message handler. Tests to see the command size has a new command in it.
