@@ -31,7 +31,7 @@ public enum QuestStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1(2, 1, QuestStateEnum.TRIGGERED, false),
+	PLAYER2_QUEST1(2, 1, QuestStateEnum.TRIGGERED, true),
 	/**
 	 * 
 	 */
