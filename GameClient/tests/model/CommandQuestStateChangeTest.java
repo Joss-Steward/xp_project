@@ -14,7 +14,7 @@ import org.junit.Test;
 import communication.messages.QuestStateChangeMessage;
 import data.Crew;
 import data.Position;
-import datasource.QuestStateEnum;
+import data.QuestStateEnum;
 
 /**
  * @author Ryan
@@ -46,7 +46,7 @@ public class CommandQuestStateChangeTest
 	{
 		int playerID = 1;
 		int questID = 1;
-		ClientPlayerQuest q = new ClientPlayerQuest(questID, "silly quest", QuestStateEnum.TRIGGERED, 3, 0);
+		ClientPlayerQuest q = new ClientPlayerQuest(questID, "silly quest", QuestStateEnum.TRIGGERED, 3, 0, true);
 		
 		Position pos = new Position(1, 2);
 		ClientPlayerManager pm = ClientPlayerManager.getSingleton();

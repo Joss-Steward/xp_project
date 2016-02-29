@@ -5,11 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import data.QuestStateEnum;
 import data.QuestStateRecord;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
 import datasource.DatabaseManager;
-import datasource.QuestStateEnum;
 
 /**
  * The RDS implementation of the gateway
@@ -171,7 +171,7 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 
 	/**
 	 * @see datasource.QuestStateTableDataGateway#udpateState(int,
-	 *      int, datasource.QuestStateEnum, boolean)
+	 *      int, data.QuestStateEnum, boolean)
 	 */
 	@Override
 	public void udpateState(int playerID, int questID, QuestStateEnum newState,

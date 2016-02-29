@@ -13,7 +13,7 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST1_ADV1(1, 1, 1, AdventureStateEnum.COMPLETED, true),
+	PLAYER1_QUEST1_ADV1(1, 1, 1, AdventureStateEnum.TRIGGERED, true),
 	/**
 	 * 
 	 */
@@ -42,10 +42,11 @@ public enum AdventureStatesForTest
 	 * 
 	 */
 	PLAYER1_QUEST3_ADV3(1, 3, 3, AdventureStateEnum.TRIGGERED, false),
+	
 	/**
 	 * 
 	 */
-	PLAYER2_QUEST1_ADV1(2, 1, 1, AdventureStateEnum.TRIGGERED, false),
+	PLAYER2_QUEST1_ADV1(2, 1, 1, AdventureStateEnum.TRIGGERED, true),
 	/**
 	 * 
 	 */
@@ -104,7 +105,16 @@ public enum AdventureStatesForTest
 	 * 
 	 */
 	PLAYER7_QUEST2_ADV1(7, 2, 1, AdventureStateEnum.HIDDEN, false),
+	/**
+	 * 
+	 */
+	MARTY_QUEST5_ADV1(PlayersForTest.MARTY.getPlayerID(), 5, 1, AdventureStateEnum.TRIGGERED, false),
 
+	
+	/**
+	 * 
+	 */
+	PLAYER8_QUEST2_ADV2(8, 2, 2, AdventureStateEnum.TRIGGERED , false),
 	// ----------------------------------------------------------------------------------------//
 	// NEWBIE's onramping adventures //
 	// ----------------------------------------------------------------------------------------//

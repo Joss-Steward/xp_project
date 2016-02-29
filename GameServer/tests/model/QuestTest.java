@@ -13,6 +13,7 @@ import data.AdventureRecord;
 import data.CriteriaString;
 import data.GameLocation;
 import data.Position;
+import data.QuestCompletionActionType;
 
 /**
  * This class holds the tests for the Quest class
@@ -39,7 +40,7 @@ public class QuestTest
 		Position pos = new Position(33, 44);
 
 		Quest q = new Quest(245, "I am a description", "HappyZone", pos, adventures, 42,
-				13);
+				13, QuestCompletionActionType.NO_ACTION, null);
 
 		assertEquals(245, q.getQuestID());
 		assertEquals("I am a description", q.getDescription());
@@ -76,7 +77,7 @@ public class QuestTest
 	@Test
 	public void testSetters()
 	{
-		Quest q = new Quest(-1, null, null, null, null, 42, 45);
+		Quest q = new Quest(-1, null, null, null, null, 42, 45, null, null);
 		ArrayList<AdventureRecord> adventures = new ArrayList<AdventureRecord>();
 		adventures.add(new AdventureRecord(5, 42, "Merlin Zone", 4,
 				AdventureCompletionType.CHAT, new CriteriaString("Henry")));

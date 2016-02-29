@@ -21,9 +21,9 @@ import org.junit.Test;
 
 import testData.QuestsForTest;
 import data.AdventureStateEnum;
+import data.QuestStateEnum;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
-import datasource.QuestStateEnum;
 
 /**
  * Test for the QuestState Class

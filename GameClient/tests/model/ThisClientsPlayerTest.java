@@ -13,8 +13,9 @@ import model.ClientPlayerManager;
 import model.QualifiedObservableConnector;
 import model.QualifiedObserver;
 import model.ThisClientsPlayer;
-import model.reports.AdventuresNeedingNotificationReport;
+import model.reports.AdventureNeedingNotificationReport;
 import model.reports.ExperiencePointsChangeReport;
+import model.reports.QuestNeedingNotificationReport;
 import model.reports.ThisClientsPlayerMovedReport;
 import model.reports.QuestStateReport;
 
@@ -25,8 +26,8 @@ import org.junit.Test;
 import testData.PlayersForTest;
 import data.AdventureStateEnum;
 import data.Position;
+import data.QuestStateEnum;
 import datasource.LevelRecord;
-import datasource.QuestStateEnum;
 
 /**
  * Tests behaviors that are unique to the player playing on this client
@@ -136,7 +137,7 @@ public class ThisClientsPlayerTest
 		cp.addQuest(q);
 		
 		ClientPlayerAdventure a = new ClientPlayerAdventure(42, "Test Adventure ow2", 3, AdventureStateEnum.HIDDEN, false);
-		ClientPlayerQuest qow = new ClientPlayerQuest(41, "Test Quest ow1", QuestStateEnum.HIDDEN, 42, 3);
+		ClientPlayerQuest qow = new ClientPlayerQuest(41, "Test Quest ow1", QuestStateEnum.HIDDEN, 42, 3, true);
 		
 		qow.addAdventure(a);
 		
@@ -168,7 +169,7 @@ public class ThisClientsPlayerTest
 	
 	/**
 	 * Test that we can send a report that contains the adventures that currently
-	 * have the state of NEED_NOTIFICATION
+	 * need notification
 	 */
 	@Test
 	public void testSendAdventuresNeedingNotificationReport()
@@ -176,7 +177,7 @@ public class ThisClientsPlayerTest
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
 		
 		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", 0, AdventureStateEnum.COMPLETED, true);
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.FINISHED, 1, 2);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.FINISHED, 1, 2, true);
 		q.addAdventure(a);
 		cp.addQuest(q);
 		
@@ -184,8 +185,36 @@ public class ThisClientsPlayerTest
 		questList.add(q);
 		
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs, AdventuresNeedingNotificationReport.class);
-		AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(cp.getID(), q.getQuestID(), a.getAdventureID(), a.getAdventureDescription());
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, AdventureNeedingNotificationReport.class);
+		AdventureNeedingNotificationReport report = new AdventureNeedingNotificationReport(cp.getID(), q.getQuestID(), a.getAdventureID(), a.getAdventureDescription(), a.getAdventureState());
+		obs.receiveReport(EasyMock.eq(report));
+		EasyMock.replay(obs);
+
+		cp.overwriteQuestList(questList);
+		
+		EasyMock.verify(obs);
+	}
+	
+	/**
+	 * Test that we can send a report that contains the quests that currently
+	 * have need notification
+	 */
+	@Test
+	public void testQuestNeedingNotificationReport()
+	{
+		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		
+		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", 0, AdventureStateEnum.COMPLETED, true);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.FINISHED, 1, 2, true);
+		q.addAdventure(a);
+		cp.addQuest(q);
+		
+		ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
+		questList.add(q);
+		
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestNeedingNotificationReport.class);
+		QuestNeedingNotificationReport report = new QuestNeedingNotificationReport(cp.getID(), q.getQuestID(), q.getQuestDescription(), q.getQuestState());
 		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 

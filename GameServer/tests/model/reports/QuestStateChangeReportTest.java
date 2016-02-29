@@ -8,8 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import testData.QuestsForTest;
+import data.QuestStateEnum;
 import datasource.DatabaseException;
-import datasource.QuestStateEnum;
 
 /**
  * @author Merlin

@@ -4,13 +4,14 @@ import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 import model.reports.AdventureStateChangeReport;
-import model.reports.AdventuresNeedingNotificationReport;
+import model.reports.AdventureNeedingNotificationReport;
 import model.reports.QuestStateChangeReport;
+import model.reports.QuestNeedingNotificationReport;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import data.AdventureStateEnum;
-import datasource.QuestStateEnum;
+import data.QuestStateEnum;
 
 /**
  * @author Cody/Scott Sends popup data to constructor from reports observed
@@ -39,7 +40,8 @@ public class PopUpDisplay implements QualifiedObserver
 	{
 		QualifiedObservableConnector cm = QualifiedObservableConnector
 				.getSingleton();
-		cm.registerObserver(this, AdventuresNeedingNotificationReport.class);
+		cm.registerObserver(this, AdventureNeedingNotificationReport.class);
+		cm.registerObserver(this, QuestNeedingNotificationReport.class);
 		cm.registerObserver(this, QuestStateChangeReport.class);
 		cm.registerObserver(this, AdventureStateChangeReport.class);
 
@@ -51,26 +53,32 @@ public class PopUpDisplay implements QualifiedObserver
 	@Override
 	public void receiveReport(QualifiedObservableReport report)
 	{
-		if (report.getClass().equals(AdventuresNeedingNotificationReport.class))
+		if (report.getClass().equals(AdventureNeedingNotificationReport.class))
 		{
-			AdventuresNeedingNotificationReport r = (AdventuresNeedingNotificationReport) report;
+			AdventureNeedingNotificationReport r = (AdventureNeedingNotificationReport) report;
 			
 			AdventureCompleteBehavior behavior = new AdventureCompleteBehavior(r.getPlayerID(), r.getQuestID(), r.getAdventureID());
-			@SuppressWarnings("unused")
-			ScreenPopUp popup = new ScreenPopUp("Adventure Completed",
-					r.getAdventureDescription() + " completed", this.stage, behavior);
+			AdventureStateEnum state = r.getState();
+			new ScreenPopUp("Adventure " + state.getDescription(),
+					r.getAdventureDescription(), this.stage, behavior);
+		} else if (report.getClass().equals(QuestNeedingNotificationReport.class))
+		{
+			QuestNeedingNotificationReport r = (QuestNeedingNotificationReport) report;
+			
+			QuestCompleteBehavior behavior = new QuestCompleteBehavior(r.getPlayerID(), r.getQuestID());
+			QuestStateEnum state = r.getState();
+			new ScreenPopUp("Quest " + state.getDescription(),
+					r.getQuestDescription(), this.stage, behavior);
 		} else if (report.getClass().equals(QuestStateChangeReport.class))
 		{
 			QuestStateChangeReport r = (QuestStateChangeReport) report;
 			if (r.getNewState() == QuestStateEnum.FULFILLED)
 			{
-				@SuppressWarnings("unused")
-				ScreenPopUp popup = new ScreenPopUp("Quest Fulfilled",
+				new ScreenPopUp("Quest Fulfilled",
 						r.getQuestDescription() + " fulfilled", this.stage, new SilentBehavior());
 			} else if (r.getNewState() == QuestStateEnum.FINISHED)
 			{
-				@SuppressWarnings("unused") 
-				ScreenPopUp popup = new ScreenPopUp("Quest Completed",
+				new ScreenPopUp("Quest Completed",
 						r.getQuestDescription() + " completed", this.stage, new SilentBehavior());
 			}
 		} else if (report.getClass().equals(AdventureStateChangeReport.class))
@@ -78,8 +86,7 @@ public class PopUpDisplay implements QualifiedObserver
 			AdventureStateChangeReport r = (AdventureStateChangeReport) report;
 			if(r.getNewState() == AdventureStateEnum.COMPLETED)
 			{
-				@SuppressWarnings("unused") 
-				ScreenPopUp popup = new ScreenPopUp("Adventure Completed",
+				new ScreenPopUp("Adventure Completed",
 						r.getAdventureDescription() + " completed", this.stage, new SilentBehavior());
 			}
 		}

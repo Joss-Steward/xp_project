@@ -16,7 +16,7 @@ import communication.messages.AdventureStateChangeMessage;
 import data.AdventureStateEnum;
 import data.Crew;
 import data.Position;
-import datasource.QuestStateEnum;
+import data.QuestStateEnum;
 
 /**
  * @author sl6469
@@ -53,7 +53,7 @@ public class CommandAdventureStateChangeTest
 		int questID = 1;
 		int adventureID = 1;
 		
-		ClientPlayerQuest q = new ClientPlayerQuest(questID, "silly quest", QuestStateEnum.TRIGGERED, 3, 0);
+		ClientPlayerQuest q = new ClientPlayerQuest(questID, "silly quest", QuestStateEnum.TRIGGERED, 3, 0, false);
 		ClientPlayerAdventure a1 = new ClientPlayerAdventure(adventureID,"adventure 1", 3, AdventureStateEnum.TRIGGERED, false);
 		q.getAdventureList().add(a1);
 		

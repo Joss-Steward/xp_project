@@ -164,18 +164,18 @@ public class AdventureState
 	 * Changes the current states state to the given state
 	 * and tells it if it needs to notify the user.
 	 * @param state state to change to
-	 * @param b whether to notify or not
+	 * @param needingNotification whether to notify or not
 	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
 	 * @throws DatabaseException shouldn't
 	 * @throws IllegalQuestChangeException thrown if queststatechange error occurs
 	 */
-	protected void changeState(AdventureStateEnum state, boolean b) throws IllegalAdventureChangeException, DatabaseException, IllegalQuestChangeException 
+	protected void changeState(AdventureStateEnum state, boolean needingNotification) throws IllegalAdventureChangeException, DatabaseException, IllegalQuestChangeException 
 	{
 		if((this.adventureState.equals(AdventureStateEnum.HIDDEN) && state.equals(AdventureStateEnum.TRIGGERED)) 
 				|| (this.adventureState.equals(AdventureStateEnum.TRIGGERED) && state.equals(AdventureStateEnum.COMPLETED))) 
 		{
 			this.adventureState = state;
-			this.needingNotification = b;
+			this.needingNotification = needingNotification;
 			
 			if(needingNotification == true)
 			{

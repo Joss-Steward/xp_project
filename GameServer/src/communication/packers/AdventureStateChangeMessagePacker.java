@@ -1,9 +1,10 @@
 package communication.packers;
 
-import java.util.ArrayList;
-
 import model.QualifiedObservableReport;
 import model.reports.AdventureStateChangeReport;
+
+import java.util.ArrayList;
+
 import communication.messages.AdventureStateChangeMessage;
 import communication.messages.Message;
 

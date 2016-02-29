@@ -3,13 +3,10 @@ package model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import model.OptionsManager;
-import model.QualifiedObservableConnector;
-import model.QualifiedObservableReport;
-import model.QualifiedObserver;
 import model.reports.KeyInputRecievedReport;
 import model.reports.PlayerLeaveReport;
 import model.reports.PlayerMovedReport;
+import model.reports.SendChatMessageReport;
 import data.AdventureCompletionType;
 import data.AdventureRecord;
 import data.AdventureStateEnum;
@@ -57,6 +54,8 @@ public class QuestManager implements QualifiedObserver
 				PlayerLeaveReport.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(this,
 				KeyInputRecievedReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(this, 
+				SendChatMessageReport.class);
 		questStates = new HashMap<Integer, ArrayList<QuestState>>();
 		if (OptionsManager.getSingleton().isTestMode())
 		{
@@ -108,7 +107,9 @@ public class QuestManager implements QualifiedObserver
 				questGateway.getTriggerPosition(),
 				adventureGateway.getAdventuresForQuest(questID),
 				questGateway.getExperiencePointsGained(),
-				questGateway.getAdventuresForFulfillment());
+				questGateway.getAdventuresForFulfillment(),
+				questGateway.getCompletionActionType(),
+				questGateway.getCompletionActionParameter());
 
 		return quest;
 	}

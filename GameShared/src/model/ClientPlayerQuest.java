@@ -3,7 +3,7 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import datasource.QuestStateEnum;
+import data.QuestStateEnum;
 
 /**
  * Player has a quest that will contain a description
@@ -25,6 +25,8 @@ public class ClientPlayerQuest implements Serializable
 	private ArrayList<ClientPlayerAdventure> adventures = new ArrayList<ClientPlayerAdventure>();
 	private int experiencePointsGained;
 	private int adventuresToFulfillment;
+
+	private boolean needingNotification;
 	/**
 	 * Constructor for client player quest
 	 * @param questID the quests id
@@ -32,14 +34,16 @@ public class ClientPlayerQuest implements Serializable
 	 * @param state the quests state
 	 * @param experiencePointsGained the number of experience you get when you fulfill this quest
 	 * @param adventuresToFulfillment the number of adventures required to fulfill this quest
+	 * @param needingNotification TODO
 	 */
-	public ClientPlayerQuest(int questID, String questDescription, QuestStateEnum state, int experiencePointsGained, int adventuresToFulfillment)
+	public ClientPlayerQuest(int questID, String questDescription, QuestStateEnum state, int experiencePointsGained, int adventuresToFulfillment, boolean needingNotification)
 	{
 		this.questID = questID;
 		this.questDescription = questDescription;
 		this.state = state;
 		this.experiencePointsGained = experiencePointsGained;
 		this.adventuresToFulfillment = adventuresToFulfillment;
+		this.needingNotification = needingNotification;
 	}
 	/**
 	 * Add adventure to the list of ClientPlayerAdventures
@@ -180,6 +184,13 @@ public class ClientPlayerQuest implements Serializable
 	public void setState(QuestStateEnum newState) 
 	{
 		this.state = newState;
+	}
+	/**
+	 * @return true if the player has not been notified about the state of this quest
+	 */
+	public boolean isNeedingNotification()
+	{
+		return needingNotification;
 	}
 	
 }

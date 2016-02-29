@@ -24,7 +24,7 @@ public enum QuestsForTest
 	/**
 	 * 
 	 */
-	THE_OTHER_QUEST(2, "Quest 2", new GameLocation("sillymap.tmx", new Position(42, 2)), 4, 2,
+	THE_OTHER_QUEST(2, "Quest 2", new GameLocation("current.tmx", new Position(4, 14)), 4, 2,
 			QuestCompletionActionType.NO_ACTION, null),
 	/**
 	 * 
@@ -35,14 +35,24 @@ public enum QuestsForTest
 	/**
 	 * 
 	 */
-	THE_LITTLE_QUEST(4, "Quest 4", new GameLocation("current.tmx", new Position(2, 32)), 5, 1,
-			QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
-					new Position(3, 3))),
+
+	THE_LITTLE_QUEST(4, "Quest 4", new GameLocation("current.tmx", new Position(2, 32)), 5, 1,QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
+			new Position(3, 3))),
+	/**
+	 * 
+	 */
+	CHAT_TO_AN_NPC_QUEST(5, "Quest 5", new GameLocation("current.tmx", new Position(0,0)), 5, 1,QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
+			new Position(3, 3))),
+	/**
+	 * 
+	 */
+
 
 	/**
 	 * The real opening quest
 	 */
-	ONRAMPING_QUEST(100, "Welcome!  For your first quest, you need to learn a little bit about this world.  Press Q to see what you need to do", 
+	ONRAMPING_QUEST(100, "Welcome!  For your first quest, you need to learn a little bit about this world.  Press Q to see what you need to do.  "
+			+ "Double clicking on a quest in the quest screen will show you its adventures.", 
 			PlayerTableDataGateway.INITIAL_GAME_LOCATION, 6, 5,
 							QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
 									new Position(10, 10)));

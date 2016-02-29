@@ -421,6 +421,7 @@ public class ScreenMap extends ScreenBasic
 			@Override
 			public boolean keyDown(InputEvent event, int keycode)
 			{
+				System.out.println("" + event.getCharacter());
 				CommandKeyInputSent cmd = new CommandKeyInputSent("" + event.getCharacter());
 				ClientModelFacade.getSingleton().queueCommand(cmd);
 				if (keycode == Keys.ENTER)

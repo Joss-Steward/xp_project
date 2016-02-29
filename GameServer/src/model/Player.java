@@ -33,6 +33,8 @@ public class Player
 
 	private Crew crew;
 	
+	final private int LOCAL_CHAT_RADIUS = 5;
+	
 
 	/**
 	 * Add experience points
@@ -46,6 +48,7 @@ public class Player
 		ExperienceChangedReport report = new ExperienceChangedReport(this.playerID, this.experiencePoints, LevelManager.getSingleton().getLevelForPoints(this.experiencePoints));
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
+
 
 	/**
 	 * Get the appearance type for how this player should be drawn
@@ -262,5 +265,20 @@ public class Player
 	public void setQuizScore(int score)
 	{
 		this.quizScore = score;
+	}
+	
+	
+	/**
+	 * When receiving a local message check if the player is close enough to
+	 * hear
+	 * 
+	 * @param position position of the sender
+	 */
+	protected boolean canReceiveLocalMessage(Position position) 
+	{
+		Position myPosition = getPlayerPosition();
+		
+		return Math.abs(myPosition.getColumn() - position.getColumn()) <= LOCAL_CHAT_RADIUS
+				&& Math.abs(myPosition.getRow() - position.getRow()) <= LOCAL_CHAT_RADIUS;
 	}
 }

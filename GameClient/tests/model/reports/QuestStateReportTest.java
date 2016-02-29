@@ -9,7 +9,7 @@ import model.reports.QuestStateReport;
 
 import org.junit.Test;
 
-import datasource.QuestStateEnum;
+import data.QuestStateEnum;
 
 /**
  * Test the QuestStateReport
@@ -26,10 +26,10 @@ public class QuestStateReportTest
 	public void test()
 	{
 		ArrayList<ClientPlayerQuest> data = new ArrayList<ClientPlayerQuest>();
-		ClientPlayerQuest q = new ClientPlayerQuest(4, "silly", QuestStateEnum.TRIGGERED, 42, 13);
+		ClientPlayerQuest q = new ClientPlayerQuest(4, "silly", QuestStateEnum.TRIGGERED, 42, 13, true);
 		data.add(q);
 		QuestStateReport report = new QuestStateReport(data);
-		assertSame(data, report.getClientPlayerQuestList());
+		assertEquals(data, report.getClientPlayerQuestList());
 		
 	}
 

@@ -9,10 +9,10 @@ import org.junit.After;
 import org.junit.Test;
 
 import testData.QuestStatesForTest;
+import data.QuestStateEnum;
 import data.QuestStateRecord;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
-import datasource.QuestStateEnum;
 import datasource.QuestStateTableDataGateway;
 
 /**

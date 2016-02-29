@@ -3,6 +3,7 @@ import model.AdventureStateTest;
 import model.ChatManagerTest;
 import model.ChatMessageReceivedCommandTest;
 import model.CommandAddPlayerTest;
+import model.CommandAdventureNotificationCompleteTest;
 import model.CommandKeyInputMessageReceivedTest;
 import model.CommandMovePlayerSilentlyTest;
 import model.CommandMovePlayerTest;
@@ -28,6 +29,7 @@ import model.reports.PlayerConnectionReportTest;
 import model.reports.PlayerMovedReportTest;
 import model.reports.QuestStateChangeReportTest;
 import model.reports.SendChatMessageReportTest;
+import model.reports.TeleportOnQuestCompletionReportTest;
 import model.reports.UpdatePlayerInformationReportTest;
 
 import org.junit.ClassRule;
@@ -35,8 +37,8 @@ import org.junit.rules.ExternalResource;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import communication.handlers.AdventureNotificationCompleteMessageHandlerTest;
 import communication.handlers.ChatMessageHandlerTest;
-import communication.handlers.ConnectMessageHandlerTest;
 import communication.handlers.DisconnectMessageHandlerTest;
 import communication.handlers.HighScoreRequestMessageHandlerTest;
 import communication.handlers.KeyInputMessageHandlerTest;
@@ -48,6 +50,8 @@ import communication.packers.ExperienceChangedMessagePackerTest;
 import communication.packers.MapFileMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.PlayerJoinedMessagePackerTest;
+import communication.packers.QuestStateChangeMessagePackerTest;
+import communication.packers.TeleportOnQuestCompletionPackerTest;
 import communication.packers.UpdatePlayerInformationMessagePackerTest;
 
 import datasource.AdventureRecordTest;
@@ -82,8 +86,9 @@ import datasource.QuestStateTableDataGatewayRDSTest;
 @Suite.SuiteClasses(
 {
 		// communication.handlers
+        AdventureNotificationCompleteMessageHandlerTest.class,
 		ChatMessageHandlerTest.class,
-		ConnectMessageHandlerTest.class,
+		//ConnectMessageHandlerTest.class,
 		DisconnectMessageHandlerTest.class,
 		HighScoreRequestMessageHandlerTest.class,
 		KeyInputMessageHandlerTest.class,
@@ -98,6 +103,8 @@ import datasource.QuestStateTableDataGatewayRDSTest;
 		MapFileMessagePackerTest.class,
 		MovementMessagePackerTest.class, 
 		PlayerJoinedMessagePackerTest.class,
+		QuestStateChangeMessagePackerTest.class,
+		TeleportOnQuestCompletionPackerTest.class,
 		UpdatePlayerInformationMessagePackerTest.class,
 		
 		//dataSource
@@ -140,9 +147,10 @@ import datasource.QuestStateTableDataGatewayRDSTest;
 		ChatManagerTest.class,
 		ChatMessageReceivedCommandTest.class,
 		CommandAddPlayerTest.class, 
+		CommandAdventureNotificationCompleteTest.class,
+		CommandKeyInputMessageReceivedTest.class,
 		CommandMovePlayerSilentlyTest.class,
 		CommandMovePlayerTest.class, 
-		CommandKeyInputMessageReceivedTest.class,
 		CommandPersistPlayerTest.class,
 		CommandRemovePlayerTest.class,
 		LevelManagerTest.class,
@@ -154,8 +162,8 @@ import datasource.QuestStateTableDataGatewayRDSTest;
 		PlayerMapperTest.class,
 		PlayerTest.class,
 		QuestManagerTest.class,
-		QuestTest.class,
 		QuestStateTest.class,
+		QuestTest.class,
 		QuizBotBehaviorTest.class,
 		
 		
@@ -167,6 +175,7 @@ import datasource.QuestStateTableDataGatewayRDSTest;
 		PlayerMovedReportTest.class, 
 		QuestStateChangeReportTest.class,
 		SendChatMessageReportTest.class,
+		TeleportOnQuestCompletionReportTest.class,
 		UpdatePlayerInformationReportTest.class,
 		})
 

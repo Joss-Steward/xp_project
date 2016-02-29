@@ -17,8 +17,8 @@ import org.junit.Test;
 import testData.PlayersForTest;
 import communication.messages.InitializeThisClientsPlayerMessage;
 import data.AdventureStateEnum;
+import data.QuestStateEnum;
 import datasource.LevelRecord;
-import datasource.QuestStateEnum;
 
 /**
  * @author Frank Schmidt
@@ -62,7 +62,7 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		ClientPlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
 		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
-		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED, 42, 133); 
+		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED, 42, 133, true); 
 		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", 5, AdventureStateEnum.TRIGGERED, false));
 		qList.add(q);
 		LevelRecord level = new LevelRecord("One", 45);
@@ -92,7 +92,7 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		ClientPlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
 		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
-		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED, 42, 8); 
+		ClientPlayerQuest q = new ClientPlayerQuest(3, "stupid quest", QuestStateEnum.TRIGGERED, 42, 8, true); 
 		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", 5, AdventureStateEnum.TRIGGERED, false));
 		qList.add(q);
 		int expectedPoints = 20;

@@ -12,8 +12,8 @@ import org.junit.Test;
 import testData.QuestsForTest;
 import communication.StateAccumulator;
 import communication.messages.QuestStateChangeMessage;
+import data.QuestStateEnum;
 import datasource.DatabaseException;
-import datasource.QuestStateEnum;
 
 /**
  * 
@@ -44,7 +44,8 @@ public class QuestStateChangeMessagePackerTest
 	{
 		QuestStateChangeMessagePacker packer = new QuestStateChangeMessagePacker();
 		assertEquals(QuestStateChangeReport.class,
-				packer.getReportTypesWePack());
+				packer.getReportTypesWePack().get(0));
+		assertEquals(1, packer.getReportTypesWePack().size());
 	}
 
 	/**

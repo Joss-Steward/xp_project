@@ -24,9 +24,9 @@ import testData.AdventuresForTest;
 import testData.QuestStatesForTest;
 import testData.QuestsForTest;
 import data.AdventureStateEnum;
+import data.QuestStateEnum;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
-import datasource.QuestStateEnum;
 
 /**
  * Test class for AdventureState

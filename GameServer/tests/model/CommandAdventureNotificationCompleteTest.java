@@ -1,17 +1,13 @@
 package model;
 
-import static org.junit.Assert.*;
-import model.CommandAdventureNotificationComplete;
-import model.OptionsManager;
-import model.PlayerManager;
-import model.QuestManager;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import testData.AdventureStatesForTest;
 import testData.PlayersForTest;
-import data.AdventureStateEnum;
 import datasource.DatabaseException;
 
 /**
@@ -58,7 +54,7 @@ public class CommandAdventureNotificationCompleteTest
 		CommandAdventureNotificationComplete cmd = new CommandAdventureNotificationComplete(playerID, questID, adventureID);
 		cmd.execute();
 		
-		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton().getAdventureStateByID(playerID, questID, adventureID).getState());
+		assertFalse( QuestManager.getSingleton().getAdventureStateByID(playerID, questID, adventureID).isNeedingNotification());
 	}
 
 }

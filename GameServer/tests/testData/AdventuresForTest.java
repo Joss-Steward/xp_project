@@ -15,7 +15,7 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	QUEST1_ADVENTURE_1(1, "Quest 1: Adventure Description 1", 1, 1, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
+	QUEST1_ADVENTURE_1(1, "Quest 1: Adventure 1: MOVE!!!!", 1, 1, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(PlayersForTest.MERLIN.getPosition().getRow()+1,PlayersForTest.MERLIN.getPosition().getColumn()))),
 	/**
 	 * 
 	 */
@@ -27,7 +27,7 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	QUEST2_ADVENTURE2(2, "Quest 2: Adventure Description 2", 2, 4, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(42,3))),
+	QUEST2_ADVENTURE2(2, "Quest 2: Adventure Description 2", 2, 4, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(4, 15))),
 	/**
 	 * 
 	 */
@@ -68,6 +68,15 @@ public enum AdventuresForTest
 	 * 
 	 */
 	QUEST4_ADVENTURE4(4, "Quest 4 Adventure 4", 4, 5, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
+
+	/**
+	 * 
+	 */
+	QUEST5_ADVENTURE1(1, "Quest 5 Adventure 1", 5, 1, AdventureCompletionType.CHAT, new CriteriaString("QuizBot")),
+	/**
+	 * 
+	 */
+
 	
 	
 	
@@ -100,6 +109,7 @@ public enum AdventuresForTest
 	 * 
 	 */
 	ONRAMPING_CHAT_WITH_SORTING_HAT(6, "Use the chat window to say something to the Red Hat", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.CHAT, new CriteriaString("RED HAT"));
+
 	
 	
 	private int adventureID;
