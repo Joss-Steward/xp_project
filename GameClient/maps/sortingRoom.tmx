@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="15" height="15" tilewidth="32" tileheight="32">
+ <properties>
+  <property name="3 24" value="current.tmx 47 17"/>
+  <property name="4 24" value="current.tmx 47 17"/>
+  <property name="5 24" value="current.tmx 47 17"/>
+ </properties>
+ <tileset firstgid="1" name="collision" tilewidth="32" tileheight="32">
+  <image source="tileset/collision.png" width="64" height="32"/>
+ </tileset>
+ <tileset firstgid="3" name="terrain" tilewidth="32" tileheight="32">
+  <image source="tileset/terrain.png" width="256" height="64"/>
+ </tileset>
+ <tileset firstgid="19" name="Ext Buildings" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MT- Medieval Town - Buildings.png" width="512" height="1728"/>
+ </tileset>
+ <tileset firstgid="883" name="Ext Castle" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MT- Medieval Town - Castle.png" width="512" height="1152"/>
+ </tileset>
+ <tileset firstgid="1459" name="Int Upper Class" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MI- Medieval Indoors - Hi Class.png" width="512" height="1216"/>
+ </tileset>
+ <tileset firstgid="2067" name="Int Mid Class" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MI- Medieval Indoors - Mid Class.png" width="512" height="1888"/>
+ </tileset>
+ <tileset firstgid="3011" name="Grasslands" tilewidth="32" tileheight="32">
+  <image source="tileset/Inq XP MT- Medieval Town - Grasslands.png" width="768" height="1696"/>
+ </tileset>
+ <layer name="background" width="15" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzbzMrAsIUMvBWIDwPxETLwUSC+DMRXyMBXgfgHEP8E4l9ksDnYGBg4gZiLjXS2BBBLArEWEGsSSYPUS7Eh3GAFZFuyEUeju5kUe9HdTIq96G4mxV50N5Ni72AJZ0rShhQZbACbP1a3
+  </data>
+ </layer>
+ <layer name="background Front" width="15" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUDCQAAAOEAAE=
+  </data>
+ </layer>
+ <layer name="foreground" width="15" height="15">
+  <data encoding="base64" compression="zlib">
+   eJy1kLsOAUEYRicSs9noXJ4AoUfo8QwK1Ao8AZ7MItG6JVq3ROuWaDWOyGbXZGc32cSXnGL++U7zWVEhJjCFGeQMIfLQlEK0oC2dm6V0l7CCNWygTKcCXZwe9KVzU7t7OMARTmBngDOEkXRuancMN7jDw+V+0jB/31elu1D67nRM/d8Wb+fj+uWMdwnpPvFeGjfBrklIGd7/EfndyitpnAxkNe7cZ6sCThFKGtdvqypODeoa919bBeWzVUwG97wSD+nZeQNFEDJ0
+  </data>
+ </layer>
+ <layer name="foreground Front" width="15" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgcoIUNwd7Fjl0cF5iCpOYUO3bxUYAKTgHDRoKdsDps4Bc0XBVHw5cqAADObAXx
+  </data>
+ </layer>
+ <layer name="Collision" width="15" height="15" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJxjYmBgYBpiGB8gJD8KIIDY8KS23lGACQA3awBp
+  </data>
+ </layer>
+</map>
