@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import data.GameLocation;
 import testData.AdventuresForTest;
-import testData.MapAreasForTest;
 
 /**
  * Test to make sure the TeleportOnQuestFinishReport works
@@ -23,12 +23,14 @@ public class TeleportOnQuestCompletionReportTest
     {
         String host = "hostname";
         int port = 22;
-        TeleportOnQuestCompletionReport report = new TeleportOnQuestCompletionReport(1, AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(), MapAreasForTest.ONE_MAP_AREA.getAreaName(),
-                host, port);
+        GameLocation gl = new GameLocation("current.tmx", null);
+        
+        TeleportOnQuestCompletionReport report = new TeleportOnQuestCompletionReport(1, AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(), 
+                gl, host, port);
         
         assertEquals(1, report.getPlayerID());
         assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(), report.getQuestID());
-        assertEquals(MapAreasForTest.ONE_MAP_AREA.getAreaName(), report.getMapName());
+        assertEquals(gl, report.getLocation());
         assertEquals(host, report.getHostName());
         assertEquals(port, report.getPortNumber());
     }
