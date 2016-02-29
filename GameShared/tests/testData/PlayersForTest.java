@@ -93,7 +93,12 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	MARTY(18, "Marty", "male_a", 1, 1, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER);
+	MARTY(18, "Marty", "male_a", 1, 1, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER),
+	
+	/**
+     * 
+     */
+    HERSH(19, "Hersh", "male_b", 4, 13, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER);
 
 	private int playerID;
 	private String appearanceType;

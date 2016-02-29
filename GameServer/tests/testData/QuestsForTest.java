@@ -46,7 +46,8 @@ public enum QuestsForTest
 	/**
 	 * 
 	 */
-
+    TELEPORT_QUEST(6, "Teleporting Quest", new GameLocation("current.tmx", new Position(2, 32)), 1, 1,QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
+            new Position(3, 3))),
 
 	/**
 	 * The real opening quest
