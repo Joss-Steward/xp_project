@@ -17,7 +17,8 @@ public class KeyInputRecievedReportTest {
 	@Test
 	public void testInitialization() {
 		String input = "q";
-		KeyInputRecievedReport report = new KeyInputRecievedReport(input);
+		int id = 1;
+		KeyInputRecievedReport report = new KeyInputRecievedReport(input, id);
 		assertEquals(input, report.getInput());
 	}
 

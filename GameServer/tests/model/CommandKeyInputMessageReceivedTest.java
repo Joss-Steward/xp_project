@@ -17,7 +17,8 @@ public class CommandKeyInputMessageReceivedTest {
 	@Test
 	public void testInitializaiton() {
 		String input = "q";
-		CommandKeyInputMessageReceived command = new CommandKeyInputMessageReceived(input);
+		int id = 1;
+		CommandKeyInputMessageReceived command = new CommandKeyInputMessageReceived(input, id);
 		assertEquals(input, command.getInput());
 
 	}
@@ -28,7 +29,8 @@ public class CommandKeyInputMessageReceivedTest {
 	@Test
 	public void testExecute() {
 		String input = "q";
-		CommandKeyInputMessageReceived command = new CommandKeyInputMessageReceived(input);
+		int id = 1;
+		CommandKeyInputMessageReceived command = new CommandKeyInputMessageReceived(input, id);
 		assertTrue(command.execute());
 	}
 

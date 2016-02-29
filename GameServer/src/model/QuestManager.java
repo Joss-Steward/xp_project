@@ -7,9 +7,12 @@ import model.OptionsManager;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
+import model.reports.KeyInputRecievedReport;
 import model.reports.PlayerLeaveReport;
 import model.reports.PlayerMovedReport;
+import data.AdventureCompletionType;
 import data.AdventureRecord;
+import data.CriteriaString;
 import data.Position;
 import datasource.AdventureTableDataGateway;
 import datasource.AdventureTableDataGatewayMock;
@@ -51,6 +54,8 @@ public class QuestManager implements QualifiedObserver
 				PlayerMovedReport.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(this,
 				PlayerLeaveReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(this,
+				KeyInputRecievedReport.class);
 		questStates = new HashMap<Integer, ArrayList<QuestState>>();
 		if (OptionsManager.getSingleton().isTestMode())
 		{
@@ -182,8 +187,59 @@ public class QuestManager implements QualifiedObserver
 			PlayerLeaveReport myReport = (PlayerLeaveReport) report;
 			removeQuestStatesForPlayer(myReport.getPlayerID());
 		}
+		else if (report.getClass() == KeyInputRecievedReport.class)
+		{
+			handlePlayerInput(report);
+		}
 	}
 
+	/**
+	 * Iterates through all quests and adventures and validates if it's the correct criteria for keyboard input.
+	 * @param report
+	 */
+	private void handlePlayerInput(QualifiedObservableReport report)
+	{
+		QuestManager qm = QuestManager.getSingleton();
+		KeyInputRecievedReport myReport = (KeyInputRecievedReport) report;
+		ArrayList<QuestState> questStates = qm.getQuestList(myReport.getPlayerId());
+		for (QuestState qs : questStates)
+		{
+			for (AdventureState as : qs.getAdventureList())
+			{
+				
+				validateInputCriteriaForAdventures(myReport.getInput(), myReport.getPlayerId(), qs.getID(), as.getID());
+			}
+		}
+	}
+	
+	/**
+	 * Validates if an input string matches the criteria string.
+	 * @param input
+	 * @param playerId
+	 * @param questId
+	 * @param adventureId
+	 */
+	private void validateInputCriteriaForAdventures(String input, int playerId, int questId, int adventureId)
+	{
+		QuestManager qm = QuestManager.getSingleton();
+		try
+		{
+			AdventureRecord ar = getAdventure(questId, adventureId);
+			if (ar.getCompletionType() == AdventureCompletionType.KEYSTROKE)
+			{
+				CriteriaString cs = (CriteriaString) ar.getCompletionCriteria();
+				if (cs.toString().equalsIgnoreCase(input))
+				{
+					qm.completeAdventure(playerId, questId, adventureId);
+				}
+			}
+		} 
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
 	private void handlePlayerMovement(QualifiedObservableReport report)
 	{
 		PlayerMovedReport myReport = (PlayerMovedReport) report;

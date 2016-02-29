@@ -19,7 +19,8 @@ public class KeyInputMessageHandler extends MessageHandler {
 	public void process(Message msg) {
 		if (msg.getClass().equals(KeyInputMessage.class)) {
 			KeyInputMessage kiMsg = (KeyInputMessage) msg;
-			CommandKeyInputMessageReceived command = new CommandKeyInputMessageReceived(kiMsg.getInput());
+			int playerId = getStateAccumulator().getPlayerID();
+			CommandKeyInputMessageReceived command = new CommandKeyInputMessageReceived(kiMsg.getInput(), playerId);
 			ModelFacade.getSingleton().queueCommand(command);
 		}
 

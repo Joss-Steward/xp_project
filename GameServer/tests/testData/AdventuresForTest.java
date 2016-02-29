@@ -69,6 +69,8 @@ public enum AdventuresForTest
 	 */
 	QUEST4_ADVENTURE4(4, "Quest 4 Adventure 4", 4, 5, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
 	
+	
+	
 	/****************************************************/
 	/* Onramping Adventures                             */
 	/****************************************************/

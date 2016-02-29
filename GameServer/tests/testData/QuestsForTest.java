@@ -47,6 +47,7 @@ public enum QuestsForTest
 							QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
 									new Position(10, 10)));
 	
+	
 	private int questID;
 	private String questDescription;
 	private GameLocation gameLocation;

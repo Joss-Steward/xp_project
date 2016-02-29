@@ -52,6 +52,7 @@ public class QuestState
 	{
 		for (AdventureState adventure : adventureList)
 		{
+			System.out.println("Adv:" + adventure.getID());
 			this.adventureList.add(adventure);
 			adventure.setParentQuest(this);
 		}
