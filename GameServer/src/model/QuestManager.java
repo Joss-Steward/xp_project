@@ -7,11 +7,14 @@ import model.reports.KeyInputRecievedReport;
 import model.reports.PlayerLeaveReport;
 import model.reports.PlayerMovedReport;
 import model.reports.SendChatMessageReport;
+import model.reports.TeleportOnQuestCompletionReport;
 import data.AdventureCompletionType;
 import data.AdventureRecord;
 import data.AdventureStateEnum;
 import data.CriteriaString;
+import data.GameLocation;
 import data.Position;
+import data.QuestCompletionActionType;
 import datasource.AdventureTableDataGateway;
 import datasource.AdventureTableDataGatewayMock;
 import datasource.AdventureTableDataGatewayRDS;
@@ -402,6 +405,18 @@ public class QuestManager implements QualifiedObserver
 		if (qs != null)
 		{
 			qs.finish();
+
+			Quest q = getQuest(questID);
+			if(q.getCompletionActionType() == QuestCompletionActionType.TELEPORT)
+			{
+			    GameLocation gl = (GameLocation) q.getCompletionActionParameter();
+			    MapToServerMapping mapping = new MapToServerMapping(gl.getMapName());
+       
+			    TeleportOnQuestCompletionReport report = new TeleportOnQuestCompletionReport(playerID, questID,
+			            gl, mapping.getHostName(), mapping.getPortNumber());
+       
+			    QualifiedObservableConnector.getSingleton().sendReport(report);
+		    }
 		}
 	}
 
