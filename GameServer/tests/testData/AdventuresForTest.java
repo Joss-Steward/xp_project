@@ -86,7 +86,7 @@ public enum AdventuresForTest
 	/****************************************************/
 	
 	/**
-	 * See quests and adventures
+	 * 
 	 */
 	ONRAMPING_PRESS_Q(1, "Press the Q key to see your active quests and adventures", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.KEYSTROKE, new CriteriaString("q")),
 	/**
@@ -109,8 +109,21 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	ONRAMPING_CHAT_WITH_SORTING_HAT(6, "Use the chat window to say something to the Red Hat", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.CHAT, new CriteriaString("Red Hat"));
+	ONRAMPING_CHAT_WITH_SORTING_HAT(6, "Use the chat window to say something to the Red Hat", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.CHAT, new CriteriaString("Red Hat")),
 
+	/**
+	 * 
+	 */
+	EXPLORING_FIND_QUIZNASIUM(1, "Find the Quiznasium",QuestsForTest.EXPLORATION_QUEST.getQuestID(), 2, AdventureCompletionType.MOVEMENT, new GameLocation("quiznasium.tmx", new Position(4,23))),
+	/**
+	 * 
+	 */
+	EXPLORING_FIND_STUDY_HALL(2, "Find the Study Hall",QuestsForTest.EXPLORATION_QUEST.getQuestID(), 2, AdventureCompletionType.MOVEMENT, new GameLocation("homework.tmx", new Position(48,24))),
+	/**
+	 * 
+	 */
+	EXPLORING_FIND_SECRET_ROOM(3, "Find the Secret Room!",QuestsForTest.EXPLORATION_QUEST.getQuestID(), 2, AdventureCompletionType.MOVEMENT, new GameLocation("Quiznasium.tmx", new Position(13,22)));
+	
 	
 	
 	private int adventureID;

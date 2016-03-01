@@ -56,7 +56,12 @@ public enum QuestsForTest
 			+ "Double clicking on a quest in the quest screen will show you its adventures.", 
 			PlayerTableDataGateway.INITIAL_GAME_LOCATION, 6, 5,
 							QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
-									new Position(10, 10)));
+									new Position(10, 10))),
+	/**
+	 * Real quest to make them explore
+	 */
+	EXPLORATION_QUEST(101, "Explore your new school", new GameLocation("current.tmx",
+			new Position(10, 10)),2, 5, QuestCompletionActionType.NO_ACTION, null);
 	
 	
 	private int questID;
