@@ -106,7 +106,7 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	ONRAMPING_CHAT_WITH_SORTING_HAT(6, "Use the chat window to say something to the Red Hat", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.CHAT, new CriteriaString("RED HAT"));
+	ONRAMPING_CHAT_WITH_SORTING_HAT(6, "Use the chat window to say something to the Red Hat", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.CHAT, new CriteriaString("Red Hat"));
 
 	
 	
