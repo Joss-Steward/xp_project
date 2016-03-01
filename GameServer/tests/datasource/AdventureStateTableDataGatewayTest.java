@@ -87,11 +87,12 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 		gateway = getGateway();
 		ArrayList<AdventureStateRecord> records = gateway
 				.getPendingAdventuresForPlayer(1);
-		assertEquals(3, records.size());
+		assertEquals(4, records.size());
 		// the records could be in either order
 		AdventureStatesForTest first = AdventureStatesForTest.PLAYER1_QUEST2_ADV3;
 		AdventureStatesForTest other = AdventureStatesForTest.PLAYER1_QUEST3_ADV1;
 		AdventureStatesForTest third = AdventureStatesForTest.PLAYER1_QUEST3_ADV3;
+		AdventureStatesForTest fourth = AdventureStatesForTest.PLAYER1_QUEST1_ADV1;
 		for (AdventureStateRecord record : records)
 		{
 			if ((record.getAdventureID() == first.getAdventureID() && (record
@@ -118,7 +119,15 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 				assertEquals(third.getQuestID(), record.getQuestID());
 				assertEquals(third.isNeedingNotification(),
 						record.isNeedingNotification());
-			} else
+			} else if ((record.getAdventureID() == fourth.getAdventureID() && (record
+					.getQuestID() == fourth.getQuestID())))
+			{
+				assertEquals(fourth.getAdventureID(), record.getAdventureID());
+				assertEquals(fourth.getState(), record.getState());
+				assertEquals(fourth.getQuestID(), record.getQuestID());
+				assertEquals(fourth.isNeedingNotification(),
+						record.isNeedingNotification());
+			}else
 			{
 				fail("Unexpected adventure state");
 			}

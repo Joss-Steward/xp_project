@@ -129,16 +129,12 @@ public class AdventureStateTest extends DatabaseTest
 
 		PlayerManager.getSingleton().addPlayer(2);
 		ArrayList<AdventureState> al = new ArrayList<AdventureState>();
-		AdventureState adventure = new AdventureState(
-				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.getAdventureID(),
-				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.getState(),
-				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.isNeedingNotification());
+		AdventureState adventure = new AdventureState(1,AdventureStateEnum.TRIGGERED,true);
 		al.add(adventure);
 		QuestState qState = new QuestState(
 				2,
-				QuestStatesForTest.PLAYER2_QUEST1.getQuestID(),
-				QuestStatesForTest.PLAYER2_QUEST1.getState(), QuestStatesForTest.PLAYER2_QUEST1.isNeedingNotification());
-		assertFalse(qState.isNeedingNotification());
+				1,
+				QuestStateEnum.TRIGGERED, false);
 		qState.addAdventures(al);
 
 		adventure.complete();

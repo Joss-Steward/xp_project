@@ -144,8 +144,8 @@ public class UpdatePlayerInformationReportTest {
 		
 		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(john);
 		assertEquals(PlayersForTest.JOHN.getExperiencePoints(), report.getExperiencePts());
-		assertEquals(LevelsForTest.ONE.getDescription(), report.getLevel().getDescription());
-		assertEquals(LevelsForTest.ONE.getLevelUpPoints(), report.getLevel().getLevelUpPoints());
+		assertEquals(LevelsForTest.TWO.getDescription(), report.getLevel().getDescription());
+		assertEquals(LevelsForTest.TWO.getLevelUpPoints(), report.getLevel().getLevelUpPoints());
 		
 	}
 }

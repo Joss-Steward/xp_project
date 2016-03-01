@@ -279,7 +279,7 @@ public class QuestManagerTest extends DatabaseTest
 	public void testQuestDoesNotExits() throws DatabaseException
 	{
 		QuestManager qm = QuestManager.getSingleton();
-		Quest quest1 = qm.getQuest(6);
+		Quest quest1 = qm.getQuest(1000);
 	}
 
 	/**

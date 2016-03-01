@@ -242,13 +242,12 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 				{
 					results.add(rec);
 				}
-				return results;
 			}
+			return results;
 		} catch (SQLException e)
 		{
 			throw new DatabaseException("Couldn't find adventures for location at " + mapName + " " + pos.toString(), e);
 		}
-		return null;
 	}
 
 }

@@ -135,12 +135,14 @@ public class PlayerTest extends DatabaseTest
 	@Test
 	public void testAddExpPointsCreatesReport() throws DatabaseException
 	{
-		Player p = playerManager.addPlayer(1);
+		Player p = playerManager.addPlayer(PlayersForTest.JOHN.getPlayerID());
 		
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				ExperienceChangedReport.class);
-		obs.receiveReport(new ExperienceChangedReport(p.getPlayerID(), 30, LevelManager.getSingleton().getLevelForPoints(30)));
+		int updatedPoints = p.getExperiencePoints()+15;
+		ExperienceChangedReport expectedReport = new ExperienceChangedReport(p.getPlayerID(), updatedPoints, LevelManager.getSingleton().getLevelForPoints(updatedPoints));
+		obs.receiveReport(expectedReport);
 		EasyMock.replay(obs);
 
 		p.addExperiencePoints(15);
