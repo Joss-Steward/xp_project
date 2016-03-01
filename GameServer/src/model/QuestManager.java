@@ -10,6 +10,7 @@ import model.reports.SendChatMessageReport;
 import data.AdventureCompletionType;
 import data.AdventureRecord;
 import data.AdventureStateEnum;
+import data.ChatType;
 import data.CriteriaString;
 import data.Position;
 import datasource.AdventureTableDataGateway;
@@ -193,6 +194,10 @@ public class QuestManager implements QualifiedObserver
 		{
 			handlePlayerInput(report);
 		}
+		else if (report.getClass() == SendChatMessageReport.class)
+		{
+			handlePlayerChatCriteriaCompletion(report);
+		}
 	}
 
 	/**
@@ -213,6 +218,85 @@ public class QuestManager implements QualifiedObserver
 			}
 		}
 	}
+	
+	/**
+	 * Will listen for SendChatMessageReports and check to see if they
+	 * help complete any of the current adventure that a player is doing
+	 * Adventure must be off AdventureCompletion type chat and the players
+	 * must be within a certain distance of each other
+	 * 
+	 */
+	private void handlePlayerChatCriteriaCompletion(QualifiedObservableReport report)
+	{
+		QuestManager qm = QuestManager.getSingleton();
+		SendChatMessageReport myReport = (SendChatMessageReport) report;
+		PlayerManager PM = PlayerManager.getSingleton();
+		if(myReport.getType() != ChatType.Local)
+		{
+			return;
+		}
+		
+		try{
+			int reportPlayerID = PM.getPlayerIDFromPlayerName(myReport.getSenderName());
+			ArrayList<QuestState> questStateList = 	qm.getQuestList(reportPlayerID);
+
+			for (QuestState q : questStateList)
+			{
+				checkAllAdventuresForCompletion(reportPlayerID, q);
+			}			
+		}catch(PlayerNotFoundException e){
+			e.printStackTrace();
+		}
+		
+	}
+	/**
+	 * checks if adventure meets chat criteria and completes it if it does
+	 * @param reportPlayerID player who sent chat message
+	 * @param q quest to get adventure for
+	 * @throws PlayerNotFoundException
+	 */
+	private void checkAllAdventuresForCompletion(int reportPlayerID, QuestState q) throws PlayerNotFoundException
+	{
+		PlayerManager PM = PlayerManager.getSingleton();
+		for(AdventureRecord a : getPendingChatAdventures(q.getID(), reportPlayerID))
+		{
+			Player npc = PM.getPlayerFromID(PM.getPlayerIDFromPlayerName(a.getCompletionCriteria().toString()));
+			if(PM.getPlayerFromID(reportPlayerID).canReceiveLocalMessage(npc.getPlayerPosition()))
+			{
+				try {
+					QuestManager.getSingleton().completeAdventure(reportPlayerID, q.getID(), a.getAdventureID());
+					
+				} catch (DatabaseException | IllegalAdventureChangeException | IllegalQuestChangeException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * returns all AdventureRecords which the type is chat
+	 * @param questID the quest to get adventures for
+	 * @param reportPlayerID the player who sent a chat message
+	 * @return all adventures that have completionType chat
+	 */
+	public ArrayList<AdventureRecord> getPendingChatAdventures(int questID, int reportPlayerID){
+		ArrayList<AdventureRecord> questAdventures = new ArrayList<AdventureRecord>();
+		try {
+			for(AdventureRecord AR : QuestManager.getSingleton().getQuest(questID).getAdventures()){
+				AdventureStateEnum currentAdventuresState = QuestManager.getSingleton().getAdventureStateByID(reportPlayerID, questID, AR.getAdventureID()).getState();
+				if(AdventureStateEnum.TRIGGERED == currentAdventuresState){
+					if(AR.getCompletionType()==AdventureCompletionType.CHAT){
+						questAdventures.add(AR);
+					}
+				}
+			}
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
+		
+		return questAdventures;		
+	}
+	
 	
 	/**
 	 * Validates if an input string matches the criteria string.
