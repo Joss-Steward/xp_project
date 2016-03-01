@@ -157,8 +157,15 @@ public enum AdventureStatesForTest
 	NEWBIE_ONRAMPING_MOVE_LEFT(PlayersForTest.NEWBIE.getPlayerID(),
 			AdventuresForTest.ONRAMPING_MOVE_LEFT.getQuestID(),
 			AdventuresForTest.ONRAMPING_MOVE_LEFT.getAdventureID(),
+			AdventureStateEnum.TRIGGERED, false),
+	
+	/**
+	 * 
+	 */
+	CHAT_WITH_RED_HAT(PlayersForTest.NEWBIE.getPlayerID(),
+			AdventuresForTest.ONRAMPING_CHAT_WITH_SORTING_HAT.getQuestID(),
+			AdventuresForTest.ONRAMPING_CHAT_WITH_SORTING_HAT.getAdventureID(),
 			AdventureStateEnum.TRIGGERED, false);
-
 	private int adventureID;
 	private int questID;
 	private int playerID;
