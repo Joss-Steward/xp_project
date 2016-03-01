@@ -27,7 +27,11 @@ public enum ServersForTest
 	/**
 	 * 
 	 */
-	HOMEWORK("homework.tmx", "localhost", 1874);
+	HOMEWORK("homework.tmx", "localhost", 1874),
+	/**
+	 * 
+	 */
+	SORTINGROOM("sortingRoom.tmx", "localhost", 1875);
 	private String mapName;
 
 	private String hostName;

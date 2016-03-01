@@ -76,7 +76,10 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
+	QUEST6_ADVENTURE_1(1, "Quest 1: Adventure 1: MOVE!!!!", 6, 1, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(PlayersForTest.HERSH.getPosition().getRow()+1,PlayersForTest.HERSH.getPosition().getColumn()))),
 
+	
+	
 	
 	/****************************************************/
 	/* Onramping Adventures                             */
