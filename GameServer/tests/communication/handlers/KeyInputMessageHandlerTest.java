@@ -5,6 +5,8 @@ import model.ModelFacade;
 
 import org.junit.Test;
 
+import testData.PlayersForTest;
+import communication.StateAccumulator;
 import communication.messages.KeyInputMessage;
 
 /**
@@ -21,10 +23,12 @@ public class KeyInputMessageHandlerTest
 	@Test
 	public void testProcessKeyInputMessage() {
 		ModelFacade.resetSingleton();
-		
+		StateAccumulator accum = new StateAccumulator(null);
+		accum.setPlayerId(PlayersForTest.MERLIN.getPlayerID());
 		String input = "q";
 		KeyInputMessage message = new KeyInputMessage(input);
 		KeyInputMessageHandler handler = new KeyInputMessageHandler();
+		handler.setAccumulator(accum);
 		handler.process(message);
 		assertEquals(1, ModelFacade.getSingleton().queueSize());
 
