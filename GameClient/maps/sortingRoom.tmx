@@ -38,17 +38,17 @@
  </layer>
  <layer name="foreground" width="15" height="15">
   <data encoding="base64" compression="zlib">
-   eJy1kLsOAUEYRicSs9noXJ4AoUfo8QwK1Ao8AZ7MItG6JVq3ROuWaDWOyGbXZGc32cSXnGL++U7zWVEhJjCFGeQMIfLQlEK0oC2dm6V0l7CCNWygTKcCXZwe9KVzU7t7OMARTmBngDOEkXRuancMN7jDw+V+0jB/31elu1D67nRM/d8Wb+fj+uWMdwnpPvFeGjfBrklIGd7/EfndyitpnAxkNe7cZ6sCThFKGtdvqypODeoa919bBeWzVUwG97wSD+nZeQNFEDJ0
+   eJzVkbkKAjEYBn+E3S3sPJ5ARXtXtFef2lXB1gu29QJbL7C1cZqAfAbFdH4wTZgpkmSR2RgmMIVmYtaC17mzTNwFLGEFa+ji9KR1Z+puYQd7OET2ceqe4QJXuH1pf3H/ZWXes+Khmry7I7lzDafuoSHtjG4ubRsn9dCRNqfbSNvHGXgYSnukOwX+053uEdgWYrNiHNaWAju3J4Z5KqY=
   </data>
  </layer>
  <layer name="foreground Front" width="15" height="15">
   <data encoding="base64" compression="zlib">
-   eJxjYBgcoIUNwd7Fjl0cF5iCpOYUO3bxUYAKTgHDRoKdsDps4Bc0XBVHw5cqAADObAXx
+   eJxjYMANXNjwSOIBwUB9IUAcCsRhRJrRAlWXDKRTgDgViNPYEOLIYDcrKn8KVE0xkC4B4lIgLmNDiMPAIaC+02h6iQWXgPpuk6n3EVDfazL1fgLq+02mXiag/7mxhJ8EOwPDLjRxSXZUvhCR8cYG1MfOTljdKMANAL1cELg=
   </data>
  </layer>
- <layer name="Collision" width="15" height="15" visible="0">
+ <layer name="Collision" width="15" height="15">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYBpiGB8gJD8KIIDY8KS23lGACQA3awBp
+   eJxjYmBgYBpieBSQDygJ19E4oQ0AAEijAHc=
   </data>
  </layer>
 </map>
