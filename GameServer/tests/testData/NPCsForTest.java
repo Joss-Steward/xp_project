@@ -29,7 +29,7 @@ public enum NPCsForTest
 	/**
 	 * 
 	 */
-	REDHAT(PlayersForTest.RED_HAT.getPlayerID(),"model.RedHatBehaior");
+	REDHAT(PlayersForTest.RED_HAT.getPlayerID(),"model.RedHatBehavior");
 
 	private String behaviorClass;
 	private int playerID;
