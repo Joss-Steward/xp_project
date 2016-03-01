@@ -2,6 +2,7 @@ package communication.handlers;
 
 import static org.junit.Assert.*;
 import model.ModelFacade;
+import model.QualifiedObservableConnector;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +27,7 @@ public class ChatMessageHandlerTest
 	public void reset()
 	{
 		ModelFacade.resetSingleton();
+		QualifiedObservableConnector.resetSingleton();
 	}
 	
 	/**
