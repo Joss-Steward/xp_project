@@ -374,20 +374,15 @@ public class QuestManager implements QualifiedObserver
 
 			for (Integer q : questIDs)
 			{
-				QuestState questState = qm.getQuestStateByID(myReport.getPlayerID(), q);
-				if ((questState != null) && (questState.getStateValue() == QuestStateEnum.AVAILABLE))
-				{
-					this.triggerQuest(myReport.getPlayerID(), q);
-				}
+				this.triggerQuest(myReport.getPlayerID(), q);
 			}
-
-			ArrayList<AdventureRecord> adventures = getAdventuresByPosition(
-					myReport.getNewPosition(), myReport.getMapName());
+			
+			ArrayList<AdventureRecord> adventures = getAdventuresByPosition(myReport.getNewPosition(), myReport.getMapName());
 			for (AdventureRecord a : adventures)
 			{
-				this.completeAdventure(myReport.getPlayerID(), a.getQuestID(),
-						a.getAdventureID());
+				this.completeAdventure(myReport.getPlayerID(), a.getQuestID(), a.getAdventureID());
 			}
+			
 		} catch (DatabaseException | IllegalAdventureChangeException
 				| IllegalQuestChangeException e)
 		{
