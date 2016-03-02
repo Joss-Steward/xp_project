@@ -83,12 +83,12 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	NEWBIE(16, "Newbie", "male_b", 4, 14, "pw", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
+	NEWBIE(16, "Newbie", "male_b", 11, 7, "pw", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
 	
 	/**
  	 * 
 	 */
-	RED_HAT(17, "Red Hat", "male_a", 4,12, "", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
+	RED_HAT(17, "Red Hat", "RedHat", 9,7, "", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
 	
 	/**
 	 * 

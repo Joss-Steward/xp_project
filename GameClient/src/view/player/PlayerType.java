@@ -55,6 +55,10 @@ public enum PlayerType
 	 */
 	matt_kujo("matt_kujo"),
 	/**
+	 * The sorting red hat
+	 */
+	RedHat("RedHat"),
+	/**
 	 * Ga
 	 */
 	ga("ga");

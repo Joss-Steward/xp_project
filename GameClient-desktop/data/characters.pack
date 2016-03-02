@@ -1,104 +1,110 @@
 
-characters.pack.png
-size: 1024,512
+characters.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-Magi
-  rotate: false
-  xy: 2, 198
-  size: 130, 194
-  orig: 130, 194
-  offset: 0, 0
-  index: -1
-MattKujo
-  rotate: false
-  xy: 2, 2
-  size: 130, 194
-  orig: 130, 194
-  offset: 0, 0
-  index: -1
-Ninja
-  rotate: false
-  xy: 134, 198
-  size: 130, 194
-  orig: 130, 194
-  offset: 0, 0
-  index: -1
 andy
   rotate: false
-  xy: 134, 2
+  xy: 1, 785
   size: 130, 194
   orig: 130, 194
   offset: 0, 0
   index: -1
 dave
   rotate: false
-  xy: 266, 198
+  xy: 1, 589
   size: 130, 194
   orig: 130, 194
   offset: 0, 0
   index: -1
-female_a
-  rotate: false
-  xy: 662, 4
-  size: 128, 192
-  orig: 128, 192
-  offset: 0, 0
-  index: -1
-female_b
-  rotate: false
-  xy: 794, 200
-  size: 128, 192
-  orig: 128, 192
-  offset: 0, 0
-  index: -1
-female_c
-  rotate: false
-  xy: 792, 4
-  size: 128, 192
-  orig: 128, 192
-  offset: 0, 0
-  index: -1
 ga
   rotate: false
-  xy: 266, 2
+  xy: 133, 785
   size: 130, 194
   orig: 130, 194
   offset: 0, 0
   index: -1
 knight_with_straw_hat
   rotate: false
-  xy: 398, 198
+  xy: 1, 393
+  size: 130, 194
+  orig: 130, 194
+  offset: 0, 0
+  index: -1
+Magi
+  rotate: false
+  xy: 133, 589
   size: 130, 194
   orig: 130, 194
   offset: 0, 0
   index: -1
 male_a
   rotate: false
-  xy: 398, 2
+  xy: 265, 785
   size: 130, 194
   orig: 130, 194
   offset: 0, 0
   index: -1
 male_b
   rotate: false
-  xy: 530, 198
+  xy: 1, 197
+  size: 130, 194
+  orig: 130, 194
+  offset: 0, 0
+  index: -1
+MattKujo
+  rotate: false
+  xy: 133, 393
   size: 130, 194
   orig: 130, 194
   offset: 0, 0
   index: -1
 merlin
   rotate: false
-  xy: 530, 2
+  xy: 265, 589
+  size: 130, 194
+  orig: 130, 194
+  offset: 0, 0
+  index: -1
+Ninja
+  rotate: false
+  xy: 1, 1
   size: 130, 194
   orig: 130, 194
   offset: 0, 0
   index: -1
 partyguy
   rotate: false
-  xy: 662, 198
+  xy: 133, 197
   size: 130, 194
   orig: 130, 194
+  offset: 0, 0
+  index: -1
+RedHat
+  rotate: false
+  xy: 265, 393
+  size: 130, 194
+  orig: 130, 194
+  offset: 0, 0
+  index: -1
+female_a
+  rotate: false
+  xy: 133, 3
+  size: 128, 192
+  orig: 128, 192
+  offset: 0, 0
+  index: -1
+female_b
+  rotate: false
+  xy: 265, 199
+  size: 128, 192
+  orig: 128, 192
+  offset: 0, 0
+  index: -1
+female_c
+  rotate: false
+  xy: 263, 3
+  size: 128, 192
+  orig: 128, 192
   offset: 0, 0
   index: -1
