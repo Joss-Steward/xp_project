@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 import model.QualifiedObservableConnector;
 import model.reports.QuestStateChangeReport;
+import model.reports.TeleportOnQuestCompletionReport;
 import data.AdventureStateEnum;
+import data.GameLocation;
+import data.QuestCompletionActionType;
 import data.QuestStateEnum;
 import datasource.DatabaseException;
 
@@ -101,7 +104,7 @@ public class QuestState
 			if ((questState == QuestStateEnum.FULFILLED)
 					&& (adventuresComplete >= adventureList.size()))
 			{
-				changeState(QuestStateEnum.FINISHED, true);
+				finish();
 			}
 		}
 	}
@@ -116,7 +119,20 @@ public class QuestState
 	 */
 	public void finish() throws IllegalQuestChangeException, DatabaseException
 	{
-		changeState(QuestStateEnum.FINISHED, false);
+		changeState(QuestStateEnum.FINISHED, true);
+		Quest q = QuestManager
+				.getSingleton().getQuest(questID);
+		if (q.getCompletionActionType() == QuestCompletionActionType.TELEPORT)
+		{
+			GameLocation gl = (GameLocation) q.getCompletionActionParameter();
+			MapToServerMapping mapping = new MapToServerMapping(gl.getMapName());
+
+			TeleportOnQuestCompletionReport report = new TeleportOnQuestCompletionReport(
+					playerID, questID, gl, mapping.getHostName(),
+					mapping.getPortNumber());
+
+			QualifiedObservableConnector.getSingleton().sendReport(report);
+		}
 	}
 
 	/**

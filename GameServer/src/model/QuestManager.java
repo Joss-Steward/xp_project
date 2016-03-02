@@ -603,6 +603,5 @@ public class QuestManager implements QualifiedObserver
 			IllegalQuestChangeException
 	{
 		getAdventureStateByID(playerID, questID, adventureID).turnOffNotification();
-		PlayerManager.getSingleton().persistPlayer(playerID);
 	}
 }

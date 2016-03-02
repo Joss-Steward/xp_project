@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import model.OptionsManager;
 import data.AdventureStateEnum;
 import data.AdventureStateRecord;
 import datasource.ClosingPreparedStatement;
@@ -145,34 +146,38 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 	}
 
 	/**
-	 * @see datasource.AdventureStateTableDataGateway#updateState(int,
-	 *      int, int, data.AdventureStateEnum, boolean)
+	 * @see datasource.AdventureStateTableDataGateway#updateState(int, int, int,
+	 *      data.AdventureStateEnum, boolean)
 	 */
 	@Override
 	public void updateState(int playerID, int questID, int adventureID,
-			AdventureStateEnum newState, boolean needingNotification) throws DatabaseException
+			AdventureStateEnum newState, boolean needingNotification)
+			throws DatabaseException
 	{
-		Connection connection = DatabaseManager.getSingleton().getConnection();
-		try
+		if (!OptionsManager.getSingleton().isUsingTestDB())
 		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
-					connection,
-					"UPDATE AdventureStates SET adventureState = ?, needingNotification = ? WHERE  playerID = ? and questID = ? and adventureID = ?");
-			stmt.setInt(1, newState.getID());
-			stmt.setBoolean(2, needingNotification);
-			stmt.setInt(3, playerID);
-			stmt.setInt(4, questID);
-			stmt.setInt(5, adventureID);
-			int count = stmt.executeUpdate();
-			if (count == 0)
+			Connection connection = DatabaseManager.getSingleton().getConnection();
+			try
 			{
-				this.createRow(playerID, questID, adventureID, newState, true);
+				ClosingPreparedStatement stmt = new ClosingPreparedStatement(
+						connection,
+						"UPDATE AdventureStates SET adventureState = ?, needingNotification = ? WHERE  playerID = ? and questID = ? and adventureID = ?");
+				stmt.setInt(1, newState.getID());
+				stmt.setBoolean(2, needingNotification);
+				stmt.setInt(3, playerID);
+				stmt.setInt(4, questID);
+				stmt.setInt(5, adventureID);
+				int count = stmt.executeUpdate();
+				if (count == 0)
+				{
+					this.createRow(playerID, questID, adventureID, newState, true);
+				}
+			} catch (SQLException e)
+			{
+				throw new DatabaseException(
+						"Couldn't update an adventure state record for player with ID "
+								+ playerID + " and quest with ID " + questID, e);
 			}
-		} catch (SQLException e)
-		{
-			throw new DatabaseException(
-					"Couldn't update an adventure state record for player with ID "
-							+ playerID + " and quest with ID " + questID, e);
 		}
 	}
 
