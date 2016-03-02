@@ -46,7 +46,7 @@ public enum QuestsForTest
 	/**
 	 * 
 	 */
-    TELEPORT_QUEST(6, "Teleporting Quest", new GameLocation("current.tmx", new Position(2, 32)), 1, 1,QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
+    TELEPORT_QUEST(6, "Teleporting Quest", new GameLocation("current.tmx", new Position(2, 32)), 1, 1,QuestCompletionActionType.TELEPORT, new GameLocation("sortingRoom.tmx",
             new Position(3, 3))),
 
 	/**
