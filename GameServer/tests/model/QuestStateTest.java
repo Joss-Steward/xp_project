@@ -185,7 +185,7 @@ public class QuestStateTest extends DatabaseTest
 		adList.add(as);
 
 		qs.addAdventures(adList);
-		qs.checkForFulfillment();
+		qs.checkForFulfillmentOrFinished();
 		assertEquals(
 				origExperiencePoints
 						+ QuestsForTest.ONE_SAME_LOCATION_QUEST.getExperienceGained(),
@@ -225,7 +225,7 @@ public class QuestStateTest extends DatabaseTest
 		adList.add(as);
 
 		qs.addAdventures(adList);
-		qs.checkForFulfillment();
+		qs.checkForFulfillmentOrFinished();
 		assertEquals(QuestStateEnum.FULFILLED, qs.getStateValue());
 		assertFalse(qs.isNeedingNotification());
 		EasyMock.verify(obs);

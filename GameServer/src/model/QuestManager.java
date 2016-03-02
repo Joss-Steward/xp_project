@@ -16,6 +16,7 @@ import data.CriteriaString;
 import data.GameLocation;
 import data.Position;
 import data.QuestCompletionActionType;
+import data.QuestStateEnum;
 import datasource.AdventureTableDataGateway;
 import datasource.AdventureTableDataGatewayMock;
 import datasource.AdventureTableDataGatewayRDS;
@@ -58,7 +59,7 @@ public class QuestManager implements QualifiedObserver
 				PlayerLeaveReport.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(this,
 				KeyInputRecievedReport.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(this, 
+		QualifiedObservableConnector.getSingleton().registerObserver(this,
 				SendChatMessageReport.class);
 		questStates = new HashMap<Integer, ArrayList<QuestState>>();
 		if (OptionsManager.getSingleton().isTestMode())
@@ -140,19 +141,24 @@ public class QuestManager implements QualifiedObserver
 			return QuestRowDataGatewayRDS.findQuestsForMapLocation(mapName, pos);
 		}
 	}
-	
+
 	/**
-	 * Returns a list of AdventureRecord objects based on completion at specified map and position
-	 * @param pos - the position of the adventure
-	 * @param mapName - the map that the adventure is on
+	 * Returns a list of AdventureRecord objects based on completion at
+	 * specified map and position
+	 * 
+	 * @param pos
+	 *            - the position of the adventure
+	 * @param mapName
+	 *            - the map that the adventure is on
 	 * @return an array list of AdventureRecords at this position
-	 * @throws DatabaseException shouldn't
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
-	public ArrayList<AdventureRecord> getAdventuresByPosition(Position pos, String mapName) throws DatabaseException
+	public ArrayList<AdventureRecord> getAdventuresByPosition(Position pos, String mapName)
+			throws DatabaseException
 	{
 		return adventureGateway.findAdventuresCompletedForMapLocation(mapName, pos);
 	}
-	
 
 	/**
 	 * Trigger a quest for a given player
@@ -192,19 +198,19 @@ public class QuestManager implements QualifiedObserver
 		{
 			PlayerLeaveReport myReport = (PlayerLeaveReport) report;
 			removeQuestStatesForPlayer(myReport.getPlayerID());
-		}
-		else if (report.getClass() == KeyInputRecievedReport.class)
+		} else if (report.getClass() == KeyInputRecievedReport.class)
 		{
 			handlePlayerInput(report);
-		}
-		else if (report.getClass() == SendChatMessageReport.class)
+		} else if (report.getClass() == SendChatMessageReport.class)
 		{
 			handlePlayerChatCriteriaCompletion(report);
 		}
 	}
 
 	/**
-	 * Iterates through all quests and adventures and validates if it's the correct criteria for keyboard input.
+	 * Iterates through all quests and adventures and validates if it's the
+	 * correct criteria for keyboard input.
+	 * 
 	 * @param report
 	 */
 	private void handlePlayerInput(QualifiedObservableReport report)
@@ -216,17 +222,18 @@ public class QuestManager implements QualifiedObserver
 		{
 			for (AdventureState as : qs.getAdventureList())
 			{
-				
-				validateInputCriteriaForAdventures(myReport.getInput(), myReport.getPlayerId(), qs.getID(), as.getID());
+
+				validateInputCriteriaForAdventures(myReport.getInput(),
+						myReport.getPlayerId(), qs.getID(), as.getID());
 			}
 		}
 	}
-	
+
 	/**
-	 * Will listen for SendChatMessageReports and check to see if they
-	 * help complete any of the current adventure that a player is doing
-	 * Adventure must be off AdventureCompletion type chat and the players
-	 * must be within a certain distance of each other
+	 * Will listen for SendChatMessageReports and check to see if they help
+	 * complete any of the current adventure that a player is doing Adventure
+	 * must be off AdventureCompletion type chat and the players must be within
+	 * a certain distance of each other
 	 * 
 	 */
 	private void handlePlayerChatCriteriaCompletion(QualifiedObservableReport report)
@@ -234,88 +241,117 @@ public class QuestManager implements QualifiedObserver
 		QuestManager qm = QuestManager.getSingleton();
 		SendChatMessageReport myReport = (SendChatMessageReport) report;
 		PlayerManager PM = PlayerManager.getSingleton();
-		if(myReport.getType() != ChatType.Local)
+		if (myReport.getType() != ChatType.Local)
 		{
 			return;
 		}
-		
-		try{
+
+		try
+		{
 			int reportPlayerID = PM.getPlayerIDFromPlayerName(myReport.getSenderName());
-			ArrayList<QuestState> questStateList = 	qm.getQuestList(reportPlayerID);
+			ArrayList<QuestState> questStateList = qm.getQuestList(reportPlayerID);
 
 			for (QuestState q : questStateList)
 			{
 				checkAllAdventuresForCompletion(reportPlayerID, q);
-			}			
-		}catch(PlayerNotFoundException e){
+			}
+		} catch (PlayerNotFoundException e)
+		{
 			e.printStackTrace();
 		}
-		
+
 	}
+
 	/**
 	 * checks if adventure meets chat criteria and completes it if it does
-	 * @param reportPlayerID player who sent chat message
-	 * @param q quest to get adventure for
+	 * 
+	 * @param reportPlayerID
+	 *            player who sent chat message
+	 * @param q
+	 *            quest to get adventure for
 	 * @throws PlayerNotFoundException
 	 */
-	private void checkAllAdventuresForCompletion(int reportPlayerID, QuestState q) throws PlayerNotFoundException
+	private void checkAllAdventuresForCompletion(int reportPlayerID, QuestState q)
+			throws PlayerNotFoundException
 	{
 		PlayerManager PM = PlayerManager.getSingleton();
-		for(AdventureRecord a : getPendingChatAdventures(q.getID(), reportPlayerID))
+		for (AdventureRecord a : getPendingChatAdventures(q.getID(), reportPlayerID))
 		{
-			Player npc = PM.getPlayerFromID(PM.getPlayerIDFromPlayerName(a.getCompletionCriteria().toString()));
-			if(PM.getPlayerFromID(reportPlayerID).canReceiveLocalMessage(npc.getPlayerPosition()))
+			Player npc = PM.getPlayerFromID(PM.getPlayerIDFromPlayerName(a
+					.getCompletionCriteria().toString()));
+			if (PM.getPlayerFromID(reportPlayerID).canReceiveLocalMessage(
+					npc.getPlayerPosition()))
 			{
-				try {
-					QuestManager.getSingleton().completeAdventure(reportPlayerID, q.getID(), a.getAdventureID());
-					
-				} catch (DatabaseException | IllegalAdventureChangeException | IllegalQuestChangeException e) {
+				try
+				{
+					QuestManager.getSingleton().completeAdventure(reportPlayerID,
+							q.getID(), a.getAdventureID());
+
+				} catch (DatabaseException | IllegalAdventureChangeException
+						| IllegalQuestChangeException e)
+				{
 					e.printStackTrace();
 				}
 			}
 		}
 	}
-	
+
 	/**
 	 * returns all AdventureRecords which the type is chat
-	 * @param questID the quest to get adventures for
-	 * @param reportPlayerID the player who sent a chat message
+	 * 
+	 * @param questID
+	 *            the quest to get adventures for
+	 * @param reportPlayerID
+	 *            the player who sent a chat message
 	 * @return all adventures that have completionType chat
 	 */
-	public ArrayList<AdventureRecord> getPendingChatAdventures(int questID, int reportPlayerID){
+	public ArrayList<AdventureRecord> getPendingChatAdventures(int questID,
+			int reportPlayerID)
+	{
 		ArrayList<AdventureRecord> questAdventures = new ArrayList<AdventureRecord>();
-		try {
-			for(AdventureRecord AR : QuestManager.getSingleton().getQuest(questID).getAdventures()){
-				AdventureStateEnum currentAdventuresState = QuestManager.getSingleton().getAdventureStateByID(reportPlayerID, questID, AR.getAdventureID()).getState();
-				if(AdventureStateEnum.TRIGGERED == currentAdventuresState){
-					if(AR.getCompletionType()==AdventureCompletionType.CHAT){
+		try
+		{
+			for (AdventureRecord AR : QuestManager.getSingleton().getQuest(questID)
+					.getAdventures())
+			{
+				AdventureStateEnum currentAdventuresState = QuestManager
+						.getSingleton()
+						.getAdventureStateByID(reportPlayerID, questID,
+								AR.getAdventureID()).getState();
+				if (AdventureStateEnum.TRIGGERED == currentAdventuresState)
+				{
+					if (AR.getCompletionType() == AdventureCompletionType.CHAT)
+					{
 						questAdventures.add(AR);
 					}
 				}
 			}
-		} catch (DatabaseException e) {
+		} catch (DatabaseException e)
+		{
 			e.printStackTrace();
 		}
-		
-		return questAdventures;		
+
+		return questAdventures;
 	}
-	
-	
+
 	/**
 	 * Validates if an input string matches the criteria string.
+	 * 
 	 * @param input
 	 * @param playerId
 	 * @param questId
 	 * @param adventureId
 	 */
-	private void validateInputCriteriaForAdventures(String input, int playerId, int questId, int adventureId)
+	private void validateInputCriteriaForAdventures(String input, int playerId,
+			int questId, int adventureId)
 	{
 		QuestManager qm = QuestManager.getSingleton();
 		try
 		{
 			AdventureRecord ar = getAdventure(questId, adventureId);
-			if (ar.getCompletionType() == AdventureCompletionType.KEYSTROKE && 
-					qm.getAdventureStateByID(playerId, questId, adventureId).getState() == AdventureStateEnum.TRIGGERED)
+			if (ar.getCompletionType() == AdventureCompletionType.KEYSTROKE
+					&& qm.getAdventureStateByID(playerId, questId, adventureId)
+							.getState() == AdventureStateEnum.TRIGGERED)
 			{
 				CriteriaString cs = (CriteriaString) ar.getCompletionCriteria();
 				if (cs.toString().equalsIgnoreCase(input))
@@ -323,13 +359,12 @@ public class QuestManager implements QualifiedObserver
 					qm.completeAdventure(playerId, questId, adventureId);
 				}
 			}
-		} 
-		catch (Exception e)
+		} catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void handlePlayerMovement(QualifiedObservableReport report)
 	{
 		PlayerMovedReport myReport = (PlayerMovedReport) report;
@@ -342,7 +377,19 @@ public class QuestManager implements QualifiedObserver
 
 			for (Integer q : questIDs)
 			{
-				this.triggerQuest(myReport.getPlayerID(), q);
+				QuestState questState = qm.getQuestStateByID(myReport.getPlayerID(), q);
+				if ((questState != null) && (questState.getStateValue() == QuestStateEnum.AVAILABLE))
+				{
+					this.triggerQuest(myReport.getPlayerID(), q);
+				}
+			}
+
+			ArrayList<AdventureRecord> adventures = getAdventuresByPosition(
+					myReport.getNewPosition(), myReport.getMapName());
+			for (AdventureRecord a : adventures)
+			{
+				this.completeAdventure(myReport.getPlayerID(), a.getQuestID(),
+						a.getAdventureID());
 			}
 		} catch (DatabaseException | IllegalAdventureChangeException
 				| IllegalQuestChangeException e)
@@ -491,16 +538,17 @@ public class QuestManager implements QualifiedObserver
 			qs.finish();
 
 			Quest q = getQuest(questID);
-			if(q.getCompletionActionType() == QuestCompletionActionType.TELEPORT)
+			if (q.getCompletionActionType() == QuestCompletionActionType.TELEPORT)
 			{
-			    GameLocation gl = (GameLocation) q.getCompletionActionParameter();
-			    MapToServerMapping mapping = new MapToServerMapping(gl.getMapName());
-       
-			    TeleportOnQuestCompletionReport report = new TeleportOnQuestCompletionReport(playerID, questID,
-			            gl, mapping.getHostName(), mapping.getPortNumber());
-       
-			    QualifiedObservableConnector.getSingleton().sendReport(report);
-		    }
+				GameLocation gl = (GameLocation) q.getCompletionActionParameter();
+				MapToServerMapping mapping = new MapToServerMapping(gl.getMapName());
+
+				TeleportOnQuestCompletionReport report = new TeleportOnQuestCompletionReport(
+						playerID, questID, gl, mapping.getHostName(),
+						mapping.getPortNumber());
+
+				QualifiedObservableConnector.getSingleton().sendReport(report);
+			}
 		}
 	}
 
@@ -525,7 +573,12 @@ public class QuestManager implements QualifiedObserver
 			throws DatabaseException, IllegalAdventureChangeException,
 			IllegalQuestChangeException
 	{
-		getAdventureStateByID(playerID, questID, adventureID).complete();
+		AdventureState adventureStateByID = getAdventureStateByID(playerID, questID,
+				adventureID);
+		if (adventureStateByID != null)
+		{
+			adventureStateByID.complete();
+		}
 
 	}
 

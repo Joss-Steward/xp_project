@@ -10,11 +10,19 @@ import static org.junit.Assert.assertSame;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import model.reports.PlayerLeaveReport;
+import model.reports.SendChatMessageReport;
+import model.reports.TeleportOnQuestCompletionReport;
+
 import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.AdventuresForTest;
+import testData.PlayersForTest;
+import testData.QuestStatesForTest;
+import testData.QuestsForTest;
 import data.AdventureRecord;
 import data.AdventureStateEnum;
 import data.ChatType;
@@ -24,13 +32,6 @@ import data.QuestStateEnum;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.QuestStateTableDataGatewayMock;
-import model.reports.PlayerLeaveReport;
-import model.reports.SendChatMessageReport;
-import model.reports.TeleportOnQuestCompletionReport;
-import testData.AdventuresForTest;
-import testData.PlayersForTest;
-import testData.QuestStatesForTest;
-import testData.QuestsForTest;
 
 /**
  * Test for the quest manager getting quests and adventures from database
@@ -348,59 +349,72 @@ public class QuestManagerTest extends DatabaseTest
 		assertFalse(questStateByID.isNeedingNotification());
 
 	}
-	
-	
+
 	/**
-	 * Completes an adventure that has the completion criteria of talking to a NPC.
+	 * Completes an adventure that has the completion criteria of talking to a
+	 * NPC.
+	 * 
 	 * @throws DatabaseException
-	 * 			shouldn't
+	 *             shouldn't
 	 * @throws IllegalAdventureChangeException
-	 * 			Adventure state changed when it shouldn't have
+	 *             Adventure state changed when it shouldn't have
 	 * @throws IllegalQuestChangeException
-	 * 			Quest state changed when it shouldn't have
+	 *             Quest state changed when it shouldn't have
 	 */
 	@Test
-	public void testCompleteAdventureByChatting() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException 
+	public void testCompleteAdventureByChatting() throws DatabaseException,
+			IllegalAdventureChangeException, IllegalQuestChangeException
 	{
-		int playerToTest = PlayersForTest.MARTY.getPlayerID();		
+		int playerToTest = PlayersForTest.MARTY.getPlayerID();
 		Player playerOne = playerManager.addPlayer(playerToTest);
 
 		Player toTalkTo = playerManager.addPlayer(PlayersForTest.QUIZBOT.getPlayerID());
-		Position playerOnePosition  = new Position(toTalkTo.getPlayerPosition().getRow()+1, toTalkTo.getPlayerPosition().getColumn() + 1);
+		Position playerOnePosition = new Position(
+				toTalkTo.getPlayerPosition().getRow() + 1, toTalkTo.getPlayerPosition()
+						.getColumn() + 1);
 		playerOne.setPlayerPosition(playerOnePosition);
-	
-		SendChatMessageReport csmr = new SendChatMessageReport("Hello", playerOne.getPlayerName(), playerOne.getPlayerPosition(), ChatType.Local );
-		
+
+		SendChatMessageReport csmr = new SendChatMessageReport("Hello",
+				playerOne.getPlayerName(), playerOne.getPlayerPosition(), ChatType.Local);
+
 		QualifiedObservableConnector.getSingleton().sendReport(csmr);
-		
-		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton().getQuestStateByID(playerToTest, 5).getAdventureList().get(0).getState());
+
+		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton()
+				.getQuestStateByID(playerToTest, 5).getAdventureList().get(0).getState());
 	}
-	
-	
+
 	/**
-	 * Adventure isn't completed because the person is outside the range of who they are supposed to talk to
+	 * Adventure isn't completed because the person is outside the range of who
+	 * they are supposed to talk to
+	 * 
 	 * @throws DatabaseException
-	 * 			shouldn't
+	 *             shouldn't
 	 * @throws IllegalAdventureChangeException
-	 * 			Adventure state changed when it shouldn't have
+	 *             Adventure state changed when it shouldn't have
 	 * @throws IllegalQuestChangeException
-	 * 			Quest state changed when it shouldn't have
+	 *             Quest state changed when it shouldn't have
 	 */
 	@Test
-	public void testNotCompleteAdventureByChattingOutsideOfRange() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException 
+	public void testNotCompleteAdventureByChattingOutsideOfRange()
+			throws DatabaseException, IllegalAdventureChangeException,
+			IllegalQuestChangeException
 	{
-		int playerToTest = PlayersForTest.MARTY.getPlayerID();		
+		int playerToTest = PlayersForTest.MARTY.getPlayerID();
 		Player playerOne = playerManager.addPlayer(playerToTest);
 
 		Player toTalkTo = playerManager.addPlayer(PlayersForTest.QUIZBOT.getPlayerID());
-		Position playerOnePosition  = new Position(toTalkTo.getPlayerPosition().getRow()+6, toTalkTo.getPlayerPosition().getColumn() + 6);
+		Position playerOnePosition = new Position(
+				toTalkTo.getPlayerPosition().getRow() + 6, toTalkTo.getPlayerPosition()
+						.getColumn() + 6);
 		playerOne.setPlayerPosition(playerOnePosition);
-	
-		SendChatMessageReport csmr = new SendChatMessageReport("Hello", playerOne.getPlayerName(), playerOne.getPlayerPosition(), ChatType.Local );
-		
+
+		SendChatMessageReport csmr = new SendChatMessageReport("Hello",
+				playerOne.getPlayerName(), playerOne.getPlayerPosition(), ChatType.Local);
+
 		QualifiedObservableConnector.getSingleton().sendReport(csmr);
-		
-		assertEquals(AdventureStateEnum.TRIGGERED, QuestManager.getSingleton().getQuestStateByID(playerToTest, 5).getAdventureList().get(0).getState());
+
+		assertEquals(AdventureStateEnum.TRIGGERED, QuestManager.getSingleton()
+				.getQuestStateByID(playerToTest, 5).getAdventureList().get(0).getState());
 	}
 
 	/**
@@ -531,7 +545,9 @@ public class QuestManagerTest extends DatabaseTest
 		QuestManager.getSingleton().addQuestState(4, questState);
 		assertEquals(4, questState.getPlayerID());
 	}
+
 	QuestManager qm = QuestManager.getSingleton();
+
 	/**
 	 * We should be able to clear out all of the quest states for a given player
 	 */
@@ -580,7 +596,7 @@ public class QuestManagerTest extends DatabaseTest
 				.getExperiencePointsGained();
 
 		QuestState x = QuestManager.getSingleton().getQuestStateByID(playerID, questID);
-		x.checkForFulfillment();
+		x.checkForFulfillmentOrFinished();
 		assertEquals(QuestStateEnum.FULFILLED, x.getStateValue());
 		assertEquals(initialExp + expGain, p.getExperiencePoints());
 	}
@@ -608,16 +624,20 @@ public class QuestManagerTest extends DatabaseTest
 		int initialExp = p.getExperiencePoints();
 
 		AdventureState as = new AdventureState(2, AdventureStateEnum.TRIGGERED, false);
-
 		ArrayList<AdventureState> adventures = new ArrayList<AdventureState>();
 		adventures.add(as);
+		
 		QuestState qs = new QuestState(playerID, questID, QuestStateEnum.FULFILLED, false);
 		qs.addAdventures(adventures);
 		QuestManager.getSingleton().addQuestState(playerID, qs);
-		int expGain = QuestManager.getSingleton().getQuest(questID).getAdventures()
-				.get(1).getExperiencePointsGained();
 		as.complete();
-		assertEquals(initialExp + expGain, p.getExperiencePoints());
+		
+		int adventureExperienceGained = QuestManager.getSingleton().getQuest(questID)
+				.getAdventureXP(1);
+		
+		assertEquals(QuestStateEnum.FINISHED,qs.getStateValue());
+		assertEquals(initialExp + adventureExperienceGained,
+				p.getExperiencePoints());
 	}
 
 	/**
@@ -629,18 +649,22 @@ public class QuestManagerTest extends DatabaseTest
 		int playerID = PlayersForTest.NEWBIE.getPlayerID();
 		int questID = 100;
 		int adventureID = 1;
-		
-		Player p = playerManager.addPlayer(playerID);
-		QuestState qs = QuestManager.getSingleton().getQuestStateByID(p.getPlayerID(), questID);
-		qs.setPlayerID(playerID);
-		
-		assertEquals(AdventureStateEnum.TRIGGERED, QuestManager.getSingleton().getAdventureStateByID(playerID, questID, adventureID).getState());
-		CommandKeyInputMessageReceived command = new CommandKeyInputMessageReceived("q", playerID);
-		command.execute();		
 
-		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton().getAdventureStateByID(playerID, questID, adventureID).getState());
+		Player p = playerManager.addPlayer(playerID);
+		QuestState qs = QuestManager.getSingleton().getQuestStateByID(p.getPlayerID(),
+				questID);
+		qs.setPlayerID(playerID);
+
+		assertEquals(AdventureStateEnum.TRIGGERED, QuestManager.getSingleton()
+				.getAdventureStateByID(playerID, questID, adventureID).getState());
+		CommandKeyInputMessageReceived command = new CommandKeyInputMessageReceived("q",
+				playerID);
+		command.execute();
+
+		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton()
+				.getAdventureStateByID(playerID, questID, adventureID).getState());
 	}
-	
+
 	/**
 	 * Tests that we finishing a quest changes its state to finished
 	 * 
@@ -657,24 +681,25 @@ public class QuestManagerTest extends DatabaseTest
 		Player p = playerManager.addPlayer(playerID);
 		QuestState qs = QuestManager.getSingleton().getQuestStateByID(playerID, questID);
 		qs.setPlayerID(playerID);
-		
-		GameLocation gl = (GameLocation) QuestsForTest.THE_LITTLE_QUEST.getCompletionActionParameter();
+
+		GameLocation gl = (GameLocation) QuestsForTest.THE_LITTLE_QUEST
+				.getCompletionActionParameter();
 		MapToServerMapping mapping = new MapToServerMapping(gl.getMapName());
-		
-		TeleportOnQuestCompletionReport report = new TeleportOnQuestCompletionReport(playerID, questID,
-                gl, mapping.getHostName(), mapping.getPortNumber());
+
+		TeleportOnQuestCompletionReport report = new TeleportOnQuestCompletionReport(
+				playerID, questID, gl, mapping.getHostName(), mapping.getPortNumber());
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		
+
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
-                TeleportOnQuestCompletionReport.class);
+				TeleportOnQuestCompletionReport.class);
 
 		obs.receiveReport(EasyMock.eq(report));
-        EasyMock.replay(obs);
-		
+		EasyMock.replay(obs);
+
 		QuestManager.getSingleton().finishQuest(p.getPlayerID(), qs.getID());
 
 		assertEquals(QuestStateEnum.FINISHED, qs.getStateValue());
-		
+
 		EasyMock.verify(obs);
 	}
 
@@ -698,20 +723,13 @@ public class QuestManagerTest extends DatabaseTest
 		Player p = playerManager.addPlayer(playerID);
 		QuestState qs = QuestManager.getSingleton().getQuestStateByID(p.getPlayerID(),
 				questID);
-
 		AdventureState as = QuestManager.getSingleton().getAdventureStateByID(
 				p.getPlayerID(), questID, adventureID);
-
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
-
 		adventureList.add(as);
-
 		qs.addAdventures(adventureList);
-
 		qs.setPlayerID(playerID);
-
 		QuestManager.getSingleton().completeAdventure(playerID, questID, adventureID);
-
 		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton()
 				.getAdventureStateByID(playerID, questID, adventureID).getState());
 	}
@@ -740,6 +758,48 @@ public class QuestManagerTest extends DatabaseTest
 		paul.setPlayerPosition(pos);
 		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton()
 				.getAdventureStateByID(paul.getPlayerID(), questID, advID).getState());
+	}
+
+	/**
+	 * This tests simulates taking a quest from triggered to fulfilled to
+	 * finished
+	 */
+	@Test
+	public void simulateCompletingAQuest()
+	{
+		Player hersh = playerManager.addPlayer(PlayersForTest.HERSH.getPlayerID());
+		
+		// completing the first adventure will fulfill the quest
+		GameLocation completionCriteria = (GameLocation) AdventuresForTest.QUEST6_ADVENTURE_1
+				.getCompletionCriteria();
+		hersh.setPlayerPosition(completionCriteria.getPosition());
+		AdventureState adventureState = QuestManager.getSingleton()
+				.getAdventureStateByID(hersh.getPlayerID(),
+						AdventuresForTest.QUEST6_ADVENTURE_1.getQuestID(),
+						AdventuresForTest.QUEST6_ADVENTURE_1.getAdventureID());
+		assertEquals(AdventureStateEnum.COMPLETED, adventureState.getState());
+		QuestState questState = QuestManager.getSingleton().getQuestStateByID(
+				hersh.getPlayerID(), AdventuresForTest.QUEST6_ADVENTURE_1.getQuestID());
+		assertEquals(QuestStateEnum.FULFILLED, questState.getStateValue());
+		assertEquals(QuestsForTest.TELEPORT_QUEST.getExperienceGained()
+				+ AdventuresForTest.QUEST6_ADVENTURE_1.getExperiencePointsGained(),
+				hersh.getExperiencePoints());
+		
+		//completing the second adventure will finish the quest
+		completionCriteria = (GameLocation) AdventuresForTest.QUEST6_ADVENTURE_2
+				.getCompletionCriteria();
+		hersh.setPlayerPosition(completionCriteria.getPosition());
+		adventureState = QuestManager.getSingleton().getAdventureStateByID(
+				hersh.getPlayerID(), AdventuresForTest.QUEST6_ADVENTURE_1.getQuestID(),
+				AdventuresForTest.QUEST6_ADVENTURE_1.getAdventureID());
+		assertEquals(AdventureStateEnum.COMPLETED, adventureState.getState());
+		questState = QuestManager.getSingleton().getQuestStateByID(hersh.getPlayerID(),
+				AdventuresForTest.QUEST6_ADVENTURE_1.getQuestID());
+		assertEquals(QuestStateEnum.FINISHED, questState.getStateValue());
+		assertEquals(QuestsForTest.TELEPORT_QUEST.getExperienceGained()
+				+ AdventuresForTest.QUEST6_ADVENTURE_1.getExperiencePointsGained()
+				+ AdventuresForTest.QUEST6_ADVENTURE_2.getExperiencePointsGained(),
+				hersh.getExperiencePoints());
 	}
 
 }

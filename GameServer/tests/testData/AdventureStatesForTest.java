@@ -112,7 +112,11 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER19_QUEST1_ADV1(19, 6, 1, AdventureStateEnum.TRIGGERED, true),
+	HERSH_TELEPORTATION_ADV1(PlayersForTest.HERSH.getPlayerID(), QuestsForTest.TELEPORT_QUEST.getQuestID(), 1, AdventureStateEnum.TRIGGERED, true),
+	/**
+	 * 
+	 */
+	HERSH_TELEPORTATION_ADV2(PlayersForTest.HERSH.getPlayerID(), QuestsForTest.TELEPORT_QUEST.getQuestID(), 2, AdventureStateEnum.TRIGGERED, true),
 
 	
 	/**

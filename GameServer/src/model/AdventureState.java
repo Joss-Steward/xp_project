@@ -129,7 +129,6 @@ public class AdventureState
 	public void complete() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException
 	{
 		changeState(AdventureStateEnum.COMPLETED, true);
-		System.out.println("Completed!");
 		PlayerManager.getSingleton()
 				.getPlayerFromID(this.parentQuestState.getPlayerID())
 				.addExperiencePoints(
@@ -137,7 +136,7 @@ public class AdventureState
 								.getAdventure(this.parentQuestState.getID(),
 										adventureID)
 								.getExperiencePointsGained());
-		this.parentQuestState.checkForFulfillment();
+		this.parentQuestState.checkForFulfillmentOrFinished();
 	}
 
 	/**
