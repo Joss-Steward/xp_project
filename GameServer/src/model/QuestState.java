@@ -126,7 +126,10 @@ public class QuestState
 		{
 			GameLocation gl = (GameLocation) q.getCompletionActionParameter();
 			MapToServerMapping mapping = new MapToServerMapping(gl.getMapName());
-
+			Player playerFromID = PlayerManager.getSingleton().getPlayerFromID(playerID);
+			playerFromID.setPlayerPositionWithoutNotifying(gl.getPosition());
+			playerFromID.setMapName(gl.getMapName());
+			playerFromID.persist();
 			TeleportOnQuestCompletionReport report = new TeleportOnQuestCompletionReport(
 					playerID, questID, gl, mapping.getHostName(),
 					mapping.getPortNumber());

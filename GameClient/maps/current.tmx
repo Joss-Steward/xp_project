@@ -18,7 +18,7 @@
  <imagelayer name="foreground" width="60" height="30">
   <image source="tileset/hubforeground.png"/>
  </imagelayer>
- <objectgroup name="Regions" width="60" height="30">
+ <objectgroup name="Regions" width="60" height="30" visible="0">
   <object name="homework" x="672" y="320" width="448" height="224"/>
   <object name="quisnasium" x="1376" y="448" width="320" height="320">
    <ellipse/>

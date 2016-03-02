@@ -57,7 +57,7 @@ public class Server implements Runnable
 			if (!runningLocal)
 			{
 				hostName = InetAddress.getLocalHost().getHostName();
-				om.setUsingTestDB(false);
+				
 			} else
 			{
 				hostName = "localhost";

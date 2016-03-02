@@ -67,10 +67,10 @@ public class PlayerMapper
 			this.playerConnectionGateway = new PlayerConnectionRowDataGatewayRDS(playerID);
 		}
 		this.player = createPlayerObject();
+		player.setPlayerLogin(new PlayerLogin(playerID));
 		player.setAppearanceType(playerGateway.getAppearanceType());
 		player.setPlayerPositionWithoutNotifying(playerGateway.getPosition());
 		player.setQuizScore(playerGateway.getQuizScore());
-		player.setPlayerLogin(new PlayerLogin(playerID));
 		player.setPlayerID(playerID);
 		player.setCrew(playerGateway.getCrew());
 
@@ -78,6 +78,7 @@ public class PlayerMapper
 		player.setDataMapper(this);
 		player.setMapName(playerConnectionGateway.getMapName());
 		loadQuestStates();
+		player.sendReportGivingPosition();
 	}
 
 	private void loadQuestStates() throws DatabaseException

@@ -170,7 +170,7 @@ public class ThisClientsPlayer extends ClientPlayer
 			{
 				q.setState(newState);
 
-				QuestStateChangeReport r = new QuestStateChangeReport(questID,
+				QuestStateChangeReport r = new QuestStateChangeReport(this.getID(), q.getQuestID(),
 						questDescription, newState);
 				QualifiedObservableConnector.getSingleton().sendReport(r);
 			}
@@ -200,7 +200,7 @@ public class ThisClientsPlayer extends ClientPlayer
 					{
 						a.setAdventureState(adventureState);
 						AdventureStateChangeReport r = new AdventureStateChangeReport(
-								adventureID, adventureDescription, adventureState);
+								this.getID(), questID, adventureID, adventureDescription, adventureState);
 						QualifiedObservableConnector.getSingleton().sendReport(r);
 					}
 				}

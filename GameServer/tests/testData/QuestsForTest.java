@@ -54,14 +54,14 @@ public enum QuestsForTest
 	 */
 	ONRAMPING_QUEST(100, "Welcome!  For your first quest, you need to learn a little bit about this world.  Press Q to see what you need to do.  "
 			+ "Double clicking on a quest in the quest screen will show you its adventures.", 
-			PlayerTableDataGateway.INITIAL_GAME_LOCATION, 6, 5,
+			PlayerTableDataGateway.INITIAL_GAME_LOCATION, 6, 6,
 							QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
-									new Position(10, 10))),
+									new Position(4, 13))),
 	/**
 	 * Real quest to make them explore
 	 */
 	EXPLORATION_QUEST(101, "Explore your new school", new GameLocation("current.tmx",
-			new Position(10, 10)),2, 5, QuestCompletionActionType.NO_ACTION, null);
+			new Position(4, 13)),2, 5, QuestCompletionActionType.NO_ACTION, null);
 	
 	
 	private int questID;

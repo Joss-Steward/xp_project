@@ -38,8 +38,7 @@ public class PopUpDisplay implements QualifiedObserver
 	 */
 	public void setUpListening()
 	{
-		QualifiedObservableConnector cm = QualifiedObservableConnector
-				.getSingleton();
+		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
 		cm.registerObserver(this, AdventureNeedingNotificationReport.class);
 		cm.registerObserver(this, QuestNeedingNotificationReport.class);
 		cm.registerObserver(this, QuestStateChangeReport.class);
@@ -56,38 +55,45 @@ public class PopUpDisplay implements QualifiedObserver
 		if (report.getClass().equals(AdventureNeedingNotificationReport.class))
 		{
 			AdventureNeedingNotificationReport r = (AdventureNeedingNotificationReport) report;
-			
-			AdventureCompleteBehavior behavior = new AdventureCompleteBehavior(r.getPlayerID(), r.getQuestID(), r.getAdventureID());
+
+			AdventureNotificationCompleteBehavior behavior = new AdventureNotificationCompleteBehavior(
+					r.getPlayerID(), r.getQuestID(), r.getAdventureID());
 			AdventureStateEnum state = r.getState();
 			new ScreenPopUp("Adventure " + state.getDescription(),
 					r.getAdventureDescription(), this.stage, behavior);
 		} else if (report.getClass().equals(QuestNeedingNotificationReport.class))
 		{
 			QuestNeedingNotificationReport r = (QuestNeedingNotificationReport) report;
-			
-			QuestCompleteBehavior behavior = new QuestCompleteBehavior(r.getPlayerID(), r.getQuestID());
+
+			QuestNotificationCompleteBehavior behavior = new QuestNotificationCompleteBehavior(
+					r.getPlayerID(), r.getQuestID());
 			QuestStateEnum state = r.getState();
-			new ScreenPopUp("Quest " + state.getDescription(),
-					r.getQuestDescription(), this.stage, behavior);
+			new ScreenPopUp("Quest " + state.getDescription(), r.getQuestDescription(),
+					this.stage, behavior);
 		} else if (report.getClass().equals(QuestStateChangeReport.class))
 		{
 			QuestStateChangeReport r = (QuestStateChangeReport) report;
 			if (r.getNewState() == QuestStateEnum.FULFILLED)
 			{
 				new ScreenPopUp("Quest Fulfilled",
-						r.getQuestDescription() + " fulfilled", this.stage, new SilentBehavior());
+						r.getQuestDescription() + " fulfilled", this.stage,
+						new QuestNotificationCompleteBehavior(r.getPlayerID(),
+								r.getQuestID()));
 			} else if (r.getNewState() == QuestStateEnum.FINISHED)
 			{
 				new ScreenPopUp("Quest Completed",
-						r.getQuestDescription() + " completed", this.stage, new SilentBehavior());
+						r.getQuestDescription() + " completed", this.stage,
+						new QuestNotificationCompleteBehavior(r.getPlayerID(),
+								r.getQuestID()));
 			}
 		} else if (report.getClass().equals(AdventureStateChangeReport.class))
 		{
 			AdventureStateChangeReport r = (AdventureStateChangeReport) report;
-			if(r.getNewState() == AdventureStateEnum.COMPLETED)
+			if (r.getNewState() == AdventureStateEnum.COMPLETED)
 			{
-				new ScreenPopUp("Adventure Completed",
-						r.getAdventureDescription() + " completed", this.stage, new SilentBehavior());
+				new ScreenPopUp("Adventure Completed", r.getAdventureDescription()
+						+ " completed", this.stage, new AdventureNotificationCompleteBehavior(
+								r.getPlayerID(), r.getQuestID(), r.getAdventureID()));
 			}
 		}
 	}

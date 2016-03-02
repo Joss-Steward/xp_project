@@ -43,6 +43,14 @@ public class DatabaseManager
 		{
 			System.err.println("Opening production database\n");
 			openConnectionTo("jdbc:mysql://production.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players");
+			try
+			{
+				connection.setAutoCommit(true);
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		testing = false;
 	}

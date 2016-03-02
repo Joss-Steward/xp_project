@@ -1,30 +1,27 @@
 package view.screen.popup;
 
-import model.CommandAdventureNotificationComplete;
 import model.ClientModelFacade;
+import model.CommandQuestNotificationComplete;
 
 /**
  * Handles behavior for adventure being completed
  * @author Ryan
  *
  */
-public class AdventureCompleteBehavior implements PopupBehavior 
+public class QuestNotificationCompleteBehavior implements PopupBehavior 
 {
 
 	private int playerID;
 	private int questID;
-	private int adventureID;
 	
 	/**
 	 * @param playerID the id of the player
 	 * @param questID the id of the quest
-	 * @param adventureID the id of the adventure
 	 */
-	public AdventureCompleteBehavior(int playerID, int questID, int adventureID)
+	public QuestNotificationCompleteBehavior(int playerID, int questID)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
-		this.adventureID = adventureID;
 	}
 	/**
 	 * @see view.screen.popup.PopupBehavior#clicked()
@@ -34,7 +31,7 @@ public class AdventureCompleteBehavior implements PopupBehavior
 	@Override
 	public void clicked() 
 	{
-		CommandAdventureNotificationComplete cmd = new CommandAdventureNotificationComplete(playerID, questID, adventureID);
+		CommandQuestNotificationComplete cmd = new CommandQuestNotificationComplete(playerID, questID);
 		ClientModelFacade.getSingleton().queueCommand(cmd);
 	}
 	/**
@@ -51,13 +48,5 @@ public class AdventureCompleteBehavior implements PopupBehavior
 	public int getQuestID() 
 	{
 		return questID;
-	}
-	
-	/**
-	 * @return the adventure ID
-	 */
-	public int getAdventureID()
-	{
-		return adventureID;
 	}
 }

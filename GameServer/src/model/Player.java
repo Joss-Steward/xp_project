@@ -28,27 +28,29 @@ public class Player
 	private Position playerPosition;
 
 	private String mapName;
-	
+
 	private int experiencePoints;
 
 	private Crew crew;
-	
+
 	final private int LOCAL_CHAT_RADIUS = 5;
-	
 
 	/**
-	 * Add experience points
-	 * and generates ExperienceChangedReport
-	 * @param expPoints Player's experience points
-	 * @throws DatabaseException shouldn't
+	 * Add experience points and generates ExperienceChangedReport
+	 * 
+	 * @param expPoints
+	 *            Player's experience points
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	public void addExperiencePoints(int expPoints) throws DatabaseException
 	{
 		this.experiencePoints = experiencePoints + expPoints;
-		ExperienceChangedReport report = new ExperienceChangedReport(this.playerID, this.experiencePoints, LevelManager.getSingleton().getLevelForPoints(this.experiencePoints));
+		ExperienceChangedReport report = new ExperienceChangedReport(this.playerID,
+				this.experiencePoints, LevelManager.getSingleton().getLevelForPoints(
+						this.experiencePoints));
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
-
 
 	/**
 	 * Get the appearance type for how this player should be drawn
@@ -70,6 +72,7 @@ public class Player
 
 	/**
 	 * Get the player's experience points
+	 * 
 	 * @return experience points
 	 */
 	public int getExperiencePoints()
@@ -113,6 +116,7 @@ public class Player
 	{
 		return playerPosition;
 	}
+
 	/**
 	 * Get the quizScore
 	 * 
@@ -155,8 +159,10 @@ public class Player
 	/**
 	 * store the information into the data source
 	 * 
-	 * @throws DatabaseException if the data source fails to complete the persistance
-	 * @throws IllegalQuestChangeException shouldn't
+	 * @throws DatabaseException
+	 *             if the data source fails to complete the persistance
+	 * @throws IllegalQuestChangeException
+	 *             shouldn't
 	 */
 	public void persist() throws DatabaseException, IllegalQuestChangeException
 	{
@@ -175,7 +181,8 @@ public class Player
 	}
 
 	/**
-	 * @param crew the crew to which this player should belong
+	 * @param crew
+	 *            the crew to which this player should belong
 	 */
 	public void setCrew(Crew crew)
 	{
@@ -183,7 +190,8 @@ public class Player
 	}
 
 	/**
-	 * @param playerMapper the mapper that will be used to persist this player
+	 * @param playerMapper
+	 *            the mapper that will be used to persist this player
 	 */
 	public void setDataMapper(PlayerMapper playerMapper)
 	{
@@ -191,10 +199,12 @@ public class Player
 	}
 
 	/**
-	 * Set experience points
-	 * and generates ExperienceChangedReport
-	 * @param expPoints Player's experience points
-	 * @throws DatabaseException shouldn't
+	 * Set experience points and generates ExperienceChangedReport
+	 * 
+	 * @param expPoints
+	 *            Player's experience points
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	public void setExperiencePoints(int expPoints) throws DatabaseException
 	{
@@ -202,7 +212,8 @@ public class Player
 	}
 
 	/**
-	 * @param mapName the name of the map this player should be on
+	 * @param mapName
+	 *            the name of the map this player should be on
 	 */
 	public void setMapName(String mapName)
 	{
@@ -210,7 +221,8 @@ public class Player
 	}
 
 	/**
-	 * @param playerID this player's unique ID
+	 * @param playerID
+	 *            this player's unique ID
 	 */
 	public void setPlayerID(int playerID)
 	{
@@ -238,12 +250,11 @@ public class Player
 	public void setPlayerPosition(Position playerPosition)
 	{
 		setPlayerPositionWithoutNotifying(playerPosition);
-		PlayerMovedReport report = new PlayerMovedReport(playerID,
-				this.getPlayerName(), playerPosition, this.mapName);
-		
-		QualifiedObservableConnector.getSingleton().sendReport(report);
+
+		sendReportGivingPosition();
+
 	}
-	
+
 	/**
 	 * Move a player without notifying the other players (used when moving from
 	 * one map to another
@@ -266,19 +277,30 @@ public class Player
 	{
 		this.quizScore = score;
 	}
-	
-	
+
 	/**
 	 * When receiving a local message check if the player is close enough to
 	 * hear
 	 * 
-	 * @param position position of the sender
+	 * @param position
+	 *            position of the sender
 	 */
-	protected boolean canReceiveLocalMessage(Position position) 
+	protected boolean canReceiveLocalMessage(Position position)
 	{
 		Position myPosition = getPlayerPosition();
-		
+
 		return Math.abs(myPosition.getColumn() - position.getColumn()) <= LOCAL_CHAT_RADIUS
 				&& Math.abs(myPosition.getRow() - position.getRow()) <= LOCAL_CHAT_RADIUS;
+	}
+
+	/**
+	 * Report our position to anyone who is interested
+	 */
+	public void sendReportGivingPosition()
+	{
+		PlayerMovedReport report = new PlayerMovedReport(playerID, this.getPlayerName(),
+				playerPosition, this.mapName);
+
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 }
