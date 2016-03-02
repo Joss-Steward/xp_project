@@ -4,28 +4,34 @@ import model.reports.KeyInputSentReport;
 
 /**
  * Command for user key input
+ * 
  * @author Ian Keefer & TJ Renninger
  */
-public class CommandKeyInputSent extends Command {
-	
+public class CommandKeyInputSent extends Command
+{
+
 	private String input;
-	
+
 	/**
-	 * @param input user key input
+	 * @param input
+	 *            user key input
 	 */
-	public CommandKeyInputSent(String input) {
+	public CommandKeyInputSent(String input)
+	{
 		this.input = input;
 	}
-	
+
 	/**
 	 * @return user key input
 	 */
-	public String getInput() {
+	public String getInput()
+	{
 		return input;
 	}
 
 	@Override
-	protected boolean execute() {
+	protected boolean execute()
+	{
 		KeyInputSentReport report = new KeyInputSentReport(input);
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 		return true;

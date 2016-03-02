@@ -1,6 +1,7 @@
 package view.screen.map;
 
 import static view.screen.Screens.DEFAULT_RES;
+
 import model.ClientModelFacade;
 import model.CommandKeyInputSent;
 import view.player.PlayerSprite;
@@ -417,8 +418,8 @@ public class ScreenMap extends ScreenBasic
 			@Override
 			public boolean keyDown(InputEvent event, int keycode)
 			{
-				System.out.println("" + event.getCharacter());
-				CommandKeyInputSent cmd = new CommandKeyInputSent("" + event.getCharacter());
+				char ch = getCharForKey(event, keycode);
+				CommandKeyInputSent cmd = new CommandKeyInputSent("" + ch);
 				ClientModelFacade.getSingleton().queueCommand(cmd);
 				if (keycode == Keys.ENTER)
 				{
@@ -468,6 +469,22 @@ public class ScreenMap extends ScreenBasic
 					return true;
 				}
 				return false;
+			}
+
+			private char getCharForKey(InputEvent event, int keyCode)
+			{
+				switch( keyCode ) { 
+		        case Keys.UP:
+		           return '\u2191';
+		        case Keys.DOWN:
+		        	 return '\u2193';
+		        case Keys.LEFT:
+		        	 return '\u2190';
+		        case Keys.RIGHT :
+		        	 return '\u2192';
+		        default:
+		        	return event.getCharacter();
+		     }
 			}
 		});
 		
