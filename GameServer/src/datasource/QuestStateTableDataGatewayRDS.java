@@ -5,12 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.OptionsManager;
 import data.QuestStateEnum;
 import data.QuestStateRecord;
-import datasource.ClosingPreparedStatement;
-import datasource.DatabaseException;
-import datasource.DatabaseManager;
 
 /**
  * The RDS implementation of the gateway
@@ -178,30 +174,29 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 	public void udpateState(int playerID, int questID, QuestStateEnum newState,
 			boolean needingNotification) throws DatabaseException
 	{
-		if (!OptionsManager.getSingleton().isUsingTestDB())
+
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
 		{
-			Connection connection = DatabaseManager.getSingleton().getConnection();
-			try
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
+					connection,
+					"UPDATE QuestStates SET questState = ?, needingNotification = ? WHERE  playerID = ? and questID = ?");
+			stmt.setInt(1, newState.getID());
+			stmt.setBoolean(2, needingNotification);
+			stmt.setInt(3, playerID);
+			stmt.setInt(4, questID);
+			int count = stmt.executeUpdate();
+			if (count == 0)
 			{
-				ClosingPreparedStatement stmt = new ClosingPreparedStatement(
-						connection,
-						"UPDATE QuestStates SET questState = ?, needingNotification = ? WHERE  playerID = ? and questID = ?");
-				stmt.setInt(1, newState.getID());
-				stmt.setBoolean(2, needingNotification);
-				stmt.setInt(3, playerID);
-				stmt.setInt(4, questID);
-				int count = stmt.executeUpdate();
-				if (count == 0)
-				{
-					this.createRow(playerID, questID, newState, needingNotification);
-				}
-			} catch (SQLException e)
-			{
-				throw new DatabaseException(
-						"Couldn't update a quest state record for player with ID "
-								+ playerID + " and quest with ID " + questID, e);
+				this.createRow(playerID, questID, newState, needingNotification);
 			}
+		} catch (SQLException e)
+		{
+			throw new DatabaseException(
+					"Couldn't update a quest state record for player with ID " + playerID
+							+ " and quest with ID " + questID, e);
 		}
+
 	}
 
 }

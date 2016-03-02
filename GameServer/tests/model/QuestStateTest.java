@@ -102,12 +102,11 @@ public class QuestStateTest extends DatabaseTest
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test(expected=IllegalQuestChangeException.class)
-	public void testTriggerFinishedQuest() throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
+	public void testTriggerFinishedQuest() throws IllegalQuestChangeException, DatabaseException, IllegalAdventureChangeException
 	{
 		QuestState quest = new QuestState(2, 1, QuestStateEnum.FINISHED, false);
 		quest.trigger();
-		assertEquals(QuestStateEnum.FINISHED, quest.getStateValue());
-		assertFalse(quest.isNeedingNotification());
+	
 	}
 
 	/**

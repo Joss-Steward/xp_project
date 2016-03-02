@@ -1,8 +1,11 @@
 package model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+
 import model.NPC;
-import model.NPCMockBehavior;
 
 import org.junit.Test;
 
@@ -31,7 +34,7 @@ public class NPCTest
 		
 		npc.stop();
 		
-		assertEquals(3, mb.getCount());
+		assertTrue( mb.getCount()>0);
 	}
 	
 	/**
@@ -54,6 +57,57 @@ public class NPCTest
 		
 		assertEquals(0, mb.getCount());
 	}
-	
+	/**
+	 * Just for testing how behaviors work
+	 */
+	private class NPCMockBehavior extends NPCBehavior
+	{
+		private static final long serialVersionUID = -1879830711372276973L;
+
+		
+		private int count = 0;
+
+		/**
+		 * @return the number of times we have done our timed event
+		 */
+		public int getCount()
+		{
+			return count;
+		}
+
+		/**
+		 * 
+		 */
+		public NPCMockBehavior()
+		{
+			pollingInterval = 50;
+		}
+
+		/**
+		 * @see model.NPCBehavior#doTimedEvent()
+		 */
+		public void doTimedEvent()
+		{
+			this.count++;
+		}
+
+		/**
+		 * @see model.NPCBehavior#getReportTypes()
+		 */
+		@Override
+		public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypes()
+		{
+			return null;
+		}
+
+		
+		/**
+		 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
+		 */
+		@Override
+		public void receiveReport(QualifiedObservableReport arg)
+		{
+		}
+	}
 	
 }

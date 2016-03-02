@@ -5,12 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.OptionsManager;
 import data.AdventureStateEnum;
 import data.AdventureStateRecord;
-import datasource.ClosingPreparedStatement;
-import datasource.DatabaseException;
-import datasource.DatabaseManager;
 
 /**
  * The RDS Implementation of this gateway
@@ -154,31 +150,30 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 			AdventureStateEnum newState, boolean needingNotification)
 			throws DatabaseException
 	{
-		if (!OptionsManager.getSingleton().isUsingTestDB())
+
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
 		{
-			Connection connection = DatabaseManager.getSingleton().getConnection();
-			try
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
+					connection,
+					"UPDATE AdventureStates SET adventureState = ?, needingNotification = ? WHERE  playerID = ? and questID = ? and adventureID = ?");
+			stmt.setInt(1, newState.getID());
+			stmt.setBoolean(2, needingNotification);
+			stmt.setInt(3, playerID);
+			stmt.setInt(4, questID);
+			stmt.setInt(5, adventureID);
+			int count = stmt.executeUpdate();
+			if (count == 0)
 			{
-				ClosingPreparedStatement stmt = new ClosingPreparedStatement(
-						connection,
-						"UPDATE AdventureStates SET adventureState = ?, needingNotification = ? WHERE  playerID = ? and questID = ? and adventureID = ?");
-				stmt.setInt(1, newState.getID());
-				stmt.setBoolean(2, needingNotification);
-				stmt.setInt(3, playerID);
-				stmt.setInt(4, questID);
-				stmt.setInt(5, adventureID);
-				int count = stmt.executeUpdate();
-				if (count == 0)
-				{
-					this.createRow(playerID, questID, adventureID, newState, true);
-				}
-			} catch (SQLException e)
-			{
-				throw new DatabaseException(
-						"Couldn't update an adventure state record for player with ID "
-								+ playerID + " and quest with ID " + questID, e);
+				this.createRow(playerID, questID, adventureID, newState, true);
 			}
+		} catch (SQLException e)
+		{
+			throw new DatabaseException(
+					"Couldn't update an adventure state record for player with ID "
+							+ playerID + " and quest with ID " + questID, e);
 		}
+
 	}
 
 	/**

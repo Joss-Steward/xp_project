@@ -120,8 +120,7 @@ public class QuestState
 	public void finish() throws IllegalQuestChangeException, DatabaseException
 	{
 		changeState(QuestStateEnum.FINISHED, true);
-		Quest q = QuestManager
-				.getSingleton().getQuest(questID);
+		Quest q = QuestManager.getSingleton().getQuest(questID);
 		if (q.getCompletionActionType() == QuestCompletionActionType.TELEPORT)
 		{
 			GameLocation gl = (GameLocation) q.getCompletionActionParameter();
@@ -131,8 +130,7 @@ public class QuestState
 			playerFromID.setMapName(gl.getMapName());
 			playerFromID.persist();
 			TeleportOnQuestCompletionReport report = new TeleportOnQuestCompletionReport(
-					playerID, questID, gl, mapping.getHostName(),
-					mapping.getPortNumber());
+					playerID, questID, gl, mapping.getHostName(), mapping.getPortNumber());
 
 			QualifiedObservableConnector.getSingleton().sendReport(report);
 		}
@@ -220,15 +218,12 @@ public class QuestState
 	public void trigger() throws IllegalAdventureChangeException,
 			IllegalQuestChangeException, DatabaseException
 	{
-		if (this.questState == QuestStateEnum.AVAILABLE)
+		changeState(QuestStateEnum.TRIGGERED, true);
+		for (AdventureState state : adventureList)
 		{
-			changeState(QuestStateEnum.TRIGGERED, true);
-			for (AdventureState state : adventureList)
+			if (state.getState() == AdventureStateEnum.HIDDEN)
 			{
-				if (state.getState() == AdventureStateEnum.HIDDEN)
-				{
-					state.trigger();
-				}
+				state.trigger();
 			}
 		}
 	}

@@ -78,7 +78,7 @@ public class PlayerMapper
 		player.setDataMapper(this);
 		player.setMapName(playerConnectionGateway.getMapName());
 		loadQuestStates();
-		player.sendReportGivingPosition();
+//		player.sendReportGivingPosition();
 	}
 
 	private void loadQuestStates() throws DatabaseException
