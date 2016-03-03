@@ -13,7 +13,6 @@ import data.AdventureStateEnum;
 import data.ChatType;
 import data.CriteriaString;
 import data.Position;
-import data.QuestStateEnum;
 import datasource.AdventureTableDataGateway;
 import datasource.AdventureTableDataGatewayMock;
 import datasource.AdventureTableDataGatewayRDS;
