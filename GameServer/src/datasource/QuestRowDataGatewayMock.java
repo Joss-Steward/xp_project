@@ -20,27 +20,22 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 
 	private class QuestData
 	{
+		private String questTitle;
 		private String questDescription;
-
 		private String mapName;
-
 		private Position position;
-
 		private int questID;
-
 		private int experiencePointsGained;
-
 		private int adventuresForFulfillment;
-
 		private QuestCompletionActionType completionActionType;
-
 		private QuestCompletionActionParameter completionActionParameter;
 
-		public QuestData(int questID, String questDescription, String mapName,
-				Position position, int experiencePointsGained,
-				int adventuresForFulfillment, QuestCompletionActionType completionActionType,
-				QuestCompletionActionParameter completionActionParam)
+		public QuestData(int questID, String questTitle, String questDescription,
+				String mapName, Position position,
+				int experiencePointsGained, int adventuresForFulfillment,
+				QuestCompletionActionType completionActionType, QuestCompletionActionParameter completionActionParam)
 		{
+			this.questTitle = questTitle;
 			this.questDescription = questDescription;
 			this.mapName = mapName;
 			this.position = position;
@@ -51,14 +46,24 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 			this.completionActionParameter = completionActionParam;
 		}
 
-		public int getExperiencePointsGained()
-		{
-			return experiencePointsGained;
-		}
-
 		public int getAdventuresForFulfillment()
 		{
 			return adventuresForFulfillment;
+		}
+
+		public QuestCompletionActionParameter getCompletionActionParameter()
+		{
+			return completionActionParameter;
+		}
+
+		public QuestCompletionActionType getCompletionActionType()
+		{
+			return completionActionType;
+		}
+
+		public int getExperiencePointsGained()
+		{
+			return experiencePointsGained;
 		}
 
 		public String getMapName()
@@ -81,17 +86,17 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 			return questID;
 		}
 
-		public QuestCompletionActionParameter getCompletionActionParameter()
+		public String getQuestTitle()
 		{
-			return completionActionParameter;
-		}
-
-		public QuestCompletionActionType getCompletionActionType()
-		{
-			return completionActionType;
+			return questTitle;
 		}
 
 	}
+
+	/**
+	 * Map quest ID to questDescription
+	 */
+	private static HashMap<Integer, QuestData> questInfo;
 
 	/**
 	 * Get the IDs of the quests that are supposed to trigger at a specified map
@@ -122,11 +127,6 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		}
 		return results;
 	}
-
-	/**
-	 * Map quest ID to questDescription
-	 */
-	private static HashMap<Integer, QuestData> questInfo;
 	private int questID;
 	private String questDescription;
 
@@ -137,6 +137,7 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 	private int adventuresForFulfillment;
 	private QuestCompletionActionType completionActionType;
 	private QuestCompletionActionParameter completionActionParameter;
+	private String questTitle;
 
 	/**
 	 * Get the row data gateway object for an existing quest
@@ -155,6 +156,7 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		if (questInfo.containsKey(questID))
 		{
 			QuestData questData = questInfo.get(questID);
+			this.questTitle = questData.getQuestTitle();
 			this.questDescription = questData.getQuestDescription();
 			this.triggerMapName = questData.getMapName();
 			this.triggerPosition = questData.getPosition();
@@ -167,6 +169,42 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		{
 			throw new DatabaseException("Couldn't find quest with ID " + questID);
 		}
+	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getAdventuresForFulfillment()
+	 */
+	@Override
+	public int getAdventuresForFulfillment()
+	{
+		return adventuresForFulfillment;
+	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getCompletionActionParameter()
+	 */
+	@Override
+	public QuestCompletionActionParameter getCompletionActionParameter()
+	{
+		return completionActionParameter;
+	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getCompletionActionType()
+	 */
+	@Override
+	public QuestCompletionActionType getCompletionActionType()
+	{
+		return completionActionType;
+	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getExperiencePointsGained()
+	 */
+	@Override
+	public int getExperiencePointsGained()
+	{
+		return experiencePointsGained;
 	}
 
 	/**
@@ -185,6 +223,15 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 	public int getQuestID()
 	{
 		return questID;
+	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getQuestTitle()
+	 */
+	@Override
+	public String getQuestTitle()
+	{
+		return questTitle;
 	}
 
 	/**
@@ -216,47 +263,11 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		{
 			questInfo.put(
 					p.getQuestID(),
-					new QuestData(p.getQuestID(), p.getQuestDescription(),
-							p.getMapName(), p.getPosition(), p.getExperienceGained(), p
-									.getAdventuresForFulfillment(), p.getCompletionActionType(),
-									p.getCompletionActionParameter()));
+					new QuestData(p.getQuestID(), p.getQuestTitle(),
+							p.getQuestDescription(), p.getMapName(), p.getPosition(), p.getExperienceGained(), p
+											.getAdventuresForFulfillment(),
+									p.getCompletionActionType(), p.getCompletionActionParameter()));
 		}
-	}
-
-	/**
-	 * @see datasource.QuestRowDataGateway#getAdventuresForFulfillment()
-	 */
-	@Override
-	public int getAdventuresForFulfillment()
-	{
-		return adventuresForFulfillment;
-	}
-
-	/**
-	 * @see datasource.QuestRowDataGateway#getExperiencePointsGained()
-	 */
-	@Override
-	public int getExperiencePointsGained()
-	{
-		return experiencePointsGained;
-	}
-
-	/**
-	 * @see datasource.QuestRowDataGateway#getCompletionActionType()
-	 */
-	@Override
-	public QuestCompletionActionType getCompletionActionType()
-	{
-		return completionActionType;
-	}
-
-	/**
-	 * @see datasource.QuestRowDataGateway#getCompletionActionParameter()
-	 */
-	@Override
-	public QuestCompletionActionParameter getCompletionActionParameter()
-	{
-		return completionActionParameter;
 	}
 
 }
