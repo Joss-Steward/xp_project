@@ -223,6 +223,19 @@ public class ThisClientsPlayer extends ClientPlayer
 	/**
 	 * Overwrite the experience and level record in the clients player
 	 * 
+	 * @param knowledge
+	 *            current knowledge
+	 * @param rec
+	 *            level report
+	 */
+	public void knowledgePointsChanged(int knowledge, LevelRecord rec)
+	{
+		setLevelInfo(rec, knowledge);
+	}
+	
+	/**
+	 * Overwrite the experience and level record in the clients player
+	 * 
 	 * @param experience
 	 *            current experience
 	 * @param rec
