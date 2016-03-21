@@ -258,10 +258,11 @@ public class QuestState
 
 			if (this.needingNotification == true)
 			{
+				Quest quest = QuestManager
+						.getSingleton().getQuest(questID);
 				QualifiedObservableConnector.getSingleton().sendReport(
-						new QuestStateChangeReport(playerID, questID, QuestManager
-								.getSingleton().getQuest(questID).getDescription(),
-								questState));
+						new QuestStateChangeReport(playerID, questID, quest.getTitle(),
+								quest.getDescription(), questState));
 			}
 
 		} else

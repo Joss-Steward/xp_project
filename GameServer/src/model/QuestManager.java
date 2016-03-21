@@ -103,7 +103,7 @@ public class QuestManager implements QualifiedObserver
 			questGateway = new QuestRowDataGatewayRDS(questID);
 		}
 
-		Quest quest = new Quest(questGateway.getQuestID(),
+		Quest quest = new Quest(questGateway.getQuestID(), questGateway.getQuestTitle(),
 				questGateway.getQuestDescription(), questGateway.getTriggerMapName(),
 				questGateway.getTriggerPosition(),
 				adventureGateway.getAdventuresForQuest(questID),
@@ -375,13 +375,15 @@ public class QuestManager implements QualifiedObserver
 			{
 				this.triggerQuest(myReport.getPlayerID(), q);
 			}
-			
-			ArrayList<AdventureRecord> adventures = getAdventuresByPosition(myReport.getNewPosition(), myReport.getMapName());
+
+			ArrayList<AdventureRecord> adventures = getAdventuresByPosition(
+					myReport.getNewPosition(), myReport.getMapName());
 			for (AdventureRecord a : adventures)
 			{
-				this.completeAdventure(myReport.getPlayerID(), a.getQuestID(), a.getAdventureID());
+				this.completeAdventure(myReport.getPlayerID(), a.getQuestID(),
+						a.getAdventureID());
 			}
-			
+
 		} catch (DatabaseException | IllegalAdventureChangeException
 				| IllegalQuestChangeException e)
 		{
