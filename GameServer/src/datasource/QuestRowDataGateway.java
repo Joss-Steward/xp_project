@@ -58,4 +58,10 @@ public interface QuestRowDataGateway
 	 * @return an object describing the details of the completion action for this quest
 	 */
 	public QuestCompletionActionParameter getCompletionActionParameter();
+
+	/**
+	 * 
+	 * @return the title of this quest
+	 */
+	public String getQuestTitle();
 }

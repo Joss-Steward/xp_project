@@ -162,8 +162,8 @@ public class QuestStateTest extends DatabaseTest
 				QuestStateChangeReport.class);
 		QuestStateChangeReport rpt = new QuestStateChangeReport(1,
 				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(),
-				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestDescription(),
-				QuestStateEnum.FULFILLED);
+				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestTitle(),
+				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestDescription(), QuestStateEnum.FULFILLED);
 		obs.receiveReport(rpt);
 		EasyMock.replay(obs);
 		QuestState qs = new QuestState(2, QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(), QuestStateEnum.TRIGGERED, false);
