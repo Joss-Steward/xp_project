@@ -28,6 +28,7 @@ public class ThisClientsPlayer extends ClientPlayer
 
 	private int experiencePoints;
 	private LevelRecord record;
+	private int knowledgePoints;
 
 	protected ThisClientsPlayer(int playerID)
 	{
@@ -232,4 +233,12 @@ public class ThisClientsPlayer extends ClientPlayer
 		setLevelInfo(rec, experience);
 	}
 
+	/**
+	 * 
+	 * @return the knowledgePoints for this player
+	 */
+	public int getKnowledgePoints()
+	{
+		return this.knowledgePoints;
+	}
 }
