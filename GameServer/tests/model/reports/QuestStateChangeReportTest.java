@@ -36,7 +36,7 @@ public class QuestStateChangeReportTest
 	public void creation() throws DatabaseException
 	{
 		QuestStateChangeReport report = new QuestStateChangeReport(1,QuestsForTest.ONE_BIG_QUEST.getQuestID(), 
-				QuestsForTest.ONE_BIG_QUEST.getQuestDescription(), QuestStateEnum.FINISHED);
+				QuestsForTest.ONE_BIG_QUEST.getQuestTitle(), QuestsForTest.ONE_BIG_QUEST.getQuestDescription(), QuestStateEnum.FINISHED);
 		
 		assertEquals(1, report.getPlayerID());
 		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestID(), report.getQuestID());

@@ -43,8 +43,7 @@ public class QuestStateChangeMessagePackerTest
 	public void testReportTypeWePack()
 	{
 		QuestStateChangeMessagePacker packer = new QuestStateChangeMessagePacker();
-		assertEquals(QuestStateChangeReport.class,
-				packer.getReportTypesWePack().get(0));
+		assertEquals(QuestStateChangeReport.class, packer.getReportTypesWePack().get(0));
 		assertEquals(1, packer.getReportTypesWePack().size());
 	}
 
@@ -61,16 +60,21 @@ public class QuestStateChangeMessagePackerTest
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
 
-		QuestStateChangeReport report = new QuestStateChangeReport(
-				2, QuestsForTest.ONE_BIG_QUEST.getQuestID(), QuestsForTest.ONE_BIG_QUEST.getQuestDescription(), QuestStateEnum.AVAILABLE);
+		QuestStateChangeReport report = new QuestStateChangeReport(2,
+				QuestsForTest.ONE_BIG_QUEST.getQuestID(),
+				QuestsForTest.ONE_BIG_QUEST.getQuestTitle(),
+				QuestsForTest.ONE_BIG_QUEST.getQuestDescription(),
+				QuestStateEnum.AVAILABLE);
 		QuestStateChangeMessagePacker packer = new QuestStateChangeMessagePacker();
 		packer.setAccumulator(stateAccumulator);
-		
+
 		QuestStateChangeMessage msg = (QuestStateChangeMessage) packer.pack(report);
 		assertNull(msg);
 	}
+
 	/**
-	 * If the msg is to the player we are packing, the message should contain the details of the quest
+	 * If the msg is to the player we are packing, the message should contain
+	 * the details of the quest
 	 * 
 	 * @throws DatabaseException
 	 *             shouldn't
@@ -80,15 +84,18 @@ public class QuestStateChangeMessagePackerTest
 	{
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
-		
+
 		QuestStateChangeReport report = new QuestStateChangeReport(
-				stateAccumulator.getPlayerID(), QuestsForTest.ONE_BIG_QUEST.getQuestID(), QuestsForTest.ONE_BIG_QUEST.getQuestDescription(), QuestStateEnum.TRIGGERED);
+				stateAccumulator.getPlayerID(), QuestsForTest.ONE_BIG_QUEST.getQuestID(),
+				QuestsForTest.ONE_BIG_QUEST.getQuestTitle(), QuestsForTest.ONE_BIG_QUEST.getQuestDescription(),
+				QuestStateEnum.TRIGGERED);
 		QuestStateChangeMessagePacker packer = new QuestStateChangeMessagePacker();
 		packer.setAccumulator(stateAccumulator);
-		
+
 		QuestStateChangeMessage msg = (QuestStateChangeMessage) packer.pack(report);
 		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestID(), msg.getQuestID());
-		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestDescription(),msg.getQuestDescription());
+		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestDescription(),
+				msg.getQuestDescription());
 		assertEquals(QuestStateEnum.TRIGGERED, msg.getNewState());
 
 	}

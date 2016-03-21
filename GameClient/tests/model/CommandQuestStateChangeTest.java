@@ -20,7 +20,7 @@ import data.QuestStateEnum;
  * @author Ryan
  *
  */
-public class CommandQuestStateChangeTest 
+public class CommandQuestStateChangeTest
 {
 
 	/**
@@ -29,25 +29,32 @@ public class CommandQuestStateChangeTest
 	@Test
 	public void testConstructor()
 	{
-		CommandQuestStateChange x = new CommandQuestStateChange(new QuestStateChangeMessage(1,2, "Silly Quest", QuestStateEnum.FINISHED));
+		CommandQuestStateChange x = new CommandQuestStateChange(
+				new QuestStateChangeMessage(1, 2, "title", "Silly Quest",
+						QuestStateEnum.FINISHED));
 		assertEquals(2, x.getQuestID());
+		assertEquals("title", x.getQuestTitle());
 		assertEquals("Silly Quest", x.getQuestDescription());
 		assertEquals(QuestStateEnum.FINISHED, x.getQuestState());
 	}
-	
+
 	/**
-	 * Test that when we execute the CommandQuestStateChange
-	 * ThisClientsPlayer ClientPlayerQuest's state changes
-	 * @throws AlreadyBoundException shouldn't
-	 * @throws NotBoundException shouldn't
+	 * Test that when we execute the CommandQuestStateChange ThisClientsPlayer
+	 * ClientPlayerQuest's state changes
+	 * 
+	 * @throws AlreadyBoundException
+	 *             shouldn't
+	 * @throws NotBoundException
+	 *             shouldn't
 	 */
 	@Test
 	public void testChangingQuest() throws AlreadyBoundException, NotBoundException
 	{
 		int playerID = 1;
 		int questID = 1;
-		ClientPlayerQuest q = new ClientPlayerQuest(questID, "silly quest", QuestStateEnum.TRIGGERED, 3, 0, true);
-		
+		ClientPlayerQuest q = new ClientPlayerQuest(questID, "title",
+				"silly quest", QuestStateEnum.TRIGGERED, 3, 0, true);
+
 		Position pos = new Position(1, 2);
 		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
 		pm.initializePlayer(playerID, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER);
@@ -56,13 +63,16 @@ public class CommandQuestStateChangeTest
 		pm.finishLogin(playerID);
 
 		ClientPlayerManager.getSingleton().getThisClientsPlayer().addQuest(q);
-		
-		CommandQuestStateChange x = new CommandQuestStateChange(new QuestStateChangeMessage(playerID, questID, "silly quest", QuestStateEnum.FINISHED));
+
+		CommandQuestStateChange x = new CommandQuestStateChange(
+				new QuestStateChangeMessage(playerID, questID, "title", "silly quest",
+						QuestStateEnum.FINISHED));
 		x.execute();
-		
-		for(ClientPlayerQuest quest : ClientPlayerManager.getSingleton().getThisClientsPlayer().getQuests())
+
+		for (ClientPlayerQuest quest : ClientPlayerManager.getSingleton()
+				.getThisClientsPlayer().getQuests())
 		{
-			if(quest.getQuestID() == questID)
+			if (quest.getQuestID() == questID)
 			{
 				assertEquals(QuestStateEnum.FINISHED, quest.getQuestState());
 			}

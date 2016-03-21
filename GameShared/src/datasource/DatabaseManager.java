@@ -37,11 +37,11 @@ public class DatabaseManager
 	{
 		if (OptionsManager.getSingleton().isUsingTestDB())
 		{
-			System.err.println("Opening test database\n");
+//			System.err.println("Opening test database\n");
 			openConnectionTo("jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players");
 		} else
 		{
-			System.err.println("Opening production database\n");
+//			System.err.println("Opening production database\n");
 			openConnectionTo("jdbc:mysql://production.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players");
 			try
 			{

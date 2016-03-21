@@ -68,10 +68,10 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 				Quest quest = QuestManager.getSingleton().getQuest(questID);
 
 				ClientPlayerQuest clientQuest = new ClientPlayerQuest(quest.getQuestID(),
-						quest.getDescription(), qs.getStateValue(),
+						quest.getTitle(), quest.getDescription(),
+						qs.getStateValue(),
 						quest.getExperiencePointsGained(),
-						quest.getAdventuresForFulfillment(),
-						qs.isNeedingNotification());
+						quest.getAdventuresForFulfillment(), qs.isNeedingNotification());
 				clientQuest.setAdventures(combineAdventure(quest, qs));
 
 				clientPlayerQuestList.add(clientQuest);
