@@ -114,9 +114,9 @@ public class LoginSuccessSequenceTest extends SequenceTest
 	{
 		QuestRowDataGateway qGateway = new QuestRowDataGatewayMock(q.getQuestID());
 		ClientPlayerQuest cpq = new ClientPlayerQuest(q.getQuestID(),
-				qGateway.getQuestDescription(), q.getState(),
-				qGateway.getExperiencePointsGained(),
-				qGateway.getAdventuresForFulfillment(), q.isNeedingNotification());
+				qGateway.getQuestTitle(), qGateway.getQuestDescription(),
+				q.getState(),
+				qGateway.getExperiencePointsGained(), qGateway.getAdventuresForFulfillment(), q.isNeedingNotification());
 		AdventureStateTableDataGateway asGateway = AdventureStateTableDataGatewayMock
 				.getSingleton();
 		ArrayList<AdventureStateRecord> adventuresForPlayer = asGateway

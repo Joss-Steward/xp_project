@@ -52,8 +52,8 @@ public class CommandQuestStateChangeTest
 	{
 		int playerID = 1;
 		int questID = 1;
-		ClientPlayerQuest q = new ClientPlayerQuest(questID, "silly quest",
-				QuestStateEnum.TRIGGERED, 3, 0, true);
+		ClientPlayerQuest q = new ClientPlayerQuest(questID, "title",
+				"silly quest", QuestStateEnum.TRIGGERED, 3, 0, true);
 
 		Position pos = new Position(1, 2);
 		ClientPlayerManager pm = ClientPlayerManager.getSingleton();

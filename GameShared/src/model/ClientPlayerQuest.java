@@ -19,26 +19,28 @@ public class ClientPlayerQuest implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	private int questID;
-
+    private String questTitle;
 	private String questDescription;
 	private QuestStateEnum state;
 	private ArrayList<ClientPlayerAdventure> adventures = new ArrayList<ClientPlayerAdventure>();
 	private int experiencePointsGained;
 	private int adventuresToFulfillment;
-
 	private boolean needingNotification;
+
 	/**
 	 * Constructor for client player quest
 	 * @param questID the quests id
+	 * @param questTitle the quest's title
 	 * @param questDescription the quests description
 	 * @param state the quests state
 	 * @param experiencePointsGained the number of experience you get when you fulfill this quest
 	 * @param adventuresToFulfillment the number of adventures required to fulfill this quest
-	 * @param needingNotification TODO
+	 * @param needingNotification true if the player needs to be notified of this quest state
 	 */
-	public ClientPlayerQuest(int questID, String questDescription, QuestStateEnum state, int experiencePointsGained, int adventuresToFulfillment, boolean needingNotification)
+	public ClientPlayerQuest(int questID, String questTitle, String questDescription, QuestStateEnum state, int experiencePointsGained, int adventuresToFulfillment, boolean needingNotification)
 	{
 		this.questID = questID;
+		this.questTitle = questTitle;
 		this.questDescription = questDescription;
 		this.state = state;
 		this.experiencePointsGained = experiencePointsGained;
@@ -53,7 +55,6 @@ public class ClientPlayerQuest implements Serializable
 	{
 		adventures.add(a);
 	}
-	
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -89,7 +90,7 @@ public class ClientPlayerQuest implements Serializable
 			return false;
 		return true;
 	}
-
+	
 	/**
 	 * Return the ClientPlayerAdventure array list
 	 * @return adventures
@@ -151,6 +152,11 @@ public class ClientPlayerQuest implements Serializable
 		return state;
 	}
 
+	public String getQuestTitle()
+	{
+		return questTitle;
+	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -170,6 +176,14 @@ public class ClientPlayerQuest implements Serializable
 	}
 
 	/**
+	 * @return true if the player has not been notified about the state of this quest
+	 */
+	public boolean isNeedingNotification()
+	{
+		return needingNotification;
+	}
+
+	/**
 	 * Set the Client Player Adventure array list to the given array list
 	 * @param adventureList ClientPlayerAdventure ArrayList
 	 */
@@ -177,20 +191,12 @@ public class ClientPlayerQuest implements Serializable
 	{
 		this.adventures = adventureList;
 	}
-
 	/**
 	 * @param newState the new state of the quest
 	 */
 	public void setState(QuestStateEnum newState) 
 	{
 		this.state = newState;
-	}
-	/**
-	 * @return true if the player has not been notified about the state of this quest
-	 */
-	public boolean isNeedingNotification()
-	{
-		return needingNotification;
 	}
 	
 }
