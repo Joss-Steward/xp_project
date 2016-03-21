@@ -4,11 +4,10 @@ import datasource.LevelRecord;
 import model.QualifiedObservableReport;
 
 /**
- * knowledgePointsChangeReport class
- * @author Matthew Croft
+ * @author mc8737
  *
  */
-public class knowledgePointsChangeReport implements QualifiedObservableReport
+public class KnowledgePointsChangeReport implements QualifiedObservableReport
 {
 
 	/**
@@ -16,6 +15,7 @@ public class knowledgePointsChangeReport implements QualifiedObservableReport
 	 */
 	public final int knowledgePoints;
 
+	
 	private final LevelRecord record;
 
 	private final int playerID;
@@ -25,7 +25,7 @@ public class knowledgePointsChangeReport implements QualifiedObservableReport
 	 * @param knowledgePoints of the player
 	 * @param level record for this play
 	 */
-	public knowledgePointsChangeReport (int playerID, int knowledgePoints, LevelRecord level)
+	public KnowledgePointsChangeReport (int playerID, int knowledgePoints, LevelRecord level)
 	{
 		this.playerID = playerID;
 		this.record =  level;
@@ -78,7 +78,7 @@ public class knowledgePointsChangeReport implements QualifiedObservableReport
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		knowledgePointsChangeReport other = (knowledgePointsChangeReport) obj;
+		KnowledgePointsChangeReport other = (KnowledgePointsChangeReport) obj;
 		if (knowledgePoints != other.knowledgePoints)
 			return false;
 		if (playerID != other.playerID)

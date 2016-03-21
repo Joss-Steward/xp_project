@@ -2,7 +2,7 @@ package model;
 
 import model.reports.ExperienceChangedReport;
 import model.reports.PlayerMovedReport;
-import model.reports.knowledgePointsChangeReport;
+import model.reports.KnowledgePointsChangeReport;
 import data.Crew;
 import data.Position;
 import datasource.DatabaseException;
@@ -310,7 +310,7 @@ public class Player
 	 */
 	public void sendknowledgePointsChangeReport()
 	{
-		knowledgePointsChangeReport report = new knowledgePointsChangeReport(playerID, this.knowledgePoints, null);
+		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(playerID, this.knowledgePoints, null);
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 }
