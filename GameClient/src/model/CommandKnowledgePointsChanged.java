@@ -1,5 +1,7 @@
 package model;
 
+import communication.messages.InitializeThisClientsPlayerMessage;
+
 import datasource.LevelRecord;
 
 /**
@@ -15,6 +17,17 @@ public class CommandKnowledgePointsChanged extends Command
 	private LevelRecord record;
 	private int playerID;
 
+	/**
+	 * constructor for the command
+	 * @param msg InitializeClientsPlayerMessage which contains all the data to
+	 * initialize this client player
+	 */
+	public CommandKnowledgePointsChanged(InitializeThisClientsPlayerMessage msg) 
+	{
+		this.knowledge = msg.getKnowledgePoints();
+		this.record = msg.getLevel();
+	}
+	
 	
 	/**
 	 * @param playerID of the player

@@ -7,7 +7,7 @@ import model.ClientPlayerQuest;
 import model.QualifiedObservableConnector;
 import model.reports.AdventureStateChangeReport;
 import model.reports.AdventureNeedingNotificationReport;
-import model.reports.ExperiencePointsChangeReport;
+import model.reports.KnowledgePointsChangeReport;
 import model.reports.QuestStateChangeReport;
 import model.reports.QuestStateReport;
 import model.reports.QuestNeedingNotificationReport;
@@ -147,7 +147,7 @@ public class ThisClientsPlayer extends ClientPlayer
 	 */
 	public void sendExperiencePointsChangeReport()
 	{
-		ExperiencePointsChangeReport r = new ExperiencePointsChangeReport(
+		KnowledgePointsChangeReport r = new KnowledgePointsChangeReport(
 				experiencePoints, record);
 		QualifiedObservableConnector.getSingleton().sendReport(r);
 	}
@@ -243,7 +243,31 @@ public class ThisClientsPlayer extends ClientPlayer
 	 */
 	public void overwriteExperiencePoints(int experience, LevelRecord rec)
 	{
-		setLevelInfo(rec, experience);
+		setLevelInfoKnowledge(rec, experience);
+	}
+
+	/**
+	 * @param rec is the LevelRecord of this player
+	 * @param knowledge points of this player
+	 */
+	public void setLevelInfoKnowledge(LevelRecord rec, int knowledge) 
+	{
+		this.record = rec;
+		this.knowledgePoints = knowledge;
+		
+		sendKnowledgePointsChangeReport();
+		
+	}
+
+	/**
+	 *  sending the knowledge changed report
+	 */
+	public void sendKnowledgePointsChangeReport() {
+		
+		KnowledgePointsChangeReport r = new KnowledgePointsChangeReport(
+				this.knowledgePoints, record);
+		QualifiedObservableConnector.getSingleton().sendReport(r);
+		
 	}
 
 	/**

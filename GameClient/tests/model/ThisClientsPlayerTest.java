@@ -14,7 +14,7 @@ import model.QualifiedObservableConnector;
 import model.QualifiedObserver;
 import model.ThisClientsPlayer;
 import model.reports.AdventureNeedingNotificationReport;
-import model.reports.ExperiencePointsChangeReport;
+import model.reports.KnowledgePointsChangeReport;
 import model.reports.QuestNeedingNotificationReport;
 import model.reports.ThisClientsPlayerMovedReport;
 import model.reports.QuestStateReport;
@@ -238,8 +238,8 @@ public class ThisClientsPlayerTest
 		cp.setLevelInfo(rec, 10);
 		
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs, ExperiencePointsChangeReport.class);
-		ExperiencePointsChangeReport report = new ExperiencePointsChangeReport(exp, rec);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, KnowledgePointsChangeReport.class);
+		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(exp, rec);
 		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 

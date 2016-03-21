@@ -22,6 +22,9 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 
 	private int experiencePts;
 	private LevelRecord level;
+	private int knowledgePoints;
+
+
 	/**
 	 * Constructor for Quest State Message
 	 * @param clientPlayerQuestList players quest list
@@ -32,6 +35,21 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 	{
 		this.clientPlayerQuestList = clientPlayerQuestList;
 		this.experiencePts = experiencePts;
+		this.level = level;
+	}
+	
+	
+	/**
+	 * @param clientPlayerQuestList players quest list
+	 * @param experiencePts player's experience points
+	 * @param level LevelRecord
+	 * @param knowledgePoints for this player
+	 */
+	public InitializeThisClientsPlayerMessage(ArrayList<ClientPlayerQuest> clientPlayerQuestList, int experiencePts, int knowledgePoints, LevelRecord level)
+	{
+		this.clientPlayerQuestList = clientPlayerQuestList;
+		this.experiencePts = experiencePts;
+		this.knowledgePoints = knowledgePoints;
 		this.level = level;
 	}
 	/**
@@ -89,6 +107,14 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 	public LevelRecord getLevel() 
 	{
 		return level;
+	}
+	
+	/**
+	 * @return the knowledgePoints of this player
+	 */
+	public int getKnowledgePoints()
+	{
+		return knowledgePoints;
 	}
 
 	/**
