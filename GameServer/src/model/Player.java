@@ -2,6 +2,7 @@ package model;
 
 import model.reports.ExperienceChangedReport;
 import model.reports.PlayerMovedReport;
+import model.reports.knowledgePointsChangeReport;
 import data.Crew;
 import data.Position;
 import datasource.DatabaseException;
@@ -17,7 +18,7 @@ public class Player
 
 	private PlayerLogin playerLogin;
 
-	private int quizScore;
+	private int knowledgePoints;
 
 	private PlayerMapper playerMapper;
 
@@ -124,7 +125,7 @@ public class Player
 	 */
 	public int getQuizScore()
 	{
-		return this.quizScore;
+		return this.knowledgePoints;
 	}
 
 	/**
@@ -132,7 +133,7 @@ public class Player
 	 */
 	public void incrementQuizScore()
 	{
-		this.quizScore++;
+		this.knowledgePoints++;
 	}
 
 	/**
@@ -275,7 +276,7 @@ public class Player
 	 */
 	public void setQuizScore(int score)
 	{
-		this.quizScore = score;
+		this.knowledgePoints = score;
 	}
 
 	/**
@@ -301,6 +302,15 @@ public class Player
 		PlayerMovedReport report = new PlayerMovedReport(playerID, this.getPlayerName(),
 				playerPosition, this.mapName);
 
+		QualifiedObservableConnector.getSingleton().sendReport(report);
+	}
+	
+	/**
+	 * Report our change in knowledgePoints
+	 */
+	public void sendknowledgePointsChangeReport()
+	{
+		knowledgePointsChangeReport report = new knowledgePointsChangeReport(playerID, this.knowledgePoints, null);
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 }
