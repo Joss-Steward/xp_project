@@ -152,6 +152,9 @@ public class ClientPlayerQuest implements Serializable
 		return state;
 	}
 
+	/**
+	 * @return this quest's title
+	 */
 	public String getQuestTitle()
 	{
 		return questTitle;

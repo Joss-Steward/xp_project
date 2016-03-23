@@ -13,6 +13,7 @@ import data.AdventureStateEnum;
 import data.ChatType;
 import data.CriteriaString;
 import data.Position;
+import data.QuestStateEnum;
 import datasource.AdventureTableDataGateway;
 import datasource.AdventureTableDataGatewayMock;
 import datasource.AdventureTableDataGatewayRDS;
@@ -175,7 +176,7 @@ public class QuestManager implements QualifiedObserver
 			DatabaseException
 	{
 		QuestState qs = getQuestStateByID(playerID, questID);
-		if (qs != null)
+		if ((qs != null) && (qs.getStateValue() != QuestStateEnum.TRIGGERED))
 		{
 			qs.trigger();
 		}
