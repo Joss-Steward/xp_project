@@ -44,7 +44,7 @@ public class KnowledgeChangedMessageHandlerTest {
 	public void handleExperienceChangedMessage() throws InterruptedException
 	{	
 		//TODO: test is failing!
-		LevelRecord record = new LevelRecord("Serf", 15);
+		LevelRecord record = new LevelRecord("Serf", 15, 0, 0);
 		int oldScore = PlayersForTest.JOHN.getKnowledgeScore();
 		
 		KnowledgeChangedMessage msg = new KnowledgeChangedMessage(PlayersForTest.JOHN.getPlayerID(), record, oldScore + 5);

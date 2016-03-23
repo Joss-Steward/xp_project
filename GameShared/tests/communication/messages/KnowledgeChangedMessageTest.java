@@ -19,7 +19,7 @@ public class KnowledgeChangedMessageTest {
 	@Test
 	public void testCreateMessage() 
 	{
-		LevelRecord record = new LevelRecord("Serf", 15);
+		LevelRecord record = new LevelRecord("Serf", 15, 0, 0);
 		KnowledgeChangedMessage msg = new KnowledgeChangedMessage(PlayersForTest.JOHN.getPlayerID(),record, PlayersForTest.JOHN.getKnowledgeScore());
 		assertEquals(PlayersForTest.JOHN.getKnowledgeScore(), msg.getKnowledgePoints());
 	}
