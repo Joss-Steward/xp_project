@@ -27,7 +27,7 @@ public class KnowledgeChangedMessage implements Message, Serializable
 	 * @param level the player is
 	 * @param playerID of the current player
 	 */
-	public KnowledgeChangedMessage(int knowledgePoints, LevelRecord level, int playerID)
+	public KnowledgeChangedMessage(int playerID, LevelRecord level, int knowledgePoints)
 	{
 		this.knowledgePoints = knowledgePoints;
 		this.level = level;

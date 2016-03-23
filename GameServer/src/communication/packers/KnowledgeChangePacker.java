@@ -32,7 +32,7 @@ public class KnowledgeChangePacker extends MessagePacker
 
 		if (this.getAccumulator().getPlayerID() == report.getPlayerID())
 		{
-			KnowledgeChangedMessage msg = new 	KnowledgeChangedMessage(report.getKnowledgePoints(), report.getRecord(), report.getPlayerID());
+			KnowledgeChangedMessage msg = new 	KnowledgeChangedMessage(report.getPlayerID(), report.getRecord(), report.getKnowledgePoints());
 			return msg;
 		}
 		return null;
