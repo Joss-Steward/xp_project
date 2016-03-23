@@ -26,12 +26,12 @@ public enum QuestsForTest
 	 * 
 	 */
 	THE_OTHER_QUEST(2, "t", "Quest 2", new GameLocation("current.tmx",
-			new Position(4, 14)), 4, 2, QuestCompletionActionType.NO_ACTION, null),
+			new Position(4, 15)), 4, 2, QuestCompletionActionType.NO_ACTION, null),
 	/**
 	 * 
 	 */
 	ONE_SAME_LOCATION_QUEST(3, "t", "Quest 3", new GameLocation("current.tmx",
-			new Position(4, 14)), 3, 2, QuestCompletionActionType.TELEPORT,
+			new Position(4, 15)), 3, 2, QuestCompletionActionType.TELEPORT,
 			new GameLocation("current.tmx", new Position(3, 3))),
 	/**
 	 * 

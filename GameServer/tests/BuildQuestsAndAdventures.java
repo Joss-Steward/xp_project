@@ -33,9 +33,13 @@ public class BuildQuestsAndAdventures
 	{
 		OptionsManager.getSingleton().setTestMode(false);
 		OptionsManager.getSingleton().setUsingTestDB(true);
+		System.out.println("creating adventure table");
 		createAdventureTable();
+		System.out.println("creating quest table");
 		createQuestTable();
+		System.out.println("creating quest state table");
 		createQuestStateTable();
+		System.out.println("creating adventure state table");
 		createAdventureStateTable();
 	}
 
@@ -72,6 +76,7 @@ public class BuildQuestsAndAdventures
 		QuestRowDataGatewayRDS.createTable();
 		for (QuestsForTest quest : QuestsForTest.values())
 		{
+			System.out.print(quest.getQuestID() + " ");
 			new QuestRowDataGatewayRDS(quest.getQuestID(), quest.getQuestTitle(),
 					quest.getQuestDescription(), quest.getMapName(), quest.getPosition(),
 					quest.getExperienceGained(), quest.getAdventuresForFulfillment(),

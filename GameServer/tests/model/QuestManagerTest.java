@@ -502,7 +502,7 @@ public class QuestManagerTest extends DatabaseTest
 		Player p = playerManager.addPlayer(1);
 		p.setPlayerPosition(QuestsForTest.ONE_BIG_QUEST.getPosition());
 		assertEquals(
-				QuestStateEnum.FINISHED,
+				QuestStateEnum.TRIGGERED,
 				QuestManager
 						.getSingleton()
 						.getQuestStateByID(p.getPlayerID(),
