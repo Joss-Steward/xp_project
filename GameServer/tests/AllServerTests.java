@@ -25,6 +25,7 @@ import model.QuizBotBehaviorTest;
 import model.reports.AdventureStateChangeReportTest;
 import model.reports.ExperienceChangedReportTest;
 import model.reports.KeyInputRecievedReportTest;
+import model.reports.KnowledgeChangeReportTest;
 import model.reports.PlayerConnectionReportTest;
 import model.reports.PlayerMovedReportTest;
 import model.reports.QuestStateChangeReportTest;
@@ -47,13 +48,13 @@ import communication.handlers.TeleportationInitiationHandlerTest;
 import communication.packers.AdventureStateChangeMessagePackerTest;
 import communication.packers.ChatMessagePackerTest;
 import communication.packers.ExperienceChangedMessagePackerTest;
+import communication.packers.KnowledgeChangedMessagePackerTest;
 import communication.packers.MapFileMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.PlayerJoinedMessagePackerTest;
 import communication.packers.QuestStateChangeMessagePackerTest;
 import communication.packers.TeleportOnQuestCompletionPackerTest;
 import communication.packers.UpdatePlayerInformationMessagePackerTest;
-
 import datasource.AdventureRecordTest;
 import datasource.AdventureStateTableDataGatewayMockTest;
 import datasource.AdventureStateTableDataGatewayRDSTest;
@@ -106,6 +107,7 @@ import datasource.QuestStateTableDataGatewayRDSTest;
 		QuestStateChangeMessagePackerTest.class,
 		TeleportOnQuestCompletionPackerTest.class,
 		UpdatePlayerInformationMessagePackerTest.class,
+		KnowledgeChangedMessagePackerTest.class,
 		
 		//dataSource
 		AdventureRecordTest.class,
@@ -177,6 +179,7 @@ import datasource.QuestStateTableDataGatewayRDSTest;
 		SendChatMessageReportTest.class,
 		TeleportOnQuestCompletionReportTest.class,
 		UpdatePlayerInformationReportTest.class,
+		KnowledgeChangeReportTest.class,
 		})
 
 public class AllServerTests

@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import tmxfiles.TMXMapReaderTest;
-
 import communication.ConnectionIncomingTest;
 import communication.ConnectionManagerTest;
 import communication.StateAccumulatorTest;
@@ -25,6 +24,7 @@ import communication.messages.DisconnectionMessageTest;
 import communication.messages.ExperienceChangedMessageTest;
 import communication.messages.InitializeThisClientsPlayerMessageTest;
 import communication.messages.KeyInputMessageTest;
+import communication.messages.KnowledgeChangedMessageTest;
 import communication.messages.LoginMessageTest;
 import communication.messages.LoginResponseMessageTest;
 import communication.messages.MapFileMessageTest;
@@ -35,7 +35,6 @@ import communication.messages.PlayerLeaveMessageTest;
 import communication.messages.TeleportationContinuationMessageTest;
 import communication.messages.TeleportationInitiationMessageTest;
 import communication.packers.MessagePackerSetTest;
-
 import data.PositionTest;
 import datasource.LevelRecordTest;
 import datasource.PlayerConnectionRowDataGatewayMockTest;
@@ -69,6 +68,7 @@ import datasource.ServerRowDataGatewayRDSTest;
 		// StubMessageHandler2.class,
 
 		// communication.messages
+		KnowledgeChangedMessageTest.class,
 		AdventureNotificationCompleteMessageTest.class,
 		AdventureStateChangeMessageTest.class,
 		AreaCollisionMessageTest.class,

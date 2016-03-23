@@ -9,6 +9,7 @@ import model.CommandClientMovePlayerTest;
 import model.CommandHighScoreResponseTest;
 import model.CommandInitializePlayerTest;
 import model.CommandKeyInputSentTest;
+import model.CommandKnowledgePointsChangedTest;
 import model.CommandLoginFailedTest;
 import model.CommandLoginTest;
 import model.CommandNewMapTest;
@@ -43,12 +44,12 @@ import view.player.PlayerSpriteTest;
 import view.screen.ScreenListenerTest;
 import view.screen.map.ScreenMapInputTest;
 import view.screen.popup.AdventureCompleteBehaviorTest;
-
 import communication.handlers.AdventureStateChangeMessageHandlerTest;
 import communication.handlers.ChatMessageHandlerTest;
 import communication.handlers.ExperienceChangedMessageHandlerTest;
 import communication.handlers.HighScoreResponseHandlerTest;
 import communication.handlers.InitializeThisClientsPlayerMessageHandlerTest;
+import communication.handlers.KnowledgeChangedMessageHandlerTest;
 import communication.handlers.LoginFailedMessageHandlerTest;
 import communication.handlers.MapFileMessageHandlerTest;
 import communication.handlers.OtherPlayerMovedMessageHandlerTest;
@@ -86,6 +87,7 @@ import communication.packers.TeleportationInitiationMessagePackerTest;
 		PlayerJoinedMessageHandlerTest.class,
 		PlayerLeaveMessageHandlerTest.class,
 		QuestStateChangeMessageHandlerTest.class,
+		KnowledgeChangedMessageHandlerTest.class,
 		
 
 		// communication.packers
@@ -105,6 +107,7 @@ import communication.packers.TeleportationInitiationMessagePackerTest;
 		CommandHighScoreResponseTest.class,
 		CommandInitializePlayerTest.class, 
 		CommandKeyInputSentTest.class,
+		CommandKnowledgePointsChangedTest.class,
 		CommandLoginFailedTest.class,
 		CommandLoginTest.class,
 		CommandClientMovePlayerTest.class,

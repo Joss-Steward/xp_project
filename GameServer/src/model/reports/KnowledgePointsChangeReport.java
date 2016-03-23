@@ -7,7 +7,7 @@ import model.QualifiedObservableReport;
  * @author Matthew Croft
  *
  */
-public class KnowledgePointsChangeReport implements QualifiedObservableReport
+public final class KnowledgePointsChangeReport implements QualifiedObservableReport
 {
 
 	/**

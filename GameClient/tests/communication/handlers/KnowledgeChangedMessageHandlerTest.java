@@ -23,7 +23,7 @@ public class KnowledgeChangedMessageHandlerTest {
 	public void reset()
 	{
 		ClientModelFacade.resetSingleton();
-		ClientModelFacade.getSingleton(true, true);
+		ClientModelFacade.getSingleton(true, false);
 	}
 	
 	/**
@@ -43,20 +43,20 @@ public class KnowledgeChangedMessageHandlerTest {
 	@Test
 	public void handleExperienceChangedMessage() throws InterruptedException
 	{	
-		//TODO: throwing an error?
-		reset();
-		
+		//TODO: test is failing!
 		LevelRecord record = new LevelRecord("Serf", 15);
+		int oldScore = PlayersForTest.JOHN.getKnowledgeScore();
 		
-		KnowledgeChangedMessage msg = new KnowledgeChangedMessage(PlayersForTest.JOHN.getPlayerID(), record,PlayersForTest.JOHN.getKnowledgeScore());
+		KnowledgeChangedMessage msg = new KnowledgeChangedMessage(PlayersForTest.JOHN.getPlayerID(), record, oldScore + 5);
 		KnowledgeChangedMessageHandler h = new KnowledgeChangedMessageHandler();
 		h.process(msg);
-
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
+		int length = ClientModelFacade.getSingleton().getCommandQueueLength();
+		assertEquals(1, length);
+		
 		while(ClientModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}
-		reset();
 	}
 }
