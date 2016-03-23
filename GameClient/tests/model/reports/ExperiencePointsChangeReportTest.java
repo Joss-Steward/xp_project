@@ -1,7 +1,7 @@
 package model.reports;
 
 import static org.junit.Assert.*;
-import model.reports.ExperiencePointsChangeReport;
+import model.reports.KnowledgePointsChangeReport;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
@@ -36,6 +36,6 @@ public class ExperiencePointsChangeReportTest
 	@Test
 	public void testEqualsContract()
 	{
-		EqualsVerifier.forClass(ExperiencePointsChangeReport.class).verify();
+		EqualsVerifier.forClass(KnowledgePointsChangeReport.class).verify();
 	}
 }

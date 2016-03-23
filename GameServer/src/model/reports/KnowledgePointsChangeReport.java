@@ -4,7 +4,7 @@ import datasource.LevelRecord;
 import model.QualifiedObservableReport;
 
 /**
- * @author mc8737
+ * @author Matthew Croft
  *
  */
 public class KnowledgePointsChangeReport implements QualifiedObservableReport

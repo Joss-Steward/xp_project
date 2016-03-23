@@ -313,4 +313,12 @@ public class Player
 		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(playerID, this.knowledgePoints, null);
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
+	
+	/**
+	 * @return the number of knowledge points of this player
+	 */
+	public int getKnowledgePoints() 
+	{
+		return knowledgePoints;
+	}
 }
