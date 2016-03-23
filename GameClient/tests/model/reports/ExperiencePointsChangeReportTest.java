@@ -23,7 +23,7 @@ public class ExperiencePointsChangeReportTest
 	public void testReportInitialization() 
 	{
 		int exp = 1000;
-		LevelRecord rec = new LevelRecord("Master Exploder", 100);
+		LevelRecord rec = new LevelRecord("Master Exploder", 100, 10, 7);
 		ExperiencePointsChangeReport report = new ExperiencePointsChangeReport(exp, rec);
 	
 		assertEquals(exp, report.getExperiencePoints());

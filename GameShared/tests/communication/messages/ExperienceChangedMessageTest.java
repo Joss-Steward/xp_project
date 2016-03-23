@@ -21,7 +21,7 @@ public class ExperienceChangedMessageTest
 	@Test
 	public void testCreateMessage() 
 	{
-		LevelRecord record = new LevelRecord("Serf", 15);
+		LevelRecord record = new LevelRecord("Serf", 15, 10, 7);
 		ExperienceChangedMessage msg = new ExperienceChangedMessage(PlayersForTest.JOHN.getPlayerID(),PlayersForTest.JOHN.getExperiencePoints(), record);
 		assertEquals(PlayersForTest.JOHN.getExperiencePoints(), msg.getExperiencePoints());
 	}
