@@ -10,28 +10,31 @@ public enum LevelsForTest
 	/**
 	 * 
 	 */
-	ONE("Serf", 45),
+	ONE("Serf", 45, 9, 30),
 	/**
 	 * 
 	 */
-	TWO("Freemerchant", 85),
+	TWO("Freemerchant", 85, 10, 31),
 	/**
 	 * 
 	 */
-	THREE("Lord", 125),
+	THREE("Lord", 125, 11, 30),
 	/**
 	 * 
 	 */
-	FOUR("King", Integer.MAX_VALUE);
+	FOUR("King", Integer.MAX_VALUE, 0, 0);
 	
 	private String description;
-
 	private int levelUpPoints;
+	private int levelUpMonth;
+	private int levelUpDate;
 
-	LevelsForTest(String description, int levelUpPoints)
+	LevelsForTest(String description, int levelUpPoints, int levelUpMonth, int levelUpDate)
 	{
 		this.description = description;
 		this.levelUpPoints = levelUpPoints;
+		this.levelUpMonth = levelUpMonth;
+		this.levelUpDate = levelUpDate;
 	}
 
 	/**
@@ -40,6 +43,22 @@ public enum LevelsForTest
 	public String getDescription()
 	{
 		return description;
+	}
+
+	/**
+	 * @return the day of the month by which they are required to move passed this level
+	 */
+	public int getLevelUpDayOfMonth()
+	{
+		return levelUpDate;
+	}
+
+	/**
+	 * @return the month by which they are required to move passed this level
+	 */
+	public int getLevelUpMonth()
+	{
+		return levelUpMonth;
 	}
 
 	/**

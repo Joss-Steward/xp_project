@@ -2,8 +2,10 @@ package datasource;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Test;
@@ -86,7 +88,14 @@ public abstract class NPCQuestionRowDataGatewayTest extends DatabaseTest
 	{
 		gateway = findRandomGateway();
 		assertNotNull(gateway);
+
+		Date now = new Date();
+		
+		assertTrue(now.after(gateway.getStartDate()));
+		assertEquals(gateway.getQuestionStatement(), NPCQuestionsForTest.ONE.getQ());
 	}
+	
+	
 
 	/**
 	 * get a gateway for a given question

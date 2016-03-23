@@ -35,7 +35,7 @@ public class InitializeThisClientsPlayerMessageTest
 		q.addAdventure(adventureTwo);
 		ArrayList<ClientPlayerQuest> list = new ArrayList<ClientPlayerQuest>();
 		list.add(q);
-		LevelRecord level = new LevelRecord("One", 15);
+		LevelRecord level = new LevelRecord("One", 15, 10, 7);
 		InitializeThisClientsPlayerMessage message = new InitializeThisClientsPlayerMessage(list, 20, level);
 		
 		assertEquals(20, message.getExperiencePts());

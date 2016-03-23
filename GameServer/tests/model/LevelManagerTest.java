@@ -54,7 +54,7 @@ public class LevelManagerTest
 	@Test
 	public void getsRightRange() throws DatabaseException
 	{
-		LevelRecord expected = new LevelRecord(LevelsForTest.TWO.getDescription(), LevelsForTest.TWO.getLevelUpPoints());
+		LevelRecord expected = new LevelRecord(LevelsForTest.TWO.getDescription(), LevelsForTest.TWO.getLevelUpPoints(), LevelsForTest.TWO.getLevelUpMonth(), LevelsForTest.TWO.getLevelUpDayOfMonth());
 		assertEquals(expected, LevelManager.getSingleton().getLevelForPoints(LevelsForTest.ONE.getLevelUpPoints()));
 	}
 	
@@ -65,7 +65,7 @@ public class LevelManagerTest
 	@Test
 	public void getsLastLevel() throws DatabaseException
 	{
-		LevelRecord expected = new LevelRecord(LevelsForTest.FOUR.getDescription(), LevelsForTest.FOUR.getLevelUpPoints());
+		LevelRecord expected = new LevelRecord(LevelsForTest.FOUR.getDescription(), LevelsForTest.FOUR.getLevelUpPoints(), LevelsForTest.FOUR.getLevelUpMonth(), LevelsForTest.FOUR.getLevelUpDayOfMonth());
 		assertEquals(expected, LevelManager.getSingleton().getLevelForPoints(LevelsForTest.THREE.getLevelUpPoints()));
 	}
 }

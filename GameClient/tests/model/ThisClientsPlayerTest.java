@@ -159,7 +159,7 @@ public class ThisClientsPlayerTest
 	{
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
 		
-		LevelRecord rec = new LevelRecord("Felyne Explorer", 100);
+		LevelRecord rec = new LevelRecord("Felyne Explorer", 100, 10, 7);
 		cp.setLevelInfo(rec, 10);
 		
 		assertEquals(10, cp.getExperiencePoints());
@@ -234,7 +234,7 @@ public class ThisClientsPlayerTest
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
 		
 		int exp = 10;
-		LevelRecord rec = new LevelRecord("Felyne Explorer", 10);
+		LevelRecord rec = new LevelRecord("Felyne Explorer", 10, 10, 7);
 		cp.setLevelInfo(rec, 10);
 		
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
