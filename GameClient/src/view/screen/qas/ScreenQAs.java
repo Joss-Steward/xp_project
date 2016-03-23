@@ -56,7 +56,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	{
 		setUpListening();
 		setSize(500, 500);
-		setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, (Gdx.graphics.getHeight() - getHeight()) / 2);
+		setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, (Gdx.graphics.getHeight() - getHeight()) / 1.1f);
 		container = new Table();
 		container.setFillParent(true);
 		container.left().top();

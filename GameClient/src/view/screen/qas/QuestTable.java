@@ -29,11 +29,10 @@ public class QuestTable extends ScrollPane
 		setScrollBarPositions(false, true);
 		setFillParent(true);
 		table = new Table();
-		table.debug();
 		table.left().top();
-		table.setFillParent(true);
-		Sprite sprite = new Sprite(new Texture(Gdx.files.internal("data/background.9.png")));
-		table.setBackground(new SpriteDrawable(sprite));
+		//table.setFillParent(true);
+//		Sprite sprite = new Sprite(new Texture(Gdx.files.internal("data/background.9.png")));
+//		table.setBackground(new SpriteDrawable(sprite));
 		updateQuests(questList);
 		setWidget(table);
 		layout();
@@ -52,10 +51,10 @@ public class QuestTable extends ScrollPane
 	{
 		table.clear();
 		//for (ClientPlayerQuest cpq : questList)
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 30; i++)
 		{
 			Label l = createClickableLabel("Quest: " /*+ cpq.getQuestID()*/);
-			table.add(l).row();
+			table.add(l).top().row();
 		}
 		layout();
 	}
