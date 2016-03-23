@@ -63,7 +63,7 @@ public class PlayerMapperTest extends DatabaseTest
 		assertEquals(testPlayer.getAppearanceType(), p.getAppearanceType());
 		assertEquals(testPlayer.getPlayerName(), p.getPlayerName());
 		assertEquals(testPlayer.getPosition(), p.getPlayerPosition());
-		assertEquals(testPlayer.getQuizScore(), p.getQuizScore());
+		assertEquals(testPlayer.getKnowledgeScore(), p.getQuizScore());
 		assertEquals(testPlayer.getMapName(), p.getMapName());
 		assertEquals(testPlayer.getExperiencePoints(), p.getExperiencePoints());
 		assertEquals(testPlayer.getCrew(), p.getCrew());

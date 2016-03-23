@@ -122,7 +122,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 			playerInfo.put(
 					nextKey,
 					new PlayerInfo(p.getPosition(), p
-							.getAppearanceType(), p.getQuizScore(), p.getExperiencePoints(), p.getCrew()));
+							.getAppearanceType(), p.getKnowledgeScore(), p.getExperiencePoints(), p.getCrew()));
 			nextKey++;
 		}
 	}

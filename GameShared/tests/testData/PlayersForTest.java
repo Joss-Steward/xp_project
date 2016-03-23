@@ -109,7 +109,7 @@ public enum PlayersForTest
 	private String mapName;
 	private int pin;
 	private String changedOn;
-	private int quizScore;
+	private int knowledgePoints;
 	private Crew crew;
 
 	/**
@@ -145,6 +145,7 @@ public enum PlayersForTest
 		this.changedOn = changedOn;
 		this.experiencePoints = experiencePoints;
 		this.crew = crew;
+		this.knowledgePoints = quizScore;
 	}
 
 	/**
@@ -212,9 +213,9 @@ public enum PlayersForTest
 	 * 
 	 * @return this player's score
 	 */
-	public int getQuizScore()
+	public int getKnowledgeScore()
 	{
-		return quizScore;
+		return knowledgePoints;
 	}
 
 	/**

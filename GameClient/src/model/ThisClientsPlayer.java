@@ -230,7 +230,7 @@ public class ThisClientsPlayer extends ClientPlayer
 	 */
 	public void knowledgePointsChanged(int knowledge, LevelRecord rec)
 	{
-		setLevelInfo(rec, knowledge);
+		setLevelInfoKnowledge(rec, knowledge);
 	}
 	
 	/**
@@ -243,7 +243,7 @@ public class ThisClientsPlayer extends ClientPlayer
 	 */
 	public void overwriteExperiencePoints(int experience, LevelRecord rec)
 	{
-		setLevelInfoKnowledge(rec, experience);
+		setLevelInfo(rec, experience);
 	}
 
 	/**
