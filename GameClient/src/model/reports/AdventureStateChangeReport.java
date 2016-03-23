@@ -11,10 +11,10 @@ public final class AdventureStateChangeReport implements QualifiedObservableRepo
 {
 
 	private final int adventureID;
-	private String adventureDescription;
-	private AdventureStateEnum newState;
-	private int questID;
-	private int playerID;
+	private final String adventureDescription;
+	private final AdventureStateEnum newState;
+	private final int questID;
+	private final int playerID;
 	
 	/**
 	 * @param playerID this player's playerID

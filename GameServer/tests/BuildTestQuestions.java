@@ -40,7 +40,8 @@ public class BuildTestQuestions
 		NPCQuestionRowDataGatewayRDS.createTable();
 		for (NPCQuestionsForTest question : NPCQuestionsForTest.values())
 		{
-			new NPCQuestionRowDataGatewayRDS(question.getQuestionID(),question.getQ(),question.getA());
+			new NPCQuestionRowDataGatewayRDS(question.getQuestionID(),question.getQ(),question.getA(),
+			        question.getStartDate(), question.getEndDate() );
 		}
 	}
 }

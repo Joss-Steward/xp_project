@@ -40,8 +40,8 @@ public class MovementTriggerQuestSequenceTest extends SequenceTest
 			new MessageFlow(ServerType.AREA_SERVER, ServerType.THIS_PLAYER_CLIENT,
 					new QuestStateChangeMessage(PlayersForTest.MATT.getPlayerID(),
 							QuestsForTest.THE_LITTLE_QUEST.getQuestID(),
-							QuestsForTest.THE_LITTLE_QUEST.getQuestDescription(),
-							QuestStateEnum.TRIGGERED), true) };
+							QuestsForTest.THE_LITTLE_QUEST.getQuestTitle(),
+							QuestsForTest.THE_LITTLE_QUEST.getQuestDescription(), QuestStateEnum.TRIGGERED), true) };
 
 	/**
 	 * @throws IOException

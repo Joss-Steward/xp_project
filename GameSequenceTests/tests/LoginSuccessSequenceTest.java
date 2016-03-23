@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -77,7 +76,9 @@ public class LoginSuccessSequenceTest extends SequenceTest
 							getPlayersQuest(PlayersForTest.MERLIN.getPlayerID()),
 							PlayersForTest.MERLIN.getExperiencePoints(), new LevelRecord(
 									LevelsForTest.TWO.getDescription(),
-									LevelsForTest.TWO.getLevelUpPoints())), true) };
+									LevelsForTest.TWO.getLevelUpPoints(),
+									LevelsForTest.TWO.getLevelUpMonth(),
+									LevelsForTest.TWO.getLevelUpDayOfMonth())), true) };
 
 	/**
 	 * @throws IOException
@@ -114,7 +115,7 @@ public class LoginSuccessSequenceTest extends SequenceTest
 	{
 		QuestRowDataGateway qGateway = new QuestRowDataGatewayMock(q.getQuestID());
 		ClientPlayerQuest cpq = new ClientPlayerQuest(q.getQuestID(),
-				qGateway.getQuestDescription(), q.getState(),
+				qGateway.getQuestTitle(), qGateway.getQuestDescription(), q.getState(),
 				qGateway.getExperiencePointsGained(),
 				qGateway.getAdventuresForFulfillment(), q.isNeedingNotification());
 		AdventureStateTableDataGateway asGateway = AdventureStateTableDataGatewayMock

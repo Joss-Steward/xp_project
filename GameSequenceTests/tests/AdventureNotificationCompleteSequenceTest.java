@@ -13,15 +13,22 @@ import model.SequenceTest;
 import model.ServerType;
 import testData.PlayersForTest;
 
+/**
+ * Tests that a notification is sent when an adventure is completed
+ * @author Ronald Sease & Evan Stevenson
+ */
 public class AdventureNotificationCompleteSequenceTest extends SequenceTest
 {
 	private MessageFlow[] sequence = 
 		{
 				new MessageFlow(ServerType.THIS_PLAYER_CLIENT, ServerType.AREA_SERVER,
 						new AdventureNotificationCompleteMessage(PlayersForTest.MERLIN.getPlayerID(), 1, 1), false)
-						//quest adventure
 		};
 	
+	/**
+	 * @throws IOException
+	 *         shouldn't
+	 */
 	public AdventureNotificationCompleteSequenceTest() throws IOException
 	{
 		for(MessageFlow mf: sequence)
@@ -30,26 +37,40 @@ public class AdventureNotificationCompleteSequenceTest extends SequenceTest
 		}
 	}
 
+	/** 
+	 * @see model.SequenceTest#getInitiatingCommand()
+	 */
 	@Override
-	public Command getInitiatingCommand() {
-		// TODO Auto-generated method stub
+	public Command getInitiatingCommand() 
+	{
 		return new CommandAdventureNotificationComplete(PlayersForTest.MERLIN.getPlayerID(), 1, 1);
 	}
 
+	/** 
+	 * @see model.SequenceTest#getInitiatingServerType()
+	 */
+	
 	@Override
-	public ServerType getInitiatingServerType() {
-		// TODO Auto-generated method stub
+	public ServerType getInitiatingServerType() 
+	{
 		return ServerType.THIS_PLAYER_CLIENT;
 	}
 
+	/** 
+	 * @see model.SequenceTest#getInitiatingPlayerID()
+	 */
 	@Override
-	public int getInitiatingPlayerID() {
-		// TODO Auto-generated method stub
+	public int getInitiatingPlayerID() 
+	{
 		return PlayersForTest.MERLIN.getPlayerID();
 	}
 
+	/** 
+	 * @see model.SequenceTest#setUpServer()
+	 */
 	@Override
-	public void setUpServer() {
+	public void setUpServer() 
+	{
 		try
 		{
 			MapManager.getSingleton().changeToNewFile(PlayersForTest.MERLIN.getMapName());
@@ -64,11 +85,12 @@ public class AdventureNotificationCompleteSequenceTest extends SequenceTest
 
 	}
 
+	/**
+	 * @see model.SequenceTest#resetDataGateways()
+	 */
 	@Override
-	public void resetDataGateways() {
+	public void resetDataGateways() 
+	{
 		PlayerManager.resetSingleton();
-		// TODO Auto-generated method stub
-
 	}
-
 }

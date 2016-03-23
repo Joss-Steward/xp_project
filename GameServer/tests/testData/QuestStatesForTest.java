@@ -13,7 +13,7 @@ public enum QuestStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER1_QUEST1(1, 1, QuestStateEnum.FINISHED, false),
+	PLAYER1_QUEST1(1, 1, QuestStateEnum.AVAILABLE, false),
 	/**
 	 * 
 	 */

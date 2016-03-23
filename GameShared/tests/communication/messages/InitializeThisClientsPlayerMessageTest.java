@@ -30,12 +30,12 @@ public class InitializeThisClientsPlayerMessageTest
 	{
 		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", 3, AdventureStateEnum.HIDDEN, false);
 		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", 3, AdventureStateEnum.HIDDEN, false);
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.HIDDEN, 42, 13, true);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "title", "Test Quest 1", QuestStateEnum.HIDDEN, 42, 13, true);
 		q.addAdventure(adventureOne);
 		q.addAdventure(adventureTwo);
 		ArrayList<ClientPlayerQuest> list = new ArrayList<ClientPlayerQuest>();
 		list.add(q);
-		LevelRecord level = new LevelRecord("One", 15);
+		LevelRecord level = new LevelRecord("One", 15, 10, 7);
 		InitializeThisClientsPlayerMessage message = new InitializeThisClientsPlayerMessage(list, 20, level);
 		
 		assertEquals(20, message.getExperiencePts());

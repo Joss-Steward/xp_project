@@ -8,9 +8,21 @@ import communication.CommunicationException;
 import model.SequenceTestRunner;
 import model.ServerType;
 
+/**
+ * Runs the adventure notification complete sequence tests as JUnit tests
+ * @author Ronald Sease & Evan Stevenson
+ *
+ */
 public class JUnitAdventureNotificationComplete 
 {
 
+	/**
+	 * Runs the adventure notification complete sequence test
+	 * @throws IOException
+	 *         shouldn't
+	 * @throws CommunicationException
+	 *         shouldn't
+	 */
 	@Test
 	public void testAdventureNotificationComplete() throws IOException, CommunicationException
 	{

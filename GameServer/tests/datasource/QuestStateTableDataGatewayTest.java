@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import testData.QuestStatesForTest;
@@ -28,8 +29,11 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 
 	/**
 	 * Make sure any static information is cleaned up between tests
-	 * @throws SQLException shouldn't
-	 * @throws DatabaseException shouldn't
+	 * 
+	 * @throws SQLException
+	 *             shouldn't
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	@After
 	public void cleanup() throws DatabaseException, SQLException
@@ -65,7 +69,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	@Test
 	public void retrieveAllAdventuresForQuest() throws DatabaseException
 	{
-		gateway = getGatewaySingleton();
+		setup();
 		ArrayList<QuestStateRecord> records = gateway.getQuestStates(1);
 		assertEquals(3, records.size());
 		QuestStateRecord record = records.get(0);
@@ -86,6 +90,16 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 			assertEquals(first.getState(), record.getState());
 			assertEquals(first.getQuestID(), record.getQuestID());
 		}
+	}
+
+	/**
+	 * make sure the data is initialized
+	 */
+	@Before
+	public void setup()
+	{
+		gateway = getGatewaySingleton();
+		gateway.resetData();
 	}
 
 	/**
@@ -120,7 +134,8 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	{
 		gateway = getGatewaySingleton();
 		gateway.createRow(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID(),
-				QuestStatesForTest.PLAYER1_QUEST1.getQuestID(), QuestStateEnum.TRIGGERED, true);
+				QuestStatesForTest.PLAYER1_QUEST1.getQuestID(), QuestStateEnum.TRIGGERED,
+				true);
 	}
 
 	/**

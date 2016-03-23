@@ -137,7 +137,7 @@ public class ThisClientsPlayerTest
 		cp.addQuest(q);
 		
 		ClientPlayerAdventure a = new ClientPlayerAdventure(42, "Test Adventure ow2", 3, AdventureStateEnum.HIDDEN, false);
-		ClientPlayerQuest qow = new ClientPlayerQuest(41, "Test Quest ow1", QuestStateEnum.HIDDEN, 42, 3, true);
+		ClientPlayerQuest qow = new ClientPlayerQuest(41, "quest title", "Test Quest ow1", QuestStateEnum.HIDDEN, 42, 3, true);
 		
 		qow.addAdventure(a);
 		
@@ -159,7 +159,7 @@ public class ThisClientsPlayerTest
 	{
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
 		
-		LevelRecord rec = new LevelRecord("Felyne Explorer", 100);
+		LevelRecord rec = new LevelRecord("Felyne Explorer", 100, 10, 7);
 		cp.setLevelInfo(rec, 10);
 		
 		assertEquals(10, cp.getExperiencePoints());
@@ -177,7 +177,7 @@ public class ThisClientsPlayerTest
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
 		
 		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", 0, AdventureStateEnum.COMPLETED, true);
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.FINISHED, 1, 2, true);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "questtitle", "Test Quest 1", QuestStateEnum.FINISHED, 1, 2, true);
 		q.addAdventure(a);
 		cp.addQuest(q);
 		
@@ -205,7 +205,7 @@ public class ThisClientsPlayerTest
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
 		
 		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", 0, AdventureStateEnum.COMPLETED, true);
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.FINISHED, 1, 2, true);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "quest title", "Test Quest 1", QuestStateEnum.FINISHED, 1, 2, true);
 		q.addAdventure(a);
 		cp.addQuest(q);
 		
@@ -234,7 +234,7 @@ public class ThisClientsPlayerTest
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
 		
 		int exp = 10;
-		LevelRecord rec = new LevelRecord("Felyne Explorer", 10);
+		LevelRecord rec = new LevelRecord("Felyne Explorer", 10, 10, 7);
 		cp.setLevelInfo(rec, 10);
 		
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);

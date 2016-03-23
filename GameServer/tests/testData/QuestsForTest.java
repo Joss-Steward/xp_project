@@ -14,57 +14,65 @@ import datasource.PlayerTableDataGateway;
  */
 public enum QuestsForTest
 {
-	
+
 	/**
 	 * 
 	 */
-	ONE_BIG_QUEST(1, "Quest 1", new GameLocation("current.tmx", new Position(4, 14)), 5, 2,
+	ONE_BIG_QUEST(1, "t", "Quest 1",
+			new GameLocation("current.tmx", new Position(4, 14)), 5, 2,
 			QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
 					new Position(3, 3))),
 	/**
 	 * 
 	 */
-	THE_OTHER_QUEST(2, "Quest 2", new GameLocation("current.tmx", new Position(4, 14)), 4, 2,
-			QuestCompletionActionType.NO_ACTION, null),
+	THE_OTHER_QUEST(2, "t", "Quest 2", new GameLocation("current.tmx",
+			new Position(4, 15)), 4, 2, QuestCompletionActionType.NO_ACTION, null),
 	/**
 	 * 
 	 */
-	ONE_SAME_LOCATION_QUEST(3, "Quest 3", new GameLocation("current.tmx", new Position(4, 14)), 3, 2,
-			QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
-					new Position(3, 3))),
+	ONE_SAME_LOCATION_QUEST(3, "t", "Quest 3", new GameLocation("current.tmx",
+			new Position(4, 15)), 3, 2, QuestCompletionActionType.TELEPORT,
+			new GameLocation("current.tmx", new Position(3, 3))),
 	/**
 	 * 
 	 */
 
-	THE_LITTLE_QUEST(4, "Quest 4", new GameLocation("current.tmx", new Position(2, 32)), 5, 1,QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
-			new Position(3, 3))),
+	THE_LITTLE_QUEST(4, "t", "Quest 4", new GameLocation("current.tmx", new Position(2,
+			32)), 5, 1, QuestCompletionActionType.TELEPORT, new GameLocation(
+			"current.tmx", new Position(3, 3))),
 	/**
 	 * 
 	 */
-	CHAT_TO_AN_NPC_QUEST(5, "Quest 5", new GameLocation("current.tmx", new Position(0,0)), 5, 1,QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
-			new Position(3, 3))),
+	CHAT_TO_AN_NPC_QUEST(5, "t", "Quest 5", new GameLocation("current.tmx", new Position(
+			0, 0)), 5, 1, QuestCompletionActionType.TELEPORT, new GameLocation(
+			"current.tmx", new Position(3, 3))),
 	/**
 	 * 
 	 */
-    TELEPORT_QUEST(6, "Teleporting Quest", new GameLocation("current.tmx", new Position(2, 32)), 1, 1,QuestCompletionActionType.TELEPORT, new GameLocation("sortingRoom.tmx",
-            new Position(3, 3))),
+	TELEPORT_QUEST(6, "t", "Teleporting Quest", new GameLocation("current.tmx",
+			new Position(2, 32)), 1, 1, QuestCompletionActionType.TELEPORT,
+			new GameLocation("sortingRoom.tmx", new Position(3, 3))),
 
 	/**
 	 * The real opening quest
 	 */
-	ONRAMPING_QUEST(100, "Welcome!  For your first quest, you need to learn a little bit about this world.  Press Q to see what you need to do.  "
-			+ "Double clicking on a quest in the quest screen will show you its adventures.", 
+	ONRAMPING_QUEST(
+			100,
+			"Introductory Quest",
+			"Welcome!  For your first quest, you need to learn a little bit about this world.  Press Q to see what you need to do.  "
+					+ "Double clicking on a quest in the quest screen will show you its adventures.",
 			PlayerTableDataGateway.INITIAL_GAME_LOCATION, 6, 6,
-							QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
-									new Position(4, 13))),
+			QuestCompletionActionType.TELEPORT, new GameLocation("current.tmx",
+					new Position(4, 13))),
 	/**
 	 * Real quest to make them explore
 	 */
-	EXPLORATION_QUEST(101, "Explore your new school", new GameLocation("current.tmx",
-			new Position(4, 13)),2, 5, QuestCompletionActionType.NO_ACTION, null);
-	
-	
+	EXPLORATION_QUEST(101, "Exploration", "Explore your new school", new GameLocation(
+			"current.tmx", new Position(4, 13)), 2, 5,
+			QuestCompletionActionType.NO_ACTION, null);
+
 	private int questID;
+	private String questTitle;
 	private String questDescription;
 	private GameLocation gameLocation;
 	private int adventuresForFulfillment;
@@ -77,7 +85,9 @@ public enum QuestsForTest
 	 * 
 	 * @param questID
 	 *            this quest's unique ID
-	 * @param adventureDescription
+	 * @param questTitle
+	 *            this quest's title
+	 * @param questDescription
 	 *            what the player has to do
 	 * @param experienceGained
 	 *            the number of experience points you get when you fulfill the
@@ -91,12 +101,14 @@ public enum QuestsForTest
 	 * @param completionActionParam
 	 *            The parameter for the completion action
 	 */
-	QuestsForTest(int questID, String adventureDescription, GameLocation gameLocation, int experienceGained, int adventuresForFulfillment,
-			QuestCompletionActionType completionActionType,
+	QuestsForTest(int questID, String questTitle, String questDescription,
+			GameLocation gameLocation, int experienceGained,
+			int adventuresForFulfillment, QuestCompletionActionType completionActionType,
 			QuestCompletionActionParameter completionActionParam)
 	{
 		this.questID = questID;
-		this.questDescription = adventureDescription;
+		this.questTitle = questTitle;
+		this.questDescription = questDescription;
 		this.gameLocation = gameLocation;
 		this.experienceGained = experienceGained;
 		this.adventuresForFulfillment = adventuresForFulfillment;
@@ -169,6 +181,14 @@ public enum QuestsForTest
 	public QuestCompletionActionParameter getCompletionActionParameter()
 	{
 		return completionActionParameter;
+	}
+
+	/**
+	 * @return this quest's title
+	 */
+	public String getQuestTitle()
+	{
+		return questTitle;
 	}
 
 }

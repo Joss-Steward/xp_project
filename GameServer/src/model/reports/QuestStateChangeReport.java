@@ -5,6 +5,7 @@ import model.QualifiedObservableReport;
 
 /**
  * Sent when a quest changes state
+ * 
  * @author Merlin
  *
  */
@@ -13,19 +14,28 @@ public final class QuestStateChangeReport implements QualifiedObservableReport
 
 	private final int questID;
 	private final int playerID;
-	private String questDescription;
-	private QuestStateEnum newState;
+	private final String questDescription;
+	private final String questTitle;
+	private final QuestStateEnum newState;
 
 	/**
-	 * @param playerID the player's unique ID
-	 * @param questID the quest's unique ID
-	 * @param questDescription the description of this quest
-	 * @param newState the state the quest has transitioned to for this player
+	 * @param playerID
+	 *            the player's unique ID
+	 * @param questID
+	 *            the quest's unique ID
+	 * @param questTitle
+	 *            this quest's title
+	 * @param questDescription
+	 *            the description of this quest
+	 * @param newState
+	 *            the state the quest has transitioned to for this player
 	 */
-	public QuestStateChangeReport(int playerID, int questID, String questDescription, QuestStateEnum newState)
+	public QuestStateChangeReport(int playerID, int questID, String questTitle,
+			String questDescription, QuestStateEnum newState)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
+		this.questTitle = questTitle;
 		this.questDescription = questDescription;
 		this.newState = newState;
 	}
@@ -78,6 +88,14 @@ public final class QuestStateChangeReport implements QualifiedObservableReport
 	public int getQuestID()
 	{
 		return questID;
+	}
+
+	/**
+	 * @return this quest's title
+	 */
+	public String getQuestTitle()
+	{
+		return questTitle;
 	}
 
 	/**

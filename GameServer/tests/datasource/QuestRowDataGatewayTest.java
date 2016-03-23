@@ -71,6 +71,7 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 		assertEquals(quest.getExperienceGained(), gateway.getExperiencePointsGained());
 		assertEquals(quest.getCompletionActionType(), gateway.getCompletionActionType());
 		assertEquals(quest.getCompletionActionParameter(), gateway.getCompletionActionParameter());
+		assertEquals(quest.getQuestTitle(), gateway.getQuestTitle());
 	}
 
 	/**
@@ -93,9 +94,9 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 	@Test
 	public void canFindQuestsForMapLocation() throws DatabaseException
 	{
-		QuestsForTest q = QuestsForTest.ONE_BIG_QUEST;
+		QuestsForTest q = QuestsForTest.THE_OTHER_QUEST;
 		ArrayList<Integer> questIDs = findQuestsForMapLocation(q.getMapName(),q.getPosition());
-		assertEquals(3, questIDs.size());
+		assertEquals(2, questIDs.size());
 		assertTrue(questIDs.contains(q.getQuestID()));
 		assertTrue(questIDs.contains(QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID()));
 	}

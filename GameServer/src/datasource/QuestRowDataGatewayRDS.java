@@ -36,10 +36,10 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 					"DROP TABLE IF EXISTS Quests");
 			stmt.executeUpdate();
 			stmt.close();
-
+			System.out.println("Table has been dropped");
 			stmt = new ClosingPreparedStatement(
 					connection,
-					"Create TABLE Quests (questID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questDescription VARCHAR(200), triggerMapName VARCHAR(80),"
+					"Create TABLE Quests (questID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questTitle VARCHAR(40),questDescription VARCHAR(200), triggerMapName VARCHAR(80),"
 							+ " triggerRow INT, triggerColumn INT, experiencePointsGained INT, adventuresForFulfillment INT, "
 							+ " completionActionType INT, completionActionParameter BLOB)");
 			stmt.executeUpdate();
@@ -50,6 +50,7 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	}
 
 	private int questID;
+	private String questTitle;
 	private String questDescription;
 	private String triggerMapName;
 	private Position triggerPosition;
@@ -78,6 +79,7 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 			stmt.setInt(1, questID);
 			ResultSet result = stmt.executeQuery();
 			result.next();
+			this.questTitle = result.getString("questTitle");
 			this.questDescription = result.getString("questDescription");
 			this.triggerMapName = result.getString("triggerMapName");
 			this.triggerPosition = new Position(result.getInt("triggerRow"),
@@ -127,6 +129,7 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	 * 
 	 * @param questID
 	 *            the quest's unique ID
+	 * @param questTitle TODO
 	 * @param questDescription
 	 *            the description of the quest
 	 * @param triggerMapName
@@ -148,10 +151,10 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	 * @throws DatabaseException
 	 *             if we can't talk to the RDS
 	 */
-	public QuestRowDataGatewayRDS(int questID, String questDescription,
-			String triggerMapName, Position triggerPosition, int experiencePointsGained,
-			int adventuresForFulfillment, QuestCompletionActionType completionActionType,
-			QuestCompletionActionParameter completionActionParameter)
+	public QuestRowDataGatewayRDS(int questID, String questTitle,
+			String questDescription, String triggerMapName, Position triggerPosition,
+			int experiencePointsGained, int adventuresForFulfillment,
+			QuestCompletionActionType completionActionType, QuestCompletionActionParameter completionActionParameter)
 			throws DatabaseException
 	{
 		this.questID = questID;
@@ -160,21 +163,23 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
 					connection,
-					"Insert INTO Quests SET questID = ?, questDescription = ?, triggerMapname = ?, triggerRow = ?, triggerColumn = ?, "
+					"Insert INTO Quests SET questID = ?, questTitle = ?,questDescription = ?, triggerMapname = ?, triggerRow = ?, triggerColumn = ?, "
 							+ "experiencePointsGained = ?, adventuresForFulfillment = ?,"
 							+ " completionActionType = ?, completionActionParameter = ?");
 			stmt.setInt(1, questID);
-			stmt.setString(2, questDescription);
-			stmt.setString(3, triggerMapName);
-			stmt.setInt(4, triggerPosition.getRow());
-			stmt.setInt(5, triggerPosition.getColumn());
-			stmt.setInt(6, experiencePointsGained);
-			stmt.setInt(7, adventuresForFulfillment);
-			stmt.setInt(8, completionActionType.getID());
-			stmt.setObject(9, completionActionParameter);
+			stmt.setString(2, questTitle);
+			stmt.setString(3, questDescription);
+			stmt.setString(4, triggerMapName);
+			stmt.setInt(5, triggerPosition.getRow());
+			stmt.setInt(6, triggerPosition.getColumn());
+			stmt.setInt(7, experiencePointsGained);
+			stmt.setInt(8, adventuresForFulfillment);
+			stmt.setInt(9, completionActionType.getID());
+			stmt.setObject(10, completionActionParameter);
 			stmt.executeUpdate();
 
 			this.questDescription = questDescription;
+			this.questTitle = questTitle;
 
 		} catch (SQLException e)
 		{
@@ -303,6 +308,15 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	public QuestCompletionActionParameter getCompletionActionParameter()
 	{
 		return completionActionParameter;
+	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getQuestTitle()
+	 */
+	@Override
+	public String getQuestTitle()
+	{
+		return questTitle;
 	}
 
 }

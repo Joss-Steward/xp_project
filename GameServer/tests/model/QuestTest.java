@@ -39,10 +39,11 @@ public class QuestTest
 
 		Position pos = new Position(33, 44);
 
-		Quest q = new Quest(245, "I am a description", "HappyZone", pos, adventures, 42,
-				13, QuestCompletionActionType.NO_ACTION, null);
+		Quest q = new Quest(245, "TITLE!!!!", "I am a description", "HappyZone", pos, adventures,
+				42, 13, QuestCompletionActionType.NO_ACTION, null);
 
 		assertEquals(245, q.getQuestID());
+		assertEquals("TITLE!!!!", q.getTitle());
 		assertEquals("I am a description", q.getDescription());
 		assertEquals("HappyZone", q.getMapName());
 		assertEquals(pos, q.getPos());
@@ -77,7 +78,7 @@ public class QuestTest
 	@Test
 	public void testSetters()
 	{
-		Quest q = new Quest(-1, null, null, null, null, 42, 45, null, null);
+		Quest q = new Quest(-1, null, null, null, null, null, 42, 45, null, null);
 		ArrayList<AdventureRecord> adventures = new ArrayList<AdventureRecord>();
 		adventures.add(new AdventureRecord(5, 42, "Merlin Zone", 4,
 				AdventureCompletionType.CHAT, new CriteriaString("Henry")));
@@ -87,12 +88,14 @@ public class QuestTest
 		Position pos = new Position(22, 20);
 
 		q.setQuestID(44);
+		q.setTitle("title");
 		q.setDescription("I am set");
 		q.setMapName("Map Name");
 		q.setPos(pos);
 		q.setAdventures(adventures);
 
 		assertEquals(44, q.getQuestID());
+		assertEquals("title", q.getTitle());
 		assertEquals("I am set", q.getDescription());
 		assertEquals("Map Name", q.getMapName());
 		assertEquals(pos, q.getPos());

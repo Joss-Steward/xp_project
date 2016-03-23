@@ -40,7 +40,7 @@ public class BuildTestLevels
 		LevelTableDataGatewayRDS.createTable();
 		for (LevelsForTest level : LevelsForTest.values())
 		{
-			LevelTableDataGatewayRDS.getSingleton().createRow(level.getDescription(), level.getLevelUpPoints());
+			LevelTableDataGatewayRDS.getSingleton().createRow(level.getDescription(), level.getLevelUpPoints(), level.getLevelUpMonth(), level.getLevelUpDayOfMonth());
 		}
 	}
 }
