@@ -43,6 +43,7 @@ public class AdventureTable extends ScrollPane
 	}
 	
 	/**
+	 * @param questDesc 
 	 * @param adventureList
 	 */
 	public void updateAdventures(String questDesc, ArrayList<ClientPlayerAdventure> adventureList)
@@ -67,7 +68,7 @@ public class AdventureTable extends ScrollPane
 		l.setWrap(true);
 		if (cpa.getAdventureState() == AdventureStateEnum.COMPLETED)
 		{
-			l.setColor(Color.RED);
+			l.setColor(Color.GREEN);
 		}
 		return l;
 	}

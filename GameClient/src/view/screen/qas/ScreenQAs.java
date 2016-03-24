@@ -138,6 +138,8 @@ public class ScreenQAs extends Group implements QualifiedObserver
 			QuestStateReport r = (QuestStateReport) report;
 			questList = r.getClientPlayerQuestList();
 			questTable.updateQuests(questList);
+			ClientPlayerQuest firstQuest= questList.get(0);
+			adventureTable.updateAdventures(firstQuest.getQuestDescription(), firstQuest.getAdventureList());
 			questTable.requestFoucus();
 		}
 	}
