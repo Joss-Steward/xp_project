@@ -41,12 +41,19 @@ import data.QuestStateEnum;
  */
 public class ScreenQAs extends Group implements QualifiedObserver
 {
+	/**
+	 * Default skin for gui
+	 */
 	public static final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+	private final float WIDTH = 600f;
+	private final float HEIGHT = 500f;
+	private final float POS_X = (Gdx.graphics.getWidth() - WIDTH) / 2;
+	private final float POS_Y = (Gdx.graphics.getHeight() - HEIGHT) / 1.1f;
 	private QuestTable questTable;
-	private Table container;
-	boolean qaScreenShowing = false;
-
-	private ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
+	private AdventureTable adventureTable;
+	private Table container; //This is required to hold both the quest table and the adventure table.
+	boolean qaScreenShowing;
+	private ArrayList<ClientPlayerQuest> questList;
 
 	/**
 	 * Basic constructor. will call show() to initialize all the data in the
@@ -54,15 +61,23 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 */
 	public ScreenQAs()
 	{
+		questList = new ArrayList<ClientPlayerQuest>();
 		setUpListening();
-		setSize(500, 500);
-		setPosition((Gdx.graphics.getWidth() - getWidth()) / 2, (Gdx.graphics.getHeight() - getHeight()) / 1.1f);
-		container = new Table();
-		container.setFillParent(true);
-		container.left().top();
+		setSize(WIDTH, HEIGHT);
+		setPosition(POS_X, POS_Y);
 		questTable = new QuestTable(questList);
-		container.add(questTable);
+		adventureTable = new AdventureTable();
+		questTable.setAdventureTable(adventureTable);  //Set the adventure table so that when a quest is clicked it can update it.
+		
+		//Make the container
+		container = new Table();
+		container.setFillParent(true);  //Sets the container to the same size as the quest screen
+		container.left().top();  //Sets the container to be at the top left of the quest screen (not the game screen).
+		container.add(questTable).width(.40f * WIDTH).height(HEIGHT); //Add quest table and tell it how much space to take;
+		container.add(adventureTable).width(.60f * WIDTH).height(HEIGHT);
+		
 		addActor(container);
+		setVisible(false);
 	}
 		
 	/**
@@ -70,16 +85,13 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 */
 	public void setUpListening()
 	{
-		QualifiedObservableConnector cm = QualifiedObservableConnector
-				.getSingleton();
+		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
 		cm.registerObserver(this, QuestStateReport.class);
 	}
 	
 	/**
 	 * Set the visibility of the QAScreen to the given boolean
-	 * 
-	 * @param b
-	 *            boolean given for showing
+	 * @param b boolean given for showing
 	 */
 	public void setQAScreenVisibility(boolean b)
 	{
@@ -88,7 +100,6 @@ public class ScreenQAs extends Group implements QualifiedObserver
 
 	/**
 	 * Is the quest table on the screen
-	 * 
 	 * @return showing ; is there quests currently displaying on the screen
 	 */
 	public boolean isQAScreenShowing()
@@ -127,6 +138,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 			QuestStateReport r = (QuestStateReport) report;
 			questList = r.getClientPlayerQuestList();
 			questTable.updateQuests(questList);
+			questTable.requestFoucus();
 		}
 	}
 	

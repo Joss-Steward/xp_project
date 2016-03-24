@@ -77,10 +77,12 @@ public class ScreenLogin extends ScreenBasic
 
 		// create login field
 		loginField = new TextField("", skin);
+		//loginField = new TextField("newbie", skin);
 		loginField.setMessageText("Player Name");
 
 		// create login field
 		pwField = new TextField("", skin);
+		//pwField = new TextField("pw", skin);
 		pwField.setMessageText("Password");
 
 		Label flagLabel = new Label(this.flagMsg, skin);

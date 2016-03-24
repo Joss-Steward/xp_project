@@ -1,15 +1,13 @@
 package view.screen.qas;
 import java.util.ArrayList;
-
-import model.ClientPlayerQuest;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
+import model.ClientPlayerQuest;
 
 /**
  * @author TJ Renninger and Ian Keefer
@@ -19,28 +17,63 @@ public class QuestTable extends ScrollPane
 {
 
 	private Table table;
+	private AdventureTable adventureTable;
+	//private ArrayList<ClientPlayerQuest> questList;
 	
 	/**
 	 * @param questList
 	 */
-	public QuestTable(ArrayList<ClientPlayerQuest> questList)
+	public QuestTable(ArrayList<ClientPlayerQuest> ql)
 	{
-		super(null, ScreenQAs.skin);
-		setScrollBarPositions(false, true);
-		setFillParent(true);
+		super(null, ScreenQAs.skin);	//Null is passed in because the widget has not been created yet.
+		setFadeScrollBars(false);
+		//questList = ql;
+		
+		//Build the table that holds all of the quests
+		buildTable();
+		setWidget(table);
+		
+		updateQuests(ql);
+		requestFoucus();
+	}
+	
+	/**
+	 * @param at
+	 */
+	public void setAdventureTable(AdventureTable at)
+	{
+		adventureTable = at;
+	}
+	
+	/**
+	 * Build the table that will hold all of the quests.
+	 */
+	private void buildTable()
+	{
 		table = new Table();
 		table.left().top();
-		//table.setFillParent(true);
-//		Sprite sprite = new Sprite(new Texture(Gdx.files.internal("data/background.9.png")));
-//		table.setBackground(new SpriteDrawable(sprite));
-		updateQuests(questList);
-		setWidget(table);
-		layout();
+		table.pad(10f);
 	}
 
-	private Label createClickableLabel(String questName) 
+	/**
+	 * Creates a label for a quest to be displayed in the quest table.
+	 * The label will be clickable
+	 * @param questName
+	 * @return
+	 */
+	private Label createQuestLabel(final ClientPlayerQuest cpq) 
 	{
-		Label l = new Label(questName, ScreenQAs.skin);
+		Label l = new Label(cpq.getQuestTitle(), ScreenQAs.skin);
+		ClickListener clickListener = new ClickListener()
+		{
+			@Override
+			public void clicked(InputEvent event, float x, float y)
+			{
+				adventureTable.updateAdventures(cpq.getQuestDescription(), cpq.getAdventureList());
+				super.clicked(event, x, y);
+			}
+		};
+		l.addListener(clickListener);
 		return l;
 	}
 
@@ -50,14 +83,18 @@ public class QuestTable extends ScrollPane
 	public void updateQuests(ArrayList<ClientPlayerQuest> questList) 
 	{
 		table.clear();
-		//for (ClientPlayerQuest cpq : questList)
-		for (int i = 0; i < 30; i++)
+		for (ClientPlayerQuest cpq : questList)
+		//for (int i = 0; i < 30; i++)
 		{
-			Label l = createClickableLabel("Quest: " /*+ cpq.getQuestID()*/);
+			Label l = createQuestLabel(cpq);
 			table.add(l).top().row();
 		}
-		layout();
 	}
 	
-	
+	/**
+	 * This does not work yet, it needs some tweaking
+	 */
+	public void requestFoucus()
+	{
+	}
 }
