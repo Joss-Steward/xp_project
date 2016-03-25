@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import data.AdventureStateEnum;
 import model.ClientPlayerAdventure;
-import model.ClientPlayerQuest;
 
 /**
  * @author TJ Renninger and Ian Keefer
@@ -33,7 +32,7 @@ public class AdventureTable extends ScrollPane
 	}
 
 	/**
-	 * 
+	 * Creates a new table that will hold all of the quests and sets it to the top left position of the scroll pane
 	 */
 	private void buildTable()
 	{
@@ -43,8 +42,9 @@ public class AdventureTable extends ScrollPane
 	}
 	
 	/**
-	 * @param questDesc 
-	 * @param adventureList
+	 * Updates the adventure table when a new quest is selected.
+	 * @param questDesc The description of the quest
+	 * @param adventureList The list of adventures the quest has
 	 */
 	public void updateAdventures(String questDesc, ArrayList<ClientPlayerAdventure> adventureList)
 	{
@@ -53,7 +53,7 @@ public class AdventureTable extends ScrollPane
 		l.setWrap(true);
 		table.add(l).left().top().width(table.getWidth() - PADDING * 4f);		//Width is used to tell the label when to wrap its text.
 		table.row();
-		for (int i = 0; i < 100; i++)  //Add a stupid amount of adventures to test scrolling
+		//for (int i = 0; i < 100; i++)  //Add a stupid amount of adventures to test scrolling
 		for (ClientPlayerAdventure cpa : adventureList)
 		{
 			l = createAdventureLabel(cpa);
@@ -62,6 +62,14 @@ public class AdventureTable extends ScrollPane
 		}
 	}
 
+	/**
+	 * Creates the label for a given adventure. The colour of the label is determined by that State of the adventure.
+	 * Green: Complete
+	 * Red: Not Started
+	 * @param cpa  The adventure to make the label for
+	 * @return The created adventure label
+	 * We made need to refactor this into its own class depending on how fancy we want the labels.
+	 */
 	private Label createAdventureLabel(ClientPlayerAdventure cpa)
 	{
 		Label l = new Label(cpa.getAdventureDescription(), ScreenQAs.skin);
@@ -69,6 +77,10 @@ public class AdventureTable extends ScrollPane
 		if (cpa.getAdventureState() == AdventureStateEnum.COMPLETED)
 		{
 			l.setColor(Color.GREEN);
+		}
+		else
+		{
+			l.setColor(Color.RED);
 		}
 		return l;
 	}

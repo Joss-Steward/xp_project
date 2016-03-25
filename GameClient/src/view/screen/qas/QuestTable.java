@@ -1,7 +1,6 @@
 package view.screen.qas;
 import java.util.ArrayList;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -18,12 +17,11 @@ public class QuestTable extends ScrollPane
 
 	private Table table;
 	private AdventureTable adventureTable;
-	//private ArrayList<ClientPlayerQuest> questList;
 	
 	/**
-	 * @param questList
+	 * @param questList The list of quest that the player has
 	 */
-	public QuestTable(ArrayList<ClientPlayerQuest> ql)
+	public QuestTable(ArrayList<ClientPlayerQuest> questList)
 	{
 		super(null, ScreenQAs.skin);	//Null is passed in because the widget has not been created yet.
 		setFadeScrollBars(false);
@@ -33,12 +31,14 @@ public class QuestTable extends ScrollPane
 		buildTable();
 		setWidget(table);
 		
-		updateQuests(ql);
+		updateQuests(questList);
 		requestFoucus();
 	}
 	
 	/**
-	 * @param at
+	 * Sets the adventure table so that the quest table is able to send the adventure table
+	 * which quest to display adventures for.
+	 * @param at The table that hold all of the adventures
 	 */
 	public void setAdventureTable(AdventureTable at)
 	{
@@ -78,7 +78,8 @@ public class QuestTable extends ScrollPane
 	}
 
 	/**
-	 * @param questList
+	 * Update the quest table to the current quest that the player has.
+	 * @param questList The list of quest that the player has
 	 */
 	public void updateQuests(ArrayList<ClientPlayerQuest> questList) 
 	{
