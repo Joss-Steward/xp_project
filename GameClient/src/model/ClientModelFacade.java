@@ -68,7 +68,6 @@ public class ClientModelFacade
 		return getSingleton(false, false);
 	}
 
-	
 	/**
 	 * @param headless
 	 *            true if we are running libgdx headless
@@ -76,7 +75,8 @@ public class ClientModelFacade
 	 *            true if this is running in testing mode
 	 * @return the only one of these there is
 	 */
-	public synchronized static ClientModelFacade getSingleton(boolean headless, boolean mockMode)
+	public synchronized static ClientModelFacade getSingleton(boolean headless,
+			boolean mockMode)
 	{
 		if (singleton == null)
 		{
@@ -171,8 +171,11 @@ public class ClientModelFacade
 			}, (float) 0.25, (float) 0.25);
 		} else
 		{
-			timer = new java.util.Timer();
-			timer.schedule(new ProcessCommandQueueTask(), 0, 250);
+//			if (!mockMode)
+			{
+				timer = new java.util.Timer();
+				timer.schedule(new ProcessCommandQueueTask(), 0, 250);
+			}
 		}
 	}
 
@@ -181,11 +184,12 @@ public class ClientModelFacade
 	 */
 	public synchronized static void killThreads()
 	{
-		if (singleton!=null)
+		if (singleton != null)
 		{
 			singleton.timer.cancel();
 		}
 	}
+
 	/**
 	 * Get how many commands are waiting to be queued
 	 * 
@@ -264,6 +268,15 @@ public class ClientModelFacade
 	public Command getNextCommand() throws InterruptedException
 	{
 		return (Command) commandQueue.getInfoPacket();
+	}
+
+	/**
+	 * Clear the queue of commands waiting to be processed
+	 */
+	public void emptyQueue()
+	{
+		commandQueue = new InformationQueue();
+
 	}
 
 }
