@@ -23,7 +23,13 @@ public enum NPCQuestionsForTest
 	 * 
 	 */
 	TWO(2, "Second question", "Second answer", new GregorianCalendar(2024, Calendar.FEBRUARY, 11).getTime(),
-	        new GregorianCalendar(2026, Calendar.FEBRUARY, 11).getTime());
+	        new GregorianCalendar(2026, Calendar.FEBRUARY, 11).getTime()),
+	
+	/**
+	 * 
+	 */
+	MULTIPLE_CHOICE(3, "Would you like to pick A for correct answer?\nA. First Choice\nB. Second Choice\nC. Third Choice\nD. Fourth Choice\n", "A",
+			new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(), new GregorianCalendar(2017, Calendar.MARCH, 28).getTime());
 
 	private String q;
 
