@@ -2,6 +2,7 @@ package communication.handlers;
 
 import static org.junit.Assert.*;
 import model.ClientModelFacade;
+import model.CommandRemovePlayer;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -50,10 +51,8 @@ public class PlayerLeaveMessageHandlerTest
 		PlayerLeaveMessageHandler handler = new PlayerLeaveMessageHandler();
 		handler.process(msg);
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
-		while(ClientModelFacade.getSingleton().hasCommandsPending())
-		{
-			Thread.sleep(100);
-		}
+		CommandRemovePlayer cmd = (CommandRemovePlayer)ClientModelFacade.getSingleton().getNextCommand();
+		assertEquals(1, cmd.getPlayerID());
 	}
 
 }

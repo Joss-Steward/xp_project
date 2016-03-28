@@ -171,7 +171,7 @@ public class ClientModelFacade
 			}, (float) 0.25, (float) 0.25);
 		} else
 		{
-//			if (!mockMode)
+			if (!mockMode)
 			{
 				timer = new java.util.Timer();
 				timer.schedule(new ProcessCommandQueueTask(), 0, 250);

@@ -2,8 +2,6 @@ package model;
 
 import communication.messages.InitializeThisClientsPlayerMessage;
 
-import datasource.LevelRecord;
-
 /**
  * @author Matthew Croft
  * @author Evan Stevenson

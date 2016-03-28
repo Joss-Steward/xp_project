@@ -1,21 +1,21 @@
 package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
 import model.ClientModelFacade;
 import model.ClientPlayerManager;
+import model.CommandClientMovePlayer;
 import model.MapManager;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import testData.PlayersForTest;
-
 import communication.messages.OtherPlayerMovedMessage;
-
 import data.Position;
 
 /**
@@ -76,12 +76,12 @@ public class OtherPlayerMovedMessageHandlerTest
 		OtherPlayerMovedMessageHandler handler = new OtherPlayerMovedMessageHandler();
 		handler.process(msg);
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
-		while (ClientModelFacade.getSingleton().hasCommandsPending())
-		{
-			Thread.sleep(100);
-		}
-		assertEquals(p, ClientPlayerManager.getSingleton().getThisClientsPlayer()
-				.getPosition());
+
+		CommandClientMovePlayer cmd = (CommandClientMovePlayer)ClientModelFacade.getSingleton().getNextCommand();
+		assertEquals(p, cmd.getPosition());
+		assertFalse(cmd.isTeleporting());
+		assertEquals(PlayersForTest.MATT.getPlayerID(), cmd.getPlayerID());
+		ClientModelFacade.getSingleton().emptyQueue();
 	}
 
 }

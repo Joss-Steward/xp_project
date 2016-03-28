@@ -1,10 +1,12 @@
 package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
 import model.ClientModelFacade;
+import model.CommandNewMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -54,9 +56,9 @@ public class MapFileMessageHandlerTest
 		MapFileMessageHandler handler = new MapFileMessageHandler();
 		handler.process(msg);
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
-		while(ClientModelFacade.getSingleton().hasCommandsPending())
-		{
-			Thread.sleep(100);
-		}
+		CommandNewMap cmd = (CommandNewMap)ClientModelFacade.getSingleton().getNextCommand();
+		assertTrue(cmd.getFileTitle().contains("testMaps/simple.tmx"));
+		ClientModelFacade.getSingleton().emptyQueue();
+		
 	}
 }

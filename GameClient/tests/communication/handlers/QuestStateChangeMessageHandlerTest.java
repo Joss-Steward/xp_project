@@ -2,6 +2,7 @@ package communication.handlers;
 
 import static org.junit.Assert.*;
 import model.ClientModelFacade;
+import model.CommandQuestStateChange;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,10 +48,11 @@ public class QuestStateChangeMessageHandlerTest
 		QuestStateChangeMessage msg = new QuestStateChangeMessage(1, 2, "quest 1 title", "Quest 1", QuestStateEnum.AVAILABLE);
 		h.process(msg);
 		assertTrue(ClientModelFacade.getSingleton().hasCommandsPending());
-		while(ClientModelFacade.getSingleton().hasCommandsPending())
-		{
-			Thread.sleep(100);
-		}
+		CommandQuestStateChange cmd = (CommandQuestStateChange)ClientModelFacade.getSingleton().getNextCommand();
+		assertEquals(2, cmd.getQuestID());
+		assertEquals("quest 1 title", cmd.getQuestTitle());
+		assertEquals("Quest 1", cmd.getQuestDescription());
+		assertEquals(QuestStateEnum.AVAILABLE, cmd.getQuestState());
 	}
 
 }
