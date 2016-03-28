@@ -225,8 +225,6 @@ public class ThisClientsPlayer extends ClientPlayer
 	 * 
 	 * @param knowledge
 	 *            current knowledge
-	 * @param rec
-	 *            level report
 	 */
 	public void knowledgePointsChanged(int knowledge)
 	{
@@ -247,7 +245,6 @@ public class ThisClientsPlayer extends ClientPlayer
 	}
 
 	/**
-	 * @param rec is the LevelRecord of this player
 	 * @param knowledge points of this player
 	 */
 	public void setLevelInfoKnowledge(int knowledge) 

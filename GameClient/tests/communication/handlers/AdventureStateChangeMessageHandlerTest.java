@@ -7,6 +7,7 @@ import java.rmi.NotBoundException;
 
 import model.ClientModelFacade;
 import model.ClientPlayerManager;
+import model.CommandAdventureStateChange;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -61,10 +62,12 @@ public class AdventureStateChangeMessageHandlerTest
 		
 		h.process(msg);
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
-		while(ClientModelFacade.getSingleton().hasCommandsPending())
-		{
-			Thread.sleep(100);
-		}
+		CommandAdventureStateChange cmd = (CommandAdventureStateChange) ClientModelFacade.getSingleton().getNextCommand();
+		assertEquals(2, cmd.getQuestID());
+		assertEquals(3, cmd.getAdventureID());
+		assertEquals("Big Adventure", cmd.getAdventureDescription());
+		assertEquals(AdventureStateEnum.TRIGGERED, cmd.getAdventureState());
+		ClientModelFacade.getSingleton().emptyQueue();
 	}
 
 }

@@ -1,14 +1,14 @@
 package communication.handlers;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import model.ClientModelFacade;
-import model.ClientPlayer;
-import model.ClientPlayerManager;
+import model.CommandInitializePlayer;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import testData.PlayersForTest;
+
 import communication.messages.PlayerJoinedMessage;
 
 /**
@@ -54,16 +54,14 @@ public class PlayerJoinedMessageHandlerTest
 		PlayerJoinedMessageHandler handler = new PlayerJoinedMessageHandler();
 		handler.process(msg);
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
-		while(ClientModelFacade.getSingleton().hasCommandsPending())
-		{
-			Thread.sleep(100);
-		}
-		ClientPlayer player = ClientPlayerManager.getSingleton().getPlayerFromID(PlayersForTest.MERLIN.getPlayerID());
-		assertEquals(PlayersForTest.MERLIN.getPlayerID(),player.getID());
-		assertEquals(PlayersForTest.MERLIN.getPlayerName().toUpperCase(), player.getName());
-		assertEquals(PlayersForTest.MERLIN.getAppearanceType(), player.getAppearanceType());
-		assertEquals(PlayersForTest.MERLIN.getPosition(), player.getPosition());
-		assertEquals(PlayersForTest.MERLIN.getCrew(), player.getCrew());
+		
+		CommandInitializePlayer cmd =(CommandInitializePlayer) ClientModelFacade.getSingleton().getNextCommand();
+		
+		assertEquals(PlayersForTest.MERLIN.getPlayerID(), cmd.getPlayerID());
+		assertEquals(PlayersForTest.MERLIN.getPlayerName().toUpperCase(), cmd.getPlayerName());
+		assertEquals(PlayersForTest.MERLIN.getAppearanceType(), cmd.getAppearanceType());
+		assertEquals(PlayersForTest.MERLIN.getPosition(), cmd.getPosition());
+		assertEquals(PlayersForTest.MERLIN.getCrew(), cmd.getCrew());
 		
 	}
 

@@ -38,7 +38,7 @@ public class CommandHighScoreResponse extends Command
 	 * Return score reports
 	 * @return score reports
 	 */
-	public Object getScoreRecord() {
+	public ArrayList<PlayerScoreRecord> getScoreRecord() {
 		return scores;
 	}
 
