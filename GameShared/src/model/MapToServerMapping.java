@@ -82,6 +82,10 @@ public final class MapToServerMapping
 	 */
 	public String getHostName()
 	{
+		if(OptionsManager.getSingleton().getHostName().equals("localhost"))
+		{
+			return "localhost";
+		}
 		return dataGateway.getHostName();
 	}
 
