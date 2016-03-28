@@ -2,7 +2,6 @@ package communication.packers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import model.LevelManager;
 import model.OptionsManager;
 import model.PlayerManager;
 import model.QuestManager;
@@ -15,7 +14,6 @@ import testData.PlayersForTest;
 import communication.StateAccumulator;
 import communication.messages.KnowledgeChangedMessage;
 import datasource.DatabaseException;
-import datasource.LevelRecord;
 
 /**
  * @author Matthew Croft
@@ -58,15 +56,13 @@ public class KnowledgeChangedMessagePackerTest {
 	@Test
 	public void testPackedObjectIsCurrentPlayer() throws DatabaseException
 	{
-		LevelRecord record = LevelManager.getSingleton().getLevelForPoints(PlayersForTest.MERLIN.getKnowledgeScore()); 
-		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.MERLIN.getKnowledgeScore(), record);
+		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.MERLIN.getKnowledgeScore());
 		KnowledgeChangePacker packer = new KnowledgeChangePacker();
 		packer.setAccumulator(stateAccumulator);
  
 		KnowledgeChangedMessage msg = (KnowledgeChangedMessage) packer.pack(report);
 		
 		assertEquals(PlayersForTest.MERLIN.getKnowledgeScore(), msg.getKnowledgePoints());
-		assertEquals(record, msg.getLevel());
 	}
 	
 	/**
@@ -80,7 +76,7 @@ public class KnowledgeChangedMessagePackerTest {
 		KnowledgeChangePacker packer = new KnowledgeChangePacker();
 		packer.setAccumulator(stateAccumulator);
 
-		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(PlayersForTest.JOHN.getPlayerID(), PlayersForTest.JOHN.getKnowledgeScore(), LevelManager.getSingleton().getLevelForPoints(PlayersForTest.JOHN.getKnowledgeScore()));
+		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(PlayersForTest.JOHN.getPlayerID(), PlayersForTest.JOHN.getKnowledgeScore());
 		assertNull(packer.pack(report));
 	}
 }

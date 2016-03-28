@@ -381,8 +381,13 @@ public class QuestManager implements QualifiedObserver
 					myReport.getNewPosition(), myReport.getMapName());
 			for (AdventureRecord a : adventures)
 			{
-				this.completeAdventure(myReport.getPlayerID(), a.getQuestID(),
+				AdventureState adventureStateByID = getAdventureStateByID(myReport.getPlayerID(), a.getQuestID(),
 						a.getAdventureID());
+				if (adventureStateByID != null && adventureStateByID.getState() != AdventureStateEnum.COMPLETED)
+				{
+					this.completeAdventure(myReport.getPlayerID(), a.getQuestID(),
+							a.getAdventureID());					
+				}
 			}
 
 		} catch (DatabaseException | IllegalAdventureChangeException

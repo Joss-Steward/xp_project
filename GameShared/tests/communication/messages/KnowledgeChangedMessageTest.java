@@ -1,11 +1,8 @@
 package communication.messages;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
-
 import testData.PlayersForTest;
-import datasource.LevelRecord;
 
 /**
  * @author Matthew Croft
@@ -19,8 +16,7 @@ public class KnowledgeChangedMessageTest {
 	@Test
 	public void testCreateMessage() 
 	{
-		LevelRecord record = new LevelRecord("Serf", 15, 0, 0);
-		KnowledgeChangedMessage msg = new KnowledgeChangedMessage(PlayersForTest.JOHN.getPlayerID(),record, PlayersForTest.JOHN.getKnowledgeScore());
+		KnowledgeChangedMessage msg = new KnowledgeChangedMessage(PlayersForTest.JOHN.getPlayerID(), PlayersForTest.JOHN.getKnowledgeScore());
 		assertEquals(PlayersForTest.JOHN.getKnowledgeScore(), msg.getKnowledgePoints());
 	}
 }

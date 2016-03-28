@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import testData.PlayersForTest;
 import communication.messages.KnowledgeChangedMessage;
-import datasource.LevelRecord;
 
 /**
  * @author Matthew Croft
@@ -44,10 +43,9 @@ public class KnowledgeChangedMessageHandlerTest {
 	public void handleExperienceChangedMessage() throws InterruptedException
 	{	
 		//TODO: test is failing!
-		LevelRecord record = new LevelRecord("Serf", 15, 0, 0);
 		int oldScore = PlayersForTest.JOHN.getKnowledgeScore();
 		
-		KnowledgeChangedMessage msg = new KnowledgeChangedMessage(PlayersForTest.JOHN.getPlayerID(), record, oldScore + 5);
+		KnowledgeChangedMessage msg = new KnowledgeChangedMessage(PlayersForTest.JOHN.getPlayerID(), oldScore + 5);
 		KnowledgeChangedMessageHandler h = new KnowledgeChangedMessageHandler();
 		h.process(msg);
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
