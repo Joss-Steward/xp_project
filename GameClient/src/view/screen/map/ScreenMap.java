@@ -1,13 +1,13 @@
 package view.screen.map;
 
 import static view.screen.Screens.DEFAULT_RES;
-
 import model.ClientModelFacade;
 import model.CommandKeyInputSent;
 import view.player.PlayerSprite;
 import view.player.PlayerSpriteFactory;
 import view.player.PlayerType;
 import view.screen.ScreenBasic;
+import view.screen.highscore.HighScoreUI;
 import view.screen.popup.PopUpDisplay;
 import view.screen.qas.ScreenQAs;
 
