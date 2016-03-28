@@ -1,4 +1,4 @@
-package view.screen.map;
+package view.screen.highscore;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -13,6 +13,7 @@ import view.screen.qas.ScreenQAs;
  */
 public class HighScoreTable extends ScrollPane
 {
+	private final float tablePadding = 10f;
 	private Table table;
 
 	/**
@@ -31,7 +32,7 @@ public class HighScoreTable extends ScrollPane
 		table = new Table();
 		table.setFillParent(true);
 		table.left().top();
-		//table.pad(PADDING);
+		table.pad(tablePadding);
 	}
 	
 	/**
@@ -53,7 +54,7 @@ public class HighScoreTable extends ScrollPane
 		final float spaceBetweenNumberAndPlayer  = 15f;
 		final float spaceBetweenPlayerAndXp = 10f;
 		Label rank = new Label(playerRank + ".", ScreenQAs.skin);
-		table.add(rank).left().padRight(spaceBetweenNumberAndPlayer).padLeft(10f);
+		table.add(rank).left().padRight(spaceBetweenNumberAndPlayer);
 		Label player = new Label(p.getPlayerName(), ScreenQAs.skin);
 		table.add(player).left().padRight(spaceBetweenPlayerAndXp);
 		Label xp = new Label("" + p.getExperiencePoints(), ScreenQAs.skin);
