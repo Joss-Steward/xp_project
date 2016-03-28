@@ -310,7 +310,7 @@ public class Player
 	 */
 	public void sendknowledgePointsChangeReport()
 	{
-		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(playerID, this.knowledgePoints, null);
+		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(playerID, this.knowledgePoints);
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 	

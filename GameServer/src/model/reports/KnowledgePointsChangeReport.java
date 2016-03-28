@@ -1,6 +1,5 @@
 package model.reports;
 
-import datasource.LevelRecord;
 import model.QualifiedObservableReport;
 
 /**
@@ -15,20 +14,15 @@ public final class KnowledgePointsChangeReport implements QualifiedObservableRep
 	 */
 	public final int knowledgePoints;
 
-	
-	private final LevelRecord record;
-
 	private final int playerID;
 	
 	/**
 	 * @param playerID of the current player
 	 * @param knowledgePoints of the player
-	 * @param level record for this play
 	 */
-	public KnowledgePointsChangeReport (int playerID, int knowledgePoints, LevelRecord level)
+	public KnowledgePointsChangeReport (int playerID, int knowledgePoints)
 	{
 		this.playerID = playerID;
-		this.record =  level;
 		this.knowledgePoints = knowledgePoints;
 	}
 	
@@ -40,21 +34,13 @@ public final class KnowledgePointsChangeReport implements QualifiedObservableRep
 	}
 
 	/**
-	 * @return LevelRecord
-	 */
-	public LevelRecord getRecord() {
-		return record;
-	}
-
-	/**
 	 * @return playerID
 	 */
 	public int getPlayerID() {
 		return playerID;
 	}
-	
-	
-	/** 
+
+	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -63,7 +49,6 @@ public final class KnowledgePointsChangeReport implements QualifiedObservableRep
 		int result = 1;
 		result = prime * result + knowledgePoints;
 		result = prime * result + playerID;
-		result = prime * result + ((record == null) ? 0 : record.hashCode());
 		return result;
 	}
 
@@ -83,13 +68,7 @@ public final class KnowledgePointsChangeReport implements QualifiedObservableRep
 			return false;
 		if (playerID != other.playerID)
 			return false;
-		if (record == null) {
-			if (other.record != null)
-				return false;
-		} else if (!record.equals(other.record))
-			return false;
 		return true;
 	}
-
 
 }

@@ -2,8 +2,6 @@ package communication.messages;
 
 import java.io.Serializable;
 
-import datasource.LevelRecord;
-
 /**
  * @author Matthew Croft
  * @author Evan Stevenson
@@ -18,8 +16,6 @@ public class KnowledgeChangedMessage implements Message, Serializable
 	
 	private int knowledgePoints;
 
-	private LevelRecord level;
-	
 	private int playerID;
 
 	/**
@@ -27,10 +23,9 @@ public class KnowledgeChangedMessage implements Message, Serializable
 	 * @param level the player is
 	 * @param playerID of the current player
 	 */
-	public KnowledgeChangedMessage(int playerID, LevelRecord level, int knowledgePoints)
+	public KnowledgeChangedMessage(int playerID, int knowledgePoints)
 	{
 		this.knowledgePoints = knowledgePoints;
-		this.level = level;
 		this.playerID = playerID;
 	}
 
@@ -41,14 +36,6 @@ public class KnowledgeChangedMessage implements Message, Serializable
 	public int getKnowledgePoints() 
 	{
 		return knowledgePoints;
-	}
-
-	/**
-	 * @return the players level
-	 */
-	public LevelRecord getLevel() 
-	{
-		return level;
 	}
 
 	/**
