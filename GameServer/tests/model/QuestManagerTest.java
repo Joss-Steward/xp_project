@@ -761,6 +761,36 @@ public class QuestManagerTest extends DatabaseTest
 	}
 
 	/**
+	 * When a player moves to the right place, should complete adventure
+	 * 
+	 * @throws IllegalQuestChangeException
+	 *             the state changed illegally
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	@Test
+	public void alreadyCompletedAdventureOnPlayerMovement() throws IllegalQuestChangeException,
+			DatabaseException
+	{
+		// We need to add a quest and adventure that are triggered on location
+		// but not already completed
+		int questID = AdventuresForTest.QUEST2_ADVENTURE2.getQuestID();
+		int advID = AdventuresForTest.QUEST2_ADVENTURE2.getAdventureID();
+
+		GameLocation location = (GameLocation) (AdventuresForTest.QUEST2_ADVENTURE2
+				.getCompletionCriteria());
+		Position pos = location.getPosition();
+		Player paul = playerManager.addPlayer(8);
+		paul.setPlayerPosition(pos);		
+		paul.setPlayerPosition(new Position(0,0));
+		paul.setPlayerPosition(pos);
+		
+		assertEquals(AdventureStateEnum.COMPLETED, QuestManager.getSingleton()
+				.getAdventureStateByID(paul.getPlayerID(), questID, advID).getState());
+		
+	}
+	
+	/**
 	 * This tests simulates taking a quest from triggered to fulfilled to
 	 * finished
 	 */

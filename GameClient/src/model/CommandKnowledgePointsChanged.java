@@ -14,7 +14,6 @@ public class CommandKnowledgePointsChanged extends Command
 
 
 	private int knowledge;
-	private LevelRecord record;
 	private int playerID;
 
 	/**
@@ -25,20 +24,17 @@ public class CommandKnowledgePointsChanged extends Command
 	public CommandKnowledgePointsChanged(InitializeThisClientsPlayerMessage msg) 
 	{
 		this.knowledge = msg.getKnowledgePoints();
-		this.record = msg.getLevel();
 	}
 	
 	
 	/**
 	 * @param playerID of the player
 	 * @param knowledgePoints of the player
-	 * @param level LevelRecord for this player
 	 */
-	public CommandKnowledgePointsChanged(int playerID, int knowledgePoints,	LevelRecord level) 
+	public CommandKnowledgePointsChanged(int playerID, int knowledgePoints) 
 	{
 		this.knowledge = knowledgePoints;
 		this.playerID = playerID;
-		this.record = level;
 	}
 
 	/**
@@ -46,13 +42,6 @@ public class CommandKnowledgePointsChanged extends Command
 	 */
 	public int getKnowledge() {
 		return knowledge;
-	}
-
-	/**
-	 * @return the level record for this player
-	 */
-	public LevelRecord getRecord() {
-		return record;
 	}
 
 	/**
@@ -65,7 +54,7 @@ public class CommandKnowledgePointsChanged extends Command
 	@Override
 	protected boolean execute() {
 		ThisClientsPlayer thisClientsPlayer = ClientPlayerManager.getSingleton().getThisClientsPlayer();
-		thisClientsPlayer.knowledgePointsChanged(knowledge, record);
+		thisClientsPlayer.knowledgePointsChanged(knowledge);
 		return true;
 	}
 

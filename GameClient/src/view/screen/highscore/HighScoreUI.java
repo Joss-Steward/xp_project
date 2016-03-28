@@ -1,4 +1,4 @@
-package view.screen.map;
+package view.screen.highscore;
 
 
 

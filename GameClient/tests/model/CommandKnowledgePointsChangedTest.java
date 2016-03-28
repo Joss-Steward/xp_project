@@ -36,13 +36,11 @@ public class CommandKnowledgePointsChangedTest
 	public void testInitialization()
 	{
 		int knowledgePoints = 100;
-		LevelRecord report = new LevelRecord("Weak Kolbold", 100, 0, 0);
 		ArrayList<ClientPlayerQuest> list = new ArrayList<ClientPlayerQuest>();
 		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(
-				list, 0, knowledgePoints, report);
+				list, 0, knowledgePoints, null);
 		CommandKnowledgePointsChanged ow = new CommandKnowledgePointsChanged(msg);
 		assertEquals(knowledgePoints, ow.getKnowledge());
-		assertEquals(report, ow.getRecord());
 	}
 
 	/**
@@ -79,6 +77,5 @@ public class CommandKnowledgePointsChangedTest
 
 		ThisClientsPlayer player = ClientPlayerManager.getSingleton().getThisClientsPlayer();
 		assertEquals(knowledgePoints , player.getKnowledgePoints());
-		assertEquals(level, player.getLevelRecord());
 	}
 }

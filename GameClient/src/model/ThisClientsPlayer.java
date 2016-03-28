@@ -148,7 +148,7 @@ public class ThisClientsPlayer extends ClientPlayer
 	public void sendExperiencePointsChangeReport()
 	{
 		KnowledgePointsChangeReport r = new KnowledgePointsChangeReport(
-				experiencePoints, record);
+				experiencePoints);
 		QualifiedObservableConnector.getSingleton().sendReport(r);
 	}
 
@@ -228,9 +228,9 @@ public class ThisClientsPlayer extends ClientPlayer
 	 * @param rec
 	 *            level report
 	 */
-	public void knowledgePointsChanged(int knowledge, LevelRecord rec)
+	public void knowledgePointsChanged(int knowledge)
 	{
-		setLevelInfoKnowledge(rec, knowledge);
+		setLevelInfoKnowledge(knowledge);
 	}
 	
 	/**
@@ -250,9 +250,8 @@ public class ThisClientsPlayer extends ClientPlayer
 	 * @param rec is the LevelRecord of this player
 	 * @param knowledge points of this player
 	 */
-	public void setLevelInfoKnowledge(LevelRecord rec, int knowledge) 
+	public void setLevelInfoKnowledge(int knowledge) 
 	{
-		this.record = rec;
 		this.knowledgePoints = knowledge;
 		
 		sendKnowledgePointsChangeReport();
@@ -265,7 +264,7 @@ public class ThisClientsPlayer extends ClientPlayer
 	public void sendKnowledgePointsChangeReport() {
 		
 		KnowledgePointsChangeReport r = new KnowledgePointsChangeReport(
-				this.knowledgePoints, record);
+				this.knowledgePoints);
 		QualifiedObservableConnector.getSingleton().sendReport(r);
 		
 	}

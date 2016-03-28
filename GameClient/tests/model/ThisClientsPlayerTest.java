@@ -239,7 +239,7 @@ public class ThisClientsPlayerTest
 		
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, KnowledgePointsChangeReport.class);
-		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(exp, rec);
+		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(exp);
 		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
@@ -249,21 +249,16 @@ public class ThisClientsPlayerTest
 	}
 	
 	/**
-	 * Test that we can set the values of ThisClientPlayer's knowledge info,
-	 * level description, and # points required for this player to level up 
-	 * for this level
+	 * Test that we can set the values of ThisClientPlayer's knowledge info
 	 */
 	@Test
 	public void testAllKnowledgeInfo()
 	{
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
 		
-		LevelRecord rec = new LevelRecord("Felyne Explorer", 100,0,0);
-		cp.setLevelInfoKnowledge(rec, 10);
+		cp.setLevelInfoKnowledge(10);
 		
 		assertEquals(10, cp.getKnowledgePoints());
-		assertEquals("Felyne Explorer", cp.getLevelRecord().getDescription());
-		assertEquals(100, cp.getLevelRecord().getLevelUpPoints());
 	}
 	
 	
@@ -276,12 +271,11 @@ public class ThisClientsPlayerTest
 		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
 		
 		int exp = 10;
-		LevelRecord rec = new LevelRecord("Felyne Explorer", 10, 0,0);
-		cp.setLevelInfoKnowledge(rec, 10);
+		cp.setLevelInfoKnowledge(10);
 		
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, KnowledgePointsChangeReport.class);
-		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(exp, rec);
+		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(exp);
 		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 

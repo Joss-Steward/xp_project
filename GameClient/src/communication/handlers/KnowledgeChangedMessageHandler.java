@@ -21,8 +21,7 @@ public class KnowledgeChangedMessageHandler extends MessageHandler
 		if (msg.getClass().equals(KnowledgeChangedMessage.class))
 		{
 			KnowledgeChangedMessage knowledgeChangedMessage = (KnowledgeChangedMessage) msg;
-			CommandKnowledgePointsChanged cmd = new CommandKnowledgePointsChanged(knowledgeChangedMessage.getPlayerID(),knowledgeChangedMessage.getKnowledgePoints(),
-					knowledgeChangedMessage.getLevel());
+			CommandKnowledgePointsChanged cmd = new CommandKnowledgePointsChanged(knowledgeChangedMessage.getPlayerID(),knowledgeChangedMessage.getKnowledgePoints());
 			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 		
