@@ -15,8 +15,11 @@ public class CommandInitializePlayer extends Command
 
 	private int playerID;
 	private String playerName;
+
 	private String appearanceType;
+
 	private Position position;
+
 	private Crew crew;
 
 	/**
@@ -52,6 +55,46 @@ public class CommandInitializePlayer extends Command
 		ClientPlayerManager.getSingleton().initializePlayer(playerID, playerName,
 				appearanceType, position, crew);
 		return true;
+	}
+
+	/**
+	 * @return the appearance type of the new player
+	 */
+	public String getAppearanceType()
+	{
+		return appearanceType;
+	}
+
+	/**
+	 * @return the crew of the new player
+	 */
+	public Crew getCrew()
+	{
+		return crew;
+	}
+
+	/**
+	 * @return the id of the new player
+	 */
+	public int getPlayerID()
+	{
+		return playerID;
+	}
+
+	/**
+	 * @return the new player's name
+	 */
+	public String getPlayerName()
+	{
+		return playerName;
+	}
+
+	/**
+	 * @return where the new player is standing
+	 */
+	public Position getPosition()
+	{
+		return position;
 	}
 
 }

@@ -2,6 +2,8 @@ package communication.handlers;
 
 import static org.junit.Assert.*;
 import model.ClientModelFacade;
+import model.Command;
+import model.CommandLoginFailed;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -49,10 +51,9 @@ public class LoginFailedMessageHandlerTest
 		LoginFailedMessage msg = new LoginFailedMessage();
 		handler.process(msg);
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
-		while(ClientModelFacade.getSingleton().hasCommandsPending())
-		{
-			Thread.sleep(100);
-		}
+		Command cmd = ClientModelFacade.getSingleton().getNextCommand();
+		assertEquals(cmd.getClass(), CommandLoginFailed.class);
+		ClientModelFacade.getSingleton().emptyQueue();
 	}
 
 }

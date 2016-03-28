@@ -29,4 +29,13 @@ public class CommandNewMap extends Command
 		// PlayerManager.getSingleton().getThisClientsPlayer().getQuestManager().getTriggersFromMap();
 		return true;
 	}
+
+	/**
+	 * 
+	 * @return the file title of the new map file
+	 */
+	public String getFileTitle()
+	{
+		return fileTitle;
+	}
 }

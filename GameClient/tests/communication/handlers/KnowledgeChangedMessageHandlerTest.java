@@ -2,6 +2,7 @@ package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
 import model.ClientModelFacade;
+import model.CommandKnowledgePointsChanged;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +43,6 @@ public class KnowledgeChangedMessageHandlerTest {
 	@Test
 	public void handleExperienceChangedMessage() throws InterruptedException
 	{	
-		//TODO: test is failing!
 		int oldScore = PlayersForTest.JOHN.getKnowledgeScore();
 		
 		KnowledgeChangedMessage msg = new KnowledgeChangedMessage(PlayersForTest.JOHN.getPlayerID(), oldScore + 5);
@@ -51,10 +51,9 @@ public class KnowledgeChangedMessageHandlerTest {
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
 		int length = ClientModelFacade.getSingleton().getCommandQueueLength();
 		assertEquals(1, length);
-		
-		while(ClientModelFacade.getSingleton().hasCommandsPending())
-		{
-			Thread.sleep(100);
-		}
+		CommandKnowledgePointsChanged cmd = (CommandKnowledgePointsChanged) ClientModelFacade.getSingleton().getNextCommand();
+		assertEquals(PlayersForTest.JOHN.getPlayerID(), cmd.getPlayerID());
+		assertEquals(oldScore+5, cmd.getKnowledge());
+		ClientModelFacade.getSingleton().emptyQueue();
 	}
 }

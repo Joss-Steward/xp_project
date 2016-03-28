@@ -7,8 +7,8 @@ import data.Position;
  */
 public class CommandClientMovePlayer extends Command
 {
-	private int thePlayerID;
-	private Position thePosition;
+	private int playerID;
+	private Position position;
 	private boolean isTeleporting;
 
 	/**
@@ -19,9 +19,17 @@ public class CommandClientMovePlayer extends Command
 	 */
 	public CommandClientMovePlayer(int playerID, Position position)
 	{
-		thePlayerID = playerID;
-		thePosition = position;
+		this.playerID = playerID;
+		this.position = position;
 		isTeleporting = false;
+	}
+
+	/**
+	 * Only dump when teleporting
+	 */
+	protected boolean doDump()
+	{
+		return isTeleporting;
 	}
 
 	/**
@@ -40,26 +48,26 @@ public class CommandClientMovePlayer extends Command
 
 		ThisClientsPlayer thisClientsPlayer = ClientPlayerManager.getSingleton()
 				.getThisClientsPlayer();
-		if (thisClientsPlayer.getID() == thePlayerID)
+		if (thisClientsPlayer.getID() == playerID)
 		{
-			if (MapManager.getSingleton().getIsTileTeleport(thePosition))
+			if (MapManager.getSingleton().getIsTileTeleport(position))
 			{
-				thisClientsPlayer.teleport(thePosition);
+				thisClientsPlayer.teleport(position);
 				isTeleporting = true;
 			}
 
-			if (MapManager.getSingleton().getIsTilePassable(thePosition))
+			if (MapManager.getSingleton().getIsTilePassable(position))
 			{
-				thisClientsPlayer.move(thePosition);
+				thisClientsPlayer.move(position);
 				moved = true;
 			}
 		} else
 		{
 			ClientPlayer playerFromID = ClientPlayerManager.getSingleton()
-					.getPlayerFromID(thePlayerID);
+					.getPlayerFromID(playerID);
 			if (playerFromID != null)
 			{
-				playerFromID.move(thePosition);
+				playerFromID.move(position);
 			}
 			moved = true;
 		}
@@ -67,9 +75,25 @@ public class CommandClientMovePlayer extends Command
 	}
 
 	/**
-	 * Only dump when teleporting
+	 * @return the ID of the player who moved
 	 */
-	protected boolean doDump()
+	public int getPlayerID()
+	{
+		return playerID;
+	}
+
+	/**
+	 * @return where the player moved to
+	 */
+	public Position getPosition()
+	{
+		return position;
+	}
+
+	/**
+	 * @return true if the player is being teleported to another map
+	 */
+	public boolean isTeleporting()
 	{
 		return isTeleporting;
 	}

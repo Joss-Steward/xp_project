@@ -1,6 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
@@ -10,6 +11,9 @@ import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
 import model.ClientModelFacade;
 import model.ClientPlayerManager;
+import model.Command;
+import model.CommandOverwriteExperience;
+import model.CommandOverwriteQuestState;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,9 +28,9 @@ import datasource.LevelRecord;
  * @author Frank Schmidt
  *
  */
-public class InitializeThisClientsPlayerMessageHandlerTest 
+public class InitializeThisClientsPlayerMessageHandlerTest
 {
-	
+
 	/**
 	 * Reset the ModelFacade
 	 */
@@ -36,7 +40,7 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		ClientModelFacade.resetSingleton();
 		ClientModelFacade.getSingleton(true, false);
 	}
-	
+
 	/**
 	 * Test the type of Message that we expect
 	 */
@@ -46,64 +50,55 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		InitializeThisClientsPlayerMessageHandler h = new InitializeThisClientsPlayerMessageHandler();
 		assertEquals(InitializeThisClientsPlayerMessage.class, h.getMessageTypeWeHandle());
 	}
-	
+
 	/**
 	 * We should add a command to the ModelFacade command queue
 	 * 
 	 * @throws InterruptedException
-	 * 				shouldn't
-	 * @throws NotBoundException shouldn't
-	 * @throws AlreadyBoundException shouldn't
+	 *             shouldn't
+	 * @throws NotBoundException
+	 *             shouldn't
+	 * @throws AlreadyBoundException
+	 *             shouldn't
 	 */
 	@Test
-	public void test() throws InterruptedException, AlreadyBoundException, NotBoundException
+	public void test() throws InterruptedException, AlreadyBoundException,
+			NotBoundException
 	{
 		ClientPlayerManager.getSingleton().initiateLogin("john", "pw");
 		ClientPlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
 		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
-		ClientPlayerQuest q = new ClientPlayerQuest(3, "questtitle", "stupid quest", QuestStateEnum.TRIGGERED, 42, 133, true); 
-		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", 5, AdventureStateEnum.TRIGGERED, false));
+		ClientPlayerQuest q = new ClientPlayerQuest(3, "questtitle", "stupid quest",
+				QuestStateEnum.TRIGGERED, 42, 133, true);
+		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", 5,
+				AdventureStateEnum.TRIGGERED, false));
 		qList.add(q);
 		LevelRecord level = new LevelRecord("One", 45, 10, 7);
-		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(qList, 20, level);
+		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(
+				qList, 20, level);
 		handler.process(msg);
-		while(ClientModelFacade.getSingleton().hasCommandsPending())
+
+		assertEquals(2, ClientModelFacade.getSingleton().getCommandQueueLength());
+		for (int i = 0; i < ClientModelFacade.getSingleton().getCommandQueueLength(); i++)
 		{
-			Thread.sleep(100);
+			Command cmd = ClientModelFacade.getSingleton().getNextCommand();
+			if (cmd.getClass() == CommandOverwriteQuestState.class)
+			{
+				CommandOverwriteQuestState thisCmd = (CommandOverwriteQuestState) (cmd);
+				assertEquals(qList, thisCmd.getClientPlayerQuestList());
+			} else if (cmd.getClass() == CommandOverwriteExperience.class)
+			{
+				CommandOverwriteExperience thisCmd = (CommandOverwriteExperience) (cmd);
+				assertEquals(20, thisCmd.getExperiencePoints());
+				assertEquals(PlayersForTest.JOHN.getPlayerID(), thisCmd.getPlayerID());
+				assertEquals(level, thisCmd.getLevelRecord());
+			} else
+			{
+				fail("Unexpected command in facade queue " + cmd);
+			}
 		}
-		ArrayList<ClientPlayerQuest> actual = ClientPlayerManager.getSingleton().getThisClientsPlayer().getQuests();
-		assertEquals(qList, actual);
-		
+		ClientModelFacade.getSingleton().emptyQueue();
 	}
-	
-	/**
-	 * We should add a command  to the ModelFacade command queue
-	 * 
-	 * @throws InterruptedException
-	 * 				shouldn't
-	 * @throws NotBoundException shouldn't
-	 * @throws AlreadyBoundException shouldn't
-	 */
-	@Test
-	public void testExperiencePts() throws InterruptedException, AlreadyBoundException, NotBoundException
-	{
-		ClientPlayerManager.getSingleton().initiateLogin("john", "pw");
-		ClientPlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
-		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
-		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
-		ClientPlayerQuest q = new ClientPlayerQuest(3, "questtitle", "stupid quest", QuestStateEnum.TRIGGERED, 42, 8, true); 
-		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", 5, AdventureStateEnum.TRIGGERED, false));
-		qList.add(q);
-		int expectedPoints = 20;
-		LevelRecord level = new LevelRecord("One", 45, 10, 7);
-		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(qList, expectedPoints, level);
-		handler.process(msg);
-		
-		while(ClientModelFacade.getSingleton().hasCommandsPending())
-		{
-			Thread.sleep(100);
-		}
-		assertEquals(expectedPoints, ClientPlayerManager.getSingleton().getThisClientsPlayer().getExperiencePoints());
-	}
+
 }
