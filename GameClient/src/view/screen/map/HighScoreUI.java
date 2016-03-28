@@ -27,7 +27,7 @@ import data.PlayerScoreRecord;
 
 /**
  * @author ck4124, Scott
- *
+ * @fixedby Ian Keefer and TJ Renninger
  */
 public class HighScoreUI extends Group implements QualifiedObserver
 {
@@ -90,12 +90,11 @@ public class HighScoreUI extends Group implements QualifiedObserver
 			HS_ScreenShowing = false;
 			this.addAction(Actions.hide());
 		} else
-		{
-			HS_ScreenShowing = true;
-			this.addAction(Actions.show());
-			
+		{	
 			CommandHighScoreRequest cmd = new CommandHighScoreRequest();
 			ClientModelFacade.getSingleton().queueCommand(cmd);
+			HS_ScreenShowing = true;
+			this.addAction(Actions.show());
 		}
 	}
 	

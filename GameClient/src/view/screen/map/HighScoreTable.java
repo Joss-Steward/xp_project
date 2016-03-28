@@ -50,10 +50,10 @@ public class HighScoreTable extends ScrollPane
 	
 	private void addPlayerLabel(PlayerScoreRecord p, int playerRank)
 	{
-		final float spaceBetweenNumberAndPlayer  = 5f;
+		final float spaceBetweenNumberAndPlayer  = 15f;
 		final float spaceBetweenPlayerAndXp = 10f;
 		Label rank = new Label(playerRank + ".", ScreenQAs.skin);
-		table.add(rank).left().padLeft(spaceBetweenNumberAndPlayer);
+		table.add(rank).left().padRight(spaceBetweenNumberAndPlayer).padLeft(10f);
 		Label player = new Label(p.getPlayerName(), ScreenQAs.skin);
 		table.add(player).left().padRight(spaceBetweenPlayerAndXp);
 		Label xp = new Label("" + p.getExperiencePoints(), ScreenQAs.skin);
