@@ -31,13 +31,12 @@ import data.PlayerScoreRecord;
  */
 public class HighScoreUI extends Group implements QualifiedObserver
 {
-	
-	Table highScoreTable;
-	
-	boolean HS_ScreenShowing = true;
-	
-	private Label header;
-	
+	private final float WIDTH = 200f;
+	private final float HEIGHT = 300f;
+	private final float POS_X = (Gdx.graphics.getWidth() - WIDTH) / 2;
+	private final float POS_Y = (Gdx.graphics.getHeight() - HEIGHT) / 1.1f;
+	private HighScoreTable highScoreTable;
+	private boolean HS_ScreenShowing;
 	private Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 	
 	/**
@@ -45,8 +44,13 @@ public class HighScoreUI extends Group implements QualifiedObserver
 	 */
 	public HighScoreUI()
 	{
-		this.show();
 		setUpListening();
+		setSize(WIDTH, HEIGHT);
+		setPosition(POS_X, POS_Y);
+		highScoreTable = new HighScoreTable();
+		highScoreTable.setFillParent(true);
+		addActor(highScoreTable);
+		setVisible(false);
 	}
 	
 	/**
@@ -84,50 +88,17 @@ public class HighScoreUI extends Group implements QualifiedObserver
 		if (isHighScoreScreenShowing())
 		{
 			HS_ScreenShowing = false;
-			this.addAction(Actions.moveTo(-this.getWidth(), 0, .3f));
+			this.addAction(Actions.hide());
 		} else
 		{
 			HS_ScreenShowing = true;
-			this.addAction(Actions.moveTo(0, 0, .3f));
+			this.addAction(Actions.show());
 			
 			CommandHighScoreRequest cmd = new CommandHighScoreRequest();
 			ClientModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}
-
-	/**
-	 * set up the UI to show the top 10 players' XP points
-	 */
-	public void show()
-	{
-		this.setSize(Gdx.graphics.getWidth()*.25f, Gdx.graphics.getHeight());
-		
-		initializeTableContents();
-		
-		this.addActor(highScoreTable);
-		
-		toggleHSScreenVisible();
-
-	}
 	
-	private void initializeTableContents()
-	{
-		header = new Label("Top 10", skin);
-		// Table setup
-		highScoreTable = new Table();
-		highScoreTable.setFillParent(true);
-		highScoreTable.top().left();
-		highScoreTable.setBackground(new NinePatchDrawable(getNinePatch("data/backgroundHS.9.png")));
-		highScoreTable.add(header).expandX();
-		
-		// Clear table
-		highScoreTable.clearChildren();
-		
-		// Set header
-		highScoreTable.add(header).expandX();
-		highScoreTable.row();
-	}
-
 	/** (Javadoc)
 	 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
 	 */
@@ -137,38 +108,12 @@ public class HighScoreUI extends Group implements QualifiedObserver
 		if (report.getClass().equals(HighScoreResponseReport.class))
 		{
 			HighScoreResponseReport rep = (HighScoreResponseReport) report;
-			
 			ArrayList<PlayerScoreRecord> list = rep.getScoreList();
 			updateTable(list);
-		}
-		
-		
+		}	
 	}
-	private void updateTable(ArrayList<PlayerScoreRecord> list)
+	private void updateTable(ArrayList<PlayerScoreRecord> players)
 	{
-		highScoreTable.setBackground(new NinePatchDrawable(getNinePatch("data/backgroundHS.9.png")));
-		highScoreTable.clearChildren();
-		highScoreTable.add(header).colspan(3).center();
-		highScoreTable.row();
-		
-		for(int i = 1; i <= 10; i++)
-		{
-			String playerName = list.get(i-1).getPlayerName();
-			highScoreTable.add(new Label(i + ".",skin)).left().padRight((float) .5);
-			highScoreTable.add(new Label(playerName, skin)).padRight(1);
-			Label xp = new Label("    " + list.get(i-1).getExperiencePoints(), skin);
-			xp.setColor(Color.GREEN);
-			highScoreTable.add(xp).padRight((float) .5);
-			highScoreTable.row();
-		}
-
+		highScoreTable.updateHighScores(players);
 	}
-
-	private NinePatch getNinePatch(String fileName)
-	{
-		// get the image
-		final Texture t = new Texture(Gdx.files.internal(fileName));
-		return new NinePatch(new TextureRegion(t));
-	}
-
 }
