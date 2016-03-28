@@ -50,7 +50,7 @@ public class PlayerInfoUI extends Group implements QualifiedObserver
 	 * set visibility of High Score Screen
 	 * @param b sets visibility of screen
 	 */
-	public void setHighScoreScreenVisibility(boolean b)
+	public void setPlayerInfoScreenVisibility(boolean b)
 	{
 		PI_ScreenShowing = b;
 	}
@@ -71,14 +71,14 @@ public class PlayerInfoUI extends Group implements QualifiedObserver
 		if (isPlayerInfoScreenShowing())
 		{
 			PI_ScreenShowing = false;
-			this.addAction(Actions.hide());
+			addAction(Actions.hide());
 		} 
 		else
 		{	
 //			CommandHighScoreRequest cmd = new CommandHighScoreRequest();
 //			ClientModelFacade.getSingleton().queueCommand(cmd);
 			PI_ScreenShowing = true;
-			this.addAction(Actions.show());
+			addAction(Actions.show());
 		}
 	}
 	

@@ -453,6 +453,22 @@ public class ScreenMap extends ScreenBasic
 					}
 					return true;
 				}
+				if (keycode == Keys.P)
+				{
+					if(playerInfoUI.isPlayerInfoScreenShowing())
+					{
+						//qaScreen.toggleQAScreenVisible();
+					}
+					if (!(stage.getKeyboardFocus() == null))
+					{
+						playerInfoUI.setPlayerInfoScreenVisibility(false);
+					}
+					else
+					{
+						playerInfoUI.togglePlayerInfoScreen();
+					}
+					return true;
+				}
 				if(keycode == Keys.H)
 				{
 					if(qaScreen.isQAScreenShowing())
