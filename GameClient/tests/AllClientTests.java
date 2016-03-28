@@ -81,13 +81,13 @@ import communication.packers.TeleportationInitiationMessagePackerTest;
 		ExperienceChangedMessageHandlerTest.class,
 		HighScoreResponseHandlerTest.class,
 		InitializeThisClientsPlayerMessageHandlerTest.class,
+		KnowledgeChangedMessageHandlerTest.class,
 		LoginFailedMessageHandlerTest.class,
 		MapFileMessageHandlerTest.class,
 		OtherPlayerMovedMessageHandlerTest.class,
 		PlayerJoinedMessageHandlerTest.class,
 		PlayerLeaveMessageHandlerTest.class,
 		QuestStateChangeMessageHandlerTest.class,
-		KnowledgeChangedMessageHandlerTest.class,
 		
 
 		// communication.packers
