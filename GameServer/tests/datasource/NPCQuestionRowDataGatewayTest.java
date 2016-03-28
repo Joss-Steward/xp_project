@@ -1,8 +1,6 @@
 package datasource;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -79,20 +77,23 @@ public abstract class NPCQuestionRowDataGatewayTest extends DatabaseTest
 
 	/**
 	 * Make sure we get a gateway when we ask for a random one
-	 * 
+	 * It runs the test multiple times to help ensure the random works
 	 * @throws DatabaseException
 	 *             shouldn't
 	 */
 	@Test
 	public void randomQuestion() throws DatabaseException
 	{
-		gateway = findRandomGateway();
-		assertNotNull(gateway);
+	    for(int i = 0; i < 10; i++)
+	    {
+	        gateway = findRandomGateway();
+	        assertNotNull(gateway);
 
-		Date now = new Date();
-		
-		assertTrue(now.after(gateway.getStartDate()));
-		assertEquals(gateway.getQuestionStatement(), NPCQuestionsForTest.ONE.getQ());
+	        Date now = new Date();
+
+	        assertTrue(now.after(gateway.getStartDate()));
+	        assertFalse(gateway.getQuestionStatement().equals(NPCQuestionsForTest.TWO.getQ()));
+	    }
 	}
 	
 	

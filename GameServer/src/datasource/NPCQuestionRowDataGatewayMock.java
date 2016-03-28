@@ -2,6 +2,7 @@ package datasource;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import testData.NPCQuestionsForTest;
@@ -161,16 +162,16 @@ public class NPCQuestionRowDataGatewayMock implements NPCQuestionRowDataGateway
 		
 		ArrayList<Integer> avaiableQuestions = new ArrayList<Integer>();
 		
-		Date now = new Date();
+		GregorianCalendar now = new GregorianCalendar();
 		
 		for(Integer i : npcQuestionInfo.keySet())
 		{
-		    if(now.compareTo(npcQuestionInfo.get(i).startDate) > 0)
+		    if(now.after(npcQuestionInfo.get(i).startDate) && now.before(npcQuestionInfo.get(i).endDate))
 		    {
                 avaiableQuestions.add(i);
 		    }
 		}
-		
+
 		int questionID = (int) (Math.random()*avaiableQuestions.size())+1;
 		return new NPCQuestionRowDataGatewayMock(questionID);
 	}
