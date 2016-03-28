@@ -1,14 +1,13 @@
 package view.screen.map;
 
 import static view.screen.Screens.DEFAULT_RES;
+
 import model.ClientModelFacade;
 import model.CommandKeyInputSent;
 import view.player.PlayerSprite;
 import view.player.PlayerSpriteFactory;
 import view.player.PlayerType;
 import view.screen.ScreenBasic;
-import view.screen.highscore.HighScoreUI;
-import view.screen.playerinfo.PlayerInfoUI;
 import view.screen.popup.PopUpDisplay;
 import view.screen.qas.ScreenQAs;
 
@@ -77,7 +76,7 @@ public class ScreenMap extends ScreenBasic
 	private ExperienceDisplay expDisplay;
 	private ChatUi chatArea;
 	private HighScoreUI highScoreUI;
-	private PlayerInfoUI playerInfoUI;
+	private MenuUI menuArea;
 	
 	@SuppressWarnings("unused")
 	private PopUpDisplay popUpDisplay;
@@ -396,7 +395,6 @@ public class ScreenMap extends ScreenBasic
 		expDisplay = new ExperienceDisplay();
 		qaScreen = new ScreenQAs();
 		highScoreUI = new HighScoreUI();
-		playerInfoUI = new PlayerInfoUI();
 		
 		worldStage = new Stage();
 		blurBatch = new SpriteBatch();
@@ -439,50 +437,26 @@ public class ScreenMap extends ScreenBasic
 				}
 				if(keycode == Keys.Q)
 				{
-					if(highScoreUI.isHighScoreScreenShowing())
-					{
-						highScoreUI.toggleHSScreenVisible();
-					}
 					if (!(stage.getKeyboardFocus() == null))
 					{
 						qaScreen.setQAScreenVisibility(false);
 					}
 					else
 					{
-						qaScreen.toggleQAScreenVisible();
-					}
-					return true;
-				}
-				if (keycode == Keys.P)
-				{
-					if(playerInfoUI.isPlayerInfoScreenShowing())
-					{
-						//qaScreen.toggleQAScreenVisible();
-					}
-					if (!(stage.getKeyboardFocus() == null))
-					{
-						playerInfoUI.setPlayerInfoScreenVisibility(false);
-					}
-					else
-					{
-						playerInfoUI.togglePlayerInfoScreen();
+						menuArea.getQuestAdventureBtn().toggle();
 					}
 					return true;
 				}
 				if(keycode == Keys.H)
 				{
-					if(qaScreen.isQAScreenShowing())
-					{
-						qaScreen.toggleQAScreenVisible();
-					}
-					
+			
 					if (!(stage.getKeyboardFocus() == null))
 					{
 						highScoreUI.setHighScoreScreenVisibility(false);
 					}
 					else
 					{
-						highScoreUI.toggleHSScreenVisible();
+						menuArea.getHighScoreBtn().toggle();
 					}
 					
 					return true;
@@ -507,11 +481,13 @@ public class ScreenMap extends ScreenBasic
 			}
 		});
 		
+		menuArea = new MenuUI(highScoreUI, qaScreen, chatArea); 
+		
 		stage.addActor(expDisplay);
 		stage.addActor(highScoreUI);
-		stage.addActor(playerInfoUI);
 		stage.addActor(qaScreen);
 		stage.addActor(chatArea);
+		stage.addActor(menuArea);
 		
 		loadingLayer = new Group();
 		loadingLayer.setSize(stage.getWidth(), stage.getHeight());
