@@ -8,6 +8,7 @@ import view.player.PlayerSpriteFactory;
 import view.player.PlayerType;
 import view.screen.ScreenBasic;
 import view.screen.highscore.HighScoreUI;
+import view.screen.playerinfo.PlayerInfoUI;
 import view.screen.popup.PopUpDisplay;
 import view.screen.qas.ScreenQAs;
 
@@ -76,6 +77,7 @@ public class ScreenMap extends ScreenBasic
 	private ExperienceDisplay expDisplay;
 	private ChatUi chatArea;
 	private HighScoreUI highScoreUI;
+	private PlayerInfoUI playerInfoUI;
 	
 	@SuppressWarnings("unused")
 	private PopUpDisplay popUpDisplay;
@@ -394,6 +396,7 @@ public class ScreenMap extends ScreenBasic
 		expDisplay = new ExperienceDisplay();
 		qaScreen = new ScreenQAs();
 		highScoreUI = new HighScoreUI();
+		playerInfoUI = new PlayerInfoUI();
 		
 		worldStage = new Stage();
 		blurBatch = new SpriteBatch();
@@ -490,6 +493,7 @@ public class ScreenMap extends ScreenBasic
 		
 		stage.addActor(expDisplay);
 		stage.addActor(highScoreUI);
+		stage.addActor(playerInfoUI);
 		stage.addActor(qaScreen);
 		stage.addActor(chatArea);
 		
