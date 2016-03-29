@@ -11,17 +11,9 @@ public enum PlayerType
 	 */
 	male_a("male_a"),
 	/**
-	 * Male appearance, type 2
-	 */
-	male_b("male_b"),
-	/**
 	 * Female appearance, type 1
 	 */
 	female_a("female_a"),
-	/**
-	 * Female appearance, type 2
-	 */
-	female_b("female_b"),
 	/**
 	 * Knight who has a straw hat
 	 */
@@ -33,7 +25,7 @@ public enum PlayerType
 	/**
 	 * Ninja
 	 */
-	ninja("ninja"),
+	Ninja("Ninja"),
 	/**
 	 * Merlin
 	 */
@@ -47,22 +39,25 @@ public enum PlayerType
 	 */
 	dave("dave"),
 	/**
-	 * Party Guy Frank
-	 */
-	partyguy("partyguy"),
-	/**
 	 * Matt
 	 */
-	matt_kujo("matt_kujo"),
+	MattKujo("MattKujo"),
 	/**
 	 * The sorting red hat
 	 */
 	RedHat("RedHat"),
 	/**
-	 * Ga
+	 * out of bounds
 	 */
-	ga("ga");
-	
+	out_of_bounds("out_of_bounds"),
+	/**
+	 * null pointer
+	 */
+	null_pointer_exception("null_pointer_exception"),
+	/**
+	 * off by one
+	 */
+	off_by_one("off_by_one");
 
 	/**
 	 * The name of the region in the loaded {@link:TextureAtlas} used by a

@@ -14,7 +14,7 @@ public enum PlayersForTest
 	/**
 	 * John must be player 1 for the current quest state report tests to pass
 	 */
-	JOHN(1, "John", "male_a", 0, 8, "pw", "current.tmx", 1111, null, 42, 46, Crew.NULL_POINTER),
+	JOHN(1, "John", "null_pointer_exception", 0, 8, "pw", "current.tmx", 1111, null, 42, 46, Crew.NULL_POINTER),
 	/**
 	 * Merlin must be player 2 for the player mapper tests to pass. That number
 	 * maps to player 2 in the quest and adventure states in QuestStatesForTest
@@ -24,7 +24,7 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	NICK(3, "Nick", "male_b", 4, 13, "pw", "homework.tmx", 1111, null, 0, 35, Crew.OUT_OF_BOUNDS),
+	NICK(3, "Nick", "off_by_one", 4, 13, "pw", "homework.tmx", 1111, null, 0, 35, Crew.OUT_OF_BOUNDS),
 	/**
 	 * 
 	 */
@@ -32,7 +32,7 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	MATT(5, "Matt", "male_b", 4, 13, "pw", "current.tmx", 1111, null, 0, 12, Crew.OUT_OF_BOUNDS),
+	MATT(5, "Matt", "male_a", 4, 13, "pw", "current.tmx", 1111, null, 0, 12, Crew.OUT_OF_BOUNDS),
 	/**
 	 * 
 	 */
@@ -41,24 +41,24 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	FRANK(7, "Frank", "male_c", 4, 13, "pw", "current.tmx", 1441, null, 0, 13, Crew.OUT_OF_BOUNDS),
+	FRANK(7, "Frank", "out_of_bounds", 4, 13, "pw", "current.tmx", 1441, null, 0, 13, Crew.OUT_OF_BOUNDS),
 	/**
 	 * 
 	 */
-	GA(8, "Ga", "male_b", 4, 13, "pw", "current.tmx", 1111, null, 0, 15, Crew.OUT_OF_BOUNDS),
+	GA(8, "Ga", "off_by_one", 4, 13, "pw", "current.tmx", 1111, null, 0, 15, Crew.OUT_OF_BOUNDS),
 	/**
 	 * 
 	 */
-	ANDY(9, "Andy", "male_b", 4, 13, "pw", null, 1111, null, 0, 33, Crew.OUT_OF_BOUNDS),
+	ANDY(9, "Andy", "null_pointer_exception", 4, 13, "pw", "current.tmx", 1111, null, 0, 33, Crew.OUT_OF_BOUNDS),
 	/**
 	 * 
 	 */
-	DAVE(10, "Dave", "male_b", 4, 13, "pw", null, 1111, null, 0, 12, Crew.OUT_OF_BOUNDS),
+	DAVE(10, "Dave", "out_of_bounds", 4, 13, "pw", null, 1111, null, 0, 12, Crew.OUT_OF_BOUNDS),
 
 	/**
 	 * 
 	 */
-	LOSER(11, "Loser", "male_b", 4, 13, "pw", null, 1111, null, 0, 3, Crew.OUT_OF_BOUNDS),
+	LOSER(11, "Loser", "off_by_one", 4, 13, "pw", null, 1111, null, 0, 3, Crew.OUT_OF_BOUNDS),
 
 	/**
 	 * 
@@ -83,7 +83,7 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	NEWBIE(16, "Newbie", "male_b", 11, 7, "pw", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
+	NEWBIE(16, "Newbie", "male_a", 11, 7, "pw", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
 	
 	/**
  	 * 
@@ -93,12 +93,12 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	MARTY(18, "Marty", "male_a", 4, 13, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER),
+	MARTY(18, "Marty", "out_of_bounds", 4, 13, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER),
 	
 	/**
      * 
      */
-    HERSH(19, "Hersh", "male_b", 4, 13, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER);
+    HERSH(19, "Hersh", "null_pointer_exception`", 4, 13, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER);
 
 	private int playerID;
 	private String appearanceType;
