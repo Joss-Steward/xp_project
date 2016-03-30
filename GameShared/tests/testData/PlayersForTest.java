@@ -93,12 +93,12 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	MARTY(18, "Marty", "out_of_bounds", 4, 13, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER),
+	MARTY(18, "Marty", "null_pointer_exception", 4, 13, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER),
 	
 	/**
      * 
      */
-    HERSH(19, "Hersh", "null_pointer_exception`", 4, 13, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER);
+    HERSH(19, "Hersh", "null_pointer_exception", 4, 13, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER);
 
 	private int playerID;
 	private String appearanceType;

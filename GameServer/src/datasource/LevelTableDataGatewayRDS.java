@@ -99,7 +99,7 @@ public class LevelTableDataGatewayRDS implements LevelTableDataGateway
 					"Insert INTO Levels SET levelDescription = ?, levelUpPoints = ?, levelUpMonth = ?, levelUpDayOfMonth = ?");
 			stmt.setString(1, description);
 			stmt.setInt(2, levelUpPoints);
-			stmt.setInt(3, levelUpPoints);
+			stmt.setInt(3, levelUpMonth);
 			stmt.setInt(4,  levelUpDayOfMonth);
 			stmt.executeUpdate();
 

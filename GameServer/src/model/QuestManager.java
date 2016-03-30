@@ -238,10 +238,6 @@ public class QuestManager implements QualifiedObserver
 		QuestManager qm = QuestManager.getSingleton();
 		SendChatMessageReport myReport = (SendChatMessageReport) report;
 		PlayerManager PM = PlayerManager.getSingleton();
-		if (myReport.getType() != ChatType.Local)
-		{
-			return;
-		}
 
 		try
 		{
