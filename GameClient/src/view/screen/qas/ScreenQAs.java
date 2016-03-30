@@ -149,11 +149,4 @@ public class ScreenQAs extends Group implements QualifiedObserver
 			questTable.requestFoucus();
 		}
 	}
-	
-	private NinePatch getNinePatch(String fileName)
-	{
-		// get the image
-		final Texture t = new Texture(Gdx.files.internal(fileName));
-		return new NinePatch(new TextureRegion(t));
-	}
 }

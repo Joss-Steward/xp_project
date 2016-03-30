@@ -2,9 +2,12 @@ package view.screen.playerinfo;
 
 import view.screen.qas.ScreenQAs;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+
+import model.ThisClientsPlayer;
 /**
  * @author tr3897
  *
@@ -34,18 +37,51 @@ public class PlayerInfoTable extends ScrollPane
 	}
 	
 	/**
-	 * @param exp 
-	 * @param players
+	 * @param player 
 	 */
-	public void updatePlayerInfo(int exp, int know, int level)
+	public void updatePlayerInfo(ThisClientsPlayer player)
 	{
+		String name = player.getName();
+		String crew = player.getCrew().name();
+		int exp = player.getExperiencePoints();
+		int know = player.getKnowledgePoints();
+		int level = player.getLevelRecord().getLevelUpPoints();
+		
 		table.clear();
-		Label label = new Label("Exp: " + exp, ScreenQAs.skin);
-		table.add(label).left().row();
-		label = new Label("Kp: " + know, ScreenQAs.skin);
-		table.add(label).left().row();
-		label = new Label("Lp: " + level, ScreenQAs.skin);
-		table.add(label).left().row();
+		//NAME
+		Label label = new Label("Name: ", ScreenQAs.skin);
+		table.add(label).left();
+		label = new Label(name, ScreenQAs.skin);
+		label.setColor(Color.GREEN);
+		table.add(label).right().row();
+		
+		//EXP
+		label = new Label("Crew: ", ScreenQAs.skin);
+		table.add(label).left();
+		label = new Label(crew, ScreenQAs.skin);
+		label.setColor(Color.GREEN);
+		table.add(label).right().row();
+		
+		//EXP
+		label = new Label("Experience: ", ScreenQAs.skin);
+		table.add(label).left();
+		label = new Label("" + exp, ScreenQAs.skin);
+		label.setColor(Color.GREEN);
+		table.add(label).right().row();
+		
+		//KNOW
+		label = new Label("Knowledge Points: ", ScreenQAs.skin);
+		table.add(label).left();
+		label = new Label("" + know, ScreenQAs.skin);
+		label.setColor(Color.GREEN);
+		table.add(label).right().row();
+		
+		//LEVEL
+		label = new Label("Level Points: ", ScreenQAs.skin);
+		table.add(label).left();
+		label = new Label("" + level, ScreenQAs.skin);
+		label.setColor(Color.GREEN);
+		table.add(label).right().row();
 	}
 	
 }

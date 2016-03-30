@@ -12,6 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+/**
+ * @author TJ Renninger and Ian Keefer
+ *
+ */
 public class PlayerInfoUI extends Group implements QualifiedObserver
 {
 	private final float WIDTH = 200f;
@@ -75,10 +79,7 @@ public class PlayerInfoUI extends Group implements QualifiedObserver
 		else
 		{	
 			ThisClientsPlayer player = ClientPlayerManager.getSingleton().getThisClientsPlayer();
-			int exp = player.getExperiencePoints();
-			int know = player.getKnowledgePoints();
-			int level = player.getLevelRecord().getLevelUpPoints();
-			playerTable.updatePlayerInfo(exp, know, level);
+			playerTable.updatePlayerInfo(player);
 //			CommandHighScoreRequest cmd = new CommandHighScoreRequest();
 //			ClientModelFacade.getSingleton().queueCommand(cmd);
 			PI_ScreenShowing = true;

@@ -108,11 +108,7 @@ public class HighScoreUI extends Group implements QualifiedObserver
 		{
 			HighScoreResponseReport rep = (HighScoreResponseReport) report;
 			ArrayList<PlayerScoreRecord> list = rep.getScoreList();
-			updateTable(list);
+			highScoreTable.updateHighScores(list);
 		}	
-	}
-	private void updateTable(ArrayList<PlayerScoreRecord> players)
-	{
-		highScoreTable.updateHighScores(players);
 	}
 }
