@@ -34,7 +34,8 @@ public class PDFAdventureWriter
 				page.setRotation(90);
 				doc.addPage(page);
 
-				PDFont font = PDType1Font.HELVETICA_BOLD;
+				PDFont fancyFont = PDType1Font.TIMES_BOLD_ITALIC;
+				PDFont font = PDType1Font.HELVETICA;
 				PDRectangle pageSize = page.getMediaBox();
 				float pageWidth = pageSize.getWidth();
 				PDPageContentStream contents;
@@ -48,10 +49,23 @@ public class PDFAdventureWriter
 					contents.transform(new Matrix(0, 1, -1, 0, pageWidth, 0));
 
 					contents.beginText();
+					contents.newLineAtOffset(150, 450);
 					contents.setFont(font, 12);
-					contents.newLineAtOffset(100, 500);
-					contents.showText(a.getAdventureDescription());
+					contents.showText(a.getAdventureDescription());					
 					contents.endText();
+					
+					contents.beginText();
+					contents.newLineAtOffset(150, 400);
+					contents.setFont(fancyFont, 18);
+					contents.showText("and will reward you with " + a.getAdventureXP() + " Experience Points for successful completion");
+					contents.endText();
+					
+					contents.beginText();
+					contents.newLineAtOffset(400, 100);
+					contents.setFont(fancyFont, 14);
+					contents.showText("This adventure is part of the quest named _________");
+					contents.endText();					
+					
 					contents.close();
 
 				} catch (IOException e)

@@ -22,7 +22,7 @@ public class PDFAdventureWriterTest
 		ThisClientsPlayer cp = ThisClientsPlayerTest
 				.setUpThisClientsPlayer(PlayersForTest.MERLIN);
 		ClientPlayerAdventure a = new ClientPlayerAdventure(1,
-				"This adventure's description", 0, AdventureStateEnum.TRIGGERED, true);
+				"Find the Department Secretary of the Computer Science & Engineering Department and introduce yourself", 0, AdventureStateEnum.TRIGGERED, true);
 		ClientPlayerQuest q = new ClientPlayerQuest(1, "quest title", "Test Quest 1",
 				QuestStateEnum.FINISHED, 1, 2, true);
 		q.addAdventure(a);
