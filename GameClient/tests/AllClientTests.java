@@ -100,6 +100,8 @@ import communication.packers.TeleportationInitiationMessagePackerTest;
 
 		// model
 		ChatManagerTest.class,
+		ClientPlayerManagerTest.class, 
+		ClientPlayerTest.class,
 		CommandAdventureStateChangeTest.class,
 		CommandChatMessageReceivedTest.class,
 		CommandChatMessageSentTest.class,
@@ -119,8 +121,7 @@ import communication.packers.TeleportationInitiationMessagePackerTest;
 		CommandSendQuestStateTest.class,
 		MapManagerTest.class, 
 		ModelFacadeTest.class,
-		ClientPlayerManagerTest.class, 
-		ClientPlayerTest.class,
+//		PDFAdventureWriterTest.class,
 		ThisClientsPlayerTest.class,
 		
 		// model.reports
