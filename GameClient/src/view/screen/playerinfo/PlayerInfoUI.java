@@ -1,10 +1,10 @@
 package view.screen.playerinfo;
 
-import model.ClientModelFacade;
-import model.CommandHighScoreRequest;
+import model.ClientPlayerManager;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
+import model.ThisClientsPlayer;
 import model.reports.ExperiencePointsChangeReport;
 
 import com.badlogic.gdx.Gdx;
@@ -33,7 +33,6 @@ public class PlayerInfoUI extends Group implements QualifiedObserver
 		playerTable = new PlayerInfoTable();
 		playerTable.setFillParent(true);
 		addActor(playerTable);
-		playerTable.updatePlayerInfo(24444444);
 		setVisible(false);
 	}
 	
@@ -75,6 +74,11 @@ public class PlayerInfoUI extends Group implements QualifiedObserver
 		} 
 		else
 		{	
+			ThisClientsPlayer player = ClientPlayerManager.getSingleton().getThisClientsPlayer();
+			int exp = player.getExperiencePoints();
+			int know = player.getKnowledgePoints();
+			int level = player.getLevelRecord().getLevelUpPoints();
+			playerTable.updatePlayerInfo(exp, know, level);
 //			CommandHighScoreRequest cmd = new CommandHighScoreRequest();
 //			ClientModelFacade.getSingleton().queueCommand(cmd);
 			PI_ScreenShowing = true;
@@ -92,7 +96,7 @@ public class PlayerInfoUI extends Group implements QualifiedObserver
 		{
 			ExperiencePointsChangeReport rep = (ExperiencePointsChangeReport) report;
 			int exp = rep.getExperiencePoints();
-			playerTable.updatePlayerInfo(exp);
+			//playerTable.updatePlayerInfo(exp);
 		}	
 	}
 }

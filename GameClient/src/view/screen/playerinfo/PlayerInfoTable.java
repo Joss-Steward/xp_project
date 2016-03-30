@@ -37,11 +37,15 @@ public class PlayerInfoTable extends ScrollPane
 	 * @param exp 
 	 * @param players
 	 */
-	public void updatePlayerInfo(int exp)
+	public void updatePlayerInfo(int exp, int know, int level)
 	{
 		table.clear();
 		Label label = new Label("Exp: " + exp, ScreenQAs.skin);
-		table.add(label);
+		table.add(label).left().row();
+		label = new Label("Kp: " + know, ScreenQAs.skin);
+		table.add(label).left().row();
+		label = new Label("Lp: " + level, ScreenQAs.skin);
+		table.add(label).left().row();
 	}
 	
 }
