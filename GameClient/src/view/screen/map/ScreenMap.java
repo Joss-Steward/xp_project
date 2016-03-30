@@ -8,6 +8,7 @@ import view.player.PlayerSpriteFactory;
 import view.player.PlayerType;
 import view.screen.ScreenBasic;
 import view.screen.highscore.HighScoreUI;
+import view.screen.playerinfo.PlayerInfoUI;
 import view.screen.popup.PopUpDisplay;
 import view.screen.qas.ScreenQAs;
 
@@ -77,6 +78,7 @@ public class ScreenMap extends ScreenBasic
 	private ChatUi chatArea;
 	private HighScoreUI highScoreUI;
 	private MenuUI menuArea;
+	private PlayerInfoUI playerInfoUI;
 	
 	@SuppressWarnings("unused")
 	private PopUpDisplay popUpDisplay;
@@ -395,6 +397,7 @@ public class ScreenMap extends ScreenBasic
 		expDisplay = new ExperienceDisplay();
 		qaScreen = new ScreenQAs();
 		highScoreUI = new HighScoreUI();
+		playerInfoUI = new PlayerInfoUI();
 		
 		worldStage = new Stage();
 		blurBatch = new SpriteBatch();
@@ -449,7 +452,6 @@ public class ScreenMap extends ScreenBasic
 				}
 				if(keycode == Keys.H)
 				{
-			
 					if (!(stage.getKeyboardFocus() == null))
 					{
 						highScoreUI.setHighScoreScreenVisibility(false);
@@ -457,6 +459,19 @@ public class ScreenMap extends ScreenBasic
 					else
 					{
 						menuArea.getHighScoreBtn().toggle();
+					}
+					
+					return true;
+				}
+				if (keycode == Keys.P)
+				{
+					if (!(stage.getKeyboardFocus() == null))
+					{
+						playerInfoUI.setPlayerInfoScreenVisibility(false);
+					}
+					else
+					{
+						playerInfoUI.togglePlayerInfoScreen();
 					}
 					
 					return true;
@@ -485,6 +500,7 @@ public class ScreenMap extends ScreenBasic
 		
 		stage.addActor(expDisplay);
 		stage.addActor(highScoreUI);
+		stage.addActor(playerInfoUI);
 		stage.addActor(qaScreen);
 		stage.addActor(chatArea);
 		stage.addActor(menuArea);
