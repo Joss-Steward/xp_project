@@ -2,15 +2,12 @@ package model;
 
 import java.util.ArrayList;
 
-import model.ClientPlayerAdventure;
-import model.ClientPlayerQuest;
-import model.QualifiedObservableConnector;
-import model.reports.AdventureStateChangeReport;
 import model.reports.AdventureNeedingNotificationReport;
+import model.reports.AdventureStateChangeReport;
 import model.reports.KnowledgePointsChangeReport;
+import model.reports.QuestNeedingNotificationReport;
 import model.reports.QuestStateChangeReport;
 import model.reports.QuestStateReport;
-import model.reports.QuestNeedingNotificationReport;
 import data.AdventureStateEnum;
 import data.Position;
 import data.QuestStateEnum;
@@ -93,8 +90,8 @@ public class ThisClientsPlayer extends ClientPlayer
 			if (q.isNeedingNotification())
 			{
 				QuestNeedingNotificationReport report = new QuestNeedingNotificationReport(
-						ClientPlayerManager.getSingleton().getThisClientsPlayer()
-						.getID(), q.getQuestID(), q.getQuestDescription(), q.getQuestState());
+						ClientPlayerManager.getSingleton().getThisClientsPlayer().getID(),
+						q.getQuestID(), q.getQuestDescription(), q.getQuestState());
 				QualifiedObservableConnector.getSingleton().sendReport(report);
 			}
 			for (ClientPlayerAdventure a : q.getAdventureList())
@@ -128,6 +125,8 @@ public class ThisClientsPlayer extends ClientPlayer
 		return experiencePoints;
 	}
 
+
+
 	/**
 	 * @param record
 	 *            level record
@@ -147,8 +146,7 @@ public class ThisClientsPlayer extends ClientPlayer
 	 */
 	public void sendExperiencePointsChangeReport()
 	{
-		KnowledgePointsChangeReport r = new KnowledgePointsChangeReport(
-				experiencePoints);
+		KnowledgePointsChangeReport r = new KnowledgePointsChangeReport(experiencePoints);
 		QualifiedObservableConnector.getSingleton().sendReport(r);
 	}
 
@@ -171,8 +169,8 @@ public class ThisClientsPlayer extends ClientPlayer
 			{
 				q.setState(newState);
 
-				QuestStateChangeReport r = new QuestStateChangeReport(this.getID(), q.getQuestID(),
-						questDescription, newState);
+				QuestStateChangeReport r = new QuestStateChangeReport(this.getID(),
+						q.getQuestID(), questDescription, newState);
 				QualifiedObservableConnector.getSingleton().sendReport(r);
 			}
 		}
@@ -201,7 +199,8 @@ public class ThisClientsPlayer extends ClientPlayer
 					{
 						a.setAdventureState(adventureState);
 						AdventureStateChangeReport r = new AdventureStateChangeReport(
-								this.getID(), questID, adventureID, adventureDescription, adventureState);
+								this.getID(), questID, adventureID, adventureDescription,
+								adventureState);
 						QualifiedObservableConnector.getSingleton().sendReport(r);
 					}
 				}
@@ -230,7 +229,7 @@ public class ThisClientsPlayer extends ClientPlayer
 	{
 		setLevelInfoKnowledge(knowledge);
 	}
-	
+
 	/**
 	 * Overwrite the experience and level record in the clients player
 	 * 
@@ -245,25 +244,27 @@ public class ThisClientsPlayer extends ClientPlayer
 	}
 
 	/**
-	 * @param knowledge points of this player
+	 * @param knowledge
+	 *            points of this player
 	 */
-	public void setLevelInfoKnowledge(int knowledge) 
+	public void setLevelInfoKnowledge(int knowledge)
 	{
 		this.knowledgePoints = knowledge;
-		
+
 		sendKnowledgePointsChangeReport();
-		
+
 	}
 
 	/**
-	 *  sending the knowledge changed report
+	 * sending the knowledge changed report
 	 */
-	public void sendKnowledgePointsChangeReport() {
-		
+	public void sendKnowledgePointsChangeReport()
+	{
+
 		KnowledgePointsChangeReport r = new KnowledgePointsChangeReport(
 				this.knowledgePoints);
 		QualifiedObservableConnector.getSingleton().sendReport(r);
-		
+
 	}
 
 	/**
