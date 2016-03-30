@@ -13,6 +13,8 @@ import model.reports.QuestStateReport;
 import org.easymock.EasyMock;
 import org.junit.Test;
 
+import testData.PlayersForTest;
+
 /**
  * Test the Command to send quest state to the view
  * @author Merlin
@@ -28,7 +30,7 @@ public class CommandSendQuestStateTest
 	@Test
 	public void executeTest()
 	{
-		ThisClientsPlayer cp = ThisClientsPlayerTest.setUpThisClientsPlayerAsNumberOne();
+		ThisClientsPlayer cp = ThisClientsPlayerTest.setUpThisClientsPlayer(PlayersForTest.JOHN);
 		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
 		cp.addQuest(q);
 		ArrayList<ClientPlayerQuest> expected = new ArrayList<ClientPlayerQuest>() ;

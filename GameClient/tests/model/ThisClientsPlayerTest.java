@@ -61,7 +61,7 @@ public class ThisClientsPlayerTest
 		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 		cp.move(new Position(3, 4));
 
 		EasyMock.verify(obs);
@@ -74,7 +74,7 @@ public class ThisClientsPlayerTest
 	@Test
 	public void notifiesOnQuestRequest()
 	{
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
 		cp.addQuest(q);
 		ArrayList<ClientPlayerQuest> expected = new ArrayList<ClientPlayerQuest>() ;
@@ -97,7 +97,7 @@ public class ThisClientsPlayerTest
 	 */
 	@Test
 	public void testThisPlayerContainsClientPlayerQuest() {
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 		
 		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
 		
@@ -106,16 +106,15 @@ public class ThisClientsPlayerTest
 		assertEquals("Test Quest 1", cp.getQuests().get(0).getQuestDescription());
 	}
 
-	static ThisClientsPlayer setUpThisClientsPlayerAsNumberOne()
+	static ThisClientsPlayer setUpThisClientsPlayer(PlayersForTest player)
 	{
 		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
-		PlayersForTest john = PlayersForTest.JOHN;
-		pm.initiateLogin(john.getPlayerName(), john.getPlayerPassword());
+		pm.initiateLogin(player.getPlayerName(), player.getPlayerPassword());
 		ThisClientsPlayer cp = null;
 		
 		try
 		{
-			cp = pm.finishLogin(john.getPlayerID());
+			cp = pm.finishLogin(player.getPlayerID());
 		} catch (AlreadyBoundException | NotBoundException e)
 		{
 			e.printStackTrace();
@@ -132,7 +131,7 @@ public class ThisClientsPlayerTest
 	@Test
 	public void canWhompOnQuestList()
 	{
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
 		cp.addQuest(q);
 		
@@ -157,7 +156,7 @@ public class ThisClientsPlayerTest
 	@Test
 	public void testAllExperienceInfo()
 	{
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 		
 		LevelRecord rec = new LevelRecord("Felyne Explorer", 100, 10, 7);
 		cp.setLevelInfo(rec, 10);
@@ -174,7 +173,7 @@ public class ThisClientsPlayerTest
 	@Test
 	public void testSendAdventuresNeedingNotificationReport()
 	{
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 		
 		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", 0, AdventureStateEnum.COMPLETED, true);
 		ClientPlayerQuest q = new ClientPlayerQuest(1, "questtitle", "Test Quest 1", QuestStateEnum.FINISHED, 1, 2, true);
@@ -202,7 +201,7 @@ public class ThisClientsPlayerTest
 	@Test
 	public void testQuestNeedingNotificationReport()
 	{
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 		
 		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", 0, AdventureStateEnum.COMPLETED, true);
 		ClientPlayerQuest q = new ClientPlayerQuest(1, "quest title", "Test Quest 1", QuestStateEnum.FINISHED, 1, 2, true);
@@ -231,7 +230,7 @@ public class ThisClientsPlayerTest
 	@Test
 	public void testSendExperiencePointsChangeReport()
 	{
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 		
 		int exp = 10;
 		LevelRecord rec = new LevelRecord("Felyne Explorer", 10, 10, 7);
@@ -254,7 +253,7 @@ public class ThisClientsPlayerTest
 	@Test
 	public void testAllKnowledgeInfo()
 	{
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 		
 		cp.setLevelInfoKnowledge(10);
 		
@@ -268,7 +267,7 @@ public class ThisClientsPlayerTest
 	@Test
 	public void testSendKnowledgePointsChangeReport()
 	{
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 		
 		int exp = 10;
 		cp.setLevelInfoKnowledge(10);
@@ -283,4 +282,6 @@ public class ThisClientsPlayerTest
 		
 		EasyMock.verify(obs);
 	}
+	
+	
 }
