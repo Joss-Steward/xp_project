@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.ObjectFloatMap;
 import data.ChatType;
 import model.ClientModelFacade;
 import model.CommandChatMessageSent;
+import view.screen.highscore.HighScoreUI;
 import view.screen.qas.ScreenQAs;
 
 /**
