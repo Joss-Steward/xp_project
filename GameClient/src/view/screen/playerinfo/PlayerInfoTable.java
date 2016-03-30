@@ -49,39 +49,49 @@ public class PlayerInfoTable extends ScrollPane
 		
 		table.clear();
 		//NAME
-		Label label = new Label("Name: ", ScreenQAs.skin);
-		table.add(label).left();
-		label = new Label(name, ScreenQAs.skin);
-		label.setColor(Color.GREEN);
-		table.add(label).right().row();
+		Table labelGroup = new Table();
+		Label label1 = new Label("Name: ", ScreenQAs.skin);
+		Label label2 = new Label(name, ScreenQAs.skin);
+		label2.setColor(Color.GREEN);
+		labelGroup.add(label1).left();
+		labelGroup.add(label2).left();
+		table.add(labelGroup).left().row();
+		
+		//CREW
+		labelGroup = new Table();
+		label1 = new Label("Crew: ", ScreenQAs.skin);
+		label2 = new Label(crew, ScreenQAs.skin);
+		label2.setColor(Color.GREEN);
+		labelGroup.add(label1).left();
+		labelGroup.add(label2).left();
+		table.add(labelGroup).left().row();
 		
 		//EXP
-		label = new Label("Crew: ", ScreenQAs.skin);
-		table.add(label).left();
-		label = new Label(crew, ScreenQAs.skin);
-		label.setColor(Color.GREEN);
-		table.add(label).right().row();
-		
-		//EXP
-		label = new Label("Experience: ", ScreenQAs.skin);
-		table.add(label).left();
-		label = new Label("" + exp, ScreenQAs.skin);
-		label.setColor(Color.GREEN);
-		table.add(label).right().row();
+		labelGroup = new Table();
+		label1 = new Label("Experience: ", ScreenQAs.skin);
+		label2 = new Label("" + exp, ScreenQAs.skin);
+		label2.setColor(Color.GREEN);
+		labelGroup.add(label1).left();
+		labelGroup.add(label2).left();
+		table.add(labelGroup).left().row();
 		
 		//KNOW
-		label = new Label("Knowledge Points: ", ScreenQAs.skin);
-		table.add(label).left();
-		label = new Label("" + know, ScreenQAs.skin);
-		label.setColor(Color.GREEN);
-		table.add(label).right().row();
+		labelGroup = new Table();
+		label1 = new Label("Knowledge Points: ", ScreenQAs.skin);
+		label2 = new Label("" + know, ScreenQAs.skin);
+		label2.setColor(Color.GREEN);
+		labelGroup.add(label1).left();
+		labelGroup.add(label2).left();
+		table.add(labelGroup).left().row();
 		
 		//LEVEL
-		label = new Label("Level Points: ", ScreenQAs.skin);
-		table.add(label).left();
-		label = new Label("" + level, ScreenQAs.skin);
-		label.setColor(Color.GREEN);
-		table.add(label).right().row();
+		labelGroup = new Table();
+		label1 = new Label("Level Points: ", ScreenQAs.skin);
+		label2 = new Label("" + level, ScreenQAs.skin);
+		label2.setColor(Color.GREEN);
+		labelGroup.add(label1).left();
+		labelGroup.add(label2).left();
+		table.add(labelGroup).left().row();
 	}
 	
 }
