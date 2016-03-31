@@ -1,6 +1,7 @@
 package model.reports;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import model.reports.AdventureStateChangeReport;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
@@ -24,13 +25,15 @@ public class AdventureStateChangeReportTest
 	public void testInitialization() 
 	{
 		AdventureStateChangeReport report = new AdventureStateChangeReport(1, AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(), AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureID(),
-				AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(), AdventureStateEnum.TRIGGERED);
+				AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(), AdventureStateEnum.TRIGGERED, true, "Mom");
 		
 		assertEquals(1, report.getPlayerID());
 		assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(), report.getAdventureID());
 		assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureID(), report.getAdventureID());
 		assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(),report.getAdventureDescription());
 		assertEquals(AdventureStateEnum.TRIGGERED, report.getNewState());
+		assertTrue(report.isRealLifeAdventure());
+		assertEquals("Mom", report.getWitnessTitle());
 	}
 	
 	/**

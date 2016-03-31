@@ -32,7 +32,7 @@ public class CommandAdventureStateChangeTest
 	@Test
 	public void testInitialization()
 	{
-		CommandAdventureStateChange x = new CommandAdventureStateChange(new AdventureStateChangeMessage(1,2,5, "Silly Adventure", AdventureStateEnum.COMPLETED));
+		CommandAdventureStateChange x = new CommandAdventureStateChange(new AdventureStateChangeMessage(1,2,5, "Silly Adventure", AdventureStateEnum.COMPLETED, null, 0));
 		assertEquals(2,x.getQuestID());
 		assertEquals(5, x.getAdventureID());
 		assertEquals("Silly Adventure", x.getAdventureDescription());
@@ -54,7 +54,7 @@ public class CommandAdventureStateChangeTest
 		int adventureID = 1;
 		
 		ClientPlayerQuest q = new ClientPlayerQuest(questID, "questtitle", "silly quest", QuestStateEnum.TRIGGERED, 3, 0, false);
-		ClientPlayerAdventure a1 = new ClientPlayerAdventure(adventureID,"adventure 1", 3, AdventureStateEnum.TRIGGERED, false);
+		ClientPlayerAdventure a1 = new ClientPlayerAdventure(adventureID,"adventure 1", 3, AdventureStateEnum.TRIGGERED, false, null, 0);
 		q.getAdventureList().add(a1);
 		
 		Position pos = new Position(1, 2);
@@ -67,7 +67,7 @@ public class CommandAdventureStateChangeTest
 		ClientPlayerManager.getSingleton().getThisClientsPlayer().addQuest(q);
 		
 		CommandAdventureStateChange x = new CommandAdventureStateChange
-				(new AdventureStateChangeMessage(playerID, questID,adventureID, "adventure 1", AdventureStateEnum.COMPLETED));
+				(new AdventureStateChangeMessage(playerID, questID,adventureID, "adventure 1", AdventureStateEnum.COMPLETED, null, 0));
 		x.execute();
 		
 		for(ClientPlayerQuest quest : ClientPlayerManager.getSingleton().getThisClientsPlayer().getQuests())

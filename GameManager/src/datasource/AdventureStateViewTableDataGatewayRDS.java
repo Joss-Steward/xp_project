@@ -60,7 +60,7 @@ public class AdventureStateViewTableDataGatewayRDS
 						result.getInt("AdventureStates.adventureID"), result
 								.getString("Adventures.adventureDescription"), result
 								.getInt("Adventures.experiencePointsGained"),
-						completionType, completionCriteria));
+						completionType, completionCriteria, null, null));
 
 			}
 

@@ -58,7 +58,7 @@ public class AdventureStateChangeMessageHandlerTest
 		ClientPlayerManager.getSingleton().initiateLogin("john", "pw");
 		ClientPlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
 		AdventureStateChangeMessageHandler h = new AdventureStateChangeMessageHandler();
-		AdventureStateChangeMessage msg = new AdventureStateChangeMessage(1, 2, 3, "Big Adventure", AdventureStateEnum.TRIGGERED);
+		AdventureStateChangeMessage msg = new AdventureStateChangeMessage(1, 2, 3, "Big Adventure", AdventureStateEnum.TRIGGERED, null, 0);
 		
 		h.process(msg);
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());

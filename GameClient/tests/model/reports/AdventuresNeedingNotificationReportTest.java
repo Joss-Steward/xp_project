@@ -25,7 +25,7 @@ public class AdventuresNeedingNotificationReportTest
 	@Test
 	public void testInitialization() 
 	{
-		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure", 3, AdventureStateEnum.COMPLETED, true);
+		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure", 3, AdventureStateEnum.COMPLETED, true, null, 0);
 		ArrayList<String> adventureList = new ArrayList<String>();
 		adventureList.add(a.getAdventureDescription());
 		AdventureNeedingNotificationReport report = new AdventureNeedingNotificationReport(1, 2, 1, "Silly Adventure", AdventureStateEnum.COMPLETED);

@@ -23,7 +23,7 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	QUEST2_ADVENTURE1(1, "Quest 2: Adventure Description 1", 2, 3, AdventureCompletionType.EXTERNAL, new CriteriaString("Department Secretary")),
+	QUEST2_ADVENTURE1(1, "Quest 2: Adventure Description 1", 2, 3, AdventureCompletionType.REAL_LIFE, new CriteriaString("Department Secretary")),
 	/**
 	 * 
 	 */
@@ -31,43 +31,43 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	QUEST2_ADVENTURE3(3, "Quest 2: Adventure Description 3", 2, 3, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
+	QUEST2_ADVENTURE3(3, "Quest 2: Adventure Description 3", 2, 3, AdventureCompletionType.REAL_LIFE, new CriteriaString("Lab Instructor")),
 	/**
 	 * 
 	 */
-	QUEST2_ADVENTURE4(4, "Quest 2: Adventure Description 4", 2, 33, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
+	QUEST2_ADVENTURE4(4, "Quest 2: Adventure Description 4", 2, 33, AdventureCompletionType.REAL_LIFE, new CriteriaString("Lab Instructor")),
 	/**
 	 * 
 	 */
-	QUEST3_ADVENTURE1(1, "Adventure 1 for Quest 3", 3, 5, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
+	QUEST3_ADVENTURE1(1, "Adventure 1 for Quest 3", 3, 5, AdventureCompletionType.REAL_LIFE, new CriteriaString("Lab Instructor")),
 	/**
 	 * 
 	 */
-	QUEST3_ADVENTURE2(2, "Adventure 2 for Quest 3", 3, 5, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
+	QUEST3_ADVENTURE2(2, "Adventure 2 for Quest 3", 3, 5, AdventureCompletionType.REAL_LIFE, new CriteriaString("Lab Instructor")),
 	/**
 	 * 
 	 */
-	QUEST3_ADVENTURE3(3, "Adventure 3 for Quest 3", 3, 5, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
+	QUEST3_ADVENTURE3(3, "Adventure 3 for Quest 3", 3, 5, AdventureCompletionType.REAL_LIFE, new CriteriaString("Lab Instructor")),
 	/**
 	 * 
 	 */
-	QUEST1_ADVENTURE3(3, "One more Adventure", 1, 3, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
+	QUEST1_ADVENTURE3(3, "One more Adventure", 1, 3, AdventureCompletionType.REAL_LIFE, new CriteriaString("Lab Instructor")),
 	/**
 	 * 
 	 */
-	QUEST4_ADVENTURE1(1, "Quest 4 Adventure", 4, 5, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
+	QUEST4_ADVENTURE1(1, "Quest 4 Adventure", 4, 5, AdventureCompletionType.REAL_LIFE, new CriteriaString("Lab Instructor")),
 	/**
 	 * 
 	 */
-	QUEST4_ADVENTURE2(2, "Quest 4 Adventure 2", 4, 5, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
+	QUEST4_ADVENTURE2(2, "Quest 4 Adventure 2", 4, 5, AdventureCompletionType.REAL_LIFE, new CriteriaString("Lab Instructor")),
 	/**
 	 * 
 	 */
-	QUEST4_ADVENTURE3(3, "Quest 4 Adventure 3", 4, 5, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
+	QUEST4_ADVENTURE3(3, "Quest 4 Adventure 3", 4, 5, AdventureCompletionType.REAL_LIFE, new CriteriaString("Lab Instructor")),
 	/**
 	 * 
 	 */
-	QUEST4_ADVENTURE4(4, "Quest 4 Adventure 4", 4, 5, AdventureCompletionType.EXTERNAL, new CriteriaString("Lab Instructor")),
+	QUEST4_ADVENTURE4(4, "Quest 4 Adventure 4", 4, 5, AdventureCompletionType.REAL_LIFE, new CriteriaString("Lab Instructor")),
 
 	/**
 	 * 

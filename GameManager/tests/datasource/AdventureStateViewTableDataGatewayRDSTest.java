@@ -40,7 +40,7 @@ public class AdventureStateViewTableDataGatewayRDSTest extends DatabaseTest
 				AdventuresForTest.QUEST3_ADVENTURE1.getAdventureDescription(),
 				AdventuresForTest.QUEST3_ADVENTURE1.getExperiencePointsGained(),
 				AdventuresForTest.QUEST3_ADVENTURE1.getCompletionType(),
-				AdventuresForTest.QUEST3_ADVENTURE1.getCompletionCriteria());
+				AdventuresForTest.QUEST3_ADVENTURE1.getCompletionCriteria(), null, null);
 		assertTrue(results.contains(expected));
 		assertTrue(results.contains(new AdventureRecord(
 				AdventuresForTest.QUEST3_ADVENTURE3.getQuestID(),
@@ -48,14 +48,14 @@ public class AdventureStateViewTableDataGatewayRDSTest extends DatabaseTest
 				AdventuresForTest.QUEST3_ADVENTURE3.getAdventureDescription(),
 				AdventuresForTest.QUEST3_ADVENTURE3.getExperiencePointsGained(),
 				AdventuresForTest.QUEST3_ADVENTURE3.getCompletionType(),
-				AdventuresForTest.QUEST3_ADVENTURE3.getCompletionCriteria())));
+				AdventuresForTest.QUEST3_ADVENTURE3.getCompletionCriteria(), null, null)));
 		assertTrue(results.contains(new AdventureRecord(
 				AdventuresForTest.QUEST2_ADVENTURE3.getQuestID(),
 				AdventuresForTest.QUEST2_ADVENTURE3.getAdventureID(),
 				AdventuresForTest.QUEST2_ADVENTURE3.getAdventureDescription(),
 				AdventuresForTest.QUEST2_ADVENTURE3.getExperiencePointsGained(),
 				AdventuresForTest.QUEST2_ADVENTURE3.getCompletionType(),
-				AdventuresForTest.QUEST2_ADVENTURE3.getCompletionCriteria())));
+				AdventuresForTest.QUEST2_ADVENTURE3.getCompletionCriteria(), null, null)));
 	}
 
 	/**
