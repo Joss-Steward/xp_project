@@ -8,6 +8,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.util.Matrix;
 
 /**
@@ -30,7 +31,7 @@ public class PDFAdventureWriter
 			for (ClientPlayerAdventure a : q.getAdventureList())
 			{
 
-				PDPage page = new PDPage(PDRectangle.A4);
+				PDPage page = new PDPage(PDRectangle.LETTER);
 				page.setRotation(90);
 				doc.addPage(page);
 
@@ -41,30 +42,45 @@ public class PDFAdventureWriter
 				PDPageContentStream contents;
 				try
 				{
-
 					contents = new PDPageContentStream(doc, page);
 					// add the rotation using the current transformation matrix
 					// including a translation of pageWidth to use the lower
 					// left corner as 0,0 reference
 					contents.transform(new Matrix(0, 1, -1, 0, pageWidth, 0));
 
+					//Place the image as the background
+					PDImageXObject pdImage = PDImageXObject.createFromFile("AdventureTemplate.jpg", doc);
+					contents.saveGraphicsState();
+					contents.drawImage(pdImage, 0, 0);
+					contents.restoreGraphicsState();
+					
+					//Quest name
 					contents.beginText();
-					contents.newLineAtOffset(150, 450);
+					contents.newLineAtOffset(75, 545);
+					contents.setFont(fancyFont, 14);
+					contents.showText("Part of quest titled '" + q.getQuestTitle() + "'");
+					contents.endText();					
+
+					//Adventure description
+					contents.beginText();
+					contents.newLineAtOffset(100, 425);
 					contents.setFont(font, 12);
 					contents.showText(a.getAdventureDescription());					
 					contents.endText();
 					
+					//Experience points
 					contents.beginText();
-					contents.newLineAtOffset(150, 400);
+					contents.newLineAtOffset(430, 340);
 					contents.setFont(fancyFont, 18);
-					contents.showText("and will reward you with " + a.getAdventureXP() + " Experience Points for successful completion");
+					contents.showText(String.valueOf(a.getAdventureXP()));
 					contents.endText();
-					
+
+					//Witness title
 					contents.beginText();
-					contents.newLineAtOffset(400, 100);
-					contents.setFont(fancyFont, 14);
-					contents.showText("This adventure is part of the quest named _________");
-					contents.endText();					
+					contents.newLineAtOffset(580, 85);
+					contents.setFont(fancyFont, 18);
+					contents.showText("Witness Title");
+					contents.endText();
 					
 					contents.close();
 
