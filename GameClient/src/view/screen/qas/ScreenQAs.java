@@ -29,8 +29,8 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	/**
 	 * Default skin for gui
 	 */
-	public static final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-	//public static final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/ui/screenskins/ui-blue.atlas"));
+	public static final Skin skin = new Skin(Gdx.files.internal("data/ui-blue.json"));
+	//public static final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 	
 	private final float WIDTH = 600f;
 	private final float HEIGHT = 500f;
