@@ -133,7 +133,7 @@ public class LoginSuccessSequenceTest extends SequenceTest
 			cpq.addAdventure(new ClientPlayerAdventure(adv.getAdventureID(),
 					adventureRecord.getAdventureDescription(), adventureRecord
 							.getExperiencePointsGained(), adv.getState(), adv
-							.isNeedingNotification(), null, 0));
+							.isNeedingNotification(), adventureRecord.isRealLifeAdventure(), adventureRecord.getCompletionCriteria().toString()));
 
 		}
 		return cpq;
