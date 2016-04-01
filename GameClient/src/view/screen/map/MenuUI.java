@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 
 import view.screen.highscore.HighScoreUI;
-import view.screen.qas.ScreenQAs;
+import view.screen.qas.QuestUI;
 
 /**
  * MenuUI.java
@@ -39,7 +39,7 @@ public class MenuUI extends Group
 	private ImageButton HighScoreBtn;
 	
 	private HighScoreUI highScoreUI;
-	private ScreenQAs qaScreen;
+	private QuestUI qaScreen;
 	@SuppressWarnings("unused")
 	private ChatUi chatArea;
 	
@@ -49,7 +49,7 @@ public class MenuUI extends Group
 	 * @param highScoreUI score UI to edit
 	 * @param chatArea chat UI to edit
 	 */
-	public MenuUI(HighScoreUI highScoreUI, ScreenQAs qaScreen, ChatUi chatArea)
+	public MenuUI(HighScoreUI highScoreUI, QuestUI qaScreen, ChatUi chatArea)
 	{
 		this.highScoreUI = highScoreUI;
 		this.qaScreen = qaScreen;

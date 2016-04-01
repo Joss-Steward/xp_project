@@ -19,7 +19,7 @@ import model.reports.QuestStateReport;
  * @author ck4124
  * @rewritten Ian Keefer and TJ Renninger
  */
-public class ScreenQAs extends Group implements QualifiedObserver
+public class QuestUI extends Group implements QualifiedObserver
 {
 	private final float WIDTH = 600f;
 	private final float HEIGHT = 500f;
@@ -35,7 +35,7 @@ public class ScreenQAs extends Group implements QualifiedObserver
 	 * Basic constructor. will call show() to initialize all the data in the
 	 * tables.
 	 */
-	public ScreenQAs()
+	public QuestUI()
 	{
 		questList = new ArrayList<ClientPlayerQuest>();
 		setUpListening();

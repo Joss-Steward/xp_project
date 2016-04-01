@@ -51,6 +51,7 @@ public class ScreenMapListener extends ScreenListener
 			PlayerType type = PlayerType.valueOf(report.getPlayerAppearanceType());
 			Position pos = report.getPlayerPosition();
 			map.addPlayer(report.getPlayerID(), type, pos, report.isThisClientsPlayer());
+			map.addUIs(type);
 		}
 		else if (arg.getClass().equals(PlayerDisconnectedFromAreaServerReport.class))
 		{

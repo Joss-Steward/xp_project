@@ -43,7 +43,7 @@ import view.screen.SkinPicker;
 import view.screen.highscore.HighScoreUI;
 import view.screen.playerinfo.PlayerInfoUI;
 import view.screen.popup.PopUpDisplay;
-import view.screen.qas.ScreenQAs;
+import view.screen.qas.QuestUI;
 
 /**
  * A basic screen that, for now, just displays the map
@@ -71,7 +71,7 @@ public class ScreenMap extends ScreenBasic
 	private ScreenMapInput mapInput;
 	
 	//GUIs that get displayed on the map
-	private ScreenQAs qaScreen;
+	private QuestUI qaScreen;
 	private ExperienceDisplay expDisplay;
 	private ChatUi chatArea;
 	private HighScoreUI highScoreUI;
@@ -547,15 +547,6 @@ public class ScreenMap extends ScreenBasic
 	public void addPlayer(int playerID, PlayerType type, Position pos,
 			boolean isThisClientsPlayer)
 	{
-		SkinPicker.getSkinPicker().setCrew(type.name());
-		qaScreen = new ScreenQAs();
-		highScoreUI = new HighScoreUI();
-		playerInfoUI = new PlayerInfoUI();
-		menuArea = new MenuUI(highScoreUI, qaScreen, chatArea); 
-		stage.addActor(highScoreUI);
-		stage.addActor(playerInfoUI);
-		stage.addActor(qaScreen);
-		stage.addActor(menuArea);
 		System.out.println("type is " + type.regionName);
 		PlayerSprite sprite = playerFactory.create(type);
 		characterQueue.put(playerID, pos);
@@ -566,6 +557,23 @@ public class ScreenMap extends ScreenBasic
 			mySprite = sprite;
 			mapInput.setSprite(mySprite);
 		}
+	}
+	
+	/**
+	 * Adds all the UIs that are dependent on the player type to the the map
+	 * @param type of UIs specific to a player
+	 */
+	public void addUIs(PlayerType type) 
+	{
+		SkinPicker.getSkinPicker().setCrew(type.name());
+		qaScreen = new QuestUI();
+		highScoreUI = new HighScoreUI();
+		playerInfoUI = new PlayerInfoUI();
+		menuArea = new MenuUI(highScoreUI, qaScreen, chatArea); 
+		stage.addActor(highScoreUI);
+		stage.addActor(playerInfoUI);
+		stage.addActor(qaScreen);
+		stage.addActor(menuArea);
 	}
 
 	/**
@@ -620,5 +628,4 @@ public class ScreenMap extends ScreenBasic
 	{
 		characterDequeue.add(playerID);
 	}
-
 }
