@@ -72,7 +72,7 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		ClientPlayerQuest q = new ClientPlayerQuest(3, "questtitle", "stupid quest",
 				QuestStateEnum.TRIGGERED, 42, 133, true);
 		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", 5,
-				AdventureStateEnum.TRIGGERED, false, null, 0));
+				AdventureStateEnum.TRIGGERED, false, true, "My big toe"));
 		qList.add(q);
 		LevelRecord level = new LevelRecord("One", 45, 10, 7);
 		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(

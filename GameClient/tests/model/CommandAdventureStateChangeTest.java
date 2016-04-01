@@ -32,31 +32,40 @@ public class CommandAdventureStateChangeTest
 	@Test
 	public void testInitialization()
 	{
-		CommandAdventureStateChange x = new CommandAdventureStateChange(new AdventureStateChangeMessage(1,2,5, "Silly Adventure", AdventureStateEnum.COMPLETED, null, 0));
-		assertEquals(2,x.getQuestID());
+		CommandAdventureStateChange x = new CommandAdventureStateChange(
+				new AdventureStateChangeMessage(1, 2, 5, "Silly Adventure",
+						AdventureStateEnum.COMPLETED, true, "Lex Luther"));
+		assertEquals(2, x.getQuestID());
 		assertEquals(5, x.getAdventureID());
 		assertEquals("Silly Adventure", x.getAdventureDescription());
 		assertEquals(AdventureStateEnum.COMPLETED, x.getAdventureState());
+		assertTrue(x.isRealLifeAdventure());
+		assertEquals("Lex Luther", x.getWitnessTitle());
 	}
 
 	/**
-	 * Test that when we execute the CommandQuestStateChange
-	 * ThisClientsPlayer ClientPlayerQuest's state changes
-	 * @throws AlreadyBoundException shouldn't
-	 * @throws NotBoundException shouldn't
+	 * Test that when we execute the CommandQuestStateChange ThisClientsPlayer
+	 * ClientPlayerQuest's state changes
+	 * 
+	 * @throws AlreadyBoundException
+	 *             shouldn't
+	 * @throws NotBoundException
+	 *             shouldn't
 	 */
 	@Test
 	public void testChangingAdventure() throws AlreadyBoundException, NotBoundException
-	{		
-		
+	{
+
 		int playerID = 1;
 		int questID = 1;
 		int adventureID = 1;
-		
-		ClientPlayerQuest q = new ClientPlayerQuest(questID, "questtitle", "silly quest", QuestStateEnum.TRIGGERED, 3, 0, false);
-		ClientPlayerAdventure a1 = new ClientPlayerAdventure(adventureID,"adventure 1", 3, AdventureStateEnum.TRIGGERED, false, null, 0);
+
+		ClientPlayerQuest q = new ClientPlayerQuest(questID, "questtitle", "silly quest",
+				QuestStateEnum.TRIGGERED, 3, 0, false);
+		ClientPlayerAdventure a1 = new ClientPlayerAdventure(adventureID, "adventure 1",
+				3, AdventureStateEnum.TRIGGERED, false, true, "Comrade");
 		q.getAdventureList().add(a1);
-		
+
 		Position pos = new Position(1, 2);
 		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
 		pm.initializePlayer(playerID, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER);
@@ -65,20 +74,23 @@ public class CommandAdventureStateChangeTest
 		pm.finishLogin(playerID);
 
 		ClientPlayerManager.getSingleton().getThisClientsPlayer().addQuest(q);
-		
-		CommandAdventureStateChange x = new CommandAdventureStateChange
-				(new AdventureStateChangeMessage(playerID, questID,adventureID, "adventure 1", AdventureStateEnum.COMPLETED, null, 0));
+
+		CommandAdventureStateChange x = new CommandAdventureStateChange(
+				new AdventureStateChangeMessage(playerID, questID, adventureID,
+						"adventure 1", AdventureStateEnum.COMPLETED, true, "Comrade"));
 		x.execute();
-		
-		for(ClientPlayerQuest quest : ClientPlayerManager.getSingleton().getThisClientsPlayer().getQuests())
+
+		for (ClientPlayerQuest quest : ClientPlayerManager.getSingleton()
+				.getThisClientsPlayer().getQuests())
 		{
-			if(quest.getQuestID() == questID)
+			if (quest.getQuestID() == questID)
 			{
-				for(ClientPlayerAdventure adventure: quest.getAdventureList())
+				for (ClientPlayerAdventure adventure : quest.getAdventureList())
 				{
-					if(adventure.getAdventureID() == adventureID)
+					if (adventure.getAdventureID() == adventureID)
 					{
-						assertEquals(AdventureStateEnum.COMPLETED, adventure.getAdventureState());
+						assertEquals(AdventureStateEnum.COMPLETED,
+								adventure.getAdventureState());
 					}
 				}
 			}
