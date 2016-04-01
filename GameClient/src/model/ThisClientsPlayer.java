@@ -101,7 +101,8 @@ public class ThisClientsPlayer extends ClientPlayer
 					AdventureNeedingNotificationReport report = new AdventureNeedingNotificationReport(
 							ClientPlayerManager.getSingleton().getThisClientsPlayer()
 									.getID(), q.getQuestID(), a.getAdventureID(),
-							a.getAdventureDescription(), a.getAdventureState());
+							a.getAdventureDescription(), a.getAdventureState(),
+							a.isNeedingNotification(), a.getWitnessTitle());
 					QualifiedObservableConnector.getSingleton().sendReport(report);
 				}
 			}
@@ -124,8 +125,6 @@ public class ThisClientsPlayer extends ClientPlayer
 	{
 		return experiencePoints;
 	}
-
-
 
 	/**
 	 * @param record

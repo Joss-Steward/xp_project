@@ -1,6 +1,7 @@
 package communication.handlers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
@@ -58,7 +59,7 @@ public class AdventureStateChangeMessageHandlerTest
 		ClientPlayerManager.getSingleton().initiateLogin("john", "pw");
 		ClientPlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
 		AdventureStateChangeMessageHandler h = new AdventureStateChangeMessageHandler();
-		AdventureStateChangeMessage msg = new AdventureStateChangeMessage(1, 2, 3, "Big Adventure", AdventureStateEnum.TRIGGERED);
+		AdventureStateChangeMessage msg = new AdventureStateChangeMessage(1, 2, 3, "Big Adventure", AdventureStateEnum.TRIGGERED, true, "Grammy");
 		
 		h.process(msg);
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
@@ -67,6 +68,8 @@ public class AdventureStateChangeMessageHandlerTest
 		assertEquals(3, cmd.getAdventureID());
 		assertEquals("Big Adventure", cmd.getAdventureDescription());
 		assertEquals(AdventureStateEnum.TRIGGERED, cmd.getAdventureState());
+		assertTrue(cmd.isRealLifeAdventure());
+		assertEquals("Grammy", cmd.getWitnessTitle());
 		ClientModelFacade.getSingleton().emptyQueue();
 	}
 

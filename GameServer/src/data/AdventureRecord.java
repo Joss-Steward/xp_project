@@ -15,6 +15,7 @@ public final class AdventureRecord
 	private final AdventureCompletionCriteria completionCriteria;
 	private AdventureCompletionType completionType;
 
+
 	/**
 	 * Create it
 	 * 
@@ -157,5 +158,13 @@ public final class AdventureRecord
 	public AdventureCompletionCriteria getCompletionCriteria()
 	{
 		return completionCriteria;
+	}
+
+	/**
+	 * @return true if the adventure must be completed in real life
+	 */
+	public boolean isRealLifeAdventure()
+	{
+		return completionType == AdventureCompletionType.REAL_LIFE;
 	}
 }

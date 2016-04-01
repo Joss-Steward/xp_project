@@ -2,6 +2,7 @@ package model;
 
 import model.QualifiedObservableConnector;
 import model.reports.AdventureStateChangeReport;
+import data.AdventureRecord;
 import data.AdventureStateEnum;
 import datasource.DatabaseException;
 
@@ -178,10 +179,11 @@ public class AdventureState
 			
 			if(needingNotification == true)
 			{
+				AdventureRecord adventure = QuestManager.getSingleton().getAdventure(parentQuestState.getID(), 
+				adventureID);
 				QualifiedObservableConnector.getSingleton().sendReport(
 						new AdventureStateChangeReport(parentQuestState.getPlayerID(), parentQuestState.getID(), adventureID, 
-								QuestManager.getSingleton().getAdventure(parentQuestState.getID(), 
-								adventureID).getAdventureDescription(), adventureState));
+								adventure.getAdventureDescription(), adventureState, adventure.isRealLifeAdventure(), adventure.getCompletionCriteria().toString()));
 			}
 		}
 		else

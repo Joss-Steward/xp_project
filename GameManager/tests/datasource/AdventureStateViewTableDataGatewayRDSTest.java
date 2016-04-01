@@ -13,7 +13,6 @@ import testData.PlayersForTest;
 import data.AdventureRecord;
 import data.AdventureStateEnum;
 import data.AdventureStateRecord;
-import datasource.AdventureStateTableDataGatewayRDS;
 
 /**
  * @author Merlin

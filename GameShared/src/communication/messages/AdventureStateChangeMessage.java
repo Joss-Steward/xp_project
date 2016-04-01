@@ -7,6 +7,7 @@ import data.AdventureStateEnum;
 /**
  * A message from an area server to a client telling the client to notify the
  * player that they has fulfilled an adventure
+ * 
  * @author Ryan
  *
  */
@@ -21,28 +22,37 @@ public class AdventureStateChangeMessage implements Message, Serializable
 	private int adventureID;
 	private String adventureDescription;
 	private AdventureStateEnum newState;
-
+	private boolean realLifeAdventure;
+	private String witnessTitle;
 
 	/**
 	 * @param playerID
-	 * 		the current player's id
-	 * @param questID 
-	 * 		the quest id
+	 *            the current player's id
+	 * @param questID
+	 *            the quest id
 	 * @param adventureID
-	 * 		the id of the adventure
+	 *            the id of the adventure
 	 * @param adventureDescription
-	 * 		the description of the adventure
+	 *            the description of the adventure
 	 * @param newState
-	 * 		the new state the adventure will be in 
+	 *            the new state the adventure will be in
+	 * @param realLifeAdventure
+	 *            true if the player must complete this adventure in real life
+	 * @param witnessTitle
+	 *            if this is a real life adventure, the title of the person who
+	 *            can witness completion
 	 */
-	public AdventureStateChangeMessage(int playerID, int questID, int adventureID, String adventureDescription,
-			AdventureStateEnum newState)
+	public AdventureStateChangeMessage(int playerID, int questID, int adventureID,
+			String adventureDescription, AdventureStateEnum newState,
+			boolean realLifeAdventure, String witnessTitle)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
 		this.adventureID = adventureID;
 		this.adventureDescription = adventureDescription;
 		this.newState = newState;
+		this.realLifeAdventure = realLifeAdventure;
+		this.witnessTitle = witnessTitle;
 	}
 
 	/**
@@ -71,19 +81,37 @@ public class AdventureStateChangeMessage implements Message, Serializable
 
 	/**
 	 * Get the player's ID
+	 * 
 	 * @return playerID
 	 */
 	public int getPlayerID()
 	{
 		return playerID;
 	}
-	
+
 	/**
 	 * Get the quest's ID
+	 * 
 	 * @return questID
 	 */
 	public int getQuestID()
 	{
 		return questID;
+	}
+
+	/**
+	 * @return true if this adventure must be completed in real life
+	 */
+	public boolean isRealLifeAdventure()
+	{
+		return realLifeAdventure;
+	}
+
+	/**
+	 * @return the title of the person who can witness completion if this is a real life adventure
+	 */
+	public String getWitnessTitle()
+	{
+		return witnessTitle;
 	}
 }

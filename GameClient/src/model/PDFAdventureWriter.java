@@ -13,83 +13,87 @@ import org.apache.pdfbox.util.Matrix;
 
 /**
  * Creates a PDF file of the current players triggered adventures
+ * 
  * @author Merlin
  *
  */
 public class PDFAdventureWriter
 {
 
+	private static PDFont FANCYFONT = PDType1Font.TIMES_BOLD_ITALIC;
+	private static PDFont DESCRIPTIONFONT = PDType1Font.HELVETICA;
+	private PDPage page;
+	private PDRectangle pageSize;
+
 	/**
 	 * Creates a file containing the player's currently triggered adventures
-	 * @param fileTitle the title of the file we should create
+	 * 
+	 * @param fileTitle
+	 *            the title of the file we should create
 	 */
 	public void createPDFOfTriggeredExternalAdventures(String fileTitle)
 	{
 		PDDocument doc = new PDDocument();
-		for (ClientPlayerQuest q : ClientPlayerManager.getSingleton().getThisClientsPlayer().getQuests())
+		for (ClientPlayerQuest q : ClientPlayerManager.getSingleton()
+				.getThisClientsPlayer().getQuests())
 		{
 			for (ClientPlayerAdventure a : q.getAdventureList())
 			{
 
-				PDPage page = new PDPage(PDRectangle.LETTER);
-				page.setRotation(90);
-				doc.addPage(page);
-
-				PDFont fancyFont = PDType1Font.TIMES_BOLD_ITALIC;
-				PDFont font = PDType1Font.HELVETICA;
-				PDRectangle pageSize = page.getMediaBox();
-				float pageWidth = pageSize.getWidth();
-				PDPageContentStream contents;
-				try
+				if (a.isRealLifeAdventure())
 				{
-					contents = new PDPageContentStream(doc, page);
-					// add the rotation using the current transformation matrix
-					// including a translation of pageWidth to use the lower
-					// left corner as 0,0 reference
-					contents.transform(new Matrix(0, 1, -1, 0, pageWidth, 0));
+					page = new PDPage(PDRectangle.LETTER);
+					page.setRotation(90);
+					doc.addPage(page);
 
-					//Place the image as the background
-					PDImageXObject pdImage = PDImageXObject.createFromFile("AdventureTemplate.jpg", doc);
-					contents.saveGraphicsState();
-					contents.drawImage(pdImage, 0, 0);
-					contents.restoreGraphicsState();
-					
-					//Quest name
-					contents.beginText();
-					contents.newLineAtOffset(75, 545);
-					contents.setFont(fancyFont, 14);
-					contents.showText("Part of quest titled '" + q.getQuestTitle() + "'");
-					contents.endText();					
+					pageSize = page.getMediaBox();
+					float pageWidth = pageSize.getWidth();
+					PDPageContentStream contents;
+					try
+					{
+						contents = new PDPageContentStream(doc, page);
+						// add the rotation using the current transformation
+						// matrix
+						// including a translation of pageWidth to use the lower
+						// left corner as 0,0 reference
+						contents.transform(new Matrix(0, 1, -1, 0, pageWidth, 0));
 
-					//Adventure description
-					contents.beginText();
-					contents.newLineAtOffset(100, 425);
-					contents.setFont(font, 12);
-					contents.showText(a.getAdventureDescription());					
-					contents.endText();
-					
-					//Experience points
-					contents.beginText();
-					contents.newLineAtOffset(430, 340);
-					contents.setFont(fancyFont, 18);
-					contents.showText(String.valueOf(a.getAdventureXP()));
-					contents.endText();
+						// Place the image as the background
+						PDImageXObject pdImage = PDImageXObject.createFromFile(
+								"AdventureTemplate.jpg", doc);
+						contents.saveGraphicsState();
+						contents.drawImage(pdImage, 0, 0);
+						contents.restoreGraphicsState();
 
-					//Witness title
-					contents.beginText();
-					contents.newLineAtOffset(580, 85);
-					contents.setFont(fancyFont, 18);
-					contents.showText("Witness Title");
-					contents.endText();
-					
-					contents.close();
+						// Quest name
+						contents.beginText();
+						contents.newLineAtOffset(75, 545);
+						contents.setFont(FANCYFONT, 14);
+						contents.showText("Part of quest titled '" + q.getQuestTitle()
+								+ "'");
+						contents.endText();
 
-				} catch (IOException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+						// Adventure description
+						showAdventureDescription(contents, a.getAdventureDescription());
+
+						// Experience points
+						showExperiencePoints(contents, a.getAdventureXP());
+
+						// Witness title
+						contents.beginText();
+						contents.newLineAtOffset(580, 85);
+						contents.setFont(FANCYFONT, 18);
+						contents.showText(a.getWitnessTitle());
+						contents.endText();
+
+						contents.close();
+
+					} catch (IOException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-
 			}
 
 		}
@@ -97,6 +101,100 @@ public class PDFAdventureWriter
 		{
 			doc.save(fileTitle);
 			doc.close();
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * If points are two digits, center it differently
+	 * 
+	 * @param contents
+	 * @param points
+	 */
+	private void showExperiencePoints(PDPageContentStream contents, int points)
+	{
+		int fontSize = 18;
+		try
+		{
+			if (points < 10)
+			{
+				contents.beginText();
+				contents.newLineAtOffset(432, 341);
+				contents.setFont(FANCYFONT, fontSize);
+				contents.showText(String.valueOf(points));
+				contents.endText();
+			} else
+			{
+				contents.beginText();
+				contents.newLineAtOffset(426, 341);
+				contents.setFont(FANCYFONT, fontSize);
+				contents.showText(String.valueOf(points));
+				contents.endText();
+			}
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * If description is > 100 chars, split it into two strings based on nearest
+	 * whitespace to middle
+	 * 
+	 * @param contents
+	 * @param description
+	 */
+	private void showAdventureDescription(PDPageContentStream contents, String description)
+	{
+		int fontSize = 14;
+		try
+		{
+			if (description.length() <= 100)
+			{
+				float descriptionWidth = DESCRIPTIONFONT.getStringWidth(description)
+						/ 1000 * fontSize;
+
+				contents.beginText();
+				contents.newLineAtOffset((pageSize.getHeight() - descriptionWidth) / 2,
+						430);
+				contents.setFont(DESCRIPTIONFONT, 14);
+				contents.showText(description);
+				contents.endText();
+			} else
+			{
+				int index = description.length() / 2 - 1;
+
+				// Find the next whitespace and split it there
+				while (description.charAt(index) != ' ')
+				{
+					index++;
+				}
+
+				String desc1 = description.substring(0, index + 1);
+				String desc2 = description.substring(index + 1);
+
+				float desc1Width = DESCRIPTIONFONT.getStringWidth(desc1) / 1000
+						* fontSize;
+				float desc2Width = DESCRIPTIONFONT.getStringWidth(desc2) / 1000
+						* fontSize;
+
+				contents.setFont(DESCRIPTIONFONT, fontSize);
+
+				contents.beginText();
+				contents.newLineAtOffset((pageSize.getHeight() - desc1Width) / 2, 440);
+				contents.showText(desc1);
+				contents.endText();
+
+				contents.beginText();
+				contents.newLineAtOffset((pageSize.getHeight() - desc2Width) / 2, 415);
+				contents.showText(desc2);
+				contents.endText();
+			}
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block

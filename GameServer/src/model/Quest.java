@@ -70,6 +70,26 @@ public class Quest
 	}
 
 	/**
+	 * Get adventure by specific adventure id
+	 * 
+	 * @param adventureID
+	 *            id of the adventure
+	 * @return adventure description
+	 */
+	public AdventureRecord getAdventureD(int adventureID)
+	{
+		for (AdventureRecord a : adventures)
+		{
+			if (a.getAdventureID() == adventureID)
+			{
+				return a;
+			}
+		}
+
+		return null;
+
+	}
+	/**
 	 * Get adventure description by specific adventure id
 	 * 
 	 * @param adventureID

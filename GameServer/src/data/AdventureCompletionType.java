@@ -10,7 +10,7 @@ public enum AdventureCompletionType
 	/**
 	 * 
 	 */
-	EXTERNAL(CriteriaString.class),
+	REAL_LIFE(CriteriaString.class),
 	
 	/**
 	 * 

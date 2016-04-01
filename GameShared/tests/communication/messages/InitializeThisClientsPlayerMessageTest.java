@@ -28,8 +28,8 @@ public class InitializeThisClientsPlayerMessageTest
 	@Test
 	public void testInitialize() 
 	{
-		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", 3, AdventureStateEnum.HIDDEN, false);
-		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", 3, AdventureStateEnum.HIDDEN, false);
+		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", 3, AdventureStateEnum.HIDDEN, false, true, "Dean");
+		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", 3, AdventureStateEnum.HIDDEN, false, false, null);
 		ClientPlayerQuest q = new ClientPlayerQuest(1, "title", "Test Quest 1", QuestStateEnum.HIDDEN, 42, 13, true);
 		q.addAdventure(adventureOne);
 		q.addAdventure(adventureTwo);
@@ -41,8 +41,12 @@ public class InitializeThisClientsPlayerMessageTest
 		assertEquals(20, message.getExperiencePts());
 		assertEquals("One", message.getLevel().getDescription());
 		assertEquals(1, message.getClientPlayerQuestList().size());
-		assertEquals(42, message.getClientPlayerQuestList().get(0).getExperiencePointsGained());
-		assertEquals(13, message.getClientPlayerQuestList().get(0).getAdventuresToFulfillment());
-		assertTrue(message.getClientPlayerQuestList().get(0).isNeedingNotification());
+		ClientPlayerQuest firstQuest = message.getClientPlayerQuestList().get(0);
+		assertEquals(42, firstQuest.getExperiencePointsGained());
+		assertEquals(13, firstQuest.getAdventuresToFulfillment());
+		assertTrue(firstQuest.isNeedingNotification());
+		ClientPlayerAdventure firstAdventure = firstQuest.getAdventureList().get(0);
+		assertTrue(firstAdventure.isRealLifeAdventure());
+		assertEquals("Dean", firstAdventure.getWitnessTitle());
 	}
 }

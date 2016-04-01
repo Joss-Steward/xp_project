@@ -2,6 +2,7 @@ package model.reports;
 
 import java.util.ArrayList;
 
+import data.AdventureRecord;
 import datasource.DatabaseException;
 import datasource.LevelRecord;
 import model.AdventureState;
@@ -68,8 +69,7 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 				Quest quest = QuestManager.getSingleton().getQuest(questID);
 
 				ClientPlayerQuest clientQuest = new ClientPlayerQuest(quest.getQuestID(),
-						quest.getTitle(), quest.getDescription(),
-						qs.getStateValue(),
+						quest.getTitle(), quest.getDescription(), qs.getStateValue(),
 						quest.getExperiencePointsGained(),
 						quest.getAdventuresForFulfillment(), qs.isNeedingNotification());
 				clientQuest.setAdventures(combineAdventure(quest, qs));
@@ -85,9 +85,10 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 		for (AdventureState a : qs.getAdventureList())
 		{
 			int adventureID = a.getID();
-			ca.add(new ClientPlayerAdventure(a.getID(), quest
-					.getAdventureDescription(adventureID), quest
-					.getAdventureXP(adventureID), a.getState(), a.isNeedingNotification()));
+			AdventureRecord adventure = quest.getAdventureD(adventureID);
+			ca.add(new ClientPlayerAdventure(a.getID(), adventure
+					.getAdventureDescription(), adventure.getExperiencePointsGained(), a
+					.getState(), a.isNeedingNotification(), adventure.isRealLifeAdventure(), adventure.getCompletionCriteria().toString()));
 		}
 
 		return ca;
