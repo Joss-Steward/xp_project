@@ -87,7 +87,7 @@ public class PDFAdventureWriter
 						contents.beginText();
 						contents.newLineAtOffset(580, 85);
 						contents.setFont(fancyFont, 18);
-						contents.showText("Witness Title");
+						contents.showText(a.getWitnessTitle());
 						contents.endText();
 
 						contents.close();
