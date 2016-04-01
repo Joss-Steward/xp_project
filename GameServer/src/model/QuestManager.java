@@ -10,7 +10,6 @@ import model.reports.SendChatMessageReport;
 import data.AdventureCompletionType;
 import data.AdventureRecord;
 import data.AdventureStateEnum;
-import data.ChatType;
 import data.CriteriaString;
 import data.Position;
 import data.QuestStateEnum;
