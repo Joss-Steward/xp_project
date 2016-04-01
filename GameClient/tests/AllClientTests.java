@@ -1,6 +1,7 @@
 import model.ChatManagerTest;
 import model.ClientPlayerManagerTest;
 import model.ClientPlayerTest;
+import model.CommandAdventureNotificationCompleteTest;
 import model.CommandAdventureStateChangeTest;
 import model.CommandChatMessageReceivedTest;
 import model.CommandChatMessageSentTest;
@@ -15,6 +16,7 @@ import model.CommandLoginTest;
 import model.CommandNewMapTest;
 import model.CommandOverwriteExperienceTest;
 import model.CommandOverwriteQuestStateTest;
+import model.CommandPrintAdventuresTest;
 import model.CommandQuestStateChangeTest;
 import model.CommandRemovePlayerTest;
 import model.CommandSendQuestStateTest;
@@ -102,20 +104,22 @@ import communication.packers.TeleportationInitiationMessagePackerTest;
 		ChatManagerTest.class,
 		ClientPlayerManagerTest.class, 
 		ClientPlayerTest.class,
+		CommandAdventureNotificationCompleteTest.class,
 		CommandAdventureStateChangeTest.class,
 		CommandChatMessageReceivedTest.class,
 		CommandChatMessageSentTest.class,
 		CommandClearModelStateTest.class,
+		CommandClientMovePlayerTest.class,
 		CommandHighScoreResponseTest.class,
 		CommandInitializePlayerTest.class, 
 		CommandKeyInputSentTest.class,
 		CommandKnowledgePointsChangedTest.class,
 		CommandLoginFailedTest.class,
 		CommandLoginTest.class,
-		CommandClientMovePlayerTest.class,
 		CommandNewMapTest.class, 
 		CommandOverwriteExperienceTest.class,
 		CommandOverwriteQuestStateTest.class,
+		CommandPrintAdventuresTest.class,
 		CommandQuestStateChangeTest.class,
 		CommandRemovePlayerTest.class,
 		CommandSendQuestStateTest.class,

@@ -19,6 +19,17 @@ public class PDFAdventureWriterTest
 	@Test
 	public void testCanWritePDF()
 	{
+		buildAPlayerWithAdventures();
+
+		PDFAdventureWriter writer = new PDFAdventureWriter();
+		writer.createPDFOfTriggeredExternalAdventures("test.pdf");
+	}
+
+	/**
+	 * 
+	 */
+	public static void buildAPlayerWithAdventures()
+	{
 		ThisClientsPlayer cp = ThisClientsPlayerTest
 				.setUpThisClientsPlayer(PlayersForTest.MERLIN);
 		ClientPlayerAdventure a = new ClientPlayerAdventure(
@@ -35,8 +46,5 @@ public class PDFAdventureWriterTest
 				AdventureStateEnum.TRIGGERED, true, true, "Csar");
 		q.addAdventure(a);
 		cp.addQuest(q);
-
-		PDFAdventureWriter writer = new PDFAdventureWriter();
-		writer.createPDFOfTriggeredExternalAdventures("test.pdf");
 	}
 }
