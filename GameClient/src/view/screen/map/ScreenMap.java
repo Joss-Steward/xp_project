@@ -1,17 +1,5 @@
 package view.screen.map;
-
 import static view.screen.Screens.DEFAULT_RES;
-import model.ClientModelFacade;
-import model.CommandKeyInputSent;
-import view.player.PlayerSprite;
-import view.player.PlayerSpriteFactory;
-import view.player.PlayerType;
-import view.screen.ScreenBasic;
-import view.screen.highscore.HighScoreUI;
-import view.screen.playerinfo.PlayerInfoUI;
-import view.screen.popup.PopUpDisplay;
-import view.screen.qas.ScreenQAs;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
@@ -43,9 +31,19 @@ import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.IntMap.Entry;
 import com.badlogic.gdx.utils.Sort;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-
 import data.ChatType;
 import data.Position;
+import model.ClientModelFacade;
+import model.CommandKeyInputSent;
+import view.player.PlayerSprite;
+import view.player.PlayerSpriteFactory;
+import view.player.PlayerType;
+import view.screen.ScreenBasic;
+import view.screen.SkinPicker;
+import view.screen.highscore.HighScoreUI;
+import view.screen.playerinfo.PlayerInfoUI;
+import view.screen.popup.PopUpDisplay;
+import view.screen.qas.ScreenQAs;
 
 /**
  * A basic screen that, for now, just displays the map
@@ -395,9 +393,6 @@ public class ScreenMap extends ScreenBasic
 	public void show()
 	{
 		expDisplay = new ExperienceDisplay();
-		qaScreen = new ScreenQAs();
-		highScoreUI = new HighScoreUI();
-		playerInfoUI = new PlayerInfoUI();
 		
 		worldStage = new Stage();
 		blurBatch = new SpriteBatch();
@@ -496,14 +491,8 @@ public class ScreenMap extends ScreenBasic
 			}
 		});
 		
-		menuArea = new MenuUI(highScoreUI, qaScreen, chatArea); 
-		
 		stage.addActor(expDisplay);
-		stage.addActor(highScoreUI);
-		stage.addActor(playerInfoUI);
-		stage.addActor(qaScreen);
 		stage.addActor(chatArea);
-		stage.addActor(menuArea);
 		
 		loadingLayer = new Group();
 		loadingLayer.setSize(stage.getWidth(), stage.getHeight());
@@ -558,6 +547,15 @@ public class ScreenMap extends ScreenBasic
 	public void addPlayer(int playerID, PlayerType type, Position pos,
 			boolean isThisClientsPlayer)
 	{
+		SkinPicker.getSkinPicker().setCrew(type.name());
+		qaScreen = new ScreenQAs();
+		highScoreUI = new HighScoreUI();
+		playerInfoUI = new PlayerInfoUI();
+		menuArea = new MenuUI(highScoreUI, qaScreen, chatArea); 
+		stage.addActor(highScoreUI);
+		stage.addActor(playerInfoUI);
+		stage.addActor(qaScreen);
+		stage.addActor(menuArea);
 		System.out.println("type is " + type.regionName);
 		PlayerSprite sprite = playerFactory.create(type);
 		characterQueue.put(playerID, pos);

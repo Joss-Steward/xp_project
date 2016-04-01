@@ -1,13 +1,11 @@
 package view.screen.login;
-
 import java.util.ArrayList;
-
-import view.screen.ScreenListener;
-import view.screen.Screens;
 import model.QualifiedObservableReport;
 import model.reports.LoginFailedReport;
 import model.reports.LoginInitiatedReport;
 import model.reports.PinFailedReport;
+import view.screen.ScreenListener;
+import view.screen.Screens;
 
 /**
  * Every screen has one of these and it is responsible for listening for the
@@ -34,9 +32,10 @@ public class ScreenLoginListener extends ScreenListener
 	@Override
 	public void receiveReport(QualifiedObservableReport arg)
 	{
+		final ScreenListener sl = this;
 		if (arg.getClass().equals(LoginInitiatedReport.class))
 		{
-			this.switchToScreen(Screens.MAP_SCREEN);
+			sl.switchToScreen(Screens.MAP_SCREEN);
 		}
 		
 		if (arg.getClass().equals(LoginFailedReport.class))

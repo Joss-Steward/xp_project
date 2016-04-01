@@ -1,11 +1,5 @@
 package view.screen.login;
 
-import model.CommandLogin;
-import model.ClientModelFacade;
-import view.screen.ScreenBasic;
-import view.screen.Screens;
-import java.awt.event.KeyListener;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
@@ -21,6 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import model.ClientModelFacade;
+import model.CommandLogin;
+import view.screen.ScreenBasic;
+import view.screen.Screens;
 
 /**
  * First screen the player sees to start playing.

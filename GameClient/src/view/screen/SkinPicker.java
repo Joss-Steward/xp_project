@@ -12,13 +12,16 @@ public class SkinPicker
 	private static SkinPicker skinPicker;
 	private HashMap<String, String> crewColorMap;
 	private Skin skin;
+	private String crew;
 	
 	private SkinPicker()
 	{
 		crewColorMap = new HashMap<String, String>();
-		crewColorMap.put("NULL_POINTER", "red");
+		crewColorMap.put("DEFAULT", "gray");
+		crewColorMap.put("NULL_POINTER_EXCEPTION", "red");
 		crewColorMap.put("OUT_OF_BOUNDS", "green");
 		crewColorMap.put("OFF_BY_ONE", "blue");
+		crew = "DEFAULT";
 	}
 	
 	/**
@@ -27,8 +30,18 @@ public class SkinPicker
 	public static SkinPicker getSkinPicker()
 	{
 		if (skinPicker == null)
+		{
 			skinPicker = new SkinPicker();
+		}
 		return skinPicker;
+	}
+	
+	/**
+	 * @param c the crew of the current player;
+	 */
+	public void setCrew(String c)
+	{
+		crew = c.toUpperCase();
 	}
 	
 	/**
@@ -38,8 +51,7 @@ public class SkinPicker
 	{
 		if (skin == null)
 		{
-			//String crew = ClientPlayerManager.getSingleton().getThisClientsPlayer().getCrew().name();
-			String color = crewColorMap.get("NULL_POINTER");	
+			String color = crewColorMap.get(crew);	
 			skin = new Skin(Gdx.files.internal("data/ui/screenskins/ui-" + color + ".json"));
 		}
 		return skin;
