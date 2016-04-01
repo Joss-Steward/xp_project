@@ -21,7 +21,6 @@ public class SkinPicker
 		crewColorMap.put("NULL_POINTER_EXCEPTION", "red");
 		crewColorMap.put("OUT_OF_BOUNDS", "green");
 		crewColorMap.put("OFF_BY_ONE", "blue");
-		crew = "DEFAULT";
 	}
 	
 	/**
@@ -51,7 +50,8 @@ public class SkinPicker
 	{
 		if (skin == null)
 		{
-			String color = crewColorMap.get(crew);	
+			String color = crewColorMap.getOrDefault(crew, crewColorMap.get("DEFAULT"));	
+			System.err.println(crew);
 			skin = new Skin(Gdx.files.internal("data/ui/screenskins/ui-" + color + ".json"));
 		}
 		return skin;

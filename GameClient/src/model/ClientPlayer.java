@@ -21,7 +21,7 @@ public class ClientPlayer extends Observable
 	protected String name;
 	protected Position position;
 	protected String appearanceType;
-	protected Crew crew;
+	private Crew crew;
 
 	/**
 	 * Create a player
