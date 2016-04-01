@@ -25,7 +25,6 @@ public class AdventureTable extends ScrollPane
 	{
 		super(null, ScreenQAs.skin);
 		setFadeScrollBars(false);
-		
 		//Build the table that holds all of the quests
 		buildTable();
 		setWidget(table);
