@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import model.ClientPlayerQuest;
+import view.screen.SkinPicker;
 
 /**
  * @author TJ Renninger and Ian Keefer
@@ -23,7 +24,7 @@ public class QuestTable extends ScrollPane
 	 */
 	public QuestTable(ArrayList<ClientPlayerQuest> questList)
 	{
-		super(null, ScreenQAs.skin);	//Null is passed in because the widget has not been created yet.
+		super(null, SkinPicker.getSkinPicker().getCrewSkin());	//Null is passed in because the widget has not been created yet.
 		setFadeScrollBars(false);
 		//questList = ql;
 		
@@ -63,7 +64,7 @@ public class QuestTable extends ScrollPane
 	 */
 	private Label createQuestLabel(final ClientPlayerQuest cpq) 
 	{
-		Label l = new Label(cpq.getQuestTitle(), ScreenQAs.skin);
+		Label l = new Label(cpq.getQuestTitle(), SkinPicker.getSkinPicker().getCrewSkin());
 		ClickListener clickListener = new ClickListener()
 		{
 			@Override

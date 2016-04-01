@@ -1,15 +1,12 @@
 package view.screen.playerinfo;
-
-import view.screen.qas.ScreenQAs;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-
 import model.ThisClientsPlayer;
+import view.screen.SkinPicker;
 /**
- * @author tr3897
+ * @author TJ Renninger and Ian Keefer
  *
  */
 public class PlayerInfoTable extends ScrollPane
@@ -22,7 +19,7 @@ public class PlayerInfoTable extends ScrollPane
 	 */
 	public PlayerInfoTable() 
 	{
-		super(null, ScreenQAs.skin);
+		super(null, SkinPicker.getSkinPicker().getCrewSkin());
 		setScrollingDisabled(true, true);
 		buildTable();
 		setWidget(table);
@@ -37,7 +34,7 @@ public class PlayerInfoTable extends ScrollPane
 	}
 	
 	/**
-	 * @param player 
+	 * @param player that is currently logged into the client
 	 */
 	public void updatePlayerInfo(ThisClientsPlayer player)
 	{
@@ -50,8 +47,8 @@ public class PlayerInfoTable extends ScrollPane
 		table.clear();
 		//NAME
 		Table labelGroup = new Table();
-		Label label1 = new Label("Name: ", ScreenQAs.skin);
-		Label label2 = new Label(name, ScreenQAs.skin);
+		Label label1 = new Label("Name: ", SkinPicker.getSkinPicker().getCrewSkin());
+		Label label2 = new Label(name, SkinPicker.getSkinPicker().getCrewSkin());
 		label2.setColor(Color.GREEN);
 		labelGroup.add(label1).left();
 		labelGroup.add(label2).left();
@@ -59,8 +56,8 @@ public class PlayerInfoTable extends ScrollPane
 		
 		//CREW
 		labelGroup = new Table();
-		label1 = new Label("Crew: ", ScreenQAs.skin);
-		label2 = new Label(crew, ScreenQAs.skin);
+		label1 = new Label("Crew: ", SkinPicker.getSkinPicker().getCrewSkin());
+		label2 = new Label(crew, SkinPicker.getSkinPicker().getCrewSkin());
 		label2.setColor(Color.GREEN);
 		labelGroup.add(label1).left();
 		labelGroup.add(label2).left();
@@ -68,8 +65,8 @@ public class PlayerInfoTable extends ScrollPane
 		
 		//EXP
 		labelGroup = new Table();
-		label1 = new Label("Experience: ", ScreenQAs.skin);
-		label2 = new Label("" + exp, ScreenQAs.skin);
+		label1 = new Label("Experience: ", SkinPicker.getSkinPicker().getCrewSkin());
+		label2 = new Label("" + exp, SkinPicker.getSkinPicker().getCrewSkin());
 		label2.setColor(Color.GREEN);
 		labelGroup.add(label1).left();
 		labelGroup.add(label2).left();
@@ -77,8 +74,8 @@ public class PlayerInfoTable extends ScrollPane
 		
 		//KNOW
 		labelGroup = new Table();
-		label1 = new Label("Knowledge Points: ", ScreenQAs.skin);
-		label2 = new Label("" + know, ScreenQAs.skin);
+		label1 = new Label("Knowledge Points: ", SkinPicker.getSkinPicker().getCrewSkin());
+		label2 = new Label("" + know, SkinPicker.getSkinPicker().getCrewSkin());
 		label2.setColor(Color.GREEN);
 		labelGroup.add(label1).left();
 		labelGroup.add(label2).left();
@@ -86,8 +83,8 @@ public class PlayerInfoTable extends ScrollPane
 		
 		//LEVEL
 		labelGroup = new Table();
-		label1 = new Label("Level Points: ", ScreenQAs.skin);
-		label2 = new Label("" + level, ScreenQAs.skin);
+		label1 = new Label("Level Points: ", SkinPicker.getSkinPicker().getCrewSkin());
+		label2 = new Label("" + level, SkinPicker.getSkinPicker().getCrewSkin());
 		label2.setColor(Color.GREEN);
 		labelGroup.add(label1).left();
 		labelGroup.add(label2).left();
