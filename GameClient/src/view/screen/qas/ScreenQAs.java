@@ -1,6 +1,10 @@
 package view.screen.qas;
 import java.util.ArrayList;
-
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.VisibleAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import model.ClientModelFacade;
 import model.ClientPlayerQuest;
 import model.CommandSendQuestState;
@@ -9,29 +13,14 @@ import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 import model.reports.QuestStateReport;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.VisibleAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-
 /**
  * A basic screen that displays the quests and adventure states.
  * 
  * @author ck4124
- *
+ * @rewritten Ian Keefer and TJ Renninger
  */
 public class ScreenQAs extends Group implements QualifiedObserver
 {
-	/**
-	 * Default skin for gui
-	 */
-	public static final Skin skin = new Skin(Gdx.files.internal("data/ui-blue.json"));
-	//public static final Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-	
 	private final float WIDTH = 600f;
 	private final float HEIGHT = 500f;
 	private final float POS_X = (Gdx.graphics.getWidth() - WIDTH) / 2;

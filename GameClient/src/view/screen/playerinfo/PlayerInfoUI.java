@@ -1,16 +1,15 @@
 package view.screen.playerinfo;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+
 import model.ClientPlayerManager;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 import model.ThisClientsPlayer;
 import model.reports.ExperiencePointsChangeReport;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * @author TJ Renninger and Ian Keefer
@@ -24,7 +23,6 @@ public class PlayerInfoUI extends Group implements QualifiedObserver
 	private final float POS_Y = (Gdx.graphics.getHeight() - HEIGHT) / 1.1f;
 	private PlayerInfoTable playerTable;
 	private boolean PI_ScreenShowing;
-	private Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 	
 	/**
 	 * sets up UI for top 10 experience points
@@ -38,10 +36,10 @@ public class PlayerInfoUI extends Group implements QualifiedObserver
 		playerTable.setFillParent(true);
 		addActor(playerTable);
 		setVisible(false);
-	}
+	}	
 	
 	/**
-	 * Sets up the QualifiedObserver for HighScoreResponseReport
+	 * Sets up the QualifiedObserver for PlayerInfoResponseReport
 	 */
 	public void setUpListening()
 	{
@@ -50,7 +48,7 @@ public class PlayerInfoUI extends Group implements QualifiedObserver
 	}
 	
 	/**
-	 * set visibility of High Score Screen
+	 * set visibility of Player Info
 	 * @param b sets visibility of screen
 	 */
 	public void setPlayerInfoScreenVisibility(boolean b)
@@ -67,7 +65,7 @@ public class PlayerInfoUI extends Group implements QualifiedObserver
 	}
 	
 	/**
-	 * Toggle the invisibility of the highscore list
+	 * Toggle the invisibility of the player info screen
 	 */
 	public void togglePlayerInfoScreen()
 	{
@@ -93,11 +91,6 @@ public class PlayerInfoUI extends Group implements QualifiedObserver
 	@Override
 	public void receiveReport(QualifiedObservableReport report)
 	{
-		if (report.getClass().equals(ExperiencePointsChangeReport.class))
-		{
-			ExperiencePointsChangeReport rep = (ExperiencePointsChangeReport) report;
-			int exp = rep.getExperiencePoints();
-			//playerTable.updatePlayerInfo(exp);
-		}	
+		
 	}
 }

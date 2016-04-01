@@ -5,8 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import data.PlayerScoreRecord;
-import view.screen.qas.ScreenQAs;
-
+import view.screen.SkinPicker;
 /**
  * @author TJ Renninger and Ian Keefer
  *
@@ -21,7 +20,7 @@ public class HighScoreTable extends ScrollPane
 	 */
 	public HighScoreTable() 
 	{
-		super(null, ScreenQAs.skin);
+		super(null, SkinPicker.getSkinPicker().getCrewSkin());
 		setFadeScrollBars(false);
 		buildTable();
 		setWidget(table);
@@ -36,7 +35,7 @@ public class HighScoreTable extends ScrollPane
 	}
 	
 	/**
-	 * @param players
+	 * @param players that are on the highscore list
 	 */
 	public void updateHighScores(ArrayList<PlayerScoreRecord> players)
 	{
@@ -53,11 +52,11 @@ public class HighScoreTable extends ScrollPane
 	{
 		final float spaceBetweenNumberAndPlayer  = 15f;
 		final float spaceBetweenPlayerAndXp = 10f;
-		Label rank = new Label(playerRank + ".", ScreenQAs.skin);
+		Label rank = new Label(playerRank + ".", SkinPicker.getSkinPicker().getCrewSkin());
 		table.add(rank).left().padRight(spaceBetweenNumberAndPlayer);
-		Label player = new Label(p.getPlayerName(), ScreenQAs.skin);
+		Label player = new Label(p.getPlayerName(), SkinPicker.getSkinPicker().getCrewSkin());
 		table.add(player).left().padRight(spaceBetweenPlayerAndXp);
-		Label xp = new Label("" + p.getExperiencePoints(), ScreenQAs.skin);
+		Label xp = new Label("" + p.getExperiencePoints(), SkinPicker.getSkinPicker().getCrewSkin());
 		xp.setColor(Color.GREEN);
 		table.add(xp).right().row();
 	}
