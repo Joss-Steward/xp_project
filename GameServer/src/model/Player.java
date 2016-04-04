@@ -134,6 +134,9 @@ public class Player
 	public void incrementQuizScore()
 	{
 		this.knowledgePoints++;
+		
+		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(playerID, this.knowledgePoints);
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 
 	/**
@@ -302,15 +305,6 @@ public class Player
 		PlayerMovedReport report = new PlayerMovedReport(playerID, this.getPlayerName(),
 				playerPosition, this.mapName);
 
-		QualifiedObservableConnector.getSingleton().sendReport(report);
-	}
-	
-	/**
-	 * Report our change in knowledgePoints
-	 */
-	public void sendknowledgePointsChangeReport()
-	{
-		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(playerID, this.knowledgePoints);
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 	

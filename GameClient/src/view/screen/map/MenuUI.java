@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.ObjectFloatMap;
 import view.screen.highscore.HighScoreUI;
 import view.screen.playerinfo.PlayerInfoUI;
 import view.screen.qas.QuestUI;
-import view.screen.qas.ScreenQAs;
 
 /**
  * MenuUI.java
