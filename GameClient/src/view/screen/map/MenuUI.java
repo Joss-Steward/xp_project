@@ -1,19 +1,20 @@
 package view.screen.map;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 
+import view.screen.SkinPicker;
 import view.screen.highscore.HighScoreUI;
+import view.screen.playerinfo.PlayerInfoUI;
 import view.screen.qas.QuestUI;
 
 /**
@@ -34,26 +35,26 @@ public class MenuUI extends Group
 	private static final float FadeRate = .25f;
 	private ObjectFloatMap<Label> newLabels;
 	
-	private ImageButton QuestAdventureBtn;
-	private ImageButton ChatBtn;
-	private ImageButton HighScoreBtn;
+	private Button QuestAdventureBtn;
+	private Button PlayerUIBtn;
+	private Button HighScoreBtn;
 	
 	private HighScoreUI highScoreUI;
 	private QuestUI qaScreen;
-	@SuppressWarnings("unused")
-	private ChatUi chatArea;
-	
+	private PlayerInfoUI playerInfoUI;
+
 	/**
 	 * Create a new chat ui that displays at the bottom of the screen
-	 * @param qaScreen Quest menu to edit
+	 * @param qaScreen2 Quest menu to edit
 	 * @param highScoreUI score UI to edit
 	 * @param chatArea chat UI to edit
+	 * @param playerInfoUI player uI to edit
 	 */
-	public MenuUI(HighScoreUI highScoreUI, QuestUI qaScreen, ChatUi chatArea)
+	public MenuUI(HighScoreUI highScoreUI, QuestUI qaScreen2, ChatUi chatArea, PlayerInfoUI playerInfoUI)
 	{
 		this.highScoreUI = highScoreUI;
-		this.qaScreen = qaScreen;
-		this.chatArea = chatArea;
+		this.qaScreen = qaScreen2;
+		this.playerInfoUI = playerInfoUI;
 		setupUI();
 	}
 	
@@ -62,9 +63,9 @@ public class MenuUI extends Group
 	 */
 	private void setupUI()
 	{
-		skin = new Skin(Gdx.files.internal("data/ui/chat.json"));
+		skin = SkinPicker.getSkinPicker().getCrewSkin();
 		
-		Table tabs = new Table();
+		Table tabs = new Table(skin);
 		tabs.setWidth(800f);
 		tabs.setHeight(800f);
 		
@@ -72,28 +73,36 @@ public class MenuUI extends Group
 		{
 			//Quest/Adventure Button
 			{
-				ImageButtonStyle style = skin.get("all", ImageButtonStyle.class);
-			
-				QuestAdventureBtn = new ImageButton(style);
+				ButtonStyle style = skin.get(ButtonStyle.class);
+				
+				QuestAdventureBtn = new Button(style);
+				QuestAdventureBtn.add(new Label("Q", skin));
 				QuestAdventureBtn.addListener(new ChangeListener(){
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
 					{
 						if(highScoreUI.isHighScoreScreenShowing())
 						{
-						
 							toggleHSButton();
 						}
 						
+						if(playerInfoUI.isPlayerInfoScreenShowing())
+						{
+							togglePlayerUIButton();
+						}
 						qaScreen.toggleQAScreenVisible();
-					}	
+						
+					}
+
+					
 				});
 				tabs.add(QuestAdventureBtn).size(32f);
 			}
 			//High scores button
 			{
-				ImageButtonStyle style = skin.get("local", ImageButtonStyle.class);
-				HighScoreBtn = new ImageButton(style);
+				ButtonStyle style = skin.get( ButtonStyle.class);
+				HighScoreBtn = new Button(style);
+				HighScoreBtn.add(new Label("H", skin));
 				HighScoreBtn.addListener(new ChangeListener(){
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
@@ -103,6 +112,10 @@ public class MenuUI extends Group
 							toggleQAButton();
 						}
 						
+						if(playerInfoUI.isPlayerInfoScreenShowing())
+						{
+							togglePlayerUIButton();
+						}
 						highScoreUI.toggleHSScreenVisible();
 					}	
 				});
@@ -111,18 +124,29 @@ public class MenuUI extends Group
 			}
 			
 			
-			//Chat button
+			//Player UI
 			{
-				ImageButtonStyle style = skin.get("zone", ImageButtonStyle.class);
-				ChatBtn = new ImageButton(style);
-				ChatBtn.addListener(new ChangeListener(){
+				ButtonStyle style = skin.get(ButtonStyle.class);
+				PlayerUIBtn = new Button(style);
+				PlayerUIBtn.add(new Label("P", skin));
+				PlayerUIBtn.addListener(new ChangeListener(){
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
 					{
-
+						if(qaScreen.isQAScreenShowing())
+						{
+							toggleQAButton();
+						}
+						
+						if(highScoreUI.isHighScoreScreenShowing())
+						{
+							toggleHSButton();
+						}
+						
+						playerInfoUI.togglePlayerInfoScreen();
 					}	
 				});
-				tabs.add(ChatBtn).size(32f);
+				tabs.add(PlayerUIBtn).size(32f);
 			}
 		}
 				
@@ -190,7 +214,22 @@ public class MenuUI extends Group
 	}
 	
 	/**
-	 * @return the button to press
+	 * 	Toggles the PlayerUI button on & off
+	 */
+	public void togglePlayerUIButton() 
+	{
+		if(!PlayerUIBtn.isChecked())
+		{
+			PlayerUIBtn.setChecked(true);
+		}
+		else
+		{
+			PlayerUIBtn.setChecked(false);
+		}
+							
+	}	
+	/**
+	 * @return the button for the Quest and adventure screen to press
 	 */
 	public Button getQuestAdventureBtn()
 	{
@@ -198,10 +237,18 @@ public class MenuUI extends Group
 	}
 	
 	/**
-	 * @return the button to press
+	 * @return the button for the HighScore screen to press
 	 */
 	public Button getHighScoreBtn()
 	{
 		return HighScoreBtn;
+	}
+	
+	/**
+	 * @return the button for the player UI
+	 */
+	public Button getPlayerUIBtn()
+	{
+		return PlayerUIBtn;
 	}
 }

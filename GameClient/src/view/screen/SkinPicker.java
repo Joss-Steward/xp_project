@@ -18,7 +18,7 @@ public class SkinPicker
 	{
 		crewColorMap = new HashMap<String, String>();
 		crewColorMap.put("DEFAULT", "gray");
-		crewColorMap.put("NULL_POINTER_EXCEPTION", "red");
+		crewColorMap.put("NULL_POINTER", "red");
 		crewColorMap.put("OUT_OF_BOUNDS", "green");
 		crewColorMap.put("OFF_BY_ONE", "blue");
 	}

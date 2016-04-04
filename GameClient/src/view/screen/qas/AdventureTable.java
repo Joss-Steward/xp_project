@@ -57,7 +57,7 @@ public class AdventureTable extends ScrollPane
 	public void updateAdventures(String questDesc, ArrayList<ClientPlayerAdventure> adventureList)
 	{
 		table.clear();
-		Label l = new Label("Description:\n" + questDesc + "\nAdventures:\n", SkinPicker.getSkinPicker().getCrewSkin());
+		Label l = new Label(questDesc + "\n\nAdventures:\n", SkinPicker.getSkinPicker().getCrewSkin());
 		l.setWrap(true);
 		table.add(l).left().top().width(table.getWidth() - PADDING * 4f);		//Width is used to tell the label when to wrap its text.
 		table.row();
