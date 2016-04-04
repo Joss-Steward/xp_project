@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,6 +33,7 @@ public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
 	private LevelRecord record;
 	private int knowledgePoints;
 	private Timer levelUpTimer = null;
+	private Date timeToLevelUp;
 
 	protected ThisClientsPlayer(int playerID)
 	{
@@ -53,11 +56,21 @@ public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
         }
     }
     
+    public String getDeadlineToLevelUp()
+    {
+        return timeToLevelUp.toString();
+    }
+    
     
     private void updateDeadlineTimeToLevelUp(QualifiedObservableReport report)
     {
         TimeToLevelUpDeadlineReport myReport = (TimeToLevelUpDeadlineReport)report;
         myReport.getTimeToDeadline().toString();
+        
+        Date deadline = myReport.getTimeToDeadline();
+        Date now = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK).getTime();
+        
+        timeToLevelUp = deadline;
         
         if(levelUpTimer == null){
             levelUpTimer = new Timer();
