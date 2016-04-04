@@ -1,17 +1,26 @@
 package view.screen.qas;
 import java.util.ArrayList;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.VisibleAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+
+import javax.swing.JFileChooser;
+
+import view.screen.SkinPicker;
 import model.ClientModelFacade;
 import model.ClientPlayerQuest;
+import model.CommandPrintAdventures;
 import model.CommandSendQuestState;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 import model.reports.QuestStateReport;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.VisibleAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
  * A basic screen that displays the quests and adventure states.
@@ -22,12 +31,13 @@ import model.reports.QuestStateReport;
 public class QuestUI extends Group implements QualifiedObserver
 {
 	private final float WIDTH = 600f;
-	private final float HEIGHT = 500f;
+	private final float HEIGHT = 300f;
 	private final float POS_X = (Gdx.graphics.getWidth() - WIDTH) / 2;
 	private final float POS_Y = (Gdx.graphics.getHeight() - HEIGHT) / 1.1f;
 	private QuestTable questTable;
 	private AdventureTable adventureTable;
 	private Table container; //This is required to hold both the quest table and the adventure table.
+	private TextButton printButton;
 	boolean qaScreenShowing;
 	private ArrayList<ClientPlayerQuest> questList;
 
@@ -54,7 +64,12 @@ public class QuestUI extends Group implements QualifiedObserver
 		container.add(questTable).width(.40f * WIDTH).height(HEIGHT); //Add quest table and tell it how much space to take;
 		container.add(adventureTable).width(.60f * WIDTH).height(HEIGHT);
 		
+		//Make the print button
+		printButton = new TextButton("Print", SkinPicker.getSkinPicker().getCrewSkin());
+		addPrintButtonListener();
+	
 		addActor(container);
+		addActor(printButton);
 		setVisible(false);
 	}
 		
@@ -65,6 +80,35 @@ public class QuestUI extends Group implements QualifiedObserver
 	{
 		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
 		cm.registerObserver(this, QuestStateReport.class);
+	}
+	
+	/**
+	 * 
+	 */
+	private void addPrintButtonListener()
+	{
+		printButton.addListener(new ClickListener()
+		{
+			@Override
+			public void clicked(InputEvent event, float x, float y) 
+			{
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setApproveButtonText("Save");
+				fileChooser.setApproveButtonToolTipText("Save selected file");
+				int option = fileChooser.showOpenDialog(null);
+				if (option == JFileChooser.APPROVE_OPTION)
+				{
+					String path = fileChooser.getSelectedFile().getAbsolutePath();
+					if (path.contains("."))
+					{
+						path = path.substring(0, path.indexOf("."));
+					}
+					CommandPrintAdventures cpa = new CommandPrintAdventures(path + ".pdf");
+					ClientModelFacade.getSingleton().queueCommand(cpa);
+				}
+				super.clicked(event, x, y);
+			}
+		});
 	}
 	
 	/**
