@@ -1,6 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import model.reports.AdventureNeedingNotificationReport;
 import model.reports.AdventureStateChangeReport;
@@ -8,6 +11,7 @@ import model.reports.KnowledgePointsChangeReport;
 import model.reports.QuestNeedingNotificationReport;
 import model.reports.QuestStateChangeReport;
 import model.reports.QuestStateReport;
+import model.reports.TimeToLevelUpDeadlineReport;
 import data.AdventureStateEnum;
 import data.Position;
 import data.QuestStateEnum;
@@ -19,18 +23,48 @@ import datasource.LevelRecord;
  * @author merlin
  * 
  */
-public class ThisClientsPlayer extends ClientPlayer
+public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
 {
 	ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
 
 	private int experiencePoints;
 	private LevelRecord record;
 	private int knowledgePoints;
+	private Timer levelUpTimer = null;
 
 	protected ThisClientsPlayer(int playerID)
 	{
 		super(playerID);
+		
+		QualifiedObservableConnector.getSingleton().registerObserver(this,
+                TimeToLevelUpDeadlineReport.class);
 	}
+	
+	
+	/**
+     * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
+     */
+    @Override
+    public void receiveReport(QualifiedObservableReport report)
+    {
+        if (report.getClass() == TimeToLevelUpDeadlineReport.class)
+        {
+            updateDeadlineTimeToLevelUp(report);
+        }
+    }
+    
+    
+    private void updateDeadlineTimeToLevelUp(QualifiedObservableReport report)
+    {
+        TimeToLevelUpDeadlineReport myReport = (TimeToLevelUpDeadlineReport)report;
+        myReport.getTimeToDeadline().toString();
+        
+        if(levelUpTimer == null){
+            levelUpTimer = new Timer();
+            levelUpTimer.scheduleAtFixedRate(new UpdateLevelUpDeadline(myReport), 0, 60*1000);
+        }
+    }
+    
 
 	/**
 	 * Moves this player and report if they have entered into any regions
@@ -274,4 +308,26 @@ public class ThisClientsPlayer extends ClientPlayer
 	{
 		return this.knowledgePoints;
 	}
+}
+
+
+class UpdateLevelUpDeadline extends TimerTask{
+    private int playerID;
+    private Date timeToDeadline;
+    private String nextLevel;
+    private TimeToLevelUpDeadlineReport myReport;
+    
+    public UpdateLevelUpDeadline(TimeToLevelUpDeadlineReport report){
+        this.playerID = report.getPlayerID();
+        this.timeToDeadline = report.getTimeToDeadline();
+        this.nextLevel = report.getNextLevel();
+        myReport = new TimeToLevelUpDeadlineReport(playerID, timeToDeadline, nextLevel);
+
+    }
+
+    @Override
+    public void run()
+    {
+        QualifiedObservableConnector.getSingleton().sendReport(myReport);
+    }
 }
