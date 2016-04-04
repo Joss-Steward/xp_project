@@ -68,7 +68,7 @@ public enum PlayersForTest
 	/**
 	 * Necessary for the game
 	 */
-	QUIZBOT(13, "QuizBot", "Magi", 4, 13, "", "quiznasium.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
+	QUIZBOT(13, "QuizBot", "Magi", 4, 19, "", "quiznasium.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
 
 	/**
 	 * 
@@ -93,7 +93,7 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	MARTY(18, "Marty", "null_pointer_exception", 4, 13, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER),
+	MARTY(18, "Marty", "null_pointer_exception", 10, 19, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER),
 	
 	/**
      * 
