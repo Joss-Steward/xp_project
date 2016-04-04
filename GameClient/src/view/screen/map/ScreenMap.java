@@ -440,7 +440,7 @@ public class ScreenMap extends ScreenBasic
 				{
 					if (!(stage.getKeyboardFocus() == null))
 					{
-						qaScreen.setQAScreenVisibility(false);
+				
 					}
 					else
 					{
@@ -452,7 +452,7 @@ public class ScreenMap extends ScreenBasic
 				{
 					if (!(stage.getKeyboardFocus() == null))
 					{
-						highScoreUI.setHighScoreScreenVisibility(false);
+						
 					}
 					else
 					{
@@ -465,11 +465,11 @@ public class ScreenMap extends ScreenBasic
 				{
 					if (!(stage.getKeyboardFocus() == null))
 					{
-						playerInfoUI.setPlayerInfoScreenVisibility(false);
+					
 					}
 					else
 					{
-						playerInfoUI.togglePlayerInfoScreen();
+						menuArea.getPlayerUIBtn().toggle();
 					}
 					
 					return true;
@@ -572,7 +572,7 @@ public class ScreenMap extends ScreenBasic
 		qaScreen = new QuestUI();
 		highScoreUI = new HighScoreUI();
 		playerInfoUI = new PlayerInfoUI();
-		menuArea = new MenuUI(highScoreUI, qaScreen, chatArea); 
+		menuArea = new MenuUI(highScoreUI, qaScreen, chatArea, playerInfoUI); 
 		stage.addActor(highScoreUI);
 		stage.addActor(playerInfoUI);
 		stage.addActor(qaScreen);
