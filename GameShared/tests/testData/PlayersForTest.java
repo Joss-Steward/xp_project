@@ -93,7 +93,7 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	MARTY(18, "Marty", "null_pointer_exception", 10, 19, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER),
+	MARTY(18, "Marty", "off_by_one", 10, 19, "pw", "current.tmx", 1111, null, 0, 0, Crew.OFF_BY_ONE),
 	
 	/**
      * 

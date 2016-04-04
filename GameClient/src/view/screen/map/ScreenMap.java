@@ -1,5 +1,6 @@
 package view.screen.map;
 import static view.screen.Screens.DEFAULT_RES;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
@@ -31,7 +32,9 @@ import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.IntMap.Entry;
 import com.badlogic.gdx.utils.Sort;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+
 import data.ChatType;
+import data.Crew;
 import data.Position;
 import model.ClientModelFacade;
 import model.CommandKeyInputSent;
@@ -491,7 +494,7 @@ public class ScreenMap extends ScreenBasic
 			}
 		});
 		
-		stage.addActor(expDisplay);
+		//stage.addActor(expDisplay);
 		stage.addActor(chatArea);
 		
 		loadingLayer = new Group();
@@ -561,11 +564,11 @@ public class ScreenMap extends ScreenBasic
 	
 	/**
 	 * Adds all the UIs that are dependent on the player type to the the map
-	 * @param type of UIs specific to a player
+	 * @param crew of UIs specific to a player
 	 */
-	public void addUIs(PlayerType type) 
+	public void addUIs(Crew crew) 
 	{
-		SkinPicker.getSkinPicker().setCrew(type.name());
+		SkinPicker.getSkinPicker().setCrew(crew.name());
 		qaScreen = new QuestUI();
 		highScoreUI = new HighScoreUI();
 		playerInfoUI = new PlayerInfoUI();
