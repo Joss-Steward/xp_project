@@ -43,7 +43,7 @@ public class PlayerInfoTable extends ScrollPane
 		int exp = player.getExperiencePoints();
 		int know = player.getKnowledgePoints();
 		int level = player.getLevelRecord().getLevelUpPoints();
-		String time = player.getDeadlineToLevelUp();
+		//String time = player.getDeadlineToLevelUp();
 		
 		table.clear();
 		//NAME
