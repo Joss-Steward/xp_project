@@ -1,7 +1,9 @@
 package view.screen.qas;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
 
 import view.screen.SkinPicker;
 import model.ClientModelFacade;
@@ -92,23 +94,42 @@ public class QuestUI extends Group implements QualifiedObserver
 			@Override
 			public void clicked(InputEvent event, float x, float y) 
 			{
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setApproveButtonText("Save");
-				fileChooser.setApproveButtonToolTipText("Save selected file");
+				JFileChooser fileChooser = openFileChooser();
 				int option = fileChooser.showOpenDialog(null);
 				if (option == JFileChooser.APPROVE_OPTION)
 				{
 					String path = fileChooser.getSelectedFile().getAbsolutePath();
-					if (path.contains("."))
+					if (!path.toLowerCase().endsWith(".pdf"))
 					{
-						path = path.substring(0, path.indexOf("."));
+						path += ".pdf";
 					}
-					CommandPrintAdventures cpa = new CommandPrintAdventures(path + ".pdf");
+					CommandPrintAdventures cpa = new CommandPrintAdventures(path);
 					ClientModelFacade.getSingleton().queueCommand(cpa);
 				}
 				super.clicked(event, x, y);
 			}
 		});
+	}
+	
+	private JFileChooser openFileChooser()
+	{
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setApproveButtonText("Save");
+		fileChooser.setApproveButtonToolTipText("Save selected file");
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fileChooser.setCurrentDirectory(new File("~"));
+		fileChooser.setFileFilter(new FileFilter() 
+		{
+			@Override
+			public String getDescription() 
+			{
+				return "PDF File (*.pdf)";
+			}
+
+			@Override
+			public boolean accept(File f) { return true; }
+		});
+		return fileChooser;
 	}
 	
 	/**
