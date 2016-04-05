@@ -38,7 +38,7 @@ public class QuestUI extends Group implements QualifiedObserver
 	private final float POS_Y = (Gdx.graphics.getHeight() - HEIGHT) / 1.1f;
 	private QuestTable questTable;
 	private AdventureTable adventureTable;
-	private Table container; //This is required to hold both the quest table and the adventure table.
+	private Table container; 											//This is required to hold both the quest table and the adventure table.
 	private TextButton printButton;
 	boolean qaScreenShowing;
 	private ArrayList<ClientPlayerQuest> questList;
@@ -55,15 +55,15 @@ public class QuestUI extends Group implements QualifiedObserver
 		setPosition(POS_X, POS_Y);
 		questTable = new QuestTable(questList);
 		adventureTable = new AdventureTable();
-		questTable.setAdventureTable(adventureTable);  //Set the adventure table so that when a quest is clicked it can update it.
+		questTable.setAdventureTable(adventureTable);  					//Set the adventure table so that when a quest is clicked it can update it.
 		
 		//Make the container
 		container = new Table();
-		container.setFillParent(true);  //Sets the container to the same size as the quest screen
-		container.left().top();  //Sets the container to be at the top left of the quest screen (not the game screen).
+		container.setFillParent(true);  								//Sets the container to the same size as the quest screen
+		container.left().top();  										//Sets the container to be at the top left of the quest screen (not the game screen).
 		
 		//Make header label
-		container.add(questTable).width(.40f * WIDTH).height(HEIGHT); //Add quest table and tell it how much space to take;
+		container.add(questTable).width(.40f * WIDTH).height(HEIGHT); 	//Add quest table and tell it how much space to take;
 		container.add(adventureTable).width(.60f * WIDTH).height(HEIGHT);
 		
 		//Make the print button
@@ -85,7 +85,8 @@ public class QuestUI extends Group implements QualifiedObserver
 	}
 	
 	/**
-	 * 
+	 * When the print button is click, this handles creating a new file chooser and then
+	 * sends the print command if a valid file is chosen.
 	 */
 	private void addPrintButtonListener()
 	{
@@ -94,15 +95,17 @@ public class QuestUI extends Group implements QualifiedObserver
 			@Override
 			public void clicked(InputEvent event, float x, float y) 
 			{
-				JFileChooser fileChooser = openFileChooser();
-				int option = fileChooser.showOpenDialog(null);
-				if (option == JFileChooser.APPROVE_OPTION)
+				JFileChooser fileChooser = openFileChooser();			//Creates a new file chooser, set up the way we need it
+				int option = fileChooser.showOpenDialog(null);			//Records the button that the user clicked
+				if (option == JFileChooser.APPROVE_OPTION)				//Only save the file is the user clicks "Save" not "Cancel"
 				{
-					String path = fileChooser.getSelectedFile().getAbsolutePath();
-					if (!path.toLowerCase().endsWith(".pdf"))
+					File file = fileChooser.getSelectedFile();			//Gets the files the the user has chosen to save
+					String path = file.getAbsolutePath();				//Gets the absolute path of that chosen file
+					if (!path.toLowerCase().endsWith(".pdf"))			//Makes sure that the the file extension is pdf
 					{
-						path += ".pdf";
+						path += ".pdf";									//If the file extension is not pdf, it sets it to pdf
 					}
+					//Create and queues the print Adventures command
 					CommandPrintAdventures cpa = new CommandPrintAdventures(path);
 					ClientModelFacade.getSingleton().queueCommand(cpa);
 				}
@@ -111,20 +114,25 @@ public class QuestUI extends Group implements QualifiedObserver
 		});
 	}
 	
+	/**
+	 * Creates a file chooser with the filters and parameters that we need
+	 * for creating a pdf file for the quests and adventures.
+	 * @return The file chooser that is created
+	 */
 	private JFileChooser openFileChooser()
 	{
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setApproveButtonText("Save");
-		fileChooser.setApproveButtonToolTipText("Save selected file");
-		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		fileChooser.setCurrentDirectory(new File("~"));
-		fileChooser.setFileFilter(new FileFilter() 
+		JFileChooser fileChooser = new JFileChooser();					//Sets up a new file chooser to 
+		fileChooser.setApproveButtonText("Save");						//Set the button text to save instead of open
+		fileChooser.setApproveButtonToolTipText("Save selected file");	//Hovering over the save button will display this text
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);		//Makes it so that directories cannot be chosen
+		fileChooser.setCurrentDirectory(new File("~"));					//Sets the default save directory to the home directory
+		fileChooser.setFileFilter(new FileFilter() 						//Filers the type of files allowed
 		{
 			@Override
 			public String getDescription() 
 			{
-				return "PDF File (*.pdf)";
-			}
+				return "PDF File (*.pdf)";								//Only pdf files are allowed
+			}															//This does not prevent the use of another file extension though
 
 			@Override
 			public boolean accept(File f) { return true; }

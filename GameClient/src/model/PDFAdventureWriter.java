@@ -12,8 +12,6 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.util.Matrix;
 
-import com.sun.org.apache.bcel.internal.classfile.Field;
-
 /**
  * Creates a PDF file of the current players triggered adventures
  * 

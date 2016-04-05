@@ -1,12 +1,14 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import data.AdventureStateEnum;
+import data.Position;
+import data.QuestStateEnum;
+import datasource.LevelRecord;
 import model.reports.AdventureNeedingNotificationReport;
 import model.reports.AdventureStateChangeReport;
 import model.reports.KnowledgePointsChangeReport;
@@ -14,10 +16,6 @@ import model.reports.QuestNeedingNotificationReport;
 import model.reports.QuestStateChangeReport;
 import model.reports.QuestStateReport;
 import model.reports.TimeToLevelUpDeadlineReport;
-import data.AdventureStateEnum;
-import data.Position;
-import data.QuestStateEnum;
-import datasource.LevelRecord;
 
 /**
  * The player who is playing the game
@@ -56,6 +54,10 @@ public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
         }
     }
     
+    /**
+     * 
+     * @return the time deadline to level up
+     */
     public String getDeadlineToLevelUp()
     {
         return timeToLevelUp.toString();
@@ -68,7 +70,7 @@ public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
         myReport.getTimeToDeadline().toString();
         
         Date deadline = myReport.getTimeToDeadline();
-        Date now = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK).getTime();
+        //Date now = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK).getTime();
         
         timeToLevelUp = deadline;
         
