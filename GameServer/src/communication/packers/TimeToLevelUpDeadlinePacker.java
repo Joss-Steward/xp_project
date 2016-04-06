@@ -44,7 +44,7 @@ public class TimeToLevelUpDeadlinePacker extends MessagePacker
     {
         ArrayList<Class<? extends QualifiedObservableReport>> result = 
                 new ArrayList<Class<? extends QualifiedObservableReport>>();
-        result.add( KnowledgePointsChangeReport.class);
+        result.add( TimeToLevelUpDeadlineReport.class);
         return result;
     }
 }

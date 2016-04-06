@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,6 +33,7 @@ public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
 	private LevelRecord record;
 	private int knowledgePoints;
 	private Timer levelUpTimer = null;
+	private String timeLeft;
 	private Date timeToLevelUp;
 
 	protected ThisClientsPlayer(int playerID)
@@ -66,17 +69,32 @@ public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
     
     private void updateDeadlineTimeToLevelUp(QualifiedObservableReport report)
     {
-        TimeToLevelUpDeadlineReport myReport = (TimeToLevelUpDeadlineReport)report;
-        myReport.getTimeToDeadline().toString();
+        timeToLevelUp = ((TimeToLevelUpDeadlineReport) report).getTimeToDeadline();
         
-        Date deadline = myReport.getTimeToDeadline();
-        //Date now = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK).getTime();
-        
-        timeToLevelUp = deadline;
+        updateDeadlineTimeToLevelUp();
         
         if(levelUpTimer == null){
             levelUpTimer = new Timer();
-            levelUpTimer.scheduleAtFixedRate(new UpdateLevelUpDeadline(myReport), 0, 60*1000);
+            levelUpTimer.scheduleAtFixedRate(new UpdateLevelUpDeadline(), 0, 60*1000);
+        }
+    }
+    
+    protected synchronized void updateDeadlineTimeToLevelUp()
+    {
+        Date now = new Date();
+        
+        long dateDifference = timeToLevelUp.getTime() - now.getTime();
+        
+        long hoursBetween = dateDifference / (1000 * 60 * 60);
+        
+        if(hoursBetween > 24)
+        {
+            long daysBetween = dateDifference / (1000 * 60 * 60 * 24);
+            timeLeft = daysBetween + " day(s)";
+        }
+        else
+        {
+            timeLeft = hoursBetween + " hour(s)";
         }
     }
     
@@ -323,26 +341,27 @@ public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
 	{
 		return this.knowledgePoints;
 	}
+
+
+    /**
+     * @return the string for how much time is left until the level up deadline
+     */
+    public String getTimeLeft()
+    {
+        return timeLeft;
+    }
 }
 
-
+/**
+ * This class is a simple timer for updating the 
+ * @author ch5968
+ *
+ */
 class UpdateLevelUpDeadline extends TimerTask{
-    private int playerID;
-    private Date timeToDeadline;
-    private String nextLevel;
-    private TimeToLevelUpDeadlineReport myReport;
-    
-    public UpdateLevelUpDeadline(TimeToLevelUpDeadlineReport report){
-        this.playerID = report.getPlayerID();
-        this.timeToDeadline = report.getTimeToDeadline();
-        this.nextLevel = report.getNextLevel();
-        myReport = new TimeToLevelUpDeadlineReport(playerID, timeToDeadline, nextLevel);
-
-    }
 
     @Override
     public void run()
     {
-        QualifiedObservableConnector.getSingleton().sendReport(myReport);
+        ClientPlayerManager.getSingleton().getThisClientsPlayer().updateDeadlineTimeToLevelUp();
     }
 }

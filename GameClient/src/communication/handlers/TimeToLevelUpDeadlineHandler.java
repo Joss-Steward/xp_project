@@ -3,7 +3,6 @@ package communication.handlers;
 import model.QualifiedObservableConnector;
 import model.reports.TimeToLevelUpDeadlineReport;
 import communication.messages.Message;
-import communication.messages.PlayerLeaveMessage;
 import communication.messages.TimeToLevelUpDeadlineMessage;
 
 /**
@@ -23,7 +22,7 @@ public class TimeToLevelUpDeadlineHandler extends MessageHandler
     public void process(Message msg)
     {
         System.out.println("received " + msg);
-        if (msg.getClass().equals(PlayerLeaveMessage.class))
+        if (msg.getClass().equals(TimeToLevelUpDeadlineMessage.class))
         {
             TimeToLevelUpDeadlineMessage realMsg = (TimeToLevelUpDeadlineMessage) msg;
             TimeToLevelUpDeadlineReport report = new TimeToLevelUpDeadlineReport(realMsg.getPlayerID(), realMsg.getTimeToDeadline(), realMsg.getNextLevel());

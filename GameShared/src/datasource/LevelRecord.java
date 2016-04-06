@@ -30,14 +30,14 @@ public class LevelRecord implements Comparable<LevelRecord>, Serializable
 	 * @param levelUpMonth TODO
 	 * @param levelUpDayOfMonth TODO
 	 */
-	public LevelRecord(String description, int levelUpPoints, int levelUpMonth, int levelUpDayOfMonth)
+    public LevelRecord(String description, int levelUpPoints, int levelUpMonth, int levelUpDayOfMonth)
 	{
 		super();
 		this.description = description;
 		this.levelUpPoints = levelUpPoints;
 		this.levelUpMonth = levelUpMonth;
 		this.levelUpDayOfMonth = levelUpDayOfMonth;
-		deadlineDate = new GregorianCalendar(Calendar.YEAR, levelUpMonth-1, levelUpDayOfMonth).getTime();
+		deadlineDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), levelUpMonth, levelUpDayOfMonth).getTime();
 	}
 	
 	/**

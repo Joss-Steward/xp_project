@@ -1,5 +1,7 @@
 package testData;
 
+import java.util.Calendar;
+
 /**
  * @author Merlin
  *
@@ -10,15 +12,15 @@ public enum LevelsForTest
 	/**
 	 * 
 	 */
-	ONE("Serf", 45, 9, 30),
+	ONE("Serf", 45, Calendar.SEPTEMBER, 30),
 	/**
 	 * 
 	 */
-	TWO("Freemerchant", 85, 10, 31),
+	TWO("Freemerchant", 85, Calendar.OCTOBER, 31),
 	/**
 	 * 
 	 */
-	THREE("Lord", 125, 11, 30),
+	THREE("Lord", 125, Calendar.NOVEMBER, 30), 
 	/**
 	 * 
 	 */

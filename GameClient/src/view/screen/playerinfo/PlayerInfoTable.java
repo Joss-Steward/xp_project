@@ -44,7 +44,7 @@ public class PlayerInfoTable extends ScrollPane
 		int exp = player.getExperiencePoints();
 		int know = player.getKnowledgePoints();
 		int level = player.getLevelRecord().getLevelUpPoints();
-		//Date deadline = player.getLevelRecord().getDeadlineDate();
+		String deadline = player.getTimeLeft();
 		
 		table.clear();
 		//NAME
@@ -95,7 +95,7 @@ public class PlayerInfoTable extends ScrollPane
 		//DEADLINE TO LEVEL UP
 		labelGroup = new Table();
 		label1 = new Label("Level Up Deadline: ", SkinPicker.getSkinPicker().getCrewSkin());
-		label2 = new Label("" + 100 + " munites", SkinPicker.getSkinPicker().getCrewSkin());
+		label2 = new Label(deadline, SkinPicker.getSkinPicker().getCrewSkin());
 		label2.setColor(Color.GREEN);
 		labelGroup.add(label1).left();
 		labelGroup.row();
