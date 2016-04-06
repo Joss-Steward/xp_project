@@ -136,7 +136,6 @@ public class PlayerManager
                     new TimeToLevelUpDeadlineReport(player.getPlayerID(), 
                             LevelManager.getSingleton().getLevelForPoints(player.getExperiencePoints()).getDeadlineDate(),
                             "nothing"));
-	        System.err.println("HELLO WORLD\nHELLO WORLD\nHELLO WORLD\nHELLO WORLD\nHELLO WORLD\nHELLO WORLD\nHELLO WORLD\nHELLO WORLD\nHELLO WORLD\nHELLO WORLD\nHELLO WORLD\n");
 
 			
 			return player;
