@@ -1,15 +1,13 @@
 package view.screen.playerinfo;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-
 import model.ClientPlayerManager;
 import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 import model.ThisClientsPlayer;
-import model.reports.ExperiencePointsChangeReport;
+import model.reports.TimeToLevelUpDeadlineReport;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 /**
  * @author TJ Renninger and Ian Keefer
@@ -44,7 +42,7 @@ public class PlayerInfoUI extends Group implements QualifiedObserver
 	public void setUpListening()
 	{
 		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
-		cm.registerObserver(this, ExperiencePointsChangeReport.class);
+		cm.registerObserver(this, TimeToLevelUpDeadlineReport.class);
 	}
 	
 	/**
@@ -78,8 +76,6 @@ public class PlayerInfoUI extends Group implements QualifiedObserver
 		{	
 			ThisClientsPlayer player = ClientPlayerManager.getSingleton().getThisClientsPlayer();
 			playerTable.updatePlayerInfo(player);
-//			CommandHighScoreRequest cmd = new CommandHighScoreRequest();
-//			ClientModelFacade.getSingleton().queueCommand(cmd);
 			PI_ScreenShowing = true;
 			addAction(Actions.show());
 		}
@@ -91,6 +87,6 @@ public class PlayerInfoUI extends Group implements QualifiedObserver
 	@Override
 	public void receiveReport(QualifiedObservableReport report)
 	{
-		
+
 	}
 }
