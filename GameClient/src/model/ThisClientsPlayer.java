@@ -1,9 +1,7 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -66,7 +64,10 @@ public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
         return timeToLevelUp.toString();
     }
     
-    
+    /**
+     * Updates the time to level up deadline for each player
+     * @param report time to level up deadline report
+     */
     private void updateDeadlineTimeToLevelUp(QualifiedObservableReport report)
     {
         timeToLevelUp = ((TimeToLevelUpDeadlineReport) report).getTimeToDeadline();
@@ -79,17 +80,23 @@ public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
         }
     }
     
+    /**
+     * Updates the time to level up. If there is more than 24 hours remaining to level up, 
+     * the number of days remaining is written to the GUI. If there is less than 24 hours, the number
+     * of hours remaining is written to the GUI.
+     */
     protected synchronized void updateDeadlineTimeToLevelUp()
     {
         Date now = new Date();
         
         long dateDifference = timeToLevelUp.getTime() - now.getTime();
         
-        long hoursBetween = dateDifference / (1000 * 60 * 60);
+        int milliSecondsPerHour = (1000 * 60 * 60);
+        long hoursBetween = dateDifference / milliSecondsPerHour;
         
         if(hoursBetween > 24)
         {
-            long daysBetween = dateDifference / (1000 * 60 * 60 * 24);
+            long daysBetween = hoursBetween / 24;
             timeLeft = daysBetween + " day(s)";
         }
         else

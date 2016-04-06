@@ -3,9 +3,9 @@ package communication.messages;
 import java.io.Serializable;
 import java.util.Date;
 
-import data.QuestStateEnum;
 
 /**
+ * time to level up deadline message
  * @author Chris, Evan, Marty 
  *
  */

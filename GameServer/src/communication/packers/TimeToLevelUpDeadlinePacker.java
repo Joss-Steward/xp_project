@@ -3,12 +3,15 @@ package communication.packers;
 import java.util.ArrayList;
 
 import model.QualifiedObservableReport;
-import model.reports.KnowledgePointsChangeReport;
 import model.reports.TimeToLevelUpDeadlineReport;
-import communication.messages.KnowledgeChangedMessage;
 import communication.messages.Message;
 import communication.messages.TimeToLevelUpDeadlineMessage;
 
+/**
+ * Packs the time to level up deadline message
+ * @author Chris, Marty, Evan
+ *
+ */
 public class TimeToLevelUpDeadlinePacker extends MessagePacker 
 {
 
