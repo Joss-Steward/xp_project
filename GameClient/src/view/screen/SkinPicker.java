@@ -51,7 +51,6 @@ public class SkinPicker
 		if (skin == null)
 		{
 			String color = crewColorMap.getOrDefault(crew, crewColorMap.get("DEFAULT"));	
-			System.err.println(crew);
 			skin = new Skin(Gdx.files.internal("data/ui/screenskins/ui-" + color + ".json"));
 		}
 		return skin;

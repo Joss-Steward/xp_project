@@ -101,9 +101,9 @@ public class QuestUI extends Group implements QualifiedObserver
 				{
 					File file = fileChooser.getSelectedFile();			//Gets the files the the user has chosen to save
 					String path = file.getAbsolutePath();				//Gets the absolute path of that chosen file
-					if (!path.toLowerCase().endsWith(".pdf"))			//Makes sure that the the file extension is pdf
+					if (!path.toLowerCase().endsWith(".pdf"))			//Makes sure that the the file extension is PDF
 					{
-						path += ".pdf";									//If the file extension is not pdf, it sets it to pdf
+						path += ".pdf";									//If the file extension is not PDF, it sets it to PDF
 					}
 					//Create and queues the print Adventures command
 					CommandPrintAdventures cpa = new CommandPrintAdventures(path);
@@ -121,7 +121,8 @@ public class QuestUI extends Group implements QualifiedObserver
 	 */
 	private JFileChooser openFileChooser()
 	{
-		JFileChooser fileChooser = new JFileChooser();					//Sets up a new file chooser to 
+		JFileChooser fileChooser = new JFileChooser();					//Sets up a new file chooser to
+		fileChooser.setDialogTitle("Print PDF");						//Sets the tile of the of the window that pops up to Print PDF
 		fileChooser.setApproveButtonText("Save");						//Set the button text to save instead of open
 		fileChooser.setApproveButtonToolTipText("Save selected file");	//Hovering over the save button will display this text
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);		//Makes it so that directories cannot be chosen
@@ -131,7 +132,7 @@ public class QuestUI extends Group implements QualifiedObserver
 			@Override
 			public String getDescription() 
 			{
-				return "PDF File (*.pdf)";								//Only pdf files are allowed
+				return "PDF File (*.pdf)";								//Only PDF files are allowed
 			}															//This does not prevent the use of another file extension though
 
 			@Override
