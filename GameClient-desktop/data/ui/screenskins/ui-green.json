@@ -7,12 +7,12 @@ red: { a: 1, b: 0, g: 0, r: 1 },
 black: { a: 1, b: 0, g: 0, r: 0 }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
-default: { down: button_02, up: button_02 },
-toggle: { down: button_02, checked: button_02, up: button_02 }
+default: { down: button_01, up: button_02 },
+toggle: { down: button_01, checked: button_02, up: button_02 }
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
-default: { down: button_02, up: button_02, font: default-font, fontColor: white },
-toggle: { down: button_02, up: button_02, checked: button_02, font: default-font, fontColor: white, downFontColor: red }
+default: { down: button_01, up: button_02, font: default-font, fontColor: white },
+toggle: { down: button_01, up: button_02, checked: button_02, font: default-font, fontColor: white, downFontColor: red }
 },
 com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
  default: {
