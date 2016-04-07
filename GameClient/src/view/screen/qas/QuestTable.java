@@ -1,5 +1,7 @@
 package view.screen.qas;
 import java.util.ArrayList;
+
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -65,6 +67,22 @@ public class QuestTable extends ScrollPane
 	private Label createQuestLabel(final ClientPlayerQuest cpq) 
 	{
 		Label l = new Label(cpq.getQuestTitle(), SkinPicker.getSkinPicker().getCrewSkin());
+		switch (cpq.getQuestState()) 
+		{
+		case TRIGGERED:
+			Color red = Color.valueOf("fa6b7b");
+			l.setColor(red);
+			break;
+		case FULFILLED:
+			l.setColor(Color.YELLOW);
+			break;
+		case FINISHED:
+			l.setColor(Color.GREEN);
+			break;
+		default:
+			l.setColor(Color.WHITE);
+			break;
+		}
 		ClickListener clickListener = new ClickListener()
 		{
 			@Override

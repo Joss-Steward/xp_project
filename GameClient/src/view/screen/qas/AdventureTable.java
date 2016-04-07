@@ -88,7 +88,8 @@ public class AdventureTable extends ScrollPane
 		}
 		else
 		{
-			l.setColor(Color.RED);
+			Color red = Color.valueOf("fa6b7b");
+			l.setColor(red);
 		}
 		return l;
 	}
