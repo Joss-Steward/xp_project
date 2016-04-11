@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import model.QualifiedObservableConnector;
 import model.reports.QuestStateChangeReport;
@@ -37,6 +38,10 @@ public class QuestState
 	 *            available, triggered, fulfilled, completed
 	 * @param needingNotification
 	 *            true if the player should be notified about the quest's state
+	 * @param startDate
+	 *            the first day that the quest is available
+	 * @param endDate
+	 *            the last day that the quest is available
 	 */
 	public QuestState(int playerID, int questID, QuestStateEnum questStateList,
 			boolean needingNotification)

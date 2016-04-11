@@ -3,6 +3,9 @@ package model;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import model.AdventureState;
 import model.IllegalAdventureChangeException;
@@ -33,6 +36,9 @@ import datasource.DatabaseTest;
  */
 public class QuestStateTest extends DatabaseTest
 {
+    
+    private Date questStartDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(); 
+    private Date questEndDate = new GregorianCalendar(9999, Calendar.MARCH, 21).getTime();
 
 	/**
 	 * 

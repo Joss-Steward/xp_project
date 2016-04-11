@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import model.reports.KeyInputRecievedReport;
@@ -175,9 +177,15 @@ public class QuestManager implements QualifiedObserver
 			DatabaseException
 	{
 		QuestState qs = getQuestStateByID(playerID, questID);
+		Calendar.getInstance().set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+		Date now = Calendar.getInstance().getTime();
 		if ((qs != null) && (qs.getStateValue() != QuestStateEnum.TRIGGERED))
 		{
-			qs.trigger();
+//		    if(now.after(qs.getStartDate()))
+//		    {
+		        qs.trigger();
+		
+//		    }
 		}
 	}
 

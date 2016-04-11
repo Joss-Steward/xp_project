@@ -3,6 +3,7 @@ package datasource;
 import data.Position;
 import data.QuestCompletionActionParameter;
 import data.QuestCompletionActionType;
+import java.util.Date;
 
 /**
  * A row data gateway for the quest table
@@ -64,4 +65,15 @@ public interface QuestRowDataGateway
 	 * @return the title of this quest
 	 */
 	public String getQuestTitle();
+
+	/**
+	 * @return the first day the quest is available
+	 */
+    public Date getStartDate();
+    
+    
+    /**
+     * @return the last day the quest is available
+     */
+    public Date getEndDate();
 }
