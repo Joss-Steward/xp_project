@@ -1,6 +1,7 @@
 package datasource;
 
 import data.Crew;
+import data.Major;
 import data.Position;
 import datasource.DatabaseException;
 
@@ -22,6 +23,11 @@ public interface PlayerRowDataGateway
 	 */
 	Crew getCrew();
 
+	/**
+	 * @return this player's major
+	 */
+	Major getMajor();
+	
 	/**
 	 * @return the player's experience points
 	 */
@@ -67,6 +73,11 @@ public interface PlayerRowDataGateway
 	 */
 	void setCrew(Crew crew);
 
+	/**
+	 * @param major of this player
+	 */
+	void setMajor(Major major);
+	
 	/**
 	 * @param experiencePoints
 	 *            this player's new experience points

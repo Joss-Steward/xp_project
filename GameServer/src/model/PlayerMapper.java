@@ -73,6 +73,7 @@ public class PlayerMapper
 		player.setQuizScore(playerGateway.getQuizScore());
 		player.setPlayerID(playerID);
 		player.setCrew(playerGateway.getCrew());
+		player.setMajor(playerGateway.getMajor());
 
 		player.setExperiencePoints(playerGateway.getExperiencePoints());
 		player.setDataMapper(this);
@@ -137,6 +138,7 @@ public class PlayerMapper
 		playerGateway.setQuizScore(player.getQuizScore());
 		playerGateway.setExperiencePoints(player.getExperiencePoints());
 		playerGateway.setCrew(player.getCrew());
+		playerGateway.setMajor(player.getMajor());
 
 		playerGateway.persist();
 

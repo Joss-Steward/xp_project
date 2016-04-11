@@ -8,6 +8,7 @@ import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 
 import data.Crew;
+import data.Major;
 import data.Position;
 import datasource.DatabaseException;
 
@@ -40,10 +41,12 @@ public class ClientPlayerTest
 		p.setName("name");
 		p.setAppearanceType("type");
 		p.setCrew(Crew.NULL_POINTER);
+		p.setMajor(Major.ELECTRICAL_ENGINEERING);
 
 		assertEquals("name", p.getName());
 		assertEquals("type", p.getAppearanceType());
 		assertEquals(Crew.NULL_POINTER, p.getCrew());
+		assertEquals(Major.ELECTRICAL_ENGINEERING, p.getMajor());
 	}
 
 	/**

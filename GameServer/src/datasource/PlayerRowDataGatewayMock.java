@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import testData.PlayersForTest;
 import data.Crew;
+import data.Major;
 import data.Position;
 import datasource.DatabaseException;
 
@@ -23,15 +24,17 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		private int quizScore;
 		private int experiencePoints;
 		private Crew crew;
+		private Major major;
 
 		public PlayerInfo(Position position, String appearanceType,
-				int quizScore, int experiencePoints, Crew crew)
+				int quizScore, int experiencePoints, Crew crew, Major major)
 		{
 			this.position = position;
 			this.appearanceType = appearanceType;
 			this.quizScore = quizScore;
 			this.experiencePoints = experiencePoints;
 			this.crew = crew;
+			this.major = major;
 		}
 
 		public Position getPosition()
@@ -43,7 +46,6 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		{
 			return appearanceType;
 		}
-
 	}
 
 	/**
@@ -87,9 +89,10 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	 * @param quizScore this player's current quiz score
 	 * @param experiencePoints this player's experience points
 	 * @param crew the crew to which this player belongs
+	 * @param major the major of this player
 	 */
 	public PlayerRowDataGatewayMock(Position position,
-			String appearanceType, int quizScore, int experiencePoints, Crew crew) 
+			String appearanceType, int quizScore, int experiencePoints, Crew crew, Major major) 
 	{
 		if (playerInfo == null)
 		{
@@ -99,7 +102,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		nextKey++;
 		
 		playerInfo.put(playerID, new PlayerInfo(position, appearanceType,
-				quizScore, experiencePoints, crew));
+				quizScore, experiencePoints, crew, major));
 	}
 
 	/**
@@ -122,7 +125,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 			playerInfo.put(
 					nextKey,
 					new PlayerInfo(p.getPosition(), p
-							.getAppearanceType(), p.getKnowledgeScore(), p.getExperiencePoints(), p.getCrew()));
+							.getAppearanceType(), p.getKnowledgeScore(), p.getExperiencePoints(), p.getCrew(), p.getMajor()));
 			nextKey++;
 		}
 	}
@@ -234,6 +237,24 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	public void setCrew(Crew crew)
 	{
 		info.crew = crew;
+	}
+
+	/**
+	 * @see datasource.PlayerRowDataGateway#getMajor()
+	 */
+	@Override
+	public Major getMajor() 
+	{
+		return info.major;
+	}
+
+	/**
+	 * @see datasource.PlayerRowDataGateway#setMajor(data.Major)
+	 */
+	@Override
+	public void setMajor(Major major) 
+	{
+		info.major = major;
 	}
 
 }

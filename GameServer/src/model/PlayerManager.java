@@ -91,7 +91,7 @@ public class PlayerManager
 			QualifiedObservableConnector.getSingleton().sendReport(
 					new PlayerConnectionReport(playerID, player.getPlayerName(), player
 							.getAppearanceType(), player.getPlayerPosition(), player
-							.getCrew()));
+							.getCrew(), player.getMajor()));
 			return player;
 		} catch (DatabaseException e)
 		{
@@ -126,7 +126,7 @@ public class PlayerManager
 			QualifiedObservableConnector.getSingleton().sendReport(
 					new PlayerConnectionReport(player.getPlayerID(), player
 							.getPlayerName(), player.getAppearanceType(), player
-							.getPlayerPosition(), player.getCrew()));
+							.getPlayerPosition(), player.getCrew(), player.getMajor()));
 
 			QualifiedObservableConnector.getSingleton().sendReport(
 					new UpdatePlayerInformationReport(player));
@@ -341,7 +341,8 @@ public class PlayerManager
 						player.getPlayerID(), existingPlayer.getPlayerID(),
 						existingPlayer.getPlayerName(),
 						existingPlayer.getAppearanceType(),
-						existingPlayer.getPlayerPosition(), existingPlayer.getCrew());
+						existingPlayer.getPlayerPosition(), existingPlayer.getCrew(),
+						existingPlayer.getMajor());
 				QualifiedObservableConnector.getSingleton().sendReport(report);
 			}
 		}
