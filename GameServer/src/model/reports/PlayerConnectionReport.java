@@ -18,8 +18,8 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 	private final String playerName;
 	private final String appearanceType;
 	private final Position position;
-	private Crew crew;
-	private Major major;
+	private final Crew crew;
+	private final Major major;
 
 	/**
 	 * Information about a player who has just joined this server
