@@ -101,7 +101,7 @@ public class PlayerManagerTest
 				PlayersForTest.MATT.getPlayerID(), PlayersForTest.MERLIN.getPlayerID(),
 				PlayersForTest.MERLIN.getPlayerName(),
 				PlayersForTest.MERLIN.getAppearanceType(),
-				PlayersForTest.MERLIN.getPosition(), PlayersForTest.MERLIN.getCrew());
+				PlayersForTest.MERLIN.getPosition(), PlayersForTest.MERLIN.getCrew(), PlayersForTest.MERLIN.getMajor());
 		;
 		obs.receiveReport(expected);
 		EasyMock.replay(obs);

@@ -55,7 +55,7 @@ public class MapFileMessagePackerTest
 		PlayerConnectionReport report = new PlayerConnectionReport(
 				playerFromID.getPlayerID(), playerFromID.getPlayerName(),
 				playerFromID.getAppearanceType(), playerFromID.getPlayerPosition(),
-				playerFromID.getCrew());
+				playerFromID.getCrew(), playerFromID.getMajor());
 		MapFileMessagePacker packer = new MapFileMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		MapFileMessage msg = (MapFileMessage) packer.pack(report);
@@ -85,7 +85,7 @@ public class MapFileMessagePackerTest
 		PlayerConnectionReport report = new PlayerConnectionReport(
 				playerFromID.getPlayerID(), playerFromID.getPlayerName(),
 				playerFromID.getAppearanceType(), playerFromID.getPlayerPosition(),
-				playerFromID.getCrew());
+				playerFromID.getCrew(), playerFromID.getMajor());
 		MapFileMessagePacker packer = new MapFileMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		OptionsManager.getSingleton().updateMapInformation("current.tmx", "", 1);

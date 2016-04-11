@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import testData.PlayersForTest;
+import data.Major;
 import data.Position;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
@@ -79,7 +80,18 @@ public class PlayerTest extends DatabaseTest
 		Player p = playerManager.addPlayer(1);
 		assertEquals("John", p.getPlayerName());
 	}
-
+	
+	/**
+	 * Make sure we can retrieve a player's major
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void canGetPlayerMajor() throws DatabaseException
+	{
+		Player p = playerManager.addPlayer(1);
+		assertEquals(Major.COMPUTER_ENGINEERING, p.getMajor());
+	}
+	
 	/**
 	 * Test to make sure we have a legitimate PIN
 	 * 

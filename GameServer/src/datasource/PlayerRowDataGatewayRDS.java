@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import model.OptionsManager;
 import data.Crew;
+import data.Major;
 import data.Position;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
@@ -40,7 +41,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 			stmt = new ClosingPreparedStatement(
 					connection,
 					"Create TABLE Players (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  row INTEGER, col INTEGER, "
-							+ "appearanceType VARCHAR(255), quizScore INTEGER, experiencePoints INTEGER, crew INTEGER NOT NULL)");
+							+ "appearanceType VARCHAR(255), quizScore INTEGER, experiencePoints INTEGER, crew INTEGER NOT NULL, major INTEGER NOT NULL)");
 			stmt.executeUpdate();
 			stmt.close();
 		} catch (SQLException e)
@@ -57,6 +58,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 
 	private Connection connection;
 	private Crew crew;
+	private Major major;
 
 	/**
 	 * finder constructor
@@ -83,6 +85,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 			this.quizScore = result.getInt("quizScore");
 			this.experiencePoints = result.getInt("experiencePoints");
 			this.crew = Crew.getCrewForID(result.getInt("crew"));
+			this.major = Major.getMajorForID(result.getInt("major"));
 
 		} catch (SQLException e)
 		{
@@ -103,18 +106,20 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	 *            this player's experience points
 	 * @param crew
 	 *            the crew to which this player belongs
+	 * @param major 
+	 * 			the major of this player
 	 * @throws DatabaseException
 	 *             shouldn't
 	 */
 	public PlayerRowDataGatewayRDS(Position position, String appearanceType,
-			int quizScore, int experiencePoints, Crew crew) throws DatabaseException
+			int quizScore, int experiencePoints, Crew crew, Major major) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
 					connection,
-					"Insert INTO Players SET row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ?, crew = ?",
+					"Insert INTO Players SET row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ?, crew = ?, major = ?",
 					Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, position.getRow());
 			stmt.setInt(2, position.getColumn());
@@ -122,6 +127,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 			stmt.setInt(4, quizScore);
 			stmt.setInt(5, experiencePoints);
 			stmt.setInt(6, crew.getID());
+			stmt.setInt(7, major.getID());
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next())
@@ -204,14 +210,15 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 			{
 				ClosingPreparedStatement stmt = new ClosingPreparedStatement(
 						connection,
-						"UPDATE Players SET row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ?, crew = ? WHERE playerID = ?");
+						"UPDATE Players SET row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ?, crew = ?, major = ? WHERE playerID = ?");
 				stmt.setInt(1, position.getRow());
 				stmt.setInt(2, position.getColumn());
 				stmt.setString(3, appearanceType);
 				stmt.setInt(4, quizScore);
 				stmt.setInt(5, experiencePoints);
 				stmt.setInt(6, crew.getID());
-				stmt.setInt(7, playerID);
+				stmt.setInt(7, major.getID());
+				stmt.setInt(8, playerID);
 				stmt.executeUpdate();
 			} catch (SQLException e)
 			{
@@ -272,6 +279,24 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	public void setQuizScore(int quizScore)
 	{
 		this.quizScore = quizScore;
+	}
+
+	/**
+	 * @see datasource.PlayerRowDataGateway#getMajor()
+	 */
+	@Override
+	public Major getMajor() 
+	{
+		return major;
+	}
+
+	/**
+	 * @see datasource.PlayerRowDataGateway#setMajor(data.Major)
+	 */
+	@Override
+	public void setMajor(Major major) 
+	{
+		this.major = major;
 	}
 
 }
