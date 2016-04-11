@@ -75,7 +75,7 @@ public class ScreenMap extends ScreenBasic
 	
 	//GUIs that get displayed on the map
 	private QuestUI qaScreen;
-	private ExperienceDisplay expDisplay;
+	//private ExperienceDisplay expDisplay;
 	private ChatUi chatArea;
 	private HighScoreUI highScoreUI;
 	private MenuUI menuArea;
@@ -395,7 +395,7 @@ public class ScreenMap extends ScreenBasic
 	@Override
 	public void show()
 	{
-		expDisplay = new ExperienceDisplay();
+		//expDisplay = new ExperienceDisplay();
 		
 		worldStage = new Stage();
 		blurBatch = new SpriteBatch();

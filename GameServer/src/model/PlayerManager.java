@@ -13,6 +13,7 @@ import model.reports.AddExistingPlayerReport;
 import model.reports.PinFailedReport;
 import model.reports.PlayerConnectionReport;
 import model.reports.PlayerLeaveReport;
+import model.reports.TimeToLevelUpDeadlineReport;
 import model.reports.UpdatePlayerInformationReport;
 import data.PlayerScoreRecord;
 import datasource.DatabaseException;
@@ -130,7 +131,13 @@ public class PlayerManager
 			QualifiedObservableConnector.getSingleton().sendReport(
 					new UpdatePlayerInformationReport(player));
 			tellNewPlayerAboutEveryoneElse(player);
+			
+			QualifiedObservableConnector.getSingleton().sendReport(
+                    new TimeToLevelUpDeadlineReport(player.getPlayerID(), 
+                            LevelManager.getSingleton().getLevelForPoints(player.getExperiencePoints()).getDeadlineDate(),
+                            "nothing"));
 
+			
 			return player;
 		} else
 		{

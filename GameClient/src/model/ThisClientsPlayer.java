@@ -1,17 +1,21 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import data.AdventureStateEnum;
+import data.Position;
+import data.QuestStateEnum;
+import datasource.LevelRecord;
 import model.reports.AdventureNeedingNotificationReport;
 import model.reports.AdventureStateChangeReport;
 import model.reports.KnowledgePointsChangeReport;
 import model.reports.QuestNeedingNotificationReport;
 import model.reports.QuestStateChangeReport;
 import model.reports.QuestStateReport;
-import data.AdventureStateEnum;
-import data.Position;
-import data.QuestStateEnum;
-import datasource.LevelRecord;
+import model.reports.TimeToLevelUpDeadlineReport;
 
 /**
  * The player who is playing the game
@@ -19,18 +23,88 @@ import datasource.LevelRecord;
  * @author merlin
  * 
  */
-public class ThisClientsPlayer extends ClientPlayer
+public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
 {
 	ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
 
 	private int experiencePoints;
 	private LevelRecord record;
 	private int knowledgePoints;
+	private Timer levelUpTimer = null;
+	private String timeLeft;
+	private Date timeToLevelUp;
 
 	protected ThisClientsPlayer(int playerID)
 	{
 		super(playerID);
+		
+		QualifiedObservableConnector.getSingleton().registerObserver(this,
+                TimeToLevelUpDeadlineReport.class);
 	}
+	
+	
+	/**
+     * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
+     */
+    @Override
+    public void receiveReport(QualifiedObservableReport report)
+    {
+        if (report.getClass() == TimeToLevelUpDeadlineReport.class)
+        {
+            updateDeadlineTimeToLevelUp(report);
+        }
+    }
+    
+    /**
+     * 
+     * @return the time deadline to level up
+     */
+    public String getDeadlineToLevelUp()
+    {
+        return timeToLevelUp.toString();
+    }
+    
+    /**
+     * Updates the time to level up deadline for each player
+     * @param report time to level up deadline report
+     */
+    private void updateDeadlineTimeToLevelUp(QualifiedObservableReport report)
+    {
+        timeToLevelUp = ((TimeToLevelUpDeadlineReport) report).getTimeToDeadline();
+        
+        updateDeadlineTimeToLevelUp();
+        
+        if(levelUpTimer == null){
+            levelUpTimer = new Timer();
+            levelUpTimer.scheduleAtFixedRate(new UpdateLevelUpDeadline(), 0, 60*1000);
+        }
+    }
+    
+    /**
+     * Updates the time to level up. If there is more than 24 hours remaining to level up, 
+     * the number of days remaining is written to the GUI. If there is less than 24 hours, the number
+     * of hours remaining is written to the GUI.
+     */
+    protected synchronized void updateDeadlineTimeToLevelUp()
+    {
+        Date now = new Date();
+        
+        long dateDifference = timeToLevelUp.getTime() - now.getTime();
+        
+        int milliSecondsPerHour = (1000 * 60 * 60);
+        long hoursBetween = dateDifference / milliSecondsPerHour;
+        
+        if(hoursBetween > 24)
+        {
+            long daysBetween = hoursBetween / 24;
+            timeLeft = daysBetween + " day(s)";
+        }
+        else
+        {
+            timeLeft = hoursBetween + " hour(s)";
+        }
+    }
+    
 
 	/**
 	 * Moves this player and report if they have entered into any regions
@@ -274,4 +348,27 @@ public class ThisClientsPlayer extends ClientPlayer
 	{
 		return this.knowledgePoints;
 	}
+
+
+    /**
+     * @return the string for how much time is left until the level up deadline
+     */
+    public String getTimeLeft()
+    {
+        return timeLeft;
+    }
+}
+
+/**
+ * This class is a simple timer for updating the 
+ * @author ch5968
+ *
+ */
+class UpdateLevelUpDeadline extends TimerTask{
+
+    @Override
+    public void run()
+    {
+        ClientPlayerManager.getSingleton().getThisClientsPlayer().updateDeadlineTimeToLevelUp();
+    }
 }

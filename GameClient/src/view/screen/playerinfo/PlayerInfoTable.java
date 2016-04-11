@@ -1,10 +1,11 @@
 package view.screen.playerinfo;
+import model.ThisClientsPlayer;
+import view.screen.SkinPicker;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import model.ThisClientsPlayer;
-import view.screen.SkinPicker;
 /**
  * @author TJ Renninger and Ian Keefer
  *
@@ -43,6 +44,7 @@ public class PlayerInfoTable extends ScrollPane
 		int exp = player.getExperiencePoints();
 		int know = player.getKnowledgePoints();
 		int level = player.getLevelRecord().getLevelUpPoints();
+		String deadline = player.getTimeLeft();
 		
 		table.clear();
 		//NAME
@@ -87,6 +89,16 @@ public class PlayerInfoTable extends ScrollPane
 		label2 = new Label("" + level, SkinPicker.getSkinPicker().getCrewSkin());
 		label2.setColor(Color.GREEN);
 		labelGroup.add(label1).left();
+		labelGroup.add(label2).left();
+		table.add(labelGroup).left().row();
+		
+		//DEADLINE TO LEVEL UP
+		labelGroup = new Table();
+		label1 = new Label("Level Up Deadline: ", SkinPicker.getSkinPicker().getCrewSkin());
+		label2 = new Label(deadline, SkinPicker.getSkinPicker().getCrewSkin());
+		label2.setColor(Color.GREEN);
+		labelGroup.add(label1).left();
+		labelGroup.row();
 		labelGroup.add(label2).left();
 		table.add(labelGroup).left().row();
 	}

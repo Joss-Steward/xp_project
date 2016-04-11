@@ -1,5 +1,6 @@
 package model;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -59,8 +60,9 @@ public class PDFAdventureWriter
 						contents.transform(new Matrix(0, 1, -1, 0, pageWidth, 0));
 
 						// Place the image as the background
+						File file = new File("AdventureTemplate.jpg");
 						PDImageXObject pdImage = PDImageXObject.createFromFile(
-								"AdventureTemplate.jpg", doc);
+								file.getAbsolutePath(), doc);
 						contents.saveGraphicsState();
 						contents.drawImage(pdImage, 0, 0);
 						contents.restoreGraphicsState();
