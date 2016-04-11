@@ -44,12 +44,13 @@ public class PlayerConnectionReportTest
 		Player john = PlayerManager.getSingleton().addPlayer(1);
 		PlayerConnectionReport report = new PlayerConnectionReport(john.getPlayerID(),
 				john.getPlayerName(), john.getAppearanceType(), john.getPlayerPosition(),
-				john.getCrew());
+				john.getCrew(), john.getMajor());
 		assertEquals(1, report.getPlayerID());
 		assertEquals(PlayersForTest.JOHN.getPlayerName(), report.getPlayerName());
 		assertEquals(PlayersForTest.JOHN.getAppearanceType(), report.getAppearanceType());
 		assertEquals(PlayersForTest.JOHN.getPosition(), report.getPosition());
 		assertEquals(PlayersForTest.JOHN.getCrew(), report.getCrew());
+		assertEquals(PlayersForTest.JOHN.getMajor(), report.getMajor());
 	}
 
 	/**

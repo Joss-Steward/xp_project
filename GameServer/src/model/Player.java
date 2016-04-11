@@ -4,6 +4,7 @@ import model.reports.ExperienceChangedReport;
 import model.reports.PlayerMovedReport;
 import model.reports.KnowledgePointsChangeReport;
 import data.Crew;
+import data.Major;
 import data.Position;
 import datasource.DatabaseException;
 
@@ -35,6 +36,8 @@ public class Player
 	private Crew crew;
 
 	final private int LOCAL_CHAT_RADIUS = 5;
+	
+	private Major major;
 
 	/**
 	 * Add experience points and generates ExperienceChangedReport
@@ -314,5 +317,19 @@ public class Player
 	public int getKnowledgePoints() 
 	{
 		return knowledgePoints;
+	}
+
+	/**
+	 * @return the major of the player
+	 */
+	public Major getMajor() {
+		return major;
+	}
+
+	/**
+	 * @param major of the player
+	 */
+	public void setMajor(Major major) {
+		this.major = major;
 	}
 }

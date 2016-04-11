@@ -1,6 +1,7 @@
 package testData;
 
 import data.Crew;
+import data.Major;
 import data.Position;
 
 /**
@@ -14,91 +15,91 @@ public enum PlayersForTest
 	/**
 	 * John must be player 1 for the current quest state report tests to pass
 	 */
-	JOHN(1, "John", "null_pointer_exception", 0, 8, "pw", "current.tmx", 1111, null, 42, 46, Crew.NULL_POINTER),
+	JOHN(1, "John", "null_pointer_exception", 0, 8, "pw", "current.tmx", 1111, null, 42, 46, Crew.NULL_POINTER, Major.COMPUTER_ENGINEERING),
 	/**
 	 * Merlin must be player 2 for the player mapper tests to pass. That number
 	 * maps to player 2 in the quest and adventure states in QuestStatesForTest
 	 * and AdventureStatesForTest
 	 */
-	MERLIN(2, "Merlin", "merlin", 4, 13, "pw", "current.tmx", 1111, null, 42, 46, Crew.OUT_OF_BOUNDS),
+	MERLIN(2, "Merlin", "merlin", 4, 13, "pw", "current.tmx", 1111, null, 42, 46, Crew.OUT_OF_BOUNDS, Major.SOFTWARE_ENGINEERING),
 	/**
 	 * 
 	 */
-	NICK(3, "Nick", "off_by_one", 4, 13, "pw", "homework.tmx", 1111, null, 0, 35, Crew.OUT_OF_BOUNDS),
+	NICK(3, "Nick", "off_by_one", 4, 13, "pw", "homework.tmx", 1111, null, 0, 35, Crew.OUT_OF_BOUNDS, Major.COMPUTER_SCIENCE),
 	/**
 	 * 
 	 */
-	JOSH(4, "Josh", "Ninja", 4, 13, "pw", "current.tmx", 1111, null, 0, 25, Crew.OUT_OF_BOUNDS),
+	JOSH(4, "Josh", "Ninja", 4, 13, "pw", "current.tmx", 1111, null, 0, 25, Crew.OUT_OF_BOUNDS, Major.SOFTWARE_ENGINEERING),
 	/**
 	 * 
 	 */
-	MATT(5, "Matt", "male_a", 4, 13, "pw", "current.tmx", 1111, null, 0, 12, Crew.OUT_OF_BOUNDS),
+	MATT(5, "Matt", "male_a", 4, 13, "pw", "current.tmx", 1111, null, 0, 12, Crew.OUT_OF_BOUNDS, Major.COMPUTER_ENGINEERING),
 	/**
 	 * 
 	 */
 	STEVE(6, "Steve", "knight_with_straw_hat", 4, 13, "pw", "current.tmx", 1111, null, 0,
-			13, Crew.OUT_OF_BOUNDS),
+			13, Crew.OUT_OF_BOUNDS, Major.ELECTRICAL_ENGINEERING),
 	/**
 	 * 
 	 */
-	FRANK(7, "Frank", "out_of_bounds", 4, 13, "pw", "current.tmx", 1441, null, 0, 13, Crew.OUT_OF_BOUNDS),
+	FRANK(7, "Frank", "out_of_bounds", 4, 13, "pw", "current.tmx", 1441, null, 0, 13, Crew.OUT_OF_BOUNDS, Major.ELECTRICAL_ENGINEERING),
 	/**
 	 * 
 	 */
-	GA(8, "Ga", "off_by_one", 4, 13, "pw", "current.tmx", 1111, null, 0, 15, Crew.OUT_OF_BOUNDS),
+	GA(8, "Ga", "off_by_one", 4, 13, "pw", "current.tmx", 1111, null, 0, 15, Crew.OUT_OF_BOUNDS, Major.ELECTRICAL_ENGINEERING),
 	/**
 	 * 
 	 */
-	ANDY(9, "Andy", "null_pointer_exception", 4, 13, "pw", "current.tmx", 1111, null, 0, 33, Crew.OUT_OF_BOUNDS),
+	ANDY(9, "Andy", "null_pointer_exception", 4, 13, "pw", "current.tmx", 1111, null, 0, 33, Crew.OUT_OF_BOUNDS, Major.ELECTRICAL_ENGINEERING),
 	/**
 	 * 
 	 */
-	DAVE(10, "Dave", "out_of_bounds", 4, 13, "pw", null, 1111, null, 0, 12, Crew.OUT_OF_BOUNDS),
+	DAVE(10, "Dave", "out_of_bounds", 4, 13, "pw", null, 1111, null, 0, 12, Crew.OUT_OF_BOUNDS, Major.ELECTRICAL_ENGINEERING),
 
 	/**
 	 * 
 	 */
-	LOSER(11, "Loser", "off_by_one", 4, 13, "pw", null, 1111, null, 0, 3, Crew.OUT_OF_BOUNDS),
+	LOSER(11, "Loser", "off_by_one", 4, 13, "pw", null, 1111, null, 0, 3, Crew.OUT_OF_BOUNDS, Major.ELECTRICAL_ENGINEERING),
 
 	/**
 	 * 
 	 */
-	MOCK_NPC(12, "NPC1", "Magi", 4, 13, "", "silly.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
+	MOCK_NPC(12, "NPC1", "Magi", 4, 13, "", "silly.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS, Major.ELECTRICAL_ENGINEERING),
 
 	/**
 	 * Necessary for the game
 	 */
-	QUIZBOT(13, "QuizBot", "Magi", 4, 19, "", "quiznasium.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
+	QUIZBOT(13, "QuizBot", "Magi", 4, 19, "", "quiznasium.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS, Major.ELECTRICAL_ENGINEERING),
 
 	/**
 	 * 
 	 */
-	MOCK_NPC3(14, "NPC3", "Magi", 4, 13, "", "silly.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
+	MOCK_NPC3(14, "NPC3", "Magi", 4, 13, "", "silly.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS, Major.COMPUTER_ENGINEERING),
 
 	/**
 	 * 
 	 */
-	RYAN(15, "Ryan", "female_a", 4, 13, "pw", "current.tmx", 1111, null, 0, 13, Crew.OUT_OF_BOUNDS),
+	RYAN(15, "Ryan", "female_a", 4, 13, "pw", "current.tmx", 1111, null, 0, 13, Crew.OUT_OF_BOUNDS, Major.COMPUTER_ENGINEERING),
 
 	/**
 	 * 
 	 */
-	NEWBIE(16, "Newbie", "male_a", 11, 7, "pw", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
+	NEWBIE(16, "Newbie", "male_a", 11, 7, "pw", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS, Major.COMPUTER_ENGINEERING),
 	
 	/**
  	 * 
 	 */
-	RED_HAT(17, "Red Hat", "RedHat", 9,7, "", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS),
+	RED_HAT(17, "Red Hat", "RedHat", 9,7, "", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS, Major.COMPUTER_ENGINEERING),
 	
 	/**
 	 * 
 	 */
-	MARTY(18, "Marty", "off_by_one", 10, 19, "pw", "current.tmx", 1111, null, 0, 0, Crew.OFF_BY_ONE),
+	MARTY(18, "Marty", "off_by_one", 10, 19, "pw", "current.tmx", 1111, null, 0, 0, Crew.OFF_BY_ONE, Major.SOFTWARE_ENGINEERING),
 	
 	/**
      * 
      */
-    HERSH(19, "Hersh", "null_pointer_exception", 4, 13, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER);
+    HERSH(19, "Hersh", "null_pointer_exception", 4, 13, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER, Major.SOFTWARE_ENGINEERING);
 
 	private int playerID;
 	private String appearanceType;
@@ -111,6 +112,7 @@ public enum PlayersForTest
 	private String changedOn;
 	private int knowledgePoints;
 	private Crew crew;
+	private Major major;
 
 	/**
 	 * @return the pin for the current connection
@@ -132,7 +134,7 @@ public enum PlayersForTest
 
 	PlayersForTest(int id, String playerName, String type, int row, int col,
 			String password, String mapName, int pin, String changedOn, int quizScore,
-			int experiencePoints, Crew crew)
+			int experiencePoints, Crew crew, Major major)
 	{
 		this.playerID = id;
 		this.playerName = playerName;
@@ -146,6 +148,7 @@ public enum PlayersForTest
 		this.experiencePoints = experiencePoints;
 		this.crew = crew;
 		this.knowledgePoints = quizScore;
+		this.major = major;
 	}
 
 	/**
@@ -233,5 +236,14 @@ public enum PlayersForTest
 	{
 		return crew;
 	}
+
+	/**
+	 * @return the major for this student
+	 */
+	public Major getMajor()
+	{
+		return major;
+	}
+
 
 }

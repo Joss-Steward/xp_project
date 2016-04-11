@@ -55,7 +55,7 @@ public class PlayerJoinedMessagePackerTest
 		PlayerConnectionReport report = new PlayerConnectionReport(
 				playerFromID.getPlayerID(), playerFromID.getPlayerName(),
 				playerFromID.getAppearanceType(), playerFromID.getPlayerPosition(),
-				playerFromID.getCrew());
+				playerFromID.getCrew(), playerFromID.getMajor());
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);
@@ -87,7 +87,7 @@ public class PlayerJoinedMessagePackerTest
 				PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.JOHN.getPlayerID(),
 				PlayersForTest.JOHN.getPlayerName(),
 				PlayersForTest.JOHN.getAppearanceType(),
-				PlayersForTest.JOHN.getPosition(), PlayersForTest.JOHN.getCrew());
+				PlayersForTest.JOHN.getPosition(), PlayersForTest.JOHN.getCrew(), PlayersForTest.JOHN.getMajor());
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);
@@ -118,7 +118,7 @@ public class PlayerJoinedMessagePackerTest
 				PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.JOHN.getPlayerID(),
 				PlayersForTest.JOHN.getPlayerName(),
 				PlayersForTest.JOHN.getAppearanceType(),
-				PlayersForTest.JOHN.getPosition(), PlayersForTest.JOHN.getCrew());
+				PlayersForTest.JOHN.getPosition(), PlayersForTest.JOHN.getCrew(), PlayersForTest.JOHN.getMajor());
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);
