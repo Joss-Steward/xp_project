@@ -438,11 +438,7 @@ public class ScreenMap extends ScreenBasic
 				}
 				if(keycode == Keys.Q)
 				{
-					if (!(stage.getKeyboardFocus() == null))
-					{
-				
-					}
-					else
+					if (stage.getKeyboardFocus() == null)
 					{
 						menuArea.getQuestAdventureBtn().toggle();
 					}
@@ -450,11 +446,7 @@ public class ScreenMap extends ScreenBasic
 				}
 				if(keycode == Keys.H)
 				{
-					if (!(stage.getKeyboardFocus() == null))
-					{
-						
-					}
-					else
+					if (stage.getKeyboardFocus() == null)
 					{
 						menuArea.getHighScoreBtn().toggle();
 					}
@@ -463,11 +455,7 @@ public class ScreenMap extends ScreenBasic
 				}
 				if (keycode == Keys.P)
 				{
-					if (!(stage.getKeyboardFocus() == null))
-					{
-					
-					}
-					else
+					if (stage.getKeyboardFocus() == null)
 					{
 						menuArea.getPlayerUIBtn().toggle();
 					}
