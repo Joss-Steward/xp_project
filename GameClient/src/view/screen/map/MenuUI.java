@@ -81,16 +81,16 @@ public class MenuUI extends Group
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
 					{
-						if(highScoreUI.isHighScoreScreenShowing())
+						if(highScoreUI.isHighScoreScreenShowing()) //Toggle the HS screen if it is open
 						{
 							toggleHSButton();
 						}
 						
-						if(playerInfoUI.isPlayerInfoScreenShowing())
+						if(playerInfoUI.isPlayerInfoScreenShowing()) //Toggle the Player info screen if it is open
 						{
 							togglePlayerUIButton();
 						}
-						qaScreen.toggleQAScreenVisible();
+						qaScreen.toggleQAScreenVisible(); //Toggle the QA screen
 						
 					}
 
@@ -107,16 +107,16 @@ public class MenuUI extends Group
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
 					{
-						if(qaScreen.isQAScreenShowing())
+						if(qaScreen.isQAScreenShowing()) //Toggle the Q/A screen if it is already open
 						{
-							toggleQAButton();
+							toggleQAButton(); 
 						}
 						
-						if(playerInfoUI.isPlayerInfoScreenShowing())
+						if(playerInfoUI.isPlayerInfoScreenShowing()) //Toggle the player Info screen if it is already open
 						{
 							togglePlayerUIButton();
 						}
-						highScoreUI.toggleHSScreenVisible();
+						highScoreUI.toggleHSScreenVisible(); //Toggle the HS screen
 					}	
 				});
 				tabs.add(HighScoreBtn).size(32f);
@@ -133,17 +133,17 @@ public class MenuUI extends Group
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
 					{
-						if(qaScreen.isQAScreenShowing())
+						if(qaScreen.isQAScreenShowing()) //Toggle the QA screen if it is already open
 						{
 							toggleQAButton();
 						}
 						
-						if(highScoreUI.isHighScoreScreenShowing())
+						if(highScoreUI.isHighScoreScreenShowing()) //Toggle the HS screen if it is already open
 						{
 							toggleHSButton();
 						}
 						
-						playerInfoUI.togglePlayerInfoScreen();
+						playerInfoUI.togglePlayerInfoScreen(); // actually open the player info screen
 					}	
 				});
 				tabs.add(PlayerUIBtn).size(32f);

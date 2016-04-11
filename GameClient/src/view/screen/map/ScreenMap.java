@@ -259,14 +259,7 @@ public class ScreenMap extends ScreenBasic
 				s.remove();
 			}
 			characterDequeue.clear();
-			
-//			if (Gdx.input.isKeyPressed(Keys.Q))
-//			{
-//				System.out.println("quest button is pressed");
-//
-//				CommandQuestScreenOpen lc = new CommandQuestScreenOpen();
-//				ModelFacade.getSingleton().queueCommand(lc);
-//			}
+	
 		}
 		//draw a loading screen
 		else
@@ -436,7 +429,7 @@ public class ScreenMap extends ScreenBasic
 						return true;
 					}
 				}
-				if(keycode == Keys.Q)
+				if(keycode == Keys.Q) // Key to open the quest/adventure screen
 				{
 					if (stage.getKeyboardFocus() == null)
 					{
@@ -444,7 +437,7 @@ public class ScreenMap extends ScreenBasic
 					}
 					return true;
 				}
-				if(keycode == Keys.H)
+				if(keycode == Keys.H) // Key to open the HighScore screen
 				{
 					if (stage.getKeyboardFocus() == null)
 					{
@@ -453,7 +446,7 @@ public class ScreenMap extends ScreenBasic
 					
 					return true;
 				}
-				if (keycode == Keys.P)
+				if (keycode == Keys.P) //Key to open the player screen
 				{
 					if (stage.getKeyboardFocus() == null)
 					{
