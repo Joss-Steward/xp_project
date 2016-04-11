@@ -66,7 +66,7 @@ public class ConnectionManager
 
 		outgoing = new ConnectionOutgoing(sock, stateAccumulator, messagePackerSet);
 		outgoingThread = new Thread(outgoing);
-		// for simplictly
+		// for simplicity
 		// T.setDaemon(true);
 		outgoingThread.start();
 		this.stateAccumulator = stateAccumulator;

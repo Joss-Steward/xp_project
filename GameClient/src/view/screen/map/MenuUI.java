@@ -12,6 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 
+import communication.ConnectionManager;
+import runners.GameLibGDX;
+import view.screen.ScreenBasic;
+import view.screen.Screens;
 import view.screen.SkinPicker;
 import view.screen.highscore.HighScoreUI;
 import view.screen.playerinfo.PlayerInfoUI;
@@ -123,8 +127,7 @@ public class MenuUI extends Group
 			
 			}
 			
-			
-			//Player UI
+			//Player UI Button
 			{
 				ButtonStyle style = skin.get(ButtonStyle.class);
 				PlayerUIBtn = new Button(style);
@@ -144,6 +147,22 @@ public class MenuUI extends Group
 						}
 						
 						playerInfoUI.togglePlayerInfoScreen(); // actually open the player info screen
+					}	
+				});
+				tabs.add(PlayerUIBtn).size(32f);
+			}
+			
+			//Logout Button
+			{
+				ButtonStyle style = skin.get(ButtonStyle.class);
+				PlayerUIBtn = new Button(style);
+				PlayerUIBtn.add(new Label("L", skin));
+				PlayerUIBtn.addListener(new ChangeListener(){
+					@Override
+					public void changed(ChangeEvent event, Actor actor)
+					{	
+						ScreenBasic screen = Screens.LOGIN_SCREEN.getScreen();
+					
 					}	
 				});
 				tabs.add(PlayerUIBtn).size(32f);
