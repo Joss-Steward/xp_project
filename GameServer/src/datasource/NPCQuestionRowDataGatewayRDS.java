@@ -35,7 +35,7 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 			stmt.close();
 
 			stmt = new ClosingPreparedStatement(connection,
-					"Create TABLE NPCQuestions (questionID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questionStatement VARCHAR(80), answer VARCHAR(80), startDate DATE, endDate DATE)");
+					"Create TABLE NPCQuestions (questionID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questionStatement VARCHAR(256), answer VARCHAR(80), startDate DATE, endDate DATE)");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -99,6 +99,8 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 			result.next();
 			this.questionStatement = result.getString("questionStatement");
 			this.answer = result.getString("answer");
+			this.startDate = result.getDate("startDate");
+			this.endDate = result.getDate("endDate");
 		} catch (SQLException e)
 		{
 			throw new DatabaseException("Couldn't find an NPC Question with ID "

@@ -52,6 +52,9 @@ public abstract class NPCQuestionRowDataGatewayTest extends DatabaseTest
 		gateway = findGateway(NPCQuestionsForTest.ONE.getQuestionID());
 		assertEquals(question.getQ(), gateway.getQuestionStatement());
 		assertEquals(question.getA(), gateway.getAnswer());
+		
+		assertEquals(question.getStartDate(), gateway.getStartDate());
+		assertEquals(question.getEndDate(), gateway.getEndDate());
 	}
 
 	/**
