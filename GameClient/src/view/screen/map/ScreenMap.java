@@ -448,6 +448,7 @@ public class ScreenMap extends ScreenBasic
 				}
 				if (keycode == Keys.P) //Key to open the player screen
 				{
+					System.out.println("WORKS 1");
 					if (stage.getKeyboardFocus() == null)
 					{
 						menuArea.getPlayerUIBtn().toggle();

@@ -42,10 +42,12 @@ public class MenuUI extends Group
 	private Button QuestAdventureBtn;
 	private Button PlayerUIBtn;
 	private Button HighScoreBtn;
+	private Button LogoutBtn;
 	
 	private HighScoreUI highScoreUI;
 	private QuestUI qaScreen;
 	private PlayerInfoUI playerInfoUI;
+	
 
 	/**
 	 * Create a new chat ui that displays at the bottom of the screen
@@ -136,6 +138,7 @@ public class MenuUI extends Group
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
 					{
+						System.out.println("WORKS 2");
 						if(qaScreen.isQAScreenShowing()) //Toggle the QA screen if it is already open
 						{
 							toggleQAButton();
@@ -143,6 +146,7 @@ public class MenuUI extends Group
 						
 						if(highScoreUI.isHighScoreScreenShowing()) //Toggle the HS screen if it is already open
 						{
+							
 							toggleHSButton();
 						}
 						
@@ -155,17 +159,18 @@ public class MenuUI extends Group
 			//Logout Button
 			{
 				ButtonStyle style = skin.get(ButtonStyle.class);
-				PlayerUIBtn = new Button(style);
-				PlayerUIBtn.add(new Label("L", skin));
-				PlayerUIBtn.addListener(new ChangeListener(){
+				LogoutBtn = new Button(style);
+				LogoutBtn.add(new Label("L", skin));
+				LogoutBtn.addListener(new ChangeListener(){
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
 					{	
+						
 						ScreenBasic screen = Screens.LOGIN_SCREEN.getScreen();
 					
 					}	
 				});
-				tabs.add(PlayerUIBtn).size(32f);
+				tabs.add(LogoutBtn).size(32f);
 			}
 		}
 				
