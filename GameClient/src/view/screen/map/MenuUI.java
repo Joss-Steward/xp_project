@@ -12,6 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 
+import communication.ConnectionManager;
+import runners.GameLibGDX;
+import view.screen.ScreenBasic;
+import view.screen.Screens;
 import view.screen.SkinPicker;
 import view.screen.highscore.HighScoreUI;
 import view.screen.playerinfo.PlayerInfoUI;
@@ -38,10 +42,12 @@ public class MenuUI extends Group
 	private Button QuestAdventureBtn;
 	private Button PlayerUIBtn;
 	private Button HighScoreBtn;
+	private Button LogoutBtn;
 	
 	private HighScoreUI highScoreUI;
 	private QuestUI qaScreen;
 	private PlayerInfoUI playerInfoUI;
+	
 
 	/**
 	 * Create a new chat ui that displays at the bottom of the screen
@@ -81,16 +87,16 @@ public class MenuUI extends Group
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
 					{
-						if(highScoreUI.isHighScoreScreenShowing())
+						if(highScoreUI.isHighScoreScreenShowing()) //Toggle the HS screen if it is open
 						{
 							toggleHSButton();
 						}
 						
-						if(playerInfoUI.isPlayerInfoScreenShowing())
+						if(playerInfoUI.isPlayerInfoScreenShowing()) //Toggle the Player info screen if it is open
 						{
 							togglePlayerUIButton();
 						}
-						qaScreen.toggleQAScreenVisible();
+						qaScreen.toggleQAScreenVisible(); //Toggle the QA screen
 						
 					}
 
@@ -107,24 +113,23 @@ public class MenuUI extends Group
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
 					{
-						if(qaScreen.isQAScreenShowing())
+						if(qaScreen.isQAScreenShowing()) //Toggle the Q/A screen if it is already open
 						{
-							toggleQAButton();
+							toggleQAButton(); 
 						}
 						
-						if(playerInfoUI.isPlayerInfoScreenShowing())
+						if(playerInfoUI.isPlayerInfoScreenShowing()) //Toggle the player Info screen if it is already open
 						{
 							togglePlayerUIButton();
 						}
-						highScoreUI.toggleHSScreenVisible();
+						highScoreUI.toggleHSScreenVisible(); //Toggle the HS screen
 					}	
 				});
 				tabs.add(HighScoreBtn).size(32f);
 			
 			}
 			
-			
-			//Player UI
+			//Player UI Button
 			{
 				ButtonStyle style = skin.get(ButtonStyle.class);
 				PlayerUIBtn = new Button(style);
@@ -133,20 +138,39 @@ public class MenuUI extends Group
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
 					{
-						if(qaScreen.isQAScreenShowing())
+						System.out.println("WORKS 2");
+						if(qaScreen.isQAScreenShowing()) //Toggle the QA screen if it is already open
 						{
 							toggleQAButton();
 						}
 						
-						if(highScoreUI.isHighScoreScreenShowing())
+						if(highScoreUI.isHighScoreScreenShowing()) //Toggle the HS screen if it is already open
 						{
+							
 							toggleHSButton();
 						}
 						
-						playerInfoUI.togglePlayerInfoScreen();
+						playerInfoUI.togglePlayerInfoScreen(); // actually open the player info screen
 					}	
 				});
 				tabs.add(PlayerUIBtn).size(32f);
+			}
+			
+			//Logout Button
+			{
+				ButtonStyle style = skin.get(ButtonStyle.class);
+				LogoutBtn = new Button(style);
+				LogoutBtn.add(new Label("L", skin));
+				LogoutBtn.addListener(new ChangeListener(){
+					@Override
+					public void changed(ChangeEvent event, Actor actor)
+					{	
+						
+						ScreenBasic screen = Screens.LOGIN_SCREEN.getScreen();
+					
+					}	
+				});
+				tabs.add(LogoutBtn).size(32f);
 			}
 		}
 				
