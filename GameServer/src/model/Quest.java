@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import data.AdventureRecord;
 import data.Position;
@@ -25,7 +26,10 @@ public class Quest
 	private int adventuresForFulfillment;
 	private QuestCompletionActionType completionActionType;
 	private QuestCompletionActionParameter completionActionParameter;
-
+	private Date startDate;
+	private Date endDate;
+	
+	
 	/**
 	 * Creates a Quest Object
 	 * 
@@ -50,23 +54,29 @@ public class Quest
 	 *            the type of action to do on completing a quest
 	 * @param completionActionParameter
 	 *            parameter for the action type
+	 * @param startDate 
+	 *            The first day the quest is available
+	 * @param endDate 
+	 *            The last day the quest is available
 	 */
 
 	public Quest(int id, String title, String desc, String map, Position pos,
 			ArrayList<AdventureRecord> adventures, int experiencePointsGained,
 			int adventuresForFulfillment, QuestCompletionActionType completionActionType,
-			QuestCompletionActionParameter completionActionParameter)
+			QuestCompletionActionParameter completionActionParameter, Date startDate, Date endDate)
 	{
 		this.questID = id;
 		this.title = title;
 		this.description = desc;
-		this.mapName = map;
+		this.mapName = map; 
 		this.position = pos;
 		this.adventures = adventures;
 		this.experiencePointsGained = experiencePointsGained;
 		this.adventuresForFulfillment = adventuresForFulfillment;
 		this.completionActionType = completionActionType;
 		this.completionActionParameter = completionActionParameter;
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 
 	/**
@@ -214,6 +224,22 @@ public class Quest
 	{
 		return title;
 	}
+	
+	/**
+	 * @return The first day the quest is available
+	 */
+	public Date getStartDate()
+    {
+        return startDate;
+    }
+	
+	/**
+	 * @return The end day the quest is available
+	 */
+	public Date getEndDate()
+    {
+        return endDate;
+    }
 
 	/**
 	 * Sets the quests adventure list

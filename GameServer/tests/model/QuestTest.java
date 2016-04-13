@@ -3,6 +3,8 @@ package model;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import model.Quest;
 
@@ -40,7 +42,8 @@ public class QuestTest
 		Position pos = new Position(33, 44);
 
 		Quest q = new Quest(245, "TITLE!!!!", "I am a description", "HappyZone", pos, adventures,
-				42, 13, QuestCompletionActionType.NO_ACTION, null);
+				42, 13, QuestCompletionActionType.NO_ACTION, null, new GregorianCalendar(2015, Calendar.MARCH, 21).getTime(),
+				new GregorianCalendar(9999, Calendar.MARCH, 21).getTime());
 
 		assertEquals(245, q.getQuestID());
 		assertEquals("TITLE!!!!", q.getTitle());
@@ -70,6 +73,9 @@ public class QuestTest
 						+ a.getAdventureDescription());
 			}
 		}
+		
+		assertEquals(q.getStartDate(), new GregorianCalendar(2015, Calendar.MARCH, 21).getTime());
+		assertEquals(q.getEndDate(), new GregorianCalendar(9999, Calendar.MARCH, 21).getTime());
 	}
 
 	/**
@@ -78,7 +84,7 @@ public class QuestTest
 	@Test
 	public void testSetters()
 	{
-		Quest q = new Quest(-1, null, null, null, null, null, 42, 45, null, null);
+		Quest q = new Quest(-1, null, null, null, null, null, 42, 45, null, null, null, null);
 		ArrayList<AdventureRecord> adventures = new ArrayList<AdventureRecord>();
 		adventures.add(new AdventureRecord(5, 42, "Merlin Zone", 4,
 				AdventureCompletionType.CHAT, new CriteriaString("Henry")));

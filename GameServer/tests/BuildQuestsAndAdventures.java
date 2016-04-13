@@ -80,7 +80,8 @@ public class BuildQuestsAndAdventures
 			new QuestRowDataGatewayRDS(quest.getQuestID(), quest.getQuestTitle(),
 					quest.getQuestDescription(), quest.getMapName(), quest.getPosition(),
 					quest.getExperienceGained(), quest.getAdventuresForFulfillment(),
-					quest.getCompletionActionType(), quest.getCompletionActionParameter());
+					quest.getCompletionActionType(), quest.getCompletionActionParameter(),
+					quest.getStartDate(), quest.getEndDate());
 			;
 		}
 	}
