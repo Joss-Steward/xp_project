@@ -73,6 +73,10 @@ public enum QuestStatesForTest
      * 
      */
     PLAYER19_QUEST7(19, 7, QuestStateEnum.AVAILABLE, false),
+    /**
+     * 
+     */
+    PLAYER19_QUEST8(19, 8, QuestStateEnum.EXPIRED, false),
 	/**
 	 * Newbie should have the first quest already triggered
 	 */

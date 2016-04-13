@@ -81,6 +81,18 @@ public enum AdventuresForTest
 	 * 
 	 */
 	QUEST6_ADVENTURE_2(2, "Quest 6: Adventure 2: MOVE!!!!", 6, 1, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(PlayersForTest.HERSH.getPosition().getRow()+2,PlayersForTest.HERSH.getPosition().getColumn()))),
+	/**
+     * 
+     */
+	QUEST7_ADVENTURE_1(1, "Quest 7: Adventure 1: MOVE!!!!", 7, 1, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(PlayersForTest.HERSH.getPosition().getRow()+1,PlayersForTest.HERSH.getPosition().getColumn()))),
+	/**
+    * 
+    */
+	QUEST7_ADVENTURE_2(2, "Quest 7: Adventure 2: MOVE!!!!", 7, 1, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(PlayersForTest.HERSH.getPosition().getRow()+2,PlayersForTest.HERSH.getPosition().getColumn()))),
+	/**
+    * 
+    */
+	QUEST8_ADVENTURE_1(1, "Quest 8: Adventure 1: I'm dead", 8, 1, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(PlayersForTest.HERSH.getPosition().getRow()+2,PlayersForTest.HERSH.getPosition().getColumn()))),
 
 	
 	

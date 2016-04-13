@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 
 import data.AdventureStateEnum;
+import data.QuestStateEnum;
 
 /**
  * Stores the adventure for the GameClient which encapsulates the AdventureState
@@ -25,6 +26,7 @@ public class ClientPlayerAdventure implements Serializable
 	private boolean needingNotification;
 	private boolean realLifeAdventure;
 	private String witnessTitle;
+	private QuestStateEnum questState;
 
 	/**
 	 * Basic constructor for ClientPlayerAdventure
@@ -47,10 +49,12 @@ public class ClientPlayerAdventure implements Serializable
 	 * @param witnessTitle
 	 *            if this is a real life adventure, the title of the person who
 	 *            can witness completion
+	 * @param qs
+	 *             the state of the quest that the adventure belongs to
 	 */
 	public ClientPlayerAdventure(int adventureID, String adventureDescription,
 			int adventureXP, AdventureStateEnum adventureState,
-			boolean needingNotification, boolean realLifeAdventure, String witnessTitle)
+			boolean needingNotification, boolean realLifeAdventure, String witnessTitle, QuestStateEnum qs)
 	{
 		this.adventureID = adventureID;
 		this.adventureXP = adventureXP;
@@ -59,6 +63,7 @@ public class ClientPlayerAdventure implements Serializable
 		this.needingNotification = needingNotification;
 		this.realLifeAdventure = realLifeAdventure;
 		this.witnessTitle = witnessTitle;
+		this.questState = qs;
 	}
 
 	/**
@@ -207,6 +212,14 @@ public class ClientPlayerAdventure implements Serializable
 	public String getWitnessTitle()
 	{
 		return witnessTitle;
+	}
+	
+	/**
+	 * @return the state of the quest that the adventure belongs to
+	 */
+	public QuestStateEnum getQuestState()
+	{
+	    return questState; 
 	}
 
 }

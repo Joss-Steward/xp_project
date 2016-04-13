@@ -79,6 +79,9 @@ public class QuestTable extends ScrollPane
 		case FINISHED:
 			l.setColor(Color.GREEN);
 			break;
+		case EXPIRED:
+            l.setColor(Color.GRAY);
+            break;
 		default:
 			l.setColor(Color.WHITE);
 			break;

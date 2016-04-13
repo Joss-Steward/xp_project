@@ -22,6 +22,7 @@ import communication.messages.PlayerJoinedMessage;
 import communication.packers.MapFileMessagePacker;
 import data.AdventureRecord;
 import data.AdventureStateRecord;
+import data.QuestStateEnum;
 import data.QuestStateRecord;
 import datasource.AdventureStateTableDataGateway;
 import datasource.AdventureStateTableDataGatewayMock;
@@ -131,9 +132,12 @@ public class LoginSuccessSequenceTest extends SequenceTest
 					adv.getAdventureID());
 
 			cpq.addAdventure(new ClientPlayerAdventure(adv.getAdventureID(),
-					adventureRecord.getAdventureDescription(), adventureRecord
-							.getExperiencePointsGained(), adv.getState(), adv
-							.isNeedingNotification(), adventureRecord.isRealLifeAdventure(), adventureRecord.getCompletionCriteria().toString()));
+					adventureRecord.getAdventureDescription()
+					, adventureRecord.getExperiencePointsGained()
+					, adv.getState(), adv.isNeedingNotification()
+					, adventureRecord.isRealLifeAdventure()
+					, adventureRecord.getCompletionCriteria().toString()
+					, QuestStateEnum.AVAILABLE));
 
 		}
 		return cpq;
