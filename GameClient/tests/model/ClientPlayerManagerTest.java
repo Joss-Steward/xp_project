@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import data.Crew;
+import data.Major;
 import data.Position;
 
 /**
@@ -59,21 +60,22 @@ public class ClientPlayerManagerTest
 	{
 		Position pos = new Position(1, 2);
 		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
-		pm.initializePlayer(1, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER);
+		pm.initializePlayer(1, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER, Major.COMPUTER_ENGINEERING);
 		ClientPlayer player = pm.getPlayerFromID(1);
 		assertEquals("Player 1", player.getName() );
 		assertEquals("Player 1 Type", player.getAppearanceType());
 		assertEquals(pos, player.getPosition());
 		assertEquals(Crew.NULL_POINTER, player.getCrew());
+		assertEquals(Major.COMPUTER_ENGINEERING, player.getMajor());
 		
 		//triangulate
-		pm.initializePlayer(2, "Player 2", "Player 2 Type", new Position(2,3), Crew.OFF_BY_ONE);
+		pm.initializePlayer(2, "Player 2", "Player 2 Type", new Position(2,3), Crew.OFF_BY_ONE, Major.COMPUTER_SCIENCE);
 		player = pm.getPlayerFromID(2);
 		assertEquals("Player 2", player.getName() );
 		assertEquals("Player 2 Type", player.getAppearanceType());
 		assertEquals(new Position(2,3), player.getPosition());
 		assertEquals(Crew.OFF_BY_ONE, player.getCrew());;
-		
+		assertEquals(Major.COMPUTER_SCIENCE, player.getMajor());
 	}
 
 	/**
@@ -157,12 +159,12 @@ public class ClientPlayerManagerTest
 		Position pos = new Position(1, 2);
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(
-				1, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER, false);
+				1, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER, Major.COMPUTER_ENGINEERING, false);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerConnectedToAreaServerReport.class);
 		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
-		pm.initializePlayer(1, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER);
+		pm.initializePlayer(1, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER, Major.COMPUTER_ENGINEERING);
 
 		EasyMock.verify(obs);
 	}

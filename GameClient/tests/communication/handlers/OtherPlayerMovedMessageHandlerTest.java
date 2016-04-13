@@ -69,7 +69,7 @@ public class OtherPlayerMovedMessageHandlerTest
 				PlayersForTest.MERLIN.getPlayerName(),
 				PlayersForTest.MERLIN.getAppearanceType(),
 				PlayersForTest.MERLIN.getPosition(),
-				PlayersForTest.MERLIN.getCrew());
+				PlayersForTest.MERLIN.getCrew(), PlayersForTest.MERLIN.getMajor());
 		Position p = new Position(1, 1);
 		OtherPlayerMovedMessage msg = new OtherPlayerMovedMessage(
 				PlayersForTest.MATT.getPlayerID(), p);

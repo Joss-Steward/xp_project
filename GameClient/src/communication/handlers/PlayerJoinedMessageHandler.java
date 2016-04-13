@@ -30,7 +30,8 @@ public class PlayerJoinedMessageHandler extends MessageHandler
 				playerJoinedMessage.getPlayerID(), playerJoinedMessage.getPlayerName(),
 				playerJoinedMessage.getAppearanceType(),
 				playerJoinedMessage.getPosition(),
-				playerJoinedMessage.getCrew());
+				playerJoinedMessage.getCrew(),
+				playerJoinedMessage.getMajor());
 		ClientModelFacade.getSingleton().queueCommand(cmd);
 	}
 

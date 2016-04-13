@@ -1,6 +1,7 @@
 package model;
 
 import data.Crew;
+import data.Major;
 import data.Position;
 
 /**
@@ -21,6 +22,8 @@ public class CommandInitializePlayer extends Command
 	private Position position;
 
 	private Crew crew;
+	
+	private Major major;
 
 	/**
 	 * For now, we just know his name
@@ -35,15 +38,18 @@ public class CommandInitializePlayer extends Command
 	 *            The position of this player
 	 * @param crew
 	 *            the crew to which this player belongs
+	 * @param major 
+	 * 			  the major to which this player belongs
 	 */
 	public CommandInitializePlayer(int playerID, String playerName,
-			String appearanceType, Position position, Crew crew)
+			String appearanceType, Position position, Crew crew, Major major)
 	{
 		this.playerID = playerID;
 		this.playerName = playerName;
 		this.appearanceType = appearanceType;
 		this.position = position;
 		this.crew = crew;
+		this.major = major;
 	}
 
 	/**
@@ -53,7 +59,7 @@ public class CommandInitializePlayer extends Command
 	protected boolean execute()
 	{
 		ClientPlayerManager.getSingleton().initializePlayer(playerID, playerName,
-				appearanceType, position, crew);
+				appearanceType, position, crew, major);
 		return true;
 	}
 
@@ -95,6 +101,14 @@ public class CommandInitializePlayer extends Command
 	public Position getPosition()
 	{
 		return position;
+	}
+	
+	/**
+	 * @return the major of the player
+	 */
+	public Major getMajor()
+	{
+		return major;
 	}
 
 }
