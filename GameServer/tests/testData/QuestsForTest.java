@@ -68,7 +68,7 @@ public enum QuestsForTest
      * 
      */
     INVALID_QUEST(7, "t", "Quest 7", new GameLocation("current.tmx",
-            new Position(4, 15)), 4, 2, QuestCompletionActionType.NO_ACTION, null, new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(), 
+            new Position(4, 16)), 4, 2, QuestCompletionActionType.NO_ACTION, null, new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(), 
             new GregorianCalendar(2015, Calendar.MARCH, 21).getTime()),
 
 	/**
