@@ -7,6 +7,7 @@ import java.util.Observable;
 import com.badlogic.gdx.utils.IntMap;
 
 import data.Crew;
+import data.Major;
 import data.Position;
 import model.QualifiedObservableConnector;
 import model.reports.LoginFailedReport;
@@ -159,10 +160,12 @@ public class ClientPlayerManager extends Observable
 	 *            The position of this player
 	 * @param crew
 	 *            The crew to which this player belongs
+	 * @param major of the player
+	 * 
 	 * @return Player The player updated
 	 */
 	public ClientPlayer initializePlayer(int playerID, String playerName,
-			String appearanceType, Position position, Crew crew)
+			String appearanceType, Position position, Crew crew, Major major)
 	{
 		ClientPlayer player = this.getPlayerFromID(playerID);
 		if (player == null)
@@ -176,13 +179,14 @@ public class ClientPlayerManager extends Observable
 			isThisClientsPlayer = playerID == thisClientsPlayer.getID();
 		}
 		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(
-				playerID, playerName, appearanceType, position, crew, isThisClientsPlayer);
+				playerID, playerName, appearanceType, position, crew, major, isThisClientsPlayer);
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 
 		player.setName(playerName);
 		player.setAppearanceType(appearanceType);
 		player.setPosition(position);
 		player.setCrew(crew);
+		player.setMajor(major);
 
 		return player;
 	}

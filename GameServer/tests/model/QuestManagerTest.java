@@ -457,7 +457,7 @@ public class QuestManagerTest extends DatabaseTest
 	}
 
 	/**
-	 * Make sure quest is triggered within player
+	 * Make sure quest is triggered within player when quest is available
 	 * 
 	 * @throws IllegalAdventureChangeException
 	 *             thrown if changing to a wrong state
@@ -489,6 +489,40 @@ public class QuestManagerTest extends DatabaseTest
 								QuestStatesForTest.PLAYER7_QUEST2.getQuestID())
 						.getStateValue());
 	}
+	
+	/**
+     * Make sure quest is not triggered within player when quest is not available
+     * 
+     * @throws IllegalAdventureChangeException
+     *             thrown if changing to a wrong state
+     * @throws IllegalQuestChangeException
+     *             thrown if illegal state change
+     * @throws DatabaseException
+     *             the state changed illegally
+     */
+    @Test
+    public void testPlayerCantTriggersQuest() throws IllegalAdventureChangeException,
+            IllegalQuestChangeException, DatabaseException
+    {
+        Player p = playerManager.addPlayer(19);
+        assertEquals(
+                QuestStateEnum.AVAILABLE,
+                QuestManager
+                        .getSingleton()
+                        .getQuestStateByID(p.getPlayerID(),
+                                QuestStatesForTest.PLAYER19_QUEST7.getQuestID())
+                        .getStateValue());
+
+        QuestManager.getSingleton().triggerQuest(19,
+                QuestStatesForTest.PLAYER19_QUEST7.getQuestID());
+        assertEquals(
+                QuestStateEnum.AVAILABLE,
+                QuestManager
+                        .getSingleton()
+                        .getQuestStateByID(p.getPlayerID(),
+                                QuestStatesForTest.PLAYER19_QUEST7.getQuestID())
+                        .getStateValue());
+    }
 
 	/**
 	 * When a player moves to the right place, we should trigger the quest

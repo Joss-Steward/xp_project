@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import data.Crew;
+import data.Major;
 import data.Position;
 
 /**
@@ -41,7 +42,7 @@ public class CommandInitializePlayerTest
 	{
 		Position pos = new Position(1, 2);
 		CommandInitializePlayer cmd = new CommandInitializePlayer(4, "Henry",
-				"Appearance", pos, Crew.NULL_POINTER);
+				"Appearance", pos, Crew.NULL_POINTER, Major.COMPUTER_SCIENCE);
 		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
 		assertNull(pm.getPlayerFromID(4));
 		assertTrue(cmd.execute());
@@ -50,6 +51,7 @@ public class CommandInitializePlayerTest
 		assertEquals("Henry", p.getName());
 		assertEquals(pos, p.getPosition());
 		assertEquals(Crew.NULL_POINTER, p.getCrew());
+		assertEquals(Major.COMPUTER_SCIENCE, p.getMajor());
 	}
 
 	/**
@@ -63,17 +65,18 @@ public class CommandInitializePlayerTest
 
 		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
 		ClientPlayer p = ClientPlayerManager.getSingleton().initializePlayer(4, "4", "4",
-				pos, Crew.OFF_BY_ONE);
+				pos, Crew.OFF_BY_ONE, Major.COMPUTER_ENGINEERING);
 		assertNotNull(pm.getPlayerFromID(4));
 
 		CommandInitializePlayer cmd = new CommandInitializePlayer(4, "Henry",
-				"Appearance", pos, Crew.NULL_POINTER);
+				"Appearance", pos, Crew.NULL_POINTER, Major.COMPUTER_ENGINEERING);
 		assertTrue(cmd.execute());
 		p = pm.getPlayerFromID(4);
 		assertEquals(4, p.getID());
 		assertEquals("Henry", p.getName());
 		assertEquals(pos, p.getPosition());
 		assertEquals(Crew.NULL_POINTER, p.getCrew());
+		assertEquals(Major.COMPUTER_ENGINEERING, p.getMajor());
 	}
 
 	/**
@@ -90,7 +93,7 @@ public class CommandInitializePlayerTest
 	{
 		Position pos = new Position(1, 2);
 		CommandInitializePlayer cmd = new CommandInitializePlayer(4, "Henry",
-				"Apperance", pos, Crew.OUT_OF_BOUNDS);
+				"Apperance", pos, Crew.OUT_OF_BOUNDS, Major.COMPUTER_ENGINEERING);
 		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
 		pm.initiateLogin("not", "needed");
 		ClientPlayer p = pm.finishLogin(4);
@@ -101,6 +104,7 @@ public class CommandInitializePlayerTest
 		assertEquals("Henry", p.getName());
 		assertEquals(pos, p.getPosition());
 		assertEquals(Crew.OUT_OF_BOUNDS, p.getCrew());
+		assertEquals(Major.COMPUTER_ENGINEERING, p.getMajor());
 	}
 
 }

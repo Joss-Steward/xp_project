@@ -213,7 +213,8 @@ public class ClientPlayer extends Observable
 	/**
 	 * @return the major of the player
 	 */
-	public Major getMajor() {
+	public Major getMajor()
+	{
 		return major;
 	}
 

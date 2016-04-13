@@ -30,7 +30,11 @@ public enum QuestStateEnum
 	/**
 	 * The player has completed all of the adventures within this quest
 	 */
-	FINISHED("is complete"), ;
+	FINISHED("is complete"), 
+	/**
+	 * The player ran out of time to complete the quest
+	 */
+	EXPIRED("is expired"),;
 
 	private String description;
 

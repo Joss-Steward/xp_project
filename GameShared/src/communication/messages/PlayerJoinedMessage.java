@@ -3,6 +3,7 @@ package communication.messages;
 import java.io.Serializable;
 
 import data.Crew;
+import data.Major;
 import data.Position;
 
 /**
@@ -25,6 +26,11 @@ public class PlayerJoinedMessage implements Message, Serializable
 	private String appearanceType;
 	private Position position;
 	private Crew crew;
+	private Major major;
+
+	
+
+
 
 	/**
 	 * @param playerID
@@ -37,23 +43,47 @@ public class PlayerJoinedMessage implements Message, Serializable
 	 *            the way the player should be drawn on the screen
 	 * @param crew
 	 *            the crew to which this player belongs
+	 * @param major of the player
 	 */
 	public PlayerJoinedMessage(int playerID, String playerName, String appearanceType,
-			Position position, Crew crew)
+			Position position, Crew crew, Major major)
 	{
 		this.playerID = playerID;
 		this.playerName = playerName;
 		this.appearanceType = appearanceType;
 		this.position = position;
 		this.crew = crew;
+		this.major = major;
 	}
+
+
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((appearanceType == null) ? 0 : appearanceType.hashCode());
+		result = prime * result + ((crew == null) ? 0 : crew.hashCode());
+		result = prime * result + ((major == null) ? 0 : major.hashCode());
+		result = prime * result + playerID;
+		result = prime * result
+				+ ((playerName == null) ? 0 : playerName.hashCode());
+		result = prime * result
+				+ ((position == null) ? 0 : position.hashCode());
+		return result;
+	}
+
+
 
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj)
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -61,28 +91,31 @@ public class PlayerJoinedMessage implements Message, Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		PlayerJoinedMessage other = (PlayerJoinedMessage) obj;
-		if (appearanceType == null)
-		{
+		if (appearanceType == null) {
 			if (other.appearanceType != null)
 				return false;
 		} else if (!appearanceType.equals(other.appearanceType))
 			return false;
+		if (crew != other.crew)
+			return false;
+		if (major != other.major)
+			return false;
 		if (playerID != other.playerID)
 			return false;
-		if (playerName == null)
-		{
+		if (playerName == null) {
 			if (other.playerName != null)
 				return false;
 		} else if (!playerName.equals(other.playerName))
 			return false;
-		if (position == null)
-		{
+		if (position == null) {
 			if (other.position != null)
 				return false;
 		} else if (!position.equals(other.position))
 			return false;
 		return true;
 	}
+
+
 
 	/**
 	 * Get the appearance type that shows how this player wants to be displayed
@@ -130,21 +163,6 @@ public class PlayerJoinedMessage implements Message, Serializable
 		return position;
 	}
 
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((appearanceType == null) ? 0 : appearanceType.hashCode());
-		result = prime * result + playerID;
-		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
-		result = prime * result + ((position == null) ? 0 : position.hashCode());
-		return result;
-	}
 
 	/**
 	 * 
@@ -153,5 +171,13 @@ public class PlayerJoinedMessage implements Message, Serializable
 	public String toString()
 	{
 		return "PlayerJoined Message: playerName = " + playerName;
+	}
+	
+	/**
+	 * @return the major
+	 */
+	public Major getMajor()
+	{
+		return major;
 	}
 }

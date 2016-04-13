@@ -41,6 +41,7 @@ public class PlayerInfoTable extends ScrollPane
 	{
 		String name = player.getName();
 		String crew = player.getCrew().name();
+		String major = player.getMajor().name();
 		int exp = player.getExperiencePoints();
 		int know = player.getKnowledgePoints();
 		int level = player.getLevelRecord().getLevelUpPoints();
@@ -60,6 +61,15 @@ public class PlayerInfoTable extends ScrollPane
 		labelGroup = new Table();
 		label1 = new Label("Crew: ", SkinPicker.getSkinPicker().getCrewSkin());
 		label2 = new Label(crew, SkinPicker.getSkinPicker().getCrewSkin());
+		label2.setColor(Color.GREEN);
+		labelGroup.add(label1).left();
+		labelGroup.add(label2).left();
+		table.add(labelGroup).left().row();
+
+		//MAJOR
+		labelGroup = new Table();
+		label1 = new Label("Major: ", SkinPicker.getSkinPicker().getCrewSkin());
+		label2 = new Label(major, SkinPicker.getSkinPicker().getCrewSkin());
 		label2.setColor(Color.GREEN);
 		labelGroup.add(label1).left();
 		labelGroup.add(label2).left();

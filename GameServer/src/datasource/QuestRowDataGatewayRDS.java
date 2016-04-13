@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import data.Position;
 import data.QuestCompletionActionParameter;
@@ -41,7 +42,7 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 					connection,
 					"Create TABLE Quests (questID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questTitle VARCHAR(40),questDescription VARCHAR(200), triggerMapName VARCHAR(80),"
 							+ " triggerRow INT, triggerColumn INT, experiencePointsGained INT, adventuresForFulfillment INT, "
-							+ " completionActionType INT, completionActionParameter BLOB)");
+							+ " completionActionType INT, completionActionParameter BLOB, startDate DATE, endDate DATE)");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -59,6 +60,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	private int adventuresForFulfillment;
 	private QuestCompletionActionParameter completionActionParameter;
 	private QuestCompletionActionType completionActionType;
+    private Date startDate;
+    private Date endDate;
 
 	/**
 	 * Finder constructor
@@ -90,6 +93,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 					.getInt("completionActionType"));
 			completionActionParameter = extractCompletionActionParameter(result,
 					completionActionType);
+			this.startDate = result.getDate("startDate");
+			this.endDate = result.getDate("endDate");
 		} catch (SQLException e)
 		{
 			throw new DatabaseException("Couldn't find a quest with ID " + questID, e);
@@ -148,13 +153,18 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	 * @param completionActionParameter
 	 *            data describing the details of the action taken when this
 	 *            quest is completed
+	 * @param startDate 
+	 *             the first day the quest is available
+	 * @param endDate
+	 *             the last day the quest is available
 	 * @throws DatabaseException
 	 *             if we can't talk to the RDS
 	 */
 	public QuestRowDataGatewayRDS(int questID, String questTitle,
 			String questDescription, String triggerMapName, Position triggerPosition,
 			int experiencePointsGained, int adventuresForFulfillment,
-			QuestCompletionActionType completionActionType, QuestCompletionActionParameter completionActionParameter)
+			QuestCompletionActionType completionActionType, QuestCompletionActionParameter completionActionParameter,
+			Date startDate, Date endDate)
 			throws DatabaseException
 	{
 		this.questID = questID;
@@ -165,7 +175,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 					connection,
 					"Insert INTO Quests SET questID = ?, questTitle = ?,questDescription = ?, triggerMapname = ?, triggerRow = ?, triggerColumn = ?, "
 							+ "experiencePointsGained = ?, adventuresForFulfillment = ?,"
-							+ " completionActionType = ?, completionActionParameter = ?");
+							+ " completionActionType = ?, completionActionParameter = ?,"
+							+ " startDate = ?, endDate = ?");
 			stmt.setInt(1, questID);
 			stmt.setString(2, questTitle);
 			stmt.setString(3, questDescription);
@@ -176,6 +187,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 			stmt.setInt(8, adventuresForFulfillment);
 			stmt.setInt(9, completionActionType.getID());
 			stmt.setObject(10, completionActionParameter);
+			stmt.setDate(11, new java.sql.Date(startDate.getTime()));
+			stmt.setDate(12, new java.sql.Date(endDate.getTime()));
 			stmt.executeUpdate();
 
 			this.questDescription = questDescription;
@@ -318,5 +331,23 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	{
 		return questTitle;
 	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getStartDate()
+	 */
+    @Override
+    public Date getStartDate()
+    {
+        return startDate;
+    }
+
+    /**
+     * @see datasource.QuestRowDataGateway#getEndDate()
+     */
+    @Override
+    public Date getEndDate()
+    {
+        return endDate;
+    }
 
 }
