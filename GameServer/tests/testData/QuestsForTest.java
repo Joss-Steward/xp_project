@@ -64,6 +64,12 @@ public enum QuestsForTest
 			new Position(2, 32)), 1, 1, QuestCompletionActionType.TELEPORT,
 			new GameLocation("sortingRoom.tmx", new Position(3, 3)), new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(), 
 		    new GregorianCalendar(9999, Calendar.MARCH, 21).getTime()),
+    /**
+     * 
+     */
+    INVALID_QUEST(7, "t", "Quest 7", new GameLocation("current.tmx",
+            new Position(4, 15)), 4, 2, QuestCompletionActionType.NO_ACTION, null, new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(), 
+            new GregorianCalendar(2015, Calendar.MARCH, 21).getTime()),
 
 	/**
 	 * The real opening quest
@@ -84,6 +90,7 @@ public enum QuestsForTest
 			"current.tmx", new Position(4, 13)), 2, 5,
 			QuestCompletionActionType.NO_ACTION, null , new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(), 
 		    new GregorianCalendar(9999, Calendar.MARCH, 21).getTime());
+	
 
 	private int questID;
 	private String questTitle;

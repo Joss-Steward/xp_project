@@ -112,7 +112,9 @@ public class QuestManager implements QualifiedObserver
 				questGateway.getExperiencePointsGained(),
 				questGateway.getAdventuresForFulfillment(),
 				questGateway.getCompletionActionType(),
-				questGateway.getCompletionActionParameter());
+				questGateway.getCompletionActionParameter(),
+				questGateway.getStartDate(),
+				questGateway.getEndDate());
 
 		return quest;
 	}
@@ -179,13 +181,15 @@ public class QuestManager implements QualifiedObserver
 		QuestState qs = getQuestStateByID(playerID, questID);
 		Calendar.getInstance().set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
 		Date now = Calendar.getInstance().getTime();
+		Quest q = getQuest(questID);
+		
 		if ((qs != null) && (qs.getStateValue() != QuestStateEnum.TRIGGERED))
 		{
-//		    if(now.after(qs.getStartDate()))
-//		    {
+		    if(now.after(q.getStartDate()) && now.before(q.getEndDate()))
+		    {
 		        qs.trigger();
 		
-//		    }
+		    }
 		}
 	}
 
