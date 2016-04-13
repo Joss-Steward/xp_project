@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import communication.messages.QuestStateChangeMessage;
 import data.Crew;
+import data.Major;
 import data.Position;
 import data.QuestStateEnum;
 
@@ -57,7 +58,7 @@ public class CommandQuestStateChangeTest
 
 		Position pos = new Position(1, 2);
 		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
-		pm.initializePlayer(playerID, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER);
+		pm.initializePlayer(playerID, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER, Major.COMPUTER_ENGINEERING);
 
 		pm.initiateLogin("john", "pw");
 		pm.finishLogin(playerID);
