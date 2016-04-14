@@ -51,7 +51,6 @@ public class MenuUI extends Group
 	private HighScoreUI highScoreUI;
 	private QuestUI qaScreen;
 	private PlayerInfoUI playerInfoUI;
-	private Stage stage;
 	
 
 	/**
@@ -62,12 +61,11 @@ public class MenuUI extends Group
 	 * @param playerInfoUI player uI to edit
 	 * @param stage 
 	 */
-	public MenuUI(HighScoreUI highScoreUI, QuestUI qaScreen2, ChatUi chatArea, PlayerInfoUI playerInfoUI, Stage stage)
+	public MenuUI(HighScoreUI highScoreUI, QuestUI qaScreen2, ChatUi chatArea, PlayerInfoUI playerInfoUI)
 	{
 		this.highScoreUI = highScoreUI;
 		this.qaScreen = qaScreen2;
 		this.playerInfoUI = playerInfoUI;
-		this.stage = stage;
 		setupUI();
 	}
 	
@@ -172,7 +170,7 @@ public class MenuUI extends Group
 					public void changed(ChangeEvent event, Actor actor)
 					{	
 						//ScreenBasic screen = Screens.LOGIN_SCREEN.getScreen();
-						new TwoChoiceScreenPopup("Are you sure you want to logout?", "Logout", "Cancel", stage , new LogoutNotificationBehavior(), null);
+						new TwoChoiceScreenPopup("Are you sure you want to logout?", "Logout", "Cancel", getStage() , new LogoutNotificationBehavior(), null);
 					}	
 				});
 				tabs.add(LogoutBtn).size(32f);
