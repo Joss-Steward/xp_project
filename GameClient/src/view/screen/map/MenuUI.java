@@ -5,20 +5,17 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 
-import communication.ConnectionManager;
-import runners.GameLibGDX;
-import view.screen.ScreenBasic;
-import view.screen.Screens;
 import view.screen.SkinPicker;
 import view.screen.highscore.HighScoreUI;
 import view.screen.playerinfo.PlayerInfoUI;
+import view.screen.popup.LogoutNotificationBehavior;
+import view.screen.popup.TwoChoiceScreenPopup;
 import view.screen.qas.QuestUI;
 
 /**
@@ -138,7 +135,6 @@ public class MenuUI extends Group
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
 					{
-						System.out.println("WORKS 2");
 						if(qaScreen.isQAScreenShowing()) //Toggle the QA screen if it is already open
 						{
 							toggleQAButton();
@@ -160,17 +156,16 @@ public class MenuUI extends Group
 			{
 				ButtonStyle style = skin.get(ButtonStyle.class);
 				LogoutBtn = new Button(style);
-				LogoutBtn.add(new Label("L", skin));
+				LogoutBtn.add(new Label("Logout", skin));
 				LogoutBtn.addListener(new ChangeListener(){
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
 					{	
-						
-						ScreenBasic screen = Screens.LOGIN_SCREEN.getScreen();
-					
+						//ScreenBasic screen = Screens.LOGIN_SCREEN.getScreen();
+						new TwoChoiceScreenPopup("Are you sure you want to logout?", "Logout", "Cancel", getStage() , new LogoutNotificationBehavior(), null);
 					}	
 				});
-				tabs.add(LogoutBtn).size(32f);
+				tabs.add(LogoutBtn).size(80f, 32f);
 			}
 		}
 				

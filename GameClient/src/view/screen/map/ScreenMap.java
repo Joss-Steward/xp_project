@@ -448,7 +448,6 @@ public class ScreenMap extends ScreenBasic
 				}
 				if (keycode == Keys.P) //Key to open the player screen
 				{
-					System.out.println("WORKS 1");
 					if (stage.getKeyboardFocus() == null)
 					{
 						menuArea.getPlayerUIBtn().toggle();
@@ -554,7 +553,7 @@ public class ScreenMap extends ScreenBasic
 		qaScreen = new QuestUI();
 		highScoreUI = new HighScoreUI();
 		playerInfoUI = new PlayerInfoUI();
-		menuArea = new MenuUI(highScoreUI, qaScreen, chatArea, playerInfoUI); 
+		menuArea = new MenuUI(highScoreUI, qaScreen, chatArea, playerInfoUI, stage); 
 		stage.addActor(highScoreUI);
 		stage.addActor(playerInfoUI);
 		stage.addActor(qaScreen);
