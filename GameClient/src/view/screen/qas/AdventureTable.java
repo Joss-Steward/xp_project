@@ -83,7 +83,12 @@ public class AdventureTable extends ScrollPane
 	 */
 	private Label createAdventureLabel(ClientPlayerAdventure cpa)
 	{
-		Label l = new Label(cpa.getAdventureDescription(), SkinPicker.getSkinPicker().getCrewSkin());
+		Label l;
+		if(cpa.isRealLifeAdventure()) {
+			l = new Label("[P] " + cpa.getAdventureDescription(), SkinPicker.getSkinPicker().getCrewSkin());
+		} else {
+			l = new Label(cpa.getAdventureDescription(), SkinPicker.getSkinPicker().getCrewSkin());
+		}
 		l.setWrap(true);
 	    if (cpa.getAdventureState() == AdventureStateEnum.COMPLETED)
 		{
@@ -91,12 +96,11 @@ public class AdventureTable extends ScrollPane
 		}
 	    else if (cpa.getQuestState() == QuestStateEnum.EXPIRED)
         {
-            l.setColor(Color.GRAY);
+            l.setColor(Color.BLACK);
         }
 		else
 		{
-			Color red = Color.valueOf("fa6b7b");
-			l.setColor(red);
+			l.setColor(Color.valueOf("e6853c"));
 		}
 		return l;
 	}

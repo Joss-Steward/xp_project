@@ -35,17 +35,22 @@ public class LegendTable extends ScrollPane
 			table = new Table();
 			table.left().top();
 			
-			Label label = new Label("Completion Legend:", SkinPicker.getSkinPicker().getCrewSkin());
+			Label label = new Label("Legend:", SkinPicker.getSkinPicker().getCrewSkin());
 			table.add(label).right().padRight(10f);
 			label = new Label("Completed", SkinPicker.getSkinPicker().getCrewSkin());
 			label.setColor(Color.GREEN);
 			table.add(label).right().padRight(10f);
-			label = new Label("Started", SkinPicker.getSkinPicker().getCrewSkin());
+			label = new Label("Fulfilled", SkinPicker.getSkinPicker().getCrewSkin());
 			label.setColor(Color.YELLOW);
 			table.add(label).right().padRight(10f);
-			label = new Label("Not Started", SkinPicker.getSkinPicker().getCrewSkin());
-			Color red = Color.valueOf("fa6b7b");
-			label.setColor(red);
+			label = new Label("In Progress", SkinPicker.getSkinPicker().getCrewSkin());
+			label.setColor(Color.valueOf("e6853c"));
+			table.add(label).right().padRight(10f);
+			label = new Label("Expired", SkinPicker.getSkinPicker().getCrewSkin());
+			label.setColor(Color.BLACK);
+			table.add(label).right().padRight(10f);
+			label = new Label("[P] Printable", SkinPicker.getSkinPicker().getCrewSkin());
+			label.setColor(Color.WHITE);
 			table.add(label).right().padRight(10f);
 			
 		}
