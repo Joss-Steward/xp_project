@@ -1,6 +1,9 @@
 package view.screen;
 import java.util.HashMap;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
@@ -53,6 +56,26 @@ public class SkinPicker
 			String color = crewColorMap.getOrDefault(crew, crewColorMap.get("DEFAULT"));	
 			skin = new Skin(Gdx.files.internal("data/ui/screenskins/ui-" + color + ".json"));
 		}
+		return skin;
+	}
+	
+	/**
+	 * @return the default skin color
+	 */
+	public Skin getDefaultSkin()
+	{
+		String color = crewColorMap.get("DEFAULT");
+		return new Skin(Gdx.files.internal("data/ui/screenskins/ui-" + color + ".json"));
+	}
+	
+	/**
+	 * @return the skin for the chat message box
+	 */
+	public Skin getChatMessageBoxSkin()
+	{
+		String color = crewColorMap.get("DEFAULT");
+		Skin skin  = new Skin(Gdx.files.internal("data/ui/screenskins/ui-" + color + ".json"));
+		new Label("", skin).getStyle().fontColor.set(Color.BLACK);
 		return skin;
 	}
 }
