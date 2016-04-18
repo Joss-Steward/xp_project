@@ -315,18 +315,20 @@ public class QuestManager implements QualifiedObserver
 		ArrayList<AdventureRecord> questAdventures = new ArrayList<AdventureRecord>();
 		try
 		{
-			for (AdventureRecord AR : QuestManager.getSingleton().getQuest(questID)
-					.getAdventures())
+
+			for (AdventureRecord AR : getQuest(questID).getAdventures())
 			{
-				AdventureStateEnum currentAdventuresState = QuestManager
-						.getSingleton()
-						.getAdventureStateByID(reportPlayerID, questID,
-								AR.getAdventureID()).getState();
-				if (AdventureStateEnum.TRIGGERED == currentAdventuresState)
+				AdventureState adventureState = getAdventureStateByID(reportPlayerID,
+						questID, AR.getAdventureID());
+				if (adventureState != null)
 				{
-					if (AR.getCompletionType() == AdventureCompletionType.CHAT)
+					AdventureStateEnum currentAdventuresState = adventureState.getState();
+					if (AdventureStateEnum.TRIGGERED == currentAdventuresState)
 					{
-						questAdventures.add(AR);
+						if (AR.getCompletionType() == AdventureCompletionType.CHAT)
+						{
+							questAdventures.add(AR);
+						}
 					}
 				}
 			}
@@ -388,12 +390,13 @@ public class QuestManager implements QualifiedObserver
 					myReport.getNewPosition(), myReport.getMapName());
 			for (AdventureRecord a : adventures)
 			{
-				AdventureState adventureStateByID = getAdventureStateByID(myReport.getPlayerID(), a.getQuestID(),
-						a.getAdventureID());
-				if (adventureStateByID != null && adventureStateByID.getState() != AdventureStateEnum.COMPLETED)
+				AdventureState adventureStateByID = getAdventureStateByID(
+						myReport.getPlayerID(), a.getQuestID(), a.getAdventureID());
+				if (adventureStateByID != null
+						&& adventureStateByID.getState() != AdventureStateEnum.COMPLETED)
 				{
 					this.completeAdventure(myReport.getPlayerID(), a.getQuestID(),
-							a.getAdventureID());					
+							a.getAdventureID());
 				}
 			}
 
