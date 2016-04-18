@@ -3,25 +3,18 @@ package view.screen.map;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 
-import communication.ConnectionManager;
-import runners.GameLibGDX;
-import view.screen.ScreenBasic;
-import view.screen.Screens;
 import view.screen.SkinPicker;
 import view.screen.highscore.HighScoreUI;
 import view.screen.playerinfo.PlayerInfoUI;
 import view.screen.popup.LogoutNotificationBehavior;
-import view.screen.popup.ScreenPopUp;
 import view.screen.popup.TwoChoiceScreenPopup;
 import view.screen.qas.QuestUI;
 
@@ -51,7 +44,6 @@ public class MenuUI extends Group
 	private HighScoreUI highScoreUI;
 	private QuestUI qaScreen;
 	private PlayerInfoUI playerInfoUI;
-	private Stage stage;
 	
 
 	/**
@@ -60,14 +52,12 @@ public class MenuUI extends Group
 	 * @param highScoreUI score UI to edit
 	 * @param chatArea chat UI to edit
 	 * @param playerInfoUI player uI to edit
-	 * @param stage 
 	 */
-	public MenuUI(HighScoreUI highScoreUI, QuestUI qaScreen2, ChatUi chatArea, PlayerInfoUI playerInfoUI, Stage stage)
+	public MenuUI(HighScoreUI highScoreUI, QuestUI qaScreen2, ChatUi chatArea, PlayerInfoUI playerInfoUI)
 	{
 		this.highScoreUI = highScoreUI;
 		this.qaScreen = qaScreen2;
 		this.playerInfoUI = playerInfoUI;
-		this.stage = stage;
 		setupUI();
 	}
 	
@@ -172,7 +162,7 @@ public class MenuUI extends Group
 					public void changed(ChangeEvent event, Actor actor)
 					{	
 						//ScreenBasic screen = Screens.LOGIN_SCREEN.getScreen();
-						new TwoChoiceScreenPopup("Are you sure you want to logout?", "Logout", "Cancel", stage , new LogoutNotificationBehavior(), null);
+						new TwoChoiceScreenPopup("Are you sure you want to logout?", "Logout", "Cancel", getStage() , new LogoutNotificationBehavior(), null);
 					}	
 				});
 				tabs.add(LogoutBtn).size(80f, 32f);
