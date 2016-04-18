@@ -832,4 +832,38 @@ public class QuestManagerTest extends DatabaseTest
 				hersh.getExperiencePoints());
 	}
 
+	/**
+     * A finished quest should be marked as finished not expired
+     * @throws IllegalQuestChangeException thrown if changing to a wrong state
+     * @throws DatabaseException shouldn't 
+     */
+    @Test
+    public void testGetQuestStateByIDWhenQuestStateIsExpired() throws IllegalQuestChangeException, DatabaseException 
+    {
+        playerManager.addPlayer(19);
+        QuestState quest =  QuestManager.getSingleton().getQuestStateByID(19, 8);
+        assertEquals(8, quest.getID());
+    }
+    
+    /**
+     * 
+     */
+    @Test
+    public void testGetQuestStateByIDWhenQuestStateIsAvilable()
+    {
+        playerManager.addPlayer(19);
+        QuestState quest =  QuestManager.getSingleton().getQuestStateByID(19, 7);
+        assertEquals(7, quest.getID());
+    }
+    
+    /**
+     * 
+     */
+    @Test
+    public void testGetQuestStateByIDWhenQuestStateIsCompleted()
+    {
+        playerManager.addPlayer(19);
+        QuestState quest = QuestManager.getSingleton().getQuestStateByID(19,9);
+        assertEquals(9, quest.getID());
+    }
 }
