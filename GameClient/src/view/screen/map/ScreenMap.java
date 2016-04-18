@@ -553,7 +553,7 @@ public class ScreenMap extends ScreenBasic
 		qaScreen = new QuestUI();
 		highScoreUI = new HighScoreUI();
 		playerInfoUI = new PlayerInfoUI();
-		menuArea = new MenuUI(highScoreUI, qaScreen, chatArea, playerInfoUI, stage); 
+		menuArea = new MenuUI(highScoreUI, qaScreen, chatArea, playerInfoUI);
 		stage.addActor(highScoreUI);
 		stage.addActor(playerInfoUI);
 		stage.addActor(qaScreen);
