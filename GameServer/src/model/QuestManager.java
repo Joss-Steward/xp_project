@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import model.reports.KeyInputRecievedReport;
+import model.reports.KnowledgePointsChangeReport;
 import model.reports.PlayerLeaveReport;
 import model.reports.PlayerMovedReport;
 import model.reports.SendChatMessageReport;
@@ -13,6 +14,7 @@ import data.AdventureCompletionType;
 import data.AdventureRecord;
 import data.AdventureStateEnum;
 import data.CriteriaString;
+import data.PointsCompleted;
 import data.Position;
 import data.QuestStateEnum;
 import datasource.AdventureTableDataGateway;
@@ -212,6 +214,9 @@ public class QuestManager implements QualifiedObserver
 		} else if (report.getClass() == SendChatMessageReport.class)
 		{
 			handlePlayerChatCriteriaCompletion(report);
+		} else if (report.getClass() == KnowledgePointsChangeReport.class)
+		{
+			handleKnowledgePointsChanged(report);
 		}
 	}
 
@@ -265,6 +270,47 @@ public class QuestManager implements QualifiedObserver
 		}
 
 	}
+	
+	/**
+	 * 
+	 * @param report
+	 */
+	private void handleKnowledgePointsChanged(QualifiedObservableReport report)
+	{
+		QuestManager qm = QuestManager.getSingleton();
+		KnowledgePointsChangeReport myReport = (KnowledgePointsChangeReport) report;
+		PlayerManager PM = PlayerManager.getSingleton();
+		
+		ArrayList<QuestState> questStates = qm.getQuestList(myReport.getPlayerID());
+		
+		ArrayList<AdventureRecord> adventuresForCompletion = new ArrayList<AdventureRecord>();
+		
+		for (QuestState q : questStates)
+		{
+			adventuresForCompletion.addAll(getAdventuresByKnowledgePoints(q.getID(), q.getPlayerID()));
+		}
+		
+		try
+		{
+			if (adventuresForCompletion.size() != 0)
+			{
+				for(AdventureRecord a : adventuresForCompletion)
+				{
+					PointsCompleted criteria = (PointsCompleted) a.getCompletionCriteria();
+
+					if (criteria.getPoints() <= PM.getPlayerFromID(myReport.getPlayerID()).getQuizScore())
+					{
+						qm.completeAdventure(myReport.getPlayerID(), a.getQuestID(), a.getAdventureID());
+					}
+				}
+			}	
+		}
+		
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * checks if adventure meets chat criteria and completes it if it does
@@ -300,6 +346,41 @@ public class QuestManager implements QualifiedObserver
 		}
 	}
 
+
+	/**
+	 * @param questID the id of the quest we're checking
+	 * @param reportPlayerId the player's id
+	 * @return the list of points adventures ready for completion
+	 */
+	public ArrayList<AdventureRecord> getAdventuresByKnowledgePoints(int questID, int reportPlayerId)
+	{
+		ArrayList<AdventureRecord> questAdventures = new ArrayList<AdventureRecord>();
+		ArrayList<AdventureRecord> pointsAdventures = new ArrayList<AdventureRecord>();
+		
+		try 
+		{
+			questAdventures = QuestManager.getSingleton().getQuest(questID).getAdventures();
+			if (questAdventures.size() != 0)
+			{
+				for (AdventureRecord A : questAdventures)
+				{					
+					AdventureState currentState = QuestManager.getSingleton().getAdventureStateByID(reportPlayerId, questID, A.getAdventureID());
+					
+					if (A.getCompletionType() == AdventureCompletionType.POINTS && currentState != null && currentState.getState() == AdventureStateEnum.TRIGGERED)
+					{
+						pointsAdventures.add(A);
+					}
+				}				
+			}			
+		}
+		
+		catch (DatabaseException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return pointsAdventures;		
+	}
 	/**
 	 * returns all AdventureRecords which the type is chat
 	 * 

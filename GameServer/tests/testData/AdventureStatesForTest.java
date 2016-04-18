@@ -127,6 +127,12 @@ public enum AdventureStatesForTest
 	 * 
 	 */
 	PLAYER8_QUEST2_ADV2(8, 2, 2, AdventureStateEnum.TRIGGERED , false),
+	/**
+	 * 
+	 */
+	PLAYER8_QUEST8_ADV2(8, 8, 2, AdventureStateEnum.TRIGGERED, false),
+	
+	
 	// ----------------------------------------------------------------------------------------//
 	// NEWBIE's onramping adventures //
 	// ----------------------------------------------------------------------------------------//

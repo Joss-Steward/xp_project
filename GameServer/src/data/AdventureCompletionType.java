@@ -21,6 +21,11 @@ public enum AdventureCompletionType
 	 * 
 	 */
 	CHAT(CriteriaString.class),
+	
+	/**
+	 * 
+	 */
+	POINTS(PointsCompleted.class),
 
 	/**
 	 * 
