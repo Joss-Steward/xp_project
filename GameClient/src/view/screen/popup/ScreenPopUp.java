@@ -53,8 +53,9 @@ public class ScreenPopUp extends Group
 			label.setFontScale(1.0f);
 			label.setAlignment(Align.center);
 			this.getContentTable().add(label).width(400).row();
-//			text(description);
+			//text(description);
 			button("OK");
+			
 			
 			this.behavior = behavior;
 		}		

@@ -166,7 +166,7 @@ public class MenuUI extends Group
 			{
 				ButtonStyle style = skin.get(ButtonStyle.class);
 				LogoutBtn = new Button(style);
-				LogoutBtn.add(new Label("L", skin));
+				LogoutBtn.add(new Label("Logout", skin));
 				LogoutBtn.addListener(new ChangeListener(){
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
@@ -175,7 +175,7 @@ public class MenuUI extends Group
 						new TwoChoiceScreenPopup("Are you sure you want to logout?", "Logout", "Cancel", stage , new LogoutNotificationBehavior(), null);
 					}	
 				});
-				tabs.add(LogoutBtn).size(32f);
+				tabs.add(LogoutBtn).size(80f, 32f);
 			}
 		}
 				
