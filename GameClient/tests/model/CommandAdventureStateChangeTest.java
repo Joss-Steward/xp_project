@@ -15,6 +15,7 @@ import org.junit.Test;
 import communication.messages.AdventureStateChangeMessage;
 import data.AdventureStateEnum;
 import data.Crew;
+import data.Major;
 import data.Position;
 import data.QuestStateEnum;
 
@@ -63,12 +64,12 @@ public class CommandAdventureStateChangeTest
 		ClientPlayerQuest q = new ClientPlayerQuest(questID, "questtitle", "silly quest",
 				QuestStateEnum.TRIGGERED, 3, 0, false);
 		ClientPlayerAdventure a1 = new ClientPlayerAdventure(adventureID, "adventure 1",
-				3, AdventureStateEnum.TRIGGERED, false, true, "Comrade");
+				3, AdventureStateEnum.TRIGGERED, false, true, "Comrade", QuestStateEnum.AVAILABLE);
 		q.getAdventureList().add(a1);
 
 		Position pos = new Position(1, 2);
 		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
-		pm.initializePlayer(playerID, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER);
+		pm.initializePlayer(playerID, "Player 1", "Player 1 Type", pos, Crew.NULL_POINTER, Major.COMPUTER_ENGINEERING);
 
 		pm.initiateLogin("john", "pw");
 		pm.finishLogin(playerID);

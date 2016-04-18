@@ -341,10 +341,10 @@ public class QuestManagerTest extends DatabaseTest
 	public void testAddQuests() throws IllegalQuestChangeException
 	{
 		Player p = playerManager.addPlayer(1);
-		QuestState quest = new QuestState(1, 15, QuestStateEnum.AVAILABLE, false);
+		QuestState quest = new QuestState(1, 1, QuestStateEnum.AVAILABLE, false);
 		QuestManager.getSingleton().addQuestState(p.getPlayerID(), quest);
 
-		QuestState questStateByID = QuestManager.getSingleton().getQuestStateByID(1, 15);
+		QuestState questStateByID = QuestManager.getSingleton().getQuestStateByID(1, 1);
 		assertEquals(QuestStateEnum.AVAILABLE, questStateByID.getStateValue());
 		assertFalse(questStateByID.isNeedingNotification());
 
@@ -457,7 +457,7 @@ public class QuestManagerTest extends DatabaseTest
 	}
 
 	/**
-	 * Make sure quest is triggered within player
+	 * Make sure quest is triggered within player when quest is available
 	 * 
 	 * @throws IllegalAdventureChangeException
 	 *             thrown if changing to a wrong state

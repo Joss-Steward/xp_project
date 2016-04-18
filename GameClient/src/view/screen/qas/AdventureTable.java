@@ -1,10 +1,13 @@
 package view.screen.qas;
 import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+
 import data.AdventureStateEnum;
+import data.QuestStateEnum;
 import model.ClientPlayerAdventure;
 import view.screen.SkinPicker;
 /**
@@ -80,16 +83,24 @@ public class AdventureTable extends ScrollPane
 	 */
 	private Label createAdventureLabel(ClientPlayerAdventure cpa)
 	{
-		Label l = new Label(cpa.getAdventureDescription(), SkinPicker.getSkinPicker().getCrewSkin());
+		Label l;
+		if(cpa.isRealLifeAdventure()) {
+			l = new Label("[P] " + cpa.getAdventureDescription(), SkinPicker.getSkinPicker().getCrewSkin());
+		} else {
+			l = new Label(cpa.getAdventureDescription(), SkinPicker.getSkinPicker().getCrewSkin());
+		}
 		l.setWrap(true);
-		if (cpa.getAdventureState() == AdventureStateEnum.COMPLETED)
+	    if (cpa.getAdventureState() == AdventureStateEnum.COMPLETED)
 		{
 			l.setColor(Color.GREEN);
 		}
+	    else if (cpa.getQuestState() == QuestStateEnum.EXPIRED)
+        {
+            l.setColor(Color.BLACK);
+        }
 		else
 		{
-			Color red = Color.valueOf("fa6b7b");
-			l.setColor(red);
+			l.setColor(Color.valueOf("e6853c"));
 		}
 		return l;
 	}

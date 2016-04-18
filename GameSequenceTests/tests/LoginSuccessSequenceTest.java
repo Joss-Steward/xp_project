@@ -22,6 +22,7 @@ import communication.messages.PlayerJoinedMessage;
 import communication.packers.MapFileMessagePacker;
 import data.AdventureRecord;
 import data.AdventureStateRecord;
+import data.QuestStateEnum;
 import data.QuestStateRecord;
 import datasource.AdventureStateTableDataGateway;
 import datasource.AdventureStateTableDataGatewayMock;
@@ -61,13 +62,13 @@ public class LoginSuccessSequenceTest extends SequenceTest
 							PlayersForTest.MERLIN.getPlayerName(),
 							PlayersForTest.MERLIN.getAppearanceType(),
 							PlayersForTest.MERLIN.getPosition(),
-							PlayersForTest.MERLIN.getCrew()), true),
+							PlayersForTest.MERLIN.getCrew(), PlayersForTest.MERLIN.getMajor()), true),
 			new MessageFlow(ServerType.AREA_SERVER, ServerType.OTHER_CLIENT,
 					new PlayerJoinedMessage(PlayersForTest.MERLIN.getPlayerID(),
 							PlayersForTest.MERLIN.getPlayerName(),
 							PlayersForTest.MERLIN.getAppearanceType(),
 							PlayersForTest.MERLIN.getPosition(),
-							PlayersForTest.MERLIN.getCrew()), true),
+							PlayersForTest.MERLIN.getCrew(), PlayersForTest.MERLIN.getMajor()), true),
 			new MessageFlow(ServerType.AREA_SERVER, ServerType.THIS_PLAYER_CLIENT,
 					new MapFileMessage(MapFileMessagePacker.DIRECTORY_PREFIX
 							+ ServersForTest.CURRENT.getMapName()), true),
@@ -131,9 +132,12 @@ public class LoginSuccessSequenceTest extends SequenceTest
 					adv.getAdventureID());
 
 			cpq.addAdventure(new ClientPlayerAdventure(adv.getAdventureID(),
-					adventureRecord.getAdventureDescription(), adventureRecord
-							.getExperiencePointsGained(), adv.getState(), adv
-							.isNeedingNotification(), adventureRecord.isRealLifeAdventure(), adventureRecord.getCompletionCriteria().toString()));
+					adventureRecord.getAdventureDescription()
+					, adventureRecord.getExperiencePointsGained()
+					, adv.getState(), adv.isNeedingNotification()
+					, adventureRecord.isRealLifeAdventure()
+					, adventureRecord.getCompletionCriteria().toString()
+					, QuestStateEnum.AVAILABLE));
 
 		}
 		return cpq;

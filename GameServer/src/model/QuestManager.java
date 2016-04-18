@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import model.reports.KeyInputRecievedReport;
@@ -110,7 +112,9 @@ public class QuestManager implements QualifiedObserver
 				questGateway.getExperiencePointsGained(),
 				questGateway.getAdventuresForFulfillment(),
 				questGateway.getCompletionActionType(),
-				questGateway.getCompletionActionParameter());
+				questGateway.getCompletionActionParameter(),
+				questGateway.getStartDate(),
+				questGateway.getEndDate());
 
 		return quest;
 	}
@@ -175,9 +179,17 @@ public class QuestManager implements QualifiedObserver
 			DatabaseException
 	{
 		QuestState qs = getQuestStateByID(playerID, questID);
+		Calendar.getInstance().set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+		Date now = Calendar.getInstance().getTime();
+		Quest q = getQuest(questID);
+		
 		if ((qs != null) && (qs.getStateValue() != QuestStateEnum.TRIGGERED))
 		{
-			qs.trigger();
+		    if(now.after(q.getStartDate()) && now.before(q.getEndDate()))
+		    {
+		        qs.trigger();
+		
+		    }
 		}
 	}
 

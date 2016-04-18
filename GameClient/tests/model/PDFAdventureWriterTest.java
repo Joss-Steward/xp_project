@@ -35,15 +35,15 @@ public class PDFAdventureWriterTest
 		ClientPlayerAdventure a = new ClientPlayerAdventure(
 				1,
 				"Find the Department Secretary of the Computer Science & Engineering Department and introduce yourself",
-				5, AdventureStateEnum.TRIGGERED, true, true, "The gods");
+				5, AdventureStateEnum.TRIGGERED, true, true, "The gods", QuestStateEnum.AVAILABLE);
 		ClientPlayerQuest q = new ClientPlayerQuest(1, "First Quest", "Test Quest 1",
 				QuestStateEnum.FINISHED, 1, 2, true);
 		q.addAdventure(a);
 		a = new ClientPlayerAdventure(1, "Another adventure's description which should not be in the PDF", 10,
-				AdventureStateEnum.TRIGGERED, true, false, null);
+				AdventureStateEnum.TRIGGERED, true, false, null, QuestStateEnum.AVAILABLE);
 		q.addAdventure(a);
 		a = new ClientPlayerAdventure(1, "Another adventure's description", 10,
-				AdventureStateEnum.TRIGGERED, true, true, "Csar");
+				AdventureStateEnum.TRIGGERED, true, true, "Csar", QuestStateEnum.AVAILABLE);
 		q.addAdventure(a);
 		cp.addQuest(q);
 	}

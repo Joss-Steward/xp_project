@@ -70,8 +70,7 @@ public class QuestTable extends ScrollPane
 		switch (cpq.getQuestState()) 
 		{
 		case TRIGGERED:
-			Color red = Color.valueOf("fa6b7b");
-			l.setColor(red);
+			l.setColor(Color.valueOf("e6853c"));
 			break;
 		case FULFILLED:
 			l.setColor(Color.YELLOW);
@@ -79,6 +78,9 @@ public class QuestTable extends ScrollPane
 		case FINISHED:
 			l.setColor(Color.GREEN);
 			break;
+		case EXPIRED:
+            l.setColor(Color.DARK_GRAY);
+            break;
 		default:
 			l.setColor(Color.WHITE);
 			break;

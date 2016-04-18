@@ -1,5 +1,6 @@
 package datasource;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,13 +28,16 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		private int questID;
 		private int experiencePointsGained;
 		private int adventuresForFulfillment;
+		private Date startDate;
+		private Date endDate;
 		private QuestCompletionActionType completionActionType;
 		private QuestCompletionActionParameter completionActionParameter;
 
 		public QuestData(int questID, String questTitle, String questDescription,
 				String mapName, Position position,
 				int experiencePointsGained, int adventuresForFulfillment,
-				QuestCompletionActionType completionActionType, QuestCompletionActionParameter completionActionParam)
+				QuestCompletionActionType completionActionType, QuestCompletionActionParameter completionActionParam,
+				Date startDate, Date endDate)
 		{
 			this.questTitle = questTitle;
 			this.questDescription = questDescription;
@@ -44,6 +48,8 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 			this.adventuresForFulfillment = adventuresForFulfillment;
 			this.completionActionType = completionActionType;
 			this.completionActionParameter = completionActionParam;
+			this.startDate = startDate;
+			this.endDate = endDate;
 		}
 
 		public int getAdventuresForFulfillment()
@@ -90,6 +96,16 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		{
 			return questTitle;
 		}
+		
+	    public Date getStartDate()
+	    {
+	        return startDate;
+	    }
+	        
+	    public Date getEndDate()
+	    {
+	        return endDate;
+	    }
 
 	}
 
@@ -138,6 +154,8 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 	private QuestCompletionActionType completionActionType;
 	private QuestCompletionActionParameter completionActionParameter;
 	private String questTitle;
+    private Date startDate;
+    private Date endDate;
 
 	/**
 	 * Get the row data gateway object for an existing quest
@@ -165,6 +183,8 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 			this.adventuresForFulfillment = questData.getAdventuresForFulfillment();
 			this.completionActionType = questData.getCompletionActionType();
 			this.completionActionParameter = questData.getCompletionActionParameter();
+			this.startDate = questData.getStartDate();
+			this.endDate = questData.getEndDate();
 		} else
 		{
 			throw new DatabaseException("Couldn't find quest with ID " + questID);
@@ -266,8 +286,26 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 					new QuestData(p.getQuestID(), p.getQuestTitle(),
 							p.getQuestDescription(), p.getMapName(), p.getPosition(), p.getExperienceGained(), p
 											.getAdventuresForFulfillment(),
-									p.getCompletionActionType(), p.getCompletionActionParameter()));
+									p.getCompletionActionType(), p.getCompletionActionParameter(), p.getStartDate(), p.getEndDate()));
 		}
 	}
+
+	/**
+	 * @return the first day the quest is available
+	 */
+    @Override
+    public Date getStartDate()
+    {
+        return startDate;
+    }
+
+    /**
+     * @return the last day the quest is available
+     */
+    @Override
+    public Date getEndDate()
+    {
+        return endDate;
+    }
 
 }

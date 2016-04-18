@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import data.AdventureStateEnum;
+import data.QuestStateEnum;
 
 /**
  * Tests the basic ClientPlayerAdventure class and its functionality. 
@@ -19,7 +20,7 @@ public class ClientPlayerAdventureTest
 	@Test
 	public void testClientPlayerAdventureInitializaiton() 
 	{
-		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure", 3, AdventureStateEnum.HIDDEN, false, true, "Dept chair");
+		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure", 3, AdventureStateEnum.HIDDEN, false, true, "Dept chair",QuestStateEnum.AVAILABLE);
 		assertEquals(1, a.getAdventureID());
 		assertEquals("Test Adventure", a.getAdventureDescription());
 		assertEquals(3, a.getAdventureXP());

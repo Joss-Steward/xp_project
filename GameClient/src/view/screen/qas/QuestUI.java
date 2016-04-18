@@ -1,4 +1,5 @@
 package view.screen.qas;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -38,7 +39,9 @@ public class QuestUI extends Group implements QualifiedObserver
 	private final float POS_Y = (Gdx.graphics.getHeight() - HEIGHT) / 1.1f;
 	private QuestTable questTable;
 	private AdventureTable adventureTable;
+	private LegendTable legendTable;
 	private Table container; 											//This is required to hold both the quest table and the adventure table.
+	private Table subContainer;
 	private TextButton printButton;
 	boolean qaScreenShowing;
 	private ArrayList<ClientPlayerQuest> questList;
@@ -55,6 +58,7 @@ public class QuestUI extends Group implements QualifiedObserver
 		setPosition(POS_X, POS_Y);
 		questTable = new QuestTable(questList);
 		adventureTable = new AdventureTable();
+		legendTable = new LegendTable();
 		questTable.setAdventureTable(adventureTable);  					//Set the adventure table so that when a quest is clicked it can update it.
 		
 		//Make the container
@@ -62,16 +66,23 @@ public class QuestUI extends Group implements QualifiedObserver
 		container.setFillParent(true);  								//Sets the container to the same size as the quest screen
 		container.left().top();  										//Sets the container to be at the top left of the quest screen (not the game screen).
 		
-		//Make header label
-		container.add(questTable).width(.40f * WIDTH).height(HEIGHT); 	//Add quest table and tell it how much space to take;
-		container.add(adventureTable).width(.60f * WIDTH).height(HEIGHT);
+		//
+		subContainer = new Table();
+		subContainer.add(questTable).width(.40f * WIDTH).height(.90f * HEIGHT); 	//Add quest table and tell it how much space to take;
+		subContainer.add(adventureTable).width(.60f * WIDTH).height(.90f * HEIGHT);
+		container.add(subContainer);
+		container.row();
+		subContainer = new Table();
+		subContainer.add(legendTable).width(.90f * WIDTH);
 		
 		//Make the print button
 		printButton = new TextButton("Print", SkinPicker.getSkinPicker().getCrewSkin());
+		//printButton.right();
+		subContainer.add(printButton).width(.10f * WIDTH);
 		addPrintButtonListener();
-	
+		container.add(subContainer);
+		
 		addActor(container);
-		addActor(printButton);
 		setVisible(false);
 	}
 		
