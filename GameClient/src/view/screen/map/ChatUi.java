@@ -2,18 +2,15 @@ package view.screen.map;
 import model.ClientModelFacade;
 import model.CommandChatMessageSent;
 import view.screen.SkinPicker;
-
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -148,6 +145,7 @@ public class ChatUi extends Group
 		messageBox.addListener(new InputListener(){
 			@Override
 			public boolean keyDown(InputEvent event, int keycode) {
+				System.out.println("Keycode: " + keycode);
 				if (keycode == Keys.ENTER)
 				{
 					sendMessage();
@@ -236,7 +234,6 @@ public class ChatUi extends Group
 		}
 		allHistory.add(message);	
 		Label l = new Label(message, skin);
-		l.addAction(Actions.fadeIn(.3f));
 		l.setWrap(true);
 		this.newLabels.put(l, 0f);
 		chatHistoryView.top().add(l).expandX().fillX();
