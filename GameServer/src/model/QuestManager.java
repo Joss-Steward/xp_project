@@ -61,6 +61,8 @@ public class QuestManager implements QualifiedObserver
 				KeyInputRecievedReport.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(this,
 				SendChatMessageReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(this, 
+				KnowledgePointsChangeReport.class);
 		questStates = new HashMap<Integer, ArrayList<QuestState>>();
 		if (OptionsManager.getSingleton().isTestMode())
 		{
