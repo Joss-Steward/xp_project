@@ -1,8 +1,10 @@
 package view.screen.highscore;
 import java.util.ArrayList;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Group;
+
+import view.screen.OverlayingScreen;
+
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+
 import data.PlayerScoreRecord;
 import model.ClientModelFacade;
 import model.CommandHighScoreRequest;
@@ -15,12 +17,10 @@ import model.reports.HighScoreResponseReport;
  * @author ck4124, Scott
  * @fixedby Ian Keefer and TJ Renninger
  */
-public class HighScoreUI extends Group implements QualifiedObserver
+public class HighScoreUI extends OverlayingScreen implements QualifiedObserver
 {
 	private final float WIDTH = 200f;
 	private final float HEIGHT = 300f;
-	private final float POS_X = (Gdx.graphics.getWidth() - WIDTH) / 2;
-	private final float POS_Y = (Gdx.graphics.getHeight() - HEIGHT) / 1.1f;
 	private HighScoreTable highScoreTable;
 	private boolean HS_ScreenShowing;
 	
@@ -29,13 +29,12 @@ public class HighScoreUI extends Group implements QualifiedObserver
 	 */
 	public HighScoreUI()
 	{
+		super();
 		setUpListening();
-		setSize(WIDTH, HEIGHT);
-		setPosition(POS_X, POS_Y);
+		
 		highScoreTable = new HighScoreTable();
 		highScoreTable.setFillParent(true);
-		addActor(highScoreTable);
-		setVisible(false);
+		container.addActor(highScoreTable);
 	}
 	
 	/**
@@ -95,5 +94,23 @@ public class HighScoreUI extends Group implements QualifiedObserver
 			ArrayList<PlayerScoreRecord> list = rep.getScoreList();
 			highScoreTable.updateHighScores(list);
 		}	
+	}
+
+	/**
+	 * @see view.screen.OverlayingScreen#getWidth()
+	 */
+	@Override
+	public float getWidth()
+	{
+		return WIDTH;
+	}
+
+	/**
+	 * @see view.screen.OverlayingScreen#getHeight()
+	 */
+	@Override
+	public float getHeight()
+	{
+		return HEIGHT;
 	}
 }

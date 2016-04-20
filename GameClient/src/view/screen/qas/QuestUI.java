@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
+import view.screen.OverlayingScreen;
 import view.screen.SkinPicker;
 import model.ClientModelFacade;
 import model.ClientPlayerQuest;
@@ -16,8 +17,6 @@ import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 import model.reports.QuestStateReport;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.VisibleAction;
@@ -31,16 +30,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * @author ck4124
  * @rewritten Ian Keefer and TJ Renninger
  */
-public class QuestUI extends Group implements QualifiedObserver
+public class QuestUI extends OverlayingScreen implements QualifiedObserver
 {
 	private final float WIDTH = 600f;
 	private final float HEIGHT = 300f;
-	private final float POS_X = (Gdx.graphics.getWidth() - WIDTH) / 2;
-	private final float POS_Y = (Gdx.graphics.getHeight() - HEIGHT) / 1.1f;
 	private QuestTable questTable;
 	private AdventureTable adventureTable;
 	private LegendTable legendTable;
-	private Table container; 											//This is required to hold both the quest table and the adventure table.
 	private Table subContainer;
 	private TextButton printButton;
 	boolean qaScreenShowing;
@@ -52,19 +48,14 @@ public class QuestUI extends Group implements QualifiedObserver
 	 */
 	public QuestUI()
 	{
+		super();
 		questList = new ArrayList<ClientPlayerQuest>();
 		setUpListening();
-		setSize(WIDTH, HEIGHT);
-		setPosition(POS_X, POS_Y);
+		
 		questTable = new QuestTable(questList);
 		adventureTable = new AdventureTable();
 		legendTable = new LegendTable();
 		questTable.setAdventureTable(adventureTable);  					//Set the adventure table so that when a quest is clicked it can update it.
-		
-		//Make the container
-		container = new Table();
-		container.setFillParent(true);  								//Sets the container to the same size as the quest screen
-		container.left().top();  										//Sets the container to be at the top left of the quest screen (not the game screen).
 		
 		//
 		subContainer = new Table();
@@ -81,9 +72,7 @@ public class QuestUI extends Group implements QualifiedObserver
 		subContainer.add(printButton).width(.10f * WIDTH);
 		addPrintButtonListener();
 		container.add(subContainer);
-		
-		addActor(container);
-		setVisible(false);
+
 	}
 		
 	/**
@@ -205,5 +194,23 @@ public class QuestUI extends Group implements QualifiedObserver
 			adventureTable.updateAdventures(firstQuest.getQuestDescription(), firstQuest.getAdventureList());
 			questTable.requestFoucus();
 		}
+	}
+
+	/**
+	 * @see view.screen.OverlayingScreen#getWidth()
+	 */
+	@Override
+	public float getWidth()
+	{
+		return WIDTH;
+	}
+
+	/**
+	 * @see view.screen.OverlayingScreen#getHeight()
+	 */
+	@Override
+	public float getHeight()
+	{
+		return HEIGHT;
 	}
 }
