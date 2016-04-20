@@ -142,9 +142,11 @@ public class ChatUi extends Group
 		
 		newLabels = new ObjectFloatMap<Label>();
 		
-		messageBox.addListener(new InputListener(){
+		messageBox.addListener(new InputListener()
+		{
 			@Override
-			public boolean keyDown(InputEvent event, int keycode) {
+			public boolean keyDown(InputEvent event, int keycode)
+			{
 				System.out.println("Keycode: " + keycode);
 				if (keycode == Keys.ENTER)
 				{
@@ -208,7 +210,7 @@ public class ChatUi extends Group
 		
 		messageBox.setText("");
 	}
-
+	
 	/**
 	 * Adds a new message into the chat history
 	 * @param message
@@ -218,6 +220,7 @@ public class ChatUi extends Group
 	 */
 	public void addMessage(String message, ChatType type)
 	{
+		boolean scrollToBottom = listPane.getScrollPercentY() == 1f;
 		switch (type)
 		{
 			case Zone:
@@ -237,10 +240,13 @@ public class ChatUi extends Group
 		l.setWrap(true);
 		this.newLabels.put(l, 0f);
 		chatHistoryView.top().add(l).expandX().fillX();
+		if (scrollToBottom)
+		{
+			listPane.layout();
+			listPane.setScrollPercentY(1f);
+		}
 		l.setColor(Color.WHITE);
 		chatHistoryView.row();
-	
-		listPane.setScrollPercentY(1f);
 		listPane.setScrollPercentX(0f);
 	}
 	
