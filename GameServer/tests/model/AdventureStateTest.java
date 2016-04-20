@@ -329,4 +329,46 @@ public class AdventureStateTest extends DatabaseTest
 
 		EasyMock.verify(obs);
 	}
+	
+	
+	/**
+     * Test that expired quest hidden adventures can not be triggered
+     * 
+     * @throws IllegalAdventureChangeException
+     *             thrown if changing to a wrong state
+     * @throws DatabaseException
+     *             shouldn't
+     * @throws IllegalQuestChangeException
+     *             thrown if changing to a wrong state
+     */
+    @Test(expected = IllegalAdventureChangeException.class)
+    public void testExpiredQuestHiddenAdventureNotTriggered() throws IllegalAdventureChangeException,
+            DatabaseException, IllegalQuestChangeException
+    {
+        PlayerManager.getSingleton().addPlayer(19);
+        AdventureState adventure = new AdventureState(1, AdventureStateEnum.HIDDEN, false);
+        adventure.changeState(AdventureStateEnum.TRIGGERED, false);
+        assertEquals(AdventureStateEnum.HIDDEN, adventure.getState());
+    }
+    
+    
+    /**
+     * Test that expired quest triggered adventures can not be completed
+     * 
+     * @throws IllegalAdventureChangeException
+     *             thrown if changing to a wrong state
+     * @throws DatabaseException
+     *             shouldn't
+     * @throws IllegalQuestChangeException
+     *             thrown if changing to a wrong state
+     */
+    @Test(expected = IllegalAdventureChangeException.class)
+    public void testExpiredQuestTriggeredAdventureNotComplete() throws IllegalAdventureChangeException,
+            DatabaseException, IllegalQuestChangeException
+    {
+        PlayerManager.getSingleton().addPlayer(19);
+        AdventureState adventure = new AdventureState(1, AdventureStateEnum.TRIGGERED, false);
+        adventure.complete();
+        assertEquals(AdventureStateEnum.TRIGGERED, adventure.getState());
+    }
 }

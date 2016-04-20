@@ -121,7 +121,10 @@ public enum AdventureStatesForTest
      * 
      */
     HERSH_EXPIRED(PlayersForTest.HERSH.getPlayerID(), QuestsForTest.EXPIRED_QUEST.getQuestID(), 1, AdventureStateEnum.TRIGGERED, true),
-
+    /**
+     * 
+     */
+    HERSH_QUEST_EXPIRED(PlayersForTest.HERSH.getPlayerID(), QuestsForTest.EXPIRED_QUEST.getQuestID(), 2, AdventureStateEnum.HIDDEN, true),
 	
 	/**
 	 * 

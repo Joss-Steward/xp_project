@@ -841,8 +841,9 @@ public class QuestManagerTest extends DatabaseTest
     public void testGetQuestStateByIDWhenQuestStateIsExpired() throws IllegalQuestChangeException, DatabaseException 
     {
         playerManager.addPlayer(19);
-        QuestState quest =  QuestManager.getSingleton().getQuestStateByID(19, 8);
-        assertEquals(8, quest.getID());
+        QuestState questState =  QuestManager.getSingleton().getQuestStateByID(19, 8);
+        assertEquals(8, questState.getID());
+        assertEquals(QuestStateEnum.EXPIRED, questState.getStateValue());
     }
     
     /**
@@ -852,8 +853,9 @@ public class QuestManagerTest extends DatabaseTest
     public void testGetQuestStateByIDWhenQuestStateIsAvilable()
     {
         playerManager.addPlayer(19);
-        QuestState quest =  QuestManager.getSingleton().getQuestStateByID(19, 7);
-        assertEquals(7, quest.getID());
+        QuestState questState =  QuestManager.getSingleton().getQuestStateByID(19, 7);
+        assertEquals(7, questState.getID());
+        assertEquals(QuestStateEnum.EXPIRED, questState.getStateValue());
     }
     
     /**
@@ -863,7 +865,8 @@ public class QuestManagerTest extends DatabaseTest
     public void testGetQuestStateByIDWhenQuestStateIsCompleted()
     {
         playerManager.addPlayer(19);
-        QuestState quest = QuestManager.getSingleton().getQuestStateByID(19,9);
-        assertEquals(9, quest.getID());
+        QuestState questState = QuestManager.getSingleton().getQuestStateByID(19,9);
+        assertEquals(9, questState.getID());
+        assertEquals(QuestStateEnum.FINISHED, questState.getStateValue());
     }
 }
