@@ -18,7 +18,6 @@ public class PlayerInfoUI extends OverlayingScreen implements QualifiedObserver
 	private final float WIDTH = 200f;
 	private final float HEIGHT = 300f;
 	private PlayerInfoTable playerTable;
-	private boolean PI_ScreenShowing;
 	
 	/**
 	 * sets up UI for top 10 experience points
@@ -40,38 +39,21 @@ public class PlayerInfoUI extends OverlayingScreen implements QualifiedObserver
 		cm.registerObserver(this, TimeToLevelUpDeadlineReport.class);
 	}
 	
-	/**
-	 * set visibility of Player Info
-	 * @param b sets visibility of screen
-	 */
-	public void setPlayerInfoScreenVisibility(boolean b)
-	{
-		PI_ScreenShowing = b;
-	}
 	
-	/**
-	 * @return the screen showing state
-	 */
-	public boolean isPlayerInfoScreenShowing()
-	{
-		return PI_ScreenShowing;
-	}
 	
 	/**
 	 * Toggle the invisibility of the player info screen
 	 */
 	public void togglePlayerInfoScreen()
 	{
-		if (isPlayerInfoScreenShowing())
+		if (isVisible())
 		{
-			PI_ScreenShowing = false;
 			addAction(Actions.hide());
 		} 
 		else
 		{	
 			ThisClientsPlayer player = ClientPlayerManager.getSingleton().getThisClientsPlayer();
 			playerTable.updatePlayerInfo(player);
-			PI_ScreenShowing = true;
 			addAction(Actions.show());
 		}
 	}

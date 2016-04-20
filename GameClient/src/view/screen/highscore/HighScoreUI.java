@@ -22,7 +22,6 @@ public class HighScoreUI extends OverlayingScreen implements QualifiedObserver
 	private final float WIDTH = 200f;
 	private final float HEIGHT = 300f;
 	private HighScoreTable highScoreTable;
-	private boolean HS_ScreenShowing;
 	
 	/**
 	 * sets up UI for top 10 experience points
@@ -48,41 +47,22 @@ public class HighScoreUI extends OverlayingScreen implements QualifiedObserver
 	}
 	
 	/**
-	 * set visibility of High Score Screen
-	 * @param b sets visibility of screen
-	 */
-	public void setHighScoreScreenVisibility(boolean b)
-	{
-		HS_ScreenShowing = b;
-	}
-	
-	/**
-	 * @return the screen showing state
-	 */
-	public boolean isHighScoreScreenShowing()
-	{
-		return HS_ScreenShowing;
-	}
-	
-	/**
 	 * Toggle the invisibility of the highscore list
 	 */
 	public void toggleHSScreenVisible()
 	{
-		if (isHighScoreScreenShowing())
+		if (isVisible())
 		{
-			HS_ScreenShowing = false;
 			this.addAction(Actions.hide());
 		} else
 		{	
 			CommandHighScoreRequest cmd = new CommandHighScoreRequest();
 			ClientModelFacade.getSingleton().queueCommand(cmd);
-			HS_ScreenShowing = true;
 			this.addAction(Actions.show());
 		}
 	}
 	
-	/** (Javadoc)
+	/** 
 	 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
 	 */
 	@Override

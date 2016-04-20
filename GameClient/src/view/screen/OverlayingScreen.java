@@ -13,7 +13,7 @@ public abstract class OverlayingScreen extends Group
 {
 	protected Table container;
 
-	
+
 	/**
 	 * @return the width of the overlaying screen
 	 */

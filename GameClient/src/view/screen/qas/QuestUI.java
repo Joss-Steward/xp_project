@@ -39,7 +39,6 @@ public class QuestUI extends OverlayingScreen implements QualifiedObserver
 	private LegendTable legendTable;
 	private Table subContainer;
 	private TextButton printButton;
-	boolean qaScreenShowing;
 	private ArrayList<ClientPlayerQuest> questList;
 
 	/**
@@ -141,23 +140,6 @@ public class QuestUI extends OverlayingScreen implements QualifiedObserver
 		return fileChooser;
 	}
 	
-	/**
-	 * Set the visibility of the QAScreen to the given boolean
-	 * @param b boolean given for showing
-	 */
-	public void setQAScreenVisibility(boolean b)
-	{
-		qaScreenShowing = b;
-	}
-
-	/**
-	 * Is the quest table on the screen
-	 * @return showing ; is there quests currently displaying on the screen
-	 */
-	public boolean isQAScreenShowing()
-	{
-		return qaScreenShowing;
-	}
 
 	/**
 	 * Toggle the invisibility of the quest list
@@ -165,13 +147,11 @@ public class QuestUI extends OverlayingScreen implements QualifiedObserver
 	public void toggleQAScreenVisible()
 	{
 		VisibleAction action;
-		if (isQAScreenShowing())
+		if (isVisible())
 		{
-			qaScreenShowing = false;
 			action = Actions.hide();
 		} else
 		{
-			qaScreenShowing = true;
 			action = Actions.show();
 			CommandSendQuestState cmd = new CommandSendQuestState();
 			ClientModelFacade.getSingleton().queueCommand(cmd);

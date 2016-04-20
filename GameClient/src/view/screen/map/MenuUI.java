@@ -84,12 +84,12 @@ public class MenuUI extends Group
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
 					{
-						if(highScoreUI.isHighScoreScreenShowing()) //Toggle the HS screen if it is open
+						if(highScoreUI.isVisible()) //Toggle the HS screen if it is open
 						{
 							toggleHSButton();
 						}
 						
-						if(playerInfoUI.isPlayerInfoScreenShowing()) //Toggle the Player info screen if it is open
+						if(playerInfoUI.isVisible()) //Toggle the Player info screen if it is open
 						{
 							togglePlayerUIButton();
 						}
@@ -110,12 +110,12 @@ public class MenuUI extends Group
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
 					{
-						if(qaScreen.isQAScreenShowing()) //Toggle the Q/A screen if it is already open
+						if(qaScreen.isVisible()) //Toggle the Q/A screen if it is already open
 						{
 							toggleQAButton(); 
 						}
 						
-						if(playerInfoUI.isPlayerInfoScreenShowing()) //Toggle the player Info screen if it is already open
+						if(playerInfoUI.isVisible()) //Toggle the player Info screen if it is already open
 						{
 							togglePlayerUIButton();
 						}
@@ -135,12 +135,12 @@ public class MenuUI extends Group
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
 					{
-						if(qaScreen.isQAScreenShowing()) //Toggle the QA screen if it is already open
+						if(qaScreen.isVisible()) //Toggle the QA screen if it is already open
 						{
 							toggleQAButton();
 						}
 						
-						if(highScoreUI.isHighScoreScreenShowing()) //Toggle the HS screen if it is already open
+						if(highScoreUI.isVisible()) //Toggle the HS screen if it is already open
 						{
 							
 							toggleHSButton();
