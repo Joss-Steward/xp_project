@@ -4,17 +4,33 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+/**
+ * A general framework for screens that are displayed on top of the tiled map
+ * @author Merlin
+ *
+ */
 public abstract class OverlayingScreen extends Group
 {
 	protected Table container;
 
-	public abstract float getWidth();
+	
+	/**
+	 * @return the width of the overlaying screen
+	 */
+	public abstract float getMyWidth();
 
-	public abstract float getHeight();
 
+	/**
+	 * @return the length of the overlaying screen
+	 */
+	public abstract float getMyHeight();
+
+	/**
+	 * 
+	 */
 	public OverlayingScreen()
 	{
-		setSize(getWidth(), getHeight());
+		setSize(getMyWidth(), getMyHeight());
 		setPosition(getXPosition(), getYPosition());
 		// Make the container
 		container = new Table();

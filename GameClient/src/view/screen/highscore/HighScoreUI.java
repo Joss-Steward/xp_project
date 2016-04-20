@@ -100,7 +100,7 @@ public class HighScoreUI extends OverlayingScreen implements QualifiedObserver
 	 * @see view.screen.OverlayingScreen#getWidth()
 	 */
 	@Override
-	public float getWidth()
+	public float getMyWidth()
 	{
 		return WIDTH;
 	}
@@ -109,7 +109,7 @@ public class HighScoreUI extends OverlayingScreen implements QualifiedObserver
 	 * @see view.screen.OverlayingScreen#getHeight()
 	 */
 	@Override
-	public float getHeight()
+	public float getMyHeight()
 	{
 		return HEIGHT;
 	}
