@@ -48,7 +48,7 @@ public class QuizBotBehavior extends NPCBehavior
 	{
 		String questionString = question.getQuestionStatement();
 
-		ChatManager.getSingleton().sendChatToClients(questionString, "Quiz Bot",
+		ChatManager.getSingleton().sendChatToClients(questionString, "QuizBot",
 				new Position(0, 0), ChatType.Zone);
 	}
 
