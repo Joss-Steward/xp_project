@@ -131,18 +131,15 @@ public class AdventureState
 	 */
 	public void complete() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException
 	{
-	    if(parentQuestState.getStateValue().equals( QuestStateEnum.EXPIRED))
-	    {
-    	    changeState(AdventureStateEnum.COMPLETED, true);
-    		PlayerManager.getSingleton()
-    				.getPlayerFromID(this.parentQuestState.getPlayerID())
-    				.addExperiencePoints(
-    						QuestManager.getSingleton()
-    								.getAdventure(this.parentQuestState.getID(),
-    										adventureID)
-    								.getExperiencePointsGained());
-    		this.parentQuestState.checkForFulfillmentOrFinished();
-	    }
+	    changeState(AdventureStateEnum.COMPLETED, true);
+		PlayerManager.getSingleton()
+				.getPlayerFromID(this.parentQuestState.getPlayerID())
+				.addExperiencePoints(
+						QuestManager.getSingleton()
+								.getAdventure(this.parentQuestState.getID(),
+										adventureID)
+								.getExperiencePointsGained());
+		this.parentQuestState.checkForFulfillmentOrFinished();
 	}
 
 	/**
@@ -153,7 +150,7 @@ public class AdventureState
 	 */
 	public void setParentQuest(QuestState questState)
 	{
-		this.parentQuestState = questState;
+		parentQuestState = questState;
 	}
 
 	/**
@@ -176,11 +173,10 @@ public class AdventureState
 	 */
 	protected void changeState(AdventureStateEnum state, boolean needingNotification) throws IllegalAdventureChangeException, DatabaseException, IllegalQuestChangeException 
 	{
-	    if(parentQuestState.getStateValue() == QuestStateEnum.EXPIRED && adventureState != AdventureStateEnum.COMPLETED)
+	    if(this.parentQuestState.getStateValue() == QuestStateEnum.EXPIRED && adventureState != AdventureStateEnum.COMPLETED)
 	    {
 	        adventureState = AdventureStateEnum.EXPIRED;
-	        return;
-	    }
+	    }	    
 		if((this.adventureState.equals(AdventureStateEnum.HIDDEN) && state.equals(AdventureStateEnum.TRIGGERED)) 
 				|| (this.adventureState.equals(AdventureStateEnum.TRIGGERED) && state.equals(AdventureStateEnum.COMPLETED))) 
 		{

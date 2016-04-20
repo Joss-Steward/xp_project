@@ -105,10 +105,19 @@ public class AdventureStateTest extends DatabaseTest
 	public void testTriggerNonHiddenAdventure() throws IllegalAdventureChangeException,
 			DatabaseException, IllegalQuestChangeException
 	{
-		AdventureState adventure = new AdventureState(1, AdventureStateEnum.COMPLETED,
+		AdventureState adventure = new AdventureState(1, AdventureStateEnum.TRIGGERED,
 				false);
+		
+		  questState = new QuestState(19, 8, QuestStateEnum.TRIGGERED, false);
+	        
+	       ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
+	        adventureList.add(adventure);        
+	        questState.addAdventures(adventureList);
+
+	        adventure.changeState(AdventureStateEnum.TRIGGERED, false);
+	        assertEquals(AdventureStateEnum.TRIGGERED, adventure.getState());
 		adventure.trigger();
-		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
+		assertEquals(AdventureStateEnum.TRIGGERED, adventure.getState());
 	}
 
 	/**
@@ -346,9 +355,17 @@ public class AdventureStateTest extends DatabaseTest
             DatabaseException, IllegalQuestChangeException
     {
         PlayerManager.getSingleton().addPlayer(19);
-        AdventureState adventure = new AdventureState(1, AdventureStateEnum.HIDDEN, false);
+        questState = new QuestState(19, 8, QuestStateEnum.EXPIRED, false);
+
+        AdventureState adventure = new AdventureState(1, AdventureStateEnum.HIDDEN,
+                false);
+        
+        ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
+        adventureList.add(adventure);        
+        questState.addAdventures(adventureList);
+
         adventure.changeState(AdventureStateEnum.TRIGGERED, false);
-        assertEquals(AdventureStateEnum.HIDDEN, adventure.getState());
+        assertEquals(AdventureStateEnum.EXPIRED, adventure.getState());
     }
     
     
@@ -367,8 +384,16 @@ public class AdventureStateTest extends DatabaseTest
             DatabaseException, IllegalQuestChangeException
     {
         PlayerManager.getSingleton().addPlayer(19);
-        AdventureState adventure = new AdventureState(1, AdventureStateEnum.TRIGGERED, false);
-        adventure.complete();
-        assertEquals(AdventureStateEnum.TRIGGERED, adventure.getState());
+        questState = new QuestState(19, 8, QuestStateEnum.EXPIRED, false);
+
+        AdventureState adventure = new AdventureState(1, AdventureStateEnum.TRIGGERED,
+                false);
+        
+        ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
+        adventureList.add(adventure);        
+        questState.addAdventures(adventureList);
+
+        adventure.changeState(AdventureStateEnum.TRIGGERED, false);
+        assertEquals(AdventureStateEnum.EXPIRED, adventure.getState());
     }
 }
