@@ -117,10 +117,13 @@ public class PlayerSprite extends Image implements Comparable<PlayerSprite>
 		// set the amount of time since the last movement
 		// this allows continuous animation while moving
 		lastMoved = 1f;
-
+		
 		// change the facing direction so it shows the proper sprite strip to
 		// animate
-		setFacing(Direction.getFacing(current, dest));
+		if (current.x != dest.x || current.y != dest.y)
+		{
+			setFacing(Direction.getFacing(current, dest));
+		}
 	}
 	
 	/**
