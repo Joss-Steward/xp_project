@@ -76,6 +76,13 @@ public enum QuestsForTest
     EXPIRED_QUEST(8, "t", "Quest 8", new GameLocation("current.tmx",
             new Position(4, 16)), 4, 2, QuestCompletionActionType.NO_ACTION, null, new GregorianCalendar(1970, Calendar.FEBRUARY, 11).getTime(), 
             new GregorianCalendar(2000, Calendar.MARCH, 21).getTime()),
+    
+    /**
+     * 
+     */
+    FINISHED_QUEST(9, "t", "Quest 9", new GameLocation("current.tmx", new Position(4,16)), 4, 2, 
+            QuestCompletionActionType.NO_ACTION, null, new GregorianCalendar(1970, Calendar.FEBRUARY, 11).getTime(), 
+            new GregorianCalendar(2000, Calendar.MARCH, 21).getTime()),
 
 	/**
 	 * The real opening quest

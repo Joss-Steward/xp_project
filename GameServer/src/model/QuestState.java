@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import model.QualifiedObservableConnector;
 import model.reports.QuestStateChangeReport;
@@ -175,12 +177,26 @@ public class QuestState
 	}
 
 	/**
-	 * Returns the quest's state
+	 * Returns the quest's state, if quest is not completed and after end date then its expired
 	 * 
 	 * @return questState the state of the quest for a player
 	 */
 	public QuestStateEnum getStateValue()
 	{
+	    Date now = Calendar.getInstance().getTime();
+	    Date questEndDate;
+        try
+        {
+            questEndDate = QuestManager.getSingleton().getQuest(questID).getEndDate();
+            if(questState != QuestStateEnum.FINISHED && now.after(questEndDate))
+            {
+                return QuestStateEnum.EXPIRED;
+            }
+        }
+        catch (DatabaseException e)
+        {
+            e.printStackTrace();
+        }
 		return questState;
 	}
 

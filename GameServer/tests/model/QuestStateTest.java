@@ -242,4 +242,42 @@ public class QuestStateTest extends DatabaseTest
 		quest.changeState(QuestStateEnum.AVAILABLE, false);
 		assertEquals(quest.getStateValue(), QuestStateEnum.AVAILABLE);
 	}
+	
+	
+	/**
+     * A finished quest should be marked as finished not expired
+     * @throws IllegalQuestChangeException thrown if changing to a wrong state
+     * @throws DatabaseException shouldn't 
+     */
+    @Test
+    public void testCompleteQuestNotExpired() throws IllegalQuestChangeException, DatabaseException 
+    {
+        QuestState quest = new QuestState(19, 8, QuestStateEnum.FINISHED, false);
+        assertEquals(QuestStateEnum.FINISHED, quest.getStateValue());
+    }
+    
+    /**
+     * An available quest should be marked as expired
+     * @throws IllegalQuestChangeException thrown if changing to a wrong state
+     * @throws DatabaseException shouldn't 
+     */
+    @Test
+    public void testAvailableQuestIsExpired() throws IllegalQuestChangeException, DatabaseException 
+    {
+        QuestState quest = new QuestState(19, 8, QuestStateEnum.AVAILABLE, false);
+        assertEquals(QuestStateEnum.EXPIRED, quest.getStateValue());
+    }
+    
+    
+    /**
+     * A triggered quest should be marked as expired
+     * @throws IllegalQuestChangeException thrown if changing to a wrong state
+     * @throws DatabaseException shouldn't 
+     */
+    @Test
+    public void testTriggeredQuestIsExpired() throws IllegalQuestChangeException, DatabaseException 
+    {
+        QuestState quest = new QuestState(19, 8, QuestStateEnum.TRIGGERED, false);
+        assertEquals(QuestStateEnum.EXPIRED, quest.getStateValue());
+    }
 }

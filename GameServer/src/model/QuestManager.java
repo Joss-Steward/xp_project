@@ -396,18 +396,20 @@ public class QuestManager implements QualifiedObserver
 		ArrayList<AdventureRecord> questAdventures = new ArrayList<AdventureRecord>();
 		try
 		{
-			for (AdventureRecord AR : QuestManager.getSingleton().getQuest(questID)
-					.getAdventures())
+
+			for (AdventureRecord AR : getQuest(questID).getAdventures())
 			{
-				AdventureStateEnum currentAdventuresState = QuestManager
-						.getSingleton()
-						.getAdventureStateByID(reportPlayerID, questID,
-								AR.getAdventureID()).getState();
-				if (AdventureStateEnum.TRIGGERED == currentAdventuresState)
+				AdventureState adventureState = getAdventureStateByID(reportPlayerID,
+						questID, AR.getAdventureID());
+				if (adventureState != null)
 				{
-					if (AR.getCompletionType() == AdventureCompletionType.CHAT)
+					AdventureStateEnum currentAdventuresState = adventureState.getState();
+					if (AdventureStateEnum.TRIGGERED == currentAdventuresState)
 					{
-						questAdventures.add(AR);
+						if (AR.getCompletionType() == AdventureCompletionType.CHAT)
+						{
+							questAdventures.add(AR);
+						}
 					}
 				}
 			}
@@ -469,12 +471,13 @@ public class QuestManager implements QualifiedObserver
 					myReport.getNewPosition(), myReport.getMapName());
 			for (AdventureRecord a : adventures)
 			{
-				AdventureState adventureStateByID = getAdventureStateByID(myReport.getPlayerID(), a.getQuestID(),
-						a.getAdventureID());
-				if (adventureStateByID != null && adventureStateByID.getState() != AdventureStateEnum.COMPLETED)
+				AdventureState adventureStateByID = getAdventureStateByID(
+						myReport.getPlayerID(), a.getQuestID(), a.getAdventureID());
+				if (adventureStateByID != null
+						&& adventureStateByID.getState() != AdventureStateEnum.COMPLETED)
 				{
 					this.completeAdventure(myReport.getPlayerID(), a.getQuestID(),
-							a.getAdventureID());					
+							a.getAdventureID());
 				}
 			}
 
@@ -519,15 +522,45 @@ public class QuestManager implements QualifiedObserver
 	 */
 	QuestState getQuestStateByID(int playerID, int questID)
 	{
-		ArrayList<QuestState> questStateList = questStates.get(playerID);
+	    
+		ArrayList<QuestState> questStateList = QuestManager.getSingleton().getQuestList(playerID);
+		Quest quest = null;
+		try
+        {
+            quest = QuestManager.getSingleton().getQuest(questID);
+        }
+        catch (DatabaseException e)
+        {
+            e.printStackTrace();
+        }	
+		
+		QuestState qState = null;
 		for (QuestState q : questStateList)
 		{
 			if (q.getID() == questID)
 			{
-				return q;
+			    qState = q;
 			}
 		}
-		return null;
+		
+		if(quest != null && qState != null)
+        {
+            Date now = Calendar.getInstance().getTime();
+            if(now.after(quest.getEndDate()) && qState.getStateValue() != QuestStateEnum.EXPIRED && 
+                    qState.getStateValue() != QuestStateEnum.FINISHED)
+            {
+                try
+                {
+                    qState.changeState(QuestStateEnum.EXPIRED, qState.isNeedingNotification());
+                }
+                catch (IllegalQuestChangeException | DatabaseException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+		
+		return qState;
 	}
 
 	/**
@@ -540,7 +573,7 @@ public class QuestManager implements QualifiedObserver
 	 *            the id of the quest
 	 * @param adventureID
 	 *            the id of the adventure
-	 * @return the state of the adventure
+	 * @return the state of the adventurenew Grego
 	 */
 	AdventureState getAdventureStateByID(int playerID, int questID, int adventureID)
 	{
@@ -646,9 +679,9 @@ public class QuestManager implements QualifiedObserver
 	public void completeAdventure(int playerID, int questID, int adventureID)
 			throws DatabaseException, IllegalAdventureChangeException,
 			IllegalQuestChangeException
-	{
-		AdventureState adventureStateByID = getAdventureStateByID(playerID, questID,
-				adventureID);
+	{  
+//	    QuestState qs = QuestManager.getSingleton().getQuestStateByID(playerID, questID);
+		AdventureState adventureStateByID = getAdventureStateByID(playerID, questID, adventureID);
 		if (adventureStateByID != null)
 		{
 			adventureStateByID.complete();

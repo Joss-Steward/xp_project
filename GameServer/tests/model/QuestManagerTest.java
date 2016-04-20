@@ -341,10 +341,10 @@ public class QuestManagerTest extends DatabaseTest
 	public void testAddQuests() throws IllegalQuestChangeException
 	{
 		Player p = playerManager.addPlayer(1);
-		QuestState quest = new QuestState(1, 15, QuestStateEnum.AVAILABLE, false);
+		QuestState quest = new QuestState(1, 1, QuestStateEnum.AVAILABLE, false);
 		QuestManager.getSingleton().addQuestState(p.getPlayerID(), quest);
 
-		QuestState questStateByID = QuestManager.getSingleton().getQuestStateByID(1, 15);
+		QuestState questStateByID = QuestManager.getSingleton().getQuestStateByID(1, 1);
 		assertEquals(QuestStateEnum.AVAILABLE, questStateByID.getStateValue());
 		assertFalse(questStateByID.isNeedingNotification());
 
@@ -489,40 +489,6 @@ public class QuestManagerTest extends DatabaseTest
 								QuestStatesForTest.PLAYER7_QUEST2.getQuestID())
 						.getStateValue());
 	}
-	
-	/**
-     * Make sure quest is not triggered within player when quest is not available
-     * 
-     * @throws IllegalAdventureChangeException
-     *             thrown if changing to a wrong state
-     * @throws IllegalQuestChangeException
-     *             thrown if illegal state change
-     * @throws DatabaseException
-     *             the state changed illegally
-     */
-    @Test
-    public void testPlayerCantTriggersQuest() throws IllegalAdventureChangeException,
-            IllegalQuestChangeException, DatabaseException
-    {
-        Player p = playerManager.addPlayer(19);
-        assertEquals(
-                QuestStateEnum.AVAILABLE,
-                QuestManager
-                        .getSingleton()
-                        .getQuestStateByID(p.getPlayerID(),
-                                QuestStatesForTest.PLAYER19_QUEST7.getQuestID())
-                        .getStateValue());
-
-        QuestManager.getSingleton().triggerQuest(19,
-                QuestStatesForTest.PLAYER19_QUEST7.getQuestID());
-        assertEquals(
-                QuestStateEnum.AVAILABLE,
-                QuestManager
-                        .getSingleton()
-                        .getQuestStateByID(p.getPlayerID(),
-                                QuestStatesForTest.PLAYER19_QUEST7.getQuestID())
-                        .getStateValue());
-    }
 
 	/**
 	 * When a player moves to the right place, we should trigger the quest
@@ -866,4 +832,38 @@ public class QuestManagerTest extends DatabaseTest
 				hersh.getExperiencePoints());
 	}
 
+	/**
+     * A finished quest should be marked as finished not expired
+     * @throws IllegalQuestChangeException thrown if changing to a wrong state
+     * @throws DatabaseException shouldn't 
+     */
+    @Test
+    public void testGetQuestStateByIDWhenQuestStateIsExpired() throws IllegalQuestChangeException, DatabaseException 
+    {
+        playerManager.addPlayer(19);
+        QuestState quest =  QuestManager.getSingleton().getQuestStateByID(19, 8);
+        assertEquals(8, quest.getID());
+    }
+    
+    /**
+     * 
+     */
+    @Test
+    public void testGetQuestStateByIDWhenQuestStateIsAvilable()
+    {
+        playerManager.addPlayer(19);
+        QuestState quest =  QuestManager.getSingleton().getQuestStateByID(19, 7);
+        assertEquals(7, quest.getID());
+    }
+    
+    /**
+     * 
+     */
+    @Test
+    public void testGetQuestStateByIDWhenQuestStateIsCompleted()
+    {
+        playerManager.addPlayer(19);
+        QuestState quest = QuestManager.getSingleton().getQuestStateByID(19,9);
+        assertEquals(9, quest.getID());
+    }
 }
