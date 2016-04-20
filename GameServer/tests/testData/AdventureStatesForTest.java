@@ -133,7 +133,8 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	PLAYER8_QUEST8_ADV2(8, 8, 2, AdventureStateEnum.TRIGGERED, false),
+	PLAYER8_QUEST10_ADV1(PlayersForTest.GA.getPlayerID(), QuestsForTest.KNOWLEDGE_QUEST.getQuestID(), 
+			AdventuresForTest.QUEST10_ADVENTURE_1.getAdventureID(), AdventureStateEnum.TRIGGERED, true),
 	
 	
 	// ----------------------------------------------------------------------------------------//

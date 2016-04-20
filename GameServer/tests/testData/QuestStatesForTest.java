@@ -66,6 +66,10 @@ public enum QuestStatesForTest
 	 */
 	PLAYER8_QUEST2(8, 2, QuestStateEnum.TRIGGERED, false),
 	/**
+	 * 
+	 */
+	PLAYER8_QUEST10(8, 10, QuestStateEnum.TRIGGERED, true),
+	/**
      * 
      */
     PLAYER19_QUEST6(19, 6, QuestStateEnum.TRIGGERED, false),
