@@ -48,7 +48,7 @@ public abstract class OverlayingScreen extends Group
 	 */
 	public float getXPosition()
 	{
-		return (Gdx.graphics.getWidth() - getWidth()) / 2;
+		return (Gdx.graphics.getWidth() - getMyWidth()) / 2;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public abstract class OverlayingScreen extends Group
 	 */
 	public float getYPosition()
 	{
-		return (Gdx.graphics.getHeight() - getHeight()) / 1.1f;
+		return (Gdx.graphics.getHeight() - getMyHeight()) / 1.1f;
 	}
 
 }

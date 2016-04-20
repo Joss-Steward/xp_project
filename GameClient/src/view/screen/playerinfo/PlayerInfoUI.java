@@ -24,10 +24,11 @@ public class PlayerInfoUI extends OverlayingScreen implements QualifiedObserver
 	 */
 	public PlayerInfoUI()
 	{
+		super();
 		setUpListening();
 		playerTable = new PlayerInfoTable();
 		playerTable.setFillParent(true);
-		container.add(playerTable);
+		container.addActor(playerTable);
 	}	
 	
 	/**

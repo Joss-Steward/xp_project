@@ -30,7 +30,6 @@ public class HighScoreUI extends OverlayingScreen implements QualifiedObserver
 	{
 		super();
 		setUpListening();
-		
 		highScoreTable = new HighScoreTable();
 		highScoreTable.setFillParent(true);
 		container.addActor(highScoreTable);
