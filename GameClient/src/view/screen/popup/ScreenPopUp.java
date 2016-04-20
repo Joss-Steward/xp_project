@@ -1,6 +1,7 @@
 package view.screen.popup;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
@@ -55,7 +56,7 @@ public class ScreenPopUp extends Group
 			this.getContentTable().add(label).width(400).row();
 			//text(description);
 			button("OK");
-			
+			key(Input.Keys.ENTER, true);
 			
 			this.behavior = behavior;
 		}		
