@@ -23,7 +23,6 @@ public class QuestTable extends OverlayingScreenTable
 	public QuestTable(ArrayList<ClientPlayerQuest> questList, boolean scrollable)
 	{
 		super(scrollable);	//Null is passed in because the widget has not been created yet.
-		setFadeScrollBars(false);
 		updateQuests(questList);
 	}
 	

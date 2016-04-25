@@ -1,16 +1,15 @@
 package view.screen.qas;
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-
-import data.AdventureStateEnum;
-import data.QuestStateEnum;
 import model.ClientPlayerAdventure;
 import view.screen.OverlayingScreenTable;
 import view.screen.SkinPicker;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
+import data.AdventureStateEnum;
+import data.QuestStateEnum;
 /**
  * @author TJ Renninger and Ian Keefer
  *
@@ -24,7 +23,6 @@ public class AdventureTable extends OverlayingScreenTable
 	public AdventureTable(boolean scrollable)
 	{
 		super(scrollable);
-		setFadeScrollBars(false);
 	}
 	
 	/**
