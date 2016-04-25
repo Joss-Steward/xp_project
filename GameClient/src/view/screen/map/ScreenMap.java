@@ -433,7 +433,11 @@ public class ScreenMap extends ScreenBasic
 				{
 					if (stage.getKeyboardFocus() == null)
 					{
-						menuArea.getQuestAdventureBtn().toggle();
+						if (!qaScreen.isVisible())
+						{
+							menuArea.closeAllOverlayingScreens();
+						}
+						qaScreen.toggleVisibility();
 					}
 					return true;
 				}
@@ -441,7 +445,11 @@ public class ScreenMap extends ScreenBasic
 				{
 					if (stage.getKeyboardFocus() == null)
 					{
-						menuArea.getHighScoreBtn().toggle();
+						if (!highScoreUI.isVisible())
+						{
+							menuArea.closeAllOverlayingScreens();
+						}
+						highScoreUI.toggleVisibility();
 					}
 					
 					return true;
@@ -450,7 +458,11 @@ public class ScreenMap extends ScreenBasic
 				{
 					if (stage.getKeyboardFocus() == null)
 					{
-						menuArea.getPlayerUIBtn().toggle();
+						if (!playerInfoUI.isVisible())
+						{
+							menuArea.closeAllOverlayingScreens();
+						}
+						playerInfoUI.toggleVisibility();
 					}
 					
 					return true;
@@ -553,7 +565,10 @@ public class ScreenMap extends ScreenBasic
 		qaScreen = new QuestUI();
 		highScoreUI = new HighScoreUI();
 		playerInfoUI = new PlayerInfoUI();
-		menuArea = new MenuUI(highScoreUI, qaScreen, chatArea, playerInfoUI);
+		menuArea = new MenuUI();
+		menuArea.addOverlayScreenToggle(qaScreen, "Q");
+		menuArea.addOverlayScreenToggle(highScoreUI, "H");
+		menuArea.addOverlayScreenToggle(playerInfoUI, "P");
 		stage.addActor(highScoreUI);
 		stage.addActor(playerInfoUI);
 		stage.addActor(qaScreen);

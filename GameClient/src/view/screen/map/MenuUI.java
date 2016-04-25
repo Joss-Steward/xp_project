@@ -1,22 +1,18 @@
 package view.screen.map;
+import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import view.screen.OverlayingScreen;
+import view.screen.SkinPicker;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.ObjectFloatMap;
-
-import view.screen.SkinPicker;
-import view.screen.highscore.HighScoreUI;
-import view.screen.playerinfo.PlayerInfoUI;
-import view.screen.popup.LogoutNotificationBehavior;
-import view.screen.popup.TwoChoiceScreenPopup;
-import view.screen.qas.QuestUI;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
  * MenuUI.java UI for the Menu
@@ -25,265 +21,58 @@ import view.screen.qas.QuestUI;
  *
  */
 public class MenuUI extends Group
-{
-	/**
-	 * Expected height of the chat ui
-	 */
-	public static final float YSIZE = 200f;
-
+{	
+	private final float HEIGHT = 30f;
 	private Skin skin;
-
-	private static final float FadeRate = .25f;
-	private ObjectFloatMap<Label> newLabels;
-
-	private Button QuestAdventureBtn;
-	private Button PlayerUIBtn;
-	private Button HighScoreBtn;
-	private Button LogoutBtn;
-
-	private HighScoreUI highScoreUI;
-	private QuestUI qaScreen;
-	private PlayerInfoUI playerInfoUI;
-
-	private boolean closingScreens;
+	private ArrayList<OverlayingScreen> overlayingScreens;
+	private Table tabs;
 
 	/**
 	 * Create a new chat ui that displays at the bottom of the screen
-	 * 
-	 * @param qaScreen2
-	 *            Quest menu to edit
-	 * @param highScoreUI
-	 *            score UI to edit
-	 * @param chatArea
-	 *            chat UI to edit
-	 * @param playerInfoUI
-	 *            player uI to edit
 	 */
-	public MenuUI(HighScoreUI highScoreUI, QuestUI qaScreen2, ChatUi chatArea,
-			PlayerInfoUI playerInfoUI)
+	public MenuUI()
 	{
-		this.highScoreUI = highScoreUI;
-		this.qaScreen = qaScreen2;
-		this.playerInfoUI = playerInfoUI;
-		setupUI();
-	}
-
-	/**
-	 * Prepare the actual ui elements for the display
-	 */
-	private void setupUI()
-	{
+		setHeight(HEIGHT);
+		setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() - getHeight());
+		overlayingScreens = new ArrayList<OverlayingScreen>();
 		skin = SkinPicker.getSkinPicker().getCrewSkin();
-
-		Table tabs = new Table(skin);
-		tabs.setWidth(800f);
-		tabs.setHeight(800f);
-
-		tabs.top();
-		{
-			// Quest/Adventure Button
-			{
-				ButtonStyle style = skin.get(ButtonStyle.class);
-
-				QuestAdventureBtn = new Button(style);
-				QuestAdventureBtn.add(new Label("Q", skin));
-				QuestAdventureBtn.addListener(new ChangeListener()
-				{
-					@Override
-					public void changed(ChangeEvent event, Actor actor)
-					{
-						closeAllOverlayingScreens();
-
-						qaScreen.toggleQAScreenVisible(); // Toggle the QA
-															// screen
-
-					}
-
-				});
-				tabs.add(QuestAdventureBtn).size(32f);
-			}
-			// High scores button
-			{
-				ButtonStyle style = skin.get(ButtonStyle.class);
-				HighScoreBtn = new Button(style);
-				HighScoreBtn.add(new Label("H", skin));
-				HighScoreBtn.addListener(new ChangeListener()
-				{
-					@Override
-					public void changed(ChangeEvent event, Actor actor)
-					{
-						closeAllOverlayingScreens();
-						highScoreUI.toggleHSScreenVisible(); // Toggle the HS
-																// screen
-					}
-				});
-				tabs.add(HighScoreBtn).size(32f);
-
-			}
-
-			// Player UI Button
-			{
-				ButtonStyle style = skin.get(ButtonStyle.class);
-				PlayerUIBtn = new Button(style);
-				PlayerUIBtn.add(new Label("P", skin));
-				PlayerUIBtn.addListener(new ChangeListener()
-				{
-					@Override
-					public void changed(ChangeEvent event, Actor actor)
-					{
-						closeAllOverlayingScreens();
-						playerInfoUI.togglePlayerInfoScreen(); // actually open
-																// the player
-																// info screen
-					}
-				});
-				tabs.add(PlayerUIBtn).size(32f);
-			}
-
-			// Logout Button
-			{
-				ButtonStyle style = skin.get(ButtonStyle.class);
-				LogoutBtn = new Button(style);
-				LogoutBtn.add(new Label("Logout", skin));
-				LogoutBtn.addListener(new ChangeListener()
-				{
-					@Override
-					public void changed(ChangeEvent event, Actor actor)
-					{
-						// ScreenBasic screen =
-						// Screens.LOGIN_SCREEN.getScreen();
-						new TwoChoiceScreenPopup("Are you sure you want to logout?",
-								"Logout", "Cancel", getStage(),
-								new LogoutNotificationBehavior(), null);
-					}
-				});
-				tabs.add(LogoutBtn).size(80f, 32f);
-			}
-		}
-
-		tabs.top();
-		// add the ui to the stage
+		tabs = new Table(skin);
+		tabs.setFillParent(true);
 		addActor(tabs);
-		newLabels = new ObjectFloatMap<Label>();
+		setVisible(true);
 	}
-
-	private void closeAllOverlayingScreens()
+	
+	/**
+	 * @param overlayingScreen
+	 * @param text
+	 */
+	public void addOverlayScreenToggle(final OverlayingScreen overlayingScreen, String text)
 	{
-		if (!closingScreens)
+		overlayingScreens.add(overlayingScreen);
+		ButtonStyle style = skin.get(ButtonStyle.class);
+		Button b = new Button(style);
+		b.add(new Label(text, skin));
+		b.addListener(new ClickListener()
 		{
-			closingScreens = true;
-
-			if (highScoreUI.isVisible()) // Toggle the HS screen if it is open
+			@Override
+			public void clicked(InputEvent event, float x, float y) 
 			{
-				toggleHSButton();
+				closeAllOverlayingScreens();
+				overlayingScreen.toggleVisibility();
+				super.clicked(event, x, y);
 			}
-
-			if (qaScreen.isVisible()) // Toggle the QA screen if it is open
-			{
-				toggleQAButton();
-			}
-
-			if (playerInfoUI.isVisible()) // Toggle the Player info screen if it
-											// is open
-			{
-				togglePlayerUIButton();
-			}
-			closingScreens = false;
-		}
+		});
+		tabs.add(b);
 	}
 
 	/**
-	 * Updates the ui
 	 * 
-	 * @param delta
-	 *            timer resolution between draw cycles
 	 */
-	@Override
-	public void act(float delta)
+	public void closeAllOverlayingScreens()
 	{
-		super.act(delta);
-
-		for (Label label : newLabels.keys())
+		for (OverlayingScreen os : overlayingScreens)
 		{
-			float fade = newLabels.get(label, 0f);
-			fade += delta;
-			Color c = label.getColor();
-			c.a = fade / FadeRate;
-			newLabels.put(label, fade);
-
-			if (fade > FadeRate)
-			{
-				newLabels.remove(label, 0f);
-			}
+			os.setVisible(false);
 		}
-	}
-
-	/**
-	 * Toggles the Quest/Adventure Button to on & off
-	 */
-	public void toggleQAButton()
-	{
-		if (!QuestAdventureBtn.isChecked())
-		{
-			QuestAdventureBtn.setChecked(true);
-		} else
-		{
-			QuestAdventureBtn.setChecked(false);
-		}
-
-	}
-
-	/**
-	 * Toggles the High score button on & off
-	 */
-	public void toggleHSButton()
-	{
-		if (!HighScoreBtn.isChecked())
-		{
-			HighScoreBtn.setChecked(true);
-		} else
-		{
-			HighScoreBtn.setChecked(false);
-		}
-
-	}
-
-	/**
-	 * Toggles the PlayerUI button on & off
-	 */
-	public void togglePlayerUIButton()
-	{
-		if (!PlayerUIBtn.isChecked())
-		{
-			PlayerUIBtn.setChecked(true);
-		} else
-		{
-			PlayerUIBtn.setChecked(false);
-		}
-
-	}
-
-	/**
-	 * @return the button for the Quest and adventure screen to press
-	 */
-	public Button getQuestAdventureBtn()
-	{
-		return QuestAdventureBtn;
-	}
-
-	/**
-	 * @return the button for the HighScore screen to press
-	 */
-	public Button getHighScoreBtn()
-	{
-		return HighScoreBtn;
-	}
-
-	/**
-	 * @return the button for the player UI
-	 */
-	public Button getPlayerUIBtn()
-	{
-		return PlayerUIBtn;
 	}
 }

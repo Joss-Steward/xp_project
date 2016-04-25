@@ -45,7 +45,8 @@ public class PlayerInfoUI extends OverlayingScreen implements QualifiedObserver
 	/**
 	 * Toggle the invisibility of the player info screen
 	 */
-	public void togglePlayerInfoScreen()
+	@Override
+	public void toggleVisibility()
 	{
 		if (isVisible())
 		{
