@@ -9,47 +9,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import data.AdventureStateEnum;
 import data.QuestStateEnum;
 import model.ClientPlayerAdventure;
+import view.screen.OverlayingScreenTable;
 import view.screen.SkinPicker;
 /**
  * @author TJ Renninger and Ian Keefer
  *
  */
-public class AdventureTable extends ScrollPane
-{
-	private final float PADDING = 10f;
-	private Table table;
-	
+public class AdventureTable extends OverlayingScreenTable
+{	
 	/**
 	 * Table that displays all of the adventures of a selected quest for the player
+	 * @param scrollable Whether or not the the overlaying screen table is scrollable
 	 */
-	public AdventureTable()
+	public AdventureTable(boolean scrollable)
 	{
-		super(null, SkinPicker.getSkinPicker().getCrewSkin());
+		super(scrollable);
 		setFadeScrollBars(false);
-		//Build the table that holds all of the quests
-		buildTable();
-		setWidget(table);
-	}
-
-	/**
-	 * Creates a new table that will hold all of the quests and sets it to the top left position of the scroll pane
-	 */
-	private void buildTable()
-	{
-		table = new Table();
-		table.left().top();
-		table.pad(PADDING);
-		
-//		Displays all the textures
-//		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/ui/screenskins/ui-blue.atlas"));
-//		for (AtlasRegion ar : atlas.getRegions())
-//		{
-//			Label l = new Label(ar.name, ScreenQAs.skin);
-//			Button b = new Button(new SpriteDrawable((atlas.createSprite(ar.name))));
-//			table.add(l);
-//			table.add(b).row();
-//		}
-		
 	}
 	
 	/**
@@ -59,17 +34,17 @@ public class AdventureTable extends ScrollPane
 	 */
 	public void updateAdventures(String questDesc, ArrayList<ClientPlayerAdventure> adventureList)
 	{
-		table.clear();
+		container.clear();
 		Label l = new Label(questDesc + "\n\nAdventures:\n", SkinPicker.getSkinPicker().getCrewSkin());
 		l.setWrap(true);
-		table.add(l).left().top().width(table.getWidth() - PADDING * 4f);		//Width is used to tell the label when to wrap its text.
-		table.row();
+		container.add(l).left().top().width(container.getWidth() - getPadding() * 4f);		//Width is used to tell the label when to wrap its text.
+		container.row();
 		//for (int i = 0; i < 100; i++)  //Add a stupid amount of adventures to test scrolling
 		for (ClientPlayerAdventure cpa : adventureList)
 		{
 			l = createAdventureLabel(cpa);
-			table.add(l).left().top().width(table.getWidth() - PADDING * 4f);	//Width is used to tell the label when to wrap its text.
-			table.row();
+			container.add(l).left().top().width(container.getWidth() - getPadding() * 4f);	//Width is used to tell the label when to wrap its text.
+			container.row();
 		}
 	}
 

@@ -51,8 +51,8 @@ public class QuestUI extends OverlayingScreen implements QualifiedObserver
 		questList = new ArrayList<ClientPlayerQuest>();
 		setUpListening();
 		
-		questTable = new QuestTable(questList);
-		adventureTable = new AdventureTable();
+		questTable = new QuestTable(questList, true);
+		adventureTable = new AdventureTable(true);
 		legendTable = new LegendTable();
 		questTable.setAdventureTable(adventureTable);  					//Set the adventure table so that when a quest is clicked it can update it.
 		
@@ -172,7 +172,6 @@ public class QuestUI extends OverlayingScreen implements QualifiedObserver
 			questTable.updateQuests(questList);
 			ClientPlayerQuest firstQuest= questList.get(0);
 			adventureTable.updateAdventures(firstQuest.getQuestDescription(), firstQuest.getAdventureList());
-			questTable.requestFoucus();
 		}
 	}
 

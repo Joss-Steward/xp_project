@@ -1,39 +1,25 @@
 package view.screen.playerinfo;
 import model.ThisClientsPlayer;
+import view.screen.OverlayingScreenTable;
 import view.screen.SkinPicker;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+
 /**
  * @author TJ Renninger and Ian Keefer
  *
  */
-public class PlayerInfoTable extends ScrollPane
+public class PlayerInfoTable extends OverlayingScreenTable
 {
-	private final float tablePadding = 10f;
-	private Table table;
-	
 	/**
-	 * 
+	 * @param scrollable Whether or not the the overlaying screen table is scrollable
 	 */
-	public PlayerInfoTable() 
+	public PlayerInfoTable(boolean scrollable) 
 	{
-		super(null, SkinPicker.getSkinPicker().getCrewSkin());
-		setScrollingDisabled(true, true);
-		buildTable();
-		setWidget(table);
+		super(scrollable);
 	}
-	
-	private void buildTable()
-	{
-		table = new Table();
-		table.setFillParent(true);
-		table.left().top();
-		table.pad(tablePadding);
-	}
-	
+
 	/**
 	 * @param player that is currently logged into the client
 	 */
@@ -47,7 +33,7 @@ public class PlayerInfoTable extends ScrollPane
 		int level = player.getLevelRecord().getLevelUpPoints();
 		String deadline = player.getTimeLeft();
 		
-		table.clear();
+		container.clear();
 		//NAME
 		Table labelGroup = new Table();
 		Label label1 = new Label("Name: ", SkinPicker.getSkinPicker().getCrewSkin());
@@ -55,7 +41,7 @@ public class PlayerInfoTable extends ScrollPane
 		label2.setColor(Color.GREEN);
 		labelGroup.add(label1).left();
 		labelGroup.add(label2).left();
-		table.add(labelGroup).left().row();
+		container.add(labelGroup).left().row();
 		
 		//CREW
 		labelGroup = new Table();
@@ -64,7 +50,7 @@ public class PlayerInfoTable extends ScrollPane
 		label2.setColor(Color.GREEN);
 		labelGroup.add(label1).left();
 		labelGroup.add(label2).left();
-		table.add(labelGroup).left().row();
+		container.add(labelGroup).left().row();
 
 		//MAJOR
 		labelGroup = new Table();
@@ -73,7 +59,7 @@ public class PlayerInfoTable extends ScrollPane
 		label2.setColor(Color.GREEN);
 		labelGroup.add(label1).left();
 		labelGroup.add(label2).left();
-		table.add(labelGroup).left().row();
+		container.add(labelGroup).left().row();
 		
 		//EXP
 		labelGroup = new Table();
@@ -82,7 +68,7 @@ public class PlayerInfoTable extends ScrollPane
 		label2.setColor(Color.GREEN);
 		labelGroup.add(label1).left();
 		labelGroup.add(label2).left();
-		table.add(labelGroup).left().row();
+		container.add(labelGroup).left().row();
 		
 		//KNOW
 		labelGroup = new Table();
@@ -91,7 +77,7 @@ public class PlayerInfoTable extends ScrollPane
 		label2.setColor(Color.GREEN);
 		labelGroup.add(label1).left();
 		labelGroup.add(label2).left();
-		table.add(labelGroup).left().row();
+		container.add(labelGroup).left().row();
 		
 		//LEVEL
 		labelGroup = new Table();
@@ -100,7 +86,7 @@ public class PlayerInfoTable extends ScrollPane
 		label2.setColor(Color.GREEN);
 		labelGroup.add(label1).left();
 		labelGroup.add(label2).left();
-		table.add(labelGroup).left().row();
+		container.add(labelGroup).left().row();
 		
 		//DEADLINE TO LEVEL UP
 		labelGroup = new Table();
@@ -110,7 +96,7 @@ public class PlayerInfoTable extends ScrollPane
 		labelGroup.add(label1).left();
 		labelGroup.row();
 		labelGroup.add(label2).left();
-		table.add(labelGroup).left().row();
+		container.add(labelGroup).left().row();
 	}
 	
 }
