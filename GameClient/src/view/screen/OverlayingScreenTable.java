@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
  */
 public abstract class OverlayingScreenTable extends ScrollPane
 {
-	private final float tablePadding = 10f;
+	private final float containerPadding = 10f;
 	protected Table container;
 	
 	/**
@@ -18,24 +18,24 @@ public abstract class OverlayingScreenTable extends ScrollPane
 	public OverlayingScreenTable(boolean scrollable) 
 	{
 		super(null, SkinPicker.getSkinPicker().getCrewSkin());
-		setScrollingDisabled(scrollable, scrollable);
-		buildTable();
+		setFadeScrollBars(false);
+		setScrollingDisabled(!scrollable, !scrollable);
+		buildContainer();
 		setWidget(container);
 	}
 
-	private void buildTable() 
+	private void buildContainer() 
 	{
 		container = new Table();
-		container.setFillParent(true);
 		container.left().top();
-		container.pad(tablePadding);
+		container.pad(containerPadding);
 	}
 	
 	/**
-	 * @return
+	 * @return the padding for the container
 	 */
 	public float getPadding()
 	{
-		return tablePadding;
+		return containerPadding;
 	}
 }
