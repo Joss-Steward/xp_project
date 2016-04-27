@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.net.Socket;
 
 import model.OptionsManager;
+import model.QualifiedObservableReport;
+import model.QualifiedObserver;
+import model.reports.LogoutReport;
+
 import communication.handlers.MessageHandlerSet;
 import communication.messages.ConnectMessage;
 import communication.packers.MessagePackerSet;
@@ -19,7 +23,7 @@ import communication.packers.MessagePackerSet;
  * @author merlin
  * 
  */
-public class ConnectionManager
+public class ConnectionManager implements QualifiedObserver
 {
 
 	private ConnectionIncoming incoming;
@@ -212,5 +216,24 @@ public class ConnectionManager
 		{
 			stateAccumulator.setPlayerId(playerID);
 		}
+	}
+
+	/** 
+	 * Receives a logout report and connects to the login server
+	 */
+	@Override
+	public void receiveReport(QualifiedObservableReport report) 
+	{
+		 if (report.getClass() == LogoutReport.class)
+	     {
+			try
+			{
+				moveToNewSocket(new Socket(OptionsManager.getSingleton().getLoginHost(), 1871));
+
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			} 
+	     }	
 	}
 }

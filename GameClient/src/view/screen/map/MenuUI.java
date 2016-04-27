@@ -66,6 +66,19 @@ public class MenuUI extends Group
 	}
 
 	/**
+	 * @param text text the button will display
+	 * @param listener action the button will do
+	 */
+	public void addButton(String text, ClickListener listener)
+	{
+		ButtonStyle style = skin.get(ButtonStyle.class);
+		Button button = new Button(style);
+		button.add(new Label(text, skin));
+		button.addListener(listener);
+		tabs.add(button);
+	}
+	
+	/**
 	 * 
 	 */
 	public void closeAllOverlayingScreens()

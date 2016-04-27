@@ -1,4 +1,8 @@
 package view.screen.popup;
+
+import model.ClientModelFacade;
+import model.CommandLogout;
+
 /**
  * Behavior for the Logout Notification
  * @author  Zachary Thompson & Abdullah Alsuwailem
@@ -13,8 +17,8 @@ public class LogoutNotificationBehavior implements PopupBehavior
 	@Override
 	public void clicked() 
 	{
-	System.out.println("IT WORKS");	
-
+		CommandLogout cmd = new CommandLogout();
+		ClientModelFacade.getSingleton().queueCommand(cmd);		
 	}
 
 }
