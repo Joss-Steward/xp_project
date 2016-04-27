@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 import model.OptionsManager;
+import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 import model.reports.LogoutReport;
@@ -56,7 +57,7 @@ public class ConnectionManager implements QualifiedObserver
 	 *            the set of MessagePackers that will pack notifications from
 	 *            the model into outgoing messages
 	 * @param watchForSocketClosure
-	 *            TODO
+	 *            
 	 * @throws IOException
 	 *             caused by socket issues
 	 */
@@ -82,6 +83,7 @@ public class ConnectionManager implements QualifiedObserver
 		// for simplictly
 		// T.setDaemon(true);
 		incomingThread.start();
+
 		if (watchForSocketClosure)
 		{
 			ConnectionListener cl = new ConnectionListener(outgoing.getStream(), 5000);
@@ -95,6 +97,7 @@ public class ConnectionManager implements QualifiedObserver
 			watcherThread = new Thread(cl);
 			watcherThread.start();
 		}
+		QualifiedObservableConnector.getSingleton().registerObserver(this, LogoutReport.class);
 	}
 
 	/**
@@ -132,7 +135,7 @@ public class ConnectionManager implements QualifiedObserver
 			// T.setDaemon(true);
 			incomingThread.start();
 		}
-
+		
 	}
 
 	/**
@@ -164,6 +167,7 @@ public class ConnectionManager implements QualifiedObserver
 		// for simplictly
 		// T.setDaemon(true);
 		incomingThread.start();
+		
 	}
 
 	/**

@@ -26,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.IntMap;
@@ -45,7 +46,9 @@ import view.screen.ScreenBasic;
 import view.screen.SkinPicker;
 import view.screen.highscore.HighScoreUI;
 import view.screen.playerinfo.PlayerInfoUI;
+import view.screen.popup.LogoutNotificationBehavior;
 import view.screen.popup.PopUpDisplay;
+import view.screen.popup.TwoChoiceScreenPopup;
 import view.screen.qas.QuestUI;
 
 /**
@@ -81,7 +84,6 @@ public class ScreenMap extends ScreenBasic
 	private MenuUI menuArea;
 	private PlayerInfoUI playerInfoUI;
 	
-	@SuppressWarnings("unused")
 	private PopUpDisplay popUpDisplay;
 	
 	//tile size that we will be moving in according to the collision masking tileset
@@ -460,7 +462,15 @@ public class ScreenMap extends ScreenBasic
 					{
 						stage.setKeyboardFocus(null);
 					}
+					menuArea.closeAllOverlayingScreens();
 					return true;
+				}
+				if (keycode == Keys.C)
+				{
+					if (stage.getKeyboardFocus() == null)
+					{
+						chatArea.setVisible(!chatArea.isVisible());
+					}
 				}
 				return false;
 			}
@@ -564,10 +574,29 @@ public class ScreenMap extends ScreenBasic
 		menuArea.addOverlayScreenToggle(qaScreen, "Q");
 		menuArea.addOverlayScreenToggle(highScoreUI, "H");
 		menuArea.addOverlayScreenToggle(playerInfoUI, "P");
+		menuArea.addButton("Logout", logoutClickListener());
 		stage.addActor(highScoreUI);
 		stage.addActor(playerInfoUI);
 		stage.addActor(qaScreen);
 		stage.addActor(menuArea);
+	}
+
+	/**
+	 * Creates the method behind the logoutClickListener
+	 * @return the click Listener with the required behavior
+	 */
+	private ClickListener logoutClickListener() 
+	{
+		return new ClickListener()
+		{
+			@Override
+			public void clicked(InputEvent event, float x, float y) 
+			{
+				popUpDisplay.addWaitingPopUp(new TwoChoiceScreenPopup("Are you sure you want to logout?", "Yes", "No", 
+						stage, new LogoutNotificationBehavior(), null));
+				
+			}
+		};
 	}
 
 	/**

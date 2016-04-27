@@ -62,7 +62,7 @@ public class PopUpDisplay implements QualifiedObserver
 			AdventureNotificationCompleteBehavior behavior = new AdventureNotificationCompleteBehavior(
 					r.getPlayerID(), r.getQuestID(), r.getAdventureID());
 			AdventureStateEnum state = r.getState();
-			addWaitingPopUp(new ScreenPopUp("Adventure " + state.getDescription(),
+			addWaitingPopUp(new OneChoiceScreenPopUp("Adventure " + state.getDescription(),
 					r.getAdventureDescription(), this.stage, behavior, this));
 		} 
 		
@@ -73,7 +73,7 @@ public class PopUpDisplay implements QualifiedObserver
 			QuestNotificationCompleteBehavior behavior = new QuestNotificationCompleteBehavior(
 					r.getPlayerID(), r.getQuestID());
 			QuestStateEnum state = r.getState();
-			addWaitingPopUp(new ScreenPopUp("Quest " + state.getDescription(), r.getQuestDescription(),
+			addWaitingPopUp(new OneChoiceScreenPopUp("Quest " + state.getDescription(), r.getQuestDescription(),
 					this.stage, behavior, this));
 		} 
 		
@@ -82,14 +82,14 @@ public class PopUpDisplay implements QualifiedObserver
 			QuestStateChangeReport r = (QuestStateChangeReport) report;
 			if (r.getNewState() == QuestStateEnum.FULFILLED)
 			{
-				addWaitingPopUp(new ScreenPopUp("Quest Fulfilled",
+				addWaitingPopUp(new OneChoiceScreenPopUp("Quest Fulfilled",
 						r.getQuestDescription() + " fulfilled", this.stage,
 						new QuestNotificationCompleteBehavior(r.getPlayerID(),
 								r.getQuestID()), this));
 			} 
 			else if (r.getNewState() == QuestStateEnum.FINISHED)
 			{
-				addWaitingPopUp(new ScreenPopUp("Quest Completed",
+				addWaitingPopUp(new OneChoiceScreenPopUp("Quest Completed",
 						r.getQuestDescription() + " completed", this.stage,
 						new QuestNotificationCompleteBehavior(r.getPlayerID(),
 								r.getQuestID()), this));
@@ -101,7 +101,7 @@ public class PopUpDisplay implements QualifiedObserver
 			AdventureStateChangeReport r = (AdventureStateChangeReport) report;
 			if (r.getNewState() == AdventureStateEnum.COMPLETED)
 			{
-				addWaitingPopUp(new ScreenPopUp("Adventure Completed", r.getAdventureDescription()
+				addWaitingPopUp(new OneChoiceScreenPopUp("Adventure Completed", r.getAdventureDescription()
 						+ " completed", this.stage, new AdventureNotificationCompleteBehavior(
 								r.getPlayerID(), r.getQuestID(), r.getAdventureID()), this));
 			}
@@ -121,7 +121,10 @@ public class PopUpDisplay implements QualifiedObserver
 		}
 	}
 	
-	private void addWaitingPopUp(ScreenPopUp popup)
+	/**
+	 * @param popup to be added
+	 */
+	public void addWaitingPopUp(ScreenPopUp popup)
 	{
 		waitingPopUps.add(popup);
 		

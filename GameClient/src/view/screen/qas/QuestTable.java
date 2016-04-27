@@ -44,7 +44,7 @@ public class QuestTable extends OverlayingScreenTable
 	 */
 	private Label createQuestLabel(final ClientPlayerQuest cpq) 
 	{
-	    String labelString = cpq.getQuestTitle() + cpq.getExpireDate().toString();
+	    String labelString = cpq.getQuestTitle();
 		Label l = new Label(labelString, SkinPicker.getSkinPicker().getCrewSkin());
 		switch (cpq.getQuestState()) 
 		{
@@ -69,7 +69,7 @@ public class QuestTable extends OverlayingScreenTable
 			@Override
 			public void clicked(InputEvent event, float x, float y)
 			{
-				adventureTable.updateAdventures(cpq.getQuestDescription(), cpq.getAdventureList());
+				adventureTable.updateAdventures(cpq.getQuestDescription(), cpq.getExpireDate().toString(), cpq.getAdventureList());
 				super.clicked(event, x, y);
 			}
 		};
