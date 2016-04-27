@@ -110,7 +110,10 @@ public enum AdventuresForTest
 	 * 
 	 */
 	QUEST10_ADVENTURE_1(1, "Quest 10: Adventure 2: Get points!", QuestsForTest.KNOWLEDGE_QUEST.getQuestID(), 1, AdventureCompletionType.POINTS, new PointsCompleted(5)),
-
+	/**
+	 * 
+	 */
+	QUEST11_ADVENTURE_1(1, "Quest 11: Adventure 1: Expired Quest!", QuestsForTest.TRIGGERED_STATE_TO_EXPIRED_STATE_QUEST.getQuestID(), 2, AdventureCompletionType.KEYSTROKE, new CriteriaString("e")),
 	
 	
 	/****************************************************/

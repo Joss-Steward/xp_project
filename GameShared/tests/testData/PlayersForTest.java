@@ -94,7 +94,7 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	MARTY(18, "Marty", "off_by_one", 10, 19, "pw", "current.tmx", 1111, null, 0, 0, Crew.OFF_BY_ONE, Major.SOFTWARE_ENGINEERING),
+	MARTY(18, "Marty", "off_by_one", 10, 19, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER, Major.SOFTWARE_ENGINEERING),
 	
 	/**
      * 

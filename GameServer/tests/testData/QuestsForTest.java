@@ -87,7 +87,11 @@ public enum QuestsForTest
      */
     KNOWLEDGE_QUEST(10, "Knowledge Quest", "Quest 10", new GameLocation("current.tmx", new Position(4, 16)), 5, 1, QuestCompletionActionType.NO_ACTION, null, 
     		new GregorianCalendar(2014, Calendar.MARCH, 21).getTime(), new GregorianCalendar(9999, Calendar.MARCH, 21).getTime()),
-
+    /**
+     * 
+     */
+    TRIGGERED_STATE_TO_EXPIRED_STATE_QUEST(11, "Quest 11", "Quest should go from triggered to expired", new GameLocation("current.tmx", new Position(3,3)), 1, 1 ,QuestCompletionActionType.NO_ACTION, null,
+    		 new GregorianCalendar(2016, Calendar.APRIL, 26).getTime(), new GregorianCalendar(2016, Calendar.APRIL, 26).getTime()),
 	/**
 	 * The real opening quest
 	 */
@@ -107,6 +111,8 @@ public enum QuestsForTest
 			"current.tmx", new Position(4, 13)), 2, 5,
 			QuestCompletionActionType.NO_ACTION, null , new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(), 
 		    new GregorianCalendar(9999, Calendar.MARCH, 21).getTime());
+	
+	 
 	
 
 	private int questID;

@@ -64,6 +64,10 @@ public enum QuestStatesForTest
 	/**
 	 * 
 	 */
+	MARTY_QUEST11(PlayersForTest.MARTY.getPlayerID(), 11, QuestStateEnum.EXPIRED, false),
+	/**
+	 * 
+	 */
 	PLAYER8_QUEST2(8, 2, QuestStateEnum.TRIGGERED, false),
 	/**
 	 * 
@@ -88,6 +92,7 @@ public enum QuestStatesForTest
 	/**
 	 * Newbie should have the first quest already triggered
 	 */
+    
 	NEWBIE_ONRAMPING(PlayersForTest.NEWBIE.getPlayerID(), QuestsForTest.ONRAMPING_QUEST.getQuestID(), QuestStateEnum.TRIGGERED, true);
 	
 	
