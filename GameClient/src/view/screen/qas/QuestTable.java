@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 public class QuestTable extends OverlayingScreenTable
 {
 	private AdventureTable adventureTable;
-	
+	private String blue_hex = "00FFFF";
 	/**
 	 * @param questList The list of quest that the player has
 	 * @param scrollable Whether or not the the overlaying screen table is scrollable
@@ -44,12 +44,12 @@ public class QuestTable extends OverlayingScreenTable
 	 */
 	private Label createQuestLabel(final ClientPlayerQuest cpq) 
 	{
-	    String labelString = cpq.getQuestTitle() + cpq.getExpireDate().toString();
+	    String labelString = cpq.getQuestTitle();
 		Label l = new Label(labelString, SkinPicker.getSkinPicker().getCrewSkin());
 		switch (cpq.getQuestState()) 
 		{
 		case TRIGGERED:
-			l.setColor(Color.valueOf("e6853c"));
+			l.setColor(Color.valueOf(blue_hex));
 			break;
 		case FULFILLED:
 			l.setColor(Color.YELLOW);
@@ -69,7 +69,7 @@ public class QuestTable extends OverlayingScreenTable
 			@Override
 			public void clicked(InputEvent event, float x, float y)
 			{
-				adventureTable.updateAdventures(cpq.getQuestDescription(), cpq.getAdventureList());
+				adventureTable.updateAdventures(cpq.getQuestDescription(), cpq.getExpireDate().toString(), cpq.getAdventureList());
 				super.clicked(event, x, y);
 			}
 		};

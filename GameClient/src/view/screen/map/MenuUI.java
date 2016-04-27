@@ -1,9 +1,7 @@
 package view.screen.map;
 import java.util.ArrayList;
-
 import view.screen.OverlayingScreen;
 import view.screen.SkinPicker;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 /**
  * MenuUI.java UI for the Menu
  * 
- * @author Zachary & Abdul
+ * @author Zachary & Abdul, Ian Keefer, TJ Renninger
  *
  */
 public class MenuUI extends Group
@@ -43,26 +41,27 @@ public class MenuUI extends Group
 	}
 	
 	/**
-	 * @param overlayingScreen
-	 * @param text
+	 * @param overlayingScreen That is to be toggled with the MenuUI
+	 * @param text To display on the button
 	 */
 	public void addOverlayScreenToggle(final OverlayingScreen overlayingScreen, String text)
 	{
 		overlayingScreens.add(overlayingScreen);
-		ButtonStyle style = skin.get(ButtonStyle.class);
-		Button b = new Button(style);
-		b.add(new Label(text, skin));
-		b.addListener(new ClickListener()
+		ClickListener listener = new ClickListener()
 		{
 			@Override
 			public void clicked(InputEvent event, float x, float y) 
 			{
+				boolean wasVisible = overlayingScreen.isVisible();
 				closeAllOverlayingScreens();
-				overlayingScreen.toggleVisibility();
+				if (!wasVisible)
+				{
+					overlayingScreen.toggleVisibility();
+				}
 				super.clicked(event, x, y);
 			}
-		});
-		tabs.add(b);
+		};
+		addButton(text, listener);
 	}
 
 	/**
@@ -79,7 +78,7 @@ public class MenuUI extends Group
 	}
 	
 	/**
-	 * 
+	 * Closes all open overlaying screen.
 	 */
 	public void closeAllOverlayingScreens()
 	{

@@ -172,7 +172,7 @@ public class QuestUI extends OverlayingScreen implements QualifiedObserver
 			questList = r.getClientPlayerQuestList();
 			questTable.updateQuests(questList);
 			ClientPlayerQuest firstQuest= questList.get(0);
-			adventureTable.updateAdventures(firstQuest.getQuestDescription(), firstQuest.getAdventureList());
+			adventureTable.updateAdventures(firstQuest.getQuestDescription(), firstQuest.getExpireDate().toString(), firstQuest.getAdventureList());
 		}
 	}
 
