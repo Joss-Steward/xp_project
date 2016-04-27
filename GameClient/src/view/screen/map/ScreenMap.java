@@ -454,6 +454,14 @@ public class ScreenMap extends ScreenBasic
 					
 					return true;
 				}
+				if (keycode == Keys.ESCAPE)
+				{
+					if (stage.getKeyboardFocus() == chatArea.messageBox)
+					{
+						stage.setKeyboardFocus(null);
+					}
+					return true;
+				}
 				return false;
 			}
 
