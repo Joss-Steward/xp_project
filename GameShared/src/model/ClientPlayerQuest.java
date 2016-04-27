@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 import data.QuestStateEnum;
 
@@ -21,6 +22,7 @@ public class ClientPlayerQuest implements Serializable
 	private int questID;
     private String questTitle;
 	private String questDescription;
+	private Date expireDate;
 	private QuestStateEnum state;
 	private ArrayList<ClientPlayerAdventure> adventures = new ArrayList<ClientPlayerAdventure>();
 	private int experiencePointsGained;
@@ -36,8 +38,10 @@ public class ClientPlayerQuest implements Serializable
 	 * @param experiencePointsGained the number of experience you get when you fulfill this quest
 	 * @param adventuresToFulfillment the number of adventures required to fulfill this quest
 	 * @param needingNotification true if the player needs to be notified of this quest state
+	 * @param expireDate date the quest expires
 	 */
-	public ClientPlayerQuest(int questID, String questTitle, String questDescription, QuestStateEnum state, int experiencePointsGained, int adventuresToFulfillment, boolean needingNotification)
+	public ClientPlayerQuest(int questID, String questTitle, String questDescription, QuestStateEnum state
+	        , int experiencePointsGained, int adventuresToFulfillment, boolean needingNotification, Date expireDate)
 	{
 		this.questID = questID;
 		this.questTitle = questTitle;
@@ -46,6 +50,7 @@ public class ClientPlayerQuest implements Serializable
 		this.experiencePointsGained = experiencePointsGained;
 		this.adventuresToFulfillment = adventuresToFulfillment;
 		this.needingNotification = needingNotification;
+		this.expireDate = expireDate;
 	}
 	/**
 	 * Add adventure to the list of ClientPlayerAdventures
@@ -200,6 +205,16 @@ public class ClientPlayerQuest implements Serializable
 	public void setState(QuestStateEnum newState) 
 	{
 		this.state = newState;
+	}
+	
+	
+	/**
+	 * Returns the date the quest expires
+	 * @return The date the quest expires
+	 */
+	public Date getExpireDate()
+	{   
+	    return expireDate;
 	}
 	
 }
