@@ -42,7 +42,7 @@ public class GameLibGDX extends Game
 			StateAccumulator stateAccumulator = new StateAccumulator(messagePackerSet);
 			
 			cm = new ConnectionManager(socket, stateAccumulator,
-					new MessageHandlerSet(stateAccumulator), messagePackerSet);
+					new MessageHandlerSet(stateAccumulator), messagePackerSet, false);
 			
 
 		} catch (IOException e)
