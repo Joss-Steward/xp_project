@@ -62,7 +62,7 @@ public class CommandAdventureStateChangeTest
 		int adventureID = 1;
 
 		ClientPlayerQuest q = new ClientPlayerQuest(questID, "questtitle", "silly quest",
-				QuestStateEnum.TRIGGERED, 3, 0, false);
+				QuestStateEnum.TRIGGERED, 3, 0, false, null);
 		ClientPlayerAdventure a1 = new ClientPlayerAdventure(adventureID, "adventure 1",
 				3, AdventureStateEnum.TRIGGERED, false, true, "Comrade", QuestStateEnum.AVAILABLE);
 		q.getAdventureList().add(a1);

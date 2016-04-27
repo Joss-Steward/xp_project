@@ -44,7 +44,8 @@ public class QuestTable extends OverlayingScreenTable
 	 */
 	private Label createQuestLabel(final ClientPlayerQuest cpq) 
 	{
-		Label l = new Label(cpq.getQuestTitle(), SkinPicker.getSkinPicker().getCrewSkin());
+	    String labelString = cpq.getQuestTitle() + cpq.getExpireDate().toString();
+		Label l = new Label(labelString, SkinPicker.getSkinPicker().getCrewSkin());
 		switch (cpq.getQuestState()) 
 		{
 		case TRIGGERED:

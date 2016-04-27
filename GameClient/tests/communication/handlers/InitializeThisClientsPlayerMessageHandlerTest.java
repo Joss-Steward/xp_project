@@ -70,7 +70,7 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
 		ClientPlayerQuest q = new ClientPlayerQuest(3, "questtitle", "stupid quest",
-				QuestStateEnum.TRIGGERED, 42, 133, true);
+				QuestStateEnum.TRIGGERED, 42, 133, true, null);
 		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", 5,
 				AdventureStateEnum.TRIGGERED, false, true, "My big toe", QuestStateEnum.AVAILABLE));
 		qList.add(q);
