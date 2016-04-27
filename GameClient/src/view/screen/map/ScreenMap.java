@@ -416,19 +416,6 @@ public class ScreenMap extends ScreenBasic
 				char ch = getCharForKey(event, keycode);
 				CommandKeyInputSent cmd = new CommandKeyInputSent("" + ch);
 				ClientModelFacade.getSingleton().queueCommand(cmd);
-				if (keycode == Keys.ENTER)
-				{
-					if (stage.getKeyboardFocus() == null)
-					{
-						stage.setKeyboardFocus(chatArea.messageBox);
-						return true;
-					}
-					else
-					{
-						stage.setKeyboardFocus(null);
-						return true;
-					}
-				}
 				if(keycode == Keys.Q) // Key to open the quest/adventure screen
 				{
 					if (stage.getKeyboardFocus() == null)
@@ -465,6 +452,14 @@ public class ScreenMap extends ScreenBasic
 						playerInfoUI.toggleVisibility();
 					}
 					
+					return true;
+				}
+				if (keycode == Keys.ESCAPE)
+				{
+					if (stage.getKeyboardFocus() == chatArea.messageBox)
+					{
+						stage.setKeyboardFocus(null);
+					}
 					return true;
 				}
 				return false;

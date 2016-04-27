@@ -140,7 +140,7 @@ public class ThisClientsPlayerTest
 		ClientPlayerAdventure a = new ClientPlayerAdventure(42, "Test Adventure ow2", 3,
 				AdventureStateEnum.HIDDEN, false, true, "Chair", QuestStateEnum.AVAILABLE);
 		ClientPlayerQuest qow = new ClientPlayerQuest(41, "quest title",
-				"Test Quest ow1", QuestStateEnum.HIDDEN, 42, 3, true);
+				"Test Quest ow1", QuestStateEnum.HIDDEN, 42, 3, true, null);
 
 		qow.addAdventure(a);
 
@@ -181,7 +181,7 @@ public class ThisClientsPlayerTest
 		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", 0,
 				AdventureStateEnum.COMPLETED, true, true, "Mom", QuestStateEnum.AVAILABLE);
 		ClientPlayerQuest q = new ClientPlayerQuest(1, "questtitle", "Test Quest 1",
-				QuestStateEnum.FINISHED, 1, 2, true);
+				QuestStateEnum.FINISHED, 1, 2, true, null);
 		q.addAdventure(a);
 		cp.addQuest(q);
 
@@ -214,7 +214,7 @@ public class ThisClientsPlayerTest
 		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", 0,
 				AdventureStateEnum.COMPLETED, true, true, "Fred", QuestStateEnum.AVAILABLE);
 		ClientPlayerQuest q = new ClientPlayerQuest(1, "quest title", "Test Quest 1",
-				QuestStateEnum.FINISHED, 1, 2, true);
+				QuestStateEnum.FINISHED, 1, 2, true, null);
 		q.addAdventure(a);
 		cp.addQuest(q);
 
