@@ -819,12 +819,14 @@ public class QuestManagerTest extends DatabaseTest
 		completionCriteria = (GameLocation) AdventuresForTest.QUEST6_ADVENTURE_2
 				.getCompletionCriteria();
 		hersh.setPlayerPosition(completionCriteria.getPosition());
+		
 		adventureState = QuestManager.getSingleton().getAdventureStateByID(
-				hersh.getPlayerID(), AdventuresForTest.QUEST6_ADVENTURE_1.getQuestID(),
-				AdventuresForTest.QUEST6_ADVENTURE_1.getAdventureID());
+				hersh.getPlayerID(), AdventuresForTest.QUEST6_ADVENTURE_2.getQuestID(),
+				AdventuresForTest.QUEST6_ADVENTURE_2.getAdventureID());
 		assertEquals(AdventureStateEnum.COMPLETED, adventureState.getState());
+		
 		questState = QuestManager.getSingleton().getQuestStateByID(hersh.getPlayerID(),
-				AdventuresForTest.QUEST6_ADVENTURE_1.getQuestID());
+				AdventuresForTest.QUEST6_ADVENTURE_2.getQuestID());
 		assertEquals(QuestStateEnum.FINISHED, questState.getStateValue());
 		assertEquals(QuestsForTest.TELEPORT_QUEST.getExperienceGained()
 				+ AdventuresForTest.QUEST6_ADVENTURE_1.getExperiencePointsGained()

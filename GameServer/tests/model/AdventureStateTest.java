@@ -108,7 +108,7 @@ public class AdventureStateTest extends DatabaseTest
 		AdventureState adventure = new AdventureState(1, AdventureStateEnum.TRIGGERED,
 				false);
 		
-		  questState = new QuestState(19, 8, QuestStateEnum.TRIGGERED, false);
+		  questState = new QuestState(19, 6, QuestStateEnum.TRIGGERED, false);
 	        
 	       ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
 	        adventureList.add(adventure);        
@@ -350,7 +350,7 @@ public class AdventureStateTest extends DatabaseTest
      * @throws IllegalQuestChangeException
      *             thrown if changing to a wrong state
      */
-    @Test(expected = IllegalAdventureChangeException.class)
+	@Test
     public void testExpiredQuestHiddenAdventureNotTriggered() throws IllegalAdventureChangeException,
             DatabaseException, IllegalQuestChangeException
     {
@@ -379,7 +379,7 @@ public class AdventureStateTest extends DatabaseTest
      * @throws IllegalQuestChangeException
      *             thrown if changing to a wrong state
      */
-    @Test(expected = IllegalAdventureChangeException.class)
+    @Test
     public void testExpiredQuestTriggeredAdventureNotComplete() throws IllegalAdventureChangeException,
             DatabaseException, IllegalQuestChangeException
     {
@@ -393,7 +393,7 @@ public class AdventureStateTest extends DatabaseTest
         adventureList.add(adventure);        
         questState.addAdventures(adventureList);
 
-        adventure.changeState(AdventureStateEnum.TRIGGERED, false);
+        adventure.changeState(AdventureStateEnum.COMPLETED, false);
         assertEquals(AdventureStateEnum.EXPIRED, adventure.getState());
     }
 }

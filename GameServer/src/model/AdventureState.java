@@ -132,14 +132,18 @@ public class AdventureState
 	public void complete() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException
 	{
 	    changeState(AdventureStateEnum.COMPLETED, true);
-		PlayerManager.getSingleton()
-				.getPlayerFromID(this.parentQuestState.getPlayerID())
-				.addExperiencePoints(
-						QuestManager.getSingleton()
-								.getAdventure(this.parentQuestState.getID(),
-										adventureID)
-								.getExperiencePointsGained());
-		this.parentQuestState.checkForFulfillmentOrFinished();
+	    if(parentQuestState.getStateValue() != QuestStateEnum.EXPIRED)
+	    {
+    		PlayerManager.getSingleton()
+    				.getPlayerFromID(this.parentQuestState.getPlayerID())
+    				.addExperiencePoints(
+    						QuestManager.getSingleton()
+    								.getAdventure(this.parentQuestState.getID(),
+    										adventureID)
+    								.getExperiencePointsGained());
+	    }
+    		this.parentQuestState.checkForFulfillmentOrFinished();
+	    
 	}
 
 	/**
@@ -173,11 +177,15 @@ public class AdventureState
 	 */
 	protected void changeState(AdventureStateEnum state, boolean needingNotification) throws IllegalAdventureChangeException, DatabaseException, IllegalQuestChangeException 
 	{
-	    if(this.parentQuestState.getStateValue() == QuestStateEnum.EXPIRED && adventureState != AdventureStateEnum.COMPLETED)
+	    if(this.parentQuestState.getStateValue() == QuestStateEnum.EXPIRED)  
 	    {
-	        adventureState = AdventureStateEnum.EXPIRED;
-	    }	    
-		if((this.adventureState.equals(AdventureStateEnum.HIDDEN) && state.equals(AdventureStateEnum.TRIGGERED)) 
+	        if(!adventureIsExpiredOrCompleted())
+	        {
+	            this.adventureState = AdventureStateEnum.EXPIRED;
+	        }
+	       
+	    }
+	    else if((this.adventureState.equals(AdventureStateEnum.HIDDEN) && state.equals(AdventureStateEnum.TRIGGERED)) 
 				|| (this.adventureState.equals(AdventureStateEnum.TRIGGERED) && state.equals(AdventureStateEnum.COMPLETED))) 
 		{
 			this.adventureState = state;
@@ -192,11 +200,20 @@ public class AdventureState
 								adventure.getAdventureDescription(), adventureState, adventure.isRealLifeAdventure(), adventure.getCompletionCriteria().toString()));
 			}
 		}
-		else
+	    else
 		{
 			throw new IllegalAdventureChangeException(this.adventureState, state);
 		}
 	}
+
+    private boolean adventureIsExpiredOrCompleted()
+    {
+        if(this.adventureState == AdventureStateEnum.COMPLETED || this.adventureState == AdventureStateEnum.EXPIRED)
+        {
+            return true;
+        }
+        return false;
+    }
 
 	/**
 	 * Set needing notification to false
