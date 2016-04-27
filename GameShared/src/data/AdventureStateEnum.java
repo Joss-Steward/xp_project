@@ -21,7 +21,13 @@ public enum AdventureStateEnum
 	/**
 	 * Player has been notified, nothing left to do.
 	 */
-	COMPLETED("is completed");
+	COMPLETED("is completed"),
+	
+	/**
+	 * Adventure has expired because quest is expired
+	 */
+	EXPIRED("is expired");
+	
 
 	private String description;
 	

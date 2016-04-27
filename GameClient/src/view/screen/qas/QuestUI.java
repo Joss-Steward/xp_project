@@ -144,7 +144,8 @@ public class QuestUI extends OverlayingScreen implements QualifiedObserver
 	/**
 	 * Toggle the invisibility of the quest list
 	 */
-	public void toggleQAScreenVisible()
+	@Override
+	public void toggleVisibility()
 	{
 		VisibleAction action;
 		if (isVisible())

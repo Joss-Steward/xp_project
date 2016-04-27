@@ -48,7 +48,8 @@ public class HighScoreUI extends OverlayingScreen implements QualifiedObserver
 	/**
 	 * Toggle the invisibility of the highscore list
 	 */
-	public void toggleHSScreenVisible()
+	@Override
+	public void toggleVisibility()
 	{
 		if (isVisible())
 		{

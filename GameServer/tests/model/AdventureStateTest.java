@@ -105,10 +105,19 @@ public class AdventureStateTest extends DatabaseTest
 	public void testTriggerNonHiddenAdventure() throws IllegalAdventureChangeException,
 			DatabaseException, IllegalQuestChangeException
 	{
-		AdventureState adventure = new AdventureState(1, AdventureStateEnum.COMPLETED,
+		AdventureState adventure = new AdventureState(1, AdventureStateEnum.TRIGGERED,
 				false);
+		
+		  questState = new QuestState(19, 6, QuestStateEnum.TRIGGERED, false);
+	        
+	       ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
+	        adventureList.add(adventure);        
+	        questState.addAdventures(adventureList);
+
+	        adventure.changeState(AdventureStateEnum.TRIGGERED, false);
+	        assertEquals(AdventureStateEnum.TRIGGERED, adventure.getState());
 		adventure.trigger();
-		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
+		assertEquals(AdventureStateEnum.TRIGGERED, adventure.getState());
 	}
 
 	/**
@@ -329,4 +338,62 @@ public class AdventureStateTest extends DatabaseTest
 
 		EasyMock.verify(obs);
 	}
+	
+	
+	/**
+     * Test that expired quest hidden adventures can not be triggered
+     * 
+     * @throws IllegalAdventureChangeException
+     *             thrown if changing to a wrong state
+     * @throws DatabaseException
+     *             shouldn't
+     * @throws IllegalQuestChangeException
+     *             thrown if changing to a wrong state
+     */
+	@Test
+    public void testExpiredQuestHiddenAdventureNotTriggered() throws IllegalAdventureChangeException,
+            DatabaseException, IllegalQuestChangeException
+    {
+        PlayerManager.getSingleton().addPlayer(19);
+        questState = new QuestState(19, 8, QuestStateEnum.EXPIRED, false);
+
+        AdventureState adventure = new AdventureState(1, AdventureStateEnum.HIDDEN,
+                false);
+        
+        ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
+        adventureList.add(adventure);        
+        questState.addAdventures(adventureList);
+
+        adventure.changeState(AdventureStateEnum.TRIGGERED, false);
+        assertEquals(AdventureStateEnum.EXPIRED, adventure.getState());
+    }
+    
+    
+    /**
+     * Test that expired quest triggered adventures can not be completed
+     * 
+     * @throws IllegalAdventureChangeException
+     *             thrown if changing to a wrong state
+     * @throws DatabaseException
+     *             shouldn't
+     * @throws IllegalQuestChangeException
+     *             thrown if changing to a wrong state
+     */
+    @Test
+    public void testExpiredQuestTriggeredAdventureNotComplete() throws IllegalAdventureChangeException,
+            DatabaseException, IllegalQuestChangeException
+    {
+        PlayerManager.getSingleton().addPlayer(19);
+        questState = new QuestState(19, 8, QuestStateEnum.EXPIRED, false);
+
+        AdventureState adventure = new AdventureState(1, AdventureStateEnum.TRIGGERED,
+                false);
+        
+        ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
+        adventureList.add(adventure);        
+        questState.addAdventures(adventureList);
+
+        adventure.changeState(AdventureStateEnum.COMPLETED, false);
+        assertEquals(AdventureStateEnum.EXPIRED, adventure.getState());
+    }
 }

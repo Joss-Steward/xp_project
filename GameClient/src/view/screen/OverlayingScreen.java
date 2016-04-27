@@ -60,5 +60,10 @@ public abstract class OverlayingScreen extends Group
 	{
 		return (Gdx.graphics.getHeight() - getMyHeight()) / 1.1f;
 	}
+	
+	/**
+	 * Handles making the overlay screen toggling is visibility.
+	 */
+	public abstract void toggleVisibility();
 
 }
