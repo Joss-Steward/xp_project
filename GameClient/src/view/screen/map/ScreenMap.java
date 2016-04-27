@@ -460,7 +460,15 @@ public class ScreenMap extends ScreenBasic
 					{
 						stage.setKeyboardFocus(null);
 					}
+					menuArea.closeAllOverlayingScreens();
 					return true;
+				}
+				if (keycode == Keys.C)
+				{
+					if (stage.getKeyboardFocus() == null)
+					{
+						chatArea.setVisible(!chatArea.isVisible());
+					}
 				}
 				return false;
 			}

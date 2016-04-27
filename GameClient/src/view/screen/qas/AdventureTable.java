@@ -29,12 +29,13 @@ public class AdventureTable extends OverlayingScreenTable
 	/**
 	 * Updates the adventure table when a new quest is selected.
 	 * @param questDesc The description of the quest
+	 * @param expire The expiration date of the quest
 	 * @param adventureList The list of adventures the quest has
 	 */
-	public void updateAdventures(String questDesc, ArrayList<ClientPlayerAdventure> adventureList)
+	public void updateAdventures(String questDesc, String expire, ArrayList<ClientPlayerAdventure> adventureList)
 	{
 		container.clear();
-		Label l = new Label(questDesc + "\n\nAdventures:\n", SkinPicker.getSkinPicker().getCrewSkin());
+		Label l = new Label(questDesc + "\nExpires: " + expire + "\n\nAdventures:\n", SkinPicker.getSkinPicker().getCrewSkin());
 		l.setWrap(true);
 		container.add(l).left().top().width(container.getWidth() - getPadding() * 4f);		//Width is used to tell the label when to wrap its text.
 		container.row();
