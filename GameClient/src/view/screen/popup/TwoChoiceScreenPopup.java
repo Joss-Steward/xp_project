@@ -1,6 +1,8 @@
 package view.screen.popup;
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -8,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 import view.screen.SkinPicker;
+import view.screen.popup.OneChoiceScreenPopUp.ExitDialog;
 
 /**
  * TwoChoiceScreenPopup.java
@@ -15,9 +18,11 @@ import view.screen.SkinPicker;
  * @author Zachary Thompson & Abdullah Alsuwailem
  *
  */
-public class TwoChoiceScreenPopup {
-	private final static Skin skin = SkinPicker.getSkinPicker().getCrewSkin();
-	
+public class TwoChoiceScreenPopup extends Group implements ScreenPopUp
+{
+	private final static Skin skin = new Skin (Gdx.files.internal("data/uiskin.json"));
+	private ExitDialog pop_close;
+	private Stage stage;
 	/**
 	 * Basic constructor. will call showPopUp() to initialize all the data in the tables
 	 * @param description for text in popup
@@ -29,13 +34,22 @@ public class TwoChoiceScreenPopup {
 	 */
 	public TwoChoiceScreenPopup(String description, String button1, String button2, Stage stage, PopupBehavior behavior1, PopupBehavior behavior2)
 	{
-		ExitDialog pop_close = new ExitDialog(description, button1, button2, behavior1, behavior2);
+		pop_close = new ExitDialog(description, button1, button2, behavior1, behavior2);
+		this.stage = stage;
+	}
+	
+	/**
+	 * Show this dialog on screen
+	 */
+	public void showDialog()
+	{
 		pop_close.show(stage);
+		stage.setKeyboardFocus(pop_close);
 	}
 	
 	
 	/**
-	 * @author sl6469
+	 * @author Zachary Thompson & Abdul
 	 *
 	 */
 	public static class ExitDialog extends Dialog

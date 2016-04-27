@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 import model.OptionsManager;
+import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 import model.reports.LogoutReport;
@@ -78,7 +79,7 @@ public class ConnectionManager implements QualifiedObserver
 		// for simplictly
 		// T.setDaemon(true);
 		incomingThread.start();
-
+		QualifiedObservableConnector.getSingleton().registerObserver(this, LogoutReport.class);
 	}
 
 	/**
