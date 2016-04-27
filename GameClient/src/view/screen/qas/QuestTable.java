@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 public class QuestTable extends OverlayingScreenTable
 {
 	private AdventureTable adventureTable;
-	
+	private String blue_hex = "00FFFF";
 	/**
 	 * @param questList The list of quest that the player has
 	 * @param scrollable Whether or not the the overlaying screen table is scrollable
@@ -49,7 +49,7 @@ public class QuestTable extends OverlayingScreenTable
 		switch (cpq.getQuestState()) 
 		{
 		case TRIGGERED:
-			l.setColor(Color.valueOf("e6853c"));
+			l.setColor(Color.valueOf(blue_hex));
 			break;
 		case FULFILLED:
 			l.setColor(Color.YELLOW);

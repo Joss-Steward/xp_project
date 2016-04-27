@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 public class LegendTable extends ScrollPane
 {
 		private Table table;
+		private String blue_hex = "00FFFF";
 		
 		/**
 		 * Table that displays all of the adventures of a selected quest for the player
@@ -44,7 +45,7 @@ public class LegendTable extends ScrollPane
 			label.setColor(Color.YELLOW);
 			table.add(label).right().padRight(10f);
 			label = new Label("In Progress", SkinPicker.getSkinPicker().getCrewSkin());
-			label.setColor(Color.valueOf("e6853c"));
+			label.setColor(Color.valueOf(blue_hex));
 			table.add(label).right().padRight(10f);
 			label = new Label("Expired", SkinPicker.getSkinPicker().getCrewSkin());
 			label.setColor(Color.BLACK);

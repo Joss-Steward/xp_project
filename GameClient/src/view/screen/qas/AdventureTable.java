@@ -16,6 +16,7 @@ import data.QuestStateEnum;
  */
 public class AdventureTable extends OverlayingScreenTable
 {	
+	private String blue_hex = "00FFFF";
 	/**
 	 * Table that displays all of the adventures of a selected quest for the player
 	 * @param scrollable Whether or not the the overlaying screen table is scrollable
@@ -73,7 +74,7 @@ public class AdventureTable extends OverlayingScreenTable
         }
 		else
 		{
-			l.setColor(Color.valueOf("e6853c"));
+			l.setColor(Color.valueOf(blue_hex));
 		}
 		return l;
 	}
