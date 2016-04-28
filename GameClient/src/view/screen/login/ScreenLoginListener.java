@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import model.QualifiedObservableReport;
 import model.reports.LoginFailedReport;
 import model.reports.LoginInitiatedReport;
+import model.reports.LogoutReport;
 import model.reports.PinFailedReport;
 import view.screen.ScreenListener;
 import view.screen.Screens;
@@ -54,6 +55,11 @@ public class ScreenLoginListener extends ScreenListener
 			this.switchToScreen(Screens.LOGIN_SCREEN);
 		}
 
+		if(arg.getClass().equals(LogoutReport.class))
+		{
+			
+			this.switchToScreen(Screens.LOGIN_SCREEN);
+		}
 
 	}
 
@@ -67,6 +73,7 @@ public class ScreenLoginListener extends ScreenListener
 		reportTypes.add(LoginInitiatedReport.class);
 		reportTypes.add(LoginFailedReport.class);
 		reportTypes.add(PinFailedReport.class);
+		reportTypes.add(LogoutReport.class);
 		return reportTypes;
 	}
 

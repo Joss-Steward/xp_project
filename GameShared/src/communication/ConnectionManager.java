@@ -232,6 +232,7 @@ public class ConnectionManager implements QualifiedObserver
 	     {
 			try
 			{
+				
 				moveToNewSocket(new Socket(OptionsManager.getSingleton().getLoginHost(), 1871));
 
 			} catch (IOException e)
