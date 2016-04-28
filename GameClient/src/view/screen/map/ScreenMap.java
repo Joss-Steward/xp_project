@@ -594,7 +594,7 @@ public class ScreenMap extends ScreenBasic
 			{
 				popUpDisplay.addWaitingPopUp(new TwoChoiceScreenPopup("Are you sure you want to logout?", "Yes", "No", 
 						stage, new LogoutNotificationBehavior(), null));
-				
+				popUpDisplay.showNextPopUp();
 			}
 		};
 	}

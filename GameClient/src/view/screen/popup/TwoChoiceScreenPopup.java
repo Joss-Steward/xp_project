@@ -9,9 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
-import view.screen.SkinPicker;
-import view.screen.popup.OneChoiceScreenPopUp.ExitDialog;
-
 /**
  * TwoChoiceScreenPopup.java
  * Method for the creation of a popup with two options

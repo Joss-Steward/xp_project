@@ -59,6 +59,7 @@ public class ScreenLoginListener extends ScreenListener
 		{
 			
 			this.switchToScreen(Screens.LOGIN_SCREEN);
+			Screens.MAP_SCREEN.getScreen().dispose();
 		}
 
 	}

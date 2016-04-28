@@ -135,7 +135,10 @@ public class PopUpDisplay implements QualifiedObserver
 		}
 	}
 	
-	private void showNextPopUp()
+	/**
+	 * causes the next popUp to be shown;
+	 */
+	public void showNextPopUp()
 	{
 		if (waitingPopUps.size() > 0)
 		{
