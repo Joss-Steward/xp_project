@@ -44,7 +44,7 @@ public class MenuUI extends Group
 	 * @param overlayingScreen That is to be toggled with the MenuUI
 	 * @param text To display on the button
 	 */
-	public void addOverlayScreenToggle(final OverlayingScreen overlayingScreen, String text)
+	public void addOverlayingScreenToggle(final OverlayingScreen overlayingScreen, String text)
 	{
 		overlayingScreens.add(overlayingScreen);
 		ClickListener listener = new ClickListener()
