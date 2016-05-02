@@ -571,9 +571,9 @@ public class ScreenMap extends ScreenBasic
 		highScoreUI = new HighScoreUI();
 		playerInfoUI = new PlayerInfoUI();
 		menuArea = new MenuUI();
-		menuArea.addOverlayScreenToggle(qaScreen, "Q");
-		menuArea.addOverlayScreenToggle(highScoreUI, "H");
-		menuArea.addOverlayScreenToggle(playerInfoUI, "P");
+		menuArea.addOverlayingScreenToggle(qaScreen, "Q");
+		menuArea.addOverlayingScreenToggle(highScoreUI, "H");
+		menuArea.addOverlayingScreenToggle(playerInfoUI, "P");
 		menuArea.addButton("Logout", logoutClickListener());
 		stage.addActor(highScoreUI);
 		stage.addActor(playerInfoUI);
