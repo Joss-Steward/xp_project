@@ -57,7 +57,9 @@ public class ConnectionManager implements QualifiedObserver
 	 *            the set of MessagePackers that will pack notifications from
 	 *            the model into outgoing messages
 	 * @param watchForSocketClosure
-	 *            
+	 *            true if we should shut things down when the socket gets closed
+	 *            by the other side
+	 * 
 	 * @throws IOException
 	 *             caused by socket issues
 	 */
@@ -97,7 +99,8 @@ public class ConnectionManager implements QualifiedObserver
 			watcherThread = new Thread(cl);
 			watcherThread.start();
 		}
-		QualifiedObservableConnector.getSingleton().registerObserver(this, LogoutReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(this,
+				LogoutReport.class);
 	}
 
 	/**
@@ -135,7 +138,7 @@ public class ConnectionManager implements QualifiedObserver
 			// T.setDaemon(true);
 			incomingThread.start();
 		}
-		
+
 	}
 
 	/**
@@ -167,7 +170,7 @@ public class ConnectionManager implements QualifiedObserver
 		// for simplictly
 		// T.setDaemon(true);
 		incomingThread.start();
-		
+
 	}
 
 	/**
@@ -222,23 +225,24 @@ public class ConnectionManager implements QualifiedObserver
 		}
 	}
 
-	/** 
+	/**
 	 * Receives a logout report and connects to the login server
 	 */
 	@Override
-	public void receiveReport(QualifiedObservableReport report) 
+	public void receiveReport(QualifiedObservableReport report)
 	{
-		 if (report.getClass() == LogoutReport.class)
-	     {
+		if (report.getClass() == LogoutReport.class)
+		{
 			try
 			{
-				
-				moveToNewSocket(new Socket(OptionsManager.getSingleton().getLoginHost(), 1871));
+
+				moveToNewSocket(new Socket(OptionsManager.getSingleton().getLoginHost(),
+						1871));
 
 			} catch (IOException e)
 			{
 				e.printStackTrace();
-			} 
-	     }	
+			}
+		}
 	}
 }
