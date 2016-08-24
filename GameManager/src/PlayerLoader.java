@@ -16,6 +16,7 @@ public class PlayerLoader
 	private static int[] EXISTING_QUEST_IDS = {1,2,3,4,5,6,7,8,100,101};
 	public static void main(String[] args) throws DatabaseException
 	{
+		// need to reinitialize the red hat
 		OptionsManager.getSingleton().setUsingTestDB(false);
 		OptionsManager.getSingleton().setTestMode(false);
 		
@@ -30,7 +31,7 @@ public class PlayerLoader
 		QuestStateTableDataGateway gateway = QuestStateTableDataGatewayRDS.getSingleton();
 		for (int qestID:EXISTING_QUEST_IDS)
 		{
-			gateway.createRow(1, qestID, QuestStateEnum.HIDDEN, false);
+			gateway.createRow(1, qestID, QuestStateEnum.AVAILABLE, false);
 		}
 	}
 

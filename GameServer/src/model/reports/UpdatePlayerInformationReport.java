@@ -3,6 +3,7 @@ package model.reports;
 import java.util.ArrayList;
 
 import data.AdventureRecord;
+import data.QuestStateEnum;
 import datasource.DatabaseException;
 import datasource.LevelRecord;
 import model.AdventureState;
@@ -65,16 +66,21 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 		{
 			for (QuestState qs : questStateList)
 			{
-				int questID = qs.getID();
-				Quest quest = QuestManager.getSingleton().getQuest(questID);
+				if (qs.getStateValue() != QuestStateEnum.AVAILABLE
+						&& qs.getStateValue() != QuestStateEnum.HIDDEN)
+				{
+					int questID = qs.getID();
+					Quest quest = QuestManager.getSingleton().getQuest(questID);
 
-				ClientPlayerQuest clientQuest = new ClientPlayerQuest(quest.getQuestID(),
-						quest.getTitle(), quest.getDescription(), qs.getStateValue(),
-						quest.getExperiencePointsGained(),
-						quest.getAdventuresForFulfillment(), qs.isNeedingNotification(), quest.getEndDate());
-				clientQuest.setAdventures(combineAdventure(quest, qs));
+					ClientPlayerQuest clientQuest = new ClientPlayerQuest(
+							quest.getQuestID(), quest.getTitle(), quest.getDescription(),
+							qs.getStateValue(), quest.getExperiencePointsGained(),
+							quest.getAdventuresForFulfillment(),
+							qs.isNeedingNotification(), quest.getEndDate());
+					clientQuest.setAdventures(combineAdventure(quest, qs));
 
-				clientPlayerQuestList.add(clientQuest);
+					clientPlayerQuestList.add(clientQuest);
+				}
 			}
 		}
 	}
@@ -88,7 +94,8 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 			AdventureRecord adventure = quest.getAdventureD(adventureID);
 			ca.add(new ClientPlayerAdventure(a.getID(), adventure
 					.getAdventureDescription(), adventure.getExperiencePointsGained(), a
-					.getState(), a.isNeedingNotification(), adventure.isRealLifeAdventure(), adventure.getCompletionCriteria().toString(),
+					.getState(), a.isNeedingNotification(), adventure
+					.isRealLifeAdventure(), adventure.getCompletionCriteria().toString(),
 					qs.getStateValue()));
 		}
 
