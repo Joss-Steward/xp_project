@@ -18,7 +18,13 @@ public class PlayerLoader
 	{
 		OptionsManager.getSingleton().setUsingTestDB(false);
 		OptionsManager.getSingleton().setTestMode(false);
-		new PlayerRowDataGatewayRDS(new Position(11,17),"male_a",0,0,Crew.OUT_OF_BOUNDS,Major.SOFTWARE_ENGINEERING);
+		
+		PlayerRowDataGatewayRDS.createTable();
+		PlayerLoginRowDataGatewayRDS.createPlayerLoginTable();
+		PlayerConnectionRowDataGatewayRDS.createPlayerConnectionTable();
+		QuestStateTableDataGatewayRDS.getSingleton().createTable();
+		
+		new PlayerRowDataGatewayRDS(new Position(11,7),"male_a",0,0,Crew.OUT_OF_BOUNDS,Major.SOFTWARE_ENGINEERING);
 		new PlayerLoginRowDataGatewayRDS( "NEWBIE" , "pw" );
 		new PlayerConnectionRowDataGatewayRDS(1, 111, "sortingRoom.tmx");
 		QuestStateTableDataGateway gateway = QuestStateTableDataGatewayRDS.getSingleton();
