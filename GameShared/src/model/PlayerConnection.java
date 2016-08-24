@@ -140,6 +140,7 @@ public class PlayerConnection
 				return false;
 			}
 			expirationTime = parseTimeString(changedOn);
+			expirationTime.add(Calendar.HOUR, 4);
 		} catch (DatabaseException e)
 		{
 			return true;

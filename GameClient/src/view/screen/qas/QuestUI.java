@@ -50,30 +50,43 @@ public class QuestUI extends OverlayingScreen implements QualifiedObserver
 		super();
 		questList = new ArrayList<ClientPlayerQuest>();
 		setUpListening();
-		
+
 		questTable = new QuestTable(questList, true);
 		adventureTable = new AdventureTable(true);
 		legendTable = new LegendTable();
-		questTable.setAdventureTable(adventureTable);  					//Set the adventure table so that when a quest is clicked it can update it.
-		
+		questTable.setAdventureTable(adventureTable); // Set the adventure table
+														// so that when a quest
+														// is clicked it can
+														// update it.
+
 		//
 		subContainer = new Table();
-		subContainer.add(questTable).width(.40f * WIDTH).height(.90f * HEIGHT); 	//Add quest table and tell it how much space to take;
+		subContainer.add(questTable).width(.40f * WIDTH).height(.90f * HEIGHT); // Add
+																				// quest
+																				// table
+																				// and
+																				// tell
+																				// it
+																				// how
+																				// much
+																				// space
+																				// to
+																				// take;
 		subContainer.add(adventureTable).width(.60f * WIDTH).height(.90f * HEIGHT);
 		container.add(subContainer);
 		container.row();
 		subContainer = new Table();
 		subContainer.add(legendTable).width(.90f * WIDTH);
-		
-		//Make the print button
+
+		// Make the print button
 		printButton = new TextButton("Print", SkinPicker.getSkinPicker().getCrewSkin());
-		//printButton.right();
+		// printButton.right();
 		subContainer.add(printButton).width(.10f * WIDTH);
 		addPrintButtonListener();
 		container.add(subContainer);
 
 	}
-		
+
 	/**
 	 * Sets up the QualifiedObserver for QuestStateReport
 	 */
@@ -82,29 +95,48 @@ public class QuestUI extends OverlayingScreen implements QualifiedObserver
 		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
 		cm.registerObserver(this, QuestStateReport.class);
 	}
-	
+
 	/**
-	 * When the print button is click, this handles creating a new file chooser and then
-	 * sends the print command if a valid file is chosen.
+	 * When the print button is click, this handles creating a new file chooser
+	 * and then sends the print command if a valid file is chosen.
 	 */
 	private void addPrintButtonListener()
 	{
 		printButton.addListener(new ClickListener()
 		{
 			@Override
-			public void clicked(InputEvent event, float x, float y) 
+			public void clicked(InputEvent event, float x, float y)
 			{
-				JFileChooser fileChooser = openFileChooser();			//Creates a new file chooser, set up the way we need it
-				int option = fileChooser.showOpenDialog(null);			//Records the button that the user clicked
-				if (option == JFileChooser.APPROVE_OPTION)				//Only save the file is the user clicks "Save" not "Cancel"
+				JFileChooser fileChooser = openFileChooser(); // Creates a new
+																// file chooser,
+																// set up the
+																// way we need
+																// it
+				int option = fileChooser.showOpenDialog(null); // Records the
+																// button that
+																// the user
+																// clicked
+				if (option == JFileChooser.APPROVE_OPTION) // Only save the file
+															// is the user
+															// clicks "Save" not
+															// "Cancel"
 				{
-					File file = fileChooser.getSelectedFile();			//Gets the files the the user has chosen to save
-					String path = file.getAbsolutePath();				//Gets the absolute path of that chosen file
-					if (!path.toLowerCase().endsWith(".pdf"))			//Makes sure that the the file extension is PDF
+					File file = fileChooser.getSelectedFile(); // Gets the files
+																// the the user
+																// has chosen to
+																// save
+					String path = file.getAbsolutePath(); // Gets the absolute
+															// path of that
+															// chosen file
+					if (!path.toLowerCase().endsWith(".pdf")) // Makes sure that
+																// the the file
+																// extension is
+																// PDF
 					{
-						path += ".pdf";									//If the file extension is not PDF, it sets it to PDF
+						path += ".pdf"; // If the file extension is not PDF, it
+										// sets it to PDF
 					}
-					//Create and queues the print Adventures command
+					// Create and queues the print Adventures command
 					CommandPrintAdventures cpa = new CommandPrintAdventures(path);
 					ClientModelFacade.getSingleton().queueCommand(cpa);
 				}
@@ -112,34 +144,57 @@ public class QuestUI extends OverlayingScreen implements QualifiedObserver
 			}
 		});
 	}
-	
+
 	/**
-	 * Creates a file chooser with the filters and parameters that we need
-	 * for creating a pdf file for the quests and adventures.
+	 * Creates a file chooser with the filters and parameters that we need for
+	 * creating a pdf file for the quests and adventures.
+	 * 
 	 * @return The file chooser that is created
 	 */
 	private JFileChooser openFileChooser()
 	{
-		JFileChooser fileChooser = new JFileChooser();					//Sets up a new file chooser to
-		fileChooser.setDialogTitle("Print PDF");						//Sets the tile of the of the window that pops up to Print PDF
-		fileChooser.setApproveButtonText("Save");						//Set the button text to save instead of open
-		fileChooser.setApproveButtonToolTipText("Save selected file");	//Hovering over the save button will display this text
-		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);		//Makes it so that directories cannot be chosen
-		fileChooser.setCurrentDirectory(new File("~"));					//Sets the default save directory to the home directory
-		fileChooser.setFileFilter(new FileFilter() 						//Filers the type of files allowed
-		{
-			@Override
-			public String getDescription() 
-			{
-				return "PDF File (*.pdf)";								//Only PDF files are allowed
-			}															//This does not prevent the use of another file extension though
+		JFileChooser fileChooser = new JFileChooser(); // Sets up a new file
+														// chooser to
+		fileChooser.setDialogTitle("Print PDF"); // Sets the tile of the of the
+													// window that pops up to
+													// Print PDF
+		fileChooser.setApproveButtonText("Save"); // Set the button text to save
+													// instead of open
+		fileChooser.setApproveButtonToolTipText("Save selected file"); // Hovering
+																		// over
+																		// the
+																		// save
+																		// button
+																		// will
+																		// display
+																		// this
+																		// text
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // Makes it
+																	// so that
+																	// directories
+																	// cannot be
+																	// chosen
+		fileChooser.setCurrentDirectory(new File("~")); // Sets the default save
+														// directory to the home
+														// directory
+		fileChooser.setFileFilter(new FileFilter() // Filers the type of files
+													// allowed
+				{
+					@Override
+					public String getDescription()
+					{
+						return "PDF File (*.pdf)"; // Only PDF files are allowed
+					} // This does not prevent the use of another file extension
+						// though
 
-			@Override
-			public boolean accept(File f) { return true; }
-		});
+					@Override
+					public boolean accept(File f)
+					{
+						return true;
+					}
+				});
 		return fileChooser;
 	}
-	
 
 	/**
 	 * Toggle the invisibility of the quest list
@@ -171,8 +226,13 @@ public class QuestUI extends OverlayingScreen implements QualifiedObserver
 			QuestStateReport r = (QuestStateReport) report;
 			questList = r.getClientPlayerQuestList();
 			questTable.updateQuests(questList);
-			ClientPlayerQuest firstQuest= questList.get(0);
-			adventureTable.updateAdventures(firstQuest.getQuestDescription(), firstQuest.getExpireDate().toString(), firstQuest.getAdventureList());
+			if (questList.size() > 0)
+			{
+				ClientPlayerQuest firstQuest = questList.get(0);
+				adventureTable.updateAdventures(firstQuest.getQuestDescription(),
+						firstQuest.getExpireDate().toString(),
+						firstQuest.getAdventureList());
+			}
 		}
 	}
 

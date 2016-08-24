@@ -60,7 +60,7 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 
 			stmt = new ClosingPreparedStatement(
 					connection,
-					"Create TABLE Adventures (adventureID INT NOT NULL, adventureDescription VARCHAR(80), "
+					"Create TABLE Adventures (adventureID INT NOT NULL, adventureDescription VARCHAR(200), "
 							+ "questID INT NOT NULL, experiencePointsGained INT, completionType INT, completionCriteria BLOB, PRIMARY KEY(questID, adventureID))");
 			stmt.executeUpdate();
 		} catch (SQLException e)

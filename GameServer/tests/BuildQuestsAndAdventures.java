@@ -31,8 +31,8 @@ public class BuildQuestsAndAdventures
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
-		OptionsManager.getSingleton().setTestMode(false);
-		OptionsManager.getSingleton().setUsingTestDB(true);
+//		OptionsManager.getSingleton().setTestMode(false);
+//		OptionsManager.getSingleton().setUsingTestDB(false);
 		System.out.println("creating adventure table");
 		createAdventureTable();
 		System.out.println("creating quest table");
