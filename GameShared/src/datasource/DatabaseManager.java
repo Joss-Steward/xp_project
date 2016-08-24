@@ -97,7 +97,7 @@ public class DatabaseManager
 		}
 		try
 		{
-			connection = DriverManager.getConnection(url, "merlin","newPWD4merlin");//"program", "ShipSim");"
+			connection = DriverManager.getConnection(url, "merlin","newPWD4merlin");//"program", "ShipSim");
 			
 		} catch (SQLException e)
 		{

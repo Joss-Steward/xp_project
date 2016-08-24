@@ -549,6 +549,7 @@ public class ScreenMap extends ScreenBasic
 			boolean isThisClientsPlayer)
 	{
 		System.out.println("type is " + type.regionName);
+		System.out.println("position is " + pos.toString());
 		PlayerSprite sprite = playerFactory.create(type);
 		characterQueue.put(playerID, pos);
 		characters.put(playerID, sprite);
