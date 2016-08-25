@@ -38,11 +38,11 @@ public class DatabaseManager
 		if (OptionsManager.getSingleton().isUsingTestDB())
 		{
 			System.err.println("Opening test database\n");
-			openConnectionTo("jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players");
+			openConnectionTo("jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players", "program", "ShipSim");
 		} else
 		{
 			System.err.println("Opening production database\n");
-			openConnectionTo("jdbc:mysql://db.cs.ship.edu:3306/ShipSim");
+			openConnectionTo("jdbc:mysql://db.cs.ship.edu:3306/ShipSim", "merlin","newPWD4merlin");
 			try
 			{
 				connection.setAutoCommit(true);
@@ -86,7 +86,7 @@ public class DatabaseManager
 		return connection;
 	}
 
-	private void openConnectionTo(String url) throws DatabaseException
+	private void openConnectionTo(String url, String username, String passwd) throws DatabaseException
 	{
 		try
 		{
@@ -97,7 +97,7 @@ public class DatabaseManager
 		}
 		try
 		{
-			connection = DriverManager.getConnection(url, "merlin","newPWD4merlin");//"program", "ShipSim");
+			connection = DriverManager.getConnection(url, username, passwd);//"program", "ShipSim");
 			
 		} catch (SQLException e)
 		{
