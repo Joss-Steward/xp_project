@@ -264,9 +264,12 @@ public class QuestManager implements QualifiedObserver
 			int reportPlayerID = PM.getPlayerIDFromPlayerName(myReport.getSenderName());
 			ArrayList<QuestState> questStateList = qm.getQuestList(reportPlayerID);
 
-			for (QuestState q : questStateList)
+			if (questStateList != null)
 			{
-				checkAllAdventuresForCompletion(reportPlayerID, q);
+				for (QuestState q : questStateList)
+				{
+					checkAllAdventuresForCompletion(reportPlayerID, q);
+				}
 			}
 		} catch (PlayerNotFoundException e)
 		{

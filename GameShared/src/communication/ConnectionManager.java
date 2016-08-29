@@ -8,7 +8,7 @@ import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 import model.reports.LogoutReport;
-
+import model.reports.PlayerDisconnectedReport;
 import communication.handlers.MessageHandlerSet;
 import communication.messages.ConnectMessage;
 import communication.packers.MessagePackerSet;
@@ -94,6 +94,7 @@ public class ConnectionManager implements QualifiedObserver
 				public void run()
 				{
 					disconnect();
+					QualifiedObservableConnector.getSingleton().sendReport(new PlayerDisconnectedReport(stateAccumulator.getPlayerID()));
 				}
 			});
 			watcherThread = new Thread(cl);

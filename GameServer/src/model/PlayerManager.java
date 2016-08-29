@@ -12,6 +12,7 @@ import model.QualifiedObservableConnector;
 import model.reports.AddExistingPlayerReport;
 import model.reports.PinFailedReport;
 import model.reports.PlayerConnectionReport;
+import model.reports.PlayerDisconnectedReport;
 import model.reports.PlayerLeaveReport;
 import model.reports.TimeToLevelUpDeadlineReport;
 import model.reports.UpdatePlayerInformationReport;
@@ -24,7 +25,7 @@ import datasource.PlayerTableDataGatewayRDS;
  * @author Merlin
  * 
  */
-public class PlayerManager
+public class PlayerManager implements QualifiedObserver
 {
 	/**
 	 * @return the only PlayerManger in the system
@@ -64,6 +65,8 @@ public class PlayerManager
 	private PlayerManager() throws DatabaseException
 	{
 		players = new HashMap<Integer, Player>();
+		QualifiedObservableConnector.getSingleton().registerObserver(this,
+				PlayerDisconnectedReport.class);
 	}
 
 	/**
@@ -131,13 +134,13 @@ public class PlayerManager
 			QualifiedObservableConnector.getSingleton().sendReport(
 					new UpdatePlayerInformationReport(player));
 			tellNewPlayerAboutEveryoneElse(player);
-			
-			QualifiedObservableConnector.getSingleton().sendReport(
-                    new TimeToLevelUpDeadlineReport(player.getPlayerID(), 
-                            LevelManager.getSingleton().getLevelForPoints(player.getExperiencePoints()).getDeadlineDate(),
-                            "nothing"));
 
-			
+			QualifiedObservableConnector.getSingleton().sendReport(
+					new TimeToLevelUpDeadlineReport(player.getPlayerID(), LevelManager
+							.getSingleton()
+							.getLevelForPoints(player.getExperiencePoints())
+							.getDeadlineDate(), "nothing"));
+
 			return player;
 		} else
 		{
@@ -346,5 +349,30 @@ public class PlayerManager
 				QualifiedObservableConnector.getSingleton().sendReport(report);
 			}
 		}
+	}
+
+	/**
+	 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
+	 */
+	@Override
+	public void receiveReport(QualifiedObservableReport report)
+	{
+		if (report.getClass().equals(PlayerDisconnectedReport.class))
+		{
+			PlayerDisconnectedReport detailedReport = (PlayerDisconnectedReport)report;
+			try
+			{
+				removePlayer(detailedReport.getPlayerID());
+			} catch (DatabaseException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalQuestChangeException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 	}
 }

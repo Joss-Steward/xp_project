@@ -41,6 +41,12 @@ public class PlayerLoader
 		new PlayerLoginRowDataGatewayRDS("Red Hat", "");
 		new PlayerConnectionRowDataGatewayRDS(redHat.getPlayerID(), 111, "sortingRoom.tmx");
 		new NPCRowDataGatewayRDS(redHat.getPlayerID(), "model.RedHatBehavior");
+		// make the quizbot
+		PlayerRowDataGatewayRDS quizBot = new PlayerRowDataGatewayRDS(new Position(4, 19), "Magi", 0, 0,
+				Crew.OUT_OF_BOUNDS, Major.SOFTWARE_ENGINEERING);
+		new PlayerLoginRowDataGatewayRDS("QuizBot", "");
+		new PlayerConnectionRowDataGatewayRDS(quizBot.getPlayerID(), 111, "quiznasium.tmx");
+		new NPCRowDataGatewayRDS(quizBot.getPlayerID(), "model.QuizBotBehavior");
 		
 		PlayerRowDataGatewayRDS thisPlayer = new PlayerRowDataGatewayRDS(new Position(11, 7), "male_a", 0, 0,
 				Crew.OUT_OF_BOUNDS, Major.SOFTWARE_ENGINEERING);
