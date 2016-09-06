@@ -1,4 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import data.AdventureRecord;
 import data.AdventureStateEnum;
@@ -24,7 +27,7 @@ public class PlayerLoader
 	private static int[] EXISTING_QUEST_IDS =
 	{ 1, 2, 3, 4, 5, 6, 7, 8, 100, 101 };
 
-	public static void main(String[] args) throws DatabaseException
+	public static void main(String[] args) throws DatabaseException, FileNotFoundException
 	{
 		OptionsManager.getSingleton().setUsingTestDB(false);
 		OptionsManager.getSingleton().setTestMode(false);
@@ -48,16 +51,21 @@ public class PlayerLoader
 		new PlayerConnectionRowDataGatewayRDS(quizBot.getPlayerID(), 111, "quiznasium.tmx");
 		new NPCRowDataGatewayRDS(quizBot.getPlayerID(), "model.QuizBotBehavior");
 		
+		//create newbie
 		PlayerRowDataGatewayRDS thisPlayer = new PlayerRowDataGatewayRDS(new Position(11, 7), "male_a", 0, 0,
 				Crew.OUT_OF_BOUNDS, Major.SOFTWARE_ENGINEERING);
 		new PlayerLoginRowDataGatewayRDS("NEWBIE", "pw");
 		new PlayerConnectionRowDataGatewayRDS(thisPlayer.getPlayerID(), 111, "sortingRoom.tmx");
-		
 		loadQuestStates(thisPlayer.getPlayerID());
-
 		loadAdventureStates(thisPlayer.getPlayerID());
-		// need to load adventure states and then verify that the other quests
-		// get triggered when we teleport to current
+		
+		createPlayersFromFile("CSCF16.csv");
+	}
+
+	private static void createPlayersFromFile(String string) throws FileNotFoundException
+	{
+		Scanner input = new Scanner(new File(string));
+		
 	}
 
 	private static void loadQuestStates(int playerID) throws DatabaseException

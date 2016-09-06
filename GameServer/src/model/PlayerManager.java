@@ -14,6 +14,7 @@ import model.reports.PinFailedReport;
 import model.reports.PlayerConnectionReport;
 import model.reports.PlayerDisconnectedReport;
 import model.reports.PlayerLeaveReport;
+import model.reports.PlayerMovedReport;
 import model.reports.TimeToLevelUpDeadlineReport;
 import model.reports.UpdatePlayerInformationReport;
 import data.PlayerScoreRecord;
@@ -135,6 +136,9 @@ public class PlayerManager implements QualifiedObserver
 					new UpdatePlayerInformationReport(player));
 			tellNewPlayerAboutEveryoneElse(player);
 
+			QualifiedObservableConnector.getSingleton().sendReport(
+					new PlayerMovedReport(player.getPlayerID(),player.getPlayerName(), player.getPlayerPosition(),player.getMapName()));
+			
 			QualifiedObservableConnector.getSingleton().sendReport(
 					new TimeToLevelUpDeadlineReport(player.getPlayerID(), LevelManager
 							.getSingleton()

@@ -66,9 +66,9 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 		{
 			for (QuestState qs : questStateList)
 			{
-				if (qs.getStateValue() != QuestStateEnum.AVAILABLE
-						&& qs.getStateValue() != QuestStateEnum.HIDDEN)
-				{
+//				if (qs.getStateValue() != QuestStateEnum.AVAILABLE
+//						&& qs.getStateValue() != QuestStateEnum.HIDDEN)
+//				{
 					int questID = qs.getID();
 					Quest quest = QuestManager.getSingleton().getQuest(questID);
 
@@ -81,7 +81,7 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 
 					clientPlayerQuestList.add(clientQuest);
 				}
-			}
+//			}
 		}
 	}
 
