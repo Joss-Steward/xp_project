@@ -25,7 +25,15 @@ public enum Major {
 	/**
 	 * 
 	 */
-	ELECTRICAL_ENGINEERING;
+	ELECTRICAL_ENGINEERING, 
+	/**
+	 * 
+	 */
+	CS_AND_E_GENERAL, 
+	/**
+	 * 
+	 */
+	OTHER;
 	
 	/**
 	 * @return a unique ID for this Major
