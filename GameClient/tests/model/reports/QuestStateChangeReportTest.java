@@ -5,7 +5,7 @@ import model.reports.QuestStateChangeReport;
 
 import org.junit.Test;
 
-import data.QuestStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * @author Ryan

@@ -17,7 +17,7 @@ import view.screen.map.ScreenMapInput;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
-import data.Position;
+import datatypes.Position;
 import static org.junit.Assert.*;
 
 /**

@@ -2,8 +2,8 @@ package model;
 
 import java.io.Serializable;
 
-import data.AdventureStateEnum;
-import data.QuestStateEnum;
+import datatypes.AdventureStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * Stores the adventure for the GameClient which encapsulates the AdventureState

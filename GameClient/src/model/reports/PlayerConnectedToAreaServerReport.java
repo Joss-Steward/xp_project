@@ -1,8 +1,8 @@
 package model.reports;
 
-import data.Crew;
-import data.Major;
-import data.Position;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 import model.QualifiedObservableReport;
 
 /**

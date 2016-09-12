@@ -9,9 +9,9 @@ import java.util.Observable;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.IntMap.Entry;
 
-import data.Crew;
-import data.Major;
-import data.Position;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 import model.QualifiedObservableConnector;
 import model.reports.LoginFailedReport;
 import model.reports.LoginInitiatedReport;

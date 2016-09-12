@@ -14,8 +14,8 @@ import data.AdventureCompletionType;
 import data.AdventureRecord;
 import data.CriteriaString;
 import data.GameLocation;
-import data.Position;
 import data.QuestCompletionActionType;
+import datatypes.Position;
 
 /**
  * This class holds the tests for the Quest class

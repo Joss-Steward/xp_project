@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-import data.QuestStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * Player has a quest that will contain a description

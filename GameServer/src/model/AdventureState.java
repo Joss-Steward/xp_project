@@ -3,9 +3,9 @@ package model;
 import model.QualifiedObservableConnector;
 import model.reports.AdventureStateChangeReport;
 import data.AdventureRecord;
-import data.AdventureStateEnum;
-import data.QuestStateEnum;
 import datasource.DatabaseException;
+import datatypes.AdventureStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * Stores the states of all the adventures for an individual player on the

@@ -1,4 +1,4 @@
-package data;
+package datatypes;
 /**
  * Types of chat messages that can be sent
  */

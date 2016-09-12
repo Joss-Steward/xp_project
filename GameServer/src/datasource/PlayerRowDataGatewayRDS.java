@@ -6,12 +6,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import model.OptionsManager;
-import data.Crew;
-import data.Major;
-import data.Position;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
 import datasource.DatabaseManager;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * The RDS version of the gateway
@@ -247,7 +247,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	}
 
 	/**
-	 * @see datasource.PlayerRowDataGateway#setCrew(data.Crew)
+	 * @see datasource.PlayerRowDataGateway#setCrew(datatypes.Crew)
 	 */
 	public void setCrew(Crew crew)
 	{
@@ -264,7 +264,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	}
 
 	/**
-	 * @see datasource.PlayerRowDataGateway#setPosition(data.Position)
+	 * @see datasource.PlayerRowDataGateway#setPosition(datatypes.Position)
 	 */
 	@Override
 	public void setPosition(Position position)
@@ -291,7 +291,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	}
 
 	/**
-	 * @see datasource.PlayerRowDataGateway#setMajor(data.Major)
+	 * @see datasource.PlayerRowDataGateway#setMajor(datatypes.Major)
 	 */
 	@Override
 	public void setMajor(Major major) 

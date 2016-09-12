@@ -20,9 +20,9 @@ import org.junit.Test;
 
 import testData.PlayersForTest;
 import communication.messages.InitializeThisClientsPlayerMessage;
-import data.AdventureStateEnum;
-import data.QuestStateEnum;
 import datasource.LevelRecord;
+import datatypes.AdventureStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * @author Frank Schmidt

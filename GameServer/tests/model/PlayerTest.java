@@ -12,11 +12,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import testData.PlayersForTest;
-import data.Major;
-import data.Position;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.QuestStateTableDataGatewayMock;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * Test the Player class

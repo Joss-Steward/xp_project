@@ -8,7 +8,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Test;
 
 import testData.AdventuresForTest;
-import data.AdventureStateEnum;
+import datatypes.AdventureStateEnum;
 
 /**
  * Tests the report of a change state

@@ -5,8 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import data.AdventureStateEnum;
 import data.AdventureStateRecord;
+import datatypes.AdventureStateEnum;
 
 /**
  * The RDS Implementation of this gateway
@@ -143,7 +143,7 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 
 	/**
 	 * @see datasource.AdventureStateTableDataGateway#updateState(int, int, int,
-	 *      data.AdventureStateEnum, boolean)
+	 *      datatypes.AdventureStateEnum, boolean)
 	 */
 	@Override
 	public void updateState(int playerID, int questID, int adventureID,

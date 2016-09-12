@@ -22,7 +22,6 @@ import communication.messages.PlayerJoinedMessage;
 import communication.packers.MapFileMessagePacker;
 import data.AdventureRecord;
 import data.AdventureStateRecord;
-import data.QuestStateEnum;
 import data.QuestStateRecord;
 import datasource.AdventureStateTableDataGateway;
 import datasource.AdventureStateTableDataGatewayMock;
@@ -35,6 +34,7 @@ import datasource.QuestRowDataGateway;
 import datasource.QuestRowDataGatewayMock;
 import datasource.QuestStateTableDataGateway;
 import datasource.QuestStateTableDataGatewayMock;
+import datatypes.QuestStateEnum;
 
 /**
  * Defines the protocol for a successful login sequence

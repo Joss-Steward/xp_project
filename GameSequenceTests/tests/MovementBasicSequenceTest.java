@@ -13,7 +13,7 @@ import model.SequenceTest;
 import model.ServerType;
 import communication.messages.OtherPlayerMovedMessage;
 import communication.messages.PlayerMovedMessage;
-import data.Position;
+import datatypes.Position;
 
 /**
  * Defines the protocol for a successful login sequence

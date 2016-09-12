@@ -6,8 +6,8 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import data.AdventureStateEnum;
-import data.QuestStateEnum;
+import datatypes.AdventureStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * Test the 

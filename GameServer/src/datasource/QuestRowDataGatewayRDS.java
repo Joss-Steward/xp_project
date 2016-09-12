@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import data.Position;
 import data.QuestCompletionActionParameter;
 import data.QuestCompletionActionType;
+import datatypes.Position;
 
 /**
  * An RDS implementation of the QuestRowDataGateway interface

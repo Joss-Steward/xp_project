@@ -1,11 +1,13 @@
 package view.screen.highscore;
 import java.util.ArrayList;
+
 import view.screen.OverlayingScreenTable;
 import view.screen.SkinPicker;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
-import data.PlayerScoreRecord;
+import datatypes.PlayerScoreRecord;
 /**
  * @author TJ Renninger and Ian Keefer
  *

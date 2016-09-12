@@ -1,6 +1,6 @@
 package model.reports;
 
-import data.Position;
+import datatypes.Position;
 import model.QualifiedObservableReport;
 
 /**

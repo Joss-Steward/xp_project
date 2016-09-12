@@ -10,7 +10,7 @@ import view.player.PlayerSprite;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
-import data.Position;
+import datatypes.Position;
 import static view.player.Direction.*;
 
 /**

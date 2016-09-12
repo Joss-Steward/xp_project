@@ -3,8 +3,8 @@ package datasource;
 import java.util.ArrayList;
 
 import data.AdventureRecord;
-import data.Position;
 import datasource.DatabaseException;
+import datatypes.Position;
 
 /**
  * Requirements for all gateways into the adventure table

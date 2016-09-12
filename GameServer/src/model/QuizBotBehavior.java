@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import model.QualifiedObservableReport;
 import model.reports.SendChatMessageReport;
-import data.ChatType;
-import data.Position;
 import datasource.DatabaseException;
+import datatypes.ChatType;
+import datatypes.Position;
 
 /**
  * The Bot Behavior of the Quiznasium NPC.

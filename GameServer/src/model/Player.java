@@ -3,10 +3,10 @@ package model;
 import model.reports.ExperienceChangedReport;
 import model.reports.PlayerMovedReport;
 import model.reports.KnowledgePointsChangeReport;
-import data.Crew;
-import data.Major;
-import data.Position;
 import datasource.DatabaseException;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * Very simple for now . . .

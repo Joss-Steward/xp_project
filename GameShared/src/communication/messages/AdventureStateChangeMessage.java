@@ -2,7 +2,7 @@ package communication.messages;
 
 import java.io.Serializable;
 
-import data.AdventureStateEnum;
+import datatypes.AdventureStateEnum;
 
 /**
  * A message from an area server to a client telling the client to notify the

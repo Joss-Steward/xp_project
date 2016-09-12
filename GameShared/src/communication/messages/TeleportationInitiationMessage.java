@@ -2,7 +2,7 @@ package communication.messages;
 
 import java.io.Serializable;
 
-import data.Position;
+import datatypes.Position;
 
 /**
  * A message that allows a client to ask for the server & port number that are

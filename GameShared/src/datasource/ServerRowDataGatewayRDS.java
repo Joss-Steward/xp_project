@@ -93,6 +93,7 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 			result.next();
 			hostName = result.getString("hostName");
 			portNumber = result.getInt("portNumber");
+			System.out.println("Found map " + mapName + " should be on "+ hostName);
 
 		} catch (SQLException e)
 		{

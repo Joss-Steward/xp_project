@@ -16,8 +16,8 @@ import org.junit.Test;
 
 import testData.PlayersForTest;
 import communication.messages.InitializeThisClientsPlayerMessage;
-import data.QuestStateEnum;
 import datasource.LevelRecord;
+import datatypes.QuestStateEnum;
 
 /**
  * Test the Command to overwrite this client player quest list

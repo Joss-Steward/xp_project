@@ -1,7 +1,7 @@
 package model;
 
-import data.ChatType;
-import data.Position;
+import datatypes.ChatType;
+import datatypes.Position;
 
 /**
  * @author Josh

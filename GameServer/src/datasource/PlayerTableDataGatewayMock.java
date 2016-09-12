@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import testData.PlayersForTest;
-import data.PlayerScoreRecord;
+import datatypes.PlayerScoreRecord;
 
 /**
  * A mock data source that provides a table data gateway view into the Players

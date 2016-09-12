@@ -16,7 +16,7 @@ import org.junit.Test;
 
 import testData.PlayersForTest;
 import communication.messages.OtherPlayerMovedMessage;
-import data.Position;
+import datatypes.Position;
 
 /**
  * @author Andrew

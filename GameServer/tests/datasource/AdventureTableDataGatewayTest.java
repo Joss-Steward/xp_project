@@ -9,9 +9,9 @@ import org.junit.Test;
 import testData.AdventuresForTest;
 import data.AdventureRecord;
 import data.GameLocation;
-import data.Position;
 import datasource.AdventureTableDataGateway;
 import datasource.DatabaseException;
+import datatypes.Position;
 
 /**
  * An abstract class that tests the table data gateways into the Adventure table

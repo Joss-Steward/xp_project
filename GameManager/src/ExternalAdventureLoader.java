@@ -10,11 +10,11 @@ import data.AdventureCompletionCriteria;
 import data.AdventureCompletionType;
 import data.CriteriaString;
 import data.GameLocation;
-import data.Position;
 import data.QuestCompletionActionType;
 import datasource.AdventureTableDataGatewayRDS;
 import datasource.DatabaseException;
 import datasource.QuestRowDataGatewayRDS;
+import datatypes.Position;
 
 public class ExternalAdventureLoader
 {

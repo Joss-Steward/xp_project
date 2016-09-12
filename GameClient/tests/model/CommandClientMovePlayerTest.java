@@ -14,9 +14,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import data.Crew;
-import data.Major;
-import data.Position;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * @author Josh

@@ -20,9 +20,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import testData.PlayersForTest;
-import data.PlayerScoreRecord;
-import data.Position;
 import datasource.DatabaseException;
+import datatypes.PlayerScoreRecord;
+import datatypes.Position;
 
 /**
  * @author Merlin

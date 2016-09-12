@@ -9,7 +9,7 @@ import model.reports.QuestStateReport;
 
 import org.junit.Test;
 
-import data.QuestStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * Test the QuestStateReport

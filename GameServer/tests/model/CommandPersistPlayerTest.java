@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import testData.PlayersForTest;
-import data.Position;
 import datasource.DatabaseException;
+import datatypes.Position;
 
 /**
  * Test that a player is persisted

@@ -24,14 +24,14 @@ import testData.PlayersForTest;
 import testData.QuestStatesForTest;
 import testData.QuestsForTest;
 import data.AdventureRecord;
-import data.AdventureStateEnum;
-import data.ChatType;
 import data.GameLocation;
-import data.Position;
-import data.QuestStateEnum;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.QuestStateTableDataGatewayMock;
+import datatypes.AdventureStateEnum;
+import datatypes.ChatType;
+import datatypes.Position;
+import datatypes.QuestStateEnum;
 
 /**
  * Test for the quest manager getting quests and adventures from database

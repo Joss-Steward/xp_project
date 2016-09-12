@@ -1,6 +1,6 @@
 package model;
 
-import data.Position;
+import datatypes.Position;
 
 /**
  * Command used to move a player on the server's part of the game

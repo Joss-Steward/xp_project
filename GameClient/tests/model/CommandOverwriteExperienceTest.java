@@ -18,8 +18,8 @@ import org.junit.Test;
 
 import testData.PlayersForTest;
 import communication.messages.InitializeThisClientsPlayerMessage;
-import data.QuestStateEnum;
 import datasource.LevelRecord;
+import datatypes.QuestStateEnum;
 
 /**
  * @author nk3668

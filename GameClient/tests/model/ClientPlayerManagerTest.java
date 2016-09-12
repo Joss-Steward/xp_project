@@ -16,9 +16,9 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
-import data.Crew;
-import data.Major;
-import data.Position;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * Tests the player manager to make sure it maintains the list of players

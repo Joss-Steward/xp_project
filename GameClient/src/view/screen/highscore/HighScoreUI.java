@@ -5,7 +5,7 @@ import view.screen.OverlayingScreen;
 
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
-import data.PlayerScoreRecord;
+import datatypes.PlayerScoreRecord;
 import model.ClientModelFacade;
 import model.CommandHighScoreRequest;
 import model.QualifiedObservableConnector;

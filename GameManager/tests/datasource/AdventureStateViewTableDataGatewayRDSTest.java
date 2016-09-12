@@ -11,8 +11,8 @@ import org.junit.Test;
 import testData.AdventuresForTest;
 import testData.PlayersForTest;
 import data.AdventureRecord;
-import data.AdventureStateEnum;
 import data.AdventureStateRecord;
+import datatypes.AdventureStateEnum;
 
 /**
  * @author Merlin

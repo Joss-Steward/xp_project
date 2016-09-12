@@ -5,7 +5,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
-import data.Position;
+import datatypes.Position;
 
 /**
  * Tests a login message

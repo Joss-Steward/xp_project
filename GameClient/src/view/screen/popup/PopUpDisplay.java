@@ -12,8 +12,8 @@ import model.reports.QuestNeedingNotificationReport;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import data.AdventureStateEnum;
-import data.QuestStateEnum;
+import datatypes.AdventureStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * @author Cody/Scott Sends popup data to constructor from reports observed

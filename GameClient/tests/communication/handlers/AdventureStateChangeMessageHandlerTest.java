@@ -15,7 +15,7 @@ import org.junit.Test;
 
 import testData.PlayersForTest;
 import communication.messages.AdventureStateChangeMessage;
-import data.AdventureStateEnum;
+import datatypes.AdventureStateEnum;
 
 /**
  * Tests functionality of the AdventureStateChangeMessageHandler

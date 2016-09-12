@@ -5,7 +5,7 @@ import data.AdventureCompletionType;
 import data.CriteriaString;
 import data.GameLocation;
 import data.PointsCompleted;
-import data.Position;
+import datatypes.Position;
 /**
  * Creates adventures for the DB
  * @author merlin

@@ -1,6 +1,6 @@
 package testData;
 
-import data.QuestStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * Creates adventures for the DB

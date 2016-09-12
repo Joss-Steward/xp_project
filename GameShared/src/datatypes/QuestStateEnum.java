@@ -1,4 +1,4 @@
-package data;
+package datatypes;
 
 /**
  * The legal states a quest can be in for a given player

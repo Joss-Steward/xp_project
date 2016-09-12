@@ -6,7 +6,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
-import data.AdventureStateEnum;
+import datatypes.AdventureStateEnum;
 
 /**
  * @author nk3668 Tests the creation & functionality of the

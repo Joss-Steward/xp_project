@@ -1,8 +1,8 @@
 package model;
 
-import data.Crew;
-import data.Major;
-import data.Position;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * Command the puts a new player in the system when that new player joins our

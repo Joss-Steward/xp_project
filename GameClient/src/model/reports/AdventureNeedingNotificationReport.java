@@ -1,6 +1,6 @@
 package model.reports;
 
-import data.AdventureStateEnum;
+import datatypes.AdventureStateEnum;
 import model.QualifiedObservableReport;
 
 /**

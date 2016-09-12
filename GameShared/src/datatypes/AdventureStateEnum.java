@@ -1,4 +1,4 @@
-package data;
+package datatypes;
 
 /**
  * A list of the states an adventure can be in

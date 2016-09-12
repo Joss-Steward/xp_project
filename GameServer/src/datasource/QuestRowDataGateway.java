@@ -1,8 +1,9 @@
 package datasource;
 
-import data.Position;
 import data.QuestCompletionActionParameter;
 import data.QuestCompletionActionType;
+import datatypes.Position;
+
 import java.util.Date;
 
 /**

@@ -7,11 +7,11 @@ import java.util.Date;
 import model.QualifiedObservableConnector;
 import model.reports.QuestStateChangeReport;
 import model.reports.TeleportOnQuestCompletionReport;
-import data.AdventureStateEnum;
 import data.GameLocation;
 import data.QuestCompletionActionType;
-import data.QuestStateEnum;
 import datasource.DatabaseException;
+import datatypes.AdventureStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * Stores the states of all the quests for an individual player on the server

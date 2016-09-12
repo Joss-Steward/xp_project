@@ -2,7 +2,7 @@ package view.player;
 
 import com.badlogic.gdx.math.Vector2;
 
-import data.Position;
+import datatypes.Position;
 
 /**
  * Facing direction of the sprite

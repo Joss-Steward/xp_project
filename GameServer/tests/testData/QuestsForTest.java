@@ -5,10 +5,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import data.GameLocation;
-import data.Position;
 import data.QuestCompletionActionParameter;
 import data.QuestCompletionActionType;
 import datasource.PlayerTableDataGateway;
+import datatypes.Position;
 
 /**
  * Creates adventures for the DB

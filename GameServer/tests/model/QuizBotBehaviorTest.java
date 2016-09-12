@@ -13,10 +13,10 @@ import model.reports.SendChatMessageReport;
 import org.junit.Before;
 import org.junit.Test;
 
-import data.ChatType;
-import data.Position;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
+import datatypes.ChatType;
+import datatypes.Position;
 
 /**
  * @author Frank & Dave & Nick

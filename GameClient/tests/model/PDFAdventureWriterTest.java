@@ -3,8 +3,8 @@ package model;
 import org.junit.Test;
 
 import testData.PlayersForTest;
-import data.AdventureStateEnum;
-import data.QuestStateEnum;
+import datatypes.AdventureStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * @author Merlin

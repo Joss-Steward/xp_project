@@ -12,11 +12,8 @@ import model.reports.PlayerMovedReport;
 import model.reports.SendChatMessageReport;
 import data.AdventureCompletionType;
 import data.AdventureRecord;
-import data.AdventureStateEnum;
 import data.CriteriaString;
 import data.PointsCompleted;
-import data.Position;
-import data.QuestStateEnum;
 import datasource.AdventureTableDataGateway;
 import datasource.AdventureTableDataGatewayMock;
 import datasource.AdventureTableDataGatewayRDS;
@@ -24,6 +21,9 @@ import datasource.DatabaseException;
 import datasource.QuestRowDataGateway;
 import datasource.QuestRowDataGatewayMock;
 import datasource.QuestRowDataGatewayRDS;
+import datatypes.AdventureStateEnum;
+import datatypes.Position;
+import datatypes.QuestStateEnum;
 
 /**
  * Retrieves the list of quest and adventures from the database and sends them

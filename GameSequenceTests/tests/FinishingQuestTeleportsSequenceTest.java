@@ -4,14 +4,12 @@ import java.rmi.NotBoundException;
 
 import testData.PlayersForTest;
 import testData.QuestsForTest;
-
 import communication.messages.OtherPlayerMovedMessage;
 import communication.messages.PlayerMovedMessage;
 import communication.messages.QuestStateChangeMessage;
-
 import datasource.DatabaseException;
 import datasource.PlayerConnectionRowDataGatewayMock;
-import data.QuestStateEnum;
+import datatypes.QuestStateEnum;
 import model.ClientPlayerManager;
 import model.Command;
 import model.CommandClientMovePlayer;

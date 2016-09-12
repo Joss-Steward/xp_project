@@ -5,10 +5,10 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import data.AdventureStateEnum;
-import data.Position;
-import data.QuestStateEnum;
 import datasource.LevelRecord;
+import datatypes.AdventureStateEnum;
+import datatypes.Position;
+import datatypes.QuestStateEnum;
 import model.reports.AdventureNeedingNotificationReport;
 import model.reports.AdventureStateChangeReport;
 import model.reports.KnowledgePointsChangeReport;

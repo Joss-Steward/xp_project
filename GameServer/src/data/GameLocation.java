@@ -1,5 +1,7 @@
 package data;
 
+import datatypes.Position;
+
 /**
  * Contains information about a particular place in the game
  * @author Merlin

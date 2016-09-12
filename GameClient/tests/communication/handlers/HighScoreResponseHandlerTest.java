@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.HighScoreResponseMessage;
-import data.PlayerScoreRecord;
+import datatypes.PlayerScoreRecord;
 
 /**
  * @author nk3668

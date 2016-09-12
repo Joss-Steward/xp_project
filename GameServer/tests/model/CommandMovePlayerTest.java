@@ -14,7 +14,7 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
-import data.Position;
+import datatypes.Position;
 
 /**
  * 

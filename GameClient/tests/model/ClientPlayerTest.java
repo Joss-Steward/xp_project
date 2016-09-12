@@ -7,10 +7,10 @@ import nl.jqno.equalsverifier.Warning;
 
 import org.junit.Test;
 
-import data.Crew;
-import data.Major;
-import data.Position;
 import datasource.DatabaseException;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * Tests the player class

@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.PlayerMovedMessage;
-import data.Position;
+import datatypes.Position;
 
 /**
  * 

@@ -13,11 +13,11 @@ import model.ClientPlayerManager;
 import org.junit.Test;
 
 import communication.messages.AdventureStateChangeMessage;
-import data.AdventureStateEnum;
-import data.Crew;
-import data.Major;
-import data.Position;
-import data.QuestStateEnum;
+import datatypes.AdventureStateEnum;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
+import datatypes.QuestStateEnum;
 
 /**
  * @author sl6469

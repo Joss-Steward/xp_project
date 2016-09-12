@@ -11,10 +11,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import testData.QuestsForTest;
-import data.Position;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.QuestRowDataGateway;
+import datatypes.Position;
 
 /**
  * Tests required of all player gateways

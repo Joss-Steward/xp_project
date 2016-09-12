@@ -11,7 +11,7 @@ import org.junit.Test;
 import communication.StateAccumulator;
 import communication.messages.OtherPlayerMovedMessage;
 import communication.messages.PlayerMovedMessage;
-import data.Position;
+import datatypes.Position;
 
 /**
  * 

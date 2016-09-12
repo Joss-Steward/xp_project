@@ -2,6 +2,7 @@ package view.screen.map;
 import model.ClientModelFacade;
 import model.CommandChatMessageSent;
 import view.screen.SkinPicker;
+
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -20,7 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 
-import data.ChatType;
+import datatypes.ChatType;
 
 /**
  * 

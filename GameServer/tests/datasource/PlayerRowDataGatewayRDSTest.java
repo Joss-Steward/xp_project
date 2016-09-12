@@ -1,11 +1,11 @@
 package datasource;
 
-import data.Crew;
-import data.Major;
-import data.Position;
 import datasource.DatabaseException;
 import datasource.PlayerRowDataGateway;
 import datasource.PlayerRowDataGatewayRDS;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 
 /**
@@ -26,7 +26,7 @@ public class PlayerRowDataGatewayRDSTest extends PlayerRowDataGatewayTest
 	}
 
 	/**
-	 * @see datasource.PlayerRowDataGatewayTest#createGateway(java.lang.String, data.Position, java.lang.String, int, int, data.Crew)
+	 * @see datasource.PlayerRowDataGatewayTest#createGateway(java.lang.String, datatypes.Position, java.lang.String, int, int, datatypes.Crew)
 	 */
 	@Override
 	PlayerRowDataGateway createGateway(String mapName, Position position,

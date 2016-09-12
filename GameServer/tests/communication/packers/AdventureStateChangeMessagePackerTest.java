@@ -12,8 +12,8 @@ import org.junit.Test;
 import testData.AdventuresForTest;
 import communication.StateAccumulator;
 import communication.messages.AdventureStateChangeMessage;
-import data.AdventureStateEnum;
 import datasource.DatabaseException;
+import datatypes.AdventureStateEnum;
 
 /**
  * @author Ryan

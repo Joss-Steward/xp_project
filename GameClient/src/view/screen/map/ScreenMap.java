@@ -35,9 +35,9 @@ import com.badlogic.gdx.utils.IntMap.Entry;
 import com.badlogic.gdx.utils.Sort;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
-import data.ChatType;
-import data.Crew;
-import data.Position;
+import datatypes.ChatType;
+import datatypes.Crew;
+import datatypes.Position;
 import model.ClientModelFacade;
 import model.CommandKeyInputSent;
 import view.player.PlayerSprite;

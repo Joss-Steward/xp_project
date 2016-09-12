@@ -73,7 +73,7 @@ public class LoginPlayerManager extends Observable
 			MapToServerMapping mapping = new MapToServerMapping(pp.getMapName());
 			server = mapping.getHostName();
 			port = mapping.getPortNumber();
-
+			System.out.println("Sending " + playerName + " to " + pp.getMapName() + " on " +server + " with port #"+ port);
 			LoginSuccessfulReport report = new LoginSuccessfulReport(pl.getPlayerID(),
 					server, port, pp.generatePin());
 			return report;

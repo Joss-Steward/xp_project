@@ -24,10 +24,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import testData.PlayersForTest;
-import data.AdventureStateEnum;
-import data.Position;
-import data.QuestStateEnum;
 import datasource.LevelRecord;
+import datatypes.AdventureStateEnum;
+import datatypes.Position;
+import datatypes.QuestStateEnum;
 
 /**
  * Tests behaviors that are unique to the player playing on this client

@@ -17,10 +17,10 @@ import model.reports.PlayerLeaveReport;
 import model.reports.PlayerMovedReport;
 import model.reports.TimeToLevelUpDeadlineReport;
 import model.reports.UpdatePlayerInformationReport;
-import data.PlayerScoreRecord;
 import datasource.DatabaseException;
 import datasource.PlayerTableDataGatewayMock;
 import datasource.PlayerTableDataGatewayRDS;
+import datatypes.PlayerScoreRecord;
 
 /**
  * @author Merlin

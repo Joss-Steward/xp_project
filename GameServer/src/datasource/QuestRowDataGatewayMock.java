@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import testData.QuestsForTest;
-import data.Position;
 import data.QuestCompletionActionParameter;
 import data.QuestCompletionActionType;
 import datasource.DatabaseException;
+import datatypes.Position;
 
 /**
  * A Mock implementation of the data source layer for the quest table

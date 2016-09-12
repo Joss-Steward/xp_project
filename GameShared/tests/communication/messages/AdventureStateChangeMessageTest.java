@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import data.AdventureStateEnum;
+import datatypes.AdventureStateEnum;
 
 /**
  * @author Ryan

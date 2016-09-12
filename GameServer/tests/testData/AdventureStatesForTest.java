@@ -1,6 +1,6 @@
 package testData;
 
-import data.AdventureStateEnum;
+import datatypes.AdventureStateEnum;
 
 /**
  * Creates adventures for the DB

@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.QuestStateChangeMessage;
-import data.QuestStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * @author Ryan

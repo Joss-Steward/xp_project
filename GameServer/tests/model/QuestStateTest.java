@@ -20,10 +20,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import testData.QuestsForTest;
-import data.AdventureStateEnum;
-import data.QuestStateEnum;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
+import datatypes.AdventureStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * Test for the QuestState Class

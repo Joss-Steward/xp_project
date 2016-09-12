@@ -5,9 +5,9 @@ import java.util.Observable;
 import model.QualifiedObservableConnector;
 import model.reports.ChangeMapReport;
 import model.reports.ThisClientsPlayerMovedReport;
-import data.Crew;
-import data.Major;
-import data.Position;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * Holds the information about one player in the system

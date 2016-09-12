@@ -8,7 +8,7 @@ import testData.AdventuresForTest;
 import data.AdventureCompletionType;
 import data.AdventureRecord;
 import data.GameLocation;
-import data.Position;
+import datatypes.Position;
 
 /**
  * Mock version of the gateway to the table of adventures.

@@ -6,8 +6,8 @@ import model.reports.SendChatMessageReport;
 import org.junit.Test;
 
 import communication.messages.ChatMessage;
-import data.ChatType;
-import data.Position;
+import datatypes.ChatType;
+import datatypes.Position;
 
 /**
  * @author Dave

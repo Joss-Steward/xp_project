@@ -1,7 +1,7 @@
 package model;
 
 import communication.messages.QuestStateChangeMessage;
-import data.QuestStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * @author Ryan

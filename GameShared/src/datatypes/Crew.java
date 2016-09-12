@@ -1,4 +1,4 @@
-package data;
+package datatypes;
 
 /**
  * The list of crews. Each player must belong to one crew

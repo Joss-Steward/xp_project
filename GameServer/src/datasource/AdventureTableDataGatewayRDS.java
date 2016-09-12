@@ -12,10 +12,10 @@ import data.AdventureCompletionCriteria;
 import data.AdventureCompletionType;
 import data.AdventureRecord;
 import data.GameLocation;
-import data.Position;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
 import datasource.DatabaseManager;
+import datatypes.Position;
 
 /**
  * The RDS Implementation of this gateway

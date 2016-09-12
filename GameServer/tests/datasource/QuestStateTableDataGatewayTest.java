@@ -10,11 +10,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import testData.QuestStatesForTest;
-import data.QuestStateEnum;
 import data.QuestStateRecord;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.QuestStateTableDataGateway;
+import datatypes.QuestStateEnum;
 
 /**
  * An abstract class that tests the table data gateways into the Adventure table

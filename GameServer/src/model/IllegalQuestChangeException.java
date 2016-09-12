@@ -1,6 +1,6 @@
 package model;
 
-import data.QuestStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * Thrown if you try to change quest states to an illegal state.

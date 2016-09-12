@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import view.player.PlayerType;
 import view.screen.ScreenListener;
-import data.Position;
+import datatypes.Position;
 import model.QualifiedObservableReport;
 import model.reports.*;
 

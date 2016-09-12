@@ -12,10 +12,10 @@ import model.ClientPlayerManager;
 import org.junit.Test;
 
 import communication.messages.QuestStateChangeMessage;
-import data.Crew;
-import data.Major;
-import data.Position;
-import data.QuestStateEnum;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
+import datatypes.QuestStateEnum;
 
 /**
  * @author Ryan

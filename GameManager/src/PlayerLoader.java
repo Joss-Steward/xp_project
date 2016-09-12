@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import data.AdventureRecord;
-import data.AdventureStateEnum;
-import data.Crew;
-import data.Major;
-import data.Position;
-import data.QuestStateEnum;
 import datasource.AdventureStateTableDataGateway;
 import datasource.AdventureStateTableDataGatewayRDS;
 import datasource.AdventureTableDataGateway;
@@ -20,6 +15,11 @@ import datasource.PlayerLoginRowDataGatewayRDS;
 import datasource.PlayerRowDataGatewayRDS;
 import datasource.QuestStateTableDataGateway;
 import datasource.QuestStateTableDataGatewayRDS;
+import datatypes.AdventureStateEnum;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
+import datatypes.QuestStateEnum;
 import model.OptionsManager;
 
 public class PlayerLoader

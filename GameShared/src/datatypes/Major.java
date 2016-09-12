@@ -1,4 +1,4 @@
-package data;
+package datatypes;
 
 /**
  * @author Emily Maust

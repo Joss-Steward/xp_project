@@ -18,13 +18,11 @@ import org.junit.Test;
 
 import testData.PlayersForTest;
 import testData.ServersForTest;
-
 import communication.StateAccumulator;
 import communication.messages.Message;
 import communication.messages.TeleportationContinuationMessage;
 import communication.messages.TeleportationInitiationMessage;
-
-import data.Position;
+import datatypes.Position;
 
 /**
  * Test the handler for GetServerInfoMessages

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import data.AdventureRecord;
-import data.Position;
 import data.QuestCompletionActionParameter;
 import data.QuestCompletionActionType;
+import datatypes.Position;
 
 /**
  * The class that hold the functionality for Quest

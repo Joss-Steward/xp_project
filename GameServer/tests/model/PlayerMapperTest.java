@@ -12,15 +12,15 @@ import org.junit.Test;
 import testData.AdventureStatesForTest;
 import testData.PlayersForTest;
 import testData.QuestStatesForTest;
-import data.AdventureStateEnum;
-import data.Crew;
-import data.Position;
 import datasource.AdventureStateTableDataGatewayMock;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayerConnectionRowDataGatewayMock;
 import datasource.PlayerRowDataGatewayMock;
 import datasource.QuestStateTableDataGatewayMock;
+import datatypes.AdventureStateEnum;
+import datatypes.Crew;
+import datatypes.Position;
 
 /**
  * Tests the PlayerMapper class

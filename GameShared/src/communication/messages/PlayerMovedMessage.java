@@ -2,7 +2,7 @@ package communication.messages;
 
 import java.io.Serializable;
 
-import data.Position;
+import datatypes.Position;
 
 /**
  * Encodes the fact that a player has moved to a given location

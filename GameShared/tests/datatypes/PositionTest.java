@@ -1,11 +1,11 @@
-package data;
+package datatypes;
 
 import static org.junit.Assert.*;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
-import data.Position;
+import datatypes.Position;
 
 /**
  * Test the Position class

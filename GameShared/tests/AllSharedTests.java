@@ -35,7 +35,6 @@ import communication.messages.PlayerLeaveMessageTest;
 import communication.messages.TeleportationContinuationMessageTest;
 import communication.messages.TeleportationInitiationMessageTest;
 import communication.packers.MessagePackerSetTest;
-import data.PositionTest;
 import datasource.LevelRecordTest;
 import datasource.PlayerConnectionRowDataGatewayMockTest;
 import datasource.PlayerConnectionRowDataGatewayRDSTest;
@@ -44,6 +43,7 @@ import datasource.PlayerLoginRowDataGatewayRDSTest;
 import datasource.PlayerScoreRecordTest;
 import datasource.ServerRowDataGatewayMockTest;
 import datasource.ServerRowDataGatewayRDSTest;
+import datatypes.PositionTest;
 
 /**
  * All of the tests for the shared code. Notice that the packages, and classes

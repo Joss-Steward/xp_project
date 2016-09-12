@@ -8,12 +8,12 @@ import org.junit.After;
 import org.junit.Test;
 
 import testData.PlayersForTest;
-import data.Crew;
-import data.Major;
-import data.Position;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayerRowDataGateway;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * Tests required of all player gateways

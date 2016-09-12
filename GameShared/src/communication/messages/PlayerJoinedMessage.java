@@ -2,9 +2,9 @@ package communication.messages;
 
 import java.io.Serializable;
 
-import data.Crew;
-import data.Major;
-import data.Position;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * Sent to all clients when a new player connects to an area server

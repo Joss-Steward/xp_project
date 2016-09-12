@@ -6,7 +6,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
-import data.Position;
+import datatypes.Position;
 
 /**
  * Test the equality of the ChangeMapReport

@@ -5,8 +5,8 @@ import model.reports.ChatSentReport;
 
 import org.junit.Test;
 
-import data.ChatType;
-import data.Position;
+import datatypes.ChatType;
+import datatypes.Position;
 
 /**
  * @author Dave

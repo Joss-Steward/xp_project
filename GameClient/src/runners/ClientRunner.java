@@ -13,7 +13,7 @@ import communication.ConnectionManager;
 import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
-import data.Position;
+import datatypes.Position;
 
 /**
  * Temporary to play with communication protocols. Will eventually start a

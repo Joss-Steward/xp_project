@@ -1,5 +1,7 @@
 package data;
 
+import datatypes.QuestStateEnum;
+
 
 /**
  * A data transfer object that contains the state of a quest for a player

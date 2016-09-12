@@ -12,7 +12,7 @@ import model.reports.HighScoreResponseReport;
 import org.easymock.EasyMock;
 import org.junit.Test;
 
-import data.PlayerScoreRecord;
+import datatypes.PlayerScoreRecord;
 
 /**
  * @author nk3668

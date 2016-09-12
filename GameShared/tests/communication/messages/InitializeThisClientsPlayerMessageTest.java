@@ -9,9 +9,9 @@ import model.ClientPlayerQuest;
 
 import org.junit.Test;
 
-import data.AdventureStateEnum;
-import data.QuestStateEnum;
 import datasource.LevelRecord;
+import datatypes.AdventureStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * Tests the InitializeThisClientsPlayerMessage class

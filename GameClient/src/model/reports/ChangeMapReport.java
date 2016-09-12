@@ -1,7 +1,7 @@
 package model.reports;
 
 import model.QualifiedObservableReport;
-import data.Position;
+import datatypes.Position;
 
 /**
  * This is the ChangeMapReport contains information for connecting to a server.

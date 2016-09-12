@@ -6,7 +6,7 @@ import model.reports.ChangeMapReport;
 import org.junit.Test;
 
 import communication.messages.TeleportationInitiationMessage;
-import data.Position;
+import datatypes.Position;
 
 /**
  * @author Matt

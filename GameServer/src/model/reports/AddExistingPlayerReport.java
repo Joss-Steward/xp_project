@@ -1,9 +1,9 @@
 package model.reports;
 
 import model.QualifiedObservableReport;
-import data.Crew;
-import data.Major;
-import data.Position;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * This report is sent when a player successfully connects to this area server

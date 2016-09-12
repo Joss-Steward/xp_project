@@ -9,10 +9,10 @@ import org.junit.After;
 import org.junit.Test;
 
 import testData.PlayersForTest;
-import data.PlayerScoreRecord;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayerTableDataGateway;
+import datatypes.PlayerScoreRecord;
 
 
 /**

@@ -1,5 +1,7 @@
 package data;
 
+import datatypes.AdventureStateEnum;
+
 
 /**
  * A data transfer record that contains the state of one adventure for one

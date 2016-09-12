@@ -3,9 +3,9 @@ package model.reports;
 import java.util.ArrayList;
 
 import data.AdventureRecord;
-import data.QuestStateEnum;
 import datasource.DatabaseException;
 import datasource.LevelRecord;
+import datatypes.QuestStateEnum;
 import model.AdventureState;
 import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
