@@ -1,15 +1,15 @@
 import java.sql.SQLException;
 
+import testData.AdventureStatesForTest;
+import testData.AdventuresForTest;
+import testData.QuestStatesForTest;
+import testData.QuestsForTest;
 import model.OptionsManager;
 import datasource.AdventureStateTableDataGatewayRDS;
-import datasource.AdventureStatesForTest;
 import datasource.AdventureTableDataGatewayRDS;
-import datasource.AdventuresForTest;
 import datasource.DatabaseException;
 import datasource.QuestRowDataGatewayRDS;
 import datasource.QuestStateTableDataGatewayRDS;
-import datasource.QuestStatesForTest;
-import datasource.QuestsForTest;
 
 /**
  * Builds the Quests and Adventures portion of the database
@@ -31,11 +31,15 @@ public class BuildQuestsAndAdventures
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
-		OptionsManager.getSingleton().setTestMode(false);
-		OptionsManager.getSingleton().setUsingTestDB(true);
+//		OptionsManager.getSingleton().setTestMode(false);
+//		OptionsManager.getSingleton().setUsingTestDB(false);
+		System.out.println("creating adventure table");
 		createAdventureTable();
+		System.out.println("creating quest table");
 		createQuestTable();
+		System.out.println("creating quest state table");
 		createQuestStateTable();
+		System.out.println("creating adventure state table");
 		createAdventureStateTable();
 	}
 
@@ -56,7 +60,8 @@ public class BuildQuestsAndAdventures
 		{
 			AdventureStateTableDataGatewayRDS.getSingleton().createRow(
 					adventure.getPlayerID(), adventure.getQuestID(),
-					adventure.getAdventureID(), adventure.getState(), adventure.isNeedingNotification());
+					adventure.getAdventureID(), adventure.getState(),
+					adventure.isNeedingNotification());
 		}
 	}
 
@@ -71,9 +76,12 @@ public class BuildQuestsAndAdventures
 		QuestRowDataGatewayRDS.createTable();
 		for (QuestsForTest quest : QuestsForTest.values())
 		{
-			new QuestRowDataGatewayRDS(quest.getQuestID(), quest.getQuestDescription(),
-					quest.getMapName(), quest.getPosition(), quest.getExperienceGained(),
-					quest.getAdventuresForFulfillment());
+			System.out.print(quest.getQuestID() + " ");
+			new QuestRowDataGatewayRDS(quest.getQuestID(), quest.getQuestTitle(),
+					quest.getQuestDescription(), quest.getMapName(), quest.getPosition(),
+					quest.getExperienceGained(), quest.getAdventuresForFulfillment(),
+					quest.getCompletionActionType(), quest.getCompletionActionParameter(),
+					quest.getStartDate(), quest.getEndDate());
 			;
 		}
 	}
@@ -90,7 +98,9 @@ public class BuildQuestsAndAdventures
 		for (AdventuresForTest adventure : AdventuresForTest.values())
 		{
 			AdventureTableDataGatewayRDS.createRow(adventure.getAdventureID(),
-					adventure.getAdventureDescription(), adventure.getQuestID(), adventure.getExperiencePointsGained(), adventure.getSignatureSpecification());
+					adventure.getAdventureDescription(), adventure.getQuestID(),
+					adventure.getExperiencePointsGained(), adventure.getCompletionType(),
+					adventure.getCompletionCriteria());
 		}
 	}
 }

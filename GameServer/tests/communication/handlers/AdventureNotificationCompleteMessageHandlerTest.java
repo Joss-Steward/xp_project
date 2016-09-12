@@ -9,10 +9,10 @@ import model.PlayerManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.AdventuresForTest;
+import testData.PlayersForTest;
+import testData.QuestsForTest;
 import communication.messages.AdventureNotificationCompleteMessage;
-import datasource.AdventuresForTest;
-import datasource.PlayersForTest;
-import datasource.QuestsForTest;
 
 /**
  * Test for AdventureNotificationCompleteMessageHandler

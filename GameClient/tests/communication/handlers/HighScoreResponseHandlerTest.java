@@ -5,12 +5,13 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import model.ClientModelFacade;
+import model.CommandHighScoreResponse;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.HighScoreResponseMessage;
-import datasource.PlayerScoreRecord;
+import datatypes.PlayerScoreRecord;
 
 /**
  * @author nk3668
@@ -59,10 +60,9 @@ public class HighScoreResponseHandlerTest
 		h.process(msg);
 
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
-		while(ClientModelFacade.getSingleton().hasCommandsPending())
-		{
-			Thread.sleep(100);
-		}
+		CommandHighScoreResponse cmd = (CommandHighScoreResponse) ClientModelFacade.getSingleton().getNextCommand();
+		assertEquals(list,cmd.getScoreRecord());
+		ClientModelFacade.getSingleton().emptyQueue();
 		reset();
 	}
 }

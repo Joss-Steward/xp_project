@@ -16,13 +16,13 @@ import model.reports.UpdatePlayerInformationReport;
 import org.junit.Before;
 import org.junit.Test;
 
-import datasource.AdventureStatesForTest;
-import datasource.AdventuresForTest;
+import testData.AdventureStatesForTest;
+import testData.AdventuresForTest;
+import testData.LevelsForTest;
+import testData.PlayersForTest;
+import testData.QuestStatesForTest;
+import testData.QuestsForTest;
 import datasource.DatabaseException;
-import datasource.LevelsForTest;
-import datasource.PlayersForTest;
-import datasource.QuestStatesForTest;
-import datasource.QuestsForTest;
 
 /**
  * Test the CurrentQuestStateReport
@@ -144,8 +144,8 @@ public class UpdatePlayerInformationReportTest {
 		
 		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(john);
 		assertEquals(PlayersForTest.JOHN.getExperiencePoints(), report.getExperiencePts());
-		assertEquals(LevelsForTest.ONE.getDescription(), report.getLevel().getDescription());
-		assertEquals(LevelsForTest.ONE.getLevelUpPoints(), report.getLevel().getLevelUpPoints());
+		assertEquals(LevelsForTest.TWO.getDescription(), report.getLevel().getDescription());
+		assertEquals(LevelsForTest.TWO.getLevelUpPoints(), report.getLevel().getLevelUpPoints());
 		
 	}
 }

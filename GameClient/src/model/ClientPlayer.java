@@ -4,8 +4,10 @@ import java.util.Observable;
 
 import model.QualifiedObservableConnector;
 import model.reports.ChangeMapReport;
-import model.reports.PlayerMovedReport;
-import data.Position;
+import model.reports.ThisClientsPlayerMovedReport;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * Holds the information about one player in the system
@@ -20,6 +22,8 @@ public class ClientPlayer extends Observable
 	protected String name;
 	protected Position position;
 	protected String appearanceType;
+	private Crew crew;
+	private Major major;
 
 	/**
 	 * Create a player
@@ -34,25 +38,28 @@ public class ClientPlayer extends Observable
 	}
 
 	/**
-	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public final int hashCode()
-	{
+	public final int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result
+				+ ((appearanceType == null) ? 0 : appearanceType.hashCode());
+		result = prime * result + ((crew == null) ? 0 : crew.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((major == null) ? 0 : major.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result
+				+ ((position == null) ? 0 : position.hashCode());
 		return result;
 	}
 
 	/**
-	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public final boolean equals(Object obj)
-	{
+	public final boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -60,7 +67,26 @@ public class ClientPlayer extends Observable
 		if (!(obj instanceof ClientPlayer))
 			return false;
 		ClientPlayer other = (ClientPlayer) obj;
+		if (appearanceType == null) {
+			if (other.appearanceType != null)
+				return false;
+		} else if (!appearanceType.equals(other.appearanceType))
+			return false;
+		if (crew != other.crew)
+			return false;
 		if (id != other.id)
+			return false;
+		if (major != other.major)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (position == null) {
+			if (other.position != null)
+				return false;
+		} else if (!position.equals(other.position))
 			return false;
 		return true;
 	}
@@ -125,7 +151,8 @@ public class ClientPlayer extends Observable
 	public void move(Position playerPosition)
 	{
 		this.position = playerPosition;
-		QualifiedObservableConnector.getSingleton().sendReport(new PlayerMovedReport(this.id, playerPosition));
+		QualifiedObservableConnector.getSingleton().sendReport(
+				new ThisClientsPlayerMovedReport(this.id, playerPosition));
 	}
 
 	/**
@@ -163,6 +190,39 @@ public class ClientPlayer extends Observable
 		QualifiedObservableConnector.getSingleton().sendReport(
 				new ChangeMapReport(id, hotSpot.getTeleportPosition(), hotSpot
 						.getMapName()));
+	}
+
+	/**
+	 * @return the crew this player belongs to
+	 */
+	public Crew getCrew()
+	{
+		return crew;
+	}
+
+	/**
+	 * 
+	 * @param crew
+	 *            the crew this player should belong to
+	 */
+	protected void setCrew(Crew crew)
+	{
+		this.crew = crew;
+	}
+
+	/**
+	 * @return the major of the player
+	 */
+	public Major getMajor()
+	{
+		return major;
+	}
+
+	/**
+	 * @param major of the player
+	 */
+	public void setMajor(Major major) {
+		this.major = major;
 	}
 
 }

@@ -2,9 +2,11 @@ package datasource;
 
 import java.util.HashMap;
 
-import data.Position;
+import testData.PlayersForTest;
 import datasource.DatabaseException;
-import datasource.PlayersForTest;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * A mock implementation for PlayerRowDataGateway
@@ -21,14 +23,18 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		private String appearanceType;
 		private int quizScore;
 		private int experiencePoints;
+		private Crew crew;
+		private Major major;
 
 		public PlayerInfo(Position position, String appearanceType,
-				int quizScore, int experiencePoints)
+				int quizScore, int experiencePoints, Crew crew, Major major)
 		{
 			this.position = position;
 			this.appearanceType = appearanceType;
 			this.quizScore = quizScore;
 			this.experiencePoints = experiencePoints;
+			this.crew = crew;
+			this.major = major;
 		}
 
 		public Position getPosition()
@@ -40,7 +46,6 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		{
 			return appearanceType;
 		}
-
 	}
 
 	/**
@@ -83,9 +88,11 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	 * @param appearanceType the appearance type of the player
 	 * @param quizScore this player's current quiz score
 	 * @param experiencePoints this player's experience points
+	 * @param crew the crew to which this player belongs
+	 * @param major the major of this player
 	 */
 	public PlayerRowDataGatewayMock(Position position,
-			String appearanceType, int quizScore, int experiencePoints) 
+			String appearanceType, int quizScore, int experiencePoints, Crew crew, Major major) 
 	{
 		if (playerInfo == null)
 		{
@@ -95,7 +102,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		nextKey++;
 		
 		playerInfo.put(playerID, new PlayerInfo(position, appearanceType,
-				quizScore, experiencePoints));
+				quizScore, experiencePoints, crew, major));
 	}
 
 	/**
@@ -118,7 +125,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 			playerInfo.put(
 					nextKey,
 					new PlayerInfo(p.getPosition(), p
-							.getAppearanceType(), p.getQuizScore(), p.getExperiencePoints()));
+							.getAppearanceType(), p.getKnowledgeScore(), p.getExperiencePoints(), p.getCrew(), p.getMajor()));
 			nextKey++;
 		}
 	}
@@ -160,7 +167,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	}
 
 	/**
-	 * @see datasource.PlayerRowDataGateway#setPosition(data.Position)
+	 * @see datasource.PlayerRowDataGateway#setPosition(datatypes.Position)
 	 */
 	@Override
 	public void setPosition(Position position)
@@ -212,6 +219,42 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	public void setExperiencePoints(int experiencePoints)
 	{
 		info.experiencePoints = experiencePoints;		
+	}
+
+	/**
+	 * @see datasource.PlayerRowDataGateway#getCrew()
+	 */
+	@Override
+	public Crew getCrew()
+	{
+		return info.crew;
+	}
+
+	/**
+	 * @see datasource.PlayerRowDataGateway#setCrew(datatypes.Crew)
+	 */
+	@Override
+	public void setCrew(Crew crew)
+	{
+		info.crew = crew;
+	}
+
+	/**
+	 * @see datasource.PlayerRowDataGateway#getMajor()
+	 */
+	@Override
+	public Major getMajor() 
+	{
+		return info.major;
+	}
+
+	/**
+	 * @see datasource.PlayerRowDataGateway#setMajor(datatypes.Major)
+	 */
+	@Override
+	public void setMajor(Major major) 
+	{
+		info.major = major;
 	}
 
 }

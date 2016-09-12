@@ -1,19 +1,9 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
 
-import model.IllegalQuestChangeException;
-import model.LevelManager;
-import model.OptionsManager;
-import model.Player;
-import model.PlayerConnection;
-import model.PlayerManager;
-import model.QualifiedObservableConnector;
-import model.QualifiedObserver;
 import model.reports.ExperienceChangedReport;
 
 import org.easymock.EasyMock;
@@ -21,11 +11,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import data.Position;
+import testData.PlayersForTest;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
-import datasource.PlayersForTest;
 import datasource.QuestStateTableDataGatewayMock;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * Test the Player class
@@ -89,7 +80,18 @@ public class PlayerTest extends DatabaseTest
 		Player p = playerManager.addPlayer(1);
 		assertEquals("John", p.getPlayerName());
 	}
-
+	
+	/**
+	 * Make sure we can retrieve a player's major
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void canGetPlayerMajor() throws DatabaseException
+	{
+		Player p = playerManager.addPlayer(1);
+		assertEquals(Major.COMPUTER_ENGINEERING, p.getMajor());
+	}
+	
 	/**
 	 * Test to make sure we have a legitimate PIN
 	 * 
@@ -103,32 +105,6 @@ public class PlayerTest extends DatabaseTest
 		PlayerConnection playerPin = new PlayerConnection(1);
 		playerPin.generateTestPin();
 		playerManager.addPlayer(1, PlayerConnection.DEFAULT_PIN);
-	}
-
-	/**
-	 * Make sure an expired PIN throws the appropriate exception
-	 * 
-	 * @throws DatabaseException
-	 *             shouldn't (exception checked in the test)
-	 */
-	@Test
-	public void oldPin() throws DatabaseException
-	{
-		PlayerConnection playerPin = new PlayerConnection(1);
-		GregorianCalendar cal = new GregorianCalendar();
-		cal.add(PlayerConnection.EXPIRATION_TIME_UNITS, -1 * PlayerConnection.EXPIRATION_TIME_QUANTITY
-				- 1);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		playerPin.setChangedOn(sdf.format(cal.getTime()));
-		boolean gotTheException = false;
-		try
-		{
-			playerManager.addPlayer(1, PlayerConnection.DEFAULT_PIN);
-		} catch (DatabaseException | IllegalQuestChangeException e)
-		{
-			gotTheException = true;
-		}
-		assertTrue(gotTheException);
 	}
 
 	/**
@@ -146,20 +122,7 @@ public class PlayerTest extends DatabaseTest
 		assertEquals(pos, p.getPlayerPosition());
 	}
 
-	/**
-	 * Make sure it complains if we give it the wrong PIN
-	 * 
-	 * @throws DatabaseException
-	 *             should
-	 * @throws IllegalQuestChangeException the state changed illegally
-	 * 
-	 */
-	@Test(expected = DatabaseException.class)
-	public void wrongPin() throws DatabaseException, IllegalQuestChangeException
-	{
-		playerManager.addPlayer(1, -1);
-	}
-
+	
 	/**
 	 * Test that we can set Player's experience points and add to it
 	 * @throws DatabaseException shouldn't
@@ -184,12 +147,14 @@ public class PlayerTest extends DatabaseTest
 	@Test
 	public void testAddExpPointsCreatesReport() throws DatabaseException
 	{
-		Player p = playerManager.addPlayer(1);
+		Player p = playerManager.addPlayer(PlayersForTest.JOHN.getPlayerID());
 		
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				ExperienceChangedReport.class);
-		obs.receiveReport(new ExperienceChangedReport(p.getPlayerID(), 30, LevelManager.getSingleton().getLevelForPoints(30)));
+		int updatedPoints = p.getExperiencePoints()+15;
+		ExperienceChangedReport expectedReport = new ExperienceChangedReport(p.getPlayerID(), updatedPoints, LevelManager.getSingleton().getLevelForPoints(updatedPoints));
+		obs.receiveReport(expectedReport);
 		EasyMock.replay(obs);
 
 		p.addExperiencePoints(15);

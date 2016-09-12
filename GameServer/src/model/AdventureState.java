@@ -2,8 +2,10 @@ package model;
 
 import model.QualifiedObservableConnector;
 import model.reports.AdventureStateChangeReport;
-import datasource.AdventureStateEnum;
+import data.AdventureRecord;
 import datasource.DatabaseException;
+import datatypes.AdventureStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * Stores the states of all the adventures for an individual player on the
@@ -114,6 +116,7 @@ public class AdventureState
 	 */
 	public void trigger() throws IllegalAdventureChangeException, DatabaseException, IllegalQuestChangeException
 	{
+	    
 		changeState(AdventureStateEnum.TRIGGERED, false);
 	}
 
@@ -128,15 +131,19 @@ public class AdventureState
 	 */
 	public void complete() throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException
 	{
-		changeState(AdventureStateEnum.COMPLETED, true);
-		PlayerManager.getSingleton()
-				.getPlayerFromID(this.parentQuestState.getPlayerID())
-				.addExperiencePoints(
-						QuestManager.getSingleton()
-								.getAdventure(this.parentQuestState.getID(),
-										adventureID)
-								.getExperiencePointsGained());
-		this.parentQuestState.checkForFulfillment();
+	    changeState(AdventureStateEnum.COMPLETED, true);
+	    if(parentQuestState.getStateValue() != QuestStateEnum.EXPIRED)
+	    {
+    		PlayerManager.getSingleton()
+    				.getPlayerFromID(this.parentQuestState.getPlayerID())
+    				.addExperiencePoints(
+    						QuestManager.getSingleton()
+    								.getAdventure(this.parentQuestState.getID(),
+    										adventureID)
+    								.getExperiencePointsGained());
+	    }
+    		this.parentQuestState.checkForFulfillmentOrFinished();
+	    
 	}
 
 	/**
@@ -147,7 +154,7 @@ public class AdventureState
 	 */
 	public void setParentQuest(QuestState questState)
 	{
-		this.parentQuestState = questState;
+		parentQuestState = questState;
 	}
 
 	/**
@@ -163,32 +170,50 @@ public class AdventureState
 	 * Changes the current states state to the given state
 	 * and tells it if it needs to notify the user.
 	 * @param state state to change to
-	 * @param b whether to notify or not
+	 * @param needingNotification whether to notify or not
 	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
 	 * @throws DatabaseException shouldn't
 	 * @throws IllegalQuestChangeException thrown if queststatechange error occurs
 	 */
-	protected void changeState(AdventureStateEnum state, boolean b) throws IllegalAdventureChangeException, DatabaseException, IllegalQuestChangeException 
+	protected void changeState(AdventureStateEnum state, boolean needingNotification) throws IllegalAdventureChangeException, DatabaseException, IllegalQuestChangeException 
 	{
-		if((this.adventureState.equals(AdventureStateEnum.HIDDEN) && state.equals(AdventureStateEnum.TRIGGERED)) 
+	    if(this.parentQuestState.getStateValue() == QuestStateEnum.EXPIRED)  
+	    {
+	        if(!adventureIsExpiredOrCompleted())
+	        {
+	            this.adventureState = AdventureStateEnum.EXPIRED;
+	        }
+	       
+	    }
+	    else if((this.adventureState.equals(AdventureStateEnum.HIDDEN) && state.equals(AdventureStateEnum.TRIGGERED)) 
 				|| (this.adventureState.equals(AdventureStateEnum.TRIGGERED) && state.equals(AdventureStateEnum.COMPLETED))) 
 		{
 			this.adventureState = state;
-			this.needingNotification = b;
+			this.needingNotification = needingNotification;
 			
 			if(needingNotification == true)
 			{
+				AdventureRecord adventure = QuestManager.getSingleton().getAdventure(parentQuestState.getID(), 
+				adventureID);
 				QualifiedObservableConnector.getSingleton().sendReport(
 						new AdventureStateChangeReport(parentQuestState.getPlayerID(), parentQuestState.getID(), adventureID, 
-								QuestManager.getSingleton().getAdventure(parentQuestState.getID(), 
-								adventureID).getAdventureDescription(), adventureState));
+								adventure.getAdventureDescription(), adventureState, adventure.isRealLifeAdventure(), adventure.getCompletionCriteria().toString()));
 			}
 		}
-		else
+	    else
 		{
 			throw new IllegalAdventureChangeException(this.adventureState, state);
 		}
 	}
+
+    private boolean adventureIsExpiredOrCompleted()
+    {
+        if(this.adventureState == AdventureStateEnum.COMPLETED || this.adventureState == AdventureStateEnum.EXPIRED)
+        {
+            return true;
+        }
+        return false;
+    }
 
 	/**
 	 * Set needing notification to false

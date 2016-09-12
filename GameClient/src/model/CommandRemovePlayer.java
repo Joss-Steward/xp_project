@@ -19,7 +19,7 @@ public class CommandRemovePlayer extends Command {
 	{
 		this.playerID = id;
 	}
-	
+
 	/**
 	 * @see Command#execute()
 	 */
@@ -27,6 +27,15 @@ public class CommandRemovePlayer extends Command {
 	protected boolean execute() {
 		ClientPlayerManager.getSingleton().removePlayer(playerID);
 		return true;
+	}
+	
+	/**
+	 * 
+	 * @return the ID of the player who left this area
+	 */
+	public int getPlayerID()
+	{
+		return playerID;
 	}
 
 }

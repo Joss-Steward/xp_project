@@ -19,7 +19,7 @@ public class DesktopClient
 	 */
 	public static void main(String[] args)
 	{
-		String host = "localhost";
+		String host = "clipper.cs.ship.edu";
 		for(String arg: args)
 		{
 			String[] splitArg = arg.split("=");
@@ -27,6 +27,7 @@ public class DesktopClient
 			{
 				host = splitArg[1];
 			}
+			
 		}
 		OptionsManager.getSingleton().setLoginHost(host);
 		OptionsManager.getSingleton().setTestMode(false);

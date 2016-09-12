@@ -19,11 +19,11 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
-import datasource.AdventureStateEnum;
+import testData.QuestsForTest;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
-import datasource.QuestStateEnum;
-import datasource.QuestsForTest;
+import datatypes.AdventureStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * Test for the QuestState Class
@@ -102,12 +102,11 @@ public class QuestStateTest extends DatabaseTest
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test(expected=IllegalQuestChangeException.class)
-	public void testTriggerFinishedQuest() throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
+	public void testTriggerFinishedQuest() throws IllegalQuestChangeException, DatabaseException, IllegalAdventureChangeException
 	{
 		QuestState quest = new QuestState(2, 1, QuestStateEnum.FINISHED, false);
 		quest.trigger();
-		assertEquals(QuestStateEnum.FINISHED, quest.getStateValue());
-		assertFalse(quest.isNeedingNotification());
+	
 	}
 
 	/**
@@ -163,8 +162,8 @@ public class QuestStateTest extends DatabaseTest
 				QuestStateChangeReport.class);
 		QuestStateChangeReport rpt = new QuestStateChangeReport(1,
 				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(),
-				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestDescription(),
-				QuestStateEnum.FULFILLED);
+				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestTitle(),
+				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestDescription(), QuestStateEnum.FULFILLED);
 		obs.receiveReport(rpt);
 		EasyMock.replay(obs);
 		QuestState qs = new QuestState(2, QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(), QuestStateEnum.TRIGGERED, false);
@@ -185,7 +184,7 @@ public class QuestStateTest extends DatabaseTest
 		adList.add(as);
 
 		qs.addAdventures(adList);
-		qs.checkForFulfillment();
+		qs.checkForFulfillmentOrFinished();
 		assertEquals(
 				origExperiencePoints
 						+ QuestsForTest.ONE_SAME_LOCATION_QUEST.getExperienceGained(),
@@ -225,7 +224,7 @@ public class QuestStateTest extends DatabaseTest
 		adList.add(as);
 
 		qs.addAdventures(adList);
-		qs.checkForFulfillment();
+		qs.checkForFulfillmentOrFinished();
 		assertEquals(QuestStateEnum.FULFILLED, qs.getStateValue());
 		assertFalse(qs.isNeedingNotification());
 		EasyMock.verify(obs);
@@ -243,4 +242,42 @@ public class QuestStateTest extends DatabaseTest
 		quest.changeState(QuestStateEnum.AVAILABLE, false);
 		assertEquals(quest.getStateValue(), QuestStateEnum.AVAILABLE);
 	}
+	
+	
+	/**
+     * A finished quest should be marked as finished not expired
+     * @throws IllegalQuestChangeException thrown if changing to a wrong state
+     * @throws DatabaseException shouldn't 
+     */
+    @Test
+    public void testCompleteQuestNotExpired() throws IllegalQuestChangeException, DatabaseException 
+    {
+        QuestState quest = new QuestState(19, 8, QuestStateEnum.FINISHED, false);
+        assertEquals(QuestStateEnum.FINISHED, quest.getStateValue());
+    }
+    
+    /**
+     * An available quest should be marked as expired
+     * @throws IllegalQuestChangeException thrown if changing to a wrong state
+     * @throws DatabaseException shouldn't 
+     */
+    @Test
+    public void testAvailableQuestIsExpired() throws IllegalQuestChangeException, DatabaseException 
+    {
+        QuestState quest = new QuestState(19, 8, QuestStateEnum.AVAILABLE, false);
+        assertEquals(QuestStateEnum.EXPIRED, quest.getStateValue());
+    }
+    
+    
+    /**
+     * A triggered quest should be marked as expired
+     * @throws IllegalQuestChangeException thrown if changing to a wrong state
+     * @throws DatabaseException shouldn't 
+     */
+    @Test
+    public void testTriggeredQuestIsExpired() throws IllegalQuestChangeException, DatabaseException 
+    {
+        QuestState quest = new QuestState(19, 8, QuestStateEnum.TRIGGERED, false);
+        assertEquals(QuestStateEnum.EXPIRED, quest.getStateValue());
+    }
 }

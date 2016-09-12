@@ -2,8 +2,8 @@ package model;
 
 import model.QualifiedObservableConnector;
 import model.reports.SendChatMessageReport;
-import data.ChatType;
-import data.Position;
+import datatypes.ChatType;
+import datatypes.Position;
 
 /**
  * @author Dave

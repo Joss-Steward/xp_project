@@ -4,17 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import org.easymock.EasyMock;
-import org.junit.Before;
-import org.junit.Test;
-
-import communication.StateAccumulator;
-import communication.messages.TeleportationInitiationMessage;
-import communication.messages.TeleportationContinuationMessage;
-import communication.messages.Message;
-import data.Position;
-import datasource.PlayersForTest;
-import datasource.ServersForTest;
 import model.ModelFacade;
 import model.OptionsManager;
 import model.Player;
@@ -22,6 +11,18 @@ import model.PlayerManager;
 import model.QualifiedObservableConnector;
 import model.QualifiedObserver;
 import model.reports.PlayerMovedReport;
+
+import org.easymock.EasyMock;
+import org.junit.Before;
+import org.junit.Test;
+
+import testData.PlayersForTest;
+import testData.ServersForTest;
+import communication.StateAccumulator;
+import communication.messages.Message;
+import communication.messages.TeleportationContinuationMessage;
+import communication.messages.TeleportationInitiationMessage;
+import datatypes.Position;
 
 /**
  * Test the handler for GetServerInfoMessages
@@ -82,6 +83,7 @@ public class TeleportationInitiationHandlerTest
 		// Reset the singleton and re-add the player to make sure that the player is refreshed from the DB
 		PlayerManager.resetSingleton();
 		PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
+		
 
 		// make sure we moved the player without notifying observers
 		Player p = PlayerManager.getSingleton().getPlayerFromID(PlayersForTest.MERLIN.getPlayerID());

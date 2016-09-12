@@ -2,6 +2,9 @@ package communication.packers;
 
 import model.QualifiedObservableReport;
 import model.reports.AdventureStateChangeReport;
+
+import java.util.ArrayList;
+
 import communication.messages.AdventureStateChangeMessage;
 import communication.messages.Message;
 
@@ -24,18 +27,21 @@ public class AdventureStateChangeMessagePacker extends MessagePacker
 		if (this.getAccumulator().getPlayerID() == playerID)
 		{
 			msg = new AdventureStateChangeMessage(rpt.getPlayerID(), rpt.getQuestID(), rpt.getAdventureID(),
-					rpt.getAdventureDescription(), rpt.getNewState());
+					rpt.getAdventureDescription(), rpt.getNewState(), rpt.isRealLifeAdventure(), rpt.getWitnessTitle());
 		}
 		return msg;
 	}
 
 	/**
-	 * @see communication.packers.MessagePacker#getReportTypeWePack()
+	 * @see communication.packers.MessagePacker#getReportTypesWePack()
 	 */
 	@Override
-	public Class<? extends QualifiedObservableReport> getReportTypeWePack() 
+	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack() 
 	{
-		return AdventureStateChangeReport.class;
+		ArrayList<Class<? extends QualifiedObservableReport>> result = 
+				new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add( AdventureStateChangeReport.class);
+		return result;
 	}
 
 

@@ -11,18 +11,41 @@ public enum ServerType
 	/**
 	 * the client that a player making the request is using
 	 */
-	THIS_PLAYER_CLIENT, /**
-	 * the client of another player who should
-	 * participate even though they did not initiate the sequence
+	THIS_PLAYER_CLIENT(false),
+
+	/**
+	 * the client of another player who should participate even though they did
+	 * not initiate the sequence
 	 */
-	OTHER_CLIENT, /**
+	OTHER_CLIENT(false),
+
+	/**
 	 * the server that manages logins
 	 */
-	LOGIN_SERVER, /**
+	LOGIN_SERVER(false),
+
+	/**
 	 * An area server
 	 */
-	AREA_SERVER, /**
+	AREA_SERVER(true),
+
+	/**
 	 * the standalone management app
 	 */
-	MANAGER
+	MANAGER(false);
+
+	private boolean oneToManyConnections;
+
+	/**
+	 * @return true if one incoming message may cause outgoing messages to other receivers
+	 */
+	public boolean supportsOneToManyConnections()
+	{
+		return oneToManyConnections;
+	}
+
+	ServerType(boolean oneToManyConnections)
+	{
+		this.oneToManyConnections = oneToManyConnections;
+	}
 }

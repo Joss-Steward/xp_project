@@ -8,7 +8,7 @@ import view.player.Direction;
 
 import com.badlogic.gdx.math.Vector2;
 
-import data.Position;
+import datatypes.Position;
 
 /**
  * @author nhydock

@@ -10,10 +10,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import data.Position;
+import testData.QuestsForTest;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.QuestRowDataGateway;
+import datatypes.Position;
 
 /**
  * Tests required of all player gateways
@@ -61,13 +62,18 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 	public void finder() throws DatabaseException
 	{
 		QuestsForTest quest = QuestsForTest.ONE_BIG_QUEST;
-		gateway = findGateway(QuestsForTest.ONE_BIG_QUEST.ordinal() + 1);
+		gateway = findGateway(QuestsForTest.ONE_BIG_QUEST.getQuestID());
 		assertEquals(quest.getQuestID(), gateway.getQuestID());
 		assertEquals(quest.getQuestDescription(), gateway.getQuestDescription());
 		assertEquals(quest.getMapName(), gateway.getTriggerMapName());
 		assertEquals(quest.getPosition(), gateway.getTriggerPosition());
 		assertEquals(quest.getAdventuresForFulfillment(), gateway.getAdventuresForFulfillment());
 		assertEquals(quest.getExperienceGained(), gateway.getExperiencePointsGained());
+		assertEquals(quest.getCompletionActionType(), gateway.getCompletionActionType());
+		assertEquals(quest.getCompletionActionParameter(), gateway.getCompletionActionParameter());
+		assertEquals(quest.getQuestTitle(), gateway.getQuestTitle());
+		assertEquals(quest.getStartDate(), gateway.getStartDate());
+		assertEquals(quest.getEndDate(), gateway.getEndDate());
 	}
 
 	/**
@@ -84,13 +90,13 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 	}
 
 	/**
-	 * There are two quests in QuestsForTest that are on the same location.  Make sure we get them both
+	 * There are three quests in QuestsForTest that are on the same location.  Make sure we get them all
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void canFindQuestsForMapLocation() throws DatabaseException
 	{
-		QuestsForTest q = QuestsForTest.ONE_BIG_QUEST;
+		QuestsForTest q = QuestsForTest.THE_OTHER_QUEST;
 		ArrayList<Integer> questIDs = findQuestsForMapLocation(q.getMapName(),q.getPosition());
 		assertEquals(2, questIDs.size());
 		assertTrue(questIDs.contains(q.getQuestID()));

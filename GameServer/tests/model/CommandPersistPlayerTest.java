@@ -9,9 +9,9 @@ import model.PlayerManager;
 import org.junit.Before;
 import org.junit.Test;
 
-import data.Position;
+import testData.PlayersForTest;
 import datasource.DatabaseException;
-import datasource.PlayersForTest;
+import datatypes.Position;
 
 /**
  * Test that a player is persisted

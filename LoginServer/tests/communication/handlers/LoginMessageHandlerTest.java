@@ -10,12 +10,12 @@ import model.LoginPlayerManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import communication.StateAccumulator;
 import communication.messages.LoginFailedMessage;
 import communication.messages.LoginMessage;
 import communication.messages.LoginSuccessfulMessage;
 import communication.messages.Message;
-import datasource.PlayersForTest;
 
 /**
  * @author Merlin

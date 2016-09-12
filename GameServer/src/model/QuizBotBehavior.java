@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import model.QualifiedObservableReport;
 import model.reports.SendChatMessageReport;
-import data.ChatType;
-import data.Position;
 import datasource.DatabaseException;
+import datatypes.ChatType;
+import datatypes.Position;
 
 /**
  * The Bot Behavior of the Quiznasium NPC.
@@ -48,7 +48,7 @@ public class QuizBotBehavior extends NPCBehavior
 	{
 		String questionString = question.getQuestionStatement();
 
-		ChatManager.getSingleton().sendChatToClients(questionString, "Quiz Bot",
+		ChatManager.getSingleton().sendChatToClients(questionString, "QuizBot",
 				new Position(0, 0), ChatType.Zone);
 	}
 

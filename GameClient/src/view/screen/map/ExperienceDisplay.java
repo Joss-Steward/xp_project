@@ -4,6 +4,7 @@ import model.QualifiedObservableConnector;
 import model.QualifiedObservableReport;
 import model.QualifiedObserver;
 import model.reports.ExperiencePointsChangeReport;
+import model.reports.KnowledgePointsChangeReport;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -38,7 +39,7 @@ public class ExperienceDisplay extends Group implements QualifiedObserver
 	private void setUpListening()
 	{
 		QualifiedObservableConnector cm = QualifiedObservableConnector.getSingleton();
-		cm.registerObserver(this, ExperiencePointsChangeReport.class);
+		cm.registerObserver(this, KnowledgePointsChangeReport.class);
 	}
 
 

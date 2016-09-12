@@ -43,8 +43,9 @@ public class MapFileMessageHandler extends MessageHandler
 			System.out.println("received " + msg);
 
 			URL decodedPath = path.toURL();
+			System.out.println(decodedPath.getPath());
 			MapFileMessage mapFileMessage = (MapFileMessage) msg;
-			String mapFile = (new URL(decodedPath, "../" + mapFileMessage.getMapFileName() )).toURI()
+			String mapFile = (new URL(decodedPath,  mapFileMessage.getMapFileName() )).toURI()
 					.getSchemeSpecificPart();
 
 			ClientModelFacade.getSingleton().queueCommand(new CommandNewMap(mapFile));

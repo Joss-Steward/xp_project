@@ -1,9 +1,12 @@
 package datasource;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
+import testData.NPCQuestionsForTest;
 import datasource.DatabaseException;
-import datasource.NPCQuestionsForTest;
 
 /**
  * A mock implementation for PlayerRowDataGateway
@@ -18,11 +21,15 @@ public class NPCQuestionRowDataGatewayMock implements NPCQuestionRowDataGateway
 	{
 		private String answer;
 		private String questionStatement;
+		private Date startDate;
+        private Date endDate;
 
-		public NPCQuestionInfo(String questionStatement, String answer)
+		public NPCQuestionInfo(String questionStatement, String answer, Date startDate, Date endDate)
 		{
 			this.questionStatement = questionStatement;
 			this.answer = answer;
+			this.startDate = startDate;
+			this.endDate = endDate;
 		}
 
 		public String getAnswer()
@@ -33,6 +40,16 @@ public class NPCQuestionRowDataGatewayMock implements NPCQuestionRowDataGateway
 		public String getQuestionStatement()
 		{
 			return questionStatement;
+		}
+		
+		public Date getStartDate()
+		{
+		    return startDate;
+		}
+		
+		public Date getEndDate()
+		{
+		    return endDate;
 		}
 	}
 
@@ -87,7 +104,7 @@ public class NPCQuestionRowDataGatewayMock implements NPCQuestionRowDataGateway
 		npcQuestionInfo = new HashMap<Integer, NPCQuestionInfo>();
 		for (NPCQuestionsForTest p : NPCQuestionsForTest.values())
 		{
-			npcQuestionInfo.put(p.getQuestionID(), new NPCQuestionInfo(p.getQ(), p.getA()));
+			npcQuestionInfo.put(p.getQuestionID(), new NPCQuestionInfo(p.getQ(), p.getA(), p.getStartDate(), p.getEndDate()));
 		}
 	}
 
@@ -116,17 +133,49 @@ public class NPCQuestionRowDataGatewayMock implements NPCQuestionRowDataGateway
 	{
 		return info.getAnswer();
 	}
+	
+	/** 
+	 * @see datasource.NPCQuestionRowDataGateway#getStartDate()
+	 */
+	@Override
+	public Date getStartDate()
+	{
+	    return info.getStartDate();
+	}
+	
+	/**
+	 * @see datasource.NPCQuestionRowDataGateway#getEndDate()
+	 */
+	@Override
+    public Date getEndDate()
+    {
+        return info.getEndDate();
+    }
 
 	/**
-	 * @return a gateway for a random row in the table
+	 * @return a gateway for a random row in the table that is available
 	 * @throws DatabaseException if the datasource cannot complete the request
 	 */
 	public static NPCQuestionRowDataGateway findRandomGateway() throws DatabaseException
 	{
 		new NPCQuestionRowDataGatewayMock(1).resetData();
-		int numberOfQuestions = npcQuestionInfo.values().size();
-		int questionID = (int) (Math.random()*numberOfQuestions)+1;
+		
+		ArrayList<Integer> avaiableQuestions = new ArrayList<Integer>();
+		
+		GregorianCalendar now = new GregorianCalendar();
+		
+		for(Integer i : npcQuestionInfo.keySet())
+		{
+		    if(now.after(npcQuestionInfo.get(i).startDate) && now.before(npcQuestionInfo.get(i).endDate))
+		    {
+                avaiableQuestions.add(i);
+		    }
+		}
+
+		int questionID = (int) (Math.random()*avaiableQuestions.size())+1;
 		return new NPCQuestionRowDataGatewayMock(questionID);
 	}
+
+    
 
 }

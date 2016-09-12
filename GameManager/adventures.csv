@@ -1,0 +1,61 @@
+Adventure  Number,Quest,Adventure Description,Start Week,End Week,Experiene Points per completion,Witness Title
+1,Well-Prepared,Take a quiz during Dr. Wellington's Monday lab/office hours and get 80% or better to demonstrate that you have read the chapter before class.,1,5,3,Great Wizard Merlin
+2,Well-Prepared,Take a quiz during Dr. Wellington's Monday lab/office hours and get 80% or better to demonstrate that you have read the chapter before class.,6,10,3,Great Wizard Merlin
+3,Well-Prepared,Take a quiz during Dr. Wellington's Monday lab/office hours and get 80% or better to demonstrate that you have read the chapter before class.,10,14,3,Great Wizard Merlin
+4,Well-Prepared,Take a quiz during Dr. Wellington's Monday lab/office hours and get 80% or better to demonstrate that you have read the chapter before class.,1,5,3,Great Wizard Merlin
+5,Well-Prepared,Take a quiz during Dr. Wellington's Monday lab/office hours and get 80% or better to demonstrate that you have read the chapter before class.,6,10,3,Great Wizard Merlin
+6,Well-Prepared,Take a quiz during Dr. Wellington's Monday lab/office hours and get 80% or better to demonstrate that you have read the chapter before class.,10,14,3,Great Wizard Merlin
+7,Early Bird,Turn in lab 1 - 5 (circle the lab) 24 hours before it is due,1,5,2,Lab Instructor
+8,Early Bird,Turn in lab 6 - 9 (circle the lab) 24 hours before it is due,6,10,2,Lab Instructor
+9,Early Bird,Turn in lab 10 - 14 (circle the lab) 24 hours before it is due,10,14,2,Lab Instructor
+10,Well-Rounded,Go to any (not necessarily computer science) faculty member's office hours and ask a question,1,3,2,Faculty Member
+11,Well-Rounded,Go to any (not necessarily computer science) faculty member's office hours and ask a question,4,6,2,Faculty Member
+12,Well-Rounded,Go to any (not necessarily computer science) faculty member's office hours and ask a question,7,10,2,Faculty Member
+13,Well-Rounded,Go to any (not necessarily computer science) faculty member's office hours and ask a question,11,14,2,Faculty Member
+14,Well-Rounded,Go to any (not necessarily computer science) faculty member's office hours and ask a question,1,6,2,Faculty Member
+15,Well-Connected,Find a faculty member who has published something about professionalism grades,1,14,2,CS/E Faculty Member
+16,Well-Connected,Find which CS/E faculty members teach Software Engineering Courses,7,14,2,CS/E Faculty Member
+17,Well-Connected,Find which CS/E faculty member has published in bioinformatics,7,14,2,CS/E Faculty Member
+18,Well-Connected,Find a CS/E faculty member who has built things for the biology department,7,14,2,CS/E Faculty Member
+19,Well-Connected,Find a CS/E faculty member whose doctorate is not a PhD,7,14,2,CS/E Faculty Member
+20,Well-Connected,Find a CS/E faculty member whose PhD research was in Natural language Generation,7,15,2,CS/E Faculty Member
+21,Well-Connected,Meet with your advisor,1,6,2,Advisor
+22,Well-Connected,Go to your CSC107 instructor's office hours and ask a question not related to this adventure,1,3,2,Lab Instructor
+23,Well-Connected,Go to your CSC107 instructor's office hours and ask a question not related to this adventure,1,3,2,Lab Instructor
+24,Well-Connected,Go to your CSC107 instructor's office hours and ask a question not related to this adventure,7,12,2,Lab Instructor
+25,Well-Connected,Find a faculty member whos PhD research was in Natural Language Generation,1,14,2,CS/E Faculty Member
+26,Ready For Fun,Find a student who is an officer on the programming team,1,14,2,Programming Team Officer
+27,Ready For Fun,Attend a meeting of the programming team,1,14,2,Programming Team Officer
+28,Ready For Fun,Attend a meeting of the game development club,1,14,2,Game Dev officer
+29,Ready For Fun,Find out what conference the game development team presented at in June 2016,1,14,2,Great Wizard Merlin
+30,Ready For Fun,Fin out what the Women in Computer Science & Engineering are doing this semester,7,14,2,WiCS-E Member
+31,Ready For Fun,Attend an anime club meeting,1,14,2,Anime Club Officer
+32,Researcher,Find an online example of a topic we cover in class and summarize it in less than a page,1,14,3,Lab Instructor
+33,Researcher,Find a journal article on the ACM Digital Library and summarize it in less than a page,1,14,3,Lab Instructor
+34,Researcher,Find a book on-line and highlight the parts of the table of contents that would help with this class,1,14,3,Lab Instructor
+35,Researcher,Find a news article related to computer science and summarize it in a paragraph,1,14,2,Lab Instructor
+36,Researcher,Find an online example of a topic we cover in class and summarize it in less than a page,1,14,3,Lab Instructor
+37,Researcher,Find a journal article on the ACM Digital Library and summarize it in less than a page,1,14,3,Lab Instructor
+38,Researcher,Find a journal article on the IEEE Computer Society Digital Library and summarize it in less than a page,1,14,3,Lab Instructor
+39,Researcher,Find a news article related to computer science and summarize it in a paragraph,1,14,2,Lab Instructor
+40,Going Beyond,Look at the API for ArrayList<T> and describe how you would use it instead of the array in our Album class,10,14,2,Lab Instructor
+41,Going Beyond,Look at the API for ArrayList<T> and modify your Album class to use it instead of the array,10,14,4,Lab Instructor
+42,Going Beyond,Find an animation of a sorting algorithm other than the ones we talk about and describe how it works in a paragraph,8,10,4,Lab Instructor
+43,Going Beyond,"Write a one page summary that explains the differences between interfaces, parent classes, and abstract classes and why you would use each",10,14,4,Lab Instructor
+44,Going Beyond,Java has one verion of for loop that our book does not cover (it is sometimes called for-each).  Write a description of how it works and where you could have used it in a lab,7,14,3,Lab Instructor
+45,Going Beyond,Find one piece of java code online or in a book and use the debugger in Eclipse to figure out how it works,1,4,2,Lab Instructor
+46,Going Beyond,Find a tutorial on Test Driven Development and complete the first three exercises,4,7,2,Lab Instructor
+47,Going Beyond,Find three online examples of conditionals and write an explanation of how each one works,6,8,2,Lab Instructor
+48,Going Beyond,Summarize Java's switch statement and give a place where we could have used it,6,8,2,Lab Instructor
+49,Going Beyond,Write up an example that shows why Do…While loops are sometimes clearer than While loops,7,9,2,Lab Instructor
+50,Campus Aware,Visit the Learning Center and make a list of the services they offer,1,5,2,An employee of the Center
+51,Campus Aware,Ask a librarian at their reference desk to help you find the ACM Digital Library and IEEE Computer Society Digital Library,1,5,2,Librarian
+52,Campus Aware,Find the location of offices of the College of Arts & Sciences Dean and determine their mission,1,5,2,Dean's Office Secretary
+53,Campus Aware,Find the locations of office of the Dean of Student Services and determine their mission,1,5,2,Dean's Office Secretary
+54,Campus Aware,Find the locations of office of the Registrar and determine their mission,1,5,2,Registrar's Office employee
+55,Campus Aware,Find the location of office of Student Accounts and determine their mission,1,5,2,Student Accounts employee
+56,Campus Aware,Find out who Tim the Enchanter is.,1,5,2,Tim the Enchanter
+57,Campus Aware,Find the Department Secretary of the Computer Science Department and introduce yourself,1,5,1,Jody - Department Secretary
+58,Campus Aware,Visit to the Career and Community Engagement Center,1,5,2,An employee of the Center
+59,Campus Aware,Use a scanner in the library to copy something,1,5,2,Library employee
+60,Ready For Fun,Make a mem related to CSC110 or CSC 107,7,14,2,Lab Instructor

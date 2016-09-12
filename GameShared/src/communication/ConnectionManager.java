@@ -4,8 +4,13 @@ import java.io.IOException;
 import java.net.Socket;
 
 import model.OptionsManager;
-
+import model.QualifiedObservableConnector;
+import model.QualifiedObservableReport;
+import model.QualifiedObserver;
+import model.reports.LogoutReport;
+import model.reports.PlayerDisconnectedReport;
 import communication.handlers.MessageHandlerSet;
+import communication.messages.ConnectMessage;
 import communication.packers.MessagePackerSet;
 
 /**
@@ -19,13 +24,15 @@ import communication.packers.MessagePackerSet;
  * @author merlin
  * 
  */
-public class ConnectionManager
+public class ConnectionManager implements QualifiedObserver
 {
 
 	private ConnectionIncoming incoming;
 	private ConnectionOutgoing outgoing;
 	private Thread outgoingThread;
 	private Thread incomingThread;
+	private Thread watcherThread;
+
 	private Socket socket;
 	private MessagePackerSet messagePackerSet;
 	private MessageHandlerSet handlerSet;
@@ -49,12 +56,16 @@ public class ConnectionManager
 	 * @param messagePackerSet
 	 *            the set of MessagePackers that will pack notifications from
 	 *            the model into outgoing messages
+	 * @param watchForSocketClosure
+	 *            true if we should shut things down when the socket gets closed
+	 *            by the other side
+	 * 
 	 * @throws IOException
 	 *             caused by socket issues
 	 */
 	public ConnectionManager(Socket sock, StateAccumulator stateAccumulator,
-			MessageHandlerSet messageHandlerSet, MessagePackerSet messagePackerSet)
-			throws IOException
+			MessageHandlerSet messageHandlerSet, MessagePackerSet messagePackerSet,
+			boolean watchForSocketClosure) throws IOException
 	{
 		System.out.println("Starting new ConnectionManager");
 		this.socket = sock;
@@ -75,6 +86,22 @@ public class ConnectionManager
 		// T.setDaemon(true);
 		incomingThread.start();
 
+		if (watchForSocketClosure)
+		{
+			ConnectionListener cl = new ConnectionListener(outgoing.getStream(), 5000);
+			cl.setDisconnectionAction(new Runnable()
+			{
+				public void run()
+				{
+					disconnect();
+					QualifiedObservableConnector.getSingleton().sendReport(new PlayerDisconnectedReport(stateAccumulator.getPlayerID()));
+				}
+			});
+			watcherThread = new Thread(cl);
+			watcherThread.start();
+		}
+		QualifiedObservableConnector.getSingleton().registerObserver(this,
+				LogoutReport.class);
 	}
 
 	/**
@@ -112,7 +139,39 @@ public class ConnectionManager
 			// T.setDaemon(true);
 			incomingThread.start();
 		}
-		
+
+	}
+
+	/**
+	 * Used by the client change which server we are connected to
+	 * 
+	 * @param sock
+	 *            the new socket
+	 * @param playerID
+	 *            the playerID we were given to connect
+	 * @param pin
+	 *            the pin we were given to connect
+	 * @throws IOException
+	 *             shouldn't
+	 */
+	public void moveToNewSocket(Socket sock, int playerID, double pin) throws IOException
+	{
+		disconnect();
+		this.socket = sock;
+
+		outgoing = new ConnectionOutgoing(sock, this.stateAccumulator, messagePackerSet);
+		outgoingThread = new Thread(outgoing);
+		// for simplictly
+		// T.setDaemon(true);
+		outgoingThread.start();
+		stateAccumulator.queueMessage(new ConnectMessage(playerID, pin));
+
+		incoming = new ConnectionIncoming(sock, handlerSet);
+		incomingThread = new Thread(incoming);
+		// for simplictly
+		// T.setDaemon(true);
+		incomingThread.start();
+
 	}
 
 	/**
@@ -164,6 +223,27 @@ public class ConnectionManager
 		if (stateAccumulator != null)
 		{
 			stateAccumulator.setPlayerId(playerID);
+		}
+	}
+
+	/**
+	 * Receives a logout report and connects to the login server
+	 */
+	@Override
+	public void receiveReport(QualifiedObservableReport report)
+	{
+		if (report.getClass() == LogoutReport.class)
+		{
+			try
+			{
+
+				moveToNewSocket(new Socket(OptionsManager.getSingleton().getLoginHost(),
+						1871));
+
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 }

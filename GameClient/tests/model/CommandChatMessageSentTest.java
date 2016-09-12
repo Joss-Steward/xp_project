@@ -5,7 +5,7 @@ import model.CommandChatMessageSent;
 
 import org.junit.Test;
 
-import data.ChatType;
+import datatypes.ChatType;
 
 /**
  * @author Matthew Kujawski and Dave Abrams

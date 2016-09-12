@@ -16,10 +16,10 @@ import model.ThisClientsPlayer;
 
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import communication.messages.InitializeThisClientsPlayerMessage;
 import datasource.LevelRecord;
-import datasource.PlayersForTest;
-import datasource.QuestStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * @author nk3668
@@ -34,7 +34,7 @@ public class CommandOverwriteExperienceTest
 	public void testInitialization()
 	{
 		int expPoints = 1000;
-		LevelRecord report = new LevelRecord("Weak Kolbold", 100);
+		LevelRecord report = new LevelRecord("Weak Kolbold", 100, 10, 7);
 		ArrayList<ClientPlayerQuest> list = new ArrayList<ClientPlayerQuest>();
 		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(
 				list, expPoints, report);
@@ -64,10 +64,10 @@ public class CommandOverwriteExperienceTest
 		}
 
 		ArrayList<ClientPlayerQuest> quests = new ArrayList<ClientPlayerQuest>();
-		ClientPlayerQuest q = new ClientPlayerQuest(42, "silly",
-				QuestStateEnum.AVAILABLE, 42, 4);
+		ClientPlayerQuest q = new ClientPlayerQuest(42, "title",
+				"silly", QuestStateEnum.AVAILABLE, 42, 4, false, null);
 		quests.add(q);
-		LevelRecord level = new LevelRecord("One", 15);
+		LevelRecord level = new LevelRecord("One", 15, 10, 7);
 		int expectedExperience = 100;
 
 		CommandOverwriteExperience x = new CommandOverwriteExperience(

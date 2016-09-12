@@ -57,7 +57,7 @@ public class Server implements Runnable
 			if (!runningLocal)
 			{
 				hostName = InetAddress.getLocalHost().getHostName();
-				om.setUsingTestDB(false);
+				
 			} else
 			{
 				hostName = "localhost";
@@ -76,7 +76,7 @@ public class Server implements Runnable
 				StateAccumulator stateAccumulator = new StateAccumulator(messagePackerSet);
 
 				new ConnectionManager(sock, stateAccumulator, new MessageHandlerSet(
-						stateAccumulator), messagePackerSet);
+						stateAccumulator), messagePackerSet, true);
 			}
 
 		} catch (Throwable e)

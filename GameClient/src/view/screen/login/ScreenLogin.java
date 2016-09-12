@@ -1,11 +1,7 @@
 package view.screen.login;
 
-import model.CommandLogin;
-import model.ClientModelFacade;
-import view.screen.ScreenBasic;
-import view.screen.Screens;
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -19,6 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import model.ClientModelFacade;
+import model.CommandLogin;
+import view.screen.ScreenBasic;
+import view.screen.Screens;
 
 /**
  * First screen the player sees to start playing.
@@ -77,11 +78,25 @@ public class ScreenLogin extends ScreenBasic
 
 		// create login field
 		loginField = new TextField("", skin);
+		//loginField = new TextField("newbie", skin);
 		loginField.setMessageText("Player Name");
 
 		// create login field
 		pwField = new TextField("", skin);
+		//pwField = new TextField("pw", skin);
 		pwField.setMessageText("Password");
+		InputListener il = new InputListener()
+		{
+			@Override
+			public boolean keyDown(InputEvent event, int keycode)
+			{
+				if (keycode == Keys.ENTER)
+					performLogin(connectingLabel);
+				return super.keyDown(event, keycode);
+			}
+		};
+		loginField.addListener(il);
+		pwField.addListener(il);
 
 		Label flagLabel = new Label(this.flagMsg, skin);
 		initializeTableContents(nameLabel, pwLabel, connectingLabel, flagLabel);
@@ -106,37 +121,42 @@ public class ScreenLogin extends ScreenBasic
 			public boolean touchDown(InputEvent event, float x, float y, int pointer,
 					int button)
 			{
-				Gdx.app.log("Touched Connect button", "down");
-				// Lock the button
-				if (connectButton.isDisabled())
-				{
-					return false;
-				}
-				connectButton.setDisabled(true);
-				if (loginField.getText().length() == 0)
-				{
-					Gdx.app.log("No name given", "NULL Player Name");
-
-					// Set the text field to default name
-					loginField.setText("Player-Name");
-					loginField.setCursorPosition(loginField.getText().length());
-					connectButton.setDisabled(false);
-					return false;
-				} else
-				{
-					// Send a message containing the player's name
-					Gdx.app.log("Player's name", loginField.getText());
-					connectButton.setDisabled(true);
-					connectingLabel.setVisible(true);
-
-					// Create the login command to allow the player to login
-					CommandLogin lc = new CommandLogin(loginField.getText(), pwField
-							.getText());
-					ClientModelFacade.getSingleton().queueCommand(lc);
-					return true;
-				}
+				return performLogin(connectingLabel);
 			}
 		});
+	}
+	
+	private boolean performLogin(final Label connectingLabel)
+	{
+		Gdx.app.log("Touched Connect button", "down");
+		// Lock the button
+		if (connectButton.isDisabled())
+		{
+			return false;
+		}
+		connectButton.setDisabled(true);
+		if (loginField.getText().length() == 0)
+		{
+			Gdx.app.log("No name given", "NULL Player Name");
+
+			// Set the text field to default name
+			loginField.setText("Player-Name");
+			loginField.setCursorPosition(loginField.getText().length());
+			connectButton.setDisabled(false);
+			return false;
+		} else
+		{
+			// Send a message containing the player's name
+			Gdx.app.log("Player's name", loginField.getText());
+			connectButton.setDisabled(true);
+			connectingLabel.setVisible(true);
+
+			// Create the login command to allow the player to login
+			CommandLogin lc = new CommandLogin(loginField.getText(), pwField
+					.getText());
+			ClientModelFacade.getSingleton().queueCommand(lc);
+			return true;
+		}
 	}
 
 	/**

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
 import datasource.DatabaseManager;
-import datasource.PlayerScoreRecord;
+import datatypes.PlayerScoreRecord;
 
 /**
  * The RDS implementation of the gateway
@@ -16,7 +16,7 @@ import datasource.PlayerScoreRecord;
  * @author Merlin
  *
  */
-public class PlayerTableDataGatewayRDS implements PlayerTableDataGateway
+public class PlayerTableDataGatewayRDS extends PlayerTableDataGateway
 {
 	private static PlayerTableDataGateway singleton;
 

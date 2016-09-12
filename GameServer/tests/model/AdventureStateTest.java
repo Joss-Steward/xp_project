@@ -19,14 +19,14 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
-import datasource.AdventureStateEnum;
-import datasource.AdventureStatesForTest;
-import datasource.AdventuresForTest;
+import testData.AdventureStatesForTest;
+import testData.AdventuresForTest;
+import testData.QuestStatesForTest;
+import testData.QuestsForTest;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
-import datasource.QuestStateEnum;
-import datasource.QuestStatesForTest;
-import datasource.QuestsForTest;
+import datatypes.AdventureStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * Test class for AdventureState
@@ -105,10 +105,19 @@ public class AdventureStateTest extends DatabaseTest
 	public void testTriggerNonHiddenAdventure() throws IllegalAdventureChangeException,
 			DatabaseException, IllegalQuestChangeException
 	{
-		AdventureState adventure = new AdventureState(1, AdventureStateEnum.COMPLETED,
+		AdventureState adventure = new AdventureState(1, AdventureStateEnum.TRIGGERED,
 				false);
+		
+		  questState = new QuestState(19, 6, QuestStateEnum.TRIGGERED, false);
+	        
+	       ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
+	        adventureList.add(adventure);        
+	        questState.addAdventures(adventureList);
+
+	        adventure.changeState(AdventureStateEnum.TRIGGERED, false);
+	        assertEquals(AdventureStateEnum.TRIGGERED, adventure.getState());
 		adventure.trigger();
-		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
+		assertEquals(AdventureStateEnum.TRIGGERED, adventure.getState());
 	}
 
 	/**
@@ -129,16 +138,12 @@ public class AdventureStateTest extends DatabaseTest
 
 		PlayerManager.getSingleton().addPlayer(2);
 		ArrayList<AdventureState> al = new ArrayList<AdventureState>();
-		AdventureState adventure = new AdventureState(
-				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.getAdventureID(),
-				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.getState(),
-				AdventureStatesForTest.PLAYER2_QUEST1_ADV1.isNeedingNotification());
+		AdventureState adventure = new AdventureState(1,AdventureStateEnum.TRIGGERED,true);
 		al.add(adventure);
 		QuestState qState = new QuestState(
 				2,
-				QuestStatesForTest.PLAYER2_QUEST1.getQuestID(),
-				QuestStatesForTest.PLAYER2_QUEST1.getState(), QuestStatesForTest.PLAYER2_QUEST1.isNeedingNotification());
-		assertFalse(qState.isNeedingNotification());
+				1,
+				QuestStateEnum.TRIGGERED, false);
 		qState.addAdventures(al);
 
 		adventure.complete();
@@ -161,7 +166,42 @@ public class AdventureStateTest extends DatabaseTest
 	 *             thrown if illegal state change
 	 */
 	@Test
-	public void testCompleteFulfillingAdventure() throws DatabaseException,
+	public void testFulfillingAdventure() throws DatabaseException,
+			IllegalAdventureChangeException, IllegalQuestChangeException
+	{
+		PlayerManager.getSingleton().addPlayer(1);
+
+		questState = new QuestState(1, QuestsForTest.THE_LITTLE_QUEST.getQuestID(), QuestStateEnum.TRIGGERED, false);
+
+		AdventureState adventure = new AdventureState(1, AdventureStateEnum.TRIGGERED,
+				false);
+		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
+		adventureList.add(adventure);
+		for (int i = 0; i < QuestsForTest.ONE_BIG_QUEST.getAdventuresForFulfillment() - 1; i++)
+		{
+			adventureList.add(new AdventureState(i, AdventureStateEnum.TRIGGERED, false));
+		}
+		questState.addAdventures(adventureList);
+
+		adventure.complete();
+		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
+		assertTrue(adventure.isNeedingNotification());
+		assertEquals(QuestStateEnum.FULFILLED, questState.getStateValue());
+		assertTrue(questState.isNeedingNotification());
+	}
+	/**
+	 * When we complete the right number of adventures, the quest should move to
+	 * the state that will cause fulfillment notification to occur
+	 * 
+	 * @throws DatabaseException
+	 *             shouldn't
+	 * @throws IllegalAdventureChangeException
+	 *             thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException
+	 *             thrown if illegal state change
+	 */
+	@Test
+	public void testFinishingAdventure() throws DatabaseException,
 			IllegalAdventureChangeException, IllegalQuestChangeException
 	{
 		PlayerManager.getSingleton().addPlayer(1);
@@ -181,7 +221,7 @@ public class AdventureStateTest extends DatabaseTest
 		adventure.complete();
 		assertEquals(AdventureStateEnum.COMPLETED, adventure.getState());
 		assertTrue(adventure.isNeedingNotification());
-		assertEquals(QuestStateEnum.FULFILLED, questState.getStateValue());
+		assertEquals(QuestStateEnum.FINISHED, questState.getStateValue());
 		assertTrue(questState.isNeedingNotification());
 	}
 
@@ -210,6 +250,8 @@ public class AdventureStateTest extends DatabaseTest
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
 		adventureList.add(adventure);
 		adventureList.add(adventure2);
+		adventureList.add(new AdventureState(2, AdventureStateEnum.TRIGGERED,
+				false));
 		questState.addAdventures(adventureList);
 
 		adventure2.complete();
@@ -284,7 +326,7 @@ public class AdventureStateTest extends DatabaseTest
 				AdventureStatesForTest.PLAYER1_QUEST2_ADV2.getQuestID(),
 				AdventureStatesForTest.PLAYER1_QUEST2_ADV2.getAdventureID(),
 				AdventuresForTest.QUEST2_ADVENTURE2.getAdventureDescription(),
-				AdventureStateEnum.COMPLETED);
+				AdventureStateEnum.COMPLETED, true, "Fred");
 		QualifiedObservableConnector.getSingleton().registerObserver(obs,
 				AdventureStateChangeReport.class);
 
@@ -296,4 +338,62 @@ public class AdventureStateTest extends DatabaseTest
 
 		EasyMock.verify(obs);
 	}
+	
+	
+	/**
+     * Test that expired quest hidden adventures can not be triggered
+     * 
+     * @throws IllegalAdventureChangeException
+     *             thrown if changing to a wrong state
+     * @throws DatabaseException
+     *             shouldn't
+     * @throws IllegalQuestChangeException
+     *             thrown if changing to a wrong state
+     */
+	@Test
+    public void testExpiredQuestHiddenAdventureNotTriggered() throws IllegalAdventureChangeException,
+            DatabaseException, IllegalQuestChangeException
+    {
+        PlayerManager.getSingleton().addPlayer(19);
+        questState = new QuestState(19, 8, QuestStateEnum.EXPIRED, false);
+
+        AdventureState adventure = new AdventureState(1, AdventureStateEnum.HIDDEN,
+                false);
+        
+        ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
+        adventureList.add(adventure);        
+        questState.addAdventures(adventureList);
+
+        adventure.changeState(AdventureStateEnum.TRIGGERED, false);
+        assertEquals(AdventureStateEnum.EXPIRED, adventure.getState());
+    }
+    
+    
+    /**
+     * Test that expired quest triggered adventures can not be completed
+     * 
+     * @throws IllegalAdventureChangeException
+     *             thrown if changing to a wrong state
+     * @throws DatabaseException
+     *             shouldn't
+     * @throws IllegalQuestChangeException
+     *             thrown if changing to a wrong state
+     */
+    @Test
+    public void testExpiredQuestTriggeredAdventureNotComplete() throws IllegalAdventureChangeException,
+            DatabaseException, IllegalQuestChangeException
+    {
+        PlayerManager.getSingleton().addPlayer(19);
+        questState = new QuestState(19, 8, QuestStateEnum.EXPIRED, false);
+
+        AdventureState adventure = new AdventureState(1, AdventureStateEnum.TRIGGERED,
+                false);
+        
+        ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
+        adventureList.add(adventure);        
+        questState.addAdventures(adventureList);
+
+        adventure.changeState(AdventureStateEnum.COMPLETED, false);
+        assertEquals(AdventureStateEnum.EXPIRED, adventure.getState());
+    }
 }

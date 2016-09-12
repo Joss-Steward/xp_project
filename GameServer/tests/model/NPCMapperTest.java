@@ -10,9 +10,9 @@ import model.PlayerMapper;
 
 import org.junit.Test;
 
+import testData.NPCsForTest;
+import testData.PlayersForTest;
 import datasource.DatabaseException;
-import datasource.NPCsForTest;
-import datasource.PlayersForTest;
 
 /**
  * Test NPC Mappers

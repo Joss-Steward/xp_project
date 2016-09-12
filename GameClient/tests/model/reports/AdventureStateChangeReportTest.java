@@ -6,8 +6,8 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
-import datasource.AdventureStateEnum;
 import datasource.AdventuresForTest;
+import datatypes.AdventureStateEnum;
 
 /**
  * Tests the report of a change state
@@ -23,10 +23,14 @@ public class AdventureStateChangeReportTest
 	@Test
 	public void testInitialization() 
 	{
-		AdventureStateChangeReport report = new AdventureStateChangeReport(1, AdventuresForTest.ONE.getAdventureDescription(), AdventureStateEnum.TRIGGERED);
-		assertEquals(AdventuresForTest.ONE.getAdventureID(), report.getadventureID());
+		int playerID = 42;
+		int questID = AdventuresForTest.ONE.getQuestID();
+		AdventureStateChangeReport report = new AdventureStateChangeReport(playerID, questID, 1, AdventuresForTest.ONE.getAdventureDescription(), AdventureStateEnum.TRIGGERED);
+		assertEquals(AdventuresForTest.ONE.getAdventureID(), report.getAdventureID());
 		assertEquals(AdventuresForTest.ONE.getAdventureDescription(),report.getAdventureDescription());
 		assertEquals(AdventureStateEnum.TRIGGERED, report.getNewState());
+		assertEquals(playerID, report.getPlayerID());
+		assertEquals(questID, report.getQuestID());
 	}
 	
 	/**

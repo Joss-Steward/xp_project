@@ -2,16 +2,24 @@ package datasource;
 
 import java.util.ArrayList;
 
+import data.GameLocation;
 import datasource.DatabaseException;
-import datasource.PlayerScoreRecord;
+import datatypes.PlayerScoreRecord;
+import datatypes.Position;
 
 /**
  * Defines the behavior required for Player table data gateways
  * @author Merlin
  *
  */
-public interface PlayerTableDataGateway
+public abstract class PlayerTableDataGateway
 {
+	
+	/**
+	 * the game location where new players should start
+	 */
+	public static final GameLocation INITIAL_GAME_LOCATION =  new GameLocation("StartingRoom.tmx", new Position(2, 32));
+	
 
 	/**
 	 * Used for testing to set the data back to a known state

@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
-import datasource.PlayerScoreRecord;
 import datasource.PlayerTableDataGateway;
-import datasource.PlayersForTest;
+import datatypes.PlayerScoreRecord;
 
 
 /**

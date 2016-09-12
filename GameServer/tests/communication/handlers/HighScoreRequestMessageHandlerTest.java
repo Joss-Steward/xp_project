@@ -11,12 +11,12 @@ import model.PlayerManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import communication.StateAccumulator;
 import communication.messages.HighScoreRequestMessage;
 import communication.messages.HighScoreResponseMessage;
 import communication.messages.Message;
 import datasource.DatabaseException;
-import datasource.PlayersForTest;
 
 /**
  * Make sure the right response gets queued back to the player

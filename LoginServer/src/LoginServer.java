@@ -55,7 +55,7 @@ public class LoginServer implements Runnable
 				
 				handlers = new MessageHandlerSet(stateAccumulator);
 				new ConnectionManager(sock, stateAccumulator,
-						handlers, packers);
+						handlers, packers, true);
 
 			}
 

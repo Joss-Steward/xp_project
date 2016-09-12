@@ -1,31 +1,27 @@
 package view.screen.map;
-
-import model.CommandChatMessageSent;
 import model.ClientModelFacade;
+import model.CommandChatMessageSent;
+import view.screen.SkinPicker;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 
-import data.ChatType;
+import datatypes.ChatType;
 
 /**
  * 
@@ -72,16 +68,15 @@ public class ChatUi extends Group
 	 */
 	private void setupUI()
 	{
-		skin = new Skin(Gdx.files.internal("data/ui/chat.json"));
+		skin = SkinPicker.getSkinPicker().getDefaultSkin();
 		
 		Table grid = new Table();
 		grid.setWidth(800f);
 		
 		//create text box for typing messages
-		messageBox = new TextField("", skin);
+		messageBox = new TextField("", SkinPicker.getSkinPicker().getChatMessageBoxSkin());
 		//create the message button
-		ImageButtonStyle sendButtonStyle = skin.get("submit", ImageButtonStyle.class);
-		Button sendButton = new ImageButton(sendButtonStyle);
+		Button sendButton = new Button(skin);
 		
 		//add button listener
 		sendButton.addListener(new ChangeListener(){
@@ -104,26 +99,9 @@ public class ChatUi extends Group
 		Table tabs = new Table();
 		tabs.top();
 		{
-			//all button
-			{
-				ImageButtonStyle style = skin.get("all", ImageButtonStyle.class);
-				ImageButton btn = new ImageButton(style);
-				btn.addListener(new ChangeListener(){
-					@Override
-					public void changed(ChangeEvent event, Actor actor)
-					{
-						changeFilter(null);
-					}	
-				});
-				tabs.add(btn).size(32f);
-				tabs.row();
-				tabGroup.add(btn);
-				btn.setChecked(true);
-			}
 			//local button
 			{
-				ImageButtonStyle style = skin.get("local", ImageButtonStyle.class);
-				ImageButton btn = new ImageButton(style);
+				TextButton btn = new TextButton("L", skin);
 				btn.addListener(new ChangeListener(){
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
@@ -137,8 +115,8 @@ public class ChatUi extends Group
 			}
 			//zone button
 			{
-				ImageButtonStyle style = skin.get("zone", ImageButtonStyle.class);
-				ImageButton btn = new ImageButton(style);
+				//ImageButtonStyle style = skin.get("zone", ImageButtonStyle.class);
+				TextButton btn = new TextButton("Z", skin);
 				btn.addListener(new ChangeListener(){
 					@Override
 					public void changed(ChangeEvent event, Actor actor)
@@ -165,9 +143,12 @@ public class ChatUi extends Group
 		
 		newLabels = new ObjectFloatMap<Label>();
 		
-		messageBox.addListener(new InputListener(){
+		messageBox.addListener(new InputListener()
+		{
 			@Override
-			public boolean keyDown(InputEvent event, int keycode) {
+			public boolean keyDown(InputEvent event, int keycode)
+			{
+				System.out.println("Keycode: " + keycode);
 				if (keycode == Keys.ENTER)
 				{
 					sendMessage();
@@ -230,7 +211,7 @@ public class ChatUi extends Group
 		
 		messageBox.setText("");
 	}
-
+	
 	/**
 	 * Adds a new message into the chat history
 	 * @param message
@@ -240,32 +221,33 @@ public class ChatUi extends Group
 	 */
 	public void addMessage(String message, ChatType type)
 	{
-		LabelStyle style;
+		boolean scrollToBottom = listPane.getScrollPercentY() == 1f;
 		switch (type)
 		{
 			case Zone:
+				message = "[Z]" + message;
 				zoneHistory.add(message);
-				style = skin.get("zone", LabelStyle.class);
 				break;
 			case Local:
+				message = "[L]" + message;
 				localHistory.add(message);
-				style = skin.get("local", LabelStyle.class);
 				break;
 			default:
-				style = skin.get("default", LabelStyle.class);
+				System.err.println("Chat done broke: " + type.name());
 				break;
 		}
-		allHistory.add(message);
-		
-		Label l = new Label(message, style);
-		l.getColor().a = 0;
-		l.addAction(Actions.fadeIn(.3f));
+		allHistory.add(message);	
+		Label l = new Label(message, skin);
 		l.setWrap(true);
 		this.newLabels.put(l, 0f);
 		chatHistoryView.top().add(l).expandX().fillX();
+		if (scrollToBottom)
+		{
+			listPane.layout();
+			listPane.setScrollPercentY(1f);
+		}
+		l.setColor(Color.WHITE);
 		chatHistoryView.row();
-	
-		listPane.setScrollPercentY(1f);
 		listPane.setScrollPercentX(0f);
 	}
 	
@@ -292,20 +274,7 @@ public class ChatUi extends Group
 		for (int i = 0; i < activeHistory.size; i++)
 		{
 			String msg = activeHistory.get(i);
-			LabelStyle style;
-			if (zoneHistory.contains(msg, false))
-			{
-				style = skin.get("zone", LabelStyle.class);
-			}
-			else if (localHistory.contains(msg, false))
-			{
-				style = skin.get("local", LabelStyle.class);
-			}
-			else
-			{
-				style = skin.get("default", LabelStyle.class);
-			}
-			Label l = new Label(msg, style);
+			Label l = new Label(msg, skin);
 			l.setWrap(true);
 			chatHistoryView.top().add(l).expandX().fillX();
 			chatHistoryView.row();

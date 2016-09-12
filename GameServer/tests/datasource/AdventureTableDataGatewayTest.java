@@ -6,9 +6,12 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import datasource.AdventureRecord;
+import testData.AdventuresForTest;
+import data.AdventureRecord;
+import data.GameLocation;
 import datasource.AdventureTableDataGateway;
 import datasource.DatabaseException;
+import datatypes.Position;
 
 /**
  * An abstract class that tests the table data gateways into the Adventure table
@@ -51,7 +54,8 @@ public abstract class AdventureTableDataGatewayTest
 			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(), record.getAdventureDescription());
 			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(), record.getQuestID());
 			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getExperiencePointsGained(), record.getExperiencePointsGained());
-			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getSignatureSpecification(), record.getSignatureSpecification());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getCompletionType(), record.getCompletionType());
+			assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getCompletionCriteria(), record.getCompletionCriteria());
 			record = records.get(1);
 			assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getAdventureDescription(), record.getAdventureDescription());
 			assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getQuestID(), record.getQuestID());
@@ -97,4 +101,24 @@ public abstract class AdventureTableDataGatewayTest
 		AdventureRecord record = gateway.getAdventure(42, 16);
 		assertNull(record);	
 	}
+	
+	/**
+	 * We should be able to receive a list of all quests completed at a location
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void canGetCompleteByLocationAdventures() throws DatabaseException
+	{
+		GameLocation location = (GameLocation)(AdventuresForTest.QUEST2_ADVENTURE2.getCompletionCriteria());
+		String mapName = location.getMapName();
+		Position pos = location.getPosition();
+//		System.out.println(mapName);
+//		System.out.println(pos.getRow() + ", " + pos.getColumn());
+		AdventureTableDataGateway gateway = getGateway();
+		ArrayList<AdventuresForTest> adventure = new ArrayList<AdventuresForTest>();
+		adventure.add(AdventuresForTest.QUEST2_ADVENTURE2);
+		ArrayList<AdventureRecord> adventuresFound = gateway.findAdventuresCompletedForMapLocation(mapName, pos);
+		assertEquals(adventure.get(0).getAdventureDescription(), adventuresFound.get(0).getAdventureDescription());
+	}
+	
 }

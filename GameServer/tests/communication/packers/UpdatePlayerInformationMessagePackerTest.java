@@ -15,10 +15,10 @@ import model.reports.UpdatePlayerInformationReport;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import communication.StateAccumulator;
 import communication.messages.InitializeThisClientsPlayerMessage;
 import datasource.DatabaseException;
-import datasource.PlayersForTest;
 
 /**
  * 
@@ -57,7 +57,7 @@ public class UpdatePlayerInformationMessagePackerTest
 	public void testReportTypeWePack()
 	{
 		UpdatePlayerInformationMessagePacker packer = new UpdatePlayerInformationMessagePacker();
-		assertEquals(UpdatePlayerInformationReport.class, packer.getReportTypeWePack());
+		assertEquals(UpdatePlayerInformationReport.class, packer.getReportTypesWePack().get(0));
 	}
 
 	/**

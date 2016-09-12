@@ -20,7 +20,7 @@ import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.ObjectMap;
 
-import data.Position;
+import datatypes.Position;
 
 /**
  * @author Merlin

@@ -3,6 +3,7 @@ package datasource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
@@ -34,7 +35,7 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 			stmt.close();
 
 			stmt = new ClosingPreparedStatement(connection,
-					"Create TABLE NPCQuestions (questionID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questionStatement VARCHAR(80), answer VARCHAR(80))");
+					"Create TABLE NPCQuestions (questionID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questionStatement VARCHAR(256), answer VARCHAR(80), startDate DATE, endDate DATE)");
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
@@ -54,12 +55,14 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 		try
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"SELECT * FROM NPCQuestions ORDER BY RAND() LIMIT 1");
+					"SELECT * FROM NPCQuestions WHERE startDate < CURDATE() AND endDate > CURDATE() ORDER BY RAND() LIMIT 1");
 			ResultSet result = stmt.executeQuery();
 			result.next();
 			NPCQuestionRowDataGatewayRDS gateway = new NPCQuestionRowDataGatewayRDS();
 			gateway.questionStatement = result.getString("questionStatement");
 			gateway.answer = result.getString("answer");
+			gateway.startDate = result.getDate("startDate");
+			gateway.endDate = result.getDate("endDate");
 			return gateway;
 		} catch (SQLException e)
 		{
@@ -69,6 +72,10 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 	private String questionStatement;
 
 	private String answer;
+	
+	private Date startDate;
+	
+	private Date endDate;
 
 	private Connection connection;
 
@@ -92,6 +99,8 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 			result.next();
 			this.questionStatement = result.getString("questionStatement");
 			this.answer = result.getString("answer");
+			this.startDate = result.getDate("startDate");
+			this.endDate = result.getDate("endDate");
 		} catch (SQLException e)
 		{
 			throw new DatabaseException("Couldn't find an NPC Question with ID "
@@ -108,25 +117,33 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 	 *            the wording of the question
 	 * @param answer
 	 *            the answer to the question
+	 * @param startDate
+	 *            the first day the question is available
+	 * @param endDate
+	 *             the last day the question is available
 	 * @throws DatabaseException
 	 *             if we fail when talking to the database (question ID already
 	 *             exists would be common)
 	 */
 	public NPCQuestionRowDataGatewayRDS(int questionID, String questionStatement,
-			String answer) throws DatabaseException
+			String answer, Date startDate, Date endDate) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"Insert INTO NPCQuestions SET questionID = ?, questionStatement = ?, answer = ?");
+					"Insert INTO NPCQuestions SET questionID = ?, questionStatement = ?, answer = ?, startDate = ?, endDate = ?");
 			stmt.setInt(1, questionID);
 			stmt.setString(2, questionStatement);
 			stmt.setString(3, answer);
+			stmt.setDate(4, new java.sql.Date(startDate.getTime()));
+			stmt.setDate(5, new java.sql.Date(endDate.getTime()));
 			stmt.executeUpdate();
-
 			this.questionStatement = questionStatement;
 			this.answer = answer;
+			this.startDate = startDate;
+			this.endDate = endDate;
+
 
 		} catch (SQLException e)
 		{
@@ -165,5 +182,22 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 	public void resetData()
 	{
 	}
+
+    /**
+     * @see datasource.NPCQuestionRowDataGateway#getStartDate()
+     */
+    @Override
+    public Date getStartDate()
+    {
+        return startDate;
+    }
+    
+    /** 
+     * @see datasource.NPCQuestionRowDataGateway#getEndDate()
+     */
+    public Date getEndDate()
+    {
+        return endDate;
+    }
 
 }

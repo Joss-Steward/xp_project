@@ -2,7 +2,8 @@ package model;
 
 import java.io.Serializable;
 
-import datasource.AdventureStateEnum;
+import datatypes.AdventureStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * Stores the adventure for the GameClient which encapsulates the AdventureState
@@ -23,6 +24,10 @@ public class ClientPlayerAdventure implements Serializable
 	private String adventureDescription;
 	private AdventureStateEnum adventureState;
 	private boolean needingNotification;
+	private boolean realLifeAdventure;
+	private String witnessTitle;
+	private QuestStateEnum questState;
+
 	/**
 	 * Basic constructor for ClientPlayerAdventure
 	 * 
@@ -38,16 +43,29 @@ public class ClientPlayerAdventure implements Serializable
 	 * @param needingNotification
 	 *            true if the player needs to be told about the state of this
 	 *            adventure
+	 * @param realLifeAdventure
+	 *            true if the player completes this adventure outside of the
+	 *            game
+	 * @param witnessTitle
+	 *            if this is a real life adventure, the title of the person who
+	 *            can witness completion
+	 * @param qs
+	 *             the state of the quest that the adventure belongs to
 	 */
-	public ClientPlayerAdventure(int adventureID, String adventureDescription, int adventureXP,
-			AdventureStateEnum adventureState, boolean needingNotification)
+	public ClientPlayerAdventure(int adventureID, String adventureDescription,
+			int adventureXP, AdventureStateEnum adventureState,
+			boolean needingNotification, boolean realLifeAdventure, String witnessTitle, QuestStateEnum qs)
 	{
 		this.adventureID = adventureID;
 		this.adventureXP = adventureXP;
 		this.adventureDescription = adventureDescription;
 		this.adventureState = adventureState;
 		this.needingNotification = needingNotification;
+		this.realLifeAdventure = realLifeAdventure;
+		this.witnessTitle = witnessTitle;
+		this.questState = qs;
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -171,11 +189,37 @@ public class ClientPlayerAdventure implements Serializable
 	}
 
 	/**
-	 * @param adventureXP the adventureXP to set
+	 * @param adventureXP
+	 *            the adventureXP to set
 	 */
 	public void setAdventureXP(int adventureXP)
 	{
 		this.adventureXP = adventureXP;
+	}
+
+	/**
+	 * @return true if this adventure must be completed in real life
+	 */
+	public boolean isRealLifeAdventure()
+	{
+		return realLifeAdventure;
+	}
+
+	/**
+	 * @return if this is a real life adventure, the title of the person who can
+	 *         witness completion
+	 */
+	public String getWitnessTitle()
+	{
+		return witnessTitle;
+	}
+	
+	/**
+	 * @return the state of the quest that the adventure belongs to
+	 */
+	public QuestStateEnum getQuestState()
+	{
+	    return questState; 
 	}
 
 }

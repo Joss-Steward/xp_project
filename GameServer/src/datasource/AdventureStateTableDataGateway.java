@@ -2,8 +2,9 @@ package datasource;
 
 import java.util.ArrayList;
 
-import datasource.AdventureStateEnum;
+import data.AdventureStateRecord;
 import datasource.DatabaseException;
+import datatypes.AdventureStateEnum;
 
 /**
  * Defines the operations required by a gateway into the states of adventures for each player

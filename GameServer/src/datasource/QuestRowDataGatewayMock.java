@@ -1,11 +1,14 @@
 package datasource;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import data.Position;
+import testData.QuestsForTest;
+import data.QuestCompletionActionParameter;
+import data.QuestCompletionActionType;
 import datasource.DatabaseException;
-import datasource.QuestsForTest;
+import datatypes.Position;
 
 /**
  * A Mock implementation of the data source layer for the quest table
@@ -18,38 +21,55 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 
 	private class QuestData
 	{
+		private String questTitle;
 		private String questDescription;
-
 		private String mapName;
-
 		private Position position;
-
 		private int questID;
-
 		private int experiencePointsGained;
-
 		private int adventuresForFulfillment;
+		private Date startDate;
+		private Date endDate;
+		private QuestCompletionActionType completionActionType;
+		private QuestCompletionActionParameter completionActionParameter;
 
-		public QuestData(int questID, String questDescription, String mapName,
-				Position position, int experiencePointsGained,
-				int adventuresForFulfillment)
+		public QuestData(int questID, String questTitle, String questDescription,
+				String mapName, Position position,
+				int experiencePointsGained, int adventuresForFulfillment,
+				QuestCompletionActionType completionActionType, QuestCompletionActionParameter completionActionParam,
+				Date startDate, Date endDate)
 		{
+			this.questTitle = questTitle;
 			this.questDescription = questDescription;
 			this.mapName = mapName;
 			this.position = position;
 			this.questID = questID;
 			this.experiencePointsGained = experiencePointsGained;
 			this.adventuresForFulfillment = adventuresForFulfillment;
-		}
-
-		public int getExperiencePointsGained()
-		{
-			return experiencePointsGained;
+			this.completionActionType = completionActionType;
+			this.completionActionParameter = completionActionParam;
+			this.startDate = startDate;
+			this.endDate = endDate;
 		}
 
 		public int getAdventuresForFulfillment()
 		{
 			return adventuresForFulfillment;
+		}
+
+		public QuestCompletionActionParameter getCompletionActionParameter()
+		{
+			return completionActionParameter;
+		}
+
+		public QuestCompletionActionType getCompletionActionType()
+		{
+			return completionActionType;
+		}
+
+		public int getExperiencePointsGained()
+		{
+			return experiencePointsGained;
 		}
 
 		public String getMapName()
@@ -72,7 +92,27 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 			return questID;
 		}
 
+		public String getQuestTitle()
+		{
+			return questTitle;
+		}
+		
+	    public Date getStartDate()
+	    {
+	        return startDate;
+	    }
+	        
+	    public Date getEndDate()
+	    {
+	        return endDate;
+	    }
+
 	}
+
+	/**
+	 * Map quest ID to questDescription
+	 */
+	private static HashMap<Integer, QuestData> questInfo;
 
 	/**
 	 * Get the IDs of the quests that are supposed to trigger at a specified map
@@ -103,11 +143,6 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		}
 		return results;
 	}
-
-	/**
-	 * Map quest ID to questDescription
-	 */
-	private static HashMap<Integer, QuestData> questInfo;
 	private int questID;
 	private String questDescription;
 
@@ -116,6 +151,11 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 	private Position triggerPosition;
 	private int experiencePointsGained;
 	private int adventuresForFulfillment;
+	private QuestCompletionActionType completionActionType;
+	private QuestCompletionActionParameter completionActionParameter;
+	private String questTitle;
+    private Date startDate;
+    private Date endDate;
 
 	/**
 	 * Get the row data gateway object for an existing quest
@@ -134,16 +174,57 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		if (questInfo.containsKey(questID))
 		{
 			QuestData questData = questInfo.get(questID);
+			this.questTitle = questData.getQuestTitle();
 			this.questDescription = questData.getQuestDescription();
 			this.triggerMapName = questData.getMapName();
 			this.triggerPosition = questData.getPosition();
 			this.questID = questID;
 			this.experiencePointsGained = questData.getExperiencePointsGained();
 			this.adventuresForFulfillment = questData.getAdventuresForFulfillment();
+			this.completionActionType = questData.getCompletionActionType();
+			this.completionActionParameter = questData.getCompletionActionParameter();
+			this.startDate = questData.getStartDate();
+			this.endDate = questData.getEndDate();
 		} else
 		{
 			throw new DatabaseException("Couldn't find quest with ID " + questID);
 		}
+	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getAdventuresForFulfillment()
+	 */
+	@Override
+	public int getAdventuresForFulfillment()
+	{
+		return adventuresForFulfillment;
+	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getCompletionActionParameter()
+	 */
+	@Override
+	public QuestCompletionActionParameter getCompletionActionParameter()
+	{
+		return completionActionParameter;
+	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getCompletionActionType()
+	 */
+	@Override
+	public QuestCompletionActionType getCompletionActionType()
+	{
+		return completionActionType;
+	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getExperiencePointsGained()
+	 */
+	@Override
+	public int getExperiencePointsGained()
+	{
+		return experiencePointsGained;
 	}
 
 	/**
@@ -162,6 +243,15 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 	public int getQuestID()
 	{
 		return questID;
+	}
+
+	/**
+	 * @see datasource.QuestRowDataGateway#getQuestTitle()
+	 */
+	@Override
+	public String getQuestTitle()
+	{
+		return questTitle;
 	}
 
 	/**
@@ -193,28 +283,29 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		{
 			questInfo.put(
 					p.getQuestID(),
-					new QuestData(p.getQuestID(), p.getQuestDescription(),
-							p.getMapName(), p.getPosition(), p.getExperienceGained(), p
-									.getAdventuresForFulfillment()));
+					new QuestData(p.getQuestID(), p.getQuestTitle(),
+							p.getQuestDescription(), p.getMapName(), p.getPosition(), p.getExperienceGained(), p
+											.getAdventuresForFulfillment(),
+									p.getCompletionActionType(), p.getCompletionActionParameter(), p.getStartDate(), p.getEndDate()));
 		}
 	}
 
 	/**
-	 * @see datasource.QuestRowDataGateway#getAdventuresForFulfillment()
+	 * @return the first day the quest is available
 	 */
-	@Override
-	public int getAdventuresForFulfillment()
-	{
-		return adventuresForFulfillment;
-	}
+    @Override
+    public Date getStartDate()
+    {
+        return startDate;
+    }
 
-	/**
-	 * @see datasource.QuestRowDataGateway#getExperiencePointsGained()
-	 */
-	@Override
-	public int getExperiencePointsGained()
-	{
-		return experiencePointsGained;
-	}
+    /**
+     * @return the last day the quest is available
+     */
+    @Override
+    public Date getEndDate()
+    {
+        return endDate;
+    }
 
 }

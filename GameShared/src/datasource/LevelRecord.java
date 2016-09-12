@@ -1,5 +1,8 @@
 package datasource;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Level object class that contains a description and levelUpPoints
@@ -14,17 +17,36 @@ public class LevelRecord implements Comparable<LevelRecord>, Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private String description;
+	private int levelUpPoints;
+	private int levelUpMonth;
+	private int levelUpDayOfMonth;
+	private Date deadlineDate;
+	
 	/**
-	 * @see java.lang.Object#hashCode()
+	 * Constructor for level object
+	 * @param description the level's description
+	 * @param levelUpPoints the levelUpPoints for the level
+	 * @param levelUpMonth TODO
+	 * @param levelUpDayOfMonth TODO
+	 */
+    public LevelRecord(String description, int levelUpPoints, int levelUpMonth, int levelUpDayOfMonth)
+	{
+		super();
+		this.description = description;
+		this.levelUpPoints = levelUpPoints;
+		this.levelUpMonth = levelUpMonth;
+		this.levelUpDayOfMonth = levelUpDayOfMonth;
+		deadlineDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), levelUpMonth, levelUpDayOfMonth).getTime();
+	}
+	
+	/**
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
-	public int hashCode()
+	public int compareTo(LevelRecord o)
 	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + levelUpPoints;
-		return result;
+		return levelUpPoints - o.levelUpPoints;
 	}
 
 	/**
@@ -51,22 +73,6 @@ public class LevelRecord implements Comparable<LevelRecord>, Serializable
 		return true;
 	}
 
-	private String description;
-
-	private int levelUpPoints;
-
-	/**
-	 * Constructor for level object
-	 * @param description the level's description
-	 * @param levelUpPoints the levelUpPoints for the level
-	 */
-	public LevelRecord(String description, int levelUpPoints)
-	{
-		super();
-		this.description = description;
-		this.levelUpPoints = levelUpPoints;
-	}
-
 	/**
 	 * @return description of the level
 	 */
@@ -76,20 +82,48 @@ public class LevelRecord implements Comparable<LevelRecord>, Serializable
 	}
 
 	/**
+	 * @return the day of the month by which they are required to level out of this level
+	 */
+	public int getLevelUpDayOfMonth()
+	{
+		return levelUpDayOfMonth;
+	}
+
+	/**
+	 * @return the month by which they are required to level out of this level
+	 */
+	public int getLevelUpMonth()
+	{
+		return levelUpMonth;
+	}
+
+	/**
 	 * @return levelUpPoints of the level
 	 */
 	public int getLevelUpPoints()
 	{
 		return levelUpPoints;
 	}
+	
+	/**
+	 * @return the deadline date
+	 */
+	public Date getDeadlineDate()
+	{
+	    return deadlineDate;
+	}
 
 	/**
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int compareTo(LevelRecord o)
+	public int hashCode()
 	{
-		return levelUpPoints - o.levelUpPoints;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + levelUpPoints;
+		return result;
 	}
 
 }

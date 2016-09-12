@@ -7,11 +7,13 @@ import java.sql.SQLException;
 import org.junit.After;
 import org.junit.Test;
 
-import data.Position;
+import testData.PlayersForTest;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayerRowDataGateway;
-import datasource.PlayersForTest;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * Tests required of all player gateways
@@ -57,6 +59,8 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 		assertEquals(john.getPosition(), gateway.getPosition());
 		assertEquals(john.getAppearanceType(), gateway.getAppearanceType());
 		assertEquals(john.getExperiencePoints(), gateway.getExperiencePoints());
+		assertEquals(john.getCrew(), gateway.getCrew());
+		assertEquals(john.getMajor(), gateway.getMajor());
 	}
 
 	/**
@@ -68,13 +72,15 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 	@Test
 	public void creation() throws DatabaseException
 	{
-		gateway = createGateway("mapName", new Position(3,2), "Warrior", 2, 13);
+		gateway = createGateway("mapName", new Position(3,2), "Warrior", 2, 13, Crew.OFF_BY_ONE, Major.SOFTWARE_ENGINEERING);
 
 		PlayerRowDataGateway after = findGateway(gateway.getPlayerID());
 		assertEquals(new Position(3,2), after.getPosition());
 		assertEquals("Warrior", after.getAppearanceType());
 		assertEquals(2,after.getQuizScore());
 		assertEquals(13, after.getExperiencePoints());
+		assertEquals(Crew.OFF_BY_ONE, after.getCrew());
+		assertEquals(Major.SOFTWARE_ENGINEERING, after.getMajor());
 	}
 
 	/**
@@ -84,11 +90,13 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 	 * @param appearanceType the appearance type of the player
 	 * @param quizScore This player's quiz score
 	 * @param experiencePoints this player's experience points
+	 * @param crew the crew to which this player belongs
+	 * @param major the major of this player
 	 * @return the gateway
 	 * @throws DatabaseException if we fail to create the row
 	 */
 	abstract PlayerRowDataGateway createGateway(String mapName, Position position,
-			String appearanceType, int quizScore, int experiencePoints) throws DatabaseException;
+			String appearanceType, int quizScore, int experiencePoints, Crew crew, Major major) throws DatabaseException;
 	
 	/**
 	 * make sure we get the right exception if we try to find someone who

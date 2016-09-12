@@ -6,8 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.ServersForTest;
 import datasource.DatabaseException;
-import datasource.ServersForTest;
 
 /**
  * 

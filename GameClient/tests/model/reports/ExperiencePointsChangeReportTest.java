@@ -1,7 +1,7 @@
 package model.reports;
 
 import static org.junit.Assert.*;
-import model.reports.ExperiencePointsChangeReport;
+import model.reports.KnowledgePointsChangeReport;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
@@ -23,7 +23,7 @@ public class ExperiencePointsChangeReportTest
 	public void testReportInitialization() 
 	{
 		int exp = 1000;
-		LevelRecord rec = new LevelRecord("Master Exploder", 100);
+		LevelRecord rec = new LevelRecord("Master Exploder", 100, 10, 7);
 		ExperiencePointsChangeReport report = new ExperiencePointsChangeReport(exp, rec);
 	
 		assertEquals(exp, report.getExperiencePoints());
@@ -36,6 +36,6 @@ public class ExperiencePointsChangeReportTest
 	@Test
 	public void testEqualsContract()
 	{
-		EqualsVerifier.forClass(ExperiencePointsChangeReport.class).verify();
+		EqualsVerifier.forClass(KnowledgePointsChangeReport.class).verify();
 	}
 }

@@ -5,8 +5,8 @@ import java.util.Observable;
 import model.QualifiedObservableConnector;
 import model.reports.ChatReceivedReport;
 import model.reports.ChatSentReport;
-import data.ChatType;
-import data.Position;
+import datatypes.ChatType;
+import datatypes.Position;
 
 /**
  * Handles all chat reporting and messaging

@@ -3,8 +3,8 @@ package datasource;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import testData.NPCsForTest;
 import datasource.DatabaseException;
-import datasource.NPCsForTest;
 import datasource.PlayerConnectionRowDataGatewayMock;
 
 /**

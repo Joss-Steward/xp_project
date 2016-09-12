@@ -1,6 +1,6 @@
 package view.screen.map;
 
-import model.CommandMovePlayer;
+import model.CommandClientMovePlayer;
 import model.ClientModelFacade;
 import model.ClientPlayerManager;
 import model.ThisClientsPlayer;
@@ -10,7 +10,7 @@ import view.player.PlayerSprite;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
-import data.Position;
+import datatypes.Position;
 import static view.player.Direction.*;
 
 /**
@@ -31,11 +31,11 @@ public class ScreenMapInput implements InputProcessor
 	public boolean keyDown(int keycode)
 	{
 		if (sprite == null) {
-			return false;
+//			return false;
 		}
 		
 		//System.out.println("Key down received: " + keycode);
-		CommandMovePlayer cm = null;
+		CommandClientMovePlayer cm = null;
 		ThisClientsPlayer cp = ClientPlayerManager.getSingleton().getThisClientsPlayer();
 		Position position = cp.getPosition();
 		Position to;
@@ -43,31 +43,31 @@ public class ScreenMapInput implements InputProcessor
 		{
 			case Keys.UP:
 				to = Direction.getPositionInDirection(position, North);
-				cm = new CommandMovePlayer(cp.getID(), to);
+				cm = new CommandClientMovePlayer(cp.getID(), to);
 				up = true;
 				break;
 	
 			case Keys.DOWN:
 				to = Direction.getPositionInDirection(position, South);
-				cm = new CommandMovePlayer(cp.getID(), to);
+				cm = new CommandClientMovePlayer(cp.getID(), to);
 				down = true;
 				break;
 	
 			case Keys.LEFT:
 				to = Direction.getPositionInDirection(position, West);
-				cm = new CommandMovePlayer(cp.getID(), to);
+				cm = new CommandClientMovePlayer(cp.getID(), to);
 				left = true;
 				break;
 	
 			case Keys.RIGHT:
 				to = Direction.getPositionInDirection(position, East);
-				cm = new CommandMovePlayer(cp.getID(), to);
+				cm = new CommandClientMovePlayer(cp.getID(), to);
 				right = true;
 				break;
 				
 		}
 
-		if (cm != null && sprite.doneWalking()) 
+		if (cm != null )//&& sprite != null && sprite.doneWalking()) 
 		{
 			ClientModelFacade.getSingleton().queueCommand(cm);
 		}
@@ -169,29 +169,29 @@ public class ScreenMapInput implements InputProcessor
 			delay += delta;
 			if (delay > PlayerSprite.MOVESPEED)
 			{
-				CommandMovePlayer cm = null;
+				CommandClientMovePlayer cm = null;
 				ThisClientsPlayer cp = ClientPlayerManager.getSingleton().getThisClientsPlayer();
 				Position position = cp.getPosition();
 				Position to;
 				if (up)
 				{
 					to = Direction.getPositionInDirection(position, North);
-					cm = new CommandMovePlayer(cp.getID(), to);
+					cm = new CommandClientMovePlayer(cp.getID(), to);
 				}
 				else if (down)
 				{
 					to = Direction.getPositionInDirection(position, South);
-					cm = new CommandMovePlayer(cp.getID(), to);	
+					cm = new CommandClientMovePlayer(cp.getID(), to);	
 				}
 				else if (left)
 				{
 					to = Direction.getPositionInDirection(position, West);
-					cm = new CommandMovePlayer(cp.getID(), to);	
+					cm = new CommandClientMovePlayer(cp.getID(), to);	
 				}
 				else if (right)
 				{
 					to = Direction.getPositionInDirection(position, East);
-					cm = new CommandMovePlayer(cp.getID(), to);	
+					cm = new CommandClientMovePlayer(cp.getID(), to);	
 				}
 				
 				if (cm != null)

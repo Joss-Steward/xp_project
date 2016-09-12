@@ -3,7 +3,7 @@ package model.reports;
 import model.QualifiedObservableReport;
 
 /**
- * Reports movement of any player playing on this server
+ * Reports that a player tried to connect with an invalid pin
  * 
  * @author Matt and Andy
  * 
@@ -11,24 +11,17 @@ import model.QualifiedObservableReport;
 public final class PinFailedReport implements QualifiedObservableReport
 {
 
-private final String errMsg;
-	
+	private final int playerID;
+
 	/**
-	 * @param err - type of pin fail error
+	 * @param playerID
+	 *            the unique ID of the player who tried to connect incorrectly
 	 */
-	public PinFailedReport(String err)
+	public PinFailedReport(int playerID)
 	{
-		this.errMsg = err;
+		this.playerID = playerID;
 	}
-	
-	/**
-	 * @return the kind of pin error message this is
-	 */
-	public String toString()
-	{
-		return errMsg;
-	}
-	
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -42,16 +35,20 @@ private final String errMsg;
 		if (getClass() != obj.getClass())
 			return false;
 		PinFailedReport other = (PinFailedReport) obj;
-		if (errMsg == null)
-		{
-			if (other.errMsg != null)
-				return false;
-		} else if (!errMsg.equals(other.errMsg))
+		if (playerID != other.playerID)
 			return false;
 		return true;
 	}
-	
-	/** 
+
+	/**
+	 * @return the ID of the player involved
+	 */
+	public int getPlayerID()
+	{
+		return playerID;
+	}
+
+	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -59,10 +56,18 @@ private final String errMsg;
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((errMsg == null) ? 0 : errMsg.hashCode());
-		
+		result = prime * result + playerID;
 		return result;
 	}
 
+	/**
+	 * @return the kind of pin error message this is
+	 */
+	public String toString()
+	{
+		return "Pin failed report for player #" + playerID;
+	}
+
+	
 
 }

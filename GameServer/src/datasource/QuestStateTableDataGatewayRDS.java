@@ -5,10 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import datasource.ClosingPreparedStatement;
-import datasource.DatabaseException;
-import datasource.DatabaseManager;
-import datasource.QuestStateEnum;
+import data.QuestStateRecord;
+import datatypes.QuestStateEnum;
 
 /**
  * The RDS implementation of the gateway
@@ -89,7 +87,7 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 					"Insert INTO QuestStates SET playerID = ?, questID = ?, questState = ?, needingNotification = ?");
 			stmt.setInt(1, playerID);
 			stmt.setInt(2, questID);
-			stmt.setInt(3, state.ordinal());
+			stmt.setInt(3, state.getID());
 			stmt.setBoolean(4, needingNotification);
 			stmt.executeUpdate();
 
@@ -169,20 +167,21 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 	}
 
 	/**
-	 * @see datasource.QuestStateTableDataGateway#udpateState(int,
-	 *      int, datasource.QuestStateEnum, boolean)
+	 * @see datasource.QuestStateTableDataGateway#udpateState(int, int,
+	 *      datatypes.QuestStateEnum, boolean)
 	 */
 	@Override
 	public void udpateState(int playerID, int questID, QuestStateEnum newState,
 			boolean needingNotification) throws DatabaseException
 	{
+
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
 					connection,
 					"UPDATE QuestStates SET questState = ?, needingNotification = ? WHERE  playerID = ? and questID = ?");
-			stmt.setInt(1, newState.ordinal());
+			stmt.setInt(1, newState.getID());
 			stmt.setBoolean(2, needingNotification);
 			stmt.setInt(3, playerID);
 			stmt.setInt(4, questID);
@@ -197,6 +196,7 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 					"Couldn't update a quest state record for player with ID " + playerID
 							+ " and quest with ID " + questID, e);
 		}
+
 	}
 
 }

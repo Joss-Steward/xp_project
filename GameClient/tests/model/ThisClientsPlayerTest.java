@@ -13,20 +13,21 @@ import model.ClientPlayerManager;
 import model.QualifiedObservableConnector;
 import model.QualifiedObserver;
 import model.ThisClientsPlayer;
-import model.reports.AdventuresNeedingNotificationReport;
-import model.reports.ExperiencePointsChangeReport;
-import model.reports.PlayerMovedReport;
+import model.reports.AdventureNeedingNotificationReport;
+import model.reports.KnowledgePointsChangeReport;
+import model.reports.QuestNeedingNotificationReport;
+import model.reports.ThisClientsPlayerMovedReport;
 import model.reports.QuestStateReport;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
-import data.Position;
-import datasource.AdventureStateEnum;
+import testData.PlayersForTest;
 import datasource.LevelRecord;
-import datasource.PlayersForTest;
-import datasource.QuestStateEnum;
+import datatypes.AdventureStateEnum;
+import datatypes.Position;
+import datatypes.QuestStateEnum;
 
 /**
  * Tests behaviors that are unique to the player playing on this client
@@ -55,32 +56,35 @@ public class ThisClientsPlayerTest
 	public void notifiesOnMove()
 	{
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerMovedReport.class);
-		PlayerMovedReport report = new PlayerMovedReport(1, new Position(3, 4));
+		QualifiedObservableConnector.getSingleton().registerObserver(obs,
+				ThisClientsPlayerMovedReport.class);
+		ThisClientsPlayerMovedReport report = new ThisClientsPlayerMovedReport(1,
+				new Position(3, 4));
 		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 		cp.move(new Position(3, 4));
 
 		EasyMock.verify(obs);
 
 	}
-	
+
 	/**
 	 * Test that the client player notifies on quest request
 	 */
 	@Test
 	public void notifiesOnQuestRequest()
 	{
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
 		cp.addQuest(q);
-		ArrayList<ClientPlayerQuest> expected = new ArrayList<ClientPlayerQuest>() ;
+		ArrayList<ClientPlayerQuest> expected = new ArrayList<ClientPlayerQuest>();
 		expected.add(q);
-		
+
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestStateReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs,
+				QuestStateReport.class);
 		QuestStateReport report = new QuestStateReport(expected);
 		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
@@ -90,31 +94,31 @@ public class ThisClientsPlayerTest
 		EasyMock.verify(obs);
 
 	}
-	
+
 	/**
 	 * Make sure that you can add a quest to ThisClientsPlayer
 	 */
 	@Test
-	public void testThisPlayerContainsClientPlayerQuest() {
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
-		
+	public void testThisPlayerContainsClientPlayerQuest()
+	{
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
+
 		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
-		
+
 		cp.addQuest(q);
 		assertEquals(2, cp.getQuests().get(0).getAdventureList().get(1).getAdventureID());
 		assertEquals("Test Quest 1", cp.getQuests().get(0).getQuestDescription());
 	}
 
-	static ThisClientsPlayer setUpThisClientsPlayerAsNumberOne()
+	static ThisClientsPlayer setUpThisClientsPlayer(PlayersForTest player)
 	{
 		ClientPlayerManager pm = ClientPlayerManager.getSingleton();
-		PlayersForTest john = PlayersForTest.JOHN;
-		pm.initiateLogin(john.getPlayerName(), john.getPlayerPassword());
+		pm.initiateLogin(player.getPlayerName(), player.getPlayerPassword());
 		ThisClientsPlayer cp = null;
-		
+
 		try
 		{
-			cp = pm.finishLogin(john.getPlayerID());
+			cp = pm.finishLogin(player.getPlayerID());
 		} catch (AlreadyBoundException | NotBoundException e)
 		{
 			e.printStackTrace();
@@ -123,99 +127,174 @@ public class ThisClientsPlayerTest
 		return cp;
 	}
 
-	
-	
 	/**
 	 * Test that we can overwrite ("whomp") this client player quest list
 	 */
 	@Test
 	public void canWhompOnQuestList()
 	{
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
 		cp.addQuest(q);
-		
-		ClientPlayerAdventure a = new ClientPlayerAdventure(42, "Test Adventure ow2", 3, AdventureStateEnum.HIDDEN, false);
-		ClientPlayerQuest qow = new ClientPlayerQuest(41, "Test Quest ow1", QuestStateEnum.HIDDEN, 42, 3);
-		
+
+		ClientPlayerAdventure a = new ClientPlayerAdventure(42, "Test Adventure ow2", 3,
+				AdventureStateEnum.HIDDEN, false, true, "Chair", QuestStateEnum.AVAILABLE);
+		ClientPlayerQuest qow = new ClientPlayerQuest(41, "quest title",
+				"Test Quest ow1", QuestStateEnum.HIDDEN, 42, 3, true, null);
+
 		qow.addAdventure(a);
-		
+
 		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
 		qList.add(qow);
 		cp.overwriteQuestList(qList);
-		
-		
+
 		assertEquals(qow, cp.getQuests().get(0));
 	}
-	
+
 	/**
 	 * Test that we can set the values of ThisClientPlayer's experience info,
-	 * level description, and # points required for this player to level up 
-	 * for this level
+	 * level description, and # points required for this player to level up for
+	 * this level
 	 */
 	@Test
 	public void testAllExperienceInfo()
 	{
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
-		
-		LevelRecord rec = new LevelRecord("Felyne Explorer", 100);
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
+
+		LevelRecord rec = new LevelRecord("Felyne Explorer", 100, 10, 7);
 		cp.setLevelInfo(rec, 10);
-		
+
 		assertEquals(10, cp.getExperiencePoints());
 		assertEquals("Felyne Explorer", cp.getLevelRecord().getDescription());
 		assertEquals(100, cp.getLevelRecord().getLevelUpPoints());
 	}
-	
+
 	/**
-	 * Test that we can send a report that contains the adventures that currently
-	 * have the state of NEED_NOTIFICATION
+	 * Test that we can send a report that contains the adventures that
+	 * currently need notification
 	 */
 	@Test
 	public void testSendAdventuresNeedingNotificationReport()
 	{
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
-		
-		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", 0, AdventureStateEnum.COMPLETED, true);
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "Test Quest 1", QuestStateEnum.FINISHED, 1, 2);
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
+
+		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", 0,
+				AdventureStateEnum.COMPLETED, true, true, "Mom", QuestStateEnum.AVAILABLE);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "questtitle", "Test Quest 1",
+				QuestStateEnum.FINISHED, 1, 2, true, null);
 		q.addAdventure(a);
 		cp.addQuest(q);
-		
+
 		ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
 		questList.add(q);
-		
+
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs, AdventuresNeedingNotificationReport.class);
-		AdventuresNeedingNotificationReport report = new AdventuresNeedingNotificationReport(cp.getID(), q.getQuestID(), a.getAdventureID(), a.getAdventureDescription());
+		QualifiedObservableConnector.getSingleton().registerObserver(obs,
+				AdventureNeedingNotificationReport.class);
+		AdventureNeedingNotificationReport report = new AdventureNeedingNotificationReport(
+				cp.getID(), q.getQuestID(), a.getAdventureID(),
+				a.getAdventureDescription(), a.getAdventureState(), true, "Mom");
 		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
 		cp.overwriteQuestList(questList);
-		
+
 		EasyMock.verify(obs);
 	}
-	
+
+	/**
+	 * Test that we can send a report that contains the quests that currently
+	 * have need notification
+	 */
+	@Test
+	public void testQuestNeedingNotificationReport()
+	{
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
+
+		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", 0,
+				AdventureStateEnum.COMPLETED, true, true, "Fred", QuestStateEnum.AVAILABLE);
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "quest title", "Test Quest 1",
+				QuestStateEnum.FINISHED, 1, 2, true, null);
+		q.addAdventure(a);
+		cp.addQuest(q);
+
+		ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
+		questList.add(q);
+
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs,
+				QuestNeedingNotificationReport.class);
+		QuestNeedingNotificationReport report = new QuestNeedingNotificationReport(
+				cp.getID(), q.getQuestID(), q.getQuestDescription(), q.getQuestState());
+		obs.receiveReport(EasyMock.eq(report));
+		EasyMock.replay(obs);
+
+		cp.overwriteQuestList(questList);
+
+		EasyMock.verify(obs);
+	}
+
 	/**
 	 * Test that we can set the values of ThisClientPlayer's experience info,
-	 * level description, and # points required for this player to level up 
-	 * for this level
+	 * level description, and # points required for this player to level up for
+	 * this level
 	 */
 	@Test
 	public void testSendExperiencePointsChangeReport()
 	{
-		ThisClientsPlayer cp = setUpThisClientsPlayerAsNumberOne();
-		
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
+
 		int exp = 10;
-		LevelRecord rec = new LevelRecord("Felyne Explorer", 10);
+		LevelRecord rec = new LevelRecord("Felyne Explorer", 10, 10, 7);
 		cp.setLevelInfo(rec, 10);
-		
+
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs, ExperiencePointsChangeReport.class);
-		ExperiencePointsChangeReport report = new ExperiencePointsChangeReport(exp, rec);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs,
+				KnowledgePointsChangeReport.class);
+		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(exp);
 		obs.receiveReport(EasyMock.eq(report));
 		EasyMock.replay(obs);
 
 		cp.sendExperiencePointsChangeReport();
-		
+
 		EasyMock.verify(obs);
 	}
+
+	/**
+	 * Test that we can set the values of ThisClientPlayer's knowledge info
+	 */
+	@Test
+	public void testAllKnowledgeInfo()
+	{
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
+
+		cp.setLevelInfoKnowledge(10);
+
+		assertEquals(10, cp.getKnowledgePoints());
+	}
+
+	/**
+	 * 
+	 */
+	@Test
+	public void testSendKnowledgePointsChangeReport()
+	{
+		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
+
+		int exp = 10;
+		cp.setLevelInfoKnowledge(10);
+
+		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs,
+				KnowledgePointsChangeReport.class);
+		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(exp);
+		obs.receiveReport(EasyMock.eq(report));
+		EasyMock.replay(obs);
+
+		cp.sendKnowledgePointsChangeReport();
+		;
+
+		EasyMock.verify(obs);
+	}
+
 }

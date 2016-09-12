@@ -17,8 +17,8 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
-import data.ChatType;
-import data.Position;
+import datatypes.ChatType;
+import datatypes.Position;
 
 /**
  * Tests the functionality of the ChatManager

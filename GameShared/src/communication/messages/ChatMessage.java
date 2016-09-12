@@ -2,8 +2,8 @@ package communication.messages;
 
 import java.io.Serializable;
 
-import data.ChatType;
-import data.Position;
+import datatypes.ChatType;
+import datatypes.Position;
 
 /**
  * 

@@ -1,7 +1,7 @@
 package model;
 
 import communication.messages.QuestStateChangeMessage;
-import datasource.QuestStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * @author Ryan
@@ -9,53 +9,68 @@ import datasource.QuestStateEnum;
  */
 public class CommandQuestStateChange extends Command
 {
-	
+
 	private int questID;
+	private String questTitle;
 	private String questDescription;
 	private QuestStateEnum questState;
 
 	/**
-	 * @param message the QuestStateChangeMesage
+	 * @param message
+	 *            the QuestStateChangeMesage
 	 */
-	public CommandQuestStateChange(QuestStateChangeMessage message) 
+	public CommandQuestStateChange(QuestStateChangeMessage message)
 	{
 		this.questID = message.getQuestID();
+		this.questTitle = message.getQuestTitle();
 		this.questDescription = message.getQuestDescription();
 		this.questState = message.getNewState();
 	}
 
 	@Override
-	protected boolean execute() 
+	protected boolean execute()
 	{
-		ClientPlayerManager.getSingleton().getThisClientsPlayer().sendQuestStateChangeReport(questID, questDescription, questState);
+		ClientPlayerManager.getSingleton().getThisClientsPlayer()
+				.sendQuestStateChangeReport(questID, questDescription, questState);
 		return true;
 	}
 
 	/**
-	 * The ID of the quest
-	 * @return questID
-	 */
-	public int getQuestID() 
-	{
-		return questID;
-	}
-
-	/**
 	 * The description of the quest
+	 * 
 	 * @return questDescription
 	 */
-	public String getQuestDescription() 
+	public String getQuestDescription()
 	{
 		return questDescription;
 	}
 
 	/**
+	 * The ID of the quest
+	 * 
+	 * @return questID
+	 */
+	public int getQuestID()
+	{
+		return questID;
+	}
+
+	/**
 	 * The State of the quest
+	 * 
 	 * @return questState
 	 */
-	public QuestStateEnum getQuestState() 
+	public QuestStateEnum getQuestState()
 	{
 		return questState;
+	}
+
+	/**
+	 * @return the quest's title
+	 */
+	public String getQuestTitle()
+	{
+		return questTitle;
 	}
 
 }

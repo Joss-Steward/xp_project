@@ -8,6 +8,8 @@ import model.PlayerID;
 
 import org.junit.Test;
 
+import testData.PlayersForTest;
+
 /**
  * @author Merlin
  *

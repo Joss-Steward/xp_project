@@ -9,8 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.StateAccumulator;
-import communication.messages.MovementMessage;
-import data.Position;
+import communication.messages.OtherPlayerMovedMessage;
+import communication.messages.PlayerMovedMessage;
+import datatypes.Position;
 
 /**
  * 
@@ -45,8 +46,8 @@ public class MovementMessagePackerTest
 	@Test
 	public void testReportTypeWePack()
 	{
-		MovementMessagePacker packer = new MovementMessagePacker();
-		assertEquals(PlayerMovedReport.class, packer.getReportTypeWePack());
+		OtherPlayerMovedMessagePacker packer = new OtherPlayerMovedMessagePacker();
+		assertEquals(PlayerMovedReport.class, packer.getReportTypesWePack().get(0));
 	}
 
 	/**
@@ -59,10 +60,10 @@ public class MovementMessagePackerTest
 		Position position = new Position(1, 2);
 		PlayerMovedReport report = new PlayerMovedReport(stateAccumulator.getPlayerID(),
 				"fred", position, "mapName");
-		MovementMessagePacker packer = new MovementMessagePacker();
+		OtherPlayerMovedMessagePacker packer = new OtherPlayerMovedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 
-		MovementMessage message = (MovementMessage) packer.pack(report);
+		PlayerMovedMessage message = (PlayerMovedMessage) packer.pack(report);
 		assertNull(message);
 	}
 
@@ -75,10 +76,10 @@ public class MovementMessagePackerTest
 	{
 		Position position = new Position(1, 2);
 		PlayerMovedReport report = new PlayerMovedReport(-1, "fred", position, "mapName");
-		MovementMessagePacker packer = new MovementMessagePacker();
+		OtherPlayerMovedMessagePacker packer = new OtherPlayerMovedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 
-		MovementMessage message = (MovementMessage) packer.pack(report);
+		OtherPlayerMovedMessage message = (OtherPlayerMovedMessage) packer.pack(report);
 		assertEquals(-1, message.getPlayerID());
 		assertEquals(position, message.getPosition());
 	}

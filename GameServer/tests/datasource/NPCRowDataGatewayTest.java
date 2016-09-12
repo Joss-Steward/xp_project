@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Test;
 
+import testData.NPCsForTest;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.NPCRowDataGateway;

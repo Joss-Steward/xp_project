@@ -7,6 +7,8 @@ import java.util.Collections;
 
 import org.junit.Test;
 
+import datatypes.PlayerScoreRecord;
+
 /**
  * @author Merlin
  *

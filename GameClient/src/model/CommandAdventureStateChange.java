@@ -1,6 +1,6 @@
 package model;
 
-import datasource.AdventureStateEnum;
+import datatypes.AdventureStateEnum;
 import communication.messages.AdventureStateChangeMessage;
 
 /**
@@ -13,6 +13,8 @@ public class CommandAdventureStateChange extends Command
 	private int adventureID, questID;
 	private String adventureDescription;
 	private AdventureStateEnum adventureState;
+	private String witnessTitle;
+	private boolean realLifeAdventure;
 	
 	/**
 	 * @param message that AdventureStateChangeMessage
@@ -23,6 +25,8 @@ public class CommandAdventureStateChange extends Command
 		this.adventureID = message.getAdventureID();
 		this.adventureDescription = message.getAdventureDescription();
 		this.adventureState = message.getNewState();
+		this.realLifeAdventure = message.isRealLifeAdventure();
+		this.witnessTitle = message.getWitnessTitle();
 	}
 
 	@Override
@@ -61,6 +65,22 @@ public class CommandAdventureStateChange extends Command
 	public AdventureStateEnum getAdventureState()
 	{
 		return adventureState;
+	}
+
+	/**
+	 * @return true if the player must complete this adventure outside of the game
+	 */
+	public boolean isRealLifeAdventure()
+	{
+		return realLifeAdventure;
+	}
+
+	/**
+	 * @return the person who can witness completion if this is a real life adventure
+	 */
+	public String getWitnessTitle()
+	{
+		return witnessTitle;
 	}
 
 	

@@ -1,13 +1,12 @@
 package model;
 
-import model.PlayerConnection;
-import model.PlayerLogin;
-import model.QualifiedObservableConnector;
 import model.reports.ExperienceChangedReport;
-import model.reports.PinFailedReport;
 import model.reports.PlayerMovedReport;
-import data.Position;
+import model.reports.KnowledgePointsChangeReport;
 import datasource.DatabaseException;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * Very simple for now . . .
@@ -20,7 +19,7 @@ public class Player
 
 	private PlayerLogin playerLogin;
 
-	private int quizScore;
+	private int knowledgePoints;
 
 	private PlayerMapper playerMapper;
 
@@ -31,9 +30,31 @@ public class Player
 	private Position playerPosition;
 
 	private String mapName;
-	
+
 	private int experiencePoints;
+
+	private Crew crew;
+
+	final private int LOCAL_CHAT_RADIUS = 5;
 	
+	private Major major;
+
+	/**
+	 * Add experience points and generates ExperienceChangedReport
+	 * 
+	 * @param expPoints
+	 *            Player's experience points
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	public void addExperiencePoints(int expPoints) throws DatabaseException
+	{
+		this.experiencePoints = experiencePoints + expPoints;
+		ExperienceChangedReport report = new ExperienceChangedReport(this.playerID,
+				this.experiencePoints, LevelManager.getSingleton().getLevelForPoints(
+						this.experiencePoints));
+		QualifiedObservableConnector.getSingleton().sendReport(report);
+	}
 
 	/**
 	 * Get the appearance type for how this player should be drawn
@@ -46,11 +67,21 @@ public class Player
 	}
 
 	/**
-	 * @return the id of this player
+	 * @return the crew to which this player belongs
 	 */
-	public int getPlayerID()
+	public Crew getCrew()
 	{
-		return playerID;
+		return crew;
+	}
+
+	/**
+	 * Get the player's experience points
+	 * 
+	 * @return experience points
+	 */
+	public int getExperiencePoints()
+	{
+		return experiencePoints;
 	}
 
 	/**
@@ -59,6 +90,14 @@ public class Player
 	public String getMapName()
 	{
 		return mapName;
+	}
+
+	/**
+	 * @return the id of this player
+	 */
+	public int getPlayerID()
+	{
+		return playerID;
 	}
 
 	/**
@@ -89,23 +128,18 @@ public class Player
 	 */
 	public int getQuizScore()
 	{
-		return this.quizScore;
+		return this.knowledgePoints;
 	}
 
-	/**
-	 * Get the player's experience points
-	 * @return experience points
-	 */
-	public int getExperiencePoints()
-	{
-		return experiencePoints;
-	}
 	/**
 	 * Increment quiz score;
 	 */
 	public void incrementQuizScore()
 	{
-		this.quizScore++;
+		this.knowledgePoints++;
+		
+		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(playerID, this.knowledgePoints);
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 
 	/**
@@ -122,21 +156,8 @@ public class Player
 	public boolean isPinValid(double pinToCheck) throws DatabaseException
 	{
 		PlayerConnection pl = new PlayerConnection(playerID);
-		PinFailedReport report = null;
-
-		if (!pl.isPinValid(pinToCheck))
+		if (!pl.isPinValid(pinToCheck) || pl.isExpired())
 		{
-			report = new PinFailedReport(PlayerConnection.ERROR_PIN_NOT_EXIST);
-		} else if (pl.isExpired())
-		{
-			report = new PinFailedReport(PlayerConnection.ERROR_PIN_EXPIRED);
-		}
-
-		if (report != null)
-		{
-			System.err.println("Pin is not valid for " + playerID
-					+ " because " + report.toString());
-			QualifiedObservableConnector.getSingleton().sendReport(report);
 			return false;
 		}
 		return true;
@@ -145,8 +166,10 @@ public class Player
 	/**
 	 * store the information into the data source
 	 * 
-	 * @throws DatabaseException if the data source fails to complete the persistance
-	 * @throws IllegalQuestChangeException shouldn't
+	 * @throws DatabaseException
+	 *             if the data source fails to complete the persistance
+	 * @throws IllegalQuestChangeException
+	 *             shouldn't
 	 */
 	public void persist() throws DatabaseException, IllegalQuestChangeException
 	{
@@ -165,7 +188,17 @@ public class Player
 	}
 
 	/**
-	 * @param playerMapper the mapper that will be used to persist this player
+	 * @param crew
+	 *            the crew to which this player should belong
+	 */
+	public void setCrew(Crew crew)
+	{
+		this.crew = crew;
+	}
+
+	/**
+	 * @param playerMapper
+	 *            the mapper that will be used to persist this player
 	 */
 	public void setDataMapper(PlayerMapper playerMapper)
 	{
@@ -173,7 +206,21 @@ public class Player
 	}
 
 	/**
-	 * @param mapName the name of the map this player should be on
+	 * Set experience points and generates ExperienceChangedReport
+	 * 
+	 * @param expPoints
+	 *            Player's experience points
+	 * @throws DatabaseException
+	 *             shouldn't
+	 */
+	public void setExperiencePoints(int expPoints) throws DatabaseException
+	{
+		this.experiencePoints = expPoints;
+	}
+
+	/**
+	 * @param mapName
+	 *            the name of the map this player should be on
 	 */
 	public void setMapName(String mapName)
 	{
@@ -181,7 +228,8 @@ public class Player
 	}
 
 	/**
-	 * @param playerID this player's unique ID
+	 * @param playerID
+	 *            this player's unique ID
 	 */
 	public void setPlayerID(int playerID)
 	{
@@ -209,10 +257,9 @@ public class Player
 	public void setPlayerPosition(Position playerPosition)
 	{
 		setPlayerPositionWithoutNotifying(playerPosition);
-		PlayerMovedReport report = new PlayerMovedReport(playerID,
-				this.getPlayerName(), playerPosition, this.mapName);
-		
-		QualifiedObservableConnector.getSingleton().sendReport(report);
+
+		sendReportGivingPosition();
+
 	}
 
 	/**
@@ -235,30 +282,54 @@ public class Player
 	 */
 	public void setQuizScore(int score)
 	{
-		this.quizScore = score;
+		this.knowledgePoints = score;
 	}
 
 	/**
-	 * Set experience points
-	 * and generates ExperienceChangedReport
-	 * @param expPoints Player's experience points
-	 * @throws DatabaseException shouldn't
+	 * When receiving a local message check if the player is close enough to
+	 * hear
+	 * 
+	 * @param position
+	 *            position of the sender
 	 */
-	public void setExperiencePoints(int expPoints) throws DatabaseException
+	protected boolean canReceiveLocalMessage(Position position)
 	{
-		this.experiencePoints = expPoints;
+		Position myPosition = getPlayerPosition();
+
+		return Math.abs(myPosition.getColumn() - position.getColumn()) <= LOCAL_CHAT_RADIUS
+				&& Math.abs(myPosition.getRow() - position.getRow()) <= LOCAL_CHAT_RADIUS;
+	}
+
+	/**
+	 * Report our position to anyone who is interested
+	 */
+	public void sendReportGivingPosition()
+	{
+		PlayerMovedReport report = new PlayerMovedReport(playerID, this.getPlayerName(),
+				playerPosition, this.mapName);
+
+		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 	
 	/**
-	 * Add experience points
-	 * and generates ExperienceChangedReport
-	 * @param expPoints Player's experience points
-	 * @throws DatabaseException shouldn't
+	 * @return the number of knowledge points of this player
 	 */
-	public void addExperiencePoints(int expPoints) throws DatabaseException
+	public int getKnowledgePoints() 
 	{
-		this.experiencePoints = experiencePoints + expPoints;
-		ExperienceChangedReport report = new ExperienceChangedReport(this.playerID, this.experiencePoints, LevelManager.getSingleton().getLevelForPoints(this.experiencePoints));
-		QualifiedObservableConnector.getSingleton().sendReport(report);
+		return knowledgePoints;
+	}
+
+	/**
+	 * @return the major of the player
+	 */
+	public Major getMajor() {
+		return major;
+	}
+
+	/**
+	 * @param major of the player
+	 */
+	public void setMajor(Major major) {
+		this.major = major;
 	}
 }

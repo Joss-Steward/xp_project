@@ -1,12 +1,12 @@
 package model.reports;
 
 import static org.junit.Assert.*;
-import model.reports.PlayerMovedReport;
+import model.reports.ThisClientsPlayerMovedReport;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
-import data.Position;
+import datatypes.Position;
 
 /**
  * @author Merlin
@@ -21,7 +21,7 @@ public class PlayerMovedReportTest
 	@Test
 	public void creation()
 	{
-		PlayerMovedReport report = new PlayerMovedReport(1, new Position(3, 2));
+		ThisClientsPlayerMovedReport report = new ThisClientsPlayerMovedReport(1, new Position(3, 2));
 		assertEquals(new Position(3, 2), report.getNewPosition());
 	}
 
@@ -31,6 +31,6 @@ public class PlayerMovedReportTest
 	@Test
 	public void equalsContract()
 	{
-		EqualsVerifier.forClass(PlayerMovedReport.class).verify();
+		EqualsVerifier.forClass(ThisClientsPlayerMovedReport.class).verify();
 	}
 }

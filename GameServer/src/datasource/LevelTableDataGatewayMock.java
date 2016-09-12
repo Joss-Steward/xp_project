@@ -3,9 +3,9 @@ package datasource;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import testData.LevelsForTest;
 import datasource.DatabaseException;
 import datasource.LevelRecord;
-import datasource.LevelsForTest;
 
 /**
  * The mock version of LevelTableDataGatewas
@@ -30,7 +30,8 @@ public class LevelTableDataGatewayMock implements LevelTableDataGateway
 		return singleton;
 	}
 
-	private HashMap<String, Integer> data = new HashMap<String, Integer>();
+	private HashMap<String, LevelRecord> data = new HashMap<String, LevelRecord>();
+
 
 	/**
 	 * Constructor for LevelTableDataGatewayMock
@@ -39,7 +40,7 @@ public class LevelTableDataGatewayMock implements LevelTableDataGateway
 	{
 		for (LevelsForTest l : LevelsForTest.values())
 		{
-			data.put(l.getDescription(), l.getLevelUpPoints());
+			data.put(l.getDescription(), new LevelRecord(l.getDescription(),l.getLevelUpPoints(),l.getLevelUpMonth(),l.getLevelUpDayOfMonth()));
 		}
 	}
 
@@ -52,7 +53,7 @@ public class LevelTableDataGatewayMock implements LevelTableDataGateway
 		ArrayList<LevelRecord> results = new ArrayList<LevelRecord>();
 		for (String desc : data.keySet())
 		{
-			results.add(new LevelRecord(desc, data.get(desc)));
+			results.add(data.get(desc));
 		}
 		return results;
 	}

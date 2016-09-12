@@ -3,6 +3,8 @@ import model.AdventureStateTest;
 import model.ChatManagerTest;
 import model.ChatMessageReceivedCommandTest;
 import model.CommandAddPlayerTest;
+import model.CommandAdventureNotificationCompleteTest;
+import model.CommandKeyInputMessageReceivedTest;
 import model.CommandMovePlayerSilentlyTest;
 import model.CommandMovePlayerTest;
 import model.CommandPersistPlayerTest;
@@ -22,10 +24,13 @@ import model.QuestTest;
 import model.QuizBotBehaviorTest;
 import model.reports.AdventureStateChangeReportTest;
 import model.reports.ExperienceChangedReportTest;
+import model.reports.KeyInputRecievedReportTest;
+import model.reports.KnowledgeChangeReportTest;
 import model.reports.PlayerConnectionReportTest;
 import model.reports.PlayerMovedReportTest;
 import model.reports.QuestStateChangeReportTest;
 import model.reports.SendChatMessageReportTest;
+import model.reports.TeleportOnQuestCompletionReportTest;
 import model.reports.UpdatePlayerInformationReportTest;
 
 import org.junit.ClassRule;
@@ -33,18 +38,22 @@ import org.junit.rules.ExternalResource;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import communication.handlers.AdventureNotificationCompleteMessageHandlerTest;
 import communication.handlers.ChatMessageHandlerTest;
-import communication.handlers.ConnectMessageHandlerTest;
 import communication.handlers.DisconnectMessageHandlerTest;
 import communication.handlers.HighScoreRequestMessageHandlerTest;
+import communication.handlers.KeyInputMessageHandlerTest;
 import communication.handlers.MovementMessageHandlerTest;
 import communication.handlers.TeleportationInitiationHandlerTest;
 import communication.packers.AdventureStateChangeMessagePackerTest;
 import communication.packers.ChatMessagePackerTest;
 import communication.packers.ExperienceChangedMessagePackerTest;
+import communication.packers.KnowledgeChangedMessagePackerTest;
 import communication.packers.MapFileMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.PlayerJoinedMessagePackerTest;
+import communication.packers.QuestStateChangeMessagePackerTest;
+import communication.packers.TeleportOnQuestCompletionPackerTest;
 import communication.packers.UpdatePlayerInformationMessagePackerTest;
 import datasource.AdventureRecordTest;
 import datasource.AdventureStateTableDataGatewayMockTest;
@@ -78,10 +87,12 @@ import datasource.QuestStateTableDataGatewayRDSTest;
 @Suite.SuiteClasses(
 {
 		// communication.handlers
+        AdventureNotificationCompleteMessageHandlerTest.class,
 		ChatMessageHandlerTest.class,
-		ConnectMessageHandlerTest.class,
+		//ConnectMessageHandlerTest.class,
 		DisconnectMessageHandlerTest.class,
 		HighScoreRequestMessageHandlerTest.class,
+		KeyInputMessageHandlerTest.class,
 		MovementMessageHandlerTest.class,
 		TeleportationInitiationHandlerTest.class,
 		
@@ -93,7 +104,10 @@ import datasource.QuestStateTableDataGatewayRDSTest;
 		MapFileMessagePackerTest.class,
 		MovementMessagePackerTest.class, 
 		PlayerJoinedMessagePackerTest.class,
+		QuestStateChangeMessagePackerTest.class,
+		TeleportOnQuestCompletionPackerTest.class,
 		UpdatePlayerInformationMessagePackerTest.class,
+		KnowledgeChangedMessagePackerTest.class,
 		
 		//dataSource
 		AdventureRecordTest.class,
@@ -135,6 +149,8 @@ import datasource.QuestStateTableDataGatewayRDSTest;
 		ChatManagerTest.class,
 		ChatMessageReceivedCommandTest.class,
 		CommandAddPlayerTest.class, 
+		CommandAdventureNotificationCompleteTest.class,
+		CommandKeyInputMessageReceivedTest.class,
 		CommandMovePlayerSilentlyTest.class,
 		CommandMovePlayerTest.class, 
 		CommandPersistPlayerTest.class,
@@ -148,19 +164,22 @@ import datasource.QuestStateTableDataGatewayRDSTest;
 		PlayerMapperTest.class,
 		PlayerTest.class,
 		QuestManagerTest.class,
-		QuestTest.class,
 		QuestStateTest.class,
+		QuestTest.class,
 		QuizBotBehaviorTest.class,
 		
 		
 		// model.reports
 		AdventureStateChangeReportTest.class,
 		ExperienceChangedReportTest.class,
+		KeyInputRecievedReportTest.class,
 		PlayerConnectionReportTest.class, 
 		PlayerMovedReportTest.class, 
 		QuestStateChangeReportTest.class,
 		SendChatMessageReportTest.class,
+		TeleportOnQuestCompletionReportTest.class,
 		UpdatePlayerInformationReportTest.class,
+		KnowledgeChangeReportTest.class,
 		})
 
 public class AllServerTests

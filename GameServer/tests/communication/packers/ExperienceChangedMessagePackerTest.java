@@ -11,11 +11,11 @@ import model.reports.ExperienceChangedReport;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import communication.StateAccumulator;
 import communication.messages.ExperienceChangedMessage;
 import datasource.DatabaseException;
 import datasource.LevelRecord;
-import datasource.PlayersForTest;
 /**
  * @author Ryan
  *
@@ -47,7 +47,7 @@ public class ExperienceChangedMessagePackerTest
 	{
 		ExperienceChangedMessagePacker packer = new ExperienceChangedMessagePacker();
 		
-		assertEquals(ExperienceChangedReport.class, packer.getReportTypeWePack());
+		assertEquals(ExperienceChangedReport.class, packer.getReportTypesWePack().get(0));
 	}
 	
 	/**

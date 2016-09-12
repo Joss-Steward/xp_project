@@ -2,10 +2,10 @@ package datasource;
 
 import java.util.ArrayList;
 
-import data.Position;
 import datasource.DatabaseException;
 import datasource.QuestRowDataGateway;
 import datasource.QuestRowDataGatewayMock;
+import datatypes.Position;
 
 
 /**
@@ -27,7 +27,7 @@ public class QuestRowDataGatewayMockTest extends QuestRowDataGatewayTest
 	}
 
 	/**
-	 * @see datasource.QuestRowDataGatewayTest#findQuestsForMapLocation(java.lang.String, data.Position)
+	 * @see datasource.QuestRowDataGatewayTest#findQuestsForMapLocation(java.lang.String, datatypes.Position)
 	 */
 	@Override
 	ArrayList<Integer> findQuestsForMapLocation(String mapName, Position position) throws DatabaseException

@@ -1,6 +1,7 @@
 package model;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import communication.CommunicationException;
 import communication.StateAccumulator;
@@ -19,12 +20,16 @@ import communication.packers.MessagePackerSet;
  */
 public class SequenceTestRunner
 {
+	/**
+	 * the message returned by the test if everything passes
+	 */
+	public static final String SUCCESS_MSG = "Success!!";
 	private SequenceTest testcase;
 	private StateAccumulator stateAccumulator;
 	private MessageHandlerSet messageHandlerSet;
 	private MessagePackerSet messagePackerSet;
 	private StateAccumulator secondStateAccumulator;
-//	private MessageHandlerSet secondMessageHandlerSet;
+	// private MessageHandlerSet secondMessageHandlerSet;
 	private MessagePackerSet secondMessagePackerSet;
 
 	/**
@@ -42,9 +47,6 @@ public class SequenceTestRunner
 		stateAccumulator = new StateAccumulator(messagePackerSet);
 		stateAccumulator.setPlayerId(test.getInitiatingPlayerID());
 		messageHandlerSet = new MessageHandlerSet(stateAccumulator);
-		secondMessagePackerSet = new MessagePackerSet();
-		secondStateAccumulator = new StateAccumulator(secondMessagePackerSet);
-//		secondMessageHandlerSet = new MessageHandlerSet(secondStateAccumulator);
 
 	}
 
@@ -67,32 +69,52 @@ public class SequenceTestRunner
 		Class<?> testClass = null;
 		try
 		{
-			testClass = Class.forName("model." + args[0]);
+			testClass = Class.forName(args[0]);
 		} catch (ClassNotFoundException e)
 		{
-			System.out.println("Can't find a class with that name");
+			System.out.println("Can't find a class with that name " + args[0]);
 			System.exit(1);
 		}
 		SequenceTest testcase = (SequenceTest) testClass.newInstance();
 		SequenceTestRunner runner = new SequenceTestRunner(testcase);
 		ServerType serverToTest = (ServerType.values())[Integer.parseInt(args[1])];
-		System.out.println(runner.run(serverToTest));
+		System.out.println(runner.run(serverToTest, true));
 		ClientModelFacade.killThreads();
+		ModelFacade.killThreads();
 	}
 
-	private String run(ServerType sType) throws CommunicationException
+	/**
+	 * @param sType
+	 *            the type of server we want to run this test on
+	 * @param verbose
+	 *            true if you want output showing the sequence of things the
+	 *            test is looking at
+	 * @return A message describing what happened - SUCCESS_MSG if the test
+	 *         passed
+	 * @throws CommunicationException
+	 *             shouldn't
+	 */
+	public String run(ServerType sType, boolean verbose) throws CommunicationException
 	{
-		if (sType == testcase.getInitiatingServerType())
+		if (sType.supportsOneToManyConnections())
 		{
-			testcase.getInitiatingCommand().execute();
+			secondMessagePackerSet = new MessagePackerSet();
+			secondStateAccumulator = new StateAccumulator(secondMessagePackerSet);
+			// secondMessageHandlerSet = new
+			// MessageHandlerSet(secondStateAccumulator);
 		}
-		MessageFlow[] messages = testcase.getMessageSequence();
+//		ModelFacade lookHere = ModelFacade.getSingleton();
+		ArrayList<MessageFlow> messages = testcase.getMessageSequence();
+		initiateTheSequence(sType, messages);
 		for (MessageFlow msgFlow : messages)
 		{
 			Message message = msgFlow.getMessage();
-			if (msgFlow.getSource().equals(sType))
+			if (msgFlow.getSource().equals(sType) && msgFlow.isReaction())
 			{
-				System.out.println("Checking that I sourced " + msgFlow.getMessage());
+				if (verbose)
+				{
+					System.out.println("Checking that I sourced " + msgFlow.getMessage());
+				}
 				Message msgInAccumulator;
 				if (msgFlow.getDestination().equals(ServerType.OTHER_CLIENT))
 				{
@@ -110,8 +132,10 @@ public class SequenceTestRunner
 			}
 			if (msgFlow.getDestination().equals(sType))
 			{
-				System.out.println("I am receiving " + msgFlow.getMessage());
-
+				if (verbose)
+				{
+					System.out.println("I am receiving " + msgFlow.getMessage());
+				}
 				messageHandlerSet.process(message);
 				if (sType == ServerType.AREA_SERVER)
 				{
@@ -120,7 +144,57 @@ public class SequenceTestRunner
 
 			}
 		}
-		return "Success!!";
+		String extraMessagesError = checkForExtraMessages();
+		if (extraMessagesError != null)
+		{
+			return extraMessagesError;
+		}
+		testcase.resetDataGateways();
+		return SUCCESS_MSG;
+	}
+
+	/**
+	 * There are two ways the sequence can be initiated: by the execution of a
+	 * command or by sending an initial message. If the test specifies a
+	 * command, execute it if we are the machine that should execute it. If the
+	 * test doesn't specify a command and we are the machine that should source
+	 * the first message, just ignore that message (it is there to cause things
+	 * to happen on other machines)
+	 * 
+	 * @param sType
+	 *            the type of machine we are testing
+	 * @param messages
+	 *            the sequence of messages we are supposed to execute
+	 */
+	private void initiateTheSequence(ServerType sType, ArrayList<MessageFlow> messages)
+	{
+		if (sType == testcase.getInitiatingServerType())
+		{
+			Command initiatingCommand = testcase.getInitiatingCommand();
+			if (initiatingCommand != null)
+			{
+				testcase.getInitiatingCommand().execute();
+			}
+		}
+	}
+
+	private String checkForExtraMessages()
+	{
+		if (secondStateAccumulator != null)
+		{
+			ArrayList<Message> secondPendingMsgs = secondStateAccumulator
+					.getPendingMsgs();
+			if (!secondPendingMsgs.isEmpty())
+			{
+				return "Second accumulator had messages pending";
+			}
+		}
+		ArrayList<Message> pendingMsgs = stateAccumulator.getPendingMsgs();
+		if (!pendingMsgs.isEmpty())
+		{
+			return "First accumulator had messages pending";
+		}
+		return null;
 	}
 
 	private void waitForCommandComplete()

@@ -1,7 +1,7 @@
 package model.reports;
 
-import data.ChatType;
-import data.Position;
+import datatypes.ChatType;
+import datatypes.Position;
 import model.QualifiedObservableReport;
 
 /**

@@ -1,12 +1,17 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import model.QualifiedObservableConnector;
 import model.reports.QuestStateChangeReport;
-import datasource.AdventureStateEnum;
+import model.reports.TeleportOnQuestCompletionReport;
+import data.GameLocation;
+import data.QuestCompletionActionType;
 import datasource.DatabaseException;
-import datasource.QuestStateEnum;
+import datatypes.AdventureStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * Stores the states of all the quests for an individual player on the server
@@ -24,7 +29,9 @@ public class QuestState
 
 	/**
 	 * Constructs the QuestState
-	 * @param playerID the player whose state this represents
+	 * 
+	 * @param playerID
+	 *            the player whose state this represents
 	 * @param questID
 	 *            unique ID for the quest in the system
 	 * @param questStateList
@@ -33,7 +40,8 @@ public class QuestState
 	 * @param needingNotification
 	 *            true if the player should be notified about the quest's state
 	 */
-	public QuestState(int playerID, int questID, QuestStateEnum questStateList, boolean needingNotification)
+	public QuestState(int playerID, int questID, QuestStateEnum questStateList,
+			boolean needingNotification)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
@@ -64,11 +72,14 @@ public class QuestState
 	 * @throws DatabaseException
 	 *             if the datasource can't find the number of adventures
 	 *             required for the quest
-	 * @throws IllegalQuestChangeException thrown if illegal state change
+	 * @throws IllegalQuestChangeException
+	 *             thrown if illegal state change
 	 */
-	public void checkForFulfillment() throws DatabaseException, IllegalQuestChangeException
+	public void checkForFulfillmentOrFinished() throws DatabaseException,
+			IllegalQuestChangeException
 	{
-		if (questState == QuestStateEnum.TRIGGERED)
+		if ((questState == QuestStateEnum.TRIGGERED)
+				|| (questState == QuestStateEnum.FULFILLED))
 		{
 			int adventuresComplete = 0;
 			for (AdventureState state : adventureList)
@@ -80,30 +91,51 @@ public class QuestState
 			}
 			int adventuresRequired = QuestManager.getSingleton().getQuest(this.questID)
 					.getAdventuresForFulfillment();
-			if (adventuresComplete >= adventuresRequired)
+			if ((questState == QuestStateEnum.TRIGGERED)
+					&& (adventuresComplete >= adventuresRequired))
 			{
 				changeState(QuestStateEnum.FULFILLED, true);
 				PlayerManager
-				.getSingleton()
-				.getPlayerFromID(playerID)
-				.addExperiencePoints(
-						QuestManager.getSingleton().getQuest(questID)
-								.getExperiencePointsGained());
-				
+						.getSingleton()
+						.getPlayerFromID(playerID)
+						.addExperiencePoints(
+								QuestManager.getSingleton().getQuest(questID)
+										.getExperiencePointsGained());
 
-				
+			}
+			if ((questState == QuestStateEnum.FULFILLED)
+					&& (adventuresComplete >= adventureList.size()))
+			{
+				finish();
 			}
 		}
 	}
 
 	/**
 	 * Changes the quest's state from fulfilled to finished
-	 * @throws IllegalQuestChangeException thrown if illegal state change
-	 * @throws DatabaseException shouldn't
+	 * 
+	 * @throws IllegalQuestChangeException
+	 *             thrown if illegal state change
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
 	public void finish() throws IllegalQuestChangeException, DatabaseException
 	{
-		changeState(QuestStateEnum.FINISHED, false);
+		changeState(QuestStateEnum.FINISHED, true);
+		Quest q = QuestManager.getSingleton().getQuest(questID);
+		if (q.getCompletionActionType() == QuestCompletionActionType.TELEPORT)
+		{
+			GameLocation gl = (GameLocation) q.getCompletionActionParameter();
+			MapToServerMapping mapping = new MapToServerMapping(gl.getMapName());
+			Player playerFromID = PlayerManager.getSingleton().getPlayerFromID(playerID);
+			playerFromID.setPlayerPositionWithoutNotifying(gl.getPosition());
+			playerFromID.setMapName(gl.getMapName());
+			playerFromID.persist();
+			TeleportOnQuestCompletionReport report = new TeleportOnQuestCompletionReport(
+					playerID, questID, gl, mapping.getHostName(), mapping.getPortNumber());
+
+			QualifiedObservableConnector.getSingleton().sendReport(report);
+		}
 	}
 
 	/**
@@ -145,12 +177,26 @@ public class QuestState
 	}
 
 	/**
-	 * Returns the quest's state
+	 * Returns the quest's state, if quest is not completed and after end date then its expired
 	 * 
 	 * @return questState the state of the quest for a player
 	 */
 	public QuestStateEnum getStateValue()
 	{
+	    Date now = Calendar.getInstance().getTime();
+	    Date questEndDate;
+        try
+        {
+            questEndDate = QuestManager.getSingleton().getQuest(questID).getEndDate();
+            if(questState != QuestStateEnum.FINISHED && now.after(questEndDate))
+            {
+                return QuestStateEnum.EXPIRED;
+            }
+        }
+        catch (DatabaseException e)
+        {
+            e.printStackTrace();
+        }
 		return questState;
 	}
 
@@ -177,46 +223,65 @@ public class QuestState
 	/**
 	 * Change the quest's state from hidden to available Also change all the
 	 * quest's adventures from hidden to pending.
-	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
-	 * @throws IllegalQuestChangeException thrown if changing to a wrong state
-	 * @throws DatabaseException shouldn't
+	 * 
+	 * @throws IllegalAdventureChangeException
+	 *             thrown if changing to a wrong state
+	 * @throws IllegalQuestChangeException
+	 *             thrown if changing to a wrong state
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
-	public void trigger() throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
+	public void trigger() throws IllegalAdventureChangeException,
+			IllegalQuestChangeException, DatabaseException
 	{
 		changeState(QuestStateEnum.TRIGGERED, true);
 		for (AdventureState state : adventureList)
 		{
-			state.trigger();
+			if (state.getState() == AdventureStateEnum.HIDDEN)
+			{
+				state.trigger();
+			}
 		}
 	}
 
 	/**
-	 * Change the state of the quest and create a report and send it to 
-	 * @param state the new state being transitioned to
-	 * @param notify should the client be notified of this change
-	 * @throws IllegalQuestChangeException trying to make a state change that isn't allowed by our model's states.
-	 * @throws DatabaseException shouldn't
+	 * Change the state of the quest and create a report and send it to
+	 * 
+	 * @param state
+	 *            the new state being transitioned to
+	 * @param notify
+	 *            should the client be notified of this change
+	 * @throws IllegalQuestChangeException
+	 *             trying to make a state change that isn't allowed by our
+	 *             model's states.
+	 * @throws DatabaseException
+	 *             shouldn't
 	 */
-	public void changeState(QuestStateEnum state, boolean notify) throws IllegalQuestChangeException, DatabaseException 
+	public void changeState(QuestStateEnum state, boolean notify)
+			throws IllegalQuestChangeException, DatabaseException
 	{
-		if((this.getStateValue().equals(QuestStateEnum.HIDDEN) && state.equals(QuestStateEnum.AVAILABLE)) 
-				|| (this.getStateValue().equals(QuestStateEnum.AVAILABLE) && state.equals(QuestStateEnum.TRIGGERED))
-				|| (this.getStateValue().equals(QuestStateEnum.TRIGGERED) && state.equals(QuestStateEnum.FULFILLED))
-				|| (this.getStateValue().equals(QuestStateEnum.FULFILLED) && state.equals(QuestStateEnum.FINISHED))) 
+		if ((this.getStateValue().equals(QuestStateEnum.HIDDEN) && state
+				.equals(QuestStateEnum.AVAILABLE))
+				|| (this.getStateValue().equals(QuestStateEnum.AVAILABLE) && state
+						.equals(QuestStateEnum.TRIGGERED))
+				|| (this.getStateValue().equals(QuestStateEnum.TRIGGERED) && state
+						.equals(QuestStateEnum.FULFILLED))
+				|| (this.getStateValue().equals(QuestStateEnum.FULFILLED) && state
+						.equals(QuestStateEnum.FINISHED)))
 		{
 			this.questState = state;
 			this.needingNotification = notify;
-			
-			if(this.needingNotification == true)
+
+			if (this.needingNotification == true)
 			{
+				Quest quest = QuestManager
+						.getSingleton().getQuest(questID);
 				QualifiedObservableConnector.getSingleton().sendReport(
-						new QuestStateChangeReport(playerID, questID, QuestManager
-								.getSingleton().getQuest(questID).getDescription(),
-								questState));
+						new QuestStateChangeReport(playerID, questID, quest.getTitle(),
+								quest.getDescription(), questState));
 			}
-			
-		}
-		else
+
+		} else
 		{
 			throw new IllegalQuestChangeException(this.getStateValue(), state);
 		}

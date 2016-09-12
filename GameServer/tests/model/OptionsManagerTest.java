@@ -7,8 +7,8 @@ import model.OptionsManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.ServersForTest;
 import datasource.DatabaseException;
-import datasource.ServersForTest;
 
 /**
  * Tests the OptionsManager

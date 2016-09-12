@@ -1,33 +1,26 @@
 package model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import model.AdventureState;
-import model.IllegalAdventureChangeException;
-import model.IllegalQuestChangeException;
-import model.OptionsManager;
-import model.Player;
-import model.PlayerMapper;
-import model.QuestManager;
-import model.QuestState;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import data.Position;
-import datasource.AdventureStateEnum;
+import testData.AdventureStatesForTest;
+import testData.PlayersForTest;
+import testData.QuestStatesForTest;
 import datasource.AdventureStateTableDataGatewayMock;
-import datasource.AdventureStatesForTest;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
 import datasource.PlayerConnectionRowDataGatewayMock;
 import datasource.PlayerRowDataGatewayMock;
-import datasource.PlayersForTest;
 import datasource.QuestStateTableDataGatewayMock;
-import datasource.QuestStatesForTest;
+import datatypes.AdventureStateEnum;
+import datatypes.Crew;
+import datatypes.Position;
 
 /**
  * Tests the PlayerMapper class
@@ -70,9 +63,10 @@ public class PlayerMapperTest extends DatabaseTest
 		assertEquals(testPlayer.getAppearanceType(), p.getAppearanceType());
 		assertEquals(testPlayer.getPlayerName(), p.getPlayerName());
 		assertEquals(testPlayer.getPosition(), p.getPlayerPosition());
-		assertEquals(testPlayer.getQuizScore(), p.getQuizScore());
+		assertEquals(testPlayer.getKnowledgeScore(), p.getQuizScore());
 		assertEquals(testPlayer.getMapName(), p.getMapName());
 		assertEquals(testPlayer.getExperiencePoints(), p.getExperiencePoints());
+		assertEquals(testPlayer.getCrew(), p.getCrew());
 
 		for (QuestStatesForTest qs : QuestStatesForTest.values())
 		{
@@ -121,6 +115,18 @@ public class PlayerMapperTest extends DatabaseTest
 	{
 		return new PlayerMapper(getPlayerWeAreTesting().getPlayerID());
 	}
+	
+	/**
+	 * When we tell a mapper to remove a player, its quests should be removed from the quest manager
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void cleansUpQuestManager() throws DatabaseException
+	{
+		PlayerMapper pm = getMapper();
+		pm.removePlayer();
+		assertNull(QuestManager.getSingleton().getQuestList(getPlayerWeAreTesting().getPlayerID()));
+	}
 
 	/**
 	 * An exception should be thrown if we are trying to create a mapper for a
@@ -154,6 +160,7 @@ public class PlayerMapperTest extends DatabaseTest
 		p.setQuizScore(666);
 		p.setMapName("sillyMap");
 		p.setExperiencePoints(424);
+		p.setCrew(Crew.NULL_POINTER);
 		QuestState questState = null;
 		if (p.getClass() == Player.class)
 		{
@@ -170,6 +177,7 @@ public class PlayerMapperTest extends DatabaseTest
 		assertEquals(p.getQuizScore(), p2.getQuizScore());
 		assertEquals(p.getMapName(), p2.getMapName());
 		assertEquals(p.getExperiencePoints(), p2.getExperiencePoints());
+		assertEquals(p.getCrew(), p2.getCrew());
 		if (p.getClass() == Player.class)
 		{
 			QuestState retrievedQuestState = QuestManager.getSingleton()

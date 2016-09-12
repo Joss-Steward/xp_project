@@ -1,13 +1,15 @@
 package communication.handlers;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import model.ClientModelFacade;
+import model.CommandInitializePlayer;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import testData.PlayersForTest;
+
 import communication.messages.PlayerJoinedMessage;
-import datasource.PlayersForTest;
 
 /**
  * Make sure the message is handled properly
@@ -48,14 +50,21 @@ public class PlayerJoinedMessageHandlerTest
 	public void test() throws InterruptedException
 	{
 		PlayerJoinedMessage msg = new PlayerJoinedMessage(2, PlayersForTest.MERLIN.name(),
-				PlayersForTest.MERLIN.getAppearanceType(), PlayersForTest.MERLIN.getPosition());
+				PlayersForTest.MERLIN.getAppearanceType(), PlayersForTest.MERLIN.getPosition(), PlayersForTest.MERLIN.getCrew(),
+				PlayersForTest.MERLIN.getMajor());
 		PlayerJoinedMessageHandler handler = new PlayerJoinedMessageHandler();
 		handler.process(msg);
 		assertEquals(1, ClientModelFacade.getSingleton().getCommandQueueLength());
-		while(ClientModelFacade.getSingleton().hasCommandsPending())
-		{
-			Thread.sleep(100);
-		}
+		
+		CommandInitializePlayer cmd =(CommandInitializePlayer) ClientModelFacade.getSingleton().getNextCommand();
+		
+		assertEquals(PlayersForTest.MERLIN.getPlayerID(), cmd.getPlayerID());
+		assertEquals(PlayersForTest.MERLIN.getPlayerName().toUpperCase(), cmd.getPlayerName());
+		assertEquals(PlayersForTest.MERLIN.getAppearanceType(), cmd.getAppearanceType());
+		assertEquals(PlayersForTest.MERLIN.getPosition(), cmd.getPosition());
+		assertEquals(PlayersForTest.MERLIN.getCrew(), cmd.getCrew());
+		assertEquals(PlayersForTest.MERLIN.getMajor(), cmd.getMajor());
+		
 	}
 
 }

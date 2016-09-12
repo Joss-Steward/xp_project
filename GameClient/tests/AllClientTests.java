@@ -1,23 +1,27 @@
 import model.ChatManagerTest;
+import model.ClientPlayerManagerTest;
+import model.ClientPlayerTest;
+import model.CommandAdventureNotificationCompleteTest;
 import model.CommandAdventureStateChangeTest;
 import model.CommandChatMessageReceivedTest;
 import model.CommandChatMessageSentTest;
 import model.CommandClearModelStateTest;
+import model.CommandClientMovePlayerTest;
 import model.CommandHighScoreResponseTest;
 import model.CommandInitializePlayerTest;
+import model.CommandKeyInputSentTest;
+import model.CommandKnowledgePointsChangedTest;
 import model.CommandLoginFailedTest;
 import model.CommandLoginTest;
-import model.CommandMovePlayerTest;
 import model.CommandNewMapTest;
 import model.CommandOverwriteExperienceTest;
 import model.CommandOverwriteQuestStateTest;
+import model.CommandPrintAdventuresTest;
 import model.CommandQuestStateChangeTest;
 import model.CommandRemovePlayerTest;
 import model.CommandSendQuestStateTest;
 import model.MapManagerTest;
 import model.ModelFacadeTest;
-import model.PlayerManagerTest;
-import model.PlayerTest;
 import model.ThisClientsPlayerTest;
 import model.reports.AdventureStateChangeReportTest;
 import model.reports.AdventuresNeedingNotificationReportTest;
@@ -26,6 +30,7 @@ import model.reports.ChangeMapReportTest;
 import model.reports.ChatSentReportTest;
 import model.reports.ExperiencePointsChangeReportTest;
 import model.reports.HighScoreResponseReportTest;
+import model.reports.KeyInputSentReportTest;
 import model.reports.LoginFailedReportTest;
 import model.reports.LoginInitiatedReportTest;
 import model.reports.NewMapReportTest;
@@ -46,14 +51,16 @@ import communication.handlers.ChatMessageHandlerTest;
 import communication.handlers.ExperienceChangedMessageHandlerTest;
 import communication.handlers.HighScoreResponseHandlerTest;
 import communication.handlers.InitializeThisClientsPlayerMessageHandlerTest;
+import communication.handlers.KnowledgeChangedMessageHandlerTest;
 import communication.handlers.LoginFailedMessageHandlerTest;
 import communication.handlers.MapFileMessageHandlerTest;
-import communication.handlers.MovementMessageHandlerTest;
+import communication.handlers.OtherPlayerMovedMessageHandlerTest;
 import communication.handlers.PlayerJoinedMessageHandlerTest;
 import communication.handlers.PlayerLeaveMessageHandlerTest;
 import communication.handlers.QuestStateChangeMessageHandlerTest;
 import communication.packers.AreaCollisionMessagePackerTest;
 import communication.packers.ChatMessagePackerTest;
+import communication.packers.KeyInputPackerTest;
 import communication.packers.LoginMessagePackerTest;
 import communication.packers.MovementMessagePackerTest;
 import communication.packers.TeleportationInitiationMessagePackerTest;
@@ -76,9 +83,10 @@ import communication.packers.TeleportationInitiationMessagePackerTest;
 		ExperienceChangedMessageHandlerTest.class,
 		HighScoreResponseHandlerTest.class,
 		InitializeThisClientsPlayerMessageHandlerTest.class,
+		KnowledgeChangedMessageHandlerTest.class,
 		LoginFailedMessageHandlerTest.class,
 		MapFileMessageHandlerTest.class,
-		MovementMessageHandlerTest.class,
+		OtherPlayerMovedMessageHandlerTest.class,
 		PlayerJoinedMessageHandlerTest.class,
 		PlayerLeaveMessageHandlerTest.class,
 		QuestStateChangeMessageHandlerTest.class,
@@ -87,31 +95,37 @@ import communication.packers.TeleportationInitiationMessagePackerTest;
 		// communication.packers
 		AreaCollisionMessagePackerTest.class,
 		ChatMessagePackerTest.class,
+		KeyInputPackerTest.class,
 		LoginMessagePackerTest.class,
 		MovementMessagePackerTest.class,
 		TeleportationInitiationMessagePackerTest.class,
 
 		// model
 		ChatManagerTest.class,
+		ClientPlayerManagerTest.class, 
+		ClientPlayerTest.class,
+		CommandAdventureNotificationCompleteTest.class,
 		CommandAdventureStateChangeTest.class,
 		CommandChatMessageReceivedTest.class,
 		CommandChatMessageSentTest.class,
 		CommandClearModelStateTest.class,
+		CommandClientMovePlayerTest.class,
 		CommandHighScoreResponseTest.class,
 		CommandInitializePlayerTest.class, 
+		CommandKeyInputSentTest.class,
+		CommandKnowledgePointsChangedTest.class,
 		CommandLoginFailedTest.class,
 		CommandLoginTest.class,
-		CommandMovePlayerTest.class,
 		CommandNewMapTest.class, 
 		CommandOverwriteExperienceTest.class,
 		CommandOverwriteQuestStateTest.class,
+		CommandPrintAdventuresTest.class,
 		CommandQuestStateChangeTest.class,
 		CommandRemovePlayerTest.class,
 		CommandSendQuestStateTest.class,
 		MapManagerTest.class, 
 		ModelFacadeTest.class,
-		PlayerManagerTest.class, 
-		PlayerTest.class,
+//		PDFAdventureWriterTest.class,
 		ThisClientsPlayerTest.class,
 		
 		// model.reports
@@ -122,6 +136,7 @@ import communication.packers.TeleportationInitiationMessagePackerTest;
 		ChatSentReportTest.class,
 		ExperiencePointsChangeReportTest.class,
 		HighScoreResponseReportTest.class,
+		KeyInputSentReportTest.class,
 		LoginFailedReportTest.class,
 		LoginInitiatedReportTest.class, 
 		NewMapReportTest.class,

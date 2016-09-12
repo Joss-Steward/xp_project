@@ -2,7 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
-import datasource.AdventureStateRecord;
+import data.AdventureStateRecord;
+import data.QuestStateRecord;
 import datasource.AdventureStateTableDataGateway;
 import datasource.AdventureStateTableDataGatewayMock;
 import datasource.AdventureStateTableDataGatewayRDS;
@@ -13,7 +14,6 @@ import datasource.PlayerConnectionRowDataGatewayRDS;
 import datasource.PlayerRowDataGateway;
 import datasource.PlayerRowDataGatewayMock;
 import datasource.PlayerRowDataGatewayRDS;
-import datasource.QuestStateRecord;
 import datasource.QuestStateTableDataGateway;
 import datasource.QuestStateTableDataGatewayMock;
 import datasource.QuestStateTableDataGatewayRDS;
@@ -57,7 +57,8 @@ public class PlayerMapper
 			this.questStateGateway = QuestStateTableDataGatewayMock.getSingleton();
 			this.adventureStateGateway = AdventureStateTableDataGatewayMock
 					.getSingleton();
-			this.playerConnectionGateway = new PlayerConnectionRowDataGatewayMock(playerID);
+			this.playerConnectionGateway = new PlayerConnectionRowDataGatewayMock(
+					playerID);
 		} else
 		{
 			this.playerGateway = new PlayerRowDataGatewayRDS(playerID);
@@ -66,16 +67,19 @@ public class PlayerMapper
 			this.playerConnectionGateway = new PlayerConnectionRowDataGatewayRDS(playerID);
 		}
 		this.player = createPlayerObject();
+		player.setPlayerLogin(new PlayerLogin(playerID));
 		player.setAppearanceType(playerGateway.getAppearanceType());
 		player.setPlayerPositionWithoutNotifying(playerGateway.getPosition());
 		player.setQuizScore(playerGateway.getQuizScore());
-		player.setPlayerLogin(new PlayerLogin(playerID));
 		player.setPlayerID(playerID);
-		
+		player.setCrew(playerGateway.getCrew());
+		player.setMajor(playerGateway.getMajor());
+
 		player.setExperiencePoints(playerGateway.getExperiencePoints());
 		player.setDataMapper(this);
 		player.setMapName(playerConnectionGateway.getMapName());
 		loadQuestStates();
+//		player.sendReportGivingPosition();
 	}
 
 	private void loadQuestStates() throws DatabaseException
@@ -84,7 +88,8 @@ public class PlayerMapper
 				.getQuestStates(player.getPlayerID());
 		for (QuestStateRecord qsRec : questStateRecords)
 		{
-			QuestState questState = new QuestState(player.getPlayerID(), qsRec.getQuestID(), qsRec.getState(), qsRec.isNeedingNotification());
+			QuestState questState = new QuestState(player.getPlayerID(),
+					qsRec.getQuestID(), qsRec.getState(), qsRec.isNeedingNotification());
 			ArrayList<AdventureStateRecord> adventureStateRecords = adventureStateGateway
 					.getAdventureStates(player.getPlayerID(), qsRec.getQuestID());
 			ArrayList<AdventureState> adventureStates = new ArrayList<AdventureState>();
@@ -122,15 +127,21 @@ public class PlayerMapper
 	 * 
 	 * @throws DatabaseException
 	 *             if we can't complete the write
-	 * @throws IllegalQuestChangeException shouldn't
+	 * @throws IllegalQuestChangeException
+	 *             shouldn't
 	 */
 	public void persist() throws DatabaseException, IllegalQuestChangeException
 	{
+
 		playerGateway.setAppearanceType(player.getAppearanceType());
 		playerGateway.setPosition(player.getPlayerPosition());
 		playerGateway.setQuizScore(player.getQuizScore());
 		playerGateway.setExperiencePoints(player.getExperiencePoints());
+		playerGateway.setCrew(player.getCrew());
+		playerGateway.setMajor(player.getMajor());
+
 		playerGateway.persist();
+
 		playerConnectionGateway.storeMapName(player.getMapName());
 
 		ArrayList<QuestState> questList = QuestManager.getSingleton().getQuestList(
@@ -144,10 +155,19 @@ public class PlayerMapper
 				for (AdventureState a : quest.getAdventureList())
 				{
 					adventureStateGateway.updateState(player.getPlayerID(),
-							quest.getID(), a.getID(), a.getState(), true);
+							quest.getID(), a.getID(), a.getState(),
+							a.isNeedingNotification());
 				}
 			}
 		}
+	}
+
+	/**
+	 * Removes the player from data areas other than the PlayerManager
+	 */
+	public void removePlayer()
+	{
+		QuestManager.getSingleton().removeQuestStatesForPlayer(player.getPlayerID());
 	}
 
 }

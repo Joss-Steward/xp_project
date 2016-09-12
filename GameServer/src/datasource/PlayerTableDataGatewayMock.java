@@ -3,8 +3,8 @@ package datasource;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import datasource.PlayerScoreRecord;
-import datasource.PlayersForTest;
+import testData.PlayersForTest;
+import datatypes.PlayerScoreRecord;
 
 /**
  * A mock data source that provides a table data gateway view into the Players
@@ -13,7 +13,7 @@ import datasource.PlayersForTest;
  * @author Merlin
  *
  */
-public class PlayerTableDataGatewayMock implements PlayerTableDataGateway
+public class PlayerTableDataGatewayMock extends PlayerTableDataGateway
 {
 
 	private static PlayerTableDataGateway singleton;

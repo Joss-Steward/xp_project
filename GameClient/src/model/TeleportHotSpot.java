@@ -1,6 +1,6 @@
 package model;
 
-import data.Position;
+import datatypes.Position;
 
 /**
  * 

@@ -1,12 +1,12 @@
 
 import java.sql.SQLException;
 
+import testData.NPCsForTest;
+import testData.PlayersForTest;
 import model.OptionsManager;
 import datasource.DatabaseException;
 import datasource.NPCRowDataGatewayRDS;
-import datasource.NPCsForTest;
 import datasource.PlayerRowDataGatewayRDS;
-import datasource.PlayersForTest;
 
 /**
  * Builds the Player portion of the database
@@ -39,7 +39,7 @@ public class BuildTestDBPlayers
 
 		for (PlayersForTest p : PlayersForTest.values())
 		{
-			new PlayerRowDataGatewayRDS(p.getPosition(), p.getAppearanceType(), p.getQuizScore(), p.getExperiencePoints());
+			new PlayerRowDataGatewayRDS(p.getPosition(), p.getAppearanceType(), p.getKnowledgeScore(), p.getExperiencePoints(), p.getCrew(), p.getMajor());
 		}
 
 	}

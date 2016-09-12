@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import testData.PlayersForTest;
 import datasource.LevelRecord;
-import datasource.PlayersForTest;
 
 /**
  * Tests that the ExperienceChangeMessage class functionality
@@ -21,7 +21,7 @@ public class ExperienceChangedMessageTest
 	@Test
 	public void testCreateMessage() 
 	{
-		LevelRecord record = new LevelRecord("Serf", 15);
+		LevelRecord record = new LevelRecord("Serf", 15, 10, 7);
 		ExperienceChangedMessage msg = new ExperienceChangedMessage(PlayersForTest.JOHN.getPlayerID(),PlayersForTest.JOHN.getExperiencePoints(), record);
 		assertEquals(PlayersForTest.JOHN.getExperiencePoints(), msg.getExperiencePoints());
 	}

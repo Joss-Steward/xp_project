@@ -5,7 +5,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 
-import data.Position;
+import datatypes.Position;
 
 /**
  * Tests a login message
@@ -22,7 +22,7 @@ public class MovementMessageTest
 	public void testToString()
 	{
 		Position position = new Position(42, 13);
-		MovementMessage msg = new MovementMessage(1, position);
+		PlayerMovedMessage msg = new PlayerMovedMessage(1, position);
 		assertEquals(1, msg.getPlayerID());
 		assertEquals(position, msg.getPosition());
 		assertEquals("Movement Message: playerID = 1, position = " + position.toString(),
@@ -35,7 +35,7 @@ public class MovementMessageTest
 	@Test
 	public void equalsContract()
 	{
-		EqualsVerifier.forClass(MovementMessage.class).verify();
+		EqualsVerifier.forClass(PlayerMovedMessage.class).verify();
 	}
 
 }

@@ -5,10 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import data.Position;
+import model.OptionsManager;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
 import datasource.DatabaseManager;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * The RDS version of the gateway
@@ -37,9 +40,10 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 
 			stmt = new ClosingPreparedStatement(
 					connection,
-					"Create TABLE Players (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  row INTEGER, col INTEGER, " +
-					"appearanceType VARCHAR(255), quizScore INTEGER, experiencePoints INTEGER)");
+					"Create TABLE Players (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  row INTEGER, col INTEGER, "
+							+ "appearanceType VARCHAR(255), quizScore INTEGER, experiencePoints INTEGER, crew INTEGER NOT NULL, major INTEGER NOT NULL)");
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e)
 		{
 			throw new DatabaseException("Unable to create the player table", e);
@@ -51,9 +55,10 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	private String appearanceType;
 	private int quizScore;
 	private int experiencePoints;
-	
-	private Connection connection;
 
+	private Connection connection;
+	private Crew crew;
+	private Major major;
 
 	/**
 	 * finder constructor
@@ -79,6 +84,8 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 			this.appearanceType = result.getString("appearanceType");
 			this.quizScore = result.getInt("quizScore");
 			this.experiencePoints = result.getInt("experiencePoints");
+			this.crew = Crew.getCrewForID(result.getInt("crew"));
+			this.major = Major.getMajorForID(result.getInt("major"));
 
 		} catch (SQLException e)
 		{
@@ -93,26 +100,34 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	 *            the row/column of the position the player is in
 	 * @param appearanceType
 	 *            the appearance type this player should be rendered with
-	 * @param quizScore this player's current quiz score
-	 * @param experiencePoints this player's experience points
+	 * @param quizScore
+	 *            this player's current quiz score
+	 * @param experiencePoints
+	 *            this player's experience points
+	 * @param crew
+	 *            the crew to which this player belongs
+	 * @param major 
+	 * 			the major of this player
 	 * @throws DatabaseException
 	 *             shouldn't
 	 */
-	public PlayerRowDataGatewayRDS(Position position,
-			String appearanceType, int quizScore, int experiencePoints) throws DatabaseException
+	public PlayerRowDataGatewayRDS(Position position, String appearanceType,
+			int quizScore, int experiencePoints, Crew crew, Major major) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
 					connection,
-					"Insert INTO Players SET row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ?",
+					"Insert INTO Players SET row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ?, crew = ?, major = ?",
 					Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, position.getRow());
 			stmt.setInt(2, position.getColumn());
 			stmt.setString(3, appearanceType);
-			stmt.setInt(4,  quizScore);
+			stmt.setInt(4, quizScore);
 			stmt.setInt(5, experiencePoints);
+			stmt.setInt(6, crew.getID());
+			stmt.setInt(7, major.getID());
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next())
@@ -134,6 +149,24 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	public String getAppearanceType()
 	{
 		return appearanceType;
+	}
+
+	/**
+	 * @see datasource.PlayerRowDataGateway#getCrew()
+	 */
+	@Override
+	public Crew getCrew()
+	{
+		return crew;
+	}
+
+	/**
+	 * @see datasource.PlayerRowDataGateway#getExperiencePoints()
+	 */
+	@Override
+	public int getExperiencePoints()
+	{
+		return experiencePoints;
 	}
 
 	/**
@@ -169,24 +202,30 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	@Override
 	public void persist() throws DatabaseException
 	{
-		this.connection = DatabaseManager.getSingleton().getConnection();
-
-		try
+		if (!OptionsManager.getSingleton().isUsingTestDB() || OptionsManager.getSingleton().isTestMode())
 		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"UPDATE Players SET row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ? WHERE playerID = ?");
-			stmt.setInt(1, position.getRow());
-			stmt.setInt(2, position.getColumn());
-			stmt.setString(3, appearanceType);
-			stmt.setInt(4, quizScore);
-			stmt.setInt(5, experiencePoints);
-			stmt.setInt(6, playerID);
-			stmt.executeUpdate();
-		} catch (SQLException e)
-		{
+			this.connection = DatabaseManager.getSingleton().getConnection();
 
-			throw new DatabaseException("Couldn't persist info for player with ID "
-					+ playerID, e);
+			try
+			{
+				ClosingPreparedStatement stmt = new ClosingPreparedStatement(
+						connection,
+						"UPDATE Players SET row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ?, crew = ?, major = ? WHERE playerID = ?");
+				stmt.setInt(1, position.getRow());
+				stmt.setInt(2, position.getColumn());
+				stmt.setString(3, appearanceType);
+				stmt.setInt(4, quizScore);
+				stmt.setInt(5, experiencePoints);
+				stmt.setInt(6, crew.getID());
+				stmt.setInt(7, major.getID());
+				stmt.setInt(8, playerID);
+				stmt.executeUpdate();
+			} catch (SQLException e)
+			{
+
+				throw new DatabaseException("Couldn't persist info for player with ID "
+						+ playerID, e);
+			}
 		}
 	}
 
@@ -208,7 +247,24 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	}
 
 	/**
-	 * @see datasource.PlayerRowDataGateway#setPosition(data.Position)
+	 * @see datasource.PlayerRowDataGateway#setCrew(datatypes.Crew)
+	 */
+	public void setCrew(Crew crew)
+	{
+		this.crew = crew;
+	}
+
+	/**
+	 * @see datasource.PlayerRowDataGateway#setExperiencePoints(int)
+	 */
+	@Override
+	public void setExperiencePoints(int experiencePoints)
+	{
+		this.experiencePoints = experiencePoints;
+	}
+
+	/**
+	 * @see datasource.PlayerRowDataGateway#setPosition(datatypes.Position)
 	 */
 	@Override
 	public void setPosition(Position position)
@@ -226,21 +282,21 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	}
 
 	/**
-	 * @see datasource.PlayerRowDataGateway#getExperiencePoints()
+	 * @see datasource.PlayerRowDataGateway#getMajor()
 	 */
 	@Override
-	public int getExperiencePoints()
+	public Major getMajor() 
 	{
-		return experiencePoints;
+		return major;
 	}
 
 	/**
-	 * @see datasource.PlayerRowDataGateway#setExperiencePoints(int)
+	 * @see datasource.PlayerRowDataGateway#setMajor(datatypes.Major)
 	 */
 	@Override
-	public void setExperiencePoints(int experiencePoints)
+	public void setMajor(Major major) 
 	{
-		this.experiencePoints = experiencePoints;
+		this.major = major;
 	}
 
 }

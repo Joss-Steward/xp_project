@@ -2,12 +2,13 @@ package communication.handlers;
 
 import static org.junit.Assert.*;
 import model.ClientModelFacade;
+import model.CommandQuestStateChange;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.messages.QuestStateChangeMessage;
-import datasource.QuestStateEnum;
+import datatypes.QuestStateEnum;
 
 /**
  * @author Ryan
@@ -44,13 +45,14 @@ public class QuestStateChangeMessageHandlerTest
 	public void testMessageHandling() throws InterruptedException
 	{
 		QuestStateChangeMessageHandler h = new QuestStateChangeMessageHandler();
-		QuestStateChangeMessage msg = new QuestStateChangeMessage(1, 2, "Quest 1", QuestStateEnum.AVAILABLE);
+		QuestStateChangeMessage msg = new QuestStateChangeMessage(1, 2, "quest 1 title", "Quest 1", QuestStateEnum.AVAILABLE);
 		h.process(msg);
 		assertTrue(ClientModelFacade.getSingleton().hasCommandsPending());
-		while(ClientModelFacade.getSingleton().hasCommandsPending())
-		{
-			Thread.sleep(100);
-		}
+		CommandQuestStateChange cmd = (CommandQuestStateChange)ClientModelFacade.getSingleton().getNextCommand();
+		assertEquals(2, cmd.getQuestID());
+		assertEquals("quest 1 title", cmd.getQuestTitle());
+		assertEquals("Quest 1", cmd.getQuestDescription());
+		assertEquals(QuestStateEnum.AVAILABLE, cmd.getQuestState());
 	}
 
 }

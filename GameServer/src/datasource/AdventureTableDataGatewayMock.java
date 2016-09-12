@@ -2,8 +2,13 @@ package datasource;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Set;
 
-import datasource.AdventuresForTest;
+import testData.AdventuresForTest;
+import data.AdventureCompletionType;
+import data.AdventureRecord;
+import data.GameLocation;
+import datatypes.Position;
 
 /**
  * Mock version of the gateway to the table of adventures.
@@ -40,7 +45,8 @@ public class AdventureTableDataGatewayMock implements AdventureTableDataGateway
 		for (AdventuresForTest a : AdventuresForTest.values())
 		{
 			AdventureRecord rec = new AdventureRecord(a.getQuestID(), a.getAdventureID(),
-					a.getAdventureDescription(), a.getExperiencePointsGained(), a.getSignatureSpecification());
+					a.getAdventureDescription(), a.getExperiencePointsGained(), a
+							.getCompletionType(), a.getCompletionCriteria());
 
 			if (data.containsKey(a.getQuestID()))
 			{
@@ -65,8 +71,7 @@ public class AdventureTableDataGatewayMock implements AdventureTableDataGateway
 	}
 
 	/**
-	 * @see datasource.AdventureTableDataGateway#getAdventure(int,
-	 *      int)
+	 * @see datasource.AdventureTableDataGateway#getAdventure(int, int)
 	 */
 	@Override
 	public AdventureRecord getAdventure(int questID, int adventureID)
@@ -83,5 +88,34 @@ public class AdventureTableDataGatewayMock implements AdventureTableDataGateway
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @see datasource.AdventureTableDataGateway#findAdventuresCompletedForMapLocation(String, Position)
+	 */
+	@Override
+	public ArrayList<AdventureRecord> findAdventuresCompletedForMapLocation(String mapName, Position pos) throws DatabaseException 
+	{
+		Set<Integer> keys = data.keySet();
+		ArrayList<AdventureRecord> results = new ArrayList<AdventureRecord>();
+		
+		for (Integer key : keys)
+		{
+			ArrayList<AdventureRecord> adventuresByQuest = data.get(key);
+			
+			for (AdventureRecord a : adventuresByQuest)
+			{
+				if (a.getCompletionType().equals(AdventureCompletionType.MOVEMENT))
+				{
+					GameLocation thisLocation = (GameLocation)a.getCompletionCriteria();
+					if (thisLocation.getPosition().equals(pos) && thisLocation.getMapName().equals(mapName))
+					{
+						results.add(a);
+					}
+				}
+			}
+		}
+		
+		return results;
 	}
 }

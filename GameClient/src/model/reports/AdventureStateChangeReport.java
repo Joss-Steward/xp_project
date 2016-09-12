@@ -1,6 +1,6 @@
 package model.reports;
 
-import datasource.AdventureStateEnum;
+import datatypes.AdventureStateEnum;
 import model.QualifiedObservableReport;
 
 /**
@@ -11,16 +11,22 @@ public final class AdventureStateChangeReport implements QualifiedObservableRepo
 {
 
 	private final int adventureID;
-	private String adventureDescription;
-	private AdventureStateEnum newState;
+	private final String adventureDescription;
+	private final AdventureStateEnum newState;
+	private final int questID;
+	private final int playerID;
 	
 	/**
+	 * @param playerID this player's playerID
+	 * @param questID the quest this adventure is attached to
 	 * @param adventureID unique adventure ID
 	 * @param adventureDescription description of adventure
 	 * @param newState state the adventure has moved to for this client player
 	 */
-	public AdventureStateChangeReport(int adventureID, String adventureDescription, AdventureStateEnum newState)
+	public AdventureStateChangeReport(int playerID, int questID, int adventureID, String adventureDescription, AdventureStateEnum newState)
 	{
+		this.playerID = playerID;
+		this.questID = questID;
 		this.adventureID = adventureID;
 		this.adventureDescription = adventureDescription;
 		this.newState = newState;
@@ -39,17 +45,21 @@ public final class AdventureStateChangeReport implements QualifiedObservableRepo
 		if (getClass() != obj.getClass())
 			return false;
 		AdventureStateChangeReport other = (AdventureStateChangeReport) obj;
+		if (adventureDescription == null)
+		{
+			if (other.adventureDescription != null)
+				return false;
+		} else if (!adventureDescription.equals(other.adventureDescription))
+			return false;
 		if (adventureID != other.adventureID)
 			return false;
+		if (newState != other.newState)
+			return false;
+		if (playerID != other.playerID)
+			return false;
+		if (questID != other.questID)
+			return false;
 		return true;
-	}
-	
-	/**
-	 * @return the state the adventure has moved to
-	 */
-	public AdventureStateEnum getNewState()
-	{
-		return newState;
 	}
 
 	/**
@@ -60,14 +70,40 @@ public final class AdventureStateChangeReport implements QualifiedObservableRepo
 		return adventureDescription;
 	}
 
+	
+	
 	/**
 	 * @return the adventureID that needs the report
 	 */
-	public int getadventureID()
+	public int getAdventureID()
 	{
 		return adventureID;
 	}
-	
+
+	/**
+	 * @return the state the adventure has moved to
+	 */
+	public AdventureStateEnum getNewState()
+	{
+		return newState;
+	}
+
+	/**
+	 * @return the player id of the player this state is associated with
+	 */
+	public int getPlayerID()
+	{
+		return playerID;
+	}
+
+	/**
+	 * @return the id of the quest containing the adventure
+	 */
+	public int getQuestID()
+	{
+		return questID;
+	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -76,7 +112,12 @@ public final class AdventureStateChangeReport implements QualifiedObservableRepo
 	{
 		final int prime = 31;
 		int result = 1;
+		result = prime * result
+				+ ((adventureDescription == null) ? 0 : adventureDescription.hashCode());
 		result = prime * result + adventureID;
+		result = prime * result + ((newState == null) ? 0 : newState.hashCode());
+		result = prime * result + playerID;
+		result = prime * result + questID;
 		return result;
 	}
 

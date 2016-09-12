@@ -3,7 +3,7 @@ package communication.messages;
 import java.io.Serializable;
 
 /**
- * Sent to all clients when a player idsconnects from an area server
+ * Sent to all clients when a player disconnects from an area server
  * 
  * @author nhydock
  * 

@@ -6,14 +6,14 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 
 import model.CommandLogin;
-import model.CommandMovePlayer;
+import model.CommandClientMovePlayer;
 import model.ClientModelFacade;
 import model.ClientPlayerManager;
 import communication.ConnectionManager;
 import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
-import data.Position;
+import datatypes.Position;
 
 /**
  * Temporary to play with communication protocols. Will eventually start a
@@ -40,7 +40,7 @@ public class ClientRunner
 		StateAccumulator stateAccumulator = new StateAccumulator(messagePackerSet);
 		
 		ConnectionManager cm = new ConnectionManager(socket, stateAccumulator,
-				new MessageHandlerSet(stateAccumulator), messagePackerSet);
+				new MessageHandlerSet(stateAccumulator), messagePackerSet, false);
 		ClientModelFacade modelFacade = ClientModelFacade.getSingleton(true, false);
 
 		Scanner scanner = new Scanner(System.in);
@@ -52,7 +52,7 @@ public class ClientRunner
 			if (tokens[0].equalsIgnoreCase("move"))
 			{
 				String[] positionParts = tokens[1].split(",");
-				CommandMovePlayer command = new CommandMovePlayer(ClientPlayerManager
+				CommandClientMovePlayer command = new CommandClientMovePlayer(ClientPlayerManager
 						.getSingleton().getThisClientsPlayer().getID(), new Position(
 						Integer.parseInt(positionParts[0]),
 						Integer.parseInt(positionParts[1])));

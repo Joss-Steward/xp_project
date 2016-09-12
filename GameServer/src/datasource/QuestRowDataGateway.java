@@ -1,6 +1,10 @@
 package datasource;
 
-import data.Position;
+import data.QuestCompletionActionParameter;
+import data.QuestCompletionActionType;
+import datatypes.Position;
+
+import java.util.Date;
 
 /**
  * A row data gateway for the quest table
@@ -47,4 +51,30 @@ public interface QuestRowDataGateway
 	 */
 	int getExperiencePointsGained();
 
+	/**
+	 * @return the type of action that should be taken when this quest is complete
+	 */
+	public QuestCompletionActionType getCompletionActionType();
+
+	/**
+	 * @return an object describing the details of the completion action for this quest
+	 */
+	public QuestCompletionActionParameter getCompletionActionParameter();
+
+	/**
+	 * 
+	 * @return the title of this quest
+	 */
+	public String getQuestTitle();
+
+	/**
+	 * @return the first day the quest is available
+	 */
+    public Date getStartDate();
+    
+    
+    /**
+     * @return the last day the quest is available
+     */
+    public Date getEndDate();
 }

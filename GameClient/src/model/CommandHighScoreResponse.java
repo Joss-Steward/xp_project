@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import model.QualifiedObservableConnector;
 import model.reports.HighScoreResponseReport;
-import datasource.PlayerScoreRecord;
+import datatypes.PlayerScoreRecord;
 
 /**
  * @author nk3668
@@ -38,7 +38,7 @@ public class CommandHighScoreResponse extends Command
 	 * Return score reports
 	 * @return score reports
 	 */
-	public Object getScoreRecord() {
+	public ArrayList<PlayerScoreRecord> getScoreRecord() {
 		return scores;
 	}
 

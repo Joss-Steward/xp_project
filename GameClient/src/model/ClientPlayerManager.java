@@ -2,11 +2,16 @@ package model;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 
 import com.badlogic.gdx.utils.IntMap;
+import com.badlogic.gdx.utils.IntMap.Entry;
 
-import data.Position;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 import model.QualifiedObservableConnector;
 import model.reports.LoginFailedReport;
 import model.reports.LoginInitiatedReport;
@@ -25,15 +30,15 @@ public class ClientPlayerManager extends Observable
 {
 
 	private static ClientPlayerManager singleton;
-	private IntMap<ClientPlayer> playerList;
+	private HashMap<Integer, ClientPlayer> playerList;
 
 	private boolean loginInProgress;
 
 	private ClientPlayerManager()
 	{
 		thisClientsPlayer = null;
-		playerList = new IntMap<ClientPlayer>();
-		
+		playerList = new HashMap<Integer, ClientPlayer>();
+
 	}
 
 	/**
@@ -94,8 +99,8 @@ public class ClientPlayerManager extends Observable
 	 *             when the player has not yet been set because login has not be
 	 *             called
 	 */
-	public ThisClientsPlayer finishLogin(int playerID)
-			throws AlreadyBoundException, NotBoundException
+	public ThisClientsPlayer finishLogin(int playerID) throws AlreadyBoundException,
+			NotBoundException
 	{
 		if (this.loginInProgress)
 		{
@@ -140,7 +145,8 @@ public class ClientPlayerManager extends Observable
 	public void initiateLogin(String name, String password)
 	{
 		loginInProgress = true;
-		QualifiedObservableConnector.getSingleton().sendReport(new LoginInitiatedReport(name, password));
+		QualifiedObservableConnector.getSingleton().sendReport(
+				new LoginInitiatedReport(name, password));
 	}
 
 	/**
@@ -155,35 +161,49 @@ public class ClientPlayerManager extends Observable
 	 *            The appearance type of the player
 	 * @param position
 	 *            The position of this player
+	 * @param crew
+	 *            The crew to which this player belongs
+	 * @param major
+	 *            of the player
+	 * 
 	 * @return Player The player updated
 	 */
 	public ClientPlayer initializePlayer(int playerID, String playerName,
-			String appearanceType, Position position)
+			String appearanceType, Position position, Crew crew, Major major)
 	{
-		ClientPlayer player = this.getPlayerFromID(playerID);
-		if (player == null)
+		ClientPlayer player;
+		if (playerList.containsKey(playerID))
+		{
+			player = playerList.get(playerID);
+			this.tellObserversToRemoveThePlayer(playerID);
+		} else
 		{
 			player = new ClientPlayer(playerID);
-			playerList.put(playerID, player);
 		}
+		playerList.put(playerID, player);
+
 		boolean isThisClientsPlayer = false;
 		if (thisClientsPlayer != null)
 		{
 			isThisClientsPlayer = playerID == thisClientsPlayer.getID();
 		}
 		PlayerConnectedToAreaServerReport report = new PlayerConnectedToAreaServerReport(
-				playerID, playerName, appearanceType, position, isThisClientsPlayer);
+				playerID, playerName, appearanceType, position, crew, major,
+				isThisClientsPlayer);
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 
 		player.setName(playerName);
 		player.setAppearanceType(appearanceType);
 		player.setPosition(position);
+		player.setCrew(crew);
+		player.setMajor(major);
 
 		return player;
 	}
-	
+
 	/**
 	 * Removes a player from being managed by this manager
+	 * 
 	 * @param playerID
 	 *            The id of the player
 	 */
@@ -191,30 +211,56 @@ public class ClientPlayerManager extends Observable
 	{
 		ClientPlayer player = this.playerList.remove(playerID);
 		if (player != null)
-		{	
-			PlayerDisconnectedFromAreaServerReport report = new PlayerDisconnectedFromAreaServerReport(playerID);
-			QualifiedObservableConnector.getSingleton().sendReport(report);
+		{
+			tellObserversToRemoveThePlayer(playerID);
 		}
 	}
-	
+
+	private void tellObserversToRemoveThePlayer(int playerID)
+	{
+		PlayerDisconnectedFromAreaServerReport report = new PlayerDisconnectedFromAreaServerReport(
+				playerID);
+		QualifiedObservableConnector.getSingleton().sendReport(report);
+	}
+
 	/**
 	 * Report when a login has failed
 	 */
 	public void loginFailed()
 	{
-		LoginFailedReport report = new LoginFailedReport("Invalid Login - Incorrect Username/Password");
+		LoginFailedReport report = new LoginFailedReport(
+				"Invalid Login - Incorrect Username/Password");
 		loginInProgress = false;
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 
 	/**
 	 * Report when a pin has failed
-	 * @param err is the error message from a pin failure
+	 * 
+	 * @param err
+	 *            is the error message from a pin failure
 	 */
 	public void pinFailed(String err)
 	{
 		PinFailedReport report = new PinFailedReport(err);
 		loginInProgress = false;
 		QualifiedObservableConnector.getSingleton().sendReport(report);
+	}
+
+	public void removeOtherPlayers()
+	{
+		ArrayList<Integer> playersToRemove = new ArrayList<Integer>();
+		for (java.util.Map.Entry<Integer, ClientPlayer> x : playerList.entrySet())
+		{
+
+			if (x.getValue().getID() != thisClientsPlayer.id)
+			{
+				playersToRemove.add(x.getValue().getID());
+			}
+		}
+		for (int id : playersToRemove)
+		{
+			removePlayer(id);
+		}
 	}
 }

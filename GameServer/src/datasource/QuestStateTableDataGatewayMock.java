@@ -3,9 +3,10 @@ package datasource;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import testData.QuestStatesForTest;
+import data.QuestStateRecord;
 import datasource.DatabaseException;
-import datasource.QuestStateEnum;
-import datasource.QuestStatesForTest;
+import datatypes.QuestStateEnum;
 
 /**
  * A mock implementation of the gateway
@@ -108,7 +109,7 @@ private static QuestStateTableDataGateway singleton;
 	}
 
 	/**
-	 * @see datasource.QuestStateTableDataGateway#createRow(int, int, datasource.QuestStateEnum, boolean)
+	 * @see datasource.QuestStateTableDataGateway#createRow(int, int, datatypes.QuestStateEnum, boolean)
 	 */
 	@Override
 	public void createRow(int playerID, int questID, QuestStateEnum state, boolean needingNotification)
@@ -120,7 +121,7 @@ private static QuestStateTableDataGateway singleton;
 
 	/**
 	 * @throws DatabaseException shouldn't
-	 * @see datasource.QuestStateTableDataGateway#udpateState(int, int, datasource.QuestStateEnum, boolean)
+	 * @see datasource.QuestStateTableDataGateway#udpateState(int, int, datatypes.QuestStateEnum, boolean)
 	 */
 	@Override
 	public void udpateState(int playerID, int questID, QuestStateEnum newState, boolean needingNotification) throws DatabaseException
