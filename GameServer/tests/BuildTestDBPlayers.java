@@ -27,7 +27,7 @@ public class BuildTestDBPlayers
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
-		OptionsManager.getSingleton().setTestMode(false);
+		OptionsManager.getSingleton().setTestMode(true);
 		OptionsManager.getSingleton().setUsingTestDB(true);
 		createPlayerTable();
 		createNpcTable();

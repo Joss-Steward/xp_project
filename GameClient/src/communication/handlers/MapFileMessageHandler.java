@@ -7,6 +7,7 @@ import java.net.URL;
 
 import model.CommandNewMap;
 import model.ClientModelFacade;
+import model.OptionsManager;
 import communication.messages.MapFileMessage;
 import communication.messages.Message;
 
@@ -45,8 +46,14 @@ public class MapFileMessageHandler extends MessageHandler
 			URL decodedPath = path.toURL();
 			System.out.println(decodedPath.getPath());
 			MapFileMessage mapFileMessage = (MapFileMessage) msg;
-			String mapFile = (new URL(decodedPath,  mapFileMessage.getMapFileName() )).toURI()
-					.getSchemeSpecificPart();
+			String mapFile;
+			String hostName = OptionsManager.getSingleton().getLoginHost();
+			if (hostName.equals("localhost"))
+				mapFile = (new URL(decodedPath, "../" + mapFileMessage.getMapFileName()))
+						.toURI().getSchemeSpecificPart();
+			else
+				mapFile = (new URL(decodedPath, mapFileMessage.getMapFileName())).toURI()
+						.getSchemeSpecificPart();
 
 			ClientModelFacade.getSingleton().queueCommand(new CommandNewMap(mapFile));
 		} catch (MalformedURLException | URISyntaxException e)
