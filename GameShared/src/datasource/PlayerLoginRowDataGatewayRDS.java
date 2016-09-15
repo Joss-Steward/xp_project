@@ -41,7 +41,6 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 			sql.append("password VARCHAR(30) NOT NULL,");
 
 			sql.append("PRIMARY KEY (PlayerID));");
-			System.out.println(sql);
 			stmt.executeUpdate(new String(sql));
 			stmt.executeUpdate("ALTER TABLE PlayerLogins ENGINE = INNODB");
 			stmt.executeUpdate("ALTER TABLE PlayerLogins ADD UNIQUE (PlayerName)");

@@ -37,7 +37,6 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 			sql.append("mapName VARCHAR(30),");
 
 			sql.append("PRIMARY KEY (playerID));");
-			System.out.println(sql);
 			stmt.executeUpdate( sql.toString());
 			stmt.executeUpdate("ALTER TABLE PlayerConnection ENGINE = INNODB");
 			stmt.executeUpdate("ALTER TABLE PlayerConnection ADD UNIQUE (playerID)");

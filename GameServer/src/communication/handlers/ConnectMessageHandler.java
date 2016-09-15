@@ -28,7 +28,6 @@ public class ConnectMessageHandler extends MessageHandler
 			ConnectMessage cMsg = (ConnectMessage) msg;
 			if (getConnectionManager() != null)
 			{
-				System.out.println("setting player");
 				getConnectionManager().setPlayerID(cMsg.getPlayerID());
 			}
 			CommandAddPlayer cmd = new CommandAddPlayer(cMsg.getPlayerID(), cMsg.getPin());
