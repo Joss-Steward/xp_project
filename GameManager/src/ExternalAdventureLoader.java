@@ -1,17 +1,12 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 import model.OptionsManager;
-import data.AdventureCompletionCriteria;
-import data.AdventureCompletionType;
-import data.CriteriaString;
 import data.GameLocation;
 import data.QuestCompletionActionType;
-import datasource.AdventureTableDataGatewayRDS;
 import datasource.DatabaseException;
 import datasource.QuestRowDataGatewayRDS;
 import datatypes.Position;
@@ -57,19 +52,6 @@ public class ExternalAdventureLoader
 			    new GregorianCalendar(9999, Calendar.MARCH, 21).getTime());
 		new QuestRowDataGatewayRDS(101, "Wandering around Quest", "Learn the game's maps", null, new Position(4,17), 6, 6, QuestCompletionActionType.NO_ACTION, null, new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(), 
 			    new GregorianCalendar(9999, Calendar.MARCH, 21).getTime());
-	}
-
-	private static int getIdForQuest(String string)
-	{
-		
-		for(int i=0;i<questNames.length;i++)
-		{
-			if (questNames[i].equals(string))
-			{
-				return i+1;
-			}
-		}
-		return -1;
 	}
 
 }

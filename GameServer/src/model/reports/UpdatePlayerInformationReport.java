@@ -2,10 +2,6 @@ package model.reports;
 
 import java.util.ArrayList;
 
-import data.AdventureRecord;
-import datasource.DatabaseException;
-import datasource.LevelRecord;
-import datatypes.QuestStateEnum;
 import model.AdventureState;
 import model.ClientPlayerAdventure;
 import model.ClientPlayerQuest;
@@ -16,6 +12,9 @@ import model.QualifiedObservableReport;
 import model.Quest;
 import model.QuestManager;
 import model.QuestState;
+import data.AdventureRecord;
+import datasource.DatabaseException;
+import datasource.LevelRecord;
 
 /**
  * Report that combines Quest descriptions and Quest states

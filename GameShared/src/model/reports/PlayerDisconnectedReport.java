@@ -14,11 +14,17 @@ public class PlayerDisconnectedReport implements QualifiedObservableReport
 
 	private int playerID;
 
+	/**
+	 * @param playerID the unique ID of the player whose socket was disconnected
+	 */
 	public PlayerDisconnectedReport(int playerID)
 	{
 		this.playerID = playerID;
 	}
 
+	/**
+	 * @return the player ID
+	 */
 	public int getPlayerID()
 	{
 		return playerID;
