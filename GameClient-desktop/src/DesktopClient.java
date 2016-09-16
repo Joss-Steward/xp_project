@@ -27,6 +27,10 @@ public class DesktopClient
 			{
 				host = splitArg[1];
 			}
+			if(splitArg[0].equals("--localhost"))
+			{
+				host = "localhost";
+			}
 			
 		}
 		OptionsManager.getSingleton().setLoginHost(host);

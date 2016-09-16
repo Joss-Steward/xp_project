@@ -22,7 +22,7 @@ public class BuildTestDBPlayerLogin
 	 */
 	public static void main(String[] args) throws DatabaseException
 	{
-		OptionsManager.getSingleton().setTestMode(false);
+		OptionsManager.getSingleton().setTestMode(true);
 		OptionsManager.getSingleton().setUsingTestDB(true);
 		createPlayerLoginTable();
 		createPlayerConnectionTable();

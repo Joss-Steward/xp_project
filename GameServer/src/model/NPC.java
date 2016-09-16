@@ -118,8 +118,6 @@ public class NPC extends Player
 			// has passed. This is so behavior doesn't occur as soon as start
 			// happens
 			timedEvent = new NpcTimerTask(behavior);
-			System.out.println("[DEBUG] Creating timer with interval "
-					+ behavior.getPollingInterval());
 			timer.scheduleAtFixedRate(timedEvent, behavior.getPollingInterval(),
 					behavior.getPollingInterval());
 		}

@@ -37,7 +37,6 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 					"DROP TABLE IF EXISTS Quests");
 			stmt.executeUpdate();
 			stmt.close();
-			System.out.println("Table has been dropped");
 			stmt = new ClosingPreparedStatement(
 					connection,
 					"Create TABLE Quests (questID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questTitle VARCHAR(40),questDescription VARCHAR(200), triggerMapName VARCHAR(80),"

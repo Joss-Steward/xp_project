@@ -18,7 +18,7 @@ public class QuizBotBehavior extends NPCBehavior
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1511084096181049717L;
+	private static final long serialVersionUID = 1L;
 
 	private NPCQuestion question;
 
@@ -102,8 +102,6 @@ public class QuizBotBehavior extends NPCBehavior
 			String answer = question.getAnswer().toLowerCase().replaceAll(" ", "");
 			SendChatMessageReport report = (SendChatMessageReport) incomingReport;
 			String userAnswer = report.getMessage().toLowerCase().replaceAll(" ", "");
-			System.out.println("[DEBUG] Answer is '" + answer + "' user answered '"
-					+ userAnswer + "'");
 			if (answer.equals(userAnswer))
 			{
 				try
