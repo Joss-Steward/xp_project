@@ -58,8 +58,7 @@ public class ConnectionIncoming implements Runnable
 						Thread.sleep(100);
 						continue;
 					}
-				} 
-				else
+				} else
 				{
 					Thread.sleep(100);
 					continue;
@@ -67,19 +66,18 @@ public class ConnectionIncoming implements Runnable
 				if (socket != null)
 				{
 					System.out.println("starting to read from " + socket);
-					
+
 					Object inputObject = this.istream.readObject();
-					//catch the normal connection polling
+					// catch the normal connection polling
 					if (Message.class.isAssignableFrom(inputObject.getClass()))
 					{
 						System.out.println("processing:  ");
 						System.out.println(inputObject.getClass());
 
 						processRequest((Message) inputObject);
-					}
-					else
+					} else
 					{
-						//System.out.println("recieved polling signal");
+						// System.out.println("recieved polling signal");
 					}
 				}
 
@@ -99,7 +97,9 @@ public class ConnectionIncoming implements Runnable
 
 	/**
 	 * process a given request
-	 * @param request the request
+	 * 
+	 * @param request
+	 *            the request
 	 */
 	protected void processRequest(Message request)
 	{
@@ -108,7 +108,9 @@ public class ConnectionIncoming implements Runnable
 			messageHandlers.process(request);
 		} catch (CommunicationException e)
 		{
-			e.printStackTrace();
+			System.out.println("No handler for " + request.getClass() + ": " + request
+					+ " which was received from " + socket.getInetAddress().getHostName()
+					+ " at " + socket.getInetAddress().getHostAddress());
 		}
 	}
 

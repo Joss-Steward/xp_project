@@ -77,8 +77,10 @@ public class LoginPlayerManager extends Observable
 			LoginSuccessfulReport report = new LoginSuccessfulReport(pl.getPlayerID(),
 					server, port, pp.generatePin());
 			return report;
-		} catch (DatabaseException e)
+		} 
+		catch (DatabaseException e)
 		{
+			e.printStackTrace();
 			throw new LoginFailedException();
 		}
 
