@@ -19,6 +19,7 @@ public class PlayerScoreRecord implements Comparable<PlayerScoreRecord>, Seriali
 	
 	private String playerName;
 	private int experiencePoints;
+	private String crewName;
 
 	/**
 	 * @param playerName
@@ -34,16 +35,31 @@ public class PlayerScoreRecord implements Comparable<PlayerScoreRecord>, Seriali
 	}
 
 	/**
-	 * @see java.lang.Object#hashCode()
+	 * @param playerName
+	 *            the player's name
+	 * @param experiencePoints
+	 *            the player's experience points
+	 */
+	public PlayerScoreRecord(String playerName, int experiencePoints, String crewName)
+	{
+		this(playerName,experiencePoints);
+		this.crewName = crewName;
+	}
+	
+	/**
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
-	public int hashCode()
+	public int compareTo(PlayerScoreRecord o)
 	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + experiencePoints;
-		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
-		return result;
+		if (o.getExperiencePoints() < this.getExperiencePoints())
+		{
+			return -1;
+		} else if (o.getExperiencePoints() == this.getExperiencePoints())
+		{
+			return 0;
+		}
+		return 1;
 	}
 
 	/**
@@ -70,12 +86,9 @@ public class PlayerScoreRecord implements Comparable<PlayerScoreRecord>, Seriali
 		return true;
 	}
 
-	/**
-	 * @return the player's name
-	 */
-	public String getPlayerName()
+	public String getCrewName()
 	{
-		return playerName;
+		return crewName;
 	}
 
 	/**
@@ -87,19 +100,24 @@ public class PlayerScoreRecord implements Comparable<PlayerScoreRecord>, Seriali
 	}
 
 	/**
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 * @return the player's name
+	 */
+	public String getPlayerName()
+	{
+		return playerName;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int compareTo(PlayerScoreRecord o)
+	public int hashCode()
 	{
-		if (o.getExperiencePoints() < this.getExperiencePoints())
-		{
-			return -1;
-		} else if (o.getExperiencePoints() == this.getExperiencePoints())
-		{
-			return 0;
-		}
-		return 1;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + experiencePoints;
+		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
+		return result;
 	}
 
 }

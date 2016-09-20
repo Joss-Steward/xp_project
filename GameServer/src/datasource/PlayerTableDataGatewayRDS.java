@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
 import datasource.DatabaseManager;
+import datatypes.Crew;
 import datatypes.PlayerScoreRecord;
 
 /**
@@ -54,13 +55,42 @@ public class PlayerTableDataGatewayRDS extends PlayerTableDataGateway
 		try
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"SELECT experiencePoints, playerName FROM Players, PlayerLogins where Players.playerID = PlayerLogins.playerID ORDER BY experiencePoints desc limit 10");
+					"SELECT experiencePoints, playerName, crew FROM Players, PlayerLogins where Players.playerID = PlayerLogins.playerID ORDER BY experiencePoints desc limit 10");
 			ResultSet result = stmt.executeQuery();
 
 			while (result.next())
 			{
+				int crewID = result.getInt("crew");
 				PlayerScoreRecord rec = new PlayerScoreRecord(
-						result.getString("playerName"), result.getInt("experiencePoints"));
+						result.getString("playerName"), result.getInt("experiencePoints"), Crew.getCrewForID(crewID).toString());
+				resultList.add(rec);
+			}
+			return resultList;
+		} catch (SQLException e)
+		{
+			throw new DatabaseException("Couldn't find the top ten players", e);
+		}
+	}
+
+	/**
+	 * @see datasource.PlayerTableDataGateway#getTopTenList()
+	 */
+	@Override
+	public ArrayList<PlayerScoreRecord> getHighScoreList() throws DatabaseException
+	{
+		ArrayList<PlayerScoreRecord> resultList = new ArrayList<PlayerScoreRecord>();
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
+		{
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"SELECT experiencePoints, playerName, crew FROM Players, PlayerLogins where Players.playerID = PlayerLogins.playerID ORDER BY PlayerLogins.playerName");
+			ResultSet result = stmt.executeQuery();
+
+			while (result.next())
+			{
+				int crewID = result.getInt("crew");
+				PlayerScoreRecord rec = new PlayerScoreRecord(
+						result.getString("playerName"), result.getInt("experiencePoints"), Crew.getCrewForID(crewID).toString());
 				resultList.add(rec);
 			}
 			return resultList;
