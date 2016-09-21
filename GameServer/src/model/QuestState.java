@@ -286,4 +286,9 @@ public class QuestState
 			throw new IllegalQuestChangeException(this.getStateValue(), state);
 		}
 	}
+
+	public void setNeedingNotification(boolean newState)
+	{
+		needingNotification = newState;
+	}
 }

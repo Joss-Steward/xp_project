@@ -733,4 +733,10 @@ public class QuestManager implements QualifiedObserver
 	{
 		getAdventureStateByID(playerID, questID, adventureID).turnOffNotification();
 	}
+
+	public void turnOffQuestNotification(int playerID, int questID)
+	{
+		QuestState qs = getQuestStateByID(playerID, questID);
+		qs.setNeedingNotification(false);
+	}
 }
