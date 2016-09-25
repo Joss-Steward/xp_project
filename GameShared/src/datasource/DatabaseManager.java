@@ -38,11 +38,11 @@ public class DatabaseManager
 		if (OptionsManager.getSingleton().isUsingTestDB())
 		{
 			System.err.println("Opening test database\n");
-			openConnectionTo("jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players", "program", "ShipSim");
+			openConnectionTo("jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players?autoReconnect=true", "program", "ShipSim");
 		} else
 		{
 			System.err.println("Opening production database\n");
-			openConnectionTo("jdbc:mysql://db.cs.ship.edu:3306/ShipSim", "merlin","newPWD4merlin");
+			openConnectionTo("jdbc:mysql://db.cs.ship.edu:3306/ShipSim?autoReconnect=true", "merlin","newPWD4merlin");
 			try
 			{
 				connection.setAutoCommit(true);
