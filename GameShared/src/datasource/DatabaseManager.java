@@ -42,7 +42,7 @@ public class DatabaseManager
 		} else
 		{
 			System.err.println("Opening production database\n");
-			openConnectionTo("jdbc:mysql://db.cs.ship.edu:3306/ShipSim?autoReconnect=true", "merlin","newPWD4merlin");
+			openConnectionTo("jdbc:mysql://db.cs.ship.edu:3306/ShipSim?autoReconnect=true", "program","pwd4ShipSim-F16");
 			try
 			{
 				connection.setAutoCommit(true);
