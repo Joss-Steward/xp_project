@@ -87,6 +87,7 @@ public class PlayerLoader
 			}
 			createPlayer(playerName,pw.toString(),parts[3],parts[4]);
 		}
+		input.close();
 	}
 
 	private static void createPlayer(String playerName, String pw, String crew, String major) throws DatabaseException

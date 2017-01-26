@@ -56,10 +56,11 @@ public class AdventureStateViewTableDataGatewayRDS
 				AdventureCompletionCriteria completionCriteria = extractCompletionCriteria(
 						result, completionType);
 
-				records.add(new AdventureRecord(result.getInt("AdventureStates.questID"),
-						result.getInt("AdventureStates.adventureID"), result
-								.getString("Adventures.adventureDescription"), result
-								.getInt("Adventures.experiencePointsGained"),
+				records.add(new AdventureRecord(result
+						.getInt("AdventureStates.questID"), result
+						.getInt("AdventureStates.adventureID"), result
+						.getString("Adventures.adventureDescription"), result
+						.getInt("Adventures.experiencePointsGained"),
 						completionType, completionCriteria));
 
 			}
@@ -67,7 +68,41 @@ public class AdventureStateViewTableDataGatewayRDS
 		} catch (SQLException e)
 		{
 			throw new DatabaseException(
-					"Unable to retrieve pending adventures for player #" + playerID, e);
+					"Unable to retrieve pending adventures for player #"
+							+ playerID, e);
+		}
+		return records;
+	}
+
+	public static List<AdventureStateRecord> getAllAdventureStateRecords(
+			int playerID) throws DatabaseException
+	{
+		ArrayList<AdventureStateRecord> records = new ArrayList<AdventureStateRecord>();
+
+		Connection connection = DatabaseManager.getSingleton().getConnection();
+		try
+		{
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
+					connection,
+					"SELECT * FROM Adventures INNER JOIN AdventureStates ON Adventures.QuestID = AdventureStates.QuestID AND Adventures.AdventureID = AdventureStates.AdventureID"
+							+ " where playerID=?;");
+			stmt.setInt(1, playerID);
+			ResultSet result = stmt.executeQuery();
+			while (result.next())
+			{
+				records.add(new AdventureStateRecord(playerID, 
+						result.getInt("AdventureStates.questID"), 
+						result.getInt("AdventureStates.adventureID"),
+						AdventureStateEnum.values()[result
+								.getInt("AdventureStates.adventureState")],
+						result.getInt("Adventures.experiencePointsGained")));
+			}
+
+		} catch (SQLException e)
+		{
+			throw new DatabaseException(
+					"Unable to retrieve pending adventures for player #"
+							+ playerID, e);
 		}
 		return records;
 	}
@@ -85,11 +120,11 @@ public class AdventureStateViewTableDataGatewayRDS
 	 * @throws DatabaseException
 	 *             if we fail talking to the database
 	 */
-	public static void moveToCompleted(int playerID, int questID, int adventureID)
-			throws DatabaseException
+	public static void moveToCompleted(int playerID, int questID,
+			int adventureID) throws DatabaseException
 	{
-		AdventureStateTableDataGatewayRDS.getSingleton().updateState(playerID, questID,
-				adventureID, AdventureStateEnum.COMPLETED, true);
+		AdventureStateTableDataGatewayRDS.getSingleton().updateState(playerID,
+				questID, adventureID, AdventureStateEnum.COMPLETED, true);
 
 	}
 
@@ -108,9 +143,10 @@ public class AdventureStateViewTableDataGatewayRDS
 			completionCriteria = completionCriteriaClass.cast(x);
 		} catch (ClassNotFoundException | IOException e)
 		{
-			throw new DatabaseException("Couldn't convert blob to completion criteria ",
-					e);
+			throw new DatabaseException(
+					"Couldn't convert blob to completion criteria ", e);
 		}
 		return completionCriteria;
 	}
+
 }

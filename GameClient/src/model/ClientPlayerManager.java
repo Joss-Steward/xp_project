@@ -6,18 +6,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 
-import com.badlogic.gdx.utils.IntMap;
-import com.badlogic.gdx.utils.IntMap.Entry;
-
-import datatypes.Crew;
-import datatypes.Major;
-import datatypes.Position;
-import model.QualifiedObservableConnector;
 import model.reports.LoginFailedReport;
 import model.reports.LoginInitiatedReport;
 import model.reports.PinFailedReport;
 import model.reports.PlayerConnectedToAreaServerReport;
 import model.reports.PlayerDisconnectedFromAreaServerReport;
+import datatypes.Crew;
+import datatypes.Major;
+import datatypes.Position;
 
 /**
  * Maintains the active set of players on the area server to which this client
@@ -247,6 +243,9 @@ public class ClientPlayerManager extends Observable
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 
+	/**
+	 * Remove the other players from the display
+	 */
 	public void removeOtherPlayers()
 	{
 		ArrayList<Integer> playersToRemove = new ArrayList<Integer>();
