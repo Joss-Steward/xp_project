@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import model.ClientModelFacade;
 import model.CommandNewMap;
+import model.OptionsManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,7 @@ import communication.messages.MapFileMessage;
 
 /**
  * @author Merlin
- * 
+ *
  */
 public class MapFileMessageHandlerTest
 {
@@ -28,8 +29,10 @@ public class MapFileMessageHandlerTest
 	{
 		ClientModelFacade.resetSingleton();
 		ClientModelFacade.getSingleton(true, false);
+		OptionsManager.getSingleton().setUsingTestDB(true);
+		OptionsManager.getSingleton().setTestMode(true);
 	}
-	
+
 	/**
 	 * Test the type of Message that we expect
 	 */
@@ -43,7 +46,7 @@ public class MapFileMessageHandlerTest
 	/**
 	 * The handler should tell the model that the new file is there. We will
 	 * know that happens if the model reports the change to its observers
-	 * 
+	 *
 	 * @throws IOException
 	 *             shouldn't
 	 * @throws InterruptedException
@@ -59,6 +62,6 @@ public class MapFileMessageHandlerTest
 		CommandNewMap cmd = (CommandNewMap)ClientModelFacade.getSingleton().getNextCommand();
 		assertTrue(cmd.getFileTitle().contains("testMaps/simple.tmx"));
 		ClientModelFacade.getSingleton().emptyQueue();
-		
+
 	}
 }

@@ -5,7 +5,7 @@ import datasource.DatabaseException;
 /**
  * Contain information about this server's mapping so it can be used easily in
  * the system
- * 
+ *
  * @author Steve
  *
  */
@@ -16,7 +16,7 @@ public class OptionsManager
 	 * Used to get an existing singleton (it must have already been created). If
 	 * it hasn't been created, you must use the getSingleton where you specify
 	 * the testing mode
-	 * 
+	 *
 	 * @return the existing singleton
 	 */
 	public static synchronized OptionsManager getSingleton()
@@ -48,7 +48,7 @@ public class OptionsManager
 
 	/**
 	 * I'm a singleton
-	 * 
+	 *
 	 */
 	private OptionsManager()
 	{
@@ -56,7 +56,7 @@ public class OptionsManager
 	}
 
 	/**
-	 * 
+	 *
 	 * @return The host we have mapped to
 	 */
 	public String getHostName()
@@ -73,7 +73,7 @@ public class OptionsManager
 	}
 
 	/**
-	 * 
+	 *
 	 * @return Our current map name
 	 */
 	public String getMapName()
@@ -82,7 +82,7 @@ public class OptionsManager
 	}
 
 	/**
-	 * 
+	 *
 	 * @return The port we have mapped to
 	 */
 	public int getPortNumber()
@@ -93,7 +93,7 @@ public class OptionsManager
 	/**
 	 * returns true if this server is running on mock data for testing purposes
 	 * where appropriate
-	 * 
+	 *
 	 * @return local mode
 	 */
 	public boolean isTestMode()
@@ -111,7 +111,7 @@ public class OptionsManager
 
 	/**
 	 * Used when we are an area server
-	 * 
+	 *
 	 * @param hostName the hostname a server is running on
 	 */
 	public synchronized void setHostName(String hostName)
@@ -141,6 +141,10 @@ public class OptionsManager
 	public void setTestMode(boolean b)
 	{
 		this.testMode = b;
+		if (b)
+		{
+			setLoginHost("localhost");
+		}
 	}
 
 	/**
@@ -153,7 +157,7 @@ public class OptionsManager
 	}
 
 	/**
-	 * 
+	 *
 	 * @param mapName The new map name
 	 * @param hostName The hostname of the server
 	 * @param port The port this server is on
