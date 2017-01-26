@@ -22,12 +22,12 @@ public enum QuestStatesForTest
 	 * 
 	 */
 	PLAYER1_QUEST3(1, 3, QuestStateEnum.AVAILABLE, true),
-	
+
 	/**
 	 * 
 	 */
 	PLAYER5_QUEST4(5, 4, QuestStateEnum.AVAILABLE, true),
-	
+
 	/**
 	 * 
 	 */
@@ -53,8 +53,8 @@ public enum QuestStatesForTest
 	 */
 	PLAYER7_QUEST1(7, 1, QuestStateEnum.TRIGGERED, false),
 	/**
-	 * A quest that is ready to be triggered (with no states for the
-	 * included adventures)
+	 * A quest that is ready to be triggered (with no states for the included
+	 * adventures)
 	 */
 	PLAYER7_QUEST2(7, 2, QuestStateEnum.AVAILABLE, false),
 	/**
@@ -74,28 +74,27 @@ public enum QuestStatesForTest
 	 */
 	PLAYER8_QUEST10(8, 10, QuestStateEnum.TRIGGERED, true),
 	/**
-     * 
-     */
-    PLAYER19_QUEST6(19, 6, QuestStateEnum.TRIGGERED, false),
-    /**
-     * 
-     */
-    PLAYER19_QUEST7(19, 7, QuestStateEnum.AVAILABLE, false),
-    /**
-     * 
-     */
-    PLAYER19_QUEST8(19, 8, QuestStateEnum.EXPIRED, false),
-    /**
-     *
-     */
-    PLAYER19_QUEST9(19, 9, QuestStateEnum.FINISHED, false),
+	 * 
+	 */
+	PLAYER19_QUEST6(19, 6, QuestStateEnum.TRIGGERED, false),
+	/**
+	 * 
+	 */
+	PLAYER19_QUEST7(19, 7, QuestStateEnum.AVAILABLE, false),
+	/**
+	 * 
+	 */
+	PLAYER19_QUEST8(19, 8, QuestStateEnum.EXPIRED, false),
+	/**
+	 *
+	 */
+	PLAYER19_QUEST9(19, 9, QuestStateEnum.FINISHED, false),
 	/**
 	 * Newbie should have the first quest already triggered
 	 */
-    
+
 	NEWBIE_ONRAMPING(PlayersForTest.NEWBIE.getPlayerID(), QuestsForTest.ONRAMPING_QUEST.getQuestID(), QuestStateEnum.TRIGGERED, true);
-	
-	
+
 	private int playerID;
 	private int questID;
 	private QuestStateEnum questState;
@@ -103,13 +102,12 @@ public enum QuestStatesForTest
 
 	/**
 	 * Constructor for Quest State Enum
-	 * @param playerID
-	 *            a player's unique ID
-	 * @param questID
-	 *            a quest's unique ID
-	 * @param questState
-	 *            the state of the quest for the specified player
-	 * @param needingNotification true if this player should be notified about the state of this quest
+	 * 
+	 * @param playerID a player's unique ID
+	 * @param questID a quest's unique ID
+	 * @param questState the state of the quest for the specified player
+	 * @param needingNotification true if this player should be notified about
+	 *            the state of this quest
 	 */
 	QuestStatesForTest(int playerID, int questID, QuestStateEnum questState, boolean needingNotification)
 	{

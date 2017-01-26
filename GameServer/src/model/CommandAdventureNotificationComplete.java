@@ -2,25 +2,25 @@ package model;
 
 import datasource.DatabaseException;
 
-
 /**
  * @author Ryan
  *
  */
 public class CommandAdventureNotificationComplete extends Command
 {
-	
+
 	private int playerID;
 	private int questID;
 	private int adventureID;
 
 	/**
 	 * Constructor
+	 * 
 	 * @param playerID id of the player
 	 * @param questID id of the quest
 	 * @param adventureID id of the adventure
 	 */
-	public CommandAdventureNotificationComplete(int playerID, int questID, int adventureID) 
+	public CommandAdventureNotificationComplete(int playerID, int questID, int adventureID)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
@@ -33,16 +33,16 @@ public class CommandAdventureNotificationComplete extends Command
 	@Override
 	protected boolean execute()
 	{
-		try 
+		try
 		{
 			QuestManager.getSingleton().turnOffNotification(playerID, questID, adventureID);
-		} catch (DatabaseException e) 
+		} catch (DatabaseException e)
 		{
 			e.printStackTrace();
-		} catch (IllegalAdventureChangeException e) 
+		} catch (IllegalAdventureChangeException e)
 		{
 			e.printStackTrace();
-		} catch (IllegalQuestChangeException e) 
+		} catch (IllegalQuestChangeException e)
 		{
 			e.printStackTrace();
 		}
@@ -52,7 +52,7 @@ public class CommandAdventureNotificationComplete extends Command
 	/**
 	 * @return id of the player
 	 */
-	public int getPlayerID() 
+	public int getPlayerID()
 	{
 		return playerID;
 	}
@@ -60,7 +60,7 @@ public class CommandAdventureNotificationComplete extends Command
 	/**
 	 * @return id of the quest
 	 */
-	public int getQuestID() 
+	public int getQuestID()
 	{
 		return questID;
 	}
@@ -68,10 +68,9 @@ public class CommandAdventureNotificationComplete extends Command
 	/**
 	 * @return id of the adventure
 	 */
-	public int getAdventureID() 
+	public int getAdventureID()
 	{
 		return adventureID;
 	}
 
-	
 }

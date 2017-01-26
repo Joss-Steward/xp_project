@@ -12,7 +12,6 @@ import datasource.PlayerTableDataGatewayRDS;
 public class PlayerTableDataGatewayRDSTest extends PlayerTableDataGatewayTest
 {
 
-	
 	/**
 	 * @see datasource.PlayerTableDataGatewayTest#getGatewaySingleton()
 	 */

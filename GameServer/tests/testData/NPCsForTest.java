@@ -1,6 +1,5 @@
 package testData;
 
-
 /**
  * The players that are in the test database
  * 
@@ -13,23 +12,20 @@ public enum NPCsForTest
 	/**
 	 * 
 	 */
-	NPC1(PlayersForTest.MOCK_NPC.getPlayerID(),
-			"model.NPCMockBehavior"),
+	NPC1(PlayersForTest.MOCK_NPC.getPlayerID(), "model.NPCMockBehavior"),
 	/**
 	 * 
 	 */
-	NPC2(PlayersForTest.QUIZBOT.getPlayerID(),
-			"model.QuizBotBehavior"),
+	NPC2(PlayersForTest.QUIZBOT.getPlayerID(), "model.QuizBotBehavior"),
 	/**
 	 * 
 	 */
-	NPC3(PlayersForTest.MOCK_NPC3.getPlayerID(),
-			"model.NPCMockBehavior"),
-	
+	NPC3(PlayersForTest.MOCK_NPC3.getPlayerID(), "model.NPCMockBehavior"),
+
 	/**
 	 * 
 	 */
-	REDHAT(PlayersForTest.RED_HAT.getPlayerID(),"model.RedHatBehavior");
+	REDHAT(PlayersForTest.RED_HAT.getPlayerID(), "model.RedHatBehavior");
 
 	private String behaviorClass;
 	private int playerID;

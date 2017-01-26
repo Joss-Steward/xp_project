@@ -23,6 +23,7 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 
 	/**
 	 * Information about a player who has just joined this server
+	 * 
 	 * @param playerID the player's ID
 	 * @param playerName the player's name
 	 * @param appearanceType the player's appearance type
@@ -30,7 +31,8 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 	 * @param crew the crew to which the player belongs
 	 * @param major the major of this player
 	 */
-	public PlayerConnectionReport(int playerID, String playerName, String appearanceType, Position position, Crew crew, Major major)
+	public PlayerConnectionReport(int playerID, String playerName, String appearanceType, Position position, Crew crew,
+			Major major)
 	{
 		this.playerID = playerID;
 		this.playerName = playerName;
@@ -79,7 +81,7 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 	{
 		return major;
 	}
-	
+
 	/**
 	 * Get this player's position on this area's map
 	 * 
@@ -94,18 +96,16 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((appearanceType == null) ? 0 : appearanceType.hashCode());
+		result = prime * result + ((appearanceType == null) ? 0 : appearanceType.hashCode());
 		result = prime * result + ((crew == null) ? 0 : crew.hashCode());
 		result = prime * result + ((major == null) ? 0 : major.hashCode());
 		result = prime * result + playerID;
-		result = prime * result
-				+ ((playerName == null) ? 0 : playerName.hashCode());
-		result = prime * result
-				+ ((position == null) ? 0 : position.hashCode());
+		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
+		result = prime * result + ((position == null) ? 0 : position.hashCode());
 		return result;
 	}
 
@@ -113,7 +113,8 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -121,7 +122,8 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 		if (getClass() != obj.getClass())
 			return false;
 		PlayerConnectionReport other = (PlayerConnectionReport) obj;
-		if (appearanceType == null) {
+		if (appearanceType == null)
+		{
 			if (other.appearanceType != null)
 				return false;
 		} else if (!appearanceType.equals(other.appearanceType))
@@ -132,12 +134,14 @@ public final class PlayerConnectionReport implements QualifiedObservableReport
 			return false;
 		if (playerID != other.playerID)
 			return false;
-		if (playerName == null) {
+		if (playerName == null)
+		{
 			if (other.playerName != null)
 				return false;
 		} else if (!playerName.equals(other.playerName))
 			return false;
-		if (position == null) {
+		if (position == null)
+		{
 			if (other.position != null)
 				return false;
 		} else if (!position.equals(other.position))

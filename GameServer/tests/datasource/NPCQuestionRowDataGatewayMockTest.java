@@ -4,9 +4,9 @@ import datasource.DatabaseException;
 import datasource.NPCQuestionRowDataGateway;
 import datasource.NPCQuestionRowDataGatewayMock;
 
-
 /**
  * Tests for the mock version of the gateway
+ * 
  * @author Merlin
  *
  */
@@ -32,5 +32,4 @@ public class NPCQuestionRowDataGatewayMockTest extends NPCQuestionRowDataGateway
 		return NPCQuestionRowDataGatewayMock.findRandomGateway();
 	}
 
-	
 }

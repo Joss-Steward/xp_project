@@ -2,7 +2,6 @@ package data;
 
 import datatypes.QuestStateEnum;
 
-
 /**
  * A data transfer object that contains the state of a quest for a player
  * 
@@ -21,17 +20,13 @@ public class QuestStateRecord
 	private boolean needingNotification;
 
 	/**
-	 * @param playerID
-	 *            the player's unique ID
-	 * @param questID
-	 *            the quest's unique ID
-	 * @param state
-	 *            this player's state for the given quest
-	 * @param needingNotification
-	 *            true if the player should be notified about this state
+	 * @param playerID the player's unique ID
+	 * @param questID the quest's unique ID
+	 * @param state this player's state for the given quest
+	 * @param needingNotification true if the player should be notified about
+	 *            this state
 	 */
-	public QuestStateRecord(int playerID, int questID, QuestStateEnum state,
-			boolean needingNotification)
+	public QuestStateRecord(int playerID, int questID, QuestStateEnum state, boolean needingNotification)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
@@ -108,8 +103,7 @@ public class QuestStateRecord
 	}
 
 	/**
-	 * @param state
-	 *            the new state
+	 * @param state the new state
 	 */
 	public void setState(QuestStateEnum state)
 	{

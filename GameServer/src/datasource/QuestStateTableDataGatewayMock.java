@@ -10,20 +10,22 @@ import datatypes.QuestStateEnum;
 
 /**
  * A mock implementation of the gateway
+ * 
  * @author Merlin
  *
  */
 public class QuestStateTableDataGatewayMock implements QuestStateTableDataGateway
 {
-private static QuestStateTableDataGateway singleton;
-	
+	private static QuestStateTableDataGateway singleton;
+
 	/**
 	 * Retrieves the mock gateway singleton.
+	 * 
 	 * @return singleton
 	 */
 	public static synchronized QuestStateTableDataGateway getSingleton()
 	{
-		if(singleton == null)
+		if (singleton == null)
 		{
 			singleton = new QuestStateTableDataGatewayMock();
 		}
@@ -31,7 +33,7 @@ private static QuestStateTableDataGateway singleton;
 	}
 
 	private Hashtable<Integer, ArrayList<QuestStateRecord>> data;
-	
+
 	/**
 	 * build the mock data from AdventuresForTest
 	 */
@@ -46,10 +48,11 @@ private static QuestStateTableDataGateway singleton;
 	public void resetData()
 	{
 		data = new Hashtable<Integer, ArrayList<QuestStateRecord>>();
-		for(QuestStatesForTest a:QuestStatesForTest.values())
+		for (QuestStatesForTest a : QuestStatesForTest.values())
 		{
-			QuestStateRecord rec = new QuestStateRecord(a.getPlayerID(), a.getQuestID(), a.getState(), a.isNeedingNotification());
-			
+			QuestStateRecord rec = new QuestStateRecord(a.getPlayerID(), a.getQuestID(), a.getState(),
+					a.isNeedingNotification());
+
 			try
 			{
 				insertRow(a.getPlayerID(), rec);
@@ -67,12 +70,12 @@ private static QuestStateTableDataGateway singleton;
 		if (data.containsKey(playerID))
 		{
 			ArrayList<QuestStateRecord> x = data.get(playerID);
-			for (QuestStateRecord r:x)
+			for (QuestStateRecord r : x)
 			{
 				if (r.getQuestID() == rec.getQuestID())
 				{
-					throw new DatabaseException("Duplicate quest state: player ID " +
-							playerID + " and quest id " + rec.getQuestID());
+					throw new DatabaseException(
+							"Duplicate quest state: player ID " + playerID + " and quest id " + rec.getQuestID());
 				}
 			}
 			x.add(rec);
@@ -83,7 +86,7 @@ private static QuestStateTableDataGateway singleton;
 			data.put(playerID, x);
 		}
 	}
-	
+
 	/**
 	 * @see datasource.QuestStateTableDataGateway#getQuestStates(int)
 	 */
@@ -109,22 +112,25 @@ private static QuestStateTableDataGateway singleton;
 	}
 
 	/**
-	 * @see datasource.QuestStateTableDataGateway#createRow(int, int, datatypes.QuestStateEnum, boolean)
+	 * @see datasource.QuestStateTableDataGateway#createRow(int, int,
+	 *      datatypes.QuestStateEnum, boolean)
 	 */
 	@Override
 	public void createRow(int playerID, int questID, QuestStateEnum state, boolean needingNotification)
 			throws DatabaseException
 	{
 		insertRow(playerID, new QuestStateRecord(playerID, questID, state, needingNotification));
-		
+
 	}
 
 	/**
 	 * @throws DatabaseException shouldn't
-	 * @see datasource.QuestStateTableDataGateway#udpateState(int, int, datatypes.QuestStateEnum, boolean)
+	 * @see datasource.QuestStateTableDataGateway#udpateState(int, int,
+	 *      datatypes.QuestStateEnum, boolean)
 	 */
 	@Override
-	public void udpateState(int playerID, int questID, QuestStateEnum newState, boolean needingNotification) throws DatabaseException
+	public void udpateState(int playerID, int questID, QuestStateEnum newState, boolean needingNotification)
+			throws DatabaseException
 	{
 		boolean updated = false;
 		ArrayList<QuestStateRecord> quests = data.get(playerID);
@@ -132,7 +138,7 @@ private static QuestStateTableDataGateway singleton;
 		{
 			quests = new ArrayList<QuestStateRecord>();
 		}
-		for (QuestStateRecord qsRec: quests)
+		for (QuestStateRecord qsRec : quests)
 		{
 			if (qsRec.getQuestID() == questID)
 			{
@@ -145,8 +151,7 @@ private static QuestStateTableDataGateway singleton;
 		{
 			createRow(playerID, questID, newState, needingNotification);
 		}
-		
+
 	}
-	
 
 }

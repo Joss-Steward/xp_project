@@ -2,7 +2,6 @@ package model;
 
 import datasource.DatabaseException;
 
-
 /**
  * Persist a player through a command
  * 
@@ -12,7 +11,7 @@ import datasource.DatabaseException;
 public class CommandPersistPlayer extends Command
 {
 	private int playerID;
-	
+
 	/**
 	 * 
 	 * @param playerID The playerID to persist
@@ -26,7 +25,7 @@ public class CommandPersistPlayer extends Command
 	 * @see model.Command#execute()
 	 */
 	@Override
-	protected boolean execute() 
+	protected boolean execute()
 	{
 		try
 		{

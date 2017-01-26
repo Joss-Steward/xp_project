@@ -76,8 +76,7 @@ public class PlayerManagerTest
 	public void notifiesOnAddPlayer()
 	{
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs,
-				PlayerConnectionReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerConnectionReport.class);
 		obs.receiveReport(EasyMock.isA(PlayerConnectionReport.class));
 		EasyMock.replay(obs);
 
@@ -95,13 +94,11 @@ public class PlayerManagerTest
 		PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
 
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs,
-				AddExistingPlayerReport.class);
-		AddExistingPlayerReport expected = new AddExistingPlayerReport(
-				PlayersForTest.MATT.getPlayerID(), PlayersForTest.MERLIN.getPlayerID(),
-				PlayersForTest.MERLIN.getPlayerName(),
-				PlayersForTest.MERLIN.getAppearanceType(),
-				PlayersForTest.MERLIN.getPosition(), PlayersForTest.MERLIN.getCrew(), PlayersForTest.MERLIN.getMajor());
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, AddExistingPlayerReport.class);
+		AddExistingPlayerReport expected = new AddExistingPlayerReport(PlayersForTest.MATT.getPlayerID(),
+				PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.MERLIN.getPlayerName(),
+				PlayersForTest.MERLIN.getAppearanceType(), PlayersForTest.MERLIN.getPosition(),
+				PlayersForTest.MERLIN.getCrew(), PlayersForTest.MERLIN.getMajor());
 		;
 		obs.receiveReport(expected);
 		EasyMock.replay(obs);
@@ -112,8 +109,7 @@ public class PlayerManagerTest
 	/**
 	 * Make sure that we can get a players id from the player name
 	 * 
-	 * @throws PlayerNotFoundException
-	 *             shouldn't
+	 * @throws PlayerNotFoundException shouldn't
 	 */
 	@Test
 	public void canGetPlayerIDFromPlayerNameOnlyOne() throws PlayerNotFoundException
@@ -125,8 +121,7 @@ public class PlayerManagerTest
 	/**
 	 * Make sure that we can get a players id from the player name
 	 * 
-	 * @throws PlayerNotFoundException
-	 *             shouldn't
+	 * @throws PlayerNotFoundException shouldn't
 	 */
 	@Test
 	public void canGetPlayerIDFromPlayerName() throws PlayerNotFoundException
@@ -140,8 +135,7 @@ public class PlayerManagerTest
 	 * Make sure the correct exception is thrown if we search for a player whose
 	 * name we don't know
 	 * 
-	 * @throws PlayerNotFoundException
-	 *             should
+	 * @throws PlayerNotFoundException should
 	 */
 	@Test(expected = PlayerNotFoundException.class)
 	public void playerNameNotFound() throws PlayerNotFoundException
@@ -153,33 +147,27 @@ public class PlayerManagerTest
 	 * Test that a player can be persisted by saving an attribute and fetching
 	 * the player again
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
-	 * @throws IllegalQuestChangeException
-	 *             the state changed illegally
+	 * @throws DatabaseException shouldn't
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
 	public void playerIsSaved() throws DatabaseException, IllegalQuestChangeException
 	{
-		Player player = PlayerManager.getSingleton().addPlayer(
-				PlayersForTest.MERLIN.getPlayerID());
+		Player player = PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
 		player.setPlayerPosition(new Position(100, 100));
 		assertTrue(PlayerManager.getSingleton().persistPlayer(player.getPlayerID()));
 
 		PlayerManager.resetSingleton();
 
-		Player fetched = PlayerManager.getSingleton().addPlayer(
-				PlayersForTest.MERLIN.getPlayerID());
+		Player fetched = PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
 		assertEquals(new Position(100, 100), fetched.getPlayerPosition());
 	}
 
 	/**
 	 * Test that the known npcs will be in the database
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
-	 * @throws SQLException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
+	 * @throws SQLException shouldn't
 	 */
 	@Test
 	public void testNpcsLoaded() throws DatabaseException, SQLException
@@ -189,22 +177,19 @@ public class PlayerManagerTest
 		om.updateMapInformation(PlayersForTest.QUIZBOT.getMapName(), "localhost", 1874);
 		PlayerManager.getSingleton().loadNpcs();
 
-		assertNotNull(PlayerManager.getSingleton().getPlayerFromID(
-				PlayersForTest.QUIZBOT.getPlayerID()));
+		assertNotNull(PlayerManager.getSingleton().getPlayerFromID(PlayersForTest.QUIZBOT.getPlayerID()));
 
 	}
 
 	/**
 	 * Make sure it can get the high score list
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void canGetTopTen() throws DatabaseException
 	{
-		ArrayList<PlayerScoreRecord> result = PlayerManager.getSingleton()
-				.getTopTenPlayers();
+		ArrayList<PlayerScoreRecord> result = PlayerManager.getSingleton().getTopTenPlayers();
 		assertEquals(10, result.size());
 	}
 }

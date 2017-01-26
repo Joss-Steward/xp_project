@@ -18,12 +18,9 @@ public class BuildTestDBPlayers
 {
 	/**
 	 * 
-	 * @param args
-	 *            unused
-	 * @throws DatabaseException
-	 *             shouldn't
-	 * @throws SQLException
-	 *             shouldn't
+	 * @param args unused
+	 * @throws DatabaseException shouldn't
+	 * @throws SQLException shouldn't
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
@@ -32,25 +29,26 @@ public class BuildTestDBPlayers
 		createPlayerTable();
 		createNpcTable();
 	}
-	
+
 	private static void createPlayerTable() throws SQLException, DatabaseException
 	{
 		PlayerRowDataGatewayRDS.createTable();
 
 		for (PlayersForTest p : PlayersForTest.values())
 		{
-			new PlayerRowDataGatewayRDS(p.getPosition(), p.getAppearanceType(), p.getKnowledgeScore(), p.getExperiencePoints(), p.getCrew(), p.getMajor());
+			new PlayerRowDataGatewayRDS(p.getPosition(), p.getAppearanceType(), p.getKnowledgeScore(),
+					p.getExperiencePoints(), p.getCrew(), p.getMajor());
 		}
 
 	}
-	
+
 	private static void createNpcTable() throws SQLException, DatabaseException
 	{
 		NPCRowDataGatewayRDS.createTable();
-		
+
 		for (NPCsForTest p : NPCsForTest.values())
 		{
-			new NPCRowDataGatewayRDS(p.getPlayerID(),p.getBehaviorClass());
+			new NPCRowDataGatewayRDS(p.getPlayerID(), p.getBehaviorClass());
 		}
 	}
 }

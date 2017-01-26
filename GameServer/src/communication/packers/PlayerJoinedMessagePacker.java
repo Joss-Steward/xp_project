@@ -28,18 +28,16 @@ public class PlayerJoinedMessagePacker extends MessagePacker
 		{
 			PlayerConnectionReport report = (PlayerConnectionReport) object;
 
-			PlayerJoinedMessage msg = new PlayerJoinedMessage(report.getPlayerID(),
-					report.getPlayerName(), report.getAppearanceType(),
-					report.getPosition(), report.getCrew(), report.getMajor());
+			PlayerJoinedMessage msg = new PlayerJoinedMessage(report.getPlayerID(), report.getPlayerName(),
+					report.getAppearanceType(), report.getPosition(), report.getCrew(), report.getMajor());
 			return msg;
 		} else if (object.getClass().equals(AddExistingPlayerReport.class))
 		{
 			AddExistingPlayerReport report = (AddExistingPlayerReport) object;
 			if (report.getRecipientPlayerID() == getAccumulator().getPlayerID())
 			{
-				PlayerJoinedMessage msg = new PlayerJoinedMessage(report.getPlayerID(),
-						report.getPlayerName(), report.getAppearanceType(),
-						report.getPosition(), report.getCrew(), report.getMajor());
+				PlayerJoinedMessage msg = new PlayerJoinedMessage(report.getPlayerID(), report.getPlayerName(),
+						report.getAppearanceType(), report.getPosition(), report.getCrew(), report.getMajor());
 				return msg;
 			}
 		}

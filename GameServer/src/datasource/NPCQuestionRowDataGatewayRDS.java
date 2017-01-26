@@ -21,8 +21,7 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 	/**
 	 * Drop the table if it exists and re-create it empty
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	public static void createTable() throws DatabaseException
 	{
@@ -45,8 +44,7 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 
 	/**
 	 * @return a random question from the data source
-	 * @throws DatabaseException
-	 *             if we can't talk to the database
+	 * @throws DatabaseException if we can't talk to the database
 	 */
 	public static NPCQuestionRowDataGateway findRandomGateway() throws DatabaseException
 	{
@@ -69,12 +67,13 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 			throw new DatabaseException("Couldn't find a a rancom NPC Question", e);
 		}
 	}
+
 	private String questionStatement;
 
 	private String answer;
-	
+
 	private Date startDate;
-	
+
 	private Date endDate;
 
 	private Connection connection;
@@ -82,10 +81,8 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 	/**
 	 * Finder constructor
 	 * 
-	 * @param questionID
-	 *            the questions Unique ID
-	 * @throws DatabaseException
-	 *             if we fail when talking to the database
+	 * @param questionID the questions Unique ID
+	 * @throws DatabaseException if we fail when talking to the database
 	 */
 	public NPCQuestionRowDataGatewayRDS(int questionID) throws DatabaseException
 	{
@@ -103,30 +100,23 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 			this.endDate = result.getDate("endDate");
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Couldn't find an NPC Question with ID "
-					+ questionID, e);
+			throw new DatabaseException("Couldn't find an NPC Question with ID " + questionID, e);
 		}
 	}
 
 	/**
 	 * Create constructor
 	 * 
-	 * @param questionID
-	 *            the question's unique ID
-	 * @param questionStatement
-	 *            the wording of the question
-	 * @param answer
-	 *            the answer to the question
-	 * @param startDate
-	 *            the first day the question is available
-	 * @param endDate
-	 *             the last day the question is available
-	 * @throws DatabaseException
-	 *             if we fail when talking to the database (question ID already
-	 *             exists would be common)
+	 * @param questionID the question's unique ID
+	 * @param questionStatement the wording of the question
+	 * @param answer the answer to the question
+	 * @param startDate the first day the question is available
+	 * @param endDate the last day the question is available
+	 * @throws DatabaseException if we fail when talking to the database
+	 *             (question ID already exists would be common)
 	 */
-	public NPCQuestionRowDataGatewayRDS(int questionID, String questionStatement,
-			String answer, Date startDate, Date endDate) throws DatabaseException
+	public NPCQuestionRowDataGatewayRDS(int questionID, String questionStatement, String answer, Date startDate,
+			Date endDate) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
@@ -144,12 +134,9 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 			this.startDate = startDate;
 			this.endDate = endDate;
 
-
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Couldn't create a NCP question record for question with ID "
-							+ questionID, e);
+			throw new DatabaseException("Couldn't create a NCP question record for question with ID " + questionID, e);
 		}
 	}
 
@@ -183,21 +170,21 @@ public class NPCQuestionRowDataGatewayRDS implements NPCQuestionRowDataGateway
 	{
 	}
 
-    /**
-     * @see datasource.NPCQuestionRowDataGateway#getStartDate()
-     */
-    @Override
-    public Date getStartDate()
-    {
-        return startDate;
-    }
-    
-    /** 
-     * @see datasource.NPCQuestionRowDataGateway#getEndDate()
-     */
-    public Date getEndDate()
-    {
-        return endDate;
-    }
+	/**
+	 * @see datasource.NPCQuestionRowDataGateway#getStartDate()
+	 */
+	@Override
+	public Date getStartDate()
+	{
+		return startDate;
+	}
+
+	/**
+	 * @see datasource.NPCQuestionRowDataGateway#getEndDate()
+	 */
+	public Date getEndDate()
+	{
+		return endDate;
+	}
 
 }

@@ -54,5 +54,4 @@ public class NPCMockBehavior extends NPCBehavior
 	{
 	}
 
-
 }

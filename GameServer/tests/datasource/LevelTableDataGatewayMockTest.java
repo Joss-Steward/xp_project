@@ -5,11 +5,11 @@ import datasource.LevelTableDataGatewayMock;
 
 /**
  * Tests the mock implementation
+ * 
  * @author merlin
  *
  */
-public class LevelTableDataGatewayMockTest extends
-		LevelTableDataGatewayTest
+public class LevelTableDataGatewayMockTest extends LevelTableDataGatewayTest
 {
 
 	/**
@@ -18,7 +18,7 @@ public class LevelTableDataGatewayMockTest extends
 	@Override
 	public LevelTableDataGateway getGateway()
 	{
-		return  LevelTableDataGatewayMock.getSingleton();
+		return LevelTableDataGatewayMock.getSingleton();
 	}
 
 }

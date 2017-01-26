@@ -29,11 +29,10 @@ public class CommandRemovePlayerTest
 	}
 
 	/**
-	 * If we remove a player, the player manager and quest manager should
-	 * forget about it
+	 * If we remove a player, the player manager and quest manager should forget
+	 * about it
 	 * 
-	 * @throws PlayerNotFoundException
-	 *             shouldn't
+	 * @throws PlayerNotFoundException shouldn't
 	 */
 	@Test
 	public void test() throws PlayerNotFoundException

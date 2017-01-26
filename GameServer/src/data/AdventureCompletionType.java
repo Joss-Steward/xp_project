@@ -2,6 +2,7 @@ package data;
 
 /**
  * The list of ways adventures can be completed
+ * 
  * @author Merlin
  *
  */
@@ -11,7 +12,7 @@ public enum AdventureCompletionType
 	 * 
 	 */
 	REAL_LIFE(CriteriaString.class),
-	
+
 	/**
 	 * 
 	 */
@@ -21,7 +22,7 @@ public enum AdventureCompletionType
 	 * 
 	 */
 	CHAT(CriteriaString.class),
-	
+
 	/**
 	 * 
 	 */
@@ -34,6 +35,7 @@ public enum AdventureCompletionType
 
 	/**
 	 * Get the completion type with a given ID
+	 * 
 	 * @param id the ID
 	 * @return the appropriate completion type
 	 */
@@ -44,12 +46,11 @@ public enum AdventureCompletionType
 
 	private Class<? extends AdventureCompletionCriteria> completionCriteriaType;
 
-	
-	AdventureCompletionType(Class<? extends AdventureCompletionCriteria>  completionCriteriaType)
+	AdventureCompletionType(Class<? extends AdventureCompletionCriteria> completionCriteriaType)
 	{
 		this.completionCriteriaType = completionCriteriaType;
 	}
-	
+
 	/**
 	 * @return the class of the adventure completion criteria
 	 */
@@ -57,7 +58,7 @@ public enum AdventureCompletionType
 	{
 		return completionCriteriaType;
 	}
-	
+
 	/**
 	 * @return the unique ID of the completion type
 	 */

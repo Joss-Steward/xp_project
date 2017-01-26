@@ -32,7 +32,6 @@ public class LevelTableDataGatewayMock implements LevelTableDataGateway
 
 	private HashMap<String, LevelRecord> data = new HashMap<String, LevelRecord>();
 
-
 	/**
 	 * Constructor for LevelTableDataGatewayMock
 	 */
@@ -40,7 +39,8 @@ public class LevelTableDataGatewayMock implements LevelTableDataGateway
 	{
 		for (LevelsForTest l : LevelsForTest.values())
 		{
-			data.put(l.getDescription(), new LevelRecord(l.getDescription(),l.getLevelUpPoints(),l.getLevelUpMonth(),l.getLevelUpDayOfMonth()));
+			data.put(l.getDescription(), new LevelRecord(l.getDescription(), l.getLevelUpPoints(), l.getLevelUpMonth(),
+					l.getLevelUpDayOfMonth()));
 		}
 	}
 

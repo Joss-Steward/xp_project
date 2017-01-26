@@ -11,27 +11,27 @@ import communication.messages.Message;
  * @author Ryan
  *
  */
-public class ExperienceChangedMessagePacker extends MessagePacker 
+public class ExperienceChangedMessagePacker extends MessagePacker
 {
 
 	/**
 	 * @see communication.packers.MessagePacker#pack(model.QualifiedObservableReport)
 	 */
 	@Override
-	public Message pack(QualifiedObservableReport object) 
+	public Message pack(QualifiedObservableReport object)
 	{
-		if(object.getClass() != ExperienceChangedReport.class)
+		if (object.getClass() != ExperienceChangedReport.class)
 		{
 			throw new IllegalArgumentException(
-					"ExperienceChangedMessagePacker cannot pack messages of type "
-							+ object.getClass());
+					"ExperienceChangedMessagePacker cannot pack messages of type " + object.getClass());
 		}
 
-		ExperienceChangedReport report = (ExperienceChangedReport)object;
+		ExperienceChangedReport report = (ExperienceChangedReport) object;
 
 		if (this.getAccumulator().getPlayerID() == report.getPlayerID())
 		{
-			ExperienceChangedMessage msg = new 	ExperienceChangedMessage(report.getPlayerID(), report.getExperiencePoints(), report.getRecord());
+			ExperienceChangedMessage msg = new ExperienceChangedMessage(report.getPlayerID(),
+					report.getExperiencePoints(), report.getRecord());
 			return msg;
 		}
 		return null;
@@ -41,11 +41,10 @@ public class ExperienceChangedMessagePacker extends MessagePacker
 	 * @see communication.packers.MessagePacker#getReportTypesWePack()
 	 */
 	@Override
-	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack() 
+	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 	{
-		ArrayList<Class<? extends QualifiedObservableReport>> result = 
-				new ArrayList<Class<? extends QualifiedObservableReport>>();
-		result.add( ExperienceChangedReport.class);
+		ArrayList<Class<? extends QualifiedObservableReport>> result = new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add(ExperienceChangedReport.class);
 		return result;
 	}
 

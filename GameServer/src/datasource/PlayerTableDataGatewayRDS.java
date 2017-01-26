@@ -61,8 +61,8 @@ public class PlayerTableDataGatewayRDS extends PlayerTableDataGateway
 			while (result.next())
 			{
 				int crewID = result.getInt("crew");
-				PlayerScoreRecord rec = new PlayerScoreRecord(
-						result.getString("playerName"), result.getInt("experiencePoints"), Crew.getCrewForID(crewID).toString());
+				PlayerScoreRecord rec = new PlayerScoreRecord(result.getString("playerName"),
+						result.getInt("experiencePoints"), Crew.getCrewForID(crewID).toString());
 				resultList.add(rec);
 			}
 			return resultList;
@@ -89,8 +89,8 @@ public class PlayerTableDataGatewayRDS extends PlayerTableDataGateway
 			while (result.next())
 			{
 				int crewID = result.getInt("crew");
-				PlayerScoreRecord rec = new PlayerScoreRecord(
-						result.getString("playerName"), result.getInt("experiencePoints"), Crew.getCrewForID(crewID).toString());
+				PlayerScoreRecord rec = new PlayerScoreRecord(result.getString("playerName"),
+						result.getInt("experiencePoints"), Crew.getCrewForID(crewID).toString());
 				resultList.add(rec);
 			}
 			return resultList;

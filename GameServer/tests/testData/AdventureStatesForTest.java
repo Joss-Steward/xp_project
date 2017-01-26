@@ -42,7 +42,7 @@ public enum AdventureStatesForTest
 	 * 
 	 */
 	PLAYER1_QUEST3_ADV3(1, 3, 3, AdventureStateEnum.TRIGGERED, false),
-	
+
 	/**
 	 * 
 	 */
@@ -112,7 +112,7 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	MARTY_QUEST11_ADV1(PlayersForTest.MARTY.getPlayerID(), 11, 1, AdventureStateEnum.TRIGGERED,false),
+	MARTY_QUEST11_ADV1(PlayersForTest.MARTY.getPlayerID(), 11, 1, AdventureStateEnum.TRIGGERED, false),
 	/**
 	 * 
 	 */
@@ -122,25 +122,23 @@ public enum AdventureStatesForTest
 	 */
 	HERSH_TELEPORTATION_ADV2(PlayersForTest.HERSH.getPlayerID(), QuestsForTest.TELEPORT_QUEST.getQuestID(), 2, AdventureStateEnum.TRIGGERED, true),
 	/**
-     * 
-     */
-    HERSH_EXPIRED(PlayersForTest.HERSH.getPlayerID(), QuestsForTest.EXPIRED_QUEST.getQuestID(), 1, AdventureStateEnum.TRIGGERED, true),
-    /**
-     * 
-     */
-    HERSH_QUEST_EXPIRED(PlayersForTest.HERSH.getPlayerID(), QuestsForTest.EXPIRED_QUEST.getQuestID(), 2, AdventureStateEnum.HIDDEN, true),
-	
+	 * 
+	 */
+	HERSH_EXPIRED(PlayersForTest.HERSH.getPlayerID(), QuestsForTest.EXPIRED_QUEST.getQuestID(), 1, AdventureStateEnum.TRIGGERED, true),
 	/**
 	 * 
 	 */
-	PLAYER8_QUEST2_ADV2(8, 2, 2, AdventureStateEnum.TRIGGERED , false),
+	HERSH_QUEST_EXPIRED(PlayersForTest.HERSH.getPlayerID(), QuestsForTest.EXPIRED_QUEST.getQuestID(), 2, AdventureStateEnum.HIDDEN, true),
+
 	/**
 	 * 
 	 */
-	PLAYER8_QUEST10_ADV1(PlayersForTest.GA.getPlayerID(), QuestsForTest.KNOWLEDGE_QUEST.getQuestID(), 
-			AdventuresForTest.QUEST10_ADVENTURE_1.getAdventureID(), AdventureStateEnum.TRIGGERED, true),
-	
-	
+	PLAYER8_QUEST2_ADV2(8, 2, 2, AdventureStateEnum.TRIGGERED, false),
+	/**
+	 * 
+	 */
+	PLAYER8_QUEST10_ADV1(PlayersForTest.GA.getPlayerID(), QuestsForTest.KNOWLEDGE_QUEST.getQuestID(), AdventuresForTest.QUEST10_ADVENTURE_1.getAdventureID(), AdventureStateEnum.TRIGGERED, true),
+
 	// ----------------------------------------------------------------------------------------//
 	// NEWBIE's onramping adventures //
 	// ----------------------------------------------------------------------------------------//
@@ -148,50 +146,32 @@ public enum AdventureStatesForTest
 	/**
 	 * 
 	 */
-	NEWBIE_ONRAMPING_Q(PlayersForTest.NEWBIE.getPlayerID(),
-			AdventuresForTest.ONRAMPING_PRESS_Q.getQuestID(),
-			AdventuresForTest.ONRAMPING_PRESS_Q.getAdventureID(),
-			AdventureStateEnum.TRIGGERED, false),
+	NEWBIE_ONRAMPING_Q(PlayersForTest.NEWBIE.getPlayerID(), AdventuresForTest.ONRAMPING_PRESS_Q.getQuestID(), AdventuresForTest.ONRAMPING_PRESS_Q.getAdventureID(), AdventureStateEnum.TRIGGERED, false),
 
 	/**
 	 * 
 	 */
-	NEWBIE_ONRAMPING_MOVE_UP(PlayersForTest.NEWBIE.getPlayerID(),
-			AdventuresForTest.ONRAMPING_MOVE_FORWARD.getQuestID(),
-			AdventuresForTest.ONRAMPING_MOVE_FORWARD.getAdventureID(),
-			AdventureStateEnum.TRIGGERED, false),
+	NEWBIE_ONRAMPING_MOVE_UP(PlayersForTest.NEWBIE.getPlayerID(), AdventuresForTest.ONRAMPING_MOVE_FORWARD.getQuestID(), AdventuresForTest.ONRAMPING_MOVE_FORWARD.getAdventureID(), AdventureStateEnum.TRIGGERED, false),
 
 	/**
 	 * 
 	 */
-	NEWBIE_ONRAMPING_MOVE_DOWN(PlayersForTest.NEWBIE.getPlayerID(),
-			AdventuresForTest.ONRAMPING_MOVE_BACKWARD.getQuestID(),
-			AdventuresForTest.ONRAMPING_MOVE_BACKWARD.getAdventureID(),
-			AdventureStateEnum.TRIGGERED, false),
+	NEWBIE_ONRAMPING_MOVE_DOWN(PlayersForTest.NEWBIE.getPlayerID(), AdventuresForTest.ONRAMPING_MOVE_BACKWARD.getQuestID(), AdventuresForTest.ONRAMPING_MOVE_BACKWARD.getAdventureID(), AdventureStateEnum.TRIGGERED, false),
 
 	/**
 	 * 
 	 */
-	NEWBIE_ONRAMPING_MOVE_RIGHT(PlayersForTest.NEWBIE.getPlayerID(),
-			AdventuresForTest.ONRAMPING_MOVE_RIGHT.getQuestID(),
-			AdventuresForTest.ONRAMPING_MOVE_RIGHT.getAdventureID(),
-			AdventureStateEnum.TRIGGERED, false),
+	NEWBIE_ONRAMPING_MOVE_RIGHT(PlayersForTest.NEWBIE.getPlayerID(), AdventuresForTest.ONRAMPING_MOVE_RIGHT.getQuestID(), AdventuresForTest.ONRAMPING_MOVE_RIGHT.getAdventureID(), AdventureStateEnum.TRIGGERED, false),
 
 	/**
 	 * 
 	 */
-	NEWBIE_ONRAMPING_MOVE_LEFT(PlayersForTest.NEWBIE.getPlayerID(),
-			AdventuresForTest.ONRAMPING_MOVE_LEFT.getQuestID(),
-			AdventuresForTest.ONRAMPING_MOVE_LEFT.getAdventureID(),
-			AdventureStateEnum.TRIGGERED, false),
-	
+	NEWBIE_ONRAMPING_MOVE_LEFT(PlayersForTest.NEWBIE.getPlayerID(), AdventuresForTest.ONRAMPING_MOVE_LEFT.getQuestID(), AdventuresForTest.ONRAMPING_MOVE_LEFT.getAdventureID(), AdventureStateEnum.TRIGGERED, false),
+
 	/**
 	 * 
 	 */
-	CHAT_WITH_RED_HAT(PlayersForTest.NEWBIE.getPlayerID(),
-			AdventuresForTest.ONRAMPING_CHAT_WITH_SORTING_HAT.getQuestID(),
-			AdventuresForTest.ONRAMPING_CHAT_WITH_SORTING_HAT.getAdventureID(),
-			AdventureStateEnum.TRIGGERED, false);
+	CHAT_WITH_RED_HAT(PlayersForTest.NEWBIE.getPlayerID(), AdventuresForTest.ONRAMPING_CHAT_WITH_SORTING_HAT.getQuestID(), AdventuresForTest.ONRAMPING_CHAT_WITH_SORTING_HAT.getAdventureID(), AdventureStateEnum.TRIGGERED, false);
 	private int adventureID;
 	private int questID;
 	private int playerID;
@@ -201,13 +181,11 @@ public enum AdventureStatesForTest
 	/**
 	 * Constructor for Adventures Enum
 	 * 
-	 * @param adventureID
-	 *            this adventure's unique ID
-	 * @param questID
-	 *            the ID of the quest that contains this adventure
+	 * @param adventureID this adventure's unique ID
+	 * @param questID the ID of the quest that contains this adventure
 	 */
-	AdventureStatesForTest(int playerID, int questID, int adventureID,
-			AdventureStateEnum state, boolean needsNotification)
+	AdventureStatesForTest(int playerID, int questID, int adventureID, AdventureStateEnum state,
+			boolean needsNotification)
 	{
 		this.adventureID = adventureID;
 		this.questID = questID;

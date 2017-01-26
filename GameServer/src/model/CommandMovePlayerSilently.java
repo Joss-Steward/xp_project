@@ -3,7 +3,9 @@ package model;
 import datatypes.Position;
 
 /**
- * Changes a player's position without notifying the rest of the players on the server.  
+ * Changes a player's position without notifying the rest of the players on the
+ * server.
+ * 
  * @author Merlin
  *
  */

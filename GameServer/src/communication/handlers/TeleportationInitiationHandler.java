@@ -32,19 +32,17 @@ public class TeleportationInitiationHandler extends MessageHandler
 		TeleportationInitiationMessage currentMsg = (TeleportationInitiationMessage) msg;
 		try
 		{
-			CommandMovePlayerSilently command = new CommandMovePlayerSilently(
-					currentMsg.getMapName(), currentMsg.getPlayerId(), currentMsg.getPosition());
+			CommandMovePlayerSilently command = new CommandMovePlayerSilently(currentMsg.getMapName(),
+					currentMsg.getPlayerId(), currentMsg.getPosition());
 			ModelFacade.getSingleton().queueCommand(command);
 
 			CommandPersistPlayer persistCommand = new CommandPersistPlayer(currentMsg.getPlayerId());
 			ModelFacade.getSingleton().queueCommand(persistCommand);
-			
-			MapToServerMapping mapping = new MapToServerMapping(currentMsg
-					.getMapName());
+
+			MapToServerMapping mapping = new MapToServerMapping(currentMsg.getMapName());
 			int pin = PlayerManager.getSingleton().getNewPinFor(playerID);
-			TeleportationContinuationMessage response = new TeleportationContinuationMessage(
-					mapping.getMapName(), mapping.getHostName(), mapping.getPortNumber(),
-					playerID, pin);
+			TeleportationContinuationMessage response = new TeleportationContinuationMessage(mapping.getMapName(),
+					mapping.getHostName(), mapping.getPortNumber(), playerID, pin);
 			this.getStateAccumulator().queueMessage(response);
 		} catch (DatabaseException e)
 		{

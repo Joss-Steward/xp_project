@@ -9,11 +9,11 @@ public enum MapAreasForTest
 	/**
 	 * 
 	 */
-	ONE_MAP_AREA("areaname",2);
-	
+	ONE_MAP_AREA("areaname", 2);
+
 	private String areaName;
 	private int questID;
-	
+
 	MapAreasForTest(String areaName, int questID)
 	{
 		this.areaName = areaName;
@@ -35,6 +35,5 @@ public enum MapAreasForTest
 	{
 		return questID;
 	}
-	
-	
+
 }

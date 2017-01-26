@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Defines the behavior of the red hat
+ * 
  * @author merlin
  *
  */

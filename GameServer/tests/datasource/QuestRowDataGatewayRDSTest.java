@@ -31,8 +31,7 @@ public class QuestRowDataGatewayRDSTest extends QuestRowDataGatewayTest
 	 *      datatypes.Position)
 	 */
 	@Override
-	ArrayList<Integer> findQuestsForMapLocation(String mapName, Position position)
-			throws DatabaseException
+	ArrayList<Integer> findQuestsForMapLocation(String mapName, Position position) throws DatabaseException
 	{
 		return QuestRowDataGatewayRDS.findQuestsForMapLocation(mapName, position);
 	}

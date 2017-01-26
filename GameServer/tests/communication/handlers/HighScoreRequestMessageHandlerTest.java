@@ -20,6 +20,7 @@ import datasource.DatabaseException;
 
 /**
  * Make sure the right response gets queued back to the player
+ * 
  * @author Merlin
  *
  */
@@ -51,8 +52,7 @@ public class HighScoreRequestMessageHandlerTest
 	 * Make sure that the appropriate response message gets queued into the
 	 * accumulator
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void generatesCorrectResponse() throws DatabaseException
@@ -62,8 +62,7 @@ public class HighScoreRequestMessageHandlerTest
 		StateAccumulator accum = new StateAccumulator(null);
 		accum.setPlayerId(PlayersForTest.MERLIN.getPlayerID());
 		handler.setAccumulator(accum);
-		HighScoreResponseMessage msg = new HighScoreResponseMessage(PlayerManager
-				.getSingleton().getTopTenPlayers());
+		HighScoreResponseMessage msg = new HighScoreResponseMessage(PlayerManager.getSingleton().getTopTenPlayers());
 
 		handler.process(msg);
 

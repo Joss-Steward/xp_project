@@ -16,10 +16,8 @@ public class CommandAddPlayer extends Command
 
 	/**
 	 * 
-	 * @param playerID
-	 *            the player's player id
-	 * @param pin
-	 *            the player's pin
+	 * @param playerID the player's player id
+	 * @param pin the player's pin
 	 */
 	public CommandAddPlayer(int playerID, double pin)
 	{

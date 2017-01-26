@@ -41,15 +41,14 @@ public class NPCQuestion implements Serializable
 		}
 		return q;
 	}
-	
+
 	private NPCQuestion()
 	{
 	}
 
 	/**
 	 * 
-	 * @return
-	 * 			answer to question
+	 * @return answer to question
 	 */
 	public String getAnswer()
 	{
@@ -58,8 +57,7 @@ public class NPCQuestion implements Serializable
 
 	/**
 	 * 
-	 * @return
-	 * 			question
+	 * @return question
 	 */
 	public String getQuestionStatement()
 	{

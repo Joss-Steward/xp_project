@@ -27,7 +27,7 @@ public interface PlayerRowDataGateway
 	 * @return this player's major
 	 */
 	Major getMajor();
-	
+
 	/**
 	 * @return the player's experience points
 	 */
@@ -51,8 +51,7 @@ public interface PlayerRowDataGateway
 	/**
 	 * Store this information into the data source
 	 * 
-	 * @throws DatabaseException
-	 *             if we can't persist the data to the data source
+	 * @throws DatabaseException if we can't persist the data to the data source
 	 */
 	void persist() throws DatabaseException;
 
@@ -62,14 +61,12 @@ public interface PlayerRowDataGateway
 	public void resetData();
 
 	/**
-	 * @param appearanceType
-	 *            the name of the animation this player should use
+	 * @param appearanceType the name of the animation this player should use
 	 */
 	void setAppearanceType(String appearanceType);
 
 	/**
-	 * @param crew
-	 *            the crew to which this player should belong
+	 * @param crew the crew to which this player should belong
 	 */
 	void setCrew(Crew crew);
 
@@ -77,22 +74,19 @@ public interface PlayerRowDataGateway
 	 * @param major of this player
 	 */
 	void setMajor(Major major);
-	
+
 	/**
-	 * @param experiencePoints
-	 *            this player's new experience points
+	 * @param experiencePoints this player's new experience points
 	 */
 	void setExperiencePoints(int experiencePoints);
 
 	/**
-	 * @param position
-	 *            the coordinate the player is currently on
+	 * @param position the coordinate the player is currently on
 	 */
 	void setPosition(Position position);
 
 	/**
-	 * @param quizScore
-	 *            this player's new score
+	 * @param quizScore this player's new score
 	 */
 	void setQuizScore(int quizScore);
 }

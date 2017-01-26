@@ -32,8 +32,7 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 		return singleton;
 	}
 
-	private void checkForDuplicateEntry(int playerID, int questID)
-			throws DatabaseException
+	private void checkForDuplicateEntry(int playerID, int questID) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
@@ -46,13 +45,12 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 
 			if (result.next())
 			{
-				throw new DatabaseException("Duplicate quest state for player ID "
-						+ playerID + " and quest id " + questID);
+				throw new DatabaseException(
+						"Duplicate quest state for player ID " + playerID + " and quest id " + questID);
 			}
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Couldn't find quests for player ID " + playerID,
-					e);
+			throw new DatabaseException("Couldn't find quests for player ID " + playerID, e);
 		}
 	}
 
@@ -64,26 +62,21 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 	/**
 	 * Add a new row to the table
 	 * 
-	 * @param playerID
-	 *            the player
-	 * @param questID
-	 *            the quest
-	 * @param state
-	 *            the player's state in that quest
-	 * @param needingNotification
-	 *            true if the player should be notified about this state
-	 * @throws DatabaseException
-	 *             if we can't talk to the RDS server
+	 * @param playerID the player
+	 * @param questID the quest
+	 * @param state the player's state in that quest
+	 * @param needingNotification true if the player should be notified about
+	 *            this state
+	 * @throws DatabaseException if we can't talk to the RDS server
 	 */
-	public void createRow(int playerID, int questID, QuestStateEnum state,
-			boolean needingNotification) throws DatabaseException
+	public void createRow(int playerID, int questID, QuestStateEnum state, boolean needingNotification)
+			throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		checkForDuplicateEntry(playerID, questID);
 		try
 		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
-					connection,
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
 					"Insert INTO QuestStates SET playerID = ?, questID = ?, questState = ?, needingNotification = ?");
 			stmt.setInt(1, playerID);
 			stmt.setInt(2, questID);
@@ -93,17 +86,15 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Couldn't create a quest state record for player with ID " + playerID
-							+ " and quest with ID " + questID, e);
+			throw new DatabaseException("Couldn't create a quest state record for player with ID " + playerID
+					+ " and quest with ID " + questID, e);
 		}
 	}
 
 	/**
 	 * Drop the table if it exists and re-create it empty
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	public void createTable() throws DatabaseException
 	{
@@ -115,8 +106,7 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 			stmt.executeUpdate();
 			stmt.close();
 
-			stmt = new ClosingPreparedStatement(
-					connection,
+			stmt = new ClosingPreparedStatement(connection,
 					"Create TABLE QuestStates (playerID INT NOT NULL, questID INT NOT NULL , questState INT NOT NULL, needingNotification BOOLEAN NOT NULL)");
 			stmt.executeUpdate();
 		} catch (SQLException e)
@@ -129,8 +119,7 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 	 * @see datasource.QuestStateTableDataGateway#getQuestStates(int)
 	 */
 	@Override
-	public ArrayList<QuestStateRecord> getQuestStates(int playerID)
-			throws DatabaseException
+	public ArrayList<QuestStateRecord> getQuestStates(int playerID) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
@@ -143,17 +132,14 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 			ArrayList<QuestStateRecord> results = new ArrayList<QuestStateRecord>();
 			while (result.next())
 			{
-				QuestStateRecord rec = new QuestStateRecord(result.getInt("playerID"),
-						result.getInt("questID"),
-						convertToState(result.getInt("QuestState")),
-						result.getBoolean("needingNotification"));
+				QuestStateRecord rec = new QuestStateRecord(result.getInt("playerID"), result.getInt("questID"),
+						convertToState(result.getInt("QuestState")), result.getBoolean("needingNotification"));
 				results.add(rec);
 			}
 			return results;
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Couldn't find quests for player ID " + playerID,
-					e);
+			throw new DatabaseException("Couldn't find quests for player ID " + playerID, e);
 		}
 	}
 
@@ -171,15 +157,14 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 	 *      datatypes.QuestStateEnum, boolean)
 	 */
 	@Override
-	public void udpateState(int playerID, int questID, QuestStateEnum newState,
-			boolean needingNotification) throws DatabaseException
+	public void udpateState(int playerID, int questID, QuestStateEnum newState, boolean needingNotification)
+			throws DatabaseException
 	{
 
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
-					connection,
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
 					"UPDATE QuestStates SET questState = ?, needingNotification = ? WHERE  playerID = ? and questID = ?");
 			stmt.setInt(1, newState.getID());
 			stmt.setBoolean(2, needingNotification);
@@ -192,9 +177,8 @@ public class QuestStateTableDataGatewayRDS implements QuestStateTableDataGateway
 			}
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Couldn't update a quest state record for player with ID " + playerID
-							+ " and quest with ID " + questID, e);
+			throw new DatabaseException("Couldn't update a quest state record for player with ID " + playerID
+					+ " and quest with ID " + questID, e);
 		}
 
 	}

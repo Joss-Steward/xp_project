@@ -15,22 +15,18 @@ public enum NPCQuestionsForTest
 	/**
 	 * 
 	 */
-    
-	ONE(1, "First question", "First answer", new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(), 
-	        new GregorianCalendar(9999, Calendar.MARCH, 21).getTime()),
-	
+
+	ONE(1, "First question", "First answer", new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime(), new GregorianCalendar(9999, Calendar.MARCH, 21).getTime()),
 
 	/**
 	 * 
 	 */
-	TWO(2, "Second question", "Second answer", new GregorianCalendar(2, Calendar.FEBRUARY, 11).getTime(),
-	        new GregorianCalendar(3, Calendar.FEBRUARY, 11).getTime()),
-	
+	TWO(2, "Second question", "Second answer", new GregorianCalendar(2, Calendar.FEBRUARY, 11).getTime(), new GregorianCalendar(3, Calendar.FEBRUARY, 11).getTime()),
+
 	/**
 	 * 
 	 */
-	MULTIPLE_CHOICE(3, "Would you like to pick A for correct answer?\nA. First Choice\nB. Second Choice\nC. Third Choice\nD. Fourth Choice\n", "A",
-			new GregorianCalendar(2016, Calendar.FEBRUARY, 11).getTime(), new GregorianCalendar(9999, Calendar.MARCH, 28).getTime());
+	MULTIPLE_CHOICE(3, "Would you like to pick A for correct answer?\nA. First Choice\nB. Second Choice\nC. Third Choice\nD. Fourth Choice\n", "A", new GregorianCalendar(2016, Calendar.FEBRUARY, 11).getTime(), new GregorianCalendar(9999, Calendar.MARCH, 28).getTime());
 
 	private String q;
 
@@ -39,23 +35,17 @@ public enum NPCQuestionsForTest
 	private int questionID;
 
 	private Date startDate;
-	
+
 	private Date endDate;
-	
-	
+
 	/**
 	 * Constructor
 	 * 
-	 * @param questionID
-	 *            this question's unique ID
-	 * @param q
-	 *            question
-	 * @param a
-	 *            answer
-     * @param startDate
-     *            first day the question is available
-     * @param endDate
-     *            last day the question is available
+	 * @param questionID this question's unique ID
+	 * @param q question
+	 * @param a answer
+	 * @param startDate first day the question is available
+	 * @param endDate last day the question is available
 	 */
 	NPCQuestionsForTest(int questionID, String q, String a, Date startDate, Date endDate)
 	{
@@ -65,6 +55,7 @@ public enum NPCQuestionsForTest
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
+
 	/**
 	 * @return the answer
 	 */
@@ -88,21 +79,21 @@ public enum NPCQuestionsForTest
 	{
 		return questionID;
 	}
-	
+
 	/**
 	 * @return the first day the question is available
 	 */
 	public Date getStartDate()
 	{
-	    return startDate;
+		return startDate;
 	}
-	
+
 	/**
 	 * @return the last day the question is available
 	 */
 	public Date getEndDate()
 	{
-	    return endDate;
+		return endDate;
 	}
-	
+
 }

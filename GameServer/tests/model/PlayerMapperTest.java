@@ -50,8 +50,7 @@ public class PlayerMapperTest extends DatabaseTest
 	 * make sure the mapper retrieves all of the necessary information for the
 	 * player it is finding
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
@@ -72,24 +71,20 @@ public class PlayerMapperTest extends DatabaseTest
 		{
 			if (qs.getPlayerID() == testPlayer.getPlayerID())
 			{
-				QuestState playerQuestState = QuestManager.getSingleton()
-						.getQuestStateByID(testPlayer.getPlayerID(), qs.getQuestID());
+				QuestState playerQuestState = QuestManager.getSingleton().getQuestStateByID(testPlayer.getPlayerID(),
+						qs.getQuestID());
 				assertEquals(qs.getState(), playerQuestState.getStateValue());
 				assertEquals(qs.isNeedingNotification(), playerQuestState.isNeedingNotification());
 				for (AdventureStatesForTest as : AdventureStatesForTest.values())
 				{
-					ArrayList<AdventureState> adventureList = playerQuestState
-							.getAdventureList();
-					if ((as.getPlayerID() == testPlayer.getPlayerID())
-							&& (as.getQuestID() == playerQuestState.getID()))
+					ArrayList<AdventureState> adventureList = playerQuestState.getAdventureList();
+					if ((as.getPlayerID() == testPlayer.getPlayerID()) && (as.getQuestID() == playerQuestState.getID()))
 					{
-						AdventureState expected = new AdventureState(as.getAdventureID(),
-								as.getState(), as.isNeedingNotification());
+						AdventureState expected = new AdventureState(as.getAdventureID(), as.getState(),
+								as.isNeedingNotification());
 						expected.setParentQuest(playerQuestState);
-						assertTrue(
-								"questID " + qs.getQuestID() + " adventureID "
-										+ as.getAdventureID() + " state " + as.getState(),
-								adventureList.contains(expected));
+						assertTrue("questID " + qs.getQuestID() + " adventureID " + as.getAdventureID() + " state "
+								+ as.getState(), adventureList.contains(expected));
 					}
 				}
 			}
@@ -108,16 +103,17 @@ public class PlayerMapperTest extends DatabaseTest
 
 	/**
 	 * @return the mapper we are testing
-	 * @throws DatabaseException
-	 *             if we can't create the mapper
+	 * @throws DatabaseException if we can't create the mapper
 	 */
 	protected PlayerMapper getMapper() throws DatabaseException
 	{
 		return new PlayerMapper(getPlayerWeAreTesting().getPlayerID());
 	}
-	
+
 	/**
-	 * When we tell a mapper to remove a player, its quests should be removed from the quest manager
+	 * When we tell a mapper to remove a player, its quests should be removed
+	 * from the quest manager
+	 * 
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
@@ -132,8 +128,7 @@ public class PlayerMapperTest extends DatabaseTest
 	 * An exception should be thrown if we are trying to create a mapper for a
 	 * player that doesn't exist
 	 * 
-	 * @throws DatabaseException
-	 *             should
+	 * @throws DatabaseException should
 	 */
 	@Test(expected = DatabaseException.class)
 	public void cantFindNonExisting() throws DatabaseException
@@ -145,9 +140,9 @@ public class PlayerMapperTest extends DatabaseTest
 	 * Make sure that all of the relevant information gets persisted to the data
 	 * source
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
-	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * @throws DatabaseException shouldn't
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong
+	 *             state
 	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 */
 	@Test
@@ -180,9 +175,8 @@ public class PlayerMapperTest extends DatabaseTest
 		assertEquals(p.getCrew(), p2.getCrew());
 		if (p.getClass() == Player.class)
 		{
-			QuestState retrievedQuestState = QuestManager.getSingleton()
-					.getQuestStateByID(p2.getPlayerID(),
-							QuestStatesForTest.PLAYER2_QUEST1.getQuestID());
+			QuestState retrievedQuestState = QuestManager.getSingleton().getQuestStateByID(p2.getPlayerID(),
+					QuestStatesForTest.PLAYER2_QUEST1.getQuestID());
 			assertEquals(questState.getStateValue(), retrievedQuestState.getStateValue());
 			for (AdventureState a : retrievedQuestState.getAdventureList())
 			{

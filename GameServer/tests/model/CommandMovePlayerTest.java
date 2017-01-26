@@ -39,8 +39,7 @@ public class CommandMovePlayerTest
 	/**
 	 * Update a player's position from id
 	 * 
-	 * @throws PlayerNotFoundException
-	 *             shouldn't
+	 * @throws PlayerNotFoundException shouldn't
 	 */
 	@Test
 	public void testValidPlayer() throws PlayerNotFoundException
@@ -61,7 +60,8 @@ public class CommandMovePlayerTest
 	}
 
 	/**
-	 * Make sure anyone who is observing for movement reports hears about this one
+	 * Make sure anyone who is observing for movement reports hears about this
+	 * one
 	 */
 	@Test
 	public void notifyObservers()
@@ -71,17 +71,17 @@ public class CommandMovePlayerTest
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerMovedReport.class);
 		obs.receiveReport(EasyMock.anyObject(PlayerMovedReport.class));
 		EasyMock.replay(obs);
-		
-		CommandMovePlayer cmd = new CommandMovePlayer(1, new Position(4,3));
+
+		CommandMovePlayer cmd = new CommandMovePlayer(1, new Position(4, 3));
 		cmd.execute();
-		
+
 		EasyMock.verify(obs);
 	}
+
 	/**
 	 * Update a player's position from id
 	 * 
-	 * @throws PlayerNotFoundException
-	 *             shouldn't
+	 * @throws PlayerNotFoundException shouldn't
 	 */
 	@Test
 	public void testNoPlayer() throws PlayerNotFoundException

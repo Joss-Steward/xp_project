@@ -16,10 +16,11 @@ import communication.messages.AdventureNotificationCompleteMessage;
 
 /**
  * Test for AdventureNotificationCompleteMessageHandler
+ * 
  * @author Ryan
  *
  */
-public class AdventureNotificationCompleteMessageHandlerTest 
+public class AdventureNotificationCompleteMessageHandlerTest
 {
 
 	/**
@@ -33,35 +34,40 @@ public class AdventureNotificationCompleteMessageHandlerTest
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton().setTestMode(true);
 	}
+
 	/**
 	 * Test what message type we handle
 	 */
 	@Test
-	public void testMessageWeHandle() 
+	public void testMessageWeHandle()
 	{
 		AdventureNotificationCompleteMessageHandler h = new AdventureNotificationCompleteMessageHandler();
-		
+
 		assertEquals(AdventureNotificationCompleteMessage.class, h.getMessageTypeWeHandle());
 	}
-	
+
 	/**
-	 * Test that AdventureNotificationCompleteMessageHandler creates CommandAdventureNotificationComplete
-	 * @throws InterruptedException  awef
+	 * Test that AdventureNotificationCompleteMessageHandler creates
+	 * CommandAdventureNotificationComplete
+	 * 
+	 * @throws InterruptedException awef
 	 */
 	@Test
 	public void testProcessCreatesCommandAdventureNotificationComplete() throws InterruptedException
 	{
 		PlayerManager.getSingleton().addPlayer(1);
-		AdventureNotificationCompleteMessage msg = new AdventureNotificationCompleteMessage(PlayersForTest.JOHN.getPlayerID(), QuestsForTest.ONE_BIG_QUEST.getQuestID(), AdventuresForTest.QUEST1_ADVENTURE2.getAdventureID());
+		AdventureNotificationCompleteMessage msg = new AdventureNotificationCompleteMessage(
+				PlayersForTest.JOHN.getPlayerID(), QuestsForTest.ONE_BIG_QUEST.getQuestID(),
+				AdventuresForTest.QUEST1_ADVENTURE2.getAdventureID());
 		AdventureNotificationCompleteMessageHandler handler = new AdventureNotificationCompleteMessageHandler();
 		handler.process(msg);
-		
+
 		assertTrue(ModelFacade.getSingleton().hasCommandsPending());
 		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);
 		}
-		
+
 	}
 
 }

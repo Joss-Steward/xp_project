@@ -16,12 +16,9 @@ public class BuildTestQuestions
 
 	/**
 	 * 
-	 * @param args
-	 *            unused
-	 * @throws DatabaseException
-	 *             shouldn't
-	 * @throws SQLException
-	 *             shouldn't
+	 * @param args unused
+	 * @throws DatabaseException shouldn't
+	 * @throws SQLException shouldn't
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
@@ -32,6 +29,7 @@ public class BuildTestQuestions
 
 	/**
 	 * Create a table of test questions
+	 * 
 	 * @throws SQLException
 	 * @throws DatabaseException
 	 */
@@ -40,8 +38,8 @@ public class BuildTestQuestions
 		NPCQuestionRowDataGatewayRDS.createTable();
 		for (NPCQuestionsForTest question : NPCQuestionsForTest.values())
 		{
-			new NPCQuestionRowDataGatewayRDS(question.getQuestionID(),question.getQ(),question.getA(),
-			        question.getStartDate(), question.getEndDate() );
+			new NPCQuestionRowDataGatewayRDS(question.getQuestionID(), question.getQ(), question.getA(),
+					question.getStartDate(), question.getEndDate());
 		}
 	}
 }

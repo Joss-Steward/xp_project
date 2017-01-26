@@ -16,9 +16,9 @@ import datatypes.Position;
 /**
  * @author Dave
  *
- * Make sure the ChatManager behaves properly.
+ *         Make sure the ChatManager behaves properly.
  */
-public class ChatManagerTest 
+public class ChatManagerTest
 {
 	/**
 	 * Start fresh for each test
@@ -29,7 +29,7 @@ public class ChatManagerTest
 		ChatManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 	}
-	
+
 	/**
 	 * Make sure that ChatManger behaves as a singleton
 	 */
@@ -38,29 +38,30 @@ public class ChatManagerTest
 	{
 		ChatManager cm1 = ChatManager.getSingleton();
 		ChatManager cm2 = ChatManager.getSingleton();
-		
+
 		assertTrue(cm1.equals(cm2));
 	}
-	
+
 	/**
-	 * Make sure that ChatManager notifies its observers when it creates a SendChatMessage report.
+	 * Make sure that ChatManager notifies its observers when it creates a
+	 * SendChatMessage report.
 	 */
 	@Test
 	public void testNotifiesObservers()
 	{
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		
-		SendChatMessageReport report = new SendChatMessageReport("message", "sender", new Position(1,1), ChatType.Local);
-		
-		QualifiedObservableConnector.getSingleton().registerObserver(obs,
-				SendChatMessageReport.class);
-		
+
+		SendChatMessageReport report = new SendChatMessageReport("message", "sender", new Position(1, 1),
+				ChatType.Local);
+
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, SendChatMessageReport.class);
+
 		obs.receiveReport(EasyMock.eq(report));
-		
+
 		EasyMock.replay(obs);
-		
-		ChatManager.getSingleton().sendChatToClients("message", "sender", new Position(1,1), ChatType.Local);
-		
+
+		ChatManager.getSingleton().sendChatToClients("message", "sender", new Position(1, 1), ChatType.Local);
+
 		EasyMock.verify(obs);
 	}
 }

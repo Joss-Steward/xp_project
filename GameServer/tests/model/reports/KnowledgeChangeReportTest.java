@@ -16,7 +16,8 @@ import datasource.DatabaseException;
  * @author Matthew Croft
  *
  */
-public class KnowledgeChangeReportTest {
+public class KnowledgeChangeReportTest
+{
 	/**
 	 * reset the necessary singletons
 	 */
@@ -26,20 +27,22 @@ public class KnowledgeChangeReportTest {
 		OptionsManager.getSingleton().setTestMode(true);
 		QuestManager.resetSingleton();
 	}
-	
+
 	/**
-	 * Tests that we can create a KnowledgePointsChangeReport
-	 * and get its knowledge points and playerID
+	 * Tests that we can create a KnowledgePointsChangeReport and get its
+	 * knowledge points and playerID
+	 * 
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void testCreateReport() throws DatabaseException 
+	public void testCreateReport() throws DatabaseException
 	{
 		Player john = PlayerManager.getSingleton().addPlayer(1);
-		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(john.getPlayerID(), john.getKnowledgePoints());
+		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(john.getPlayerID(),
+				john.getKnowledgePoints());
 		assertEquals(john.getKnowledgePoints(), report.getKnowledgePoints());
-	}	
-	
+	}
+
 	/**
 	 * Make sure the equals contract is obeyed
 	 */

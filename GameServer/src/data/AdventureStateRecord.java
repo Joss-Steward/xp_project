@@ -2,7 +2,6 @@ package data;
 
 import datatypes.AdventureStateEnum;
 
-
 /**
  * A data transfer record that contains the state of one adventure for one
  * player
@@ -20,19 +19,15 @@ public class AdventureStateRecord
 	private boolean needingNotification;
 
 	/**
-	 * @param playerID
-	 *            the player
-	 * @param questID
-	 *            the quest that contains the adventure
-	 * @param adventureID
-	 *            the adventure
-	 * @param state
-	 *            the player's state for that adventure
-	 * @param needingNotification
-	 *            true if the player should be notified about this adventure state
+	 * @param playerID the player
+	 * @param questID the quest that contains the adventure
+	 * @param adventureID the adventure
+	 * @param state the player's state for that adventure
+	 * @param needingNotification true if the player should be notified about
+	 *            this adventure state
 	 */
-	public AdventureStateRecord(int playerID, int questID, int adventureID,
-			AdventureStateEnum state, boolean needingNotification)
+	public AdventureStateRecord(int playerID, int questID, int adventureID, AdventureStateEnum state,
+			boolean needingNotification)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
@@ -83,8 +78,7 @@ public class AdventureStateRecord
 	}
 
 	/**
-	 * @param newState
-	 *            the state this adventure should have
+	 * @param newState the state this adventure should have
 	 */
 	public void setState(AdventureStateEnum newState)
 	{
@@ -95,8 +89,7 @@ public class AdventureStateRecord
 	 * Remember whether the player needs to be notified about the state we are
 	 * in
 	 * 
-	 * @param b
-	 *            true if we should notify the player
+	 * @param b true if we should notify the player
 	 */
 	public void setNeedingNotification(boolean b)
 	{

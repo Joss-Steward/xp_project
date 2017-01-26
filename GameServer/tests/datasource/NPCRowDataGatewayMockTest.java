@@ -6,9 +6,9 @@ import datasource.DatabaseException;
 import datasource.NPCRowDataGateway;
 import datasource.NPCRowDataGatewayMock;
 
-
 /**
  * Tests for the mock version of the gateway
+ * 
  * @author Merlin
  *
  */

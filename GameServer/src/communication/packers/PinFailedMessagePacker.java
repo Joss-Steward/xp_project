@@ -45,9 +45,8 @@ public class PinFailedMessagePacker extends MessagePacker
 	@Override
 	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 	{
-		ArrayList<Class<? extends QualifiedObservableReport>> result = 
-				new ArrayList<Class<? extends QualifiedObservableReport>>();
-		result.add( PinFailedReport.class);
+		ArrayList<Class<? extends QualifiedObservableReport>> result = new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add(PinFailedReport.class);
 		return result;
 	}
 

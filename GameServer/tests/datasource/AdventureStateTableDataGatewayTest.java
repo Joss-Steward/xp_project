@@ -30,8 +30,7 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	/**
 	 * Makes sure to reset gateway
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Before
 	public void setup() throws DatabaseException
@@ -43,10 +42,8 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	/**
 	 * Make sure any static information is cleaned up between tests
 	 * 
-	 * @throws SQLException
-	 *             shouldn't
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws SQLException shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@After
 	public void cleanup() throws DatabaseException, SQLException
@@ -78,15 +75,13 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	/**
 	 * Make sure we can retrieve all pending adventures for a given player
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void retrieveAllPendingAdventuresForPlayer() throws DatabaseException
 	{
 		gateway = getGateway();
-		ArrayList<AdventureStateRecord> records = gateway
-				.getPendingAdventuresForPlayer(1);
+		ArrayList<AdventureStateRecord> records = gateway.getPendingAdventuresForPlayer(1);
 		assertEquals(4, records.size());
 		// the records could be in either order
 		AdventureStatesForTest first = AdventureStatesForTest.PLAYER1_QUEST2_ADV3;
@@ -95,39 +90,34 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 		AdventureStatesForTest fourth = AdventureStatesForTest.PLAYER1_QUEST1_ADV1;
 		for (AdventureStateRecord record : records)
 		{
-			if ((record.getAdventureID() == first.getAdventureID() && (record
-					.getQuestID() == first.getQuestID())))
+			if ((record.getAdventureID() == first.getAdventureID() && (record.getQuestID() == first.getQuestID())))
 			{
 				assertEquals(first.getState(), record.getState());
 				assertEquals(first.getQuestID(), record.getQuestID());
-				assertEquals(first.isNeedingNotification(),
-						record.isNeedingNotification());
+				assertEquals(first.isNeedingNotification(), record.isNeedingNotification());
 
-			} else if ((record.getAdventureID() == other.getAdventureID() && (record
-					.getQuestID() == other.getQuestID())))
+			} else if ((record.getAdventureID() == other.getAdventureID()
+					&& (record.getQuestID() == other.getQuestID())))
 			{
 				assertEquals(other.getAdventureID(), record.getAdventureID());
 				assertEquals(other.getState(), record.getState());
 				assertEquals(other.getQuestID(), record.getQuestID());
-				assertEquals(other.isNeedingNotification(),
-						record.isNeedingNotification());
-			} else if ((record.getAdventureID() == third.getAdventureID() && (record
-					.getQuestID() == third.getQuestID())))
+				assertEquals(other.isNeedingNotification(), record.isNeedingNotification());
+			} else if ((record.getAdventureID() == third.getAdventureID()
+					&& (record.getQuestID() == third.getQuestID())))
 			{
 				assertEquals(third.getAdventureID(), record.getAdventureID());
 				assertEquals(third.getState(), record.getState());
 				assertEquals(third.getQuestID(), record.getQuestID());
-				assertEquals(third.isNeedingNotification(),
-						record.isNeedingNotification());
-			} else if ((record.getAdventureID() == fourth.getAdventureID() && (record
-					.getQuestID() == fourth.getQuestID())))
+				assertEquals(third.isNeedingNotification(), record.isNeedingNotification());
+			} else if ((record.getAdventureID() == fourth.getAdventureID()
+					&& (record.getQuestID() == fourth.getQuestID())))
 			{
 				assertEquals(fourth.getAdventureID(), record.getAdventureID());
 				assertEquals(fourth.getState(), record.getState());
 				assertEquals(fourth.getQuestID(), record.getQuestID());
-				assertEquals(fourth.isNeedingNotification(),
-						record.isNeedingNotification());
-			}else
+				assertEquals(fourth.isNeedingNotification(), record.isNeedingNotification());
+			} else
 			{
 				fail("Unexpected adventure state");
 			}
@@ -138,21 +128,18 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	 * Make sure that nothing goes wrong if we try to retrieve pending
 	 * adventures and there aren't any
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void retrievePendingAdventuresForPlayerWithNone() throws DatabaseException
 	{
 		gateway = getGateway();
-		ArrayList<AdventureStateRecord> records = gateway
-				.getPendingAdventuresForPlayer(3);
+		ArrayList<AdventureStateRecord> records = gateway.getPendingAdventuresForPlayer(3);
 		assertEquals(0, records.size());
 	}
 
 	/**
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void retrieveAllAdventuresForQuest() throws DatabaseException
@@ -185,8 +172,7 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	/**
 	 * If a quest has no quests, we should return an empty list
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void returnsEmptyListIfNone() throws DatabaseException
@@ -199,24 +185,21 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	/**
 	 * Should be able to change the state of an existing record
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void canChangeExisting() throws DatabaseException
 	{
 		gateway = getGateway();
 		AdventureStatesForTest adv = AdventureStatesForTest.PLAYER2_QUEST1_ADV3;
-		gateway.updateState(adv.getPlayerID(), adv.getQuestID(), adv.getAdventureID(),
-				AdventureStateEnum.COMPLETED, false);
+		gateway.updateState(adv.getPlayerID(), adv.getQuestID(), adv.getAdventureID(), AdventureStateEnum.COMPLETED,
+				false);
 
-		ArrayList<AdventureStateRecord> actual = gateway.getAdventureStates(
-				adv.getPlayerID(), adv.getQuestID());
+		ArrayList<AdventureStateRecord> actual = gateway.getAdventureStates(adv.getPlayerID(), adv.getQuestID());
 		int count = 0;
 		for (AdventureStateRecord asRec : actual)
 		{
-			if (asRec.getQuestID() == adv.getQuestID()
-					&& asRec.getAdventureID() == adv.getAdventureID())
+			if (asRec.getQuestID() == adv.getQuestID() && asRec.getAdventureID() == adv.getAdventureID())
 			{
 				count = count + 1;
 				assertEquals(AdventureStateEnum.COMPLETED, asRec.getState());
@@ -229,14 +212,13 @@ public abstract class AdventureStateTableDataGatewayTest extends DatabaseTest
 	/**
 	 * Updating a non-existing record adds it to the data source
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void canAddNew() throws DatabaseException
 	{
 		gateway = getGateway();
-		gateway.updateState(13, 22, 11, AdventureStateEnum.TRIGGERED,true);
+		gateway.updateState(13, 22, 11, AdventureStateEnum.TRIGGERED, true);
 		ArrayList<AdventureStateRecord> actual = gateway.getAdventureStates(13, 22);
 		assertEquals(1, actual.size());
 		AdventureStateRecord asRec = actual.get(0);

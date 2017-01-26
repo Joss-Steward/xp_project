@@ -12,7 +12,6 @@ import datasource.PlayerTableDataGatewayMock;
 public class PlayerTableDataGatewayMockTest extends PlayerTableDataGatewayTest
 {
 
-	
 	/**
 	 * @see datasource.PlayerTableDataGatewayTest#getGatewaySingleton()
 	 */

@@ -7,6 +7,7 @@ import communication.messages.Message;
 
 /**
  * Handles a message that the player has disconnected from this area server
+ * 
  * @author nhydock
  *
  */
@@ -23,9 +24,9 @@ public class DisconnectMessageHandler extends MessageHandler
 		if (msg.getClass().equals(DisconnectMessage.class))
 		{
 			DisconnectMessage cMsg = (DisconnectMessage) msg;
-			
+
 			CommandRemovePlayer cmd = new CommandRemovePlayer(cMsg.getPlayerID());
-			
+
 			ModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}

@@ -31,7 +31,7 @@ public class ConnectMessageHandlerTest
 		PlayerManager.resetSingleton();
 		ModelFacade.resetSingleton();
 	}
-	
+
 	/**
 	 * Tests that getTypeWeHandle method returns correct type.
 	 */
@@ -41,17 +41,15 @@ public class ConnectMessageHandlerTest
 		ConnectMessageHandler h = new ConnectMessageHandler();
 		assertEquals(ConnectMessage.class, h.getMessageTypeWeHandle());
 	}
-	
+
 	/**
 	 * The incoming message should cause creation of the player in the model and
 	 * notification of the player's playerID to the state accumulator
 	 * 
-	 * @throws InterruptedException
-	 *             Shouldn't
+	 * @throws InterruptedException Shouldn't
 	 */
 	@Test
-	public void tellsStateAccumulatorIfPlayerIDPinIsRecognized()
-			throws InterruptedException
+	public void tellsStateAccumulatorIfPlayerIDPinIsRecognized() throws InterruptedException
 	{
 		ConnectMessageHandler handler = new ConnectMessageHandler();
 		ConnectionManager connectionManager = new ConnectionManager();
@@ -69,10 +67,9 @@ public class ConnectMessageHandlerTest
 	 * The incoming message should cause creation of the player in the model and
 	 * notification of the player's player ID to the state accumulator
 	 * 
-	 * @throws InterruptedException
-	 *             Shouldn't
+	 * @throws InterruptedException Shouldn't
 	 */
-	@Test 
+	@Test
 	public void tellsModel() throws InterruptedException
 	{
 		ConnectMessageHandler handler = new ConnectMessageHandler();

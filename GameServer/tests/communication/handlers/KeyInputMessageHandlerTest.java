@@ -11,6 +11,7 @@ import communication.messages.KeyInputMessage;
 
 /**
  * Tests functionality for a key input message handler
+ * 
  * @author Ian Keefer & TJ Renninger
  *
  */
@@ -18,10 +19,12 @@ public class KeyInputMessageHandlerTest
 {
 
 	/**
-	 * Tests the creation and process of a key input message handler. Tests to see the command size has a new command in it.
+	 * Tests the creation and process of a key input message handler. Tests to
+	 * see the command size has a new command in it.
 	 */
 	@Test
-	public void testProcessKeyInputMessage() {
+	public void testProcessKeyInputMessage()
+	{
 		ModelFacade.resetSingleton();
 		StateAccumulator accum = new StateAccumulator(null);
 		accum.setPlayerId(PlayersForTest.MERLIN.getPlayerID());

@@ -6,8 +6,10 @@ import data.CriteriaString;
 import data.GameLocation;
 import data.PointsCompleted;
 import datatypes.Position;
+
 /**
  * Creates adventures for the DB
+ * 
  * @author merlin
  *
  */
@@ -16,7 +18,7 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	QUEST1_ADVENTURE_1(1, "Quest 1: Adventure 1: MOVE!!!!", 1, 1, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(PlayersForTest.MERLIN.getPosition().getRow()+1,PlayersForTest.MERLIN.getPosition().getColumn()))),
+	QUEST1_ADVENTURE_1(1, "Quest 1: Adventure 1: MOVE!!!!", 1, 1, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx", new Position(PlayersForTest.MERLIN.getPosition().getRow() + 1, PlayersForTest.MERLIN.getPosition().getColumn()))),
 	/**
 	 * 
 	 */
@@ -28,7 +30,7 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	QUEST2_ADVENTURE2(2, "Quest 2: Adventure Description 2", 2, 4, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(4, 15))),
+	QUEST2_ADVENTURE2(2, "Quest 2: Adventure Description 2", 2, 4, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx", new Position(4, 15))),
 	/**
 	 * 
 	 */
@@ -77,36 +79,36 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	QUEST6_ADVENTURE_1(1, "Quest 6: Adventure 1: MOVE!!!!", 6, 1, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(PlayersForTest.HERSH.getPosition().getRow()+1,PlayersForTest.HERSH.getPosition().getColumn()))),
+	QUEST6_ADVENTURE_1(1, "Quest 6: Adventure 1: MOVE!!!!", 6, 1, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx", new Position(PlayersForTest.HERSH.getPosition().getRow() + 1, PlayersForTest.HERSH.getPosition().getColumn()))),
 	/**
 	 * 
 	 */
-	QUEST6_ADVENTURE_2(2, "Quest 6: Adventure 2: MOVE!!!!", 6, 2, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(PlayersForTest.HERSH.getPosition().getRow()+2,PlayersForTest.HERSH.getPosition().getColumn()))),
-	/**
-     * 
-     */
-	QUEST7_ADVENTURE_1(1, "Quest 7: Adventure 1: MOVE!!!!", 7, 1, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(PlayersForTest.HERSH.getPosition().getRow()+1,PlayersForTest.HERSH.getPosition().getColumn()))),
-	/**
-    * 
-    */
-	QUEST7_ADVENTURE_2(2, "Quest 7: Adventure 2: MOVE!!!!", 7, 0, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(PlayersForTest.HERSH.getPosition().getRow()+2,PlayersForTest.HERSH.getPosition().getColumn()))),
+	QUEST6_ADVENTURE_2(2, "Quest 6: Adventure 2: MOVE!!!!", 6, 2, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx", new Position(PlayersForTest.HERSH.getPosition().getRow() + 2, PlayersForTest.HERSH.getPosition().getColumn()))),
 	/**
 	 * 
 	 */
-	QUEST8_ADVENTURE_1(1, "Quest 8: Adventure 1: I'm dead", 8, 0, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",new Position(PlayersForTest.HERSH.getPosition().getRow()+3,PlayersForTest.HERSH.getPosition().getColumn()))),	
+	QUEST7_ADVENTURE_1(1, "Quest 7: Adventure 1: MOVE!!!!", 7, 1, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx", new Position(PlayersForTest.HERSH.getPosition().getRow() + 1, PlayersForTest.HERSH.getPosition().getColumn()))),
 	/**
-     * 
-     */
-    QUEST8_ADVENTURE_2(2, "Quest 8: Adventure 2: Get points!", 8, 1, AdventureCompletionType.POINTS, new PointsCompleted(5)),
-    /**
-     * 
-     */
-    QUEST8_ADVENTURE_3(3, "Quest 8: Adventure 3: Get points!", 8, 1, AdventureCompletionType.POINTS, new PointsCompleted(5)),
-    /**
-     * 
-     */
-    QUEST8_ADVENTURE_4(4, "Quest 8: Adventure 4: Get points!", 8, 1, AdventureCompletionType.POINTS, new PointsCompleted(5)),
-    /**
+	* 
+	*/
+	QUEST7_ADVENTURE_2(2, "Quest 7: Adventure 2: MOVE!!!!", 7, 0, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx", new Position(PlayersForTest.HERSH.getPosition().getRow() + 2, PlayersForTest.HERSH.getPosition().getColumn()))),
+	/**
+	 * 
+	 */
+	QUEST8_ADVENTURE_1(1, "Quest 8: Adventure 1: I'm dead", 8, 0, AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx", new Position(PlayersForTest.HERSH.getPosition().getRow() + 3, PlayersForTest.HERSH.getPosition().getColumn()))),
+	/**
+	 * 
+	 */
+	QUEST8_ADVENTURE_2(2, "Quest 8: Adventure 2: Get points!", 8, 1, AdventureCompletionType.POINTS, new PointsCompleted(5)),
+	/**
+	 * 
+	 */
+	QUEST8_ADVENTURE_3(3, "Quest 8: Adventure 3: Get points!", 8, 1, AdventureCompletionType.POINTS, new PointsCompleted(5)),
+	/**
+	 * 
+	 */
+	QUEST8_ADVENTURE_4(4, "Quest 8: Adventure 4: Get points!", 8, 1, AdventureCompletionType.POINTS, new PointsCompleted(5)),
+	/**
 	 * 
 	 */
 	QUEST10_ADVENTURE_1(1, "Quest 10: Adventure 2: Get points!", QuestsForTest.KNOWLEDGE_QUEST.getQuestID(), 1, AdventureCompletionType.POINTS, new PointsCompleted(5)),
@@ -114,12 +116,11 @@ public enum AdventuresForTest
 	 * 
 	 */
 	QUEST11_ADVENTURE_1(1, "Quest 11: Adventure 1: Expired Quest!", QuestsForTest.TRIGGERED_STATE_TO_EXPIRED_STATE_QUEST.getQuestID(), 2, AdventureCompletionType.KEYSTROKE, new CriteriaString("e")),
-	
-	
+
 	/****************************************************/
-	/* Onramping Adventures                             */
+	/* Onramping Adventures */
 	/****************************************************/
-	
+
 	/**
 	 * 
 	 */
@@ -140,7 +141,7 @@ public enum AdventuresForTest
 	 * 
 	 */
 	ONRAMPING_MOVE_RIGHT(5, "Press right arrow to move right", QuestsForTest.ONRAMPING_QUEST.getQuestID(), 2, AdventureCompletionType.KEYSTROKE, new CriteriaString("\u2192")),
-	
+
 	/**
 	 * 
 	 */
@@ -149,35 +150,38 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	EXPLORING_FIND_QUIZNASIUM(1, "Find the Quiznasium",QuestsForTest.EXPLORATION_QUEST.getQuestID(), 2, AdventureCompletionType.MOVEMENT, new GameLocation("quiznasium.tmx", new Position(4,23))),
+	EXPLORING_FIND_QUIZNASIUM(1, "Find the Quiznasium", QuestsForTest.EXPLORATION_QUEST.getQuestID(), 2, AdventureCompletionType.MOVEMENT, new GameLocation("quiznasium.tmx", new Position(4, 23))),
 	/**
 	 * 
 	 */
-	EXPLORING_FIND_STUDY_HALL(2, "Find the Study Hall",QuestsForTest.EXPLORATION_QUEST.getQuestID(), 2, AdventureCompletionType.MOVEMENT, new GameLocation("homework.tmx", new Position(48,24))),
+	EXPLORING_FIND_STUDY_HALL(2, "Find the Study Hall", QuestsForTest.EXPLORATION_QUEST.getQuestID(), 2, AdventureCompletionType.MOVEMENT, new GameLocation("homework.tmx", new Position(48, 24))),
 	/**
 	 * 
 	 */
-	EXPLORING_FIND_SECRET_ROOM(3, "Find the Secret Room!",QuestsForTest.EXPLORATION_QUEST.getQuestID(), 2, AdventureCompletionType.MOVEMENT, new GameLocation("Quiznasium.tmx", new Position(13,22)));
-	
-	
-	
+	EXPLORING_FIND_SECRET_ROOM(3, "Find the Secret Room!", QuestsForTest.EXPLORATION_QUEST.getQuestID(), 2, AdventureCompletionType.MOVEMENT, new GameLocation("Quiznasium.tmx", new Position(13, 22)));
+
 	private int adventureID;
 	private String adventureDescription;
 	private int questID;
 	private int experiencePointsGained;
 	private AdventureCompletionType completionType;
 	private AdventureCompletionCriteria completionCriteria;
-	
+
 	/**
 	 * Constructor for Adventures Enum
+	 * 
 	 * @param adventureID this adventure's unique ID
 	 * @param adventureDescription what the player has to do
 	 * @param questID the ID of the quest that contains this adventure
-	 * @param experiencePointsGained the number of experience points the player gets when he completes the adventure
-	 * @param completionType the method the player must use to complete this adventure
-	 * @param signatureSpecification the rules about who can sign for an outside adventure
+	 * @param experiencePointsGained the number of experience points the player
+	 *            gets when he completes the adventure
+	 * @param completionType the method the player must use to complete this
+	 *            adventure
+	 * @param signatureSpecification the rules about who can sign for an outside
+	 *            adventure
 	 */
-	AdventuresForTest(int adventureID, String adventureDescription, int questID, int experiencePointsGained, AdventureCompletionType completionType, AdventureCompletionCriteria signatureSpecification)
+	AdventuresForTest(int adventureID, String adventureDescription, int questID, int experiencePointsGained,
+			AdventureCompletionType completionType, AdventureCompletionCriteria signatureSpecification)
 	{
 		this.adventureID = adventureID;
 		this.adventureDescription = adventureDescription;
@@ -234,5 +238,5 @@ public enum AdventuresForTest
 	{
 		return completionType;
 	}
-	
+
 }

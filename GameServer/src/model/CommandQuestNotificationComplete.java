@@ -1,24 +1,22 @@
 package model;
 
-import datasource.DatabaseException;
-
-
 /**
  * @author Ryan
  *
  */
 public class CommandQuestNotificationComplete extends Command
 {
-	
+
 	private int playerID;
 	private int questID;
 
 	/**
 	 * Constructor
+	 * 
 	 * @param playerID id of the player
 	 * @param questID id of the quest
 	 */
-	public CommandQuestNotificationComplete(int playerID, int questID) 
+	public CommandQuestNotificationComplete(int playerID, int questID)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
@@ -37,7 +35,7 @@ public class CommandQuestNotificationComplete extends Command
 	/**
 	 * @return id of the player
 	 */
-	public int getPlayerID() 
+	public int getPlayerID()
 	{
 		return playerID;
 	}
@@ -45,7 +43,7 @@ public class CommandQuestNotificationComplete extends Command
 	/**
 	 * @return id of the quest
 	 */
-	public int getQuestID() 
+	public int getQuestID()
 	{
 		return questID;
 	}

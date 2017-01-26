@@ -36,23 +36,20 @@ public class Player
 	private Crew crew;
 
 	final private int LOCAL_CHAT_RADIUS = 5;
-	
+
 	private Major major;
 
 	/**
 	 * Add experience points and generates ExperienceChangedReport
 	 * 
-	 * @param expPoints
-	 *            Player's experience points
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @param expPoints Player's experience points
+	 * @throws DatabaseException shouldn't
 	 */
 	public void addExperiencePoints(int expPoints) throws DatabaseException
 	{
 		this.experiencePoints = experiencePoints + expPoints;
-		ExperienceChangedReport report = new ExperienceChangedReport(this.playerID,
-				this.experiencePoints, LevelManager.getSingleton().getLevelForPoints(
-						this.experiencePoints));
+		ExperienceChangedReport report = new ExperienceChangedReport(this.playerID, this.experiencePoints,
+				LevelManager.getSingleton().getLevelForPoints(this.experiencePoints));
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
 
@@ -137,7 +134,7 @@ public class Player
 	public void incrementQuizScore()
 	{
 		this.knowledgePoints++;
-		
+
 		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(playerID, this.knowledgePoints);
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
@@ -146,11 +143,10 @@ public class Player
 	 * Check the pin to make sure it is correct with regards to contents and
 	 * expiration
 	 * 
-	 * @param pinToCheck
-	 *            the pin we gave the player to connect to this area server
+	 * @param pinToCheck the pin we gave the player to connect to this area
+	 *            server
 	 * @return true or false with pin validity
-	 * @throws DatabaseException
-	 *             if the data source had an exception
+	 * @throws DatabaseException if the data source had an exception
 	 */
 
 	public boolean isPinValid(double pinToCheck) throws DatabaseException
@@ -166,10 +162,9 @@ public class Player
 	/**
 	 * store the information into the data source
 	 * 
-	 * @throws DatabaseException
-	 *             if the data source fails to complete the persistance
-	 * @throws IllegalQuestChangeException
-	 *             shouldn't
+	 * @throws DatabaseException if the data source fails to complete the
+	 *             persistance
+	 * @throws IllegalQuestChangeException shouldn't
 	 */
 	public void persist() throws DatabaseException, IllegalQuestChangeException
 	{
@@ -179,8 +174,7 @@ public class Player
 	/**
 	 * Set the appearance type for this player
 	 * 
-	 * @param appearanceType
-	 *            the new appearance type
+	 * @param appearanceType the new appearance type
 	 */
 	public void setAppearanceType(String appearanceType)
 	{
@@ -188,8 +182,7 @@ public class Player
 	}
 
 	/**
-	 * @param crew
-	 *            the crew to which this player should belong
+	 * @param crew the crew to which this player should belong
 	 */
 	public void setCrew(Crew crew)
 	{
@@ -197,8 +190,7 @@ public class Player
 	}
 
 	/**
-	 * @param playerMapper
-	 *            the mapper that will be used to persist this player
+	 * @param playerMapper the mapper that will be used to persist this player
 	 */
 	public void setDataMapper(PlayerMapper playerMapper)
 	{
@@ -208,10 +200,8 @@ public class Player
 	/**
 	 * Set experience points and generates ExperienceChangedReport
 	 * 
-	 * @param expPoints
-	 *            Player's experience points
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @param expPoints Player's experience points
+	 * @throws DatabaseException shouldn't
 	 */
 	public void setExperiencePoints(int expPoints) throws DatabaseException
 	{
@@ -219,8 +209,7 @@ public class Player
 	}
 
 	/**
-	 * @param mapName
-	 *            the name of the map this player should be on
+	 * @param mapName the name of the map this player should be on
 	 */
 	public void setMapName(String mapName)
 	{
@@ -228,8 +217,7 @@ public class Player
 	}
 
 	/**
-	 * @param playerID
-	 *            this player's unique ID
+	 * @param playerID this player's unique ID
 	 */
 	public void setPlayerID(int playerID)
 	{
@@ -239,8 +227,7 @@ public class Player
 	/**
 	 * Tell this player what his login information is
 	 * 
-	 * @param pl
-	 *            his login information
+	 * @param pl his login information
 	 */
 	public void setPlayerLogin(PlayerLogin pl)
 	{
@@ -250,9 +237,8 @@ public class Player
 	/**
 	 * Set the player's position
 	 * 
-	 * @param playerPosition
-	 *            The new location the player is Assuming a valid position.
-	 *            Error checking else where
+	 * @param playerPosition The new location the player is Assuming a valid
+	 *            position. Error checking else where
 	 */
 	public void setPlayerPosition(Position playerPosition)
 	{
@@ -266,8 +252,7 @@ public class Player
 	 * Move a player without notifying the other players (used when moving from
 	 * one map to another
 	 * 
-	 * @param newPosition
-	 *            the position the player should move to
+	 * @param newPosition the position the player should move to
 	 */
 	public void setPlayerPositionWithoutNotifying(Position newPosition)
 	{
@@ -277,8 +262,7 @@ public class Player
 	/**
 	 * Set the quizScore
 	 * 
-	 * @param score
-	 *            the new quiz score
+	 * @param score the new quiz score
 	 */
 	public void setQuizScore(int score)
 	{
@@ -289,8 +273,7 @@ public class Player
 	 * When receiving a local message check if the player is close enough to
 	 * hear
 	 * 
-	 * @param position
-	 *            position of the sender
+	 * @param position position of the sender
 	 */
 	protected boolean canReceiveLocalMessage(Position position)
 	{
@@ -305,16 +288,15 @@ public class Player
 	 */
 	public void sendReportGivingPosition()
 	{
-		PlayerMovedReport report = new PlayerMovedReport(playerID, this.getPlayerName(),
-				playerPosition, this.mapName);
+		PlayerMovedReport report = new PlayerMovedReport(playerID, this.getPlayerName(), playerPosition, this.mapName);
 
 		QualifiedObservableConnector.getSingleton().sendReport(report);
 	}
-	
+
 	/**
 	 * @return the number of knowledge points of this player
 	 */
-	public int getKnowledgePoints() 
+	public int getKnowledgePoints()
 	{
 		return knowledgePoints;
 	}
@@ -322,14 +304,16 @@ public class Player
 	/**
 	 * @return the major of the player
 	 */
-	public Major getMajor() {
+	public Major getMajor()
+	{
 		return major;
 	}
 
 	/**
 	 * @param major of the player
 	 */
-	public void setMajor(Major major) {
+	public void setMajor(Major major)
+	{
 		this.major = major;
 	}
 }

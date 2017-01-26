@@ -19,8 +19,10 @@ import datasource.DatabaseException;
  * @author Matthew Croft
  *
  */
-public class KnowledgeChangedMessagePackerTest {
+public class KnowledgeChangedMessagePackerTest
+{
 	private StateAccumulator stateAccumulator;
+
 	/**
 	 * reset the necessary singletons
 	 */
@@ -29,13 +31,14 @@ public class KnowledgeChangedMessagePackerTest {
 	{
 		OptionsManager.getSingleton().setTestMode(true);
 		QuestManager.resetSingleton();
-		
+
 		PlayerManager playerManager = PlayerManager.getSingleton();
 		playerManager.addPlayer(PlayersForTest.JOHN.getPlayerID());
 		playerManager.addPlayer(PlayersForTest.MERLIN.getPlayerID());
 		stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(PlayersForTest.MERLIN.getPlayerID());
 	}
+
 	/**
 	 * 
 	 */
@@ -43,30 +46,33 @@ public class KnowledgeChangedMessagePackerTest {
 	public void testReportWePack()
 	{
 		KnowledgeChangePacker packer = new KnowledgeChangePacker();
-		
+
 		assertEquals(KnowledgePointsChangeReport.class, packer.getReportTypesWePack().get(0));
 	}
-	
+
 	/**
-	 * the message should contain the appropriate player's ID, experience points and level object
+	 * the message should contain the appropriate player's ID, experience points
+	 * and level object
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void testPackedObjectIsCurrentPlayer() throws DatabaseException
 	{
-		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.MERLIN.getKnowledgeScore());
+		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(PlayersForTest.MERLIN.getPlayerID(),
+				PlayersForTest.MERLIN.getKnowledgeScore());
 		KnowledgeChangePacker packer = new KnowledgeChangePacker();
 		packer.setAccumulator(stateAccumulator);
- 
+
 		KnowledgeChangedMessage msg = (KnowledgeChangedMessage) packer.pack(report);
-		
+
 		assertEquals(PlayersForTest.MERLIN.getKnowledgeScore(), msg.getKnowledgePoints());
 	}
-	
+
 	/**
-	 * If the report is not about the player we are communicating with, we should ignore it
+	 * If the report is not about the player we are communicating with, we
+	 * should ignore it
+	 * 
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
@@ -76,7 +82,8 @@ public class KnowledgeChangedMessagePackerTest {
 		KnowledgeChangePacker packer = new KnowledgeChangePacker();
 		packer.setAccumulator(stateAccumulator);
 
-		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(PlayersForTest.JOHN.getPlayerID(), PlayersForTest.JOHN.getKnowledgeScore());
+		KnowledgePointsChangeReport report = new KnowledgePointsChangeReport(PlayersForTest.JOHN.getPlayerID(),
+				PlayersForTest.JOHN.getKnowledgeScore());
 		assertNull(packer.pack(report));
 	}
 }

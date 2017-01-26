@@ -17,9 +17,9 @@ import datatypes.Position;
  * @author Josh
  */
 
-public class ChatMessageHandlerTest 
+public class ChatMessageHandlerTest
 {
-	
+
 	/**
 	 * Reset the ModelFacade
 	 */
@@ -29,7 +29,7 @@ public class ChatMessageHandlerTest
 		ModelFacade.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 	}
-	
+
 	/**
 	 * Tests that getTypeWeHandle method returns correct type.
 	 */
@@ -39,21 +39,22 @@ public class ChatMessageHandlerTest
 		ChatMessageHandler h = new ChatMessageHandler();
 		assertEquals(ChatMessage.class, h.getMessageTypeWeHandle());
 	}
-	
+
 	/**
 	 * Testing to see if a command is queued after receiving a message
+	 * 
 	 * @throws InterruptedException shouldn't
 	 */
 	@Test
 	public void handleChatMessage() throws InterruptedException
 	{
 		reset();
-		
-		ChatMessage cm = new ChatMessage("Bob", "Hey", new Position(0,0), ChatType.Local);
+
+		ChatMessage cm = new ChatMessage("Bob", "Hey", new Position(0, 0), ChatType.Local);
 		ChatMessageHandler ch = new ChatMessageHandler();
 		ch.process(cm);
-		assertEquals(1,ModelFacade.getSingleton().queueSize());
-		
+		assertEquals(1, ModelFacade.getSingleton().queueSize());
+
 		while (ModelFacade.getSingleton().hasCommandsPending())
 		{
 			Thread.sleep(100);

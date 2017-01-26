@@ -29,12 +29,9 @@ public class Server implements Runnable
 	/**
 	 * Create a new Server listening on a given port
 	 * 
-	 * @param map
-	 *            The map that this server will serve
-	 * @param port
-	 *            The port to listen on
-	 * @param runningLocal
-	 *            true if we are running with a host name of localhost
+	 * @param map The map that this server will serve
+	 * @param port The port to listen on
+	 * @param runningLocal true if we are running with a host name of localhost
 	 */
 	public Server(String map, int port, boolean runningLocal)
 	{
@@ -52,12 +49,12 @@ public class Server implements Runnable
 		try
 		{
 			OptionsManager om = OptionsManager.getSingleton();
-			
+
 			String hostName;
 			if (!runningLocal)
 			{
 				hostName = InetAddress.getLocalHost().getHostName();
-				
+
 			} else
 			{
 				hostName = "localhost";
@@ -67,16 +64,15 @@ public class Server implements Runnable
 			servSock = new ServerSocket(OptionsManager.getSingleton().getPortNumber(), 10);
 			while (true)
 			{
-				System.out.println("Listening on port "
-						+ OptionsManager.getSingleton().getPortNumber());
+				System.out.println("Listening on port " + OptionsManager.getSingleton().getPortNumber());
 				Socket sock = servSock.accept();
 				System.out.println(i + ":  got something from " + sock);
 				i++;
 				MessagePackerSet messagePackerSet = new MessagePackerSet();
 				StateAccumulator stateAccumulator = new StateAccumulator(messagePackerSet);
 
-				new ConnectionManager(sock, stateAccumulator, new MessageHandlerSet(
-						stateAccumulator), messagePackerSet, true);
+				new ConnectionManager(sock, stateAccumulator, new MessageHandlerSet(stateAccumulator), messagePackerSet,
+						true);
 			}
 
 		} catch (Throwable e)
@@ -103,11 +99,9 @@ public class Server implements Runnable
 	/**
 	 * Run like java -jar server.jar --port=1000 map=quiznasium
 	 * 
-	 * @param args
-	 *            Main runner
-	 * @throws IllegalArgumentException
-	 *             Thrown when the port is not given as an argument to the
-	 *             execution
+	 * @param args Main runner
+	 * @throws IllegalArgumentException Thrown when the port is not given as an
+	 *             argument to the execution
 	 */
 	public static void main(String args[]) throws IllegalArgumentException
 	{
@@ -126,19 +120,17 @@ public class Server implements Runnable
 			} else if (splitArg[0].equals("--localhost"))
 			{
 				runningLocal = true;
-			} else if(splitArg[0].equals("--production"))
+			} else if (splitArg[0].equals("--production"))
 			{
 				OptionsManager.getSingleton().setUsingTestDB(false);
 			}
 		}
 		if (map == null)
 		{
-			throw new IllegalArgumentException(
-					"Map name is required to run the server. Use the --map=STRING option.");
+			throw new IllegalArgumentException("Map name is required to run the server. Use the --map=STRING option.");
 		} else if (port == null && !OptionsManager.getSingleton().isTestMode())
 		{
-			throw new IllegalArgumentException(
-					"Port is required to run the server. Use the --port=INTEGER option.");
+			throw new IllegalArgumentException("Port is required to run the server. Use the --port=INTEGER option.");
 		}
 		Server S = new Server(map, port, runningLocal);
 		S.run();

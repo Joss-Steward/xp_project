@@ -27,8 +27,7 @@ public class PlayerLeaveMessagePacker extends MessagePacker
 		{
 			PlayerLeaveReport report = (PlayerLeaveReport) object;
 
-			PlayerLeaveMessage msg = new PlayerLeaveMessage(
-					report.getPlayerID());
+			PlayerLeaveMessage msg = new PlayerLeaveMessage(report.getPlayerID());
 			return msg;
 		}
 		return null;
@@ -40,9 +39,8 @@ public class PlayerLeaveMessagePacker extends MessagePacker
 	@Override
 	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 	{
-		ArrayList<Class<? extends QualifiedObservableReport>> result = 
-				new ArrayList<Class<? extends QualifiedObservableReport>>();
-		result.add( PlayerLeaveReport.class);
+		ArrayList<Class<? extends QualifiedObservableReport>> result = new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add(PlayerLeaveReport.class);
 		return result;
 	}
 

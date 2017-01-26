@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * A row data gateway for the quest table
+ * 
  * @author merlin
  *
  */
@@ -15,7 +16,8 @@ public interface QuestRowDataGateway
 {
 
 	/**
-	 * Used for testing - tells the mock version to reset its data back to the original state
+	 * Used for testing - tells the mock version to reset its data back to the
+	 * original state
 	 */
 	public void resetData();
 
@@ -31,7 +33,8 @@ public interface QuestRowDataGateway
 
 	/**
 	 * 
-	 * @return the name of the map that contains the trigger point for this quest
+	 * @return the name of the map that contains the trigger point for this
+	 *         quest
 	 */
 	public String getTriggerMapName();
 
@@ -47,17 +50,20 @@ public interface QuestRowDataGateway
 	public int getAdventuresForFulfillment();
 
 	/**
-	 * @return the number of experience points you gain when you fulfill this quest
+	 * @return the number of experience points you gain when you fulfill this
+	 *         quest
 	 */
 	int getExperiencePointsGained();
 
 	/**
-	 * @return the type of action that should be taken when this quest is complete
+	 * @return the type of action that should be taken when this quest is
+	 *         complete
 	 */
 	public QuestCompletionActionType getCompletionActionType();
 
 	/**
-	 * @return an object describing the details of the completion action for this quest
+	 * @return an object describing the details of the completion action for
+	 *         this quest
 	 */
 	public QuestCompletionActionParameter getCompletionActionParameter();
 
@@ -70,11 +76,10 @@ public interface QuestRowDataGateway
 	/**
 	 * @return the first day the quest is available
 	 */
-    public Date getStartDate();
-    
-    
-    /**
-     * @return the last day the quest is available
-     */
-    public Date getEndDate();
+	public Date getStartDate();
+
+	/**
+	 * @return the last day the quest is available
+	 */
+	public Date getEndDate();
 }

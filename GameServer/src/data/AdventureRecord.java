@@ -15,27 +15,20 @@ public final class AdventureRecord
 	private final AdventureCompletionCriteria completionCriteria;
 	private AdventureCompletionType completionType;
 
-
 	/**
 	 * Create it
 	 * 
-	 * @param questID
-	 *            the unique ID of the quest that contains the adventure
-	 * @param adventureID
-	 *            the adventure's unique ID
-	 * @param adventureDescription
-	 *            the adventure's description
-	 * @param experiencePointsGained
-	 *            the number of points earned by completing this adventure
-	 * @param completionType
-	 *            the type of action the player must do to complete this
-	 *            adventure
-	 * @param completionCriteria
-	 *            the criteria for satisfying this adventure
+	 * @param questID the unique ID of the quest that contains the adventure
+	 * @param adventureID the adventure's unique ID
+	 * @param adventureDescription the adventure's description
+	 * @param experiencePointsGained the number of points earned by completing
+	 *            this adventure
+	 * @param completionType the type of action the player must do to complete
+	 *            this adventure
+	 * @param completionCriteria the criteria for satisfying this adventure
 	 */
-	public AdventureRecord(int questID, int adventureID, String adventureDescription,
-			int experiencePointsGained, AdventureCompletionType completionType,
-			AdventureCompletionCriteria completionCriteria)
+	public AdventureRecord(int questID, int adventureID, String adventureDescription, int experiencePointsGained,
+			AdventureCompletionType completionType, AdventureCompletionCriteria completionCriteria)
 	{
 		this.adventureID = adventureID;
 		this.adventureDescription = adventureDescription;
@@ -88,8 +81,7 @@ public final class AdventureRecord
 	 */
 	public String toString()
 	{
-		return "Quest " + questID + ":     " + "Adventure  " + adventureID + "      "
-				+ adventureDescription;
+		return "Quest " + questID + ":     " + "Adventure  " + adventureID + "      " + adventureDescription;
 	}
 
 	/**
@@ -100,13 +92,11 @@ public final class AdventureRecord
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((adventureDescription == null) ? 0 : adventureDescription.hashCode());
+		result = prime * result + ((adventureDescription == null) ? 0 : adventureDescription.hashCode());
 		result = prime * result + adventureID;
 		result = prime * result + experiencePointsGained;
 		result = prime * result + questID;
-		result = prime * result
-				+ ((completionCriteria == null) ? 0 : completionCriteria.hashCode());
+		result = prime * result + ((completionCriteria == null) ? 0 : completionCriteria.hashCode());
 		return result;
 	}
 

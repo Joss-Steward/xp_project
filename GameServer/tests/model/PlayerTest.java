@@ -32,8 +32,7 @@ public class PlayerTest extends DatabaseTest
 	/**
 	 * make sure the necessary singletons are reset
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 * @see datasource.DatabaseTest#setUp()
 	 */
 	@Before
@@ -49,6 +48,7 @@ public class PlayerTest extends DatabaseTest
 
 	/**
 	 * cleanup the singletons we played with
+	 * 
 	 * @see datasource.DatabaseTest#tearDown()
 	 */
 	@After
@@ -58,6 +58,7 @@ public class PlayerTest extends DatabaseTest
 		QualifiedObservableConnector.resetSingleton();
 		PlayerManager.resetSingleton();
 	}
+
 	/**
 	 * Make sure we can retrieve a player's appearanceType
 	 */
@@ -71,8 +72,7 @@ public class PlayerTest extends DatabaseTest
 	/**
 	 * Make sure we can retrieve a player's unique name from the db
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn'ts
+	 * @throws DatabaseException shouldn'ts
 	 */
 	@Test
 	public void canGetPlayerName() throws DatabaseException
@@ -80,9 +80,10 @@ public class PlayerTest extends DatabaseTest
 		Player p = playerManager.addPlayer(1);
 		assertEquals("John", p.getPlayerName());
 	}
-	
+
 	/**
 	 * Make sure we can retrieve a player's major
+	 * 
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
@@ -91,12 +92,11 @@ public class PlayerTest extends DatabaseTest
 		Player p = playerManager.addPlayer(1);
 		assertEquals(Major.COMPUTER_ENGINEERING, p.getMajor());
 	}
-	
+
 	/**
 	 * Test to make sure we have a legitimate PIN
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
@@ -110,8 +110,7 @@ public class PlayerTest extends DatabaseTest
 	/**
 	 * Sets the players position and checks it
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn'ts
+	 * @throws DatabaseException shouldn'ts
 	 */
 	@Test
 	public void testPlayerPosition() throws DatabaseException
@@ -122,9 +121,9 @@ public class PlayerTest extends DatabaseTest
 		assertEquals(pos, p.getPlayerPosition());
 	}
 
-	
 	/**
 	 * Test that we can set Player's experience points and add to it
+	 * 
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
@@ -138,22 +137,23 @@ public class PlayerTest extends DatabaseTest
 		p.addExperiencePoints(3);
 		assertEquals(37, p.getExperiencePoints());
 	}
-	
+
 	/**
-	 * Tests that adding experience points to a player object 
-	 * generates ExperienceChangedReport
+	 * Tests that adding experience points to a player object generates
+	 * ExperienceChangedReport
+	 * 
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void testAddExpPointsCreatesReport() throws DatabaseException
 	{
 		Player p = playerManager.addPlayer(PlayersForTest.JOHN.getPlayerID());
-		
+
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs,
-				ExperienceChangedReport.class);
-		int updatedPoints = p.getExperiencePoints()+15;
-		ExperienceChangedReport expectedReport = new ExperienceChangedReport(p.getPlayerID(), updatedPoints, LevelManager.getSingleton().getLevelForPoints(updatedPoints));
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, ExperienceChangedReport.class);
+		int updatedPoints = p.getExperiencePoints() + 15;
+		ExperienceChangedReport expectedReport = new ExperienceChangedReport(p.getPlayerID(), updatedPoints,
+				LevelManager.getSingleton().getLevelForPoints(updatedPoints));
 		obs.receiveReport(expectedReport);
 		EasyMock.replay(obs);
 

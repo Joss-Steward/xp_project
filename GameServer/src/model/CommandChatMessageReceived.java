@@ -6,7 +6,7 @@ import datatypes.Position;
 /**
  * @author Josh
  *
- *Receives the message parameters and passes them to the ChatManager 
+ *         Receives the message parameters and passes them to the ChatManager
  */
 public class CommandChatMessageReceived extends Command
 {
@@ -14,7 +14,7 @@ public class CommandChatMessageReceived extends Command
 	private String senderName;
 	private Position location;
 	private ChatType type;
-	
+
 	/**
 	 * @param senderName is the name of the player who sent the message
 	 * @param message is the message that will be sent to server
@@ -28,11 +28,11 @@ public class CommandChatMessageReceived extends Command
 		this.location = location;
 		this.type = type;
 	}
-	
+
 	/**
 	 * @return the message that was received the server
 	 */
-	public String getMessage() 
+	public String getMessage()
 	{
 		return message;
 	}
@@ -40,7 +40,7 @@ public class CommandChatMessageReceived extends Command
 	/**
 	 * @return the name of the player that sent the message
 	 */
-	public String getSenderName() 
+	public String getSenderName()
 	{
 		return senderName;
 	}
@@ -48,7 +48,7 @@ public class CommandChatMessageReceived extends Command
 	/**
 	 * @return the location of the player when the message was sent
 	 */
-	public Position getLocation() 
+	public Position getLocation()
 	{
 		return location;
 	}
@@ -56,13 +56,14 @@ public class CommandChatMessageReceived extends Command
 	/**
 	 * @return the type of message
 	 */
-	public ChatType getType() 
+	public ChatType getType()
 	{
 		return type;
 	}
 
 	/**
-	 * The ChatManager will call the sendChatToUI method with the following parameters.
+	 * The ChatManager will call the sendChatToUI method with the following
+	 * parameters.
 	 */
 	@Override
 	protected boolean execute()

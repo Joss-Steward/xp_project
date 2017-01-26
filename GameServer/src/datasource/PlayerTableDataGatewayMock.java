@@ -75,12 +75,12 @@ public class PlayerTableDataGatewayMock extends PlayerTableDataGateway
 	}
 
 	/**
-	 * Unbuilt because the tests don't test this.  That seemed very fragile (anyone changing
-	 * anything in the test DB for players would break such a test
+	 * Unbuilt because the tests don't test this. That seemed very fragile
+	 * (anyone changing anything in the test DB for players would break such a
+	 * test
 	 */
 	@Override
-	public ArrayList<PlayerScoreRecord> getHighScoreList()
-			throws DatabaseException
+	public ArrayList<PlayerScoreRecord> getHighScoreList() throws DatabaseException
 	{
 		return null;
 	}

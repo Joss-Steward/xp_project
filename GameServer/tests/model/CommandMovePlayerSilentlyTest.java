@@ -40,8 +40,7 @@ public class CommandMovePlayerSilentlyTest
 	/**
 	 * Update a player's position from id
 	 * 
-	 * @throws PlayerNotFoundException
-	 *             shouldn't
+	 * @throws PlayerNotFoundException shouldn't
 	 */
 	@Test
 	public void testValidPlayer() throws PlayerNotFoundException
@@ -54,7 +53,7 @@ public class CommandMovePlayerSilentlyTest
 		p.setPlayerPosition(startPosition);
 
 		assertEquals(startPosition, p.getPlayerPosition());
-		
+
 		CommandMovePlayerSilently cmd = new CommandMovePlayerSilently("newMap", 1, newPosition);
 		cmd.execute();
 
@@ -63,7 +62,8 @@ public class CommandMovePlayerSilentlyTest
 	}
 
 	/**
-	 * Make sure anyone who is observing for movement reports doesn't hear about this one
+	 * Make sure anyone who is observing for movement reports doesn't hear about
+	 * this one
 	 */
 	@Test
 	public void doesntNotifyObservers()
@@ -72,17 +72,17 @@ public class CommandMovePlayerSilentlyTest
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
 		QualifiedObservableConnector.getSingleton().registerObserver(obs, PlayerMovedReport.class);
 		EasyMock.replay(obs);
-		
-		CommandMovePlayerSilently cmd = new CommandMovePlayerSilently("newMap", 1, new Position(4,3));
+
+		CommandMovePlayerSilently cmd = new CommandMovePlayerSilently("newMap", 1, new Position(4, 3));
 		cmd.execute();
-		
+
 		EasyMock.verify(obs);
 	}
+
 	/**
 	 * Update a player's position from id
 	 * 
-	 * @throws PlayerNotFoundException
-	 *             shouldn't
+	 * @throws PlayerNotFoundException shouldn't
 	 */
 	@Test
 	public void testNoPlayer() throws PlayerNotFoundException

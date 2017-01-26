@@ -74,8 +74,7 @@ public class NPC extends Player
 	/**
 	 * Used only for testing - sets the behavior object directly
 	 * 
-	 * @param mb
-	 *            the behavior object this NPC should use
+	 * @param mb the behavior object this NPC should use
 	 */
 	public void setBehavior(NPCBehavior mb)
 	{
@@ -85,8 +84,8 @@ public class NPC extends Player
 	/**
 	 * Tell this NPC which behavior class it should use
 	 * 
-	 * @param behaviorClass
-	 *            the name of the class specifying the behavior of this NPC
+	 * @param behaviorClass the name of the class specifying the behavior of
+	 *            this NPC
 	 */
 	public void setBehaviorClass(String behaviorClass)
 	{
@@ -97,8 +96,7 @@ public class NPC extends Player
 			{
 				System.out.println("Creating behavior for " + behaviorClass);
 				behavior = (NPCBehavior) Class.forName(behaviorClass).newInstance();
-			} catch (InstantiationException | IllegalAccessException
-					| ClassNotFoundException e)
+			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e)
 			{
 				behavior = null;
 				e.printStackTrace();
@@ -118,8 +116,7 @@ public class NPC extends Player
 			// has passed. This is so behavior doesn't occur as soon as start
 			// happens
 			timedEvent = new NpcTimerTask(behavior);
-			timer.scheduleAtFixedRate(timedEvent, behavior.getPollingInterval(),
-					behavior.getPollingInterval());
+			timer.scheduleAtFixedRate(timedEvent, behavior.getPollingInterval(), behavior.getPollingInterval());
 		}
 	}
 

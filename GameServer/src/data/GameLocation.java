@@ -4,6 +4,7 @@ import datatypes.Position;
 
 /**
  * Contains information about a particular place in the game
+ * 
  * @author Merlin
  *
  */
@@ -21,6 +22,7 @@ public class GameLocation implements AdventureCompletionCriteria, QuestCompletio
 
 	/**
 	 * Stores one place in the game
+	 * 
 	 * @param mapName the map containing the place
 	 * @param position the position with that map of the place
 	 */
@@ -29,6 +31,7 @@ public class GameLocation implements AdventureCompletionCriteria, QuestCompletio
 		this.mapName = mapName;
 		this.position = position;
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */

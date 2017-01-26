@@ -17,6 +17,7 @@ import datatypes.Position;
 
 /**
  * Tests required of all player gateways
+ * 
  * @author Merlin
  *
  */
@@ -27,14 +28,17 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 
 	/**
 	 * Find the gateway for a given player
+	 * 
 	 * @param playerID the ID of the player we are testing
 	 * @return the gateway
-	 * @throws DatabaseException if the playerID can't be found in the data source
+	 * @throws DatabaseException if the playerID can't be found in the data
+	 *             source
 	 */
 	abstract PlayerRowDataGateway findGateway(int playerID) throws DatabaseException;
-	
+
 	/**
 	 * Make sure any static information is cleaned up between tests
+	 * 
 	 * @throws SQLException shouldn't
 	 * @throws DatabaseException shouldn't
 	 */
@@ -47,6 +51,7 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 			gateway.resetData();
 		}
 	}
+
 	/**
 	 * @throws DatabaseException shouldn't
 	 */
@@ -66,25 +71,27 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 	/**
 	 * Make sure we can add a new user to the system
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void creation() throws DatabaseException
 	{
-		gateway = createGateway("mapName", new Position(3,2), "Warrior", 2, 13, Crew.OFF_BY_ONE, Major.SOFTWARE_ENGINEERING);
+		gateway = createGateway("mapName", new Position(3, 2), "Warrior", 2, 13, Crew.OFF_BY_ONE,
+				Major.SOFTWARE_ENGINEERING);
 
 		PlayerRowDataGateway after = findGateway(gateway.getPlayerID());
-		assertEquals(new Position(3,2), after.getPosition());
+		assertEquals(new Position(3, 2), after.getPosition());
 		assertEquals("Warrior", after.getAppearanceType());
-		assertEquals(2,after.getQuizScore());
+		assertEquals(2, after.getQuizScore());
 		assertEquals(13, after.getExperiencePoints());
 		assertEquals(Crew.OFF_BY_ONE, after.getCrew());
 		assertEquals(Major.SOFTWARE_ENGINEERING, after.getMajor());
 	}
 
 	/**
-	 * Get a gateway that creates a row in the data source with the given information
+	 * Get a gateway that creates a row in the data source with the given
+	 * information
+	 * 
 	 * @param mapName the name of the map
 	 * @param position the position on the map
 	 * @param appearanceType the appearance type of the player
@@ -95,15 +102,14 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 	 * @return the gateway
 	 * @throws DatabaseException if we fail to create the row
 	 */
-	abstract PlayerRowDataGateway createGateway(String mapName, Position position,
-			String appearanceType, int quizScore, int experiencePoints, Crew crew, Major major) throws DatabaseException;
-	
+	abstract PlayerRowDataGateway createGateway(String mapName, Position position, String appearanceType, int quizScore,
+			int experiencePoints, Crew crew, Major major) throws DatabaseException;
+
 	/**
 	 * make sure we get the right exception if we try to find someone who
 	 * doesn't exist
 	 * 
-	 * @throws DatabaseException
-	 *             should
+	 * @throws DatabaseException should
 	 */
 	@Test(expected = DatabaseException.class)
 	public void findNotExisting() throws DatabaseException
@@ -111,25 +117,21 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 		gateway = findGateway(11111);
 	}
 
-	
 	/**
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void changePosition() throws DatabaseException
 	{
 		gateway = findGateway(PlayersForTest.MERLIN.getPlayerID());
-		gateway.setPosition(new Position(42,32));
+		gateway.setPosition(new Position(42, 32));
 		gateway.persist();
-		PlayerRowDataGateway after = findGateway(PlayersForTest.MERLIN
-				.getPlayerID());
-		assertEquals(new Position(42,32), after.getPosition());
+		PlayerRowDataGateway after = findGateway(PlayersForTest.MERLIN.getPlayerID());
+		assertEquals(new Position(42, 32), after.getPosition());
 	}
-	
+
 	/**
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void changeQuizScore() throws DatabaseException
@@ -137,14 +139,12 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 		gateway = findGateway(PlayersForTest.MERLIN.getPlayerID());
 		gateway.setQuizScore(666);
 		gateway.persist();
-		PlayerRowDataGateway after = findGateway(PlayersForTest.MERLIN
-				.getPlayerID());
+		PlayerRowDataGateway after = findGateway(PlayersForTest.MERLIN.getPlayerID());
 		assertEquals(666, after.getQuizScore());
 	}
-	
+
 	/**
-	 * @throws DatabaseException 
-	 * 				shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void changeExperiencePoints() throws DatabaseException
@@ -152,15 +152,13 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 		gateway = findGateway(PlayersForTest.MERLIN.getPlayerID());
 		gateway.setExperiencePoints(424);
 		gateway.persist();
-		
-		PlayerRowDataGateway after = findGateway(PlayersForTest.MERLIN
-				.getPlayerID());
-		assertEquals(424, after.getExperiencePoints());		
+
+		PlayerRowDataGateway after = findGateway(PlayersForTest.MERLIN.getPlayerID());
+		assertEquals(424, after.getExperiencePoints());
 	}
-	
+
 	/**
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void changeAppearanceType() throws DatabaseException
@@ -168,8 +166,7 @@ public abstract class PlayerRowDataGatewayTest extends DatabaseTest
 		gateway = findGateway(PlayersForTest.MERLIN.getPlayerID());
 		gateway.setAppearanceType("Ugly!");
 		gateway.persist();
-		PlayerRowDataGateway after = findGateway(PlayersForTest.MERLIN
-				.getPlayerID());
+		PlayerRowDataGateway after = findGateway(PlayersForTest.MERLIN.getPlayerID());
 		assertEquals("Ugly!", after.getAppearanceType());
 	}
 }

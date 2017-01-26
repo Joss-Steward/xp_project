@@ -9,8 +9,8 @@ public enum QuestCompletionActionType
 	/**
 	 * 
 	 */
-	TELEPORT(GameLocation.class), 
-	
+	TELEPORT(GameLocation.class),
+
 	/**
 	 * 
 	 */

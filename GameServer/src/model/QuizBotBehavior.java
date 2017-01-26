@@ -48,13 +48,13 @@ public class QuizBotBehavior extends NPCBehavior
 	{
 		String questionString = question.getQuestionStatement();
 
-		ChatManager.getSingleton().sendChatToClients(questionString, "QuizBot",
-				new Position(0, 0), ChatType.Zone);
+		ChatManager.getSingleton().sendChatToClients(questionString, "QuizBot", new Position(0, 0), ChatType.Zone);
 	}
 
 	/**
 	 * Gets a new random question from the database.
-	 * @throws DatabaseException 
+	 * 
+	 * @throws DatabaseException
 	 */
 	private void pullNewQuestion()
 	{
@@ -90,8 +90,8 @@ public class QuizBotBehavior extends NPCBehavior
 	/**
 	 * Watches SendChatMessageReports for a correct answer. On correct answer,
 	 * announce the correct answer, pull a new random question, and ask that
-	 * question.
-	 * *
+	 * question. *
+	 * 
 	 * @see model.QualifiedObserver#receiveReport(model.QualifiedObservableReport)
 	 */
 	@Override
@@ -106,20 +106,15 @@ public class QuizBotBehavior extends NPCBehavior
 			{
 				try
 				{
-					int playerID = PlayerManager.getSingleton()
-							.getPlayerIDFromPlayerName(report.getSenderName());
-					Player player = PlayerManager.getSingleton()
-							.getPlayerFromID(playerID);
+					int playerID = PlayerManager.getSingleton().getPlayerIDFromPlayerName(report.getSenderName());
+					Player player = PlayerManager.getSingleton().getPlayerFromID(playerID);
 
 					ChatManager.getSingleton().sendChatToClients(
-							player.getPlayerName()
-									+ " answered correctly.  The answer was "
-									+ question.getAnswer(), "Quiz Bot",
-							new Position(0, 0), ChatType.Zone);
+							player.getPlayerName() + " answered correctly.  The answer was " + question.getAnswer(),
+							"Quiz Bot", new Position(0, 0), ChatType.Zone);
 					player.incrementQuizScore();
 					ChatManager.getSingleton().sendChatToClients(
-							player.getPlayerName() + " score is now "
-									+ player.getQuizScore(), "Quiz Bot",
+							player.getPlayerName() + " score is now " + player.getQuizScore(), "Quiz Bot",
 							new Position(0, 0), ChatType.Zone);
 				} catch (PlayerNotFoundException e)
 				{
@@ -130,6 +125,6 @@ public class QuizBotBehavior extends NPCBehavior
 				askQuestion();
 			}
 		}
-		
+
 	}
 }

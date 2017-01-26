@@ -24,23 +24,23 @@ public class QuestStateChangeReportTest
 	@Before
 	public void setUp()
 	{
-			}
+	}
 
 	/**
 	 * make sure it gets built correctly
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void creation() throws DatabaseException
 	{
-		QuestStateChangeReport report = new QuestStateChangeReport(1,QuestsForTest.ONE_BIG_QUEST.getQuestID(), 
-				QuestsForTest.ONE_BIG_QUEST.getQuestTitle(), QuestsForTest.ONE_BIG_QUEST.getQuestDescription(), QuestStateEnum.FINISHED);
-		
+		QuestStateChangeReport report = new QuestStateChangeReport(1, QuestsForTest.ONE_BIG_QUEST.getQuestID(),
+				QuestsForTest.ONE_BIG_QUEST.getQuestTitle(), QuestsForTest.ONE_BIG_QUEST.getQuestDescription(),
+				QuestStateEnum.FINISHED);
+
 		assertEquals(1, report.getPlayerID());
 		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestID(), report.getQuestID());
-		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestDescription(),report.getQuestDescription());
+		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestDescription(), report.getQuestDescription());
 		assertEquals(QuestStateEnum.FINISHED, report.getNewState());
 	}
 

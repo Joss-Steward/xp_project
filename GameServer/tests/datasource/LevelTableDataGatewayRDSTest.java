@@ -3,14 +3,13 @@ package datasource;
 import datasource.LevelTableDataGateway;
 import datasource.LevelTableDataGatewayRDS;
 
-
 /**
  * Tests the RDS Implementation
+ * 
  * @author merlin
  *
  */
-public class LevelTableDataGatewayRDSTest extends
-		LevelTableDataGatewayTest
+public class LevelTableDataGatewayRDSTest extends LevelTableDataGatewayTest
 {
 
 	/**
@@ -19,7 +18,7 @@ public class LevelTableDataGatewayRDSTest extends
 	@Override
 	public LevelTableDataGateway getGateway()
 	{
-		return  LevelTableDataGatewayRDS.getSingleton();
+		return LevelTableDataGatewayRDS.getSingleton();
 	}
 
 }

@@ -22,7 +22,7 @@ public class NPCQuestionRowDataGatewayMock implements NPCQuestionRowDataGateway
 		private String answer;
 		private String questionStatement;
 		private Date startDate;
-        private Date endDate;
+		private Date endDate;
 
 		public NPCQuestionInfo(String questionStatement, String answer, Date startDate, Date endDate)
 		{
@@ -41,19 +41,18 @@ public class NPCQuestionRowDataGatewayMock implements NPCQuestionRowDataGateway
 		{
 			return questionStatement;
 		}
-		
+
 		public Date getStartDate()
 		{
-		    return startDate;
+			return startDate;
 		}
-		
+
 		public Date getEndDate()
 		{
-		    return endDate;
+			return endDate;
 		}
 	}
 
-	
 	/**
 	 * Map question ID to question information
 	 */
@@ -72,10 +71,8 @@ public class NPCQuestionRowDataGatewayMock implements NPCQuestionRowDataGateway
 	/**
 	 * Finder constructor - will initialize itself from the stored information
 	 * 
-	 * @param questionID
-	 *            the ID of the player we are looking for
-	 * @throws DatabaseException
-	 *             if the playerID isn't in the data source
+	 * @param questionID the ID of the player we are looking for
+	 * @throws DatabaseException if the playerID isn't in the data source
 	 */
 	public NPCQuestionRowDataGatewayMock(int questionID) throws DatabaseException
 	{
@@ -94,7 +91,6 @@ public class NPCQuestionRowDataGatewayMock implements NPCQuestionRowDataGateway
 		}
 	}
 
-
 	/**
 	 * @see datasource.NPCQuestionRowDataGateway#resetData()
 	 */
@@ -104,7 +100,8 @@ public class NPCQuestionRowDataGatewayMock implements NPCQuestionRowDataGateway
 		npcQuestionInfo = new HashMap<Integer, NPCQuestionInfo>();
 		for (NPCQuestionsForTest p : NPCQuestionsForTest.values())
 		{
-			npcQuestionInfo.put(p.getQuestionID(), new NPCQuestionInfo(p.getQ(), p.getA(), p.getStartDate(), p.getEndDate()));
+			npcQuestionInfo.put(p.getQuestionID(),
+					new NPCQuestionInfo(p.getQ(), p.getA(), p.getStartDate(), p.getEndDate()));
 		}
 	}
 
@@ -133,24 +130,24 @@ public class NPCQuestionRowDataGatewayMock implements NPCQuestionRowDataGateway
 	{
 		return info.getAnswer();
 	}
-	
-	/** 
+
+	/**
 	 * @see datasource.NPCQuestionRowDataGateway#getStartDate()
 	 */
 	@Override
 	public Date getStartDate()
 	{
-	    return info.getStartDate();
+		return info.getStartDate();
 	}
-	
+
 	/**
 	 * @see datasource.NPCQuestionRowDataGateway#getEndDate()
 	 */
 	@Override
-    public Date getEndDate()
-    {
-        return info.getEndDate();
-    }
+	public Date getEndDate()
+	{
+		return info.getEndDate();
+	}
 
 	/**
 	 * @return a gateway for a random row in the table that is available
@@ -159,23 +156,21 @@ public class NPCQuestionRowDataGatewayMock implements NPCQuestionRowDataGateway
 	public static NPCQuestionRowDataGateway findRandomGateway() throws DatabaseException
 	{
 		new NPCQuestionRowDataGatewayMock(1).resetData();
-		
+
 		ArrayList<Integer> avaiableQuestions = new ArrayList<Integer>();
-		
+
 		GregorianCalendar now = new GregorianCalendar();
-		
-		for(Integer i : npcQuestionInfo.keySet())
+
+		for (Integer i : npcQuestionInfo.keySet())
 		{
-		    if(now.after(npcQuestionInfo.get(i).startDate) && now.before(npcQuestionInfo.get(i).endDate))
-		    {
-                avaiableQuestions.add(i);
-		    }
+			if (now.after(npcQuestionInfo.get(i).startDate) && now.before(npcQuestionInfo.get(i).endDate))
+			{
+				avaiableQuestions.add(i);
+			}
 		}
 
-		int questionID = (int) (Math.random()*avaiableQuestions.size())+1;
+		int questionID = (int) (Math.random() * avaiableQuestions.size()) + 1;
 		return new NPCQuestionRowDataGatewayMock(questionID);
 	}
-
-    
 
 }

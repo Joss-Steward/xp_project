@@ -45,9 +45,10 @@ public class QuestStateTest extends DatabaseTest
 		QuestManager.resetSingleton();
 		QualifiedObservableConnector.resetSingleton();
 	}
-	
+
 	/**
 	 * Test creating a very simple quest, and retreiving its information
+	 * 
 	 * @throws IllegalQuestChangeException shouldn't
 	 */
 	@Test
@@ -82,12 +83,15 @@ public class QuestStateTest extends DatabaseTest
 
 	/**
 	 * Test the change in quest's state when triggered
-	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * 
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong
+	 *             state
 	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void testTriggerQuest() throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
+	public void testTriggerQuest()
+			throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
 	{
 		QuestState quest = new QuestState(2, 1, QuestStateEnum.AVAILABLE, true);
 		quest.trigger();
@@ -97,26 +101,32 @@ public class QuestStateTest extends DatabaseTest
 
 	/**
 	 * Test to make sure you can't trigger finished quests
-	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * 
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong
+	 *             state
 	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 * @throws DatabaseException shouldn't
 	 */
-	@Test(expected=IllegalQuestChangeException.class)
-	public void testTriggerFinishedQuest() throws IllegalQuestChangeException, DatabaseException, IllegalAdventureChangeException
+	@Test(expected = IllegalQuestChangeException.class)
+	public void testTriggerFinishedQuest()
+			throws IllegalQuestChangeException, DatabaseException, IllegalAdventureChangeException
 	{
 		QuestState quest = new QuestState(2, 1, QuestStateEnum.FINISHED, false);
 		quest.trigger();
-	
+
 	}
 
 	/**
 	 * Test that when a quest is triggered, its adventures get triggered as well
-	 * @throws IllegalAdventureChangeException thrown if changing to a wrong state
+	 * 
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong
+	 *             state
 	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void testTriggerQuestsAdventures() throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
+	public void testTriggerQuestsAdventures()
+			throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
 	{
 		QuestState qs = new QuestState(2, 1, QuestStateEnum.AVAILABLE, false);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
@@ -146,31 +156,28 @@ public class QuestStateTest extends DatabaseTest
 	 * notifications complete) the quest should become fulfilled and the
 	 * appropriate report should be generated
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 */
 	@Test
 	public void testFulfilling() throws DatabaseException, IllegalQuestChangeException
 	{
-		
+
 		PlayerManager.getSingleton().addPlayer(2);
-		int origExperiencePoints = PlayerManager.getSingleton().getPlayerFromID(2)
-				.getExperiencePoints();
+		int origExperiencePoints = PlayerManager.getSingleton().getPlayerFromID(2).getExperiencePoints();
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs,
-				QuestStateChangeReport.class);
-		QuestStateChangeReport rpt = new QuestStateChangeReport(1,
-				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(),
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestStateChangeReport.class);
+		QuestStateChangeReport rpt = new QuestStateChangeReport(1, QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(),
 				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestTitle(),
 				QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestDescription(), QuestStateEnum.FULFILLED);
 		obs.receiveReport(rpt);
 		EasyMock.replay(obs);
-		QuestState qs = new QuestState(2, QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(), QuestStateEnum.TRIGGERED, false);
+		QuestState qs = new QuestState(2, QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID(), QuestStateEnum.TRIGGERED,
+				false);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
 
 		PlayerManager.getSingleton().addPlayer(2);
-		
+
 		AdventureState as = new AdventureState(1, AdventureStateEnum.COMPLETED, true);
 		adList.add(as);
 		as = new AdventureState(2, AdventureStateEnum.COMPLETED, false);
@@ -185,9 +192,7 @@ public class QuestStateTest extends DatabaseTest
 
 		qs.addAdventures(adList);
 		qs.checkForFulfillmentOrFinished();
-		assertEquals(
-				origExperiencePoints
-						+ QuestsForTest.ONE_SAME_LOCATION_QUEST.getExperienceGained(),
+		assertEquals(origExperiencePoints + QuestsForTest.ONE_SAME_LOCATION_QUEST.getExperienceGained(),
 				PlayerManager.getSingleton().getPlayerFromID(2).getExperiencePoints());
 		assertEquals(QuestStateEnum.FULFILLED, qs.getStateValue());
 		assertTrue(qs.isNeedingNotification());
@@ -198,16 +203,14 @@ public class QuestStateTest extends DatabaseTest
 	 * If a quest is already in the process of being fulfilled, no report should
 	 * be generated
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 */
 	@Test
 	public void testFulfillingRepeatedly() throws DatabaseException, IllegalQuestChangeException
 	{
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(obs,
-				QuestStateChangeReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(obs, QuestStateChangeReport.class);
 		EasyMock.replay(obs);
 		QuestState qs = new QuestState(1, 3, QuestStateEnum.FULFILLED, false);
 		ArrayList<AdventureState> adList = new ArrayList<AdventureState>();
@@ -229,55 +232,57 @@ public class QuestStateTest extends DatabaseTest
 		assertFalse(qs.isNeedingNotification());
 		EasyMock.verify(obs);
 	}
-	
+
 	/**
 	 * Test that the new change state method works as intended.
+	 * 
 	 * @throws IllegalQuestChangeException thrown if changing to a wrong state
-	 * @throws DatabaseException shouldn't 
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void testChangeStateToTriggered() throws IllegalQuestChangeException, DatabaseException 
+	public void testChangeStateToTriggered() throws IllegalQuestChangeException, DatabaseException
 	{
 		QuestState quest = new QuestState(2, 1, QuestStateEnum.HIDDEN, false);
 		quest.changeState(QuestStateEnum.AVAILABLE, false);
 		assertEquals(quest.getStateValue(), QuestStateEnum.AVAILABLE);
 	}
-	
-	
+
 	/**
-     * A finished quest should be marked as finished not expired
-     * @throws IllegalQuestChangeException thrown if changing to a wrong state
-     * @throws DatabaseException shouldn't 
-     */
-    @Test
-    public void testCompleteQuestNotExpired() throws IllegalQuestChangeException, DatabaseException 
-    {
-        QuestState quest = new QuestState(19, 8, QuestStateEnum.FINISHED, false);
-        assertEquals(QuestStateEnum.FINISHED, quest.getStateValue());
-    }
-    
-    /**
-     * An available quest should be marked as expired
-     * @throws IllegalQuestChangeException thrown if changing to a wrong state
-     * @throws DatabaseException shouldn't 
-     */
-    @Test
-    public void testAvailableQuestIsExpired() throws IllegalQuestChangeException, DatabaseException 
-    {
-        QuestState quest = new QuestState(19, 8, QuestStateEnum.AVAILABLE, false);
-        assertEquals(QuestStateEnum.EXPIRED, quest.getStateValue());
-    }
-    
-    
-    /**
-     * A triggered quest should be marked as expired
-     * @throws IllegalQuestChangeException thrown if changing to a wrong state
-     * @throws DatabaseException shouldn't 
-     */
-    @Test
-    public void testTriggeredQuestIsExpired() throws IllegalQuestChangeException, DatabaseException 
-    {
-        QuestState quest = new QuestState(19, 8, QuestStateEnum.TRIGGERED, false);
-        assertEquals(QuestStateEnum.EXPIRED, quest.getStateValue());
-    }
+	 * A finished quest should be marked as finished not expired
+	 * 
+	 * @throws IllegalQuestChangeException thrown if changing to a wrong state
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void testCompleteQuestNotExpired() throws IllegalQuestChangeException, DatabaseException
+	{
+		QuestState quest = new QuestState(19, 8, QuestStateEnum.FINISHED, false);
+		assertEquals(QuestStateEnum.FINISHED, quest.getStateValue());
+	}
+
+	/**
+	 * An available quest should be marked as expired
+	 * 
+	 * @throws IllegalQuestChangeException thrown if changing to a wrong state
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void testAvailableQuestIsExpired() throws IllegalQuestChangeException, DatabaseException
+	{
+		QuestState quest = new QuestState(19, 8, QuestStateEnum.AVAILABLE, false);
+		assertEquals(QuestStateEnum.EXPIRED, quest.getStateValue());
+	}
+
+	/**
+	 * A triggered quest should be marked as expired
+	 * 
+	 * @throws IllegalQuestChangeException thrown if changing to a wrong state
+	 * @throws DatabaseException shouldn't
+	 */
+	@Test
+	public void testTriggeredQuestIsExpired() throws IllegalQuestChangeException, DatabaseException
+	{
+		QuestState quest = new QuestState(19, 8, QuestStateEnum.TRIGGERED, false);
+		assertEquals(QuestStateEnum.EXPIRED, quest.getStateValue());
+	}
 }

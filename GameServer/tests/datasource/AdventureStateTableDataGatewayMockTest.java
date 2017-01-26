@@ -5,11 +5,11 @@ import datasource.AdventureStateTableDataGatewayMock;
 
 /**
  * Tests the mock implementation
+ * 
  * @author merlin
  *
  */
-public class AdventureStateTableDataGatewayMockTest extends
-		AdventureStateTableDataGatewayTest
+public class AdventureStateTableDataGatewayMockTest extends AdventureStateTableDataGatewayTest
 {
 
 	/**
@@ -21,5 +21,4 @@ public class AdventureStateTableDataGatewayMockTest extends
 		return AdventureStateTableDataGatewayMock.getSingleton();
 	}
 
-	
 }

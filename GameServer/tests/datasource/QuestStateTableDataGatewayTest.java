@@ -30,10 +30,8 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	/**
 	 * Make sure any static information is cleaned up between tests
 	 * 
-	 * @throws SQLException
-	 *             shouldn't
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws SQLException shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@After
 	public void cleanup() throws DatabaseException, SQLException
@@ -63,8 +61,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	}
 
 	/**
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void retrieveAllAdventuresForQuest() throws DatabaseException
@@ -105,20 +102,17 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	/**
 	 * We should be able to add new rows to the table
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void canInsertARecord() throws DatabaseException
 	{
 		gateway = getGatewaySingleton();
-		gateway.createRow(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID(), 4,
-				QuestStateEnum.TRIGGERED, true);
-		ArrayList<QuestStateRecord> actual = gateway
-				.getQuestStates(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID());
+		gateway.createRow(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID(), 4, QuestStateEnum.TRIGGERED, true);
+		ArrayList<QuestStateRecord> actual = gateway.getQuestStates(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID());
 		assertEquals(4, actual.size());
-		assertTrue(actual.contains(new QuestStateRecord(QuestStatesForTest.PLAYER1_QUEST1
-				.getPlayerID(), 4, QuestStateEnum.TRIGGERED, true)));
+		assertTrue(actual.contains(new QuestStateRecord(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID(), 4,
+				QuestStateEnum.TRIGGERED, true)));
 
 	}
 
@@ -126,23 +120,20 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	 * The combination of player ID and quest ID should be unique in the table.
 	 * If we try to add a duplicate, we should get a database exception
 	 * 
-	 * @throws DatabaseException
-	 *             should!
+	 * @throws DatabaseException should!
 	 */
 	@Test(expected = DatabaseException.class)
 	public void cannotInsertDuplicateData() throws DatabaseException
 	{
 		gateway = getGatewaySingleton();
 		gateway.createRow(QuestStatesForTest.PLAYER1_QUEST1.getPlayerID(),
-				QuestStatesForTest.PLAYER1_QUEST1.getQuestID(), QuestStateEnum.TRIGGERED,
-				true);
+				QuestStatesForTest.PLAYER1_QUEST1.getQuestID(), QuestStateEnum.TRIGGERED, true);
 	}
 
 	/**
 	 * If a player has no quests, we should return an empty list
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void returnsEmptyListIfNone() throws DatabaseException
@@ -153,8 +144,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	}
 
 	/**
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 * 
 	 */
 	@Test
@@ -179,8 +169,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	/**
 	 * If we try to update a quest state that doesn't exist, it should be added
 	 * 
-	 * @throws DatabaseException
-	 *             should
+	 * @throws DatabaseException should
 	 */
 	@Test
 	public void updatingNonExistentQuestException() throws DatabaseException

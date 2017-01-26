@@ -26,11 +26,13 @@ import datasource.DatabaseException;
 
 /**
  * Test the CurrentQuestStateReport
+ * 
  * @author Ryan, LaVonne, Olivia
  *
  */
-public class UpdatePlayerInformationReportTest {
-	
+public class UpdatePlayerInformationReportTest
+{
+
 	/**
 	 * reset the necessary singletons
 	 */
@@ -40,11 +42,10 @@ public class UpdatePlayerInformationReportTest {
 		OptionsManager.getSingleton().setTestMode(true);
 		QuestManager.resetSingleton();
 	}
-	
 
-	
 	/**
 	 * Tests that we can combine a quest description and state
+	 * 
 	 * @throws DatabaseException shouldn't
 	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
@@ -53,19 +54,20 @@ public class UpdatePlayerInformationReportTest {
 	{
 		Player john = PlayerManager.getSingleton().addPlayer(1);
 		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(john);
-		
+
 		assertEquals(1, report.getPlayerID());
-		assertEquals(QuestManager.getSingleton().getQuestList(john.getPlayerID()).size(), report.getClientPlayerQuestList().size());
-		
+		assertEquals(QuestManager.getSingleton().getQuestList(john.getPlayerID()).size(),
+				report.getClientPlayerQuestList().size());
+
 		int i = 1;
-		for(ClientPlayerQuest q: report.getClientPlayerQuestList())
+		for (ClientPlayerQuest q : report.getClientPlayerQuestList())
 		{
-			if(i == 1)
+			if (i == 1)
 			{
 				assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestDescription(), q.getQuestDescription());
 				assertEquals(QuestStatesForTest.PLAYER1_QUEST1.getState(), q.getQuestState());
 			}
-			if(i == 2)
+			if (i == 2)
 			{
 				assertEquals(QuestsForTest.THE_OTHER_QUEST.getQuestDescription(), q.getQuestDescription());
 				assertEquals(QuestStatesForTest.PLAYER1_QUEST2.getState(), q.getQuestState());
@@ -76,6 +78,7 @@ public class UpdatePlayerInformationReportTest {
 
 	/**
 	 * Tests that we can combine a quest description and state
+	 * 
 	 * @throws DatabaseException shouldn't
 	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
@@ -84,44 +87,48 @@ public class UpdatePlayerInformationReportTest {
 	{
 		Player john = PlayerManager.getSingleton().addPlayer(1);
 		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(john);
-		
+
 		int i = 1;
-		for(ClientPlayerQuest q: report.getClientPlayerQuestList())
+		for (ClientPlayerQuest q : report.getClientPlayerQuestList())
 		{
 			ArrayList<ClientPlayerAdventure> adventureList = q.getAdventureList();
-			
-			if(i == 1)
-			{				
+
+			if (i == 1)
+			{
 				int j = 1;
-				for(ClientPlayerAdventure a: adventureList)
+				for (ClientPlayerAdventure a : adventureList)
 				{
-					if(j == 1)
+					if (j == 1)
 					{
-						assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(), a.getAdventureDescription());
+						assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(),
+								a.getAdventureDescription());
 						assertEquals(AdventureStatesForTest.PLAYER1_QUEST1_ADV1.getState(), a.getAdventureState());
 					}
-					if(j == 2)
+					if (j == 2)
 					{
-						assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getAdventureDescription(), a.getAdventureDescription());
+						assertEquals(AdventuresForTest.QUEST1_ADVENTURE2.getAdventureDescription(),
+								a.getAdventureDescription());
 						assertEquals(AdventureStatesForTest.PLAYER1_QUEST1_ADV2.getState(), a.getAdventureState());
 					}
 					j++;
 				}
-				
+
 			}
-			if(i == 2)
+			if (i == 2)
 			{
 				int j = 1;
-				for(ClientPlayerAdventure a: adventureList)
+				for (ClientPlayerAdventure a : adventureList)
 				{
-					if(j == 1)
+					if (j == 1)
 					{
-						assertEquals(AdventuresForTest.QUEST2_ADVENTURE1.getAdventureDescription(), a.getAdventureDescription());
+						assertEquals(AdventuresForTest.QUEST2_ADVENTURE1.getAdventureDescription(),
+								a.getAdventureDescription());
 						assertEquals(AdventureStatesForTest.PLAYER1_QUEST2_ADV1.getState(), a.getAdventureState());
 					}
-					if(j == 2)
+					if (j == 2)
 					{
-						assertEquals(AdventuresForTest.QUEST2_ADVENTURE2.getAdventureDescription(), a.getAdventureDescription());
+						assertEquals(AdventuresForTest.QUEST2_ADVENTURE2.getAdventureDescription(),
+								a.getAdventureDescription());
 						assertEquals(AdventureStatesForTest.PLAYER1_QUEST2_ADV2.getState(), a.getAdventureState());
 					}
 					j++;
@@ -130,10 +137,11 @@ public class UpdatePlayerInformationReportTest {
 			i++;
 		}
 	}
-	
+
 	/**
-	 * Tests that we can report a players experience points
-	 * and their levels description and the points level requires
+	 * Tests that we can report a players experience points and their levels
+	 * description and the points level requires
+	 * 
 	 * @throws DatabaseException shouldn't
 	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
@@ -141,11 +149,11 @@ public class UpdatePlayerInformationReportTest {
 	public void testExperienceAndLevelPoints() throws DatabaseException, IllegalQuestChangeException
 	{
 		Player john = PlayerManager.getSingleton().addPlayer(1);
-		
+
 		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(john);
 		assertEquals(PlayersForTest.JOHN.getExperiencePoints(), report.getExperiencePts());
 		assertEquals(LevelsForTest.TWO.getDescription(), report.getLevel().getDescription());
 		assertEquals(LevelsForTest.TWO.getLevelUpPoints(), report.getLevel().getLevelUpPoints());
-		
+
 	}
 }

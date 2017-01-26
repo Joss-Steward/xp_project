@@ -4,9 +4,9 @@ import datasource.DatabaseException;
 import datasource.NPCQuestionRowDataGateway;
 import datasource.NPCQuestionRowDataGatewayRDS;
 
-
 /**
  * Tests for the RDS version of the gateway
+ * 
  * @author Merlin
  *
  */

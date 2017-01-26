@@ -7,9 +7,9 @@ import datatypes.Crew;
 import datatypes.Major;
 import datatypes.Position;
 
-
 /**
  * Tests for the mock version of the gateway
+ * 
  * @author Merlin
  *
  */
@@ -26,11 +26,12 @@ public class PlayerRowDataGatewayMockTest extends PlayerRowDataGatewayTest
 	}
 
 	/**
-	 * @see datasource.PlayerRowDataGatewayTest#createGateway(java.lang.String, datatypes.Position, java.lang.String, int, int, Crew, major)
+	 * @see datasource.PlayerRowDataGatewayTest#createGateway(java.lang.String,
+	 *      datatypes.Position, java.lang.String, int, int, Crew, major)
 	 */
 	@Override
-	PlayerRowDataGateway createGateway(String mapName, Position position,
-			String appearanceType, int quizScore, int experiencePoints, Crew crew, Major major) throws DatabaseException
+	PlayerRowDataGateway createGateway(String mapName, Position position, String appearanceType, int quizScore,
+			int experiencePoints, Crew crew, Major major) throws DatabaseException
 	{
 		return new PlayerRowDataGatewayMock(position, appearanceType, quizScore, experiencePoints, crew, major);
 	}

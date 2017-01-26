@@ -15,8 +15,7 @@ public class CommandRemovePlayer extends Command
 
 	/**
 	 * 
-	 * @param playerID
-	 *            the player's player id
+	 * @param playerID the player's player id
 	 */
 	public CommandRemovePlayer(int playerID)
 	{

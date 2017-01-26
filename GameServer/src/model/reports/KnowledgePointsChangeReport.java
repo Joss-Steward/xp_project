@@ -15,28 +15,30 @@ public final class KnowledgePointsChangeReport implements QualifiedObservableRep
 	public final int knowledgePoints;
 
 	private final int playerID;
-	
+
 	/**
 	 * @param playerID of the current player
 	 * @param knowledgePoints of the player
 	 */
-	public KnowledgePointsChangeReport (int playerID, int knowledgePoints)
+	public KnowledgePointsChangeReport(int playerID, int knowledgePoints)
 	{
 		this.playerID = playerID;
 		this.knowledgePoints = knowledgePoints;
 	}
-	
+
 	/**
 	 * @return knowledgePoints
 	 */
-	public int getKnowledgePoints() {
+	public int getKnowledgePoints()
+	{
 		return knowledgePoints;
 	}
 
 	/**
 	 * @return playerID
 	 */
-	public int getPlayerID() {
+	public int getPlayerID()
+	{
 		return playerID;
 	}
 
@@ -44,7 +46,8 @@ public final class KnowledgePointsChangeReport implements QualifiedObservableRep
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + knowledgePoints;
@@ -56,7 +59,8 @@ public final class KnowledgePointsChangeReport implements QualifiedObservableRep
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)

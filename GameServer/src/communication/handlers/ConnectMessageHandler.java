@@ -31,9 +31,9 @@ public class ConnectMessageHandler extends MessageHandler
 				getConnectionManager().setPlayerID(cMsg.getPlayerID());
 			}
 			CommandAddPlayer cmd = new CommandAddPlayer(cMsg.getPlayerID(), cMsg.getPin());
-			
+
 			ModelFacade.getSingleton().queueCommand(cmd);
-			
+
 		}
 	}
 

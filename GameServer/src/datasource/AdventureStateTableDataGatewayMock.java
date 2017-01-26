@@ -51,8 +51,8 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 		data = new Hashtable<Key, ArrayList<AdventureStateRecord>>();
 		for (AdventureStatesForTest a : AdventureStatesForTest.values())
 		{
-			AdventureStateRecord rec = new AdventureStateRecord(a.getPlayerID(),
-					a.getQuestID(), a.getAdventureID(), a.getState(), a.isNeedingNotification());
+			AdventureStateRecord rec = new AdventureStateRecord(a.getPlayerID(), a.getQuestID(), a.getAdventureID(),
+					a.getState(), a.isNeedingNotification());
 			if (a.getQuestID() > maxQuestIDSeen)
 			{
 				maxQuestIDSeen = a.getQuestID();
@@ -136,21 +136,19 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 	}
 
 	/**
-	 * @see datasource.AdventureStateTableDataGateway#updateState(int,
-	 *      int, int, datatypes.AdventureStateEnum, boolean)
+	 * @see datasource.AdventureStateTableDataGateway#updateState(int, int, int,
+	 *      datatypes.AdventureStateEnum, boolean)
 	 */
 	@Override
-	public void updateState(int playerID, int questID, int adventureID,
-			AdventureStateEnum newState, boolean needingNotification) throws DatabaseException
+	public void updateState(int playerID, int questID, int adventureID, AdventureStateEnum newState,
+			boolean needingNotification) throws DatabaseException
 	{
 		if (data.containsKey(new Key(playerID, questID)))
 		{
-			ArrayList<AdventureStateRecord> advStates = data.get(new Key(playerID,
-					questID));
+			ArrayList<AdventureStateRecord> advStates = data.get(new Key(playerID, questID));
 			for (AdventureStateRecord asRec : advStates)
 			{
-				if ((asRec.getQuestID() == questID)
-						&& (asRec.getAdventureID() == adventureID))
+				if ((asRec.getQuestID() == questID) && (asRec.getAdventureID() == adventureID))
 				{
 					asRec.setState(newState);
 					asRec.setNeedingNotification(needingNotification);
@@ -174,12 +172,12 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 	}
 
 	/**
-	 * @see datasource.AdventureStateTableDataGateway#createRow(int,
-	 *      int, int, datatypes.AdventureStateEnum, boolean)
+	 * @see datasource.AdventureStateTableDataGateway#createRow(int, int, int,
+	 *      datatypes.AdventureStateEnum, boolean)
 	 */
 	@Override
-	public void createRow(int playerID, int questID, int adventureID,
-			AdventureStateEnum state, boolean needingNotification) throws DatabaseException
+	public void createRow(int playerID, int questID, int adventureID, AdventureStateEnum state,
+			boolean needingNotification) throws DatabaseException
 	{
 		updateState(playerID, questID, adventureID, state, needingNotification);
 	}
@@ -188,8 +186,7 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 	 * @see datasource.AdventureStateTableDataGateway#getPendingAdventuresForPlayer(int)
 	 */
 	@Override
-	public ArrayList<AdventureStateRecord> getPendingAdventuresForPlayer(int playerID)
-			throws DatabaseException
+	public ArrayList<AdventureStateRecord> getPendingAdventuresForPlayer(int playerID) throws DatabaseException
 	{
 		ArrayList<AdventureStateRecord> results = new ArrayList<AdventureStateRecord>();
 		for (int questID = 0; questID <= maxQuestIDSeen; questID++)
@@ -197,14 +194,14 @@ public class AdventureStateTableDataGatewayMock implements AdventureStateTableDa
 			if (data.containsKey(new Key(playerID, questID)))
 			{
 				ArrayList<AdventureStateRecord> adventureList = data.get(new Key(playerID, questID));
-				for (AdventureStateRecord a:adventureList)
+				for (AdventureStateRecord a : adventureList)
 				{
 					if (a.getState() == AdventureStateEnum.TRIGGERED)
 					{
 						results.add(a);
 					}
 				}
-			} 
+			}
 		}
 		return results;
 	}

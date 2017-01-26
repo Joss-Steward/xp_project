@@ -40,16 +40,14 @@ public class AdventureStateChangeMessagePackerTest
 	public void testReportTypeWePack()
 	{
 		AdventureStateChangeMessagePacker packer = new AdventureStateChangeMessagePacker();
-		assertEquals(AdventureStateChangeReport.class,
-				packer.getReportTypesWePack().get(0));
+		assertEquals(AdventureStateChangeReport.class, packer.getReportTypesWePack().get(0));
 	}
 
 	/**
 	 * If the msg is to the player we are packing, the message should contain
 	 * the details of the quest
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void testPackedMessageIsBuiltCorrectly() throws DatabaseException
@@ -57,21 +55,17 @@ public class AdventureStateChangeMessagePackerTest
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
 
-		AdventureStateChangeReport report = new AdventureStateChangeReport(
-				stateAccumulator.getPlayerID(),
+		AdventureStateChangeReport report = new AdventureStateChangeReport(stateAccumulator.getPlayerID(),
 				AdventuresForTest.QUEST1_ADVENTURE_1.getQuestID(),
 				AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureID(),
-				AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(),
-				AdventureStateEnum.TRIGGERED, true, "Henry");
+				AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(), AdventureStateEnum.TRIGGERED, true,
+				"Henry");
 		AdventureStateChangeMessagePacker packer = new AdventureStateChangeMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 
-		AdventureStateChangeMessage msg = (AdventureStateChangeMessage) packer
-				.pack(report);
-		assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureID(),
-				msg.getAdventureID());
-		assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(),
-				msg.getAdventureDescription());
+		AdventureStateChangeMessage msg = (AdventureStateChangeMessage) packer.pack(report);
+		assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureID(), msg.getAdventureID());
+		assertEquals(AdventuresForTest.QUEST1_ADVENTURE_1.getAdventureDescription(), msg.getAdventureDescription());
 		assertEquals(AdventureStateEnum.TRIGGERED, msg.getNewState());
 		assertTrue(msg.isRealLifeAdventure());
 		assertEquals("Henry", msg.getWitnessTitle());

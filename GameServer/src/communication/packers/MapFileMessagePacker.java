@@ -19,7 +19,7 @@ public class MapFileMessagePacker extends MessagePacker
 	 * The prefix for where maps are stored on the client
 	 */
 	public static String DIRECTORY_PREFIX = "maps/";
-	
+
 	/**
 	 * @see communication.packers.MessagePacker#pack(model.QualifiedObservableReport)
 	 */
@@ -32,7 +32,8 @@ public class MapFileMessagePacker extends MessagePacker
 			int playerID = report.getPlayerID();
 			if (this.getAccumulator().getPlayerID() == playerID)
 			{
-				//send this server's map file back to the client when they connect to the server
+				// send this server's map file back to the client when they
+				// connect to the server
 				OptionsManager optionsManager = OptionsManager.getSingleton();
 				String mapName = optionsManager.getMapName();
 				MapFileMessage msg = new MapFileMessage(DIRECTORY_PREFIX + mapName);
@@ -53,9 +54,8 @@ public class MapFileMessagePacker extends MessagePacker
 	@Override
 	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 	{
-		ArrayList<Class<? extends QualifiedObservableReport>> result = 
-				new ArrayList<Class<? extends QualifiedObservableReport>>();
-		result.add( PlayerConnectionReport.class);
+		ArrayList<Class<? extends QualifiedObservableReport>> result = new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add(PlayerConnectionReport.class);
 		return result;
 	}
 

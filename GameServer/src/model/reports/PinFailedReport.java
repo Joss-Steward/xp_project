@@ -14,8 +14,8 @@ public final class PinFailedReport implements QualifiedObservableReport
 	private final int playerID;
 
 	/**
-	 * @param playerID
-	 *            the unique ID of the player who tried to connect incorrectly
+	 * @param playerID the unique ID of the player who tried to connect
+	 *            incorrectly
 	 */
 	public PinFailedReport(int playerID)
 	{
@@ -67,7 +67,5 @@ public final class PinFailedReport implements QualifiedObservableReport
 	{
 		return "Pin failed report for player #" + playerID;
 	}
-
-	
 
 }

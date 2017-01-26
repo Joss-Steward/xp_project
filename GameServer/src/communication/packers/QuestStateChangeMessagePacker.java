@@ -28,8 +28,8 @@ public class QuestStateChangeMessagePacker extends MessagePacker
 		int playerID = rpt.getPlayerID();
 		if (this.getAccumulator().getPlayerID() == playerID)
 		{
-			msg = new QuestStateChangeMessage(rpt.getPlayerID(), rpt.getQuestID(),
-					rpt.getQuestTitle(), rpt.getQuestDescription(), rpt.getNewState());
+			msg = new QuestStateChangeMessage(rpt.getPlayerID(), rpt.getQuestID(), rpt.getQuestTitle(),
+					rpt.getQuestDescription(), rpt.getNewState());
 		}
 		return msg;
 
@@ -41,9 +41,8 @@ public class QuestStateChangeMessagePacker extends MessagePacker
 	@Override
 	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 	{
-		ArrayList<Class<? extends QualifiedObservableReport>> result = 
-				new ArrayList<Class<? extends QualifiedObservableReport>>();
-		result.add( QuestStateChangeReport.class);
+		ArrayList<Class<? extends QualifiedObservableReport>> result = new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add(QuestStateChangeReport.class);
 		return result;
 	}
 

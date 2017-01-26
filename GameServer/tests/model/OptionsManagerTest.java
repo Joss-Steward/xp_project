@@ -22,16 +22,14 @@ public class OptionsManagerTest
 	/**
 	 * Reset that singleton
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Before
 	public void setup() throws DatabaseException
 	{
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton().setTestMode(true);
-		MapToServerMapping mapping = new MapToServerMapping(
-				ServersForTest.FIRST_SERVER.getMapName());
+		MapToServerMapping mapping = new MapToServerMapping(ServersForTest.FIRST_SERVER.getMapName());
 		mapping.setHostName("holder");
 		mapping.setMapName(ServersForTest.FIRST_SERVER.getMapName());
 		mapping.setPortNumber(0);
@@ -55,19 +53,16 @@ public class OptionsManagerTest
 	 * When we set the map name, the map to server mapping is updated in the
 	 * database
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void savesServerMapping() throws DatabaseException
 	{
 		OptionsManager manager = OptionsManager.getSingleton();
 		manager.setTestMode(true);
-		manager.updateMapInformation(ServersForTest.FIRST_SERVER.getMapName(),
-				"ourhost.com", 1337);
+		manager.updateMapInformation(ServersForTest.FIRST_SERVER.getMapName(), "ourhost.com", 1337);
 
-		MapToServerMapping actual = new MapToServerMapping(
-				ServersForTest.FIRST_SERVER.getMapName());
+		MapToServerMapping actual = new MapToServerMapping(ServersForTest.FIRST_SERVER.getMapName());
 		assertEquals(actual.getHostName(), "ourhost.com");
 		assertEquals(actual.getMapName(), ServersForTest.FIRST_SERVER.getMapName());
 		assertEquals(actual.getPortNumber(), 1337);
@@ -76,15 +71,13 @@ public class OptionsManagerTest
 	/**
 	 * Basic getter test
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void serverMappingGetters() throws DatabaseException
 	{
 		OptionsManager manager = OptionsManager.getSingleton();
-		manager.updateMapInformation(ServersForTest.FIRST_SERVER.getMapName(),
-				"ourhost.com", 1337);
+		manager.updateMapInformation(ServersForTest.FIRST_SERVER.getMapName(), "ourhost.com", 1337);
 
 		assertEquals(ServersForTest.FIRST_SERVER.getMapName(), manager.getMapName());
 		assertEquals("ourhost.com", manager.getHostName());

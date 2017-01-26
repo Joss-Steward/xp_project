@@ -14,7 +14,6 @@ import datasource.DatabaseTest;
 import datasource.PlayerTableDataGateway;
 import datatypes.PlayerScoreRecord;
 
-
 /**
  * An abstract class that tests the table data gateways into the Adventure table
  * 
@@ -28,6 +27,7 @@ public abstract class PlayerTableDataGatewayTest extends DatabaseTest
 
 	/**
 	 * Make sure any static information is cleaned up between tests
+	 * 
 	 * @throws SQLException shouldn't
 	 * @throws DatabaseException shouldn't
 	 */
@@ -59,8 +59,7 @@ public abstract class PlayerTableDataGatewayTest extends DatabaseTest
 	}
 
 	/**
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void retrieveTopTenHighScores() throws DatabaseException
@@ -68,10 +67,11 @@ public abstract class PlayerTableDataGatewayTest extends DatabaseTest
 		gateway = getGatewaySingleton();
 		ArrayList<PlayerScoreRecord> results = gateway.getTopTenList();
 		assertEquals(10, results.size());
-		assertEquals(new PlayerScoreRecord(PlayersForTest.MERLIN.getPlayerName(),PlayersForTest.MERLIN.getExperiencePoints()), results.get(0));
-		assertFalse(results.contains(new PlayerScoreRecord(PlayersForTest.LOSER.getPlayerName(),PlayersForTest.LOSER.getExperiencePoints())));
-		
+		assertEquals(new PlayerScoreRecord(PlayersForTest.MERLIN.getPlayerName(),
+				PlayersForTest.MERLIN.getExperiencePoints()), results.get(0));
+		assertFalse(results.contains(new PlayerScoreRecord(PlayersForTest.LOSER.getPlayerName(),
+				PlayersForTest.LOSER.getExperiencePoints())));
+
 	}
 
-	
 }

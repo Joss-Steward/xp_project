@@ -29,6 +29,7 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 
 	/**
 	 * Makes sure to reset the gateway
+	 * 
 	 * @throws DatabaseException shouldn't
 	 */
 	@Before
@@ -37,8 +38,10 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 		gateway = this.findGateway(1);
 		gateway.resetData();
 	}
+
 	/**
 	 * Make sure any static information is cleaned up between tests
+	 * 
 	 * @throws SQLException shouldn't
 	 * @throws DatabaseException shouldn't
 	 */
@@ -55,8 +58,7 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 	/**
 	 * Make sure we can retrieve a specific question
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void finder() throws DatabaseException
@@ -80,8 +82,7 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 	 * make sure we get the right exception if we try to find a quest who
 	 * doesn't exist
 	 * 
-	 * @throws DatabaseException
-	 *             should
+	 * @throws DatabaseException should
 	 */
 	@Test(expected = DatabaseException.class)
 	public void findNotExisting() throws DatabaseException
@@ -90,14 +91,16 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 	}
 
 	/**
-	 * There are three quests in QuestsForTest that are on the same location.  Make sure we get them all
+	 * There are three quests in QuestsForTest that are on the same location.
+	 * Make sure we get them all
+	 * 
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void canFindQuestsForMapLocation() throws DatabaseException
 	{
 		QuestsForTest q = QuestsForTest.THE_OTHER_QUEST;
-		ArrayList<Integer> questIDs = findQuestsForMapLocation(q.getMapName(),q.getPosition());
+		ArrayList<Integer> questIDs = findQuestsForMapLocation(q.getMapName(), q.getPosition());
 		assertEquals(2, questIDs.size());
 		assertTrue(questIDs.contains(q.getQuestID()));
 		assertTrue(questIDs.contains(QuestsForTest.ONE_SAME_LOCATION_QUEST.getQuestID()));
@@ -105,15 +108,18 @@ public abstract class QuestRowDataGatewayTest extends DatabaseTest
 
 	/**
 	 * Use the appropriate gateway to find the quests on a given map location
+	 * 
 	 * @param mapName the name of the map
 	 * @param position the position on the map
-	 * @return a list of quest IDs for quests that are triggered at the given location
+	 * @return a list of quest IDs for quests that are triggered at the given
+	 *         location
 	 * @throws DatabaseException shouldn't
 	 */
 	abstract ArrayList<Integer> findQuestsForMapLocation(String mapName, Position position) throws DatabaseException;
 
 	/**
 	 * Get a gateway for these tests to use
+	 * 
 	 * @param questID the ID of the quest the gateway should manage
 	 * @return the gateway
 	 * @throws DatabaseException if the gateway can't be created

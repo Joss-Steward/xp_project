@@ -36,8 +36,7 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 	/**
 	 * Drop the table if it exists and re-create it empty
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	public void createTable() throws DatabaseException
 	{
@@ -48,8 +47,7 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 					"DROP TABLE IF EXISTS AdventureStates");
 			stmt.executeUpdate();
 			stmt.close();
-			stmt = new ClosingPreparedStatement(
-					connection,
+			stmt = new ClosingPreparedStatement(connection,
 					"Create TABLE AdventureStates (adventureID INT NOT NULL, questID INT NOT NULL, playerID INT NOT NULL, "
 							+ "adventureState INT, needingNotification BOOLEAN)");
 			stmt.executeUpdate();
@@ -64,8 +62,7 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 	 *      int)
 	 */
 	@Override
-	public ArrayList<AdventureStateRecord> getAdventureStates(int playerID, int questID)
-			throws DatabaseException
+	public ArrayList<AdventureStateRecord> getAdventureStates(int playerID, int questID) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
@@ -79,18 +76,15 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 			ArrayList<AdventureStateRecord> results = new ArrayList<AdventureStateRecord>();
 			while (result.next())
 			{
-				AdventureStateRecord rec = new AdventureStateRecord(
-						result.getInt("playerID"), result.getInt("questID"),
-						result.getInt("adventureID"),
-						convertToState(result.getInt("adventureState")),
+				AdventureStateRecord rec = new AdventureStateRecord(result.getInt("playerID"), result.getInt("questID"),
+						result.getInt("adventureID"), convertToState(result.getInt("adventureState")),
 						result.getBoolean("needingNotification"));
 				results.add(rec);
 			}
 			return results;
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Couldn't find adventures for quest ID "
-					+ questID, e);
+			throw new DatabaseException("Couldn't find adventures for quest ID " + questID, e);
 		}
 	}
 
@@ -102,29 +96,21 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 	/**
 	 * Create a new row in the table
 	 * 
-	 * @param playerID
-	 *            the player ID
-	 * @param questID
-	 *            the quest that contains the adventure
-	 * @param adventureID
-	 *            the unique ID of the adventure
-	 * @param adventureState
-	 *            the state of this adventure for this player
-	 * @param needingNotification
-	 *            true if the player should be notified about the state of this
-	 *            adventure
-	 * @throws DatabaseException
-	 *             if we can't talk to the RDS
+	 * @param playerID the player ID
+	 * @param questID the quest that contains the adventure
+	 * @param adventureID the unique ID of the adventure
+	 * @param adventureState the state of this adventure for this player
+	 * @param needingNotification true if the player should be notified about
+	 *            the state of this adventure
+	 * @throws DatabaseException if we can't talk to the RDS
 	 */
-	public void createRow(int playerID, int questID, int adventureID,
-			AdventureStateEnum adventureState, boolean needingNotification)
-			throws DatabaseException
+	public void createRow(int playerID, int questID, int adventureID, AdventureStateEnum adventureState,
+			boolean needingNotification) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
-					connection,
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
 					"Insert INTO AdventureStates SET questID = ?, adventureID = ?, playerID = ?, adventureState = ?, needingNotification = ?");
 			stmt.setInt(1, questID);
 			stmt.setInt(2, adventureID);
@@ -135,9 +121,8 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Couldn't create a adventure state record for adventure with ID "
-							+ adventureID, e);
+			throw new DatabaseException("Couldn't create a adventure state record for adventure with ID " + adventureID,
+					e);
 		}
 	}
 
@@ -146,16 +131,14 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 	 *      datatypes.AdventureStateEnum, boolean)
 	 */
 	@Override
-	public void updateState(int playerID, int questID, int adventureID,
-			AdventureStateEnum newState, boolean needingNotification)
-			throws DatabaseException
+	public void updateState(int playerID, int questID, int adventureID, AdventureStateEnum newState,
+			boolean needingNotification) throws DatabaseException
 	{
 
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
-					connection,
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
 					"UPDATE AdventureStates SET adventureState = ?, needingNotification = ? WHERE  playerID = ? and questID = ? and adventureID = ?");
 			stmt.setInt(1, newState.getID());
 			stmt.setBoolean(2, needingNotification);
@@ -169,9 +152,8 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 			}
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Couldn't update an adventure state record for player with ID "
-							+ playerID + " and quest with ID " + questID, e);
+			throw new DatabaseException("Couldn't update an adventure state record for player with ID " + playerID
+					+ " and quest with ID " + questID, e);
 		}
 
 	}
@@ -190,8 +172,7 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 	 * @see datasource.AdventureStateTableDataGateway#getPendingAdventuresForPlayer(int)
 	 */
 	@Override
-	public ArrayList<AdventureStateRecord> getPendingAdventuresForPlayer(int playerID)
-			throws DatabaseException
+	public ArrayList<AdventureStateRecord> getPendingAdventuresForPlayer(int playerID) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
@@ -205,18 +186,15 @@ public class AdventureStateTableDataGatewayRDS implements AdventureStateTableDat
 			ArrayList<AdventureStateRecord> results = new ArrayList<AdventureStateRecord>();
 			while (result.next())
 			{
-				AdventureStateRecord rec = new AdventureStateRecord(
-						result.getInt("playerID"), result.getInt("questID"),
-						result.getInt("adventureID"),
-						convertToState(result.getInt("adventureState")),
+				AdventureStateRecord rec = new AdventureStateRecord(result.getInt("playerID"), result.getInt("questID"),
+						result.getInt("adventureID"), convertToState(result.getInt("adventureState")),
 						result.getBoolean("needingNotification"));
 				results.add(rec);
 			}
 			return results;
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Couldn't find pending adventures for player ID "
-					+ playerID, e);
+			throw new DatabaseException("Couldn't find pending adventures for player ID " + playerID, e);
 		}
 	}
 }

@@ -11,28 +11,28 @@ import communication.messages.Message;
  * @author Matthew Croft
  *
  */
-public class KnowledgeChangePacker extends MessagePacker 
+public class KnowledgeChangePacker extends MessagePacker
 {
 
 	/**
 	 * @see communication.packers.MessagePacker#pack(model.QualifiedObservableReport)
 	 */
 	@Override
-	public Message pack(QualifiedObservableReport object) 
+	public Message pack(QualifiedObservableReport object)
 	{
-		
-		if(object.getClass() != KnowledgePointsChangeReport.class)
+
+		if (object.getClass() != KnowledgePointsChangeReport.class)
 		{
 			throw new IllegalArgumentException(
-					"KnowledgeChangedMessagePacker cannot pack messages of type "
-							+ object.getClass());
+					"KnowledgeChangedMessagePacker cannot pack messages of type " + object.getClass());
 		}
 
-		KnowledgePointsChangeReport report = (KnowledgePointsChangeReport)object;
+		KnowledgePointsChangeReport report = (KnowledgePointsChangeReport) object;
 
 		if (this.getAccumulator().getPlayerID() == report.getPlayerID())
 		{
-			KnowledgeChangedMessage msg = new 	KnowledgeChangedMessage(report.getPlayerID(), report.getKnowledgePoints());
+			KnowledgeChangedMessage msg = new KnowledgeChangedMessage(report.getPlayerID(),
+					report.getKnowledgePoints());
 			return msg;
 		}
 		return null;
@@ -44,9 +44,8 @@ public class KnowledgeChangePacker extends MessagePacker
 	@Override
 	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 	{
-		ArrayList<Class<? extends QualifiedObservableReport>> result = 
-				new ArrayList<Class<? extends QualifiedObservableReport>>();
-		result.add( KnowledgePointsChangeReport.class);
+		ArrayList<Class<? extends QualifiedObservableReport>> result = new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add(KnowledgePointsChangeReport.class);
 		return result;
 	}
 

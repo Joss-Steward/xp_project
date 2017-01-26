@@ -42,10 +42,8 @@ public class NPCRowDataGatewayMock implements NPCRowDataGateway
 	/**
 	 * Finder constructor - will initialize itself from the stored information
 	 * 
-	 * @param playerID
-	 *            the ID of the player we are looking for
-	 * @throws DatabaseException
-	 *             if the playerID isn't in the data source
+	 * @param playerID the ID of the player we are looking for
+	 * @throws DatabaseException if the playerID isn't in the data source
 	 */
 	public NPCRowDataGatewayMock(int playerID) throws DatabaseException
 	{
@@ -104,6 +102,7 @@ public class NPCRowDataGatewayMock implements NPCRowDataGateway
 
 	/**
 	 * Get all of the NPCS in the mock data for a given map name
+	 * 
 	 * @param mapName the name of the map
 	 * @return the NPCs that are managed by the server managing the given map
 	 * @throws DatabaseException shouldn't
@@ -115,7 +114,7 @@ public class NPCRowDataGatewayMock implements NPCRowDataGateway
 			new NPCRowDataGatewayMock(NPCsForTest.NPC1.getPlayerID()).resetData();
 		}
 		ArrayList<NPCRowDataGateway> result = new ArrayList<NPCRowDataGateway>();
-		for (Integer npcID:npcInfo.keySet())
+		for (Integer npcID : npcInfo.keySet())
 		{
 			PlayerConnectionRowDataGatewayMock playerGateway = new PlayerConnectionRowDataGatewayMock(npcID);
 			if (playerGateway.getMapName().equals(mapName))

@@ -28,7 +28,7 @@ import datatypes.QuestStateEnum;
 /**
  * Retrieves the list of quest and adventures from the database and sends them
  * to the PlayerManager?
- * 
+ *
  * @author lavonne
  */
 public class QuestManager implements QualifiedObserver
@@ -38,7 +38,7 @@ public class QuestManager implements QualifiedObserver
 
 	/**
 	 * The method returns a singleton of QuestManager
-	 * 
+	 *
 	 * @return the only QuestManager in the system
 	 */
 	public synchronized static QuestManager getSingleton()
@@ -53,16 +53,11 @@ public class QuestManager implements QualifiedObserver
 
 	private QuestManager()
 	{
-		QualifiedObservableConnector.getSingleton().registerObserver(this,
-				PlayerMovedReport.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(this,
-				PlayerLeaveReport.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(this,
-				KeyInputRecievedReport.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(this,
-				SendChatMessageReport.class);
-		QualifiedObservableConnector.getSingleton().registerObserver(this,
-				KnowledgePointsChangeReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(this, PlayerMovedReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(this, PlayerLeaveReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(this, KeyInputRecievedReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(this, SendChatMessageReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(this, KnowledgePointsChangeReport.class);
 		questStates = new HashMap<Integer, ArrayList<QuestState>>();
 		if (OptionsManager.getSingleton().isTestMode())
 		{
@@ -89,12 +84,10 @@ public class QuestManager implements QualifiedObserver
 	/**
 	 * Gets a specific quest from the database. Creates a Quest and passes it on
 	 * the player mapper?
-	 * 
-	 * @param questID
-	 *            the quest to retrieve
+	 *
+	 * @param questID the quest to retrieve
 	 * @return quest the retrieved request
-	 * @throws DatabaseException
-	 *             throw an exception if the quest id isn't found
+	 * @throws DatabaseException throw an exception if the quest id isn't found
 	 */
 	public Quest getQuest(int questID) throws DatabaseException
 	{
@@ -110,31 +103,23 @@ public class QuestManager implements QualifiedObserver
 		}
 
 		Quest quest = new Quest(questGateway.getQuestID(), questGateway.getQuestTitle(),
-				questGateway.getQuestDescription(), questGateway.getTriggerMapName(),
-				questGateway.getTriggerPosition(),
-				adventureGateway.getAdventuresForQuest(questID),
-				questGateway.getExperiencePointsGained(),
-				questGateway.getAdventuresForFulfillment(),
-				questGateway.getCompletionActionType(),
-				questGateway.getCompletionActionParameter(), questGateway.getStartDate(),
-				questGateway.getEndDate());
+				questGateway.getQuestDescription(), questGateway.getTriggerMapName(), questGateway.getTriggerPosition(),
+				adventureGateway.getAdventuresForQuest(questID), questGateway.getExperiencePointsGained(),
+				questGateway.getAdventuresForFulfillment(), questGateway.getCompletionActionType(),
+				questGateway.getCompletionActionParameter(), questGateway.getStartDate(), questGateway.getEndDate());
 
 		return quest;
 	}
 
 	/**
 	 * Return the quests that are associated with a certain map and position
-	 * 
-	 * @param pos
-	 *            the position of the quest
-	 * @param mapName
-	 *            the map that the quest is on
+	 *
+	 * @param pos the position of the quest
+	 * @param mapName the map that the quest is on
 	 * @return an array list of questIDs
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
-	public ArrayList<Integer> getQuestsByPosition(Position pos, String mapName)
-			throws DatabaseException
+	public ArrayList<Integer> getQuestsByPosition(Position pos, String mapName) throws DatabaseException
 	{
 		if (OptionsManager.getSingleton().isTestMode())
 		{
@@ -148,38 +133,29 @@ public class QuestManager implements QualifiedObserver
 	/**
 	 * Returns a list of AdventureRecord objects based on completion at
 	 * specified map and position
-	 * 
-	 * @param pos
-	 *            - the position of the adventure
-	 * @param mapName
-	 *            - the map that the adventure is on
+	 *
+	 * @param pos - the position of the adventure
+	 * @param mapName - the map that the adventure is on
 	 * @return an array list of AdventureRecords at this position
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
-	public ArrayList<AdventureRecord> getAdventuresByPosition(Position pos, String mapName)
-			throws DatabaseException
+	public ArrayList<AdventureRecord> getAdventuresByPosition(Position pos, String mapName) throws DatabaseException
 	{
 		return adventureGateway.findAdventuresCompletedForMapLocation(mapName, pos);
 	}
 
 	/**
 	 * Trigger a quest for a given player
-	 * 
-	 * @param playerID
-	 *            the player
-	 * @param questID
-	 *            the quest to be triggered
-	 * @throws IllegalAdventureChangeException
-	 *             thrown if changing to a wrong state
-	 * @throws IllegalQuestChangeException
-	 *             thrown if illegal state change
-	 * @throws DatabaseException
-	 *             shouldn't
+	 *
+	 * @param playerID the player
+	 * @param questID the quest to be triggered
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong
+	 *             state
+	 * @throws IllegalQuestChangeException thrown if illegal state change
+	 * @throws DatabaseException shouldn't
 	 */
 	public void triggerQuest(int playerID, int questID)
-			throws IllegalAdventureChangeException, IllegalQuestChangeException,
-			DatabaseException
+			throws IllegalAdventureChangeException, IllegalQuestChangeException, DatabaseException
 	{
 		QuestState qs = getQuestStateByID(playerID, questID);
 		Calendar.getInstance().set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
@@ -224,7 +200,7 @@ public class QuestManager implements QualifiedObserver
 	/**
 	 * Iterates through all quests and adventures and validates if it's the
 	 * correct criteria for keyboard input.
-	 * 
+	 *
 	 * @param report
 	 */
 	private void handlePlayerInput(QualifiedObservableReport report)
@@ -239,8 +215,8 @@ public class QuestManager implements QualifiedObserver
 				for (AdventureState as : qs.getAdventureList())
 				{
 
-					validateInputCriteriaForAdventures(myReport.getInput(),
-							myReport.getPlayerId(), qs.getID(), as.getID());
+					validateInputCriteriaForAdventures(myReport.getInput(), myReport.getPlayerId(), qs.getID(),
+							as.getID());
 				}
 			}
 		}
@@ -251,7 +227,7 @@ public class QuestManager implements QualifiedObserver
 	 * complete any of the current adventure that a player is doing Adventure
 	 * must be off AdventureCompletion type chat and the players must be within
 	 * a certain distance of each other
-	 * 
+	 *
 	 */
 	private void handlePlayerChatCriteriaCompletion(QualifiedObservableReport report)
 	{
@@ -279,7 +255,7 @@ public class QuestManager implements QualifiedObserver
 	}
 
 	/**
-	 * 
+	 *
 	 * @param report
 	 */
 	private void handleKnowledgePointsChanged(QualifiedObservableReport report)
@@ -294,8 +270,7 @@ public class QuestManager implements QualifiedObserver
 
 		for (QuestState q : questStates)
 		{
-			adventuresForCompletion.addAll(getAdventuresByKnowledgePoints(q.getID(),
-					q.getPlayerID()));
+			adventuresForCompletion.addAll(getAdventuresByKnowledgePoints(q.getID(), q.getPlayerID()));
 		}
 
 		try
@@ -304,14 +279,11 @@ public class QuestManager implements QualifiedObserver
 			{
 				for (AdventureRecord a : adventuresForCompletion)
 				{
-					PointsCompleted criteria = (PointsCompleted) a
-							.getCompletionCriteria();
+					PointsCompleted criteria = (PointsCompleted) a.getCompletionCriteria();
 
-					if (criteria.getPoints() <= PM
-							.getPlayerFromID(myReport.getPlayerID()).getQuizScore())
+					if (criteria.getPoints() <= PM.getPlayerFromID(myReport.getPlayerID()).getQuizScore())
 					{
-						qm.completeAdventure(myReport.getPlayerID(), a.getQuestID(),
-								a.getAdventureID());
+						qm.completeAdventure(myReport.getPlayerID(), a.getQuestID(), a.getAdventureID());
 					}
 				}
 			}
@@ -325,31 +297,24 @@ public class QuestManager implements QualifiedObserver
 
 	/**
 	 * checks if adventure meets chat criteria and completes it if it does
-	 * 
-	 * @param reportPlayerID
-	 *            player who sent chat message
-	 * @param q
-	 *            quest to get adventure for
+	 *
+	 * @param reportPlayerID player who sent chat message
+	 * @param q quest to get adventure for
 	 * @throws PlayerNotFoundException
 	 */
-	private void checkAllAdventuresForCompletion(int reportPlayerID, QuestState q)
-			throws PlayerNotFoundException
+	private void checkAllAdventuresForCompletion(int reportPlayerID, QuestState q) throws PlayerNotFoundException
 	{
 		PlayerManager PM = PlayerManager.getSingleton();
 		for (AdventureRecord a : getPendingChatAdventures(q.getID(), reportPlayerID))
 		{
-			Player npc = PM.getPlayerFromID(PM.getPlayerIDFromPlayerName(a
-					.getCompletionCriteria().toString()));
-			if (PM.getPlayerFromID(reportPlayerID).canReceiveLocalMessage(
-					npc.getPlayerPosition()))
+			Player npc = PM.getPlayerFromID(PM.getPlayerIDFromPlayerName(a.getCompletionCriteria().toString()));
+			if (PM.getPlayerFromID(reportPlayerID).canReceiveLocalMessage(npc.getPlayerPosition()))
 			{
 				try
 				{
-					QuestManager.getSingleton().completeAdventure(reportPlayerID,
-							q.getID(), a.getAdventureID());
+					QuestManager.getSingleton().completeAdventure(reportPlayerID, q.getID(), a.getAdventureID());
 
-				} catch (DatabaseException | IllegalAdventureChangeException
-						| IllegalQuestChangeException e)
+				} catch (DatabaseException | IllegalAdventureChangeException | IllegalQuestChangeException e)
 				{
 					e.printStackTrace();
 				}
@@ -358,32 +323,26 @@ public class QuestManager implements QualifiedObserver
 	}
 
 	/**
-	 * @param questID
-	 *            the id of the quest we're checking
-	 * @param reportPlayerId
-	 *            the player's id
+	 * @param questID the id of the quest we're checking
+	 * @param reportPlayerId the player's id
 	 * @return the list of points adventures ready for completion
 	 */
-	public ArrayList<AdventureRecord> getAdventuresByKnowledgePoints(int questID,
-			int reportPlayerId)
+	public ArrayList<AdventureRecord> getAdventuresByKnowledgePoints(int questID, int reportPlayerId)
 	{
 		ArrayList<AdventureRecord> questAdventures = new ArrayList<AdventureRecord>();
 		ArrayList<AdventureRecord> pointsAdventures = new ArrayList<AdventureRecord>();
 
 		try
 		{
-			questAdventures = QuestManager.getSingleton().getQuest(questID)
-					.getAdventures();
+			questAdventures = QuestManager.getSingleton().getQuest(questID).getAdventures();
 			if (questAdventures.size() != 0)
 			{
 				for (AdventureRecord A : questAdventures)
 				{
-					AdventureState currentState = QuestManager.getSingleton()
-							.getAdventureStateByID(reportPlayerId, questID,
-									A.getAdventureID());
+					AdventureState currentState = QuestManager.getSingleton().getAdventureStateByID(reportPlayerId,
+							questID, A.getAdventureID());
 
-					if (A.getCompletionType() == AdventureCompletionType.POINTS
-							&& currentState != null
+					if (A.getCompletionType() == AdventureCompletionType.POINTS && currentState != null
 							&& currentState.getState() == AdventureStateEnum.TRIGGERED)
 					{
 						pointsAdventures.add(A);
@@ -402,15 +361,12 @@ public class QuestManager implements QualifiedObserver
 
 	/**
 	 * returns all AdventureRecords which the type is chat
-	 * 
-	 * @param questID
-	 *            the quest to get adventures for
-	 * @param reportPlayerID
-	 *            the player who sent a chat message
+	 *
+	 * @param questID the quest to get adventures for
+	 * @param reportPlayerID the player who sent a chat message
 	 * @return all adventures that have completionType chat
 	 */
-	public ArrayList<AdventureRecord> getPendingChatAdventures(int questID,
-			int reportPlayerID)
+	public ArrayList<AdventureRecord> getPendingChatAdventures(int questID, int reportPlayerID)
 	{
 		ArrayList<AdventureRecord> questAdventures = new ArrayList<AdventureRecord>();
 		try
@@ -418,8 +374,7 @@ public class QuestManager implements QualifiedObserver
 
 			for (AdventureRecord AR : getQuest(questID).getAdventures())
 			{
-				AdventureState adventureState = getAdventureStateByID(reportPlayerID,
-						questID, AR.getAdventureID());
+				AdventureState adventureState = getAdventureStateByID(reportPlayerID, questID, AR.getAdventureID());
 				if (adventureState != null)
 				{
 					AdventureStateEnum currentAdventuresState = adventureState.getState();
@@ -442,22 +397,20 @@ public class QuestManager implements QualifiedObserver
 
 	/**
 	 * Validates if an input string matches the criteria string.
-	 * 
+	 *
 	 * @param input
 	 * @param playerId
 	 * @param questId
 	 * @param adventureId
 	 */
-	private void validateInputCriteriaForAdventures(String input, int playerId,
-			int questId, int adventureId)
+	private void validateInputCriteriaForAdventures(String input, int playerId, int questId, int adventureId)
 	{
 		QuestManager qm = QuestManager.getSingleton();
 		try
 		{
 			AdventureRecord ar = getAdventure(questId, adventureId);
-			if (ar.getCompletionType() == AdventureCompletionType.KEYSTROKE
-					&& qm.getAdventureStateByID(playerId, questId, adventureId)
-							.getState() == AdventureStateEnum.TRIGGERED)
+			if (ar.getCompletionType() == AdventureCompletionType.KEYSTROKE && qm
+					.getAdventureStateByID(playerId, questId, adventureId).getState() == AdventureStateEnum.TRIGGERED)
 			{
 				CriteriaString cs = (CriteriaString) ar.getCompletionCriteria();
 				if (cs.toString().equalsIgnoreCase(input))
@@ -478,30 +431,26 @@ public class QuestManager implements QualifiedObserver
 		{
 			QuestManager qm = QuestManager.getSingleton();
 			ArrayList<Integer> questIDs = new ArrayList<Integer>();
-			questIDs = qm.getQuestsByPosition(myReport.getNewPosition(),
-					myReport.getMapName());
+			questIDs = qm.getQuestsByPosition(myReport.getNewPosition(), myReport.getMapName());
 
 			for (Integer q : questIDs)
 			{
 				this.triggerQuest(myReport.getPlayerID(), q);
 			}
 
-			ArrayList<AdventureRecord> adventures = getAdventuresByPosition(
-					myReport.getNewPosition(), myReport.getMapName());
+			ArrayList<AdventureRecord> adventures = getAdventuresByPosition(myReport.getNewPosition(),
+					myReport.getMapName());
 			for (AdventureRecord a : adventures)
 			{
-				AdventureState adventureStateByID = getAdventureStateByID(
-						myReport.getPlayerID(), a.getQuestID(), a.getAdventureID());
-				if (adventureStateByID != null
-						&& adventureStateByID.getState() != AdventureStateEnum.COMPLETED)
+				AdventureState adventureStateByID = getAdventureStateByID(myReport.getPlayerID(), a.getQuestID(),
+						a.getAdventureID());
+				if (adventureStateByID != null && adventureStateByID.getState() != AdventureStateEnum.COMPLETED)
 				{
-					this.completeAdventure(myReport.getPlayerID(), a.getQuestID(),
-							a.getAdventureID());
+					this.completeAdventure(myReport.getPlayerID(), a.getQuestID(), a.getAdventureID());
 				}
 			}
 
-		} catch (DatabaseException | IllegalAdventureChangeException
-				| IllegalQuestChangeException e)
+		} catch (DatabaseException | IllegalAdventureChangeException | IllegalQuestChangeException e)
 		{
 			e.printStackTrace();
 		}
@@ -509,11 +458,9 @@ public class QuestManager implements QualifiedObserver
 
 	/**
 	 * Add a quest to the player's questList
-	 * 
-	 * @param playerID
-	 *            the player we are adding the quest id
-	 * @param quest
-	 *            the quest being added
+	 *
+	 * @param playerID the player we are adding the quest id
+	 * @param quest the quest being added
 	 */
 	public void addQuestState(int playerID, QuestState quest)
 	{
@@ -532,18 +479,15 @@ public class QuestManager implements QualifiedObserver
 
 	/**
 	 * Go through the questList and get the state of the quest based on the id
-	 * 
-	 * @param playerID
-	 *            the id of the player
-	 * @param questID
-	 *            the id of the quest we are interested in
+	 *
+	 * @param playerID the id of the player
+	 * @param questID the id of the quest we are interested in
 	 * @return the state of the quest
 	 */
 	QuestState getQuestStateByID(int playerID, int questID)
 	{
 
-		ArrayList<QuestState> questStateList = QuestManager.getSingleton().getQuestList(
-				playerID);
+		ArrayList<QuestState> questStateList = QuestManager.getSingleton().getQuestList(playerID);
 		Quest quest = null;
 		try
 		{
@@ -565,14 +509,12 @@ public class QuestManager implements QualifiedObserver
 		if (quest != null && qState != null)
 		{
 			Date now = Calendar.getInstance().getTime();
-			if (now.after(quest.getEndDate())
-					&& qState.getStateValue() != QuestStateEnum.EXPIRED
+			if (now.after(quest.getEndDate()) && qState.getStateValue() != QuestStateEnum.EXPIRED
 					&& qState.getStateValue() != QuestStateEnum.FINISHED)
 			{
 				try
 				{
-					qState.changeState(QuestStateEnum.EXPIRED,
-							qState.isNeedingNotification());
+					qState.changeState(QuestStateEnum.EXPIRED, qState.isNeedingNotification());
 				} catch (IllegalQuestChangeException | DatabaseException e)
 				{
 					e.printStackTrace();
@@ -586,13 +528,10 @@ public class QuestManager implements QualifiedObserver
 	/**
 	 * Use the id's of the player quest and adventure to find a specified
 	 * adventure state
-	 * 
-	 * @param playerID
-	 *            the id of the player
-	 * @param questID
-	 *            the id of the quest
-	 * @param adventureID
-	 *            the id of the adventure
+	 *
+	 * @param playerID the id of the player
+	 * @param questID the id of the quest
+	 * @param adventureID the id of the adventure
 	 * @return the state of the adventurenew Grego
 	 */
 	AdventureState getAdventureStateByID(int playerID, int questID, int adventureID)
@@ -619,9 +558,8 @@ public class QuestManager implements QualifiedObserver
 
 	/**
 	 * Get a list of all of the current quest states for a given player
-	 * 
-	 * @param playerID
-	 *            the player's id
+	 *
+	 * @param playerID the player's id
 	 * @return the states
 	 */
 	public ArrayList<QuestState> getQuestList(int playerID)
@@ -631,9 +569,8 @@ public class QuestManager implements QualifiedObserver
 
 	/**
 	 * Remove all of the quest states for a given player
-	 * 
-	 * @param playerID
-	 *            the player we are removing
+	 *
+	 * @param playerID the player we are removing
 	 */
 	public void removeQuestStatesForPlayer(int playerID)
 	{
@@ -642,35 +579,26 @@ public class QuestManager implements QualifiedObserver
 
 	/**
 	 * Get the information about a specific adventure
-	 * 
-	 * @param questID
-	 *            the quest that contains the adventure
-	 * @param adventureID
-	 *            the adventure ID within that quest
+	 *
+	 * @param questID the quest that contains the adventure
+	 * @param adventureID the adventure ID within that quest
 	 * @return the requested details
-	 * @throws DatabaseException
-	 *             if the data source can't respond well
+	 * @throws DatabaseException if the data source can't respond well
 	 */
-	public AdventureRecord getAdventure(int questID, int adventureID)
-			throws DatabaseException
+	public AdventureRecord getAdventure(int questID, int adventureID) throws DatabaseException
 	{
 		return this.adventureGateway.getAdventure(questID, adventureID);
 	}
 
 	/**
 	 * If quest state is not null, finish
-	 * 
-	 * @param playerID
-	 *            the player ID
-	 * @param questID
-	 *            the quest ID
-	 * @throws IllegalQuestChangeException
-	 *             thrown if illegal state change
-	 * @throws DatabaseException
-	 *             shouldn't
+	 *
+	 * @param playerID the player ID
+	 * @param questID the quest ID
+	 * @throws IllegalQuestChangeException thrown if illegal state change
+	 * @throws DatabaseException shouldn't
 	 */
-	public void finishQuest(int playerID, int questID)
-			throws IllegalQuestChangeException, DatabaseException
+	public void finishQuest(int playerID, int questID) throws IllegalQuestChangeException, DatabaseException
 	{
 		QuestState qs = getQuestStateByID(playerID, questID);
 		if (qs != null)
@@ -682,28 +610,21 @@ public class QuestManager implements QualifiedObserver
 	/**
 	 * Get the adventure state from the id's and set the adventure state to
 	 * complete if it is pending
-	 * 
-	 * @param playerID
-	 *            the id of the player
-	 * @param questID
-	 *            the id of the quest
-	 * @param adventureID
-	 *            the id of the adventure
-	 * @throws DatabaseException
-	 *             shouldn't
-	 * @throws IllegalAdventureChangeException
-	 *             thrown if changing to a wrong state
-	 * @throws IllegalQuestChangeException
-	 *             thrown if illegal state change
+	 *
+	 * @param playerID the id of the player
+	 * @param questID the id of the quest
+	 * @param adventureID the id of the adventure
+	 * @throws DatabaseException shouldn't
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong
+	 *             state
+	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 */
 	public void completeAdventure(int playerID, int questID, int adventureID)
-			throws DatabaseException, IllegalAdventureChangeException,
-			IllegalQuestChangeException
+			throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException
 	{
 		// QuestState qs =
 		// QuestManager.getSingleton().getQuestStateByID(playerID, questID);
-		AdventureState adventureStateByID = getAdventureStateByID(playerID, questID,
-				adventureID);
+		AdventureState adventureStateByID = getAdventureStateByID(playerID, questID, adventureID);
 		if (adventureStateByID != null)
 		{
 			adventureStateByID.complete();
@@ -713,27 +634,28 @@ public class QuestManager implements QualifiedObserver
 
 	/**
 	 * Set needing notification to false
-	 * 
-	 * @param playerID
-	 *            the id of the player
-	 * @param questID
-	 *            the id of the quest
-	 * @param adventureID
-	 *            the id of the adventure
-	 * @throws DatabaseException
-	 *             shouldn't
-	 * @throws IllegalAdventureChangeException
-	 *             thrown if changing to a wrong state
-	 * @throws IllegalQuestChangeException
-	 *             thrown if illegal state change
+	 *
+	 * @param playerID the id of the player
+	 * @param questID the id of the quest
+	 * @param adventureID the id of the adventure
+	 * @throws DatabaseException shouldn't
+	 * @throws IllegalAdventureChangeException thrown if changing to a wrong
+	 *             state
+	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 */
 	public void turnOffNotification(int playerID, int questID, int adventureID)
-			throws DatabaseException, IllegalAdventureChangeException,
-			IllegalQuestChangeException
+			throws DatabaseException, IllegalAdventureChangeException, IllegalQuestChangeException
 	{
 		getAdventureStateByID(playerID, questID, adventureID).turnOffNotification();
 	}
 
+	/**
+	 * Called when the user no longer needs to be notified about the current
+	 * state of a quest
+	 * 
+	 * @param playerID the player
+	 * @param questID the quest that should be quieted
+	 */
 	public void turnOffQuestNotification(int playerID, int questID)
 	{
 		QuestState qs = getQuestStateByID(playerID, questID);

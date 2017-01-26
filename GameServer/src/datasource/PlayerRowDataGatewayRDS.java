@@ -25,21 +25,18 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	/**
 	 * Drop the table if it exists and re-create it empty
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	public static void createTable() throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"DROP TABLE IF EXISTS Players");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection, "DROP TABLE IF EXISTS Players");
 			stmt.executeUpdate();
 			stmt.close();
 
-			stmt = new ClosingPreparedStatement(
-					connection,
+			stmt = new ClosingPreparedStatement(connection,
 					"Create TABLE Players (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  row INTEGER, col INTEGER, "
 							+ "appearanceType VARCHAR(255), quizScore INTEGER, experiencePoints INTEGER, crew INTEGER NOT NULL, major INTEGER NOT NULL)");
 			stmt.executeUpdate();
@@ -63,10 +60,8 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	/**
 	 * finder constructor
 	 * 
-	 * @param playerID
-	 *            the unique ID of the player we are working with
-	 * @throws DatabaseException
-	 *             if we cannot find that player in the database
+	 * @param playerID the unique ID of the player we are working with
+	 * @throws DatabaseException if we cannot find that player in the database
 	 */
 	public PlayerRowDataGatewayRDS(int playerID) throws DatabaseException
 	{
@@ -79,8 +74,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 			stmt.setInt(1, playerID);
 			ResultSet result = stmt.executeQuery();
 			result.next();
-			this.position = (Position) new Position(result.getInt("row"),
-					result.getInt("col"));
+			this.position = (Position) new Position(result.getInt("row"), result.getInt("col"));
 			this.appearanceType = result.getString("appearanceType");
 			this.quizScore = result.getInt("quizScore");
 			this.experiencePoints = result.getInt("experiencePoints");
@@ -96,29 +90,22 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	/**
 	 * create constructor
 	 * 
-	 * @param position
-	 *            the row/column of the position the player is in
-	 * @param appearanceType
-	 *            the appearance type this player should be rendered with
-	 * @param quizScore
-	 *            this player's current quiz score
-	 * @param experiencePoints
-	 *            this player's experience points
-	 * @param crew
-	 *            the crew to which this player belongs
-	 * @param major 
-	 * 			the major of this player
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @param position the row/column of the position the player is in
+	 * @param appearanceType the appearance type this player should be rendered
+	 *            with
+	 * @param quizScore this player's current quiz score
+	 * @param experiencePoints this player's experience points
+	 * @param crew the crew to which this player belongs
+	 * @param major the major of this player
+	 * @throws DatabaseException shouldn't
 	 */
-	public PlayerRowDataGatewayRDS(Position position, String appearanceType,
-			int quizScore, int experiencePoints, Crew crew, Major major) throws DatabaseException
+	public PlayerRowDataGatewayRDS(Position position, String appearanceType, int quizScore, int experiencePoints,
+			Crew crew, Major major) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
-					connection,
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
 					"Insert INTO Players SET row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ?, crew = ?, major = ?",
 					Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, position.getRow());
@@ -137,8 +124,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Couldn't create a player record for player with ID " + playerID, e);
+			throw new DatabaseException("Couldn't create a player record for player with ID " + playerID, e);
 		}
 	}
 
@@ -208,8 +194,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 
 			try
 			{
-				ClosingPreparedStatement stmt = new ClosingPreparedStatement(
-						connection,
+				ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
 						"UPDATE Players SET row = ?, col = ?, appearanceType = ?, quizScore = ?, experiencePoints = ?, crew = ?, major = ? WHERE playerID = ?");
 				stmt.setInt(1, position.getRow());
 				stmt.setInt(2, position.getColumn());
@@ -223,8 +208,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 			} catch (SQLException e)
 			{
 
-				throw new DatabaseException("Couldn't persist info for player with ID "
-						+ playerID, e);
+				throw new DatabaseException("Couldn't persist info for player with ID " + playerID, e);
 			}
 		}
 	}
@@ -285,7 +269,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	 * @see datasource.PlayerRowDataGateway#getMajor()
 	 */
 	@Override
-	public Major getMajor() 
+	public Major getMajor()
 	{
 		return major;
 	}
@@ -294,7 +278,7 @@ public class PlayerRowDataGatewayRDS implements PlayerRowDataGateway
 	 * @see datasource.PlayerRowDataGateway#setMajor(datatypes.Major)
 	 */
 	@Override
-	public void setMajor(Major major) 
+	public void setMajor(Major major)
 	{
 		this.major = major;
 	}

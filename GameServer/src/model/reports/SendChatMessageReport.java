@@ -5,7 +5,8 @@ import datatypes.Position;
 import model.QualifiedObservableReport;
 
 /**
- * Carries information from a chat message from the ChatManager to the ChatMessagePacker.
+ * Carries information from a chat message from the ChatManager to the
+ * ChatMessagePacker.
  * 
  * @author Dave
  */
@@ -15,6 +16,7 @@ public final class SendChatMessageReport implements QualifiedObservableReport
 	private final String name;
 	private final Position location;
 	private final ChatType type;
+
 	/**
 	 * @param messageContent The text of the message
 	 * @param playerName The name of the player who sent the message
@@ -28,11 +30,11 @@ public final class SendChatMessageReport implements QualifiedObservableReport
 		this.location = pos;
 		this.type = type;
 	}
-	
+
 	/**
 	 * @return The position of the player when they sent the message
 	 */
-	public Position getPosition() 
+	public Position getPosition()
 	{
 		return location;
 	}
@@ -40,7 +42,7 @@ public final class SendChatMessageReport implements QualifiedObservableReport
 	/**
 	 * @return The name of the player who sent the message
 	 */
-	public String getSenderName() 
+	public String getSenderName()
 	{
 		return name;
 	}
@@ -48,7 +50,7 @@ public final class SendChatMessageReport implements QualifiedObservableReport
 	/**
 	 * @return The text of the message
 	 */
-	public String getMessage() 
+	public String getMessage()
 	{
 		return text;
 	}
@@ -56,7 +58,7 @@ public final class SendChatMessageReport implements QualifiedObservableReport
 	/**
 	 * @return The type of chat message this is
 	 */
-	public ChatType getType() 
+	public ChatType getType()
 	{
 		return type;
 	}
@@ -66,23 +68,24 @@ public final class SendChatMessageReport implements QualifiedObservableReport
 	 * properly compared with one another.
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((location == null) ? 0 : location.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((text == null) ? 0 : text.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
-	
+
 	/**
 	 * Override the default equals() so that instances of this class can be
 	 * properly compared.
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -90,17 +93,20 @@ public final class SendChatMessageReport implements QualifiedObservableReport
 		if (getClass() != obj.getClass())
 			return false;
 		SendChatMessageReport other = (SendChatMessageReport) obj;
-		if (location == null) {
+		if (location == null)
+		{
 			if (other.location != null)
 				return false;
 		} else if (!location.equals(other.location))
 			return false;
-		if (name == null) {
+		if (name == null)
+		{
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (text == null) {
+		if (text == null)
+		{
 			if (other.text != null)
 				return false;
 		} else if (!text.equals(other.text))

@@ -16,12 +16,9 @@ public class BuildTestLevels
 
 	/**
 	 * 
-	 * @param args
-	 *            unused
-	 * @throws DatabaseException
-	 *             shouldn't
-	 * @throws SQLException
-	 *             shouldn't
+	 * @param args unused
+	 * @throws DatabaseException shouldn't
+	 * @throws SQLException shouldn't
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
@@ -32,6 +29,7 @@ public class BuildTestLevels
 
 	/**
 	 * Create a table of levels
+	 * 
 	 * @throws SQLException
 	 * @throws DatabaseException
 	 */
@@ -40,7 +38,8 @@ public class BuildTestLevels
 		LevelTableDataGatewayRDS.createTable();
 		for (LevelsForTest level : LevelsForTest.values())
 		{
-			LevelTableDataGatewayRDS.getSingleton().createRow(level.getDescription(), level.getLevelUpPoints(), level.getLevelUpMonth(), level.getLevelUpDayOfMonth());
+			LevelTableDataGatewayRDS.getSingleton().createRow(level.getDescription(), level.getLevelUpPoints(),
+					level.getLevelUpMonth(), level.getLevelUpDayOfMonth());
 		}
 	}
 }

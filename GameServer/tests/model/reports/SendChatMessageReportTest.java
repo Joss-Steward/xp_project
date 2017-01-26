@@ -12,7 +12,7 @@ import datatypes.Position;
 /**
  * @author Dave
  *
- * Make sure that the SendChatMessageReport behaves properly.
+ *         Make sure that the SendChatMessageReport behaves properly.
  */
 public class SendChatMessageReportTest
 {
@@ -24,17 +24,17 @@ public class SendChatMessageReportTest
 	{
 		String msg = "Test message";
 		String sender = "Bob";
-		Position pos = new Position(0,1);
+		Position pos = new Position(0, 1);
 		ChatType type = ChatType.World;
-		
+
 		SendChatMessageReport report = new SendChatMessageReport(msg, sender, pos, type);
-		
+
 		assertEquals(msg, report.getMessage());
 		assertEquals(sender, report.getSenderName());
 		assertEquals(pos, report.getPosition());
 		assertEquals(type, report.getType());
 	}
-	
+
 	/**
 	 * Make sure the equals contract is obeyed
 	 */

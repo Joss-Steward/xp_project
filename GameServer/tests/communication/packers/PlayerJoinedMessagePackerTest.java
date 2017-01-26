@@ -38,8 +38,7 @@ public class PlayerJoinedMessagePackerTest
 	/**
 	 * Checks that existing players are notified when a player is added
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void ifThePlayerIsNotOnThisConnection() throws DatabaseException
@@ -50,11 +49,9 @@ public class PlayerJoinedMessagePackerTest
 		stateAccumulator.setPlayerId(PlayersForTest.MERLIN.getPlayerID());
 		playerManager.addPlayer(PlayersForTest.JOHN.getPlayerID());
 
-		Player playerFromID = playerManager.getPlayerFromID(PlayersForTest.JOHN
-				.getPlayerID());
-		PlayerConnectionReport report = new PlayerConnectionReport(
-				playerFromID.getPlayerID(), playerFromID.getPlayerName(),
-				playerFromID.getAppearanceType(), playerFromID.getPlayerPosition(),
+		Player playerFromID = playerManager.getPlayerFromID(PlayersForTest.JOHN.getPlayerID());
+		PlayerConnectionReport report = new PlayerConnectionReport(playerFromID.getPlayerID(),
+				playerFromID.getPlayerName(), playerFromID.getAppearanceType(), playerFromID.getPlayerPosition(),
 				playerFromID.getCrew(), playerFromID.getMajor());
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
@@ -71,8 +68,7 @@ public class PlayerJoinedMessagePackerTest
 	 * on the server. If the message is targeted at our accumulator, we should
 	 * pack a PlayerJoinedMessage
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void addNotifiesAboutExistingPlayer() throws DatabaseException
@@ -83,11 +79,10 @@ public class PlayerJoinedMessagePackerTest
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(PlayersForTest.MERLIN.getPlayerID());
 
-		AddExistingPlayerReport report = new AddExistingPlayerReport(
-				PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.JOHN.getPlayerID(),
-				PlayersForTest.JOHN.getPlayerName(),
-				PlayersForTest.JOHN.getAppearanceType(),
-				PlayersForTest.JOHN.getPosition(), PlayersForTest.JOHN.getCrew(), PlayersForTest.JOHN.getMajor());
+		AddExistingPlayerReport report = new AddExistingPlayerReport(PlayersForTest.MERLIN.getPlayerID(),
+				PlayersForTest.JOHN.getPlayerID(), PlayersForTest.JOHN.getPlayerName(),
+				PlayersForTest.JOHN.getAppearanceType(), PlayersForTest.JOHN.getPosition(),
+				PlayersForTest.JOHN.getCrew(), PlayersForTest.JOHN.getMajor());
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);
@@ -102,8 +97,7 @@ public class PlayerJoinedMessagePackerTest
 	 * Add existing player reports should only be sent by the accumulator that
 	 * is talking to the recipient player
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void ignoresExistingPlayerWhenNotMine() throws DatabaseException
@@ -114,11 +108,10 @@ public class PlayerJoinedMessagePackerTest
 		StateAccumulator stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(PlayersForTest.JOHN.getPlayerID());
 
-		AddExistingPlayerReport report = new AddExistingPlayerReport(
-				PlayersForTest.MERLIN.getPlayerID(), PlayersForTest.JOHN.getPlayerID(),
-				PlayersForTest.JOHN.getPlayerName(),
-				PlayersForTest.JOHN.getAppearanceType(),
-				PlayersForTest.JOHN.getPosition(), PlayersForTest.JOHN.getCrew(), PlayersForTest.JOHN.getMajor());
+		AddExistingPlayerReport report = new AddExistingPlayerReport(PlayersForTest.MERLIN.getPlayerID(),
+				PlayersForTest.JOHN.getPlayerID(), PlayersForTest.JOHN.getPlayerName(),
+				PlayersForTest.JOHN.getAppearanceType(), PlayersForTest.JOHN.getPosition(),
+				PlayersForTest.JOHN.getCrew(), PlayersForTest.JOHN.getMajor());
 		PlayerJoinedMessagePacker packer = new PlayerJoinedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 		PlayerJoinedMessage msg = (PlayerJoinedMessage) packer.pack(report);

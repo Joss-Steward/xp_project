@@ -66,24 +66,21 @@ public class PlayerManager implements QualifiedObserver
 	private PlayerManager() throws DatabaseException
 	{
 		players = new HashMap<Integer, Player>();
-		QualifiedObservableConnector.getSingleton().registerObserver(this,
-				PlayerDisconnectedReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(this, PlayerDisconnectedReport.class);
 	}
 
 	/**
 	 * Adds a player to the list of active players on this server without
 	 * checking its pin - only for testing purposes
 	 * 
-	 * @param playerID
-	 *            the players id number
+	 * @param playerID the players id number
 	 * @return the player object for the added player
 	 */
 	public Player addPlayer(int playerID)
 	{
 		if (!OptionsManager.getSingleton().isTestMode())
 		{
-			throw new IllegalStateException(
-					"Trying to add a player without giving a PIN when not in test mode");
+			throw new IllegalStateException("Trying to add a player without giving a PIN when not in test mode");
 		}
 		try
 		{
@@ -92,10 +89,9 @@ public class PlayerManager implements QualifiedObserver
 			player.setPlayerLogin(new PlayerLogin(playerID));
 			players.put(playerID, player);
 
-			QualifiedObservableConnector.getSingleton().sendReport(
-					new PlayerConnectionReport(playerID, player.getPlayerName(), player
-							.getAppearanceType(), player.getPlayerPosition(), player
-							.getCrew(), player.getMajor()));
+			QualifiedObservableConnector.getSingleton()
+					.sendReport(new PlayerConnectionReport(playerID, player.getPlayerName(), player.getAppearanceType(),
+							player.getPlayerPosition(), player.getCrew(), player.getMajor()));
 			return player;
 		} catch (DatabaseException e)
 		{
@@ -107,18 +103,13 @@ public class PlayerManager implements QualifiedObserver
 	/**
 	 * Adds a player to the list of active players on this server
 	 * 
-	 * @param playerID
-	 *            the players id number
-	 * @param pin
-	 *            the pin we gave the client to connect to this server
+	 * @param playerID the players id number
+	 * @param pin the pin we gave the client to connect to this server
 	 * @return the player object that we added
-	 * @throws DatabaseException
-	 *             if the player's pin was not correct
-	 * @throws IllegalQuestChangeException
-	 *             the state changed illegally
+	 * @throws DatabaseException if the player's pin was not correct
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
-	public Player addPlayer(int playerID, double pin) throws DatabaseException,
-			IllegalQuestChangeException
+	public Player addPlayer(int playerID, double pin) throws DatabaseException, IllegalQuestChangeException
 	{
 
 		PlayerMapper pm = new PlayerMapper(playerID);
@@ -127,31 +118,27 @@ public class PlayerManager implements QualifiedObserver
 		{
 			players.put(playerID, player);
 
-			QualifiedObservableConnector.getSingleton().sendReport(
-					new PlayerConnectionReport(player.getPlayerID(), player
-							.getPlayerName(), player.getAppearanceType(), player
-							.getPlayerPosition(), player.getCrew(), player.getMajor()));
+			QualifiedObservableConnector.getSingleton()
+					.sendReport(new PlayerConnectionReport(player.getPlayerID(), player.getPlayerName(),
+							player.getAppearanceType(), player.getPlayerPosition(), player.getCrew(),
+							player.getMajor()));
 
-			QualifiedObservableConnector.getSingleton().sendReport(
-					new UpdatePlayerInformationReport(player));
+			QualifiedObservableConnector.getSingleton().sendReport(new UpdatePlayerInformationReport(player));
 			tellNewPlayerAboutEveryoneElse(player);
 
-			QualifiedObservableConnector.getSingleton().sendReport(
-					new PlayerMovedReport(player.getPlayerID(),player.getPlayerName(), player.getPlayerPosition(),player.getMapName()));
-			
-			QualifiedObservableConnector.getSingleton().sendReport(
-					new TimeToLevelUpDeadlineReport(player.getPlayerID(), LevelManager
-							.getSingleton()
-							.getLevelForPoints(player.getExperiencePoints())
-							.getDeadlineDate(), "nothing"));
+			QualifiedObservableConnector.getSingleton().sendReport(new PlayerMovedReport(player.getPlayerID(),
+					player.getPlayerName(), player.getPlayerPosition(), player.getMapName()));
+
+			QualifiedObservableConnector.getSingleton().sendReport(new TimeToLevelUpDeadlineReport(player.getPlayerID(),
+					LevelManager.getSingleton().getLevelForPoints(player.getExperiencePoints()).getDeadlineDate(),
+					"nothing"));
 
 			return player;
 		} else
 		{
 			pm.removePlayer();
 			PinFailedReport report = new PinFailedReport(playerID);
-			System.err.println("Pin is not valid for " + playerID + " because "
-					+ report.toString());
+			System.err.println("Pin is not valid for " + playerID + " because " + report.toString());
 			QualifiedObservableConnector.getSingleton().sendReport(report);
 		}
 		return null;
@@ -169,11 +156,9 @@ public class PlayerManager implements QualifiedObserver
 	/**
 	 * Get a new PIN for a player so they can connect to a different area server
 	 * 
-	 * @param playerID
-	 *            the player ID
+	 * @param playerID the player ID
 	 * @return the pin they should use for their next connection
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	public int getNewPinFor(int playerID) throws DatabaseException
 	{
@@ -182,8 +167,7 @@ public class PlayerManager implements QualifiedObserver
 	}
 
 	/**
-	 * @param playerID
-	 *            the playerID of the player we are looking for
+	 * @param playerID the playerID of the player we are looking for
 	 * @return the player we were looking for
 	 */
 	public Player getPlayerFromID(int playerID)
@@ -192,14 +176,12 @@ public class PlayerManager implements QualifiedObserver
 	}
 
 	/**
-	 * @param playerName
-	 *            the player name of the player we are searching for
+	 * @param playerName the player name of the player we are searching for
 	 * @return the player ID of the player we are searching for
-	 * @throws PlayerNotFoundException
-	 *             if no player with that player name is found
+	 * @throws PlayerNotFoundException if no player with that player name is
+	 *             found
 	 */
-	public int getPlayerIDFromPlayerName(String playerName)
-			throws PlayerNotFoundException
+	public int getPlayerIDFromPlayerName(String playerName) throws PlayerNotFoundException
 	{
 		java.util.Iterator<Player> i = players.values().iterator();
 		while (i.hasNext())
@@ -215,8 +197,7 @@ public class PlayerManager implements QualifiedObserver
 
 	/**
 	 * @return the players with the top ten scores sorted by score
-	 * @throws DatabaseException
-	 *             if the data source can't get the data for us
+	 * @throws DatabaseException if the data source can't get the data for us
 	 */
 	public ArrayList<PlayerScoreRecord> getTopTenPlayers() throws DatabaseException
 	{
@@ -231,8 +212,7 @@ public class PlayerManager implements QualifiedObserver
 	 * Load the npcs that belong on this map, add them to player manager, and
 	 * start them
 	 * 
-	 * @throws DatabaseException
-	 *             when database goes wrong
+	 * @throws DatabaseException when database goes wrong
 	 */
 	public void loadNpcs() throws DatabaseException
 	{
@@ -253,8 +233,7 @@ public class PlayerManager implements QualifiedObserver
 		// {
 		// throw new DatabaseException("Unable to load npcs");
 		// }
-		ArrayList<NPCMapper> pendingNPCs = NPCMapper.findNPCsOnMap(OptionsManager
-				.getSingleton().getMapName());
+		ArrayList<NPCMapper> pendingNPCs = NPCMapper.findNPCsOnMap(OptionsManager.getSingleton().getMapName());
 		for (NPCMapper m : pendingNPCs)
 		{
 			NPC nextNPC = (NPC) m.getPlayer();
@@ -274,16 +253,13 @@ public class PlayerManager implements QualifiedObserver
 	/**
 	 * Persist the player with a given ID
 	 * 
-	 * @param playerID
-	 *            The player id of the player to persist
+	 * @param playerID The player id of the player to persist
 	 * @return Success status of persistence
-	 * @throws DatabaseException
-	 *             IF we have trouble persisting to the data source
-	 * @throws IllegalQuestChangeException
-	 *             the state changed illegally
+	 * @throws DatabaseException IF we have trouble persisting to the data
+	 *             source
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
-	public boolean persistPlayer(int playerID) throws DatabaseException,
-			IllegalQuestChangeException
+	public boolean persistPlayer(int playerID) throws DatabaseException, IllegalQuestChangeException
 	{
 
 		Player player = this.getPlayerFromID(playerID);
@@ -299,15 +275,12 @@ public class PlayerManager implements QualifiedObserver
 	 * Remove a player from this server's player manager and inform all
 	 * connected clients of the disconnection
 	 * 
-	 * @param playerID
-	 *            the ID of the player we should remove
-	 * @throws DatabaseException
-	 *             if we can't persist the player to the data source
-	 * @throws IllegalQuestChangeException
-	 *             the state changed illegally
+	 * @param playerID the ID of the player we should remove
+	 * @throws DatabaseException if we can't persist the player to the data
+	 *             source
+	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
-	public void removePlayer(int playerID) throws DatabaseException,
-			IllegalQuestChangeException
+	public void removePlayer(int playerID) throws DatabaseException, IllegalQuestChangeException
 	{
 		persistPlayer(playerID);
 		Player p = this.players.remove(playerID);
@@ -344,12 +317,10 @@ public class PlayerManager implements QualifiedObserver
 		{
 			if (existingPlayer.getPlayerID() != player.getPlayerID())
 			{
-				AddExistingPlayerReport report = new AddExistingPlayerReport(
-						player.getPlayerID(), existingPlayer.getPlayerID(),
-						existingPlayer.getPlayerName(),
-						existingPlayer.getAppearanceType(),
-						existingPlayer.getPlayerPosition(), existingPlayer.getCrew(),
-						existingPlayer.getMajor());
+				AddExistingPlayerReport report = new AddExistingPlayerReport(player.getPlayerID(),
+						existingPlayer.getPlayerID(), existingPlayer.getPlayerName(),
+						existingPlayer.getAppearanceType(), existingPlayer.getPlayerPosition(),
+						existingPlayer.getCrew(), existingPlayer.getMajor());
 				QualifiedObservableConnector.getSingleton().sendReport(report);
 			}
 		}
@@ -363,7 +334,7 @@ public class PlayerManager implements QualifiedObserver
 	{
 		if (report.getClass().equals(PlayerDisconnectedReport.class))
 		{
-			PlayerDisconnectedReport detailedReport = (PlayerDisconnectedReport)report;
+			PlayerDisconnectedReport detailedReport = (PlayerDisconnectedReport) report;
 			try
 			{
 				removePlayer(detailedReport.getPlayerID());

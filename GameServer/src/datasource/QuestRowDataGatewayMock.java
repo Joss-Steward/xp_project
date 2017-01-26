@@ -33,8 +33,7 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		private QuestCompletionActionType completionActionType;
 		private QuestCompletionActionParameter completionActionParameter;
 
-		public QuestData(int questID, String questTitle, String questDescription,
-				String mapName, Position position,
+		public QuestData(int questID, String questTitle, String questDescription, String mapName, Position position,
 				int experiencePointsGained, int adventuresForFulfillment,
 				QuestCompletionActionType completionActionType, QuestCompletionActionParameter completionActionParam,
 				Date startDate, Date endDate)
@@ -96,16 +95,16 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		{
 			return questTitle;
 		}
-		
-	    public Date getStartDate()
-	    {
-	        return startDate;
-	    }
-	        
-	    public Date getEndDate()
-	    {
-	        return endDate;
-	    }
+
+		public Date getStartDate()
+		{
+			return startDate;
+		}
+
+		public Date getEndDate()
+		{
+			return endDate;
+		}
 
 	}
 
@@ -118,16 +117,13 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 	 * Get the IDs of the quests that are supposed to trigger at a specified map
 	 * location
 	 * 
-	 * @param mapName
-	 *            the name of the map
-	 * @param position
-	 *            the position on the map
+	 * @param mapName the name of the map
+	 * @param position the position on the map
 	 * @return the quest IDs
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
-	public static ArrayList<Integer> findQuestsForMapLocation(String mapName,
-			Position position) throws DatabaseException
+	public static ArrayList<Integer> findQuestsForMapLocation(String mapName, Position position)
+			throws DatabaseException
 	{
 		if (questInfo == null)
 		{
@@ -143,6 +139,7 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		}
 		return results;
 	}
+
 	private int questID;
 	private String questDescription;
 
@@ -154,16 +151,14 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 	private QuestCompletionActionType completionActionType;
 	private QuestCompletionActionParameter completionActionParameter;
 	private String questTitle;
-    private Date startDate;
-    private Date endDate;
+	private Date startDate;
+	private Date endDate;
 
 	/**
 	 * Get the row data gateway object for an existing quest
 	 * 
-	 * @param questID
-	 *            the quest's unique ID
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @param questID the quest's unique ID
+	 * @throws DatabaseException shouldn't
 	 */
 	public QuestRowDataGatewayMock(int questID) throws DatabaseException
 	{
@@ -281,31 +276,28 @@ public class QuestRowDataGatewayMock implements QuestRowDataGateway
 		questInfo = new HashMap<Integer, QuestData>();
 		for (QuestsForTest p : QuestsForTest.values())
 		{
-			questInfo.put(
-					p.getQuestID(),
-					new QuestData(p.getQuestID(), p.getQuestTitle(),
-							p.getQuestDescription(), p.getMapName(), p.getPosition(), p.getExperienceGained(), p
-											.getAdventuresForFulfillment(),
-									p.getCompletionActionType(), p.getCompletionActionParameter(), p.getStartDate(), p.getEndDate()));
+			questInfo.put(p.getQuestID(), new QuestData(p.getQuestID(), p.getQuestTitle(), p.getQuestDescription(),
+					p.getMapName(), p.getPosition(), p.getExperienceGained(), p.getAdventuresForFulfillment(),
+					p.getCompletionActionType(), p.getCompletionActionParameter(), p.getStartDate(), p.getEndDate()));
 		}
 	}
 
 	/**
 	 * @return the first day the quest is available
 	 */
-    @Override
-    public Date getStartDate()
-    {
-        return startDate;
-    }
+	@Override
+	public Date getStartDate()
+	{
+		return startDate;
+	}
 
-    /**
-     * @return the last day the quest is available
-     */
-    @Override
-    public Date getEndDate()
-    {
-        return endDate;
-    }
+	/**
+	 * @return the last day the quest is available
+	 */
+	@Override
+	public Date getEndDate()
+	{
+		return endDate;
+	}
 
 }

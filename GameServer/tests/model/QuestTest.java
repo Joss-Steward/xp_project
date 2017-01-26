@@ -33,16 +33,15 @@ public class QuestTest
 	public void testInitialize()
 	{
 		ArrayList<AdventureRecord> adventures = new ArrayList<AdventureRecord>();
-		adventures.add(new AdventureRecord(5, 42, "Merlin Zone", 4,
-				AdventureCompletionType.CHAT, new CriteriaString("Henry")));
-		adventures.add(new AdventureRecord(5, 420, "Library Quest", 8,
-				AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",
-						new Position(42, 3))));
+		adventures.add(new AdventureRecord(5, 42, "Merlin Zone", 4, AdventureCompletionType.CHAT,
+				new CriteriaString("Henry")));
+		adventures.add(new AdventureRecord(5, 420, "Library Quest", 8, AdventureCompletionType.MOVEMENT,
+				new GameLocation("current.tmx", new Position(42, 3))));
 
 		Position pos = new Position(33, 44);
 
-		Quest q = new Quest(245, "TITLE!!!!", "I am a description", "HappyZone", pos, adventures,
-				42, 13, QuestCompletionActionType.NO_ACTION, null, new GregorianCalendar(2015, Calendar.MARCH, 21).getTime(),
+		Quest q = new Quest(245, "TITLE!!!!", "I am a description", "HappyZone", pos, adventures, 42, 13,
+				QuestCompletionActionType.NO_ACTION, null, new GregorianCalendar(2015, Calendar.MARCH, 21).getTime(),
 				new GregorianCalendar(9999, Calendar.MARCH, 21).getTime());
 
 		assertEquals(245, q.getQuestID());
@@ -65,15 +64,13 @@ public class QuestTest
 			} else if (a.getAdventureID() == 420)
 			{
 				assertEquals(AdventureCompletionType.MOVEMENT, a.getCompletionType());
-				assertEquals(new GameLocation("current.tmx", new Position(42, 3)),
-						a.getCompletionCriteria());
+				assertEquals(new GameLocation("current.tmx", new Position(42, 3)), a.getCompletionCriteria());
 			} else
 			{
-				fail("Unexpected adventure with description "
-						+ a.getAdventureDescription());
+				fail("Unexpected adventure with description " + a.getAdventureDescription());
 			}
 		}
-		
+
 		assertEquals(q.getStartDate(), new GregorianCalendar(2015, Calendar.MARCH, 21).getTime());
 		assertEquals(q.getEndDate(), new GregorianCalendar(9999, Calendar.MARCH, 21).getTime());
 	}
@@ -86,11 +83,10 @@ public class QuestTest
 	{
 		Quest q = new Quest(-1, null, null, null, null, null, 42, 45, null, null, null, null);
 		ArrayList<AdventureRecord> adventures = new ArrayList<AdventureRecord>();
-		adventures.add(new AdventureRecord(5, 42, "Merlin Zone", 4,
-				AdventureCompletionType.CHAT, new CriteriaString("Henry")));
-		adventures.add(new AdventureRecord(5, 420, "Library Quest", 8,
-				AdventureCompletionType.MOVEMENT, new GameLocation("current.tmx",
-						new Position(42, 3))));
+		adventures.add(new AdventureRecord(5, 42, "Merlin Zone", 4, AdventureCompletionType.CHAT,
+				new CriteriaString("Henry")));
+		adventures.add(new AdventureRecord(5, 420, "Library Quest", 8, AdventureCompletionType.MOVEMENT,
+				new GameLocation("current.tmx", new Position(42, 3))));
 		Position pos = new Position(22, 20);
 
 		q.setQuestID(44);

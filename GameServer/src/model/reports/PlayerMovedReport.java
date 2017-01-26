@@ -18,12 +18,9 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 	private final String mapName;
 
 	/**
-	 * @param playerID
-	 *            the ID of the player that moved
-	 * @param playerName
-	 *            the unique name of the player that moved
-	 * @param position
-	 *            the position he moved to
+	 * @param playerID the ID of the player that moved
+	 * @param playerName the unique name of the player that moved
+	 * @param position the position he moved to
 	 * @param mapName the name of the map the player is moving to
 	 */
 	public PlayerMovedReport(int playerID, String playerName, Position position, String mapName)
@@ -34,7 +31,6 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 		this.mapName = mapName;
 	}
 
-	
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -79,7 +75,6 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 		return mapName;
 	}
 
-
 	/**
 	 * @return the newPosition
 	 */
@@ -88,7 +83,6 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 		return newPosition;
 	}
 
-
 	/**
 	 * @return the playerID
 	 */
@@ -96,7 +90,6 @@ public final class PlayerMovedReport implements QualifiedObservableReport
 	{
 		return playerID;
 	}
-
 
 	/**
 	 * Get the players unique name

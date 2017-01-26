@@ -16,8 +16,7 @@ public class CriteriaString implements AdventureCompletionCriteria
 	private String string;
 
 	/**
-	 * @param string
-	 *            the string that is the criteria
+	 * @param string the string that is the criteria
 	 */
 	public CriteriaString(String string)
 	{

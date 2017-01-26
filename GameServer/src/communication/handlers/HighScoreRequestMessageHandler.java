@@ -8,6 +8,7 @@ import datasource.DatabaseException;
 
 /**
  * This should just echo back a response that contains the top ten high scores
+ * 
  * @author Merlin
  *
  */
@@ -22,12 +23,13 @@ public class HighScoreRequestMessageHandler extends MessageHandler
 	{
 		try
 		{
-			this.getStateAccumulator().queueMessage(new HighScoreResponseMessage(PlayerManager.getSingleton().getTopTenPlayers()));
+			this.getStateAccumulator()
+					.queueMessage(new HighScoreResponseMessage(PlayerManager.getSingleton().getTopTenPlayers()));
 		} catch (DatabaseException e)
 		{
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	/**

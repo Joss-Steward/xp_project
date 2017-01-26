@@ -16,21 +16,20 @@ import model.QualifiedObserver;
 public abstract class NPCBehavior implements Serializable, QualifiedObserver
 {
 	private static final long serialVersionUID = -1535370359851281459L;
-	
+
 	/**
 	 * Defaults to 1s
 	 */
 	protected int pollingInterval = 1000;
-	
+
 	/**
 	 * @return how often this behavior wants to be performed
 	 */
-	public int getPollingInterval() 
+	public int getPollingInterval()
 	{
 		return this.pollingInterval;
 	}
-	
-	
+
 	/**
 	 * EVERY subclass should call this method in its constructor!!!!!!
 	 */
@@ -43,13 +42,12 @@ public abstract class NPCBehavior implements Serializable, QualifiedObserver
 			cm.registerObserver(this, reportType);
 		}
 	}
-	
-	
+
 	/**
 	 * Execute the timed event
 	 */
 	public abstract void doTimedEvent();
-	
+
 	/**
 	 * @return the report types this listener should pay attention to
 	 */

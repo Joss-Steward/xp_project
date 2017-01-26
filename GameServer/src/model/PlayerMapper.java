@@ -44,10 +44,8 @@ public class PlayerMapper
 	/**
 	 * Finder constructor
 	 * 
-	 * @param playerID
-	 *            the player's unique ID
-	 * @throws DatabaseException
-	 *             if we can't find the given player
+	 * @param playerID the player's unique ID
+	 * @throws DatabaseException if we can't find the given player
 	 */
 	public PlayerMapper(int playerID) throws DatabaseException
 	{
@@ -55,10 +53,8 @@ public class PlayerMapper
 		{
 			this.playerGateway = new PlayerRowDataGatewayMock(playerID);
 			this.questStateGateway = QuestStateTableDataGatewayMock.getSingleton();
-			this.adventureStateGateway = AdventureStateTableDataGatewayMock
-					.getSingleton();
-			this.playerConnectionGateway = new PlayerConnectionRowDataGatewayMock(
-					playerID);
+			this.adventureStateGateway = AdventureStateTableDataGatewayMock.getSingleton();
+			this.playerConnectionGateway = new PlayerConnectionRowDataGatewayMock(playerID);
 		} else
 		{
 			this.playerGateway = new PlayerRowDataGatewayRDS(playerID);
@@ -79,24 +75,23 @@ public class PlayerMapper
 		player.setDataMapper(this);
 		player.setMapName(playerConnectionGateway.getMapName());
 		loadQuestStates();
-//		player.sendReportGivingPosition();
+		// player.sendReportGivingPosition();
 	}
 
 	private void loadQuestStates() throws DatabaseException
 	{
-		ArrayList<QuestStateRecord> questStateRecords = questStateGateway
-				.getQuestStates(player.getPlayerID());
+		ArrayList<QuestStateRecord> questStateRecords = questStateGateway.getQuestStates(player.getPlayerID());
 		for (QuestStateRecord qsRec : questStateRecords)
 		{
-			QuestState questState = new QuestState(player.getPlayerID(),
-					qsRec.getQuestID(), qsRec.getState(), qsRec.isNeedingNotification());
+			QuestState questState = new QuestState(player.getPlayerID(), qsRec.getQuestID(), qsRec.getState(),
+					qsRec.isNeedingNotification());
 			ArrayList<AdventureStateRecord> adventureStateRecords = adventureStateGateway
 					.getAdventureStates(player.getPlayerID(), qsRec.getQuestID());
 			ArrayList<AdventureState> adventureStates = new ArrayList<AdventureState>();
 			for (AdventureStateRecord asRec : adventureStateRecords)
 			{
-				adventureStates.add(new AdventureState(asRec.getAdventureID(), asRec
-						.getState(), asRec.isNeedingNotification()));
+				adventureStates.add(
+						new AdventureState(asRec.getAdventureID(), asRec.getState(), asRec.isNeedingNotification()));
 			}
 			questState.addAdventures(adventureStates);
 			QuestManager.getSingleton().addQuestState(player.getPlayerID(), questState);
@@ -125,10 +120,8 @@ public class PlayerMapper
 	/**
 	 * Persist the current state of the player into the data source
 	 * 
-	 * @throws DatabaseException
-	 *             if we can't complete the write
-	 * @throws IllegalQuestChangeException
-	 *             shouldn't
+	 * @throws DatabaseException if we can't complete the write
+	 * @throws IllegalQuestChangeException shouldn't
 	 */
 	public void persist() throws DatabaseException, IllegalQuestChangeException
 	{
@@ -144,18 +137,16 @@ public class PlayerMapper
 
 		playerConnectionGateway.storeMapName(player.getMapName());
 
-		ArrayList<QuestState> questList = QuestManager.getSingleton().getQuestList(
-				player.getPlayerID());
+		ArrayList<QuestState> questList = QuestManager.getSingleton().getQuestList(player.getPlayerID());
 		if (questList != null)
 		{
 			for (QuestState quest : questList)
 			{
-				questStateGateway.udpateState(player.getPlayerID(), quest.getID(),
-						quest.getStateValue(), quest.isNeedingNotification());
+				questStateGateway.udpateState(player.getPlayerID(), quest.getID(), quest.getStateValue(),
+						quest.isNeedingNotification());
 				for (AdventureState a : quest.getAdventureList())
 				{
-					adventureStateGateway.updateState(player.getPlayerID(),
-							quest.getID(), a.getID(), a.getState(),
+					adventureStateGateway.updateState(player.getPlayerID(), quest.getID(), a.getID(), a.getState(),
 							a.isNeedingNotification());
 				}
 			}

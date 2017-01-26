@@ -26,8 +26,8 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		private Crew crew;
 		private Major major;
 
-		public PlayerInfo(Position position, String appearanceType,
-				int quizScore, int experiencePoints, Crew crew, Major major)
+		public PlayerInfo(Position position, String appearanceType, int quizScore, int experiencePoints, Crew crew,
+				Major major)
 		{
 			this.position = position;
 			this.appearanceType = appearanceType;
@@ -59,10 +59,8 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	/**
 	 * Finder constructor - will initialize itself from the stored information
 	 * 
-	 * @param playerID
-	 *            the ID of the player we are looking for
-	 * @throws DatabaseException
-	 *             if the playerID isn't in the data source
+	 * @param playerID the ID of the player we are looking for
+	 * @throws DatabaseException if the playerID isn't in the data source
 	 */
 	public PlayerRowDataGatewayMock(int playerID) throws DatabaseException
 	{
@@ -82,8 +80,9 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	}
 
 	/**
-	 * Create constructor - will add the information as a new row in the data source as
-	 * the object is constructed
+	 * Create constructor - will add the information as a new row in the data
+	 * source as the object is constructed
+	 * 
 	 * @param position the position of the player on the map
 	 * @param appearanceType the appearance type of the player
 	 * @param quizScore this player's current quiz score
@@ -91,8 +90,8 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	 * @param crew the crew to which this player belongs
 	 * @param major the major of this player
 	 */
-	public PlayerRowDataGatewayMock(Position position,
-			String appearanceType, int quizScore, int experiencePoints, Crew crew, Major major) 
+	public PlayerRowDataGatewayMock(Position position, String appearanceType, int quizScore, int experiencePoints,
+			Crew crew, Major major)
 	{
 		if (playerInfo == null)
 		{
@@ -100,9 +99,8 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		}
 		playerID = nextKey;
 		nextKey++;
-		
-		playerInfo.put(playerID, new PlayerInfo(position, appearanceType,
-				quizScore, experiencePoints, crew, major));
+
+		playerInfo.put(playerID, new PlayerInfo(position, appearanceType, quizScore, experiencePoints, crew, major));
 	}
 
 	/**
@@ -122,10 +120,8 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 		nextKey = 1;
 		for (PlayersForTest p : PlayersForTest.values())
 		{
-			playerInfo.put(
-					nextKey,
-					new PlayerInfo(p.getPosition(), p
-							.getAppearanceType(), p.getKnowledgeScore(), p.getExperiencePoints(), p.getCrew(), p.getMajor()));
+			playerInfo.put(nextKey, new PlayerInfo(p.getPosition(), p.getAppearanceType(), p.getKnowledgeScore(),
+					p.getExperiencePoints(), p.getCrew(), p.getMajor()));
 			nextKey++;
 		}
 	}
@@ -200,7 +196,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	public void setQuizScore(int quizScore)
 	{
 		info.quizScore = quizScore;
-		
+
 	}
 
 	/**
@@ -218,7 +214,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	@Override
 	public void setExperiencePoints(int experiencePoints)
 	{
-		info.experiencePoints = experiencePoints;		
+		info.experiencePoints = experiencePoints;
 	}
 
 	/**
@@ -243,7 +239,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	 * @see datasource.PlayerRowDataGateway#getMajor()
 	 */
 	@Override
-	public Major getMajor() 
+	public Major getMajor()
 	{
 		return info.major;
 	}
@@ -252,7 +248,7 @@ public class PlayerRowDataGatewayMock implements PlayerRowDataGateway
 	 * @see datasource.PlayerRowDataGateway#setMajor(datatypes.Major)
 	 */
 	@Override
-	public void setMajor(Major major) 
+	public void setMajor(Major major)
 	{
 		info.major = major;
 	}

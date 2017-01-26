@@ -56,12 +56,14 @@ public class ModelFacade
 
 	/**
 	 * Checks if commands are pending
+	 * 
 	 * @return if commands are pending
 	 */
 	public boolean hasCommandsPending()
 	{
 		return commandsPending;
 	}
+
 	/**
 	 * Make the default constructor private
 	 */
@@ -110,16 +112,16 @@ public class ModelFacade
 	 */
 	public synchronized static void killThreads()
 	{
-		if (singleton!=null)
+		if (singleton != null)
 		{
 			singleton.timer.cancel();
 		}
 	}
+
 	/**
 	 * Queue a command for the model to process
 	 * 
-	 * @param cmd
-	 *            the command to be processed
+	 * @param cmd the command to be processed
 	 */
 	public void queueCommand(Command cmd)
 	{

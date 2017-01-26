@@ -22,20 +22,20 @@ public class KeyInputRecievedReport implements QualifiedObservableReport
 		this.input = input;
 		this.playerId = playerId;
 	}
-	
 
 	/**
 	 * @return user key input
 	 */
-	public String getInput() 
+	public String getInput()
 	{
 		return input;
 	}
-	
+
 	/**
 	 * @return user id
 	 */
-	public int getPlayerId() {
+	public int getPlayerId()
+	{
 		return playerId;
 	}
 }

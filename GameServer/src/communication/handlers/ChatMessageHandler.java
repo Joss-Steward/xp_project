@@ -26,14 +26,10 @@ public class ChatMessageHandler extends MessageHandler
 		if (msg.getClass().equals(ChatMessage.class))
 		{
 			ChatMessage cMsg = (ChatMessage) msg;
-			
-			CommandChatMessageReceived cmd = 
-					new CommandChatMessageReceived(
-					cMsg.getSenderName(), 
-					cMsg.getMessage(),
-					cMsg.getPosition(), 
-					cMsg.getType());
-			
+
+			CommandChatMessageReceived cmd = new CommandChatMessageReceived(cMsg.getSenderName(), cMsg.getMessage(),
+					cMsg.getPosition(), cMsg.getType());
+
 			ModelFacade.getSingleton().queueCommand(cmd);
 		}
 	}

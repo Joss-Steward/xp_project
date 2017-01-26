@@ -5,14 +5,15 @@ import model.QualifiedObservableReport;
 
 /**
  * The ExperienceChangedReport class
+ * 
  * @author Olivia
  * @author LaVonne
  */
-public final class ExperienceChangedReport  implements QualifiedObservableReport
+public final class ExperienceChangedReport implements QualifiedObservableReport
 {
 
 	private final int experiencePoints;
-	
+
 	private final LevelRecord record;
 
 	private final int playerID;
@@ -22,7 +23,7 @@ public final class ExperienceChangedReport  implements QualifiedObservableReport
 	 * @param experiencePoints experience points of the player
 	 * @param record level record of the player
 	 */
-	public ExperienceChangedReport(int playerID, int experiencePoints, LevelRecord record) 
+	public ExperienceChangedReport(int playerID, int experiencePoints, LevelRecord record)
 	{
 		this.experiencePoints = experiencePoints;
 		this.record = record;
@@ -31,24 +32,27 @@ public final class ExperienceChangedReport  implements QualifiedObservableReport
 
 	/**
 	 * Gets player's current experience points
+	 * 
 	 * @return experiencePoints
 	 */
-	public int getExperiencePoints() 
+	public int getExperiencePoints()
 	{
 		return experiencePoints;
 	}
-	
+
 	/**
-	 * Returns the player's LevelRecord 
+	 * Returns the player's LevelRecord
+	 * 
 	 * @return the record
 	 */
-	public LevelRecord getRecord() 
+	public LevelRecord getRecord()
 	{
 		return record;
 	}
-	
+
 	/**
 	 * Returns the player's ID
+	 * 
 	 * @return playerID
 	 */
 	public int getPlayerID()
@@ -60,7 +64,8 @@ public final class ExperienceChangedReport  implements QualifiedObservableReport
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + experiencePoints;
@@ -73,7 +78,8 @@ public final class ExperienceChangedReport  implements QualifiedObservableReport
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -85,7 +91,8 @@ public final class ExperienceChangedReport  implements QualifiedObservableReport
 			return false;
 		if (playerID != other.playerID)
 			return false;
-		if (record == null) {
+		if (record == null)
+		{
 			if (other.record != null)
 				return false;
 		} else if (!record.equals(other.record))
@@ -93,6 +100,4 @@ public final class ExperienceChangedReport  implements QualifiedObservableReport
 		return true;
 	}
 
-
-	
 }

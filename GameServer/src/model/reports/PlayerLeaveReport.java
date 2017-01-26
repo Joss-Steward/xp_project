@@ -9,16 +9,15 @@ import model.QualifiedObservableReport;
  * @author nhydock
  *
  */
-public class PlayerLeaveReport implements QualifiedObservableReport 
+public class PlayerLeaveReport implements QualifiedObservableReport
 {
 	private int playerID;
 
 	/**
 	 *
-	 * @param id
-	 *            the id of the player
+	 * @param id the id of the player
 	 */
-	public PlayerLeaveReport(int id) 
+	public PlayerLeaveReport(int id)
 	{
 		this.playerID = id;
 	}
@@ -26,7 +25,7 @@ public class PlayerLeaveReport implements QualifiedObservableReport
 	/**
 	 * @return the player id
 	 */
-	public int getPlayerID() 
+	public int getPlayerID()
 	{
 		return playerID;
 	}
@@ -35,7 +34,7 @@ public class PlayerLeaveReport implements QualifiedObservableReport
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) 
+	public boolean equals(Object obj)
 	{
 		if (this == obj)
 			return true;

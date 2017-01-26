@@ -19,19 +19,14 @@ public final class QuestStateChangeReport implements QualifiedObservableReport
 	private final QuestStateEnum newState;
 
 	/**
-	 * @param playerID
-	 *            the player's unique ID
-	 * @param questID
-	 *            the quest's unique ID
-	 * @param questTitle
-	 *            this quest's title
-	 * @param questDescription
-	 *            the description of this quest
-	 * @param newState
-	 *            the state the quest has transitioned to for this player
+	 * @param playerID the player's unique ID
+	 * @param questID the quest's unique ID
+	 * @param questTitle this quest's title
+	 * @param questDescription the description of this quest
+	 * @param newState the state the quest has transitioned to for this player
 	 */
-	public QuestStateChangeReport(int playerID, int questID, String questTitle,
-			String questDescription, QuestStateEnum newState)
+	public QuestStateChangeReport(int playerID, int questID, String questTitle, String questDescription,
+			QuestStateEnum newState)
 	{
 		this.playerID = playerID;
 		this.questID = questID;

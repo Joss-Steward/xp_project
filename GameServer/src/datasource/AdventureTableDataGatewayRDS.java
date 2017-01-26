@@ -45,21 +45,18 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 	/**
 	 * Drop the table if it exists and re-create it empty
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	public static void createTable() throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"DROP TABLE IF EXISTS Adventures");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection, "DROP TABLE IF EXISTS Adventures");
 			stmt.executeUpdate();
 			stmt.close();
 
-			stmt = new ClosingPreparedStatement(
-					connection,
+			stmt = new ClosingPreparedStatement(connection,
 					"Create TABLE Adventures (adventureID INT NOT NULL, adventureDescription VARCHAR(200), "
 							+ "questID INT NOT NULL, experiencePointsGained INT, completionType INT, completionCriteria BLOB, PRIMARY KEY(questID, adventureID))");
 			stmt.executeUpdate();
@@ -73,8 +70,7 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 	 * @see datasource.AdventureTableDataGateway#getAdventuresForQuest(int)
 	 */
 	@Override
-	public ArrayList<AdventureRecord> getAdventuresForQuest(int questID)
-			throws DatabaseException
+	public ArrayList<AdventureRecord> getAdventuresForQuest(int questID) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
@@ -93,40 +89,31 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 			return results;
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Couldn't find adventures for quest ID "
-					+ questID, e);
+			throw new DatabaseException("Couldn't find adventures for quest ID " + questID, e);
 		}
 	}
 
 	/**
 	 * Create a new row in the table
 	 * 
-	 * @param adventureID
-	 *            the unique ID of the adventure
-	 * @param adventureDescription
-	 *            the description of the adventure
-	 * @param questID
-	 *            the quest that contains the adventure
-	 * @param experiencePointsEarned
-	 *            the number of points you get when you complete this adventure
-	 * @param completionType
-	 *            the type of action the player must do to complete this
-	 *            adventure
-	 * @param completionCriteria
-	 *            the criteria for completing this adventure
-	 * @throws DatabaseException
-	 *             if we can't talk to the RDS
+	 * @param adventureID the unique ID of the adventure
+	 * @param adventureDescription the description of the adventure
+	 * @param questID the quest that contains the adventure
+	 * @param experiencePointsEarned the number of points you get when you
+	 *            complete this adventure
+	 * @param completionType the type of action the player must do to complete
+	 *            this adventure
+	 * @param completionCriteria the criteria for completing this adventure
+	 * @throws DatabaseException if we can't talk to the RDS
 	 */
-	public static void createRow(int adventureID, String adventureDescription,
-			int questID, int experiencePointsEarned,
-			AdventureCompletionType completionType,
-			AdventureCompletionCriteria completionCriteria) throws DatabaseException
+	public static void createRow(int adventureID, String adventureDescription, int questID, int experiencePointsEarned,
+			AdventureCompletionType completionType, AdventureCompletionCriteria completionCriteria)
+			throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
-					connection,
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
 					"Insert INTO Adventures SET adventureID = ?, adventureDescription = ?, questID = ?,"
 							+ "experiencePointsGained = ?, completionType = ?, completionCriteria = ?");
 			stmt.setInt(1, adventureID);
@@ -139,9 +126,7 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Couldn't create a adventure record for adventure with ID "
-							+ adventureID, e);
+			throw new DatabaseException("Couldn't create a adventure record for adventure with ID " + adventureID, e);
 		}
 	}
 
@@ -149,8 +134,7 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 	 * @see datasource.AdventureTableDataGateway#getAdventure(int, int)
 	 */
 	@Override
-	public AdventureRecord getAdventure(int questID, int adventureID)
-			throws DatabaseException
+	public AdventureRecord getAdventure(int questID, int adventureID) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
@@ -168,43 +152,35 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 			}
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Couldn't find adventure " + adventureID
-					+ " for quest ID " + questID, e);
+			throw new DatabaseException("Couldn't find adventure " + adventureID + " for quest ID " + questID, e);
 		}
 		return null;
 	}
 
-	private AdventureRecord buildAdventureRecord(ResultSet queryResult)
-			throws DatabaseException
+	private AdventureRecord buildAdventureRecord(ResultSet queryResult) throws DatabaseException
 	{
 		try
 		{
 			AdventureCompletionType completionType = AdventureCompletionType
 					.findByID(queryResult.getInt("completionType"));
-			AdventureCompletionCriteria completionCriteria = extractCompletionCriteria(
-					queryResult, completionType);
+			AdventureCompletionCriteria completionCriteria = extractCompletionCriteria(queryResult, completionType);
 
-			AdventureRecord rec = new AdventureRecord(queryResult.getInt("questID"),
-					queryResult.getInt("adventureID"),
-					queryResult.getString("adventureDescription"),
-					queryResult.getInt("experiencePointsGained"), completionType,
-					completionCriteria);
+			AdventureRecord rec = new AdventureRecord(queryResult.getInt("questID"), queryResult.getInt("adventureID"),
+					queryResult.getString("adventureDescription"), queryResult.getInt("experiencePointsGained"),
+					completionType, completionCriteria);
 			return rec;
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Exception trying to parse the results of reading an adventure", e);
+			throw new DatabaseException("Exception trying to parse the results of reading an adventure", e);
 		}
 	}
 
 	private AdventureCompletionCriteria extractCompletionCriteria(ResultSet queryResult,
-			AdventureCompletionType completionType) throws SQLException,
-			DatabaseException
+			AdventureCompletionType completionType) throws SQLException, DatabaseException
 	{
 		Class<? extends AdventureCompletionCriteria> completionCriteriaClass = completionType
 				.getCompletionCriteriaType();
-		ByteArrayInputStream baip = new ByteArrayInputStream(
-				(byte[]) queryResult.getObject("completionCriteria"));
+		ByteArrayInputStream baip = new ByteArrayInputStream((byte[]) queryResult.getObject("completionCriteria"));
 		AdventureCompletionCriteria completionCriteria = null;
 		try
 		{
@@ -212,21 +188,22 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 			completionCriteria = completionCriteriaClass.cast(x);
 		} catch (ClassNotFoundException | IOException e)
 		{
-			throw new DatabaseException("Couldn't convert blob to completion criteria ",
-					e);
+			throw new DatabaseException("Couldn't convert blob to completion criteria ", e);
 		}
 		return completionCriteria;
 	}
 
 	/**
-	 * @see datasource.AdventureTableDataGateway#findAdventuresCompletedForMapLocation(String, Position)
+	 * @see datasource.AdventureTableDataGateway#findAdventuresCompletedForMapLocation(String,
+	 *      Position)
 	 */
 	@Override
-	public ArrayList<AdventureRecord> findAdventuresCompletedForMapLocation(String mapName, Position pos) throws DatabaseException 
+	public ArrayList<AdventureRecord> findAdventuresCompletedForMapLocation(String mapName, Position pos)
+			throws DatabaseException
 	{
 		ArrayList<AdventureRecord> results = new ArrayList<AdventureRecord>();
 
-		Connection connection = DatabaseManager.getSingleton().getConnection();		
+		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
@@ -237,7 +214,7 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 			while (queryResult.next())
 			{
 				AdventureRecord rec = buildAdventureRecord(queryResult);
-				GameLocation thisLocation = (GameLocation)rec.getCompletionCriteria();
+				GameLocation thisLocation = (GameLocation) rec.getCompletionCriteria();
 				if (thisLocation.getPosition().equals(pos) && thisLocation.getMapName().equals(mapName))
 				{
 					results.add(rec);
@@ -246,7 +223,8 @@ public class AdventureTableDataGatewayRDS implements AdventureTableDataGateway
 			return results;
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Couldn't find adventures for location at " + mapName + " " + pos.toString(), e);
+			throw new DatabaseException("Couldn't find adventures for location at " + mapName + " " + pos.toString(),
+					e);
 		}
 	}
 

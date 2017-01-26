@@ -25,10 +25,8 @@ public class NPCRowDataGatewayRDS implements NPCRowDataGateway
 	/**
 	 * finder constructor
 	 * 
-	 * @param playerID
-	 *            the unique ID of the player we are working with
-	 * @throws DatabaseException
-	 *             if we cannot find that player in the database
+	 * @param playerID the unique ID of the player we are working with
+	 * @throws DatabaseException if we cannot find that player in the database
 	 */
 	public NPCRowDataGatewayRDS(int playerID) throws DatabaseException
 	{
@@ -52,15 +50,12 @@ public class NPCRowDataGatewayRDS implements NPCRowDataGateway
 	/**
 	 * Create Constructor
 	 * 
-	 * @param playerID
-	 *            the NPC's playerID
-	 * @param behaviorClass
-	 *            the name of the class encoding the behavior for the NPC
-	 * @throws DatabaseException
-	 *             if we can't add the info to the database
+	 * @param playerID the NPC's playerID
+	 * @param behaviorClass the name of the class encoding the behavior for the
+	 *            NPC
+	 * @throws DatabaseException if we can't add the info to the database
 	 */
-	public NPCRowDataGatewayRDS(int playerID, String behaviorClass)
-			throws DatabaseException
+	public NPCRowDataGatewayRDS(int playerID, String behaviorClass) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
@@ -75,27 +70,24 @@ public class NPCRowDataGatewayRDS implements NPCRowDataGateway
 
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Couldn't create a player record for player with ID " + playerID, e);
+			throw new DatabaseException("Couldn't create a player record for player with ID " + playerID, e);
 		}
 	}
 
 	/**
 	 * Drop the table if it exists and re-create it empty
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	public static void createTable() throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"DROP TABLE IF EXISTS NPCs");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection, "DROP TABLE IF EXISTS NPCs");
 			stmt.executeUpdate();
 			stmt.close();
-			
+
 			stmt = new ClosingPreparedStatement(connection,
 					"Create TABLE NPCs (playerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, behaviorClass VARCHAR(80))");
 			stmt.executeUpdate();
@@ -132,13 +124,14 @@ public class NPCRowDataGatewayRDS implements NPCRowDataGateway
 	}
 
 	/**
-	 * Get gateways for all of the NPCs that are managed by a server managing a given map
+	 * Get gateways for all of the NPCs that are managed by a server managing a
+	 * given map
+	 * 
 	 * @param mapName the map we are interested in
 	 * @return the NPCs
 	 * @throws DatabaseException if we have trouble talking to the database
 	 */
-	public static ArrayList<NPCRowDataGateway> getNPCsForMap(String mapName)
-			throws DatabaseException
+	public static ArrayList<NPCRowDataGateway> getNPCsForMap(String mapName) throws DatabaseException
 	{
 		ArrayList<NPCRowDataGateway> gateways = new ArrayList<NPCRowDataGateway>();
 
@@ -158,8 +151,7 @@ public class NPCRowDataGatewayRDS implements NPCRowDataGateway
 
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Unable to retrieve NPCs for map named "
-					+ mapName, e);
+			throw new DatabaseException("Unable to retrieve NPCs for map named " + mapName, e);
 		}
 		return gateways;
 	}

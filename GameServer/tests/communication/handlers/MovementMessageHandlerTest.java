@@ -31,7 +31,7 @@ public class MovementMessageHandlerTest
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton().setTestMode(true);
 	}
-	
+
 	/**
 	 * Tests that getTypeWeHandle method returns correct type.
 	 */
@@ -46,8 +46,7 @@ public class MovementMessageHandlerTest
 	 * Start with a player in a position, send that player through a movement
 	 * message and ensure that the player has the new position
 	 * 
-	 * @throws InterruptedException
-	 *             Shouldn't
+	 * @throws InterruptedException Shouldn't
 	 */
 	@Test
 	public void updatesAPlayerPosition() throws InterruptedException

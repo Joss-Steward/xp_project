@@ -39,8 +39,7 @@ public class CommandAddPlayerTest
 	/**
 	 * If we add a player, the playermanager should know about it
 	 * 
-	 * @throws PlayerNotFoundException
-	 *             shouldn't
+	 * @throws PlayerNotFoundException shouldn't
 	 */
 	@Test
 	public void test() throws PlayerNotFoundException

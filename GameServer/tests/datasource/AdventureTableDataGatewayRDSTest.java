@@ -3,14 +3,13 @@ package datasource;
 import datasource.AdventureTableDataGateway;
 import datasource.AdventureTableDataGatewayRDS;
 
-
 /**
  * Tests the RDS Implementation
+ * 
  * @author merlin
  *
  */
-public class AdventureTableDataGatewayRDSTest extends
-		AdventureTableDataGatewayTest
+public class AdventureTableDataGatewayRDSTest extends AdventureTableDataGatewayTest
 {
 
 	/**
@@ -19,7 +18,7 @@ public class AdventureTableDataGatewayRDSTest extends
 	@Override
 	public AdventureTableDataGateway getGateway()
 	{
-		return  AdventureTableDataGatewayRDS.getSingleton();
+		return AdventureTableDataGatewayRDS.getSingleton();
 	}
 
 }

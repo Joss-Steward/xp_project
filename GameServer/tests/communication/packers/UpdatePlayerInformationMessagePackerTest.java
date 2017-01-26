@@ -64,8 +64,7 @@ public class UpdatePlayerInformationMessagePackerTest
 	 * If the report is not about the player we are communicating with, we
 	 * should ignore it
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
@@ -76,29 +75,25 @@ public class UpdatePlayerInformationMessagePackerTest
 		packer.setAccumulator(stateAccumulator);
 
 		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(
-				PlayerManager.getSingleton().getPlayerFromID(
-						PlayersForTest.JOHN.getPlayerID()));
+				PlayerManager.getSingleton().getPlayerFromID(PlayersForTest.JOHN.getPlayerID()));
 		assertNull(packer.pack(report));
 	}
 
 	/**
 	 * the message should contain the appropriate quests and adventures
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
 	public void testPackedObjectIsCurrentPlayer() throws DatabaseException, IllegalQuestChangeException
 	{
-		Player player = PlayerManager.getSingleton().getPlayerFromID(
-				stateAccumulator.getPlayerID());
+		Player player = PlayerManager.getSingleton().getPlayerFromID(stateAccumulator.getPlayerID());
 		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(player);
 		UpdatePlayerInformationMessagePacker packer = new UpdatePlayerInformationMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 
-		InitializeThisClientsPlayerMessage message = (InitializeThisClientsPlayerMessage) packer
-				.pack(report);
+		InitializeThisClientsPlayerMessage message = (InitializeThisClientsPlayerMessage) packer.pack(report);
 		ArrayList<ClientPlayerQuest> expected = report.getClientPlayerQuestList();
 		ArrayList<ClientPlayerQuest> actual = message.getClientPlayerQuestList();
 		assertEquals(expected.size(), actual.size());
@@ -112,21 +107,18 @@ public class UpdatePlayerInformationMessagePackerTest
 	 * Tests that we can add experience pts and levelrecord to
 	 * InitializeThisClientsPlayerMessage message
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
 	@Test
 	public void testPackExperiencePtsAndLevel() throws DatabaseException, IllegalQuestChangeException
 	{
-		Player player = PlayerManager.getSingleton().getPlayerFromID(
-				stateAccumulator.getPlayerID());
+		Player player = PlayerManager.getSingleton().getPlayerFromID(stateAccumulator.getPlayerID());
 		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(player);
 		UpdatePlayerInformationMessagePacker packer = new UpdatePlayerInformationMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 
-		InitializeThisClientsPlayerMessage message = (InitializeThisClientsPlayerMessage) packer
-				.pack(report);
+		InitializeThisClientsPlayerMessage message = (InitializeThisClientsPlayerMessage) packer.pack(report);
 		assertEquals(report.getExperiencePts(), message.getExperiencePts());
 		assertEquals(report.getLevel(), message.getLevel());
 	}

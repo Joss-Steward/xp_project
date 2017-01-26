@@ -44,8 +44,7 @@ public class NPCMapperTest extends PlayerMapperTest
 	 * When we get the mapper for an existing player, make sure that the NPC
 	 * specific information is created
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void fillsExisting() throws DatabaseException
@@ -59,17 +58,14 @@ public class NPCMapperTest extends PlayerMapperTest
 	/**
 	 * Make sure we can find all of the NPCs for a given map
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void findsForMap() throws DatabaseException
 	{
 		ArrayList<NPCMapper> npcs = NPCMapper.findNPCsOnMap("silly.tmx");
 		assertEquals(2, npcs.size());
-		assertEquals(PlayersForTest.MOCK_NPC.getPlayerID(), npcs.get(0).getPlayer()
-				.getPlayerID());
-		assertEquals(PlayersForTest.MOCK_NPC3.getPlayerID(), npcs.get(1).getPlayer()
-				.getPlayerID());
+		assertEquals(PlayersForTest.MOCK_NPC.getPlayerID(), npcs.get(0).getPlayer().getPlayerID());
+		assertEquals(PlayersForTest.MOCK_NPC3.getPlayerID(), npcs.get(1).getPlayer().getPlayerID());
 	}
 }

@@ -13,6 +13,7 @@ import datasource.QuestStateTableDataGatewayRDS;
 
 /**
  * Encapsulates one set of changes to the states of quests and adventures
+ * 
  * @author Merlin
  *
  */
@@ -25,7 +26,8 @@ public class QuestStateUnitOfWork
 
 	/**
 	 * @param playerID the player whose quests we are monitoring
-	 * @throws DatabaseException if we can't get a gateway to the quests or adventures for this player
+	 * @throws DatabaseException if we can't get a gateway to the quests or
+	 *             adventures for this player
 	 */
 	public QuestStateUnitOfWork(int playerID) throws DatabaseException
 	{
@@ -43,22 +45,22 @@ public class QuestStateUnitOfWork
 
 	/**
 	 * Persist all of the changes at once
+	 * 
 	 * @throws DatabaseException if we can't persist all the way to the db
 	 */
 	public void persist() throws DatabaseException
 	{
-		ArrayList<QuestState> questList = QuestManager.getSingleton().getQuestList(
-				playerID);
+		ArrayList<QuestState> questList = QuestManager.getSingleton().getQuestList(playerID);
 		if (questList != null)
 		{
 			for (QuestState quest : questList)
 			{
-				questStateGateway.udpateState(playerID, quest.getID(),
-						quest.getStateValue(), quest.isNeedingNotification());
+				questStateGateway.udpateState(playerID, quest.getID(), quest.getStateValue(),
+						quest.isNeedingNotification());
 				for (AdventureState a : quest.getAdventureList())
 				{
-					adventureStateGateway.updateState(playerID, quest.getID(), a.getID(),
-							a.getState(), a.isNeedingNotification());
+					adventureStateGateway.updateState(playerID, quest.getID(), a.getID(), a.getState(),
+							a.isNeedingNotification());
 				}
 			}
 		}

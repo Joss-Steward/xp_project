@@ -20,26 +20,18 @@ public final class AdventureStateChangeReport implements QualifiedObservableRepo
 	private String witnessTitle;
 
 	/**
-	 * @param id
-	 *            players ID
-	 * @param questID
-	 *            id of the quest
-	 * @param adventureID
-	 *            adventures ID to change state
-	 * @param adventureDescription
-	 *            description of adventure
-	 * @param newState
-	 *            new state to be changed to
-	 * @param realLifeAdventure
-	 *            true if the player must complete this adventure outside of the
-	 *            game
-	 * @param witnessTitle
-	 *            the title of the person who can witness completion if this is
-	 *            a real life adventure
+	 * @param id players ID
+	 * @param questID id of the quest
+	 * @param adventureID adventures ID to change state
+	 * @param adventureDescription description of adventure
+	 * @param newState new state to be changed to
+	 * @param realLifeAdventure true if the player must complete this adventure
+	 *            outside of the game
+	 * @param witnessTitle the title of the person who can witness completion if
+	 *            this is a real life adventure
 	 */
-	public AdventureStateChangeReport(int id, int questID, int adventureID,
-			String adventureDescription, AdventureStateEnum newState,
-			boolean realLifeAdventure, String witnessTitle)
+	public AdventureStateChangeReport(int id, int questID, int adventureID, String adventureDescription,
+			AdventureStateEnum newState, boolean realLifeAdventure, String witnessTitle)
 	{
 		this.playerID = id;
 		this.questID = questID;
@@ -98,8 +90,7 @@ public final class AdventureStateChangeReport implements QualifiedObservableRepo
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((adventureDescription == null) ? 0 : adventureDescription.hashCode());
+		result = prime * result + ((adventureDescription == null) ? 0 : adventureDescription.hashCode());
 		result = prime * result + adventureID;
 		result = prime * result + ((newState == null) ? 0 : newState.hashCode());
 		result = prime * result + playerID;

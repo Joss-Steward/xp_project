@@ -25,20 +25,17 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	/**
 	 * Drop the table if it exists and re-create it empty
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	public static void createTable() throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"DROP TABLE IF EXISTS Quests");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection, "DROP TABLE IF EXISTS Quests");
 			stmt.executeUpdate();
 			stmt.close();
-			stmt = new ClosingPreparedStatement(
-					connection,
+			stmt = new ClosingPreparedStatement(connection,
 					"Create TABLE Quests (questID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, questTitle VARCHAR(40),questDescription VARCHAR(200), triggerMapName VARCHAR(80),"
 							+ " triggerRow INT, triggerColumn INT, experiencePointsGained INT, adventuresForFulfillment INT, "
 							+ " completionActionType INT, completionActionParameter BLOB, startDate DATE, endDate DATE)");
@@ -59,16 +56,14 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	private int adventuresForFulfillment;
 	private QuestCompletionActionParameter completionActionParameter;
 	private QuestCompletionActionType completionActionType;
-    private Date startDate;
-    private Date endDate;
+	private Date startDate;
+	private Date endDate;
 
 	/**
 	 * Finder constructor
 	 * 
-	 * @param questID
-	 *            the id of the quest this gateway will manage
-	 * @throws DatabaseException
-	 *             if we can't talk to the RDS server
+	 * @param questID the id of the quest this gateway will manage
+	 * @throws DatabaseException if we can't talk to the RDS server
 	 */
 	public QuestRowDataGatewayRDS(int questID) throws DatabaseException
 	{
@@ -84,14 +79,11 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 			this.questTitle = result.getString("questTitle");
 			this.questDescription = result.getString("questDescription");
 			this.triggerMapName = result.getString("triggerMapName");
-			this.triggerPosition = new Position(result.getInt("triggerRow"),
-					result.getInt("triggerColumn"));
+			this.triggerPosition = new Position(result.getInt("triggerRow"), result.getInt("triggerColumn"));
 			this.experiencePointsGained = result.getInt("experiencePointsGained");
 			this.adventuresForFulfillment = result.getInt("adventuresForFulfillment");
-			this.completionActionType = QuestCompletionActionType.findByID(result
-					.getInt("completionActionType"));
-			completionActionParameter = extractCompletionActionParameter(result,
-					completionActionType);
+			this.completionActionType = QuestCompletionActionType.findByID(result.getInt("completionActionType"));
+			completionActionParameter = extractCompletionActionParameter(result, completionActionType);
 			this.startDate = result.getDate("startDate");
 			this.endDate = result.getDate("endDate");
 		} catch (SQLException e)
@@ -100,9 +92,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 		}
 	}
 
-	private QuestCompletionActionParameter extractCompletionActionParameter(
-			ResultSet result, QuestCompletionActionType completionActionType)
-			throws SQLException, DatabaseException
+	private QuestCompletionActionParameter extractCompletionActionParameter(ResultSet result,
+			QuestCompletionActionType completionActionType) throws SQLException, DatabaseException
 	{
 		Class<? extends QuestCompletionActionParameter> completionActionParameterType = completionActionType
 				.getCompletionActionParameterType();
@@ -117,11 +108,9 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 				completionActionParameter = completionActionParameterType.cast(x);
 			} catch (ClassNotFoundException | IOException e)
 			{
-				throw new DatabaseException(
-						"Couldn't convert blob to completion action parameter ", e);
+				throw new DatabaseException("Couldn't convert blob to completion action parameter ", e);
 			}
-		}
-		else
+		} else
 		{
 			completionActionParameter = null;
 		}
@@ -131,47 +120,35 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	/**
 	 * Create constructor
 	 * 
-	 * @param questID
-	 *            the quest's unique ID
+	 * @param questID the quest's unique ID
 	 * @param questTitle TODO
-	 * @param questDescription
-	 *            the description of the quest
-	 * @param triggerMapName
-	 *            the name of the map that contains the trigger location for
-	 *            this quest
-	 * @param triggerPosition
-	 *            the coordinates of the trigger location for this quest
-	 * @param experiencePointsGained
-	 *            the number of experience points gained for completing this
+	 * @param questDescription the description of the quest
+	 * @param triggerMapName the name of the map that contains the trigger
+	 *            location for this quest
+	 * @param triggerPosition the coordinates of the trigger location for this
 	 *            quest
-	 * @param adventuresForFulfillment
-	 *            the number of adventures this quest requires for fulfillment
-	 * @param completionActionType
-	 *            the type of action that should be taken when this quest is
-	 *            completed
-	 * @param completionActionParameter
-	 *            data describing the details of the action taken when this
-	 *            quest is completed
-	 * @param startDate 
-	 *             the first day the quest is available
-	 * @param endDate
-	 *             the last day the quest is available
-	 * @throws DatabaseException
-	 *             if we can't talk to the RDS
+	 * @param experiencePointsGained the number of experience points gained for
+	 *            completing this quest
+	 * @param adventuresForFulfillment the number of adventures this quest
+	 *            requires for fulfillment
+	 * @param completionActionType the type of action that should be taken when
+	 *            this quest is completed
+	 * @param completionActionParameter data describing the details of the
+	 *            action taken when this quest is completed
+	 * @param startDate the first day the quest is available
+	 * @param endDate the last day the quest is available
+	 * @throws DatabaseException if we can't talk to the RDS
 	 */
-	public QuestRowDataGatewayRDS(int questID, String questTitle,
-			String questDescription, String triggerMapName, Position triggerPosition,
-			int experiencePointsGained, int adventuresForFulfillment,
+	public QuestRowDataGatewayRDS(int questID, String questTitle, String questDescription, String triggerMapName,
+			Position triggerPosition, int experiencePointsGained, int adventuresForFulfillment,
 			QuestCompletionActionType completionActionType, QuestCompletionActionParameter completionActionParameter,
-			Date startDate, Date endDate)
-			throws DatabaseException
+			Date startDate, Date endDate) throws DatabaseException
 	{
 		this.questID = questID;
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
-					connection,
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
 					"Insert INTO Quests SET questID = ?, questTitle = ?,questDescription = ?, triggerMapname = ?, triggerRow = ?, triggerColumn = ?, "
 							+ "experiencePointsGained = ?, adventuresForFulfillment = ?,"
 							+ " completionActionType = ?, completionActionParameter = ?,"
@@ -195,8 +172,7 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Couldn't create a quest record for quest with ID " + questID, e);
+			throw new DatabaseException("Couldn't create a quest record for quest with ID " + questID, e);
 		}
 	}
 
@@ -250,23 +226,19 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	 * Get the IDs of the quests that are supposed to trigger at a specified map
 	 * location
 	 * 
-	 * @param mapName
-	 *            the name of the map
-	 * @param position
-	 *            the position on the map
+	 * @param mapName the name of the map
+	 * @param position the position on the map
 	 * @return the quest IDs
-	 * @throws DatabaseException
-	 *             if we can't talk to the RDS data source
+	 * @throws DatabaseException if we can't talk to the RDS data source
 	 */
-	public static ArrayList<Integer> findQuestsForMapLocation(String mapName,
-			Position position) throws DatabaseException
+	public static ArrayList<Integer> findQuestsForMapLocation(String mapName, Position position)
+			throws DatabaseException
 	{
 		try
 		{
 			Connection connection = DatabaseManager.getSingleton().getConnection();
 
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(
-					connection,
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
 					"SELECT questID FROM Quests WHERE triggerMapName = ? and triggerRow = ? and triggerColumn = ?");
 			stmt.setString(1, mapName);
 			stmt.setInt(2, position.getRow());
@@ -281,8 +253,8 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 			return results;
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Couldn't find a quests for map named " + mapName
-					+ " and position " + position, e);
+			throw new DatabaseException("Couldn't find a quests for map named " + mapName + " and position " + position,
+					e);
 		}
 	}
 
@@ -334,19 +306,19 @@ public class QuestRowDataGatewayRDS implements QuestRowDataGateway
 	/**
 	 * @see datasource.QuestRowDataGateway#getStartDate()
 	 */
-    @Override
-    public Date getStartDate()
-    {
-        return startDate;
-    }
+	@Override
+	public Date getStartDate()
+	{
+		return startDate;
+	}
 
-    /**
-     * @see datasource.QuestRowDataGateway#getEndDate()
-     */
-    @Override
-    public Date getEndDate()
-    {
-        return endDate;
-    }
+	/**
+	 * @see datasource.QuestRowDataGateway#getEndDate()
+	 */
+	@Override
+	public Date getEndDate()
+	{
+		return endDate;
+	}
 
 }

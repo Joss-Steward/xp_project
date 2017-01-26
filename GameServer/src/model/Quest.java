@@ -28,47 +28,35 @@ public class Quest
 	private QuestCompletionActionParameter completionActionParameter;
 	private Date startDate;
 	private Date endDate;
-	
-	
+
 	/**
 	 * Creates a Quest Object
 	 * 
-	 * @param id
-	 *            the id
-	 * @param title
-	 *            The quest's title
-	 * @param desc
-	 *            the description
-	 * @param map
-	 *            the map that the quest is on
-	 * @param pos
-	 *            position of the quest
-	 * @param adventures
-	 *            the list of adventures
-	 * @param experiencePointsGained
-	 *            the number of points we get when we fulfill this quest
-	 * @param adventuresForFulfillment
-	 *            the number of adventures we have to complete to fulfill this
+	 * @param id the id
+	 * @param title The quest's title
+	 * @param desc the description
+	 * @param map the map that the quest is on
+	 * @param pos position of the quest
+	 * @param adventures the list of adventures
+	 * @param experiencePointsGained the number of points we get when we fulfill
+	 *            this quest
+	 * @param adventuresForFulfillment the number of adventures we have to
+	 *            complete to fulfill this quest
+	 * @param completionActionType the type of action to do on completing a
 	 *            quest
-	 * @param completionActionType
-	 *            the type of action to do on completing a quest
-	 * @param completionActionParameter
-	 *            parameter for the action type
-	 * @param startDate 
-	 *            The first day the quest is available
-	 * @param endDate 
-	 *            The last day the quest is available
+	 * @param completionActionParameter parameter for the action type
+	 * @param startDate The first day the quest is available
+	 * @param endDate The last day the quest is available
 	 */
 
-	public Quest(int id, String title, String desc, String map, Position pos,
-			ArrayList<AdventureRecord> adventures, int experiencePointsGained,
-			int adventuresForFulfillment, QuestCompletionActionType completionActionType,
+	public Quest(int id, String title, String desc, String map, Position pos, ArrayList<AdventureRecord> adventures,
+			int experiencePointsGained, int adventuresForFulfillment, QuestCompletionActionType completionActionType,
 			QuestCompletionActionParameter completionActionParameter, Date startDate, Date endDate)
 	{
 		this.questID = id;
 		this.title = title;
 		this.description = desc;
-		this.mapName = map; 
+		this.mapName = map;
 		this.position = pos;
 		this.adventures = adventures;
 		this.experiencePointsGained = experiencePointsGained;
@@ -82,8 +70,7 @@ public class Quest
 	/**
 	 * Get adventure by specific adventure id
 	 * 
-	 * @param adventureID
-	 *            id of the adventure
+	 * @param adventureID id of the adventure
 	 * @return adventure description
 	 */
 	public AdventureRecord getAdventureD(int adventureID)
@@ -99,11 +86,11 @@ public class Quest
 		return null;
 
 	}
+
 	/**
 	 * Get adventure description by specific adventure id
 	 * 
-	 * @param adventureID
-	 *            id of the adventure
+	 * @param adventureID id of the adventure
 	 * @return adventure description
 	 */
 	public String getAdventureDescription(int adventureID)
@@ -139,8 +126,7 @@ public class Quest
 	/**
 	 * Get adventure description by specific adventure id
 	 * 
-	 * @param adventureID
-	 *            id of the adventure
+	 * @param adventureID id of the adventure
 	 * @return adventure description
 	 */
 	public int getAdventureXP(int adventureID)
@@ -224,28 +210,27 @@ public class Quest
 	{
 		return title;
 	}
-	
+
 	/**
 	 * @return The first day the quest is available
 	 */
 	public Date getStartDate()
-    {
-        return startDate;
-    }
-	
+	{
+		return startDate;
+	}
+
 	/**
 	 * @return The end day the quest is available
 	 */
 	public Date getEndDate()
-    {
-        return endDate;
-    }
+	{
+		return endDate;
+	}
 
 	/**
 	 * Sets the quests adventure list
 	 * 
-	 * @param adventures
-	 *            the new adventure list
+	 * @param adventures the new adventure list
 	 */
 	public void setAdventures(ArrayList<AdventureRecord> adventures)
 	{
@@ -255,8 +240,7 @@ public class Quest
 	/**
 	 * Sets the quests description
 	 * 
-	 * @param newDesc
-	 *            the new description
+	 * @param newDesc the new description
 	 */
 	public void setDescription(String newDesc)
 	{
@@ -266,8 +250,7 @@ public class Quest
 	/**
 	 * Set the quest's map name
 	 * 
-	 * @param mapName
-	 *            the map that the quest is on
+	 * @param mapName the map that the quest is on
 	 */
 	public void setMapName(String mapName)
 	{
@@ -277,8 +260,7 @@ public class Quest
 	/**
 	 * Set the position of the quest
 	 * 
-	 * @param pos
-	 *            position of the quest
+	 * @param pos position of the quest
 	 */
 	public void setPos(Position pos)
 	{
@@ -288,8 +270,7 @@ public class Quest
 	/**
 	 * Sets the quests id
 	 * 
-	 * @param newId
-	 *            the new id
+	 * @param newId the new id
 	 */
 	public void setQuestID(int newId)
 	{
@@ -297,8 +278,7 @@ public class Quest
 	}
 
 	/**
-	 * @param title
-	 *            the new title for this quest
+	 * @param title the new title for this quest
 	 */
 	public void setTitle(String title)
 	{

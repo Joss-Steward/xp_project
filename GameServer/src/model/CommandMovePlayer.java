@@ -14,10 +14,8 @@ public class CommandMovePlayer extends Command
 	private Position newPosition;
 
 	/**
-	 * @param playerId
-	 *            The player who to move
-	 * @param newPosition
-	 *            The new Position to move
+	 * @param playerId The player who to move
+	 * @param newPosition The new Position to move
 	 */
 	public CommandMovePlayer(int playerId, Position newPosition)
 	{

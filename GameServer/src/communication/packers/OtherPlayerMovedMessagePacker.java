@@ -33,8 +33,7 @@ public class OtherPlayerMovedMessagePacker extends MessagePacker
 			int playerID = report.getPlayerID();
 			if (this.getAccumulator().getPlayerID() != playerID)
 			{
-				OtherPlayerMovedMessage msg = new OtherPlayerMovedMessage(playerID,
-						report.getNewPosition());
+				OtherPlayerMovedMessage msg = new OtherPlayerMovedMessage(playerID, report.getNewPosition());
 				return msg;
 			}
 		}
@@ -47,9 +46,8 @@ public class OtherPlayerMovedMessagePacker extends MessagePacker
 	@Override
 	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 	{
-		ArrayList<Class<? extends QualifiedObservableReport>> result = 
-				new ArrayList<Class<? extends QualifiedObservableReport>>();
-		result.add( PlayerMovedReport.class);
+		ArrayList<Class<? extends QualifiedObservableReport>> result = new ArrayList<Class<? extends QualifiedObservableReport>>();
+		result.add(PlayerMovedReport.class);
 		return result;
 	}
 

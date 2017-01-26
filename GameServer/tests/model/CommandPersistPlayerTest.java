@@ -15,10 +15,11 @@ import datatypes.Position;
 
 /**
  * Test that a player is persisted
+ * 
  * @author Steve
  *
  */
-public class CommandPersistPlayerTest 
+public class CommandPersistPlayerTest
 {
 
 	/**
@@ -34,6 +35,7 @@ public class CommandPersistPlayerTest
 
 	/**
 	 * Test that persistence happens
+	 * 
 	 * @throws DatabaseException shouldn't
 	 * @throws IllegalQuestChangeException the state changed illegally
 	 */
@@ -44,9 +46,9 @@ public class CommandPersistPlayerTest
 		player.setPlayerPositionWithoutNotifying(new Position(101, 101));
 		player.setAppearanceType("appearance");
 		PlayerManager.getSingleton().persistPlayer(player.getPlayerID());
-		
+
 		PlayerManager.resetSingleton();
-		
+
 		Player fetched = PlayerManager.getSingleton().addPlayer(PlayersForTest.MERLIN.getPlayerID());
 		assertEquals(player.getPlayerPosition(), fetched.getPlayerPosition());
 		assertEquals(player.getAppearanceType(), fetched.getAppearanceType());

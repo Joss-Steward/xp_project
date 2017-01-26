@@ -9,13 +9,15 @@ import org.junit.Test;
  * @author TJ Renninger
  *
  */
-public class KeyInputRecievedReportTest {
+public class KeyInputRecievedReportTest
+{
 
 	/**
 	 * Test to see that a key input report is created.
 	 */
 	@Test
-	public void testInitialization() {
+	public void testInitialization()
+	{
 		String input = "q";
 		int id = 1;
 		KeyInputRecievedReport report = new KeyInputRecievedReport(input, id);

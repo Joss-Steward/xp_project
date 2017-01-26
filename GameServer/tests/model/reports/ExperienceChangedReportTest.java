@@ -17,10 +17,11 @@ import datasource.LevelRecord;
 
 /**
  * Tests the ExperienceChangedReport class functionality
+ * 
  * @author Olivia
  * @author LaVonne
  */
-public class ExperienceChangedReportTest 
+public class ExperienceChangedReportTest
 {
 	/**
 	 * reset the necessary singletons
@@ -31,22 +32,24 @@ public class ExperienceChangedReportTest
 		OptionsManager.getSingleton().setTestMode(true);
 		QuestManager.resetSingleton();
 	}
-	
+
 	/**
-	 * Tests that we can create a ExperienceChangedReport
-	 * and get its experience points and playerID
+	 * Tests that we can create a ExperienceChangedReport and get its experience
+	 * points and playerID
+	 * 
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void testCreateReport() throws DatabaseException 
+	public void testCreateReport() throws DatabaseException
 	{
 		Player john = PlayerManager.getSingleton().addPlayer(1);
 		LevelRecord expected = LevelManager.getSingleton().getLevelForPoints(john.getExperiencePoints());
-		ExperienceChangedReport report = new ExperienceChangedReport(john.getPlayerID(), john.getExperiencePoints(), expected);
+		ExperienceChangedReport report = new ExperienceChangedReport(john.getPlayerID(), john.getExperiencePoints(),
+				expected);
 		assertEquals(john.getExperiencePoints(), report.getExperiencePoints());
 		assertEquals(expected, report.getRecord());
-	}	
-	
+	}
+
 	/**
 	 * Make sure the equals contract is obeyed
 	 */

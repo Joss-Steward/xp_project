@@ -87,100 +87,58 @@ import datasource.QuestStateTableDataGatewayRDSTest;
 @Suite.SuiteClasses(
 {
 		// communication.handlers
-        AdventureNotificationCompleteMessageHandlerTest.class,
-		ChatMessageHandlerTest.class,
-		//ConnectMessageHandlerTest.class,
-		DisconnectMessageHandlerTest.class,
-		HighScoreRequestMessageHandlerTest.class,
-		KeyInputMessageHandlerTest.class,
-		MovementMessageHandlerTest.class,
-		TeleportationInitiationHandlerTest.class,
-		
+		AdventureNotificationCompleteMessageHandlerTest.class, ChatMessageHandlerTest.class,
+		// ConnectMessageHandlerTest.class,
+		DisconnectMessageHandlerTest.class, HighScoreRequestMessageHandlerTest.class, KeyInputMessageHandlerTest.class,
+		MovementMessageHandlerTest.class, TeleportationInitiationHandlerTest.class,
 
 		// communication.packers
-		AdventureStateChangeMessagePackerTest.class,
-		ChatMessagePackerTest.class,
-		ExperienceChangedMessagePackerTest.class,
-		MapFileMessagePackerTest.class,
-		MovementMessagePackerTest.class, 
-		PlayerJoinedMessagePackerTest.class,
-		QuestStateChangeMessagePackerTest.class,
-		TeleportOnQuestCompletionPackerTest.class,
-		UpdatePlayerInformationMessagePackerTest.class,
+		AdventureStateChangeMessagePackerTest.class, ChatMessagePackerTest.class,
+		ExperienceChangedMessagePackerTest.class, MapFileMessagePackerTest.class, MovementMessagePackerTest.class,
+		PlayerJoinedMessagePackerTest.class, QuestStateChangeMessagePackerTest.class,
+		TeleportOnQuestCompletionPackerTest.class, UpdatePlayerInformationMessagePackerTest.class,
 		KnowledgeChangedMessagePackerTest.class,
-		
-		//dataSource
+
+		// dataSource
 		AdventureRecordTest.class,
-		//AdventuresForTest.class,
-		//AdventureStatesForTest.class,
-		AdventureStateTableDataGatewayMockTest.class,
-		AdventureStateTableDataGatewayRDSTest.class,
-		//AdventureStateTableDataGatewayTest.class,
-		AdventureTableDataGatewayMockTest.class,
-		AdventureTableDataGatewayRDSTest.class,
-		//AdventureTableDataGateway.class
-		//LevelsForTest.class
-		LevelTableDataGatewayMockTest.class,
-		LevelTableDataGatewayRDSTest.class,
-		//LevelTableDataGatewayTest.class,
-		//MapAreasForTest.class
-		NPCQuestionRowDataGatewayMockTest.class,
-		NPCQuestionRowDataGatewayRDSTest.class,
-		//NPCQuestionRowDataGatewayTest.class,
-		//NPCQuestionsForTest.class,
-		NPCRowDataGatewayMockTest.class,
-		NPCRowDataGatewayRDSTest.class,
-		//NPCRowDataGatewayTest.class,
-		//NPCsForTest.class,
-		PlayerRowDataGatewayMockTest.class,
-		PlayerRowDataGatewayRDSTest.class,
-		//PlayerRowDataGatewayTest.class,
-		QuestRowDataGatewayMockTest.class,
-		QuestRowDataGatewayRDSTest.class,
-		//QuestRowDataGatewayTest.class,
-		//QuestsForTest
-		//QuestStatesForTest.class
-		QuestStateTableDataGatewayMockTest.class,
-		QuestStateTableDataGatewayRDSTest.class,
-		//QuestStateTableDataGatewayTest.class,
+		// AdventuresForTest.class,
+		// AdventureStatesForTest.class,
+		AdventureStateTableDataGatewayMockTest.class, AdventureStateTableDataGatewayRDSTest.class,
+		// AdventureStateTableDataGatewayTest.class,
+		AdventureTableDataGatewayMockTest.class, AdventureTableDataGatewayRDSTest.class,
+		// AdventureTableDataGateway.class
+		// LevelsForTest.class
+		LevelTableDataGatewayMockTest.class, LevelTableDataGatewayRDSTest.class,
+		// LevelTableDataGatewayTest.class,
+		// MapAreasForTest.class
+		NPCQuestionRowDataGatewayMockTest.class, NPCQuestionRowDataGatewayRDSTest.class,
+		// NPCQuestionRowDataGatewayTest.class,
+		// NPCQuestionsForTest.class,
+		NPCRowDataGatewayMockTest.class, NPCRowDataGatewayRDSTest.class,
+		// NPCRowDataGatewayTest.class,
+		// NPCsForTest.class,
+		PlayerRowDataGatewayMockTest.class, PlayerRowDataGatewayRDSTest.class,
+		// PlayerRowDataGatewayTest.class,
+		QuestRowDataGatewayMockTest.class, QuestRowDataGatewayRDSTest.class,
+		// QuestRowDataGatewayTest.class,
+		// QuestsForTest
+		// QuestStatesForTest.class
+		QuestStateTableDataGatewayMockTest.class, QuestStateTableDataGatewayRDSTest.class,
+		// QuestStateTableDataGatewayTest.class,
 
 		// model
-		AdventureStateTest.class,
-		ChatManagerTest.class,
-		ChatMessageReceivedCommandTest.class,
-		CommandAddPlayerTest.class, 
-		CommandAdventureNotificationCompleteTest.class,
-		CommandKeyInputMessageReceivedTest.class,
-		CommandMovePlayerSilentlyTest.class,
-		CommandMovePlayerTest.class, 
-		CommandPersistPlayerTest.class,
-		CommandRemovePlayerTest.class,
-		LevelManagerTest.class,
-		NPCMapperTest.class,
-		NPCQuestionTest.class,
-		NPCTest.class,
-		OptionsManagerTest.class,
-		PlayerManagerTest.class,
-		PlayerMapperTest.class,
-		PlayerTest.class,
-		QuestManagerTest.class,
-		QuestStateTest.class,
-		QuestTest.class,
-		QuizBotBehaviorTest.class,
-		
-		
+		AdventureStateTest.class, ChatManagerTest.class, ChatMessageReceivedCommandTest.class,
+		CommandAddPlayerTest.class, CommandAdventureNotificationCompleteTest.class,
+		CommandKeyInputMessageReceivedTest.class, CommandMovePlayerSilentlyTest.class, CommandMovePlayerTest.class,
+		CommandPersistPlayerTest.class, CommandRemovePlayerTest.class, LevelManagerTest.class, NPCMapperTest.class,
+		NPCQuestionTest.class, NPCTest.class, OptionsManagerTest.class, PlayerManagerTest.class, PlayerMapperTest.class,
+		PlayerTest.class, QuestManagerTest.class, QuestStateTest.class, QuestTest.class, QuizBotBehaviorTest.class,
+
 		// model.reports
-		AdventureStateChangeReportTest.class,
-		ExperienceChangedReportTest.class,
-		KeyInputRecievedReportTest.class,
-		PlayerConnectionReportTest.class, 
-		PlayerMovedReportTest.class, 
-		QuestStateChangeReportTest.class,
-		SendChatMessageReportTest.class,
-		TeleportOnQuestCompletionReportTest.class,
-		UpdatePlayerInformationReportTest.class,
-		KnowledgeChangeReportTest.class,
-		})
+		AdventureStateChangeReportTest.class, ExperienceChangedReportTest.class, KeyInputRecievedReportTest.class,
+		PlayerConnectionReportTest.class, PlayerMovedReportTest.class, QuestStateChangeReportTest.class,
+		SendChatMessageReportTest.class, TeleportOnQuestCompletionReportTest.class,
+		UpdatePlayerInformationReportTest.class, KnowledgeChangeReportTest.class, })
 
 public class AllServerTests
 {

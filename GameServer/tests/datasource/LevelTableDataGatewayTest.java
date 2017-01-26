@@ -40,8 +40,7 @@ public abstract class LevelTableDataGatewayTest
 	/**
 	 * One method retrieves them all
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void retrievesThemAll() throws DatabaseException
@@ -51,8 +50,8 @@ public abstract class LevelTableDataGatewayTest
 
 		for (LevelsForTest l : LevelsForTest.values())
 		{
-			LevelRecord r = new LevelRecord(l.getDescription(), l.getLevelUpPoints(),
-					l.getLevelUpMonth(), l.getLevelUpDayOfMonth());
+			LevelRecord r = new LevelRecord(l.getDescription(), l.getLevelUpPoints(), l.getLevelUpMonth(),
+					l.getLevelUpDayOfMonth());
 			assertTrue(actual.contains(r));
 		}
 	}

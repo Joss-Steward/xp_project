@@ -36,8 +36,7 @@ public class MovementMessagePackerTest
 		PlayerManager.getSingleton().addPlayer(1);
 		stateAccumulator = new StateAccumulator(null);
 		stateAccumulator.setPlayerId(1);
-		
-		
+
 	}
 
 	/**
@@ -58,8 +57,7 @@ public class MovementMessagePackerTest
 	public void testPackedObjectIsCurrentPlayer()
 	{
 		Position position = new Position(1, 2);
-		PlayerMovedReport report = new PlayerMovedReport(stateAccumulator.getPlayerID(),
-				"fred", position, "mapName");
+		PlayerMovedReport report = new PlayerMovedReport(stateAccumulator.getPlayerID(), "fred", position, "mapName");
 		OtherPlayerMovedMessagePacker packer = new OtherPlayerMovedMessagePacker();
 		packer.setAccumulator(stateAccumulator);
 

@@ -6,9 +6,9 @@ import datasource.DatabaseException;
 import datasource.NPCRowDataGateway;
 import datasource.NPCRowDataGatewayRDS;
 
-
 /**
  * Tests for the RDS version of the gateway
+ * 
  * @author Merlin
  *
  */
@@ -28,8 +28,7 @@ public class NPCRowDataGatewayRDSTest extends NPCRowDataGatewayTest
 	 * @see datasource.NPCRowDataGatewayTest#getAllForMap(java.lang.String)
 	 */
 	@Override
-	public ArrayList<NPCRowDataGateway> getAllForMap(String mapName)
-			throws DatabaseException
+	public ArrayList<NPCRowDataGateway> getAllForMap(String mapName) throws DatabaseException
 	{
 		return NPCRowDataGatewayRDS.getNPCsForMap(mapName);
 	}

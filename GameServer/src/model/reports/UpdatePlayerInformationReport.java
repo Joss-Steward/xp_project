@@ -34,15 +34,12 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 	 * Combine the player's quest state and quest descriptions Sets local
 	 * experience points equal to player's experience points
 	 * 
-	 * @param player
-	 *            the player
-	 * @throws DatabaseException
-	 *             shouldn't
-	 * @throws IllegalQuestChangeException
-	 *             When the quest's state is changing to an illegal state
+	 * @param player the player
+	 * @throws DatabaseException shouldn't
+	 * @throws IllegalQuestChangeException When the quest's state is changing to
+	 *             an illegal state
 	 */
-	public UpdatePlayerInformationReport(Player player) throws DatabaseException,
-			IllegalQuestChangeException
+	public UpdatePlayerInformationReport(Player player) throws DatabaseException, IllegalQuestChangeException
 	{
 		combineQuest(QuestManager.getSingleton().getQuestList(player.getPlayerID()));
 		this.experiencePoints = player.getExperiencePoints();
@@ -55,8 +52,7 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 	 * clientPlayerQuestList
 	 * 
 	 * @throws DatabaseException
-	 * @throws IllegalQuestChangeException
-	 *             shouldn't
+	 * @throws IllegalQuestChangeException shouldn't
 	 */
 	private void combineQuest(ArrayList<QuestState> questStateList)
 			throws DatabaseException, IllegalQuestChangeException
@@ -65,22 +61,20 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 		{
 			for (QuestState qs : questStateList)
 			{
-//				if (qs.getStateValue() != QuestStateEnum.AVAILABLE
-//						&& qs.getStateValue() != QuestStateEnum.HIDDEN)
-//				{
-					int questID = qs.getID();
-					Quest quest = QuestManager.getSingleton().getQuest(questID);
+				// if (qs.getStateValue() != QuestStateEnum.AVAILABLE
+				// && qs.getStateValue() != QuestStateEnum.HIDDEN)
+				// {
+				int questID = qs.getID();
+				Quest quest = QuestManager.getSingleton().getQuest(questID);
 
-					ClientPlayerQuest clientQuest = new ClientPlayerQuest(
-							quest.getQuestID(), quest.getTitle(), quest.getDescription(),
-							qs.getStateValue(), quest.getExperiencePointsGained(),
-							quest.getAdventuresForFulfillment(),
-							qs.isNeedingNotification(), quest.getEndDate());
-					clientQuest.setAdventures(combineAdventure(quest, qs));
+				ClientPlayerQuest clientQuest = new ClientPlayerQuest(quest.getQuestID(), quest.getTitle(),
+						quest.getDescription(), qs.getStateValue(), quest.getExperiencePointsGained(),
+						quest.getAdventuresForFulfillment(), qs.isNeedingNotification(), quest.getEndDate());
+				clientQuest.setAdventures(combineAdventure(quest, qs));
 
-					clientPlayerQuestList.add(clientQuest);
-				}
-//			}
+				clientPlayerQuestList.add(clientQuest);
+			}
+			// }
 		}
 	}
 
@@ -91,11 +85,9 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 		{
 			int adventureID = a.getID();
 			AdventureRecord adventure = quest.getAdventureD(adventureID);
-			ca.add(new ClientPlayerAdventure(a.getID(), adventure
-					.getAdventureDescription(), adventure.getExperiencePointsGained(), a
-					.getState(), a.isNeedingNotification(), adventure
-					.isRealLifeAdventure(), adventure.getCompletionCriteria().toString(),
-					qs.getStateValue()));
+			ca.add(new ClientPlayerAdventure(a.getID(), adventure.getAdventureDescription(),
+					adventure.getExperiencePointsGained(), a.getState(), a.isNeedingNotification(),
+					adventure.isRealLifeAdventure(), adventure.getCompletionCriteria().toString(), qs.getStateValue()));
 		}
 
 		return ca;

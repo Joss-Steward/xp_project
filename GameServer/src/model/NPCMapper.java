@@ -22,14 +22,12 @@ public class NPCMapper extends PlayerMapper
 	/**
 	 * Finds all of the NPCs on a given map and creates mappers for them all
 	 * 
-	 * @param mapName
-	 *            the name of the map
+	 * @param mapName the name of the map
 	 * @return mappers for all of the MPCs on the given map
-	 * @throws DatabaseException
-	 *             if the data source layer cannot answer the request
+	 * @throws DatabaseException if the data source layer cannot answer the
+	 *             request
 	 */
-	public static ArrayList<NPCMapper> findNPCsOnMap(String mapName)
-			throws DatabaseException
+	public static ArrayList<NPCMapper> findNPCsOnMap(String mapName) throws DatabaseException
 	{
 		ArrayList<NPCRowDataGateway> gateways;
 		if (OptionsManager.getSingleton().isTestMode())
@@ -52,10 +50,9 @@ public class NPCMapper extends PlayerMapper
 	/**
 	 * Find constructor
 	 * 
-	 * @param playerID
-	 *            the unique ID of the NPC we are interested in
-	 * @throws DatabaseException
-	 *             if the data source can't find a player with the given ID
+	 * @param playerID the unique ID of the NPC we are interested in
+	 * @throws DatabaseException if the data source can't find a player with the
+	 *             given ID
 	 */
 	public NPCMapper(int playerID) throws DatabaseException
 	{
