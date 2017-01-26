@@ -45,15 +45,16 @@ public class PlayerManagerTest
 	/**
 	 * When a login is successful, the PlayerManager should send a
 	 * LoginSuccessfulReport
+	 * 
 	 * @throws LoginFailedException shouldn't
 	 */
 	@Test
 	public void respondsOnSuccessfulLogin() throws LoginFailedException
 	{
 		LoginPlayerManager pm = LoginPlayerManager.getSingleton();
-		LoginSuccessfulReport expected = new LoginSuccessfulReport(PlayersForTest.MERLIN.getPlayerID(), "localhost", 1872,
-				0);
-		
+		LoginSuccessfulReport expected = new LoginSuccessfulReport(PlayersForTest.MERLIN.getPlayerID(), "localhost",
+				1872, 0);
+
 		LoginSuccessfulReport actual = pm.login(PlayersForTest.MERLIN.getPlayerName(),
 				PlayersForTest.MERLIN.getPlayerPassword());
 		assertEquals(expected, actual);
@@ -61,14 +62,14 @@ public class PlayerManagerTest
 
 	/**
 	 * When a login fails, the PlayerManager should throw an exception
+	 * 
 	 * @throws LoginFailedException should
 	 */
-	@Test (expected = LoginFailedException.class)
+	@Test(expected = LoginFailedException.class)
 	public void notifiesOnFailedLogin() throws LoginFailedException
 	{
 		LoginPlayerManager pm = LoginPlayerManager.getSingleton();
-		pm.login(PlayersForTest.MERLIN.getPlayerName(),
-				PlayersForTest.MERLIN.getPlayerPassword() + "Z");
+		pm.login(PlayersForTest.MERLIN.getPlayerName(), PlayersForTest.MERLIN.getPlayerPassword() + "Z");
 	}
 
 }

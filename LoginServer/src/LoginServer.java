@@ -7,6 +7,7 @@ import communication.ConnectionManager;
 import communication.StateAccumulator;
 import communication.handlers.MessageHandlerSet;
 import communication.packers.MessagePackerSet;
+
 /**
  * A daemon that resides on the server listening to the gigabuds and to client
  * requests
@@ -52,10 +53,9 @@ public class LoginServer implements Runnable
 				i++;
 				packers = new MessagePackerSet();
 				StateAccumulator stateAccumulator = new StateAccumulator(packers);
-				
+
 				handlers = new MessageHandlerSet(stateAccumulator);
-				new ConnectionManager(sock, stateAccumulator,
-						handlers, packers, true);
+				new ConnectionManager(sock, stateAccumulator, handlers, packers, true);
 
 			}
 
@@ -81,20 +81,19 @@ public class LoginServer implements Runnable
 	}
 
 	/**
-	 * @param args
-	 *            Main runner
+	 * @param args Main runner
 	 */
 	public static void main(String args[])
 	{
 		OptionsManager.getSingleton();
 		OptionsManager.getSingleton().setTestMode(false);
-		for(String arg: args)
+		for (String arg : args)
 		{
 			String[] splitArg = arg.split("=");
-			if(splitArg[0].equals("--localhost"))
+			if (splitArg[0].equals("--localhost"))
 			{
 				OptionsManager.getSingleton().setHostName("localhost");
-			} else if(splitArg[0].equals("--production"))
+			} else if (splitArg[0].equals("--production"))
 			{
 				OptionsManager.getSingleton().setUsingTestDB(false);
 			}

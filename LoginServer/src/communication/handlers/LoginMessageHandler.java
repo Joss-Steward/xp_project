@@ -33,8 +33,8 @@ public class LoginMessageHandler extends MessageHandler
 		{
 			LoginSuccessfulReport report = LoginPlayerManager.getSingleton().login(loginMsg.getPlayerName(),
 					loginMsg.getPassword());
-			LoginSuccessfulMessage response = new LoginSuccessfulMessage(report.getPlayerID(),
-					report.getHostname(), report.getPort(), report.getPin());
+			LoginSuccessfulMessage response = new LoginSuccessfulMessage(report.getPlayerID(), report.getHostname(),
+					report.getPort(), report.getPin());
 			this.getStateAccumulator().queueMessage(response);
 		} catch (LoginFailedException e)
 		{

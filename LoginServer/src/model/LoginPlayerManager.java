@@ -49,17 +49,13 @@ public class LoginPlayerManager extends Observable
 	 * Attempt to login to the system. Credentials will be checked and
 	 * appropriate reports will be made
 	 *
-	 * @param playerName
-	 *            the player's name
-	 * @param password
-	 *            the password
+	 * @param playerName the player's name
+	 * @param password the password
 	 * @return a report giving the instructions for how the client should
 	 *         connect to an area server
-	 * @throws LoginFailedException
-	 *             for database errors or invalid credentials
+	 * @throws LoginFailedException for database errors or invalid credentials
 	 */
-	public LoginSuccessfulReport login(String playerName, String password)
-			throws LoginFailedException
+	public LoginSuccessfulReport login(String playerName, String password) throws LoginFailedException
 	{
 		try
 		{
@@ -73,12 +69,11 @@ public class LoginPlayerManager extends Observable
 			MapToServerMapping mapping = new MapToServerMapping(pp.getMapName());
 			server = mapping.getHostName();
 			port = mapping.getPortNumber();
-			System.out.println("Sending " + playerName + " to " + pp.getMapName() + " on " +server + " with port #"+ port);
-			LoginSuccessfulReport report = new LoginSuccessfulReport(pl.getPlayerID(),
-					server, port, pp.generatePin());
+			System.out.println(
+					"Sending " + playerName + " to " + pp.getMapName() + " on " + server + " with port #" + port);
+			LoginSuccessfulReport report = new LoginSuccessfulReport(pl.getPlayerID(), server, port, pp.generatePin());
 			return report;
-		}
-		catch (DatabaseException e)
+		} catch (DatabaseException e)
 		{
 
 			throw new LoginFailedException();

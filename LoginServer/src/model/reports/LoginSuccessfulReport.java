@@ -15,15 +15,12 @@ public final class LoginSuccessfulReport implements QualifiedObservableReport
 	private final int playerID;
 
 	/**
-	 * @param playerID
-	 *            the playerID who was successful
-	 * @param hostname
-	 *            the hostname of the area server the client should connect to
-	 * @param port
-	 *            the port number of the area server the client should connect
+	 * @param playerID the playerID who was successful
+	 * @param hostname the hostname of the area server the client should connect
 	 *            to
-	 * @param d
-	 *            the pin the client should use in its connection
+	 * @param port the port number of the area server the client should connect
+	 *            to
+	 * @param d the pin the client should use in its connection
 	 * 
 	 */
 	public LoginSuccessfulReport(int playerID, String hostname, int port, double d)

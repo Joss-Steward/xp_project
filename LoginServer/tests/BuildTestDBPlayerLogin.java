@@ -15,10 +15,8 @@ public class BuildTestDBPlayerLogin
 
 	/**
 	 * 
-	 * @param args
-	 *            unused
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @param args unused
+	 * @throws DatabaseException shouldn't
 	 */
 	public static void main(String[] args) throws DatabaseException
 	{
@@ -31,24 +29,23 @@ public class BuildTestDBPlayerLogin
 	private static void createPlayerLoginTable() throws DatabaseException
 	{
 		PlayerLoginRowDataGatewayRDS.createPlayerLoginTable();
-		
+
 		for (PlayersForTest p : PlayersForTest.values())
 		{
-			new PlayerLoginRowDataGatewayRDS( p.getPlayerName() , p.getPlayerPassword() );
+			new PlayerLoginRowDataGatewayRDS(p.getPlayerName(), p.getPlayerPassword());
 		}
-		
+
 	}
 
 	private static void createPlayerConnectionTable() throws DatabaseException
 	{
 		PlayerConnectionRowDataGatewayRDS.createPlayerConnectionTable();
-		
+
 		for (PlayersForTest p : PlayersForTest.values())
 		{
 			new PlayerConnectionRowDataGatewayRDS(p.getPlayerID(), p.getPin(), p.getMapName());
-			
+
 		}
 	}
 
-	
 }

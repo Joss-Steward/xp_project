@@ -14,11 +14,10 @@ import communication.handlers.LoginMessageHandlerTest;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 {
-// communication.handlers
+		// communication.handlers
 		LoginMessageHandlerTest.class,
 
 		// communication.packers
-
 
 		// model
 		PlayerLoginTest.class, PlayerManagerTest.class,

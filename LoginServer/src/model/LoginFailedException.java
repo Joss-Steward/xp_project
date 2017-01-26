@@ -1,7 +1,9 @@
 package model;
 
 /**
- * Used to report that a login attempt failed (database problem or invalid credentials)
+ * Used to report that a login attempt failed (database problem or invalid
+ * credentials)
+ * 
  * @author merlin
  *
  */
