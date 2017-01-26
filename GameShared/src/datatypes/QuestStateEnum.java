@@ -2,17 +2,14 @@ package datatypes;
 
 /**
  * The legal states a quest can be in for a given player
- * 
+ *
  * @author Merlin
  *
  */
 public enum QuestStateEnum
 {
 
-	/**
-	 * The player cannot see any about this quest
-	 */
-	HIDDEN(""),
+
 	/**
 	 * The player can know that there is a quest, but knows nothing about it
 	 */

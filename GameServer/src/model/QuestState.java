@@ -233,8 +233,7 @@ public class QuestState
 	 */
 	public void changeState(QuestStateEnum state, boolean notify) throws IllegalQuestChangeException, DatabaseException
 	{
-		if ((this.getStateValue().equals(QuestStateEnum.HIDDEN) && state.equals(QuestStateEnum.AVAILABLE))
-				|| (this.getStateValue().equals(QuestStateEnum.AVAILABLE) && state.equals(QuestStateEnum.TRIGGERED))
+		if ( (this.getStateValue().equals(QuestStateEnum.AVAILABLE) && state.equals(QuestStateEnum.TRIGGERED))
 				|| (this.getStateValue().equals(QuestStateEnum.TRIGGERED) && state.equals(QuestStateEnum.FULFILLED))
 				|| (this.getStateValue().equals(QuestStateEnum.FULFILLED) && state.equals(QuestStateEnum.FINISHED)))
 		{

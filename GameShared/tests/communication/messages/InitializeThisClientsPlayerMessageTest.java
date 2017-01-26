@@ -15,7 +15,7 @@ import datatypes.QuestStateEnum;
 
 /**
  * Tests the InitializeThisClientsPlayerMessage class
- * 
+ *
  * @author Olivia, LaVonne
  *
  */
@@ -32,7 +32,7 @@ public class InitializeThisClientsPlayerMessageTest
 				AdventureStateEnum.HIDDEN, false, true, "Dean", QuestStateEnum.AVAILABLE);
 		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", 3,
 				AdventureStateEnum.HIDDEN, false, false, null, QuestStateEnum.AVAILABLE);
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "title", "Test Quest 1", QuestStateEnum.HIDDEN, 42, 13, true,
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "title", "Test Quest 1", QuestStateEnum.AVAILABLE, 42, 13, true,
 				null);
 		q.addAdventure(adventureOne);
 		q.addAdventure(adventureTwo);

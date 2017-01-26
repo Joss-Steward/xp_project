@@ -9,6 +9,7 @@ import model.OptionsManager;
 import model.Player;
 import model.PlayerConnection;
 import model.PlayerManager;
+import model.QualifiedObservableConnector;
 import model.reports.PlayerConnectionReport;
 
 import org.junit.Before;
@@ -20,7 +21,7 @@ import datasource.DatabaseException;
 
 /**
  * @author Merlin
- * 
+ *
  */
 public class MapFileMessagePackerTest
 {
@@ -34,12 +35,13 @@ public class MapFileMessagePackerTest
 		PlayerManager.resetSingleton();
 		OptionsManager.resetSingleton();
 		OptionsManager.getSingleton().setTestMode(true);
+		QualifiedObservableConnector.resetSingleton();
 	}
 
 	/**
 	 * If we are notified about a player other than the one we are associated
 	 * with, we shouldn't pack a message
-	 * 
+	 *
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
@@ -63,7 +65,7 @@ public class MapFileMessagePackerTest
 	/**
 	 * If we are notified about a player that is the one we are associated with,
 	 * return null (no need to send this on)
-	 * 
+	 *
 	 * @throws DatabaseException shouldn't
 	 * @throws SQLException shouldn't
 	 * @throws IllegalQuestChangeException the state changed illegally
@@ -77,7 +79,7 @@ public class MapFileMessagePackerTest
 		stateAccumulator.setPlayerId(1);
 		MapFileMessagePacker packer = new MapFileMessagePacker();
 		packer.setAccumulator(stateAccumulator);
-		
+
 		Player playerFromID = PlayerManager.getSingleton().getPlayerFromID(1);
 		PlayerConnectionReport report = new PlayerConnectionReport(playerFromID.getPlayerID(),
 				playerFromID.getPlayerName(), playerFromID.getAppearanceType(), playerFromID.getPlayerPosition(),

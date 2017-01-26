@@ -18,7 +18,7 @@ import datatypes.QuestStateEnum;
 
 /**
  * An abstract class that tests the table data gateways into the Adventure table
- * 
+ *
  * @author merlin
  *
  */
@@ -29,7 +29,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 
 	/**
 	 * Make sure any static information is cleaned up between tests
-	 * 
+	 *
 	 * @throws SQLException shouldn't
 	 * @throws DatabaseException shouldn't
 	 */
@@ -49,7 +49,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	public abstract QuestStateTableDataGateway getGatewaySingleton();
 
 	/**
-	 * 
+	 *
 	 */
 	@Test
 	public void isASingleton()
@@ -69,24 +69,20 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 		setup();
 		ArrayList<QuestStateRecord> records = gateway.getQuestStates(1);
 		assertEquals(3, records.size());
-		QuestStateRecord record = records.get(0);
-		// the records could be in either order
-		QuestStatesForTest first = QuestStatesForTest.PLAYER1_QUEST1;
-		QuestStatesForTest other = QuestStatesForTest.PLAYER1_QUEST2;
-		if (record.getQuestID() == first.getQuestID())
+		// the records could be in any order
+		for (int i = 0; i < 3; i++)
 		{
-			assertEquals(first.getState(), record.getState());
-			record = records.get(1);
-			assertEquals(other.getState(), record.getState());
-			assertEquals(other.getQuestID(), record.getQuestID());
-		} else
-		{
-			assertEquals(other.getState(), record.getState());
-			assertEquals(other.getQuestID(), record.getQuestID());
-			record = records.get(1);
-			assertEquals(first.getState(), record.getState());
-			assertEquals(first.getQuestID(), record.getQuestID());
+			QuestStateRecord record = records.get(i);
+
+			QuestStatesForTest expected = QuestStatesForTest.PLAYER1_QUEST1;
+			if (record.getQuestID() == QuestStatesForTest.PLAYER1_QUEST2.getQuestID())
+			{
+				expected = QuestStatesForTest.PLAYER1_QUEST2;
+				assertEquals("Invalid state for quest id " + record.getQuestID(), expected.getState(),
+						record.getState());
+			}
 		}
+
 	}
 
 	/**
@@ -101,7 +97,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 
 	/**
 	 * We should be able to add new rows to the table
-	 * 
+	 *
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
@@ -119,7 +115,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 	/**
 	 * The combination of player ID and quest ID should be unique in the table.
 	 * If we try to add a duplicate, we should get a database exception
-	 * 
+	 *
 	 * @throws DatabaseException should!
 	 */
 	@Test(expected = DatabaseException.class)
@@ -132,7 +128,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 
 	/**
 	 * If a player has no quests, we should return an empty list
-	 * 
+	 *
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
@@ -145,7 +141,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 
 	/**
 	 * @throws DatabaseException shouldn't
-	 * 
+	 *
 	 */
 	@Test
 	public void canChangeExistingState() throws DatabaseException
@@ -168,7 +164,7 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 
 	/**
 	 * If we try to update a quest state that doesn't exist, it should be added
-	 * 
+	 *
 	 * @throws DatabaseException should
 	 */
 	@Test

@@ -11,7 +11,7 @@ import datatypes.QuestStateEnum;
 
 /**
  * Test the
- * 
+ *
  * @author nk3668
  *
  */
@@ -25,12 +25,12 @@ public class ClientPlayerQuestTest
 	public void testClientPlayerQuestInitialization()
 	{
 		Date expireDate = new Date();
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "title", "Test Quest 1", QuestStateEnum.HIDDEN, 42, 133, true,
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "title", "Test Quest 1", QuestStateEnum.AVAILABLE, 42, 133, true,
 				expireDate);
 		assertEquals(1, q.getQuestID());
 		assertEquals("title", q.getQuestTitle());
 		assertEquals("Test Quest 1", q.getQuestDescription());
-		assertEquals(QuestStateEnum.HIDDEN, q.getQuestState());
+		assertEquals(QuestStateEnum.AVAILABLE, q.getQuestState());
 		assertEquals(42, q.getExperiencePointsGained());
 		assertEquals(133, q.getAdventuresToFulfillment());
 		assertEquals(expireDate, q.getExpireDate());
@@ -38,7 +38,7 @@ public class ClientPlayerQuestTest
 
 	/**
 	 * Create a new ClientPlayerQuest with two ClientPlayerAdventures
-	 * 
+	 *
 	 * @return the ClientPlayerQuest
 	 */
 	public static ClientPlayerQuest createOneQuestWithTwoAdventures()
@@ -47,7 +47,7 @@ public class ClientPlayerQuestTest
 				AdventureStateEnum.HIDDEN, false, true, "Henry", QuestStateEnum.AVAILABLE);
 		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", 4,
 				AdventureStateEnum.HIDDEN, false, false, null, QuestStateEnum.AVAILABLE);
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "title", "Test Quest 1", QuestStateEnum.HIDDEN, 1, 2, true,
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "title", "Test Quest 1", QuestStateEnum.AVAILABLE, 1, 2, true,
 				null);
 		q.addAdventure(adventureOne);
 		q.addAdventure(adventureTwo);
@@ -63,7 +63,7 @@ public class ClientPlayerQuestTest
 
 	/**
 	 * Create a new ClientPlayerQuest with two ClientPlayerAdventures
-	 * 
+	 *
 	 * @return the ClientPlayerQuest
 	 */
 	public static ClientPlayerQuest createOneQuestWithTwoAdventuresNeedingNotification()
@@ -92,7 +92,7 @@ public class ClientPlayerQuestTest
 		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", 7,
 				AdventureStateEnum.HIDDEN, false, true, "Liz", QuestStateEnum.AVAILABLE);
 		assertEquals(2, adventureTwo.getAdventureID());
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "title", "Test Quest 1", QuestStateEnum.HIDDEN, 1, 2, true,
+		ClientPlayerQuest q = new ClientPlayerQuest(1, "title", "Test Quest 1", QuestStateEnum.AVAILABLE, 1, 2, true,
 				null);
 		q.addAdventure(adventureOne);
 		q.addAdventure(adventureTwo);

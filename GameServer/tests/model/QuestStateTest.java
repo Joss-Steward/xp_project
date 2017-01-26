@@ -27,7 +27,7 @@ import datatypes.QuestStateEnum;
 
 /**
  * Test for the QuestState Class
- * 
+ *
  * @author Ryan
  *
  */
@@ -35,7 +35,7 @@ public class QuestStateTest extends DatabaseTest
 {
 
 	/**
-	 * 
+	 *
 	 */
 	@Before
 	public void setUp()
@@ -48,7 +48,7 @@ public class QuestStateTest extends DatabaseTest
 
 	/**
 	 * Test creating a very simple quest, and retreiving its information
-	 * 
+	 *
 	 * @throws IllegalQuestChangeException shouldn't
 	 */
 	@Test
@@ -68,7 +68,7 @@ public class QuestStateTest extends DatabaseTest
 	@Test
 	public void testAddAdventures()
 	{
-		QuestState qs = new QuestState(2, 1, QuestStateEnum.HIDDEN, true);
+		QuestState qs = new QuestState(2, 1, QuestStateEnum.AVAILABLE, true);
 		ArrayList<AdventureState> adventureList = new ArrayList<AdventureState>();
 		AdventureState as1 = new AdventureState(1, AdventureStateEnum.HIDDEN, false);
 		AdventureState as2 = new AdventureState(2, AdventureStateEnum.HIDDEN, false);
@@ -83,7 +83,7 @@ public class QuestStateTest extends DatabaseTest
 
 	/**
 	 * Test the change in quest's state when triggered
-	 * 
+	 *
 	 * @throws IllegalAdventureChangeException thrown if changing to a wrong
 	 *             state
 	 * @throws IllegalQuestChangeException thrown if illegal state change
@@ -101,7 +101,7 @@ public class QuestStateTest extends DatabaseTest
 
 	/**
 	 * Test to make sure you can't trigger finished quests
-	 * 
+	 *
 	 * @throws IllegalAdventureChangeException thrown if changing to a wrong
 	 *             state
 	 * @throws IllegalQuestChangeException thrown if illegal state change
@@ -118,7 +118,7 @@ public class QuestStateTest extends DatabaseTest
 
 	/**
 	 * Test that when a quest is triggered, its adventures get triggered as well
-	 * 
+	 *
 	 * @throws IllegalAdventureChangeException thrown if changing to a wrong
 	 *             state
 	 * @throws IllegalQuestChangeException thrown if illegal state change
@@ -155,7 +155,7 @@ public class QuestStateTest extends DatabaseTest
 	 * When the right number of adventures are complete (with or without
 	 * notifications complete) the quest should become fulfilled and the
 	 * appropriate report should be generated
-	 * 
+	 *
 	 * @throws DatabaseException shouldn't
 	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 */
@@ -202,7 +202,7 @@ public class QuestStateTest extends DatabaseTest
 	/**
 	 * If a quest is already in the process of being fulfilled, no report should
 	 * be generated
-	 * 
+	 *
 	 * @throws DatabaseException shouldn't
 	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 */
@@ -235,21 +235,21 @@ public class QuestStateTest extends DatabaseTest
 
 	/**
 	 * Test that the new change state method works as intended.
-	 * 
+	 *
 	 * @throws IllegalQuestChangeException thrown if changing to a wrong state
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void testChangeStateToTriggered() throws IllegalQuestChangeException, DatabaseException
 	{
-		QuestState quest = new QuestState(2, 1, QuestStateEnum.HIDDEN, false);
+		QuestState quest = new QuestState(2, 1, QuestStateEnum.AVAILABLE, false);
 		quest.changeState(QuestStateEnum.AVAILABLE, false);
 		assertEquals(quest.getStateValue(), QuestStateEnum.AVAILABLE);
 	}
 
 	/**
 	 * A finished quest should be marked as finished not expired
-	 * 
+	 *
 	 * @throws IllegalQuestChangeException thrown if changing to a wrong state
 	 * @throws DatabaseException shouldn't
 	 */
@@ -262,7 +262,7 @@ public class QuestStateTest extends DatabaseTest
 
 	/**
 	 * An available quest should be marked as expired
-	 * 
+	 *
 	 * @throws IllegalQuestChangeException thrown if changing to a wrong state
 	 * @throws DatabaseException shouldn't
 	 */
@@ -275,7 +275,7 @@ public class QuestStateTest extends DatabaseTest
 
 	/**
 	 * A triggered quest should be marked as expired
-	 * 
+	 *
 	 * @throws IllegalQuestChangeException thrown if changing to a wrong state
 	 * @throws DatabaseException shouldn't
 	 */
