@@ -28,19 +28,14 @@ public class QuestStateChangeMessage implements Message, Serializable
 
 	/**
 	 * 
-	 * @param playerID
-	 *            the ID of the player
-	 * @param questID
-	 *            the ID of the quest
-	 * @param questTitle
-	 *            the title of the quest
-	 * @param questDescription
-	 *            the description of the quest
-	 * @param newState
-	 *            the state the quest has moved to
+	 * @param playerID the ID of the player
+	 * @param questID the ID of the quest
+	 * @param questTitle the title of the quest
+	 * @param questDescription the description of the quest
+	 * @param newState the state the quest has moved to
 	 */
-	public QuestStateChangeMessage(int playerID, int questID, String questTitle,
-			String questDescription, QuestStateEnum newState)
+	public QuestStateChangeMessage(int playerID, int questID, String questTitle, String questDescription,
+			QuestStateEnum newState)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
@@ -121,8 +116,7 @@ public class QuestStateChangeMessage implements Message, Serializable
 		int result = 1;
 		result = prime * result + ((newState == null) ? 0 : newState.hashCode());
 		result = prime * result + playerID;
-		result = prime * result
-				+ ((questDescription == null) ? 0 : questDescription.hashCode());
+		result = prime * result + ((questDescription == null) ? 0 : questDescription.hashCode());
 		result = prime * result + questID;
 		return result;
 	}

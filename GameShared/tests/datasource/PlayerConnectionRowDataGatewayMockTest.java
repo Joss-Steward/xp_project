@@ -1,18 +1,17 @@
 package datasource;
 
-
-
 /**
  * Test our mock data source
+ * 
  * @author Merlin
  *
  */
 public class PlayerConnectionRowDataGatewayMockTest extends PlayerConnectionRowDataGatewayTest
 {
 
-	
 	/**
-	 * @see datasource.PlayerConnectionRowDataGatewayTest#createRowDataGateway(int, int, java.lang.String)
+	 * @see datasource.PlayerConnectionRowDataGatewayTest#createRowDataGateway(int,
+	 *      int, java.lang.String)
 	 */
 	@Override
 	PlayerConnectionRowDataGateway createRowDataGateway(int playerID, int pin, String mapFileName)
@@ -24,7 +23,7 @@ public class PlayerConnectionRowDataGatewayMockTest extends PlayerConnectionRowD
 	 * @see datasource.PlayerConnectionRowDataGatewayTest#findRowDataGateway(int)
 	 */
 	@Override
-	 PlayerConnectionRowDataGateway findRowDataGateway(int playerID) throws DatabaseException
+	PlayerConnectionRowDataGateway findRowDataGateway(int playerID) throws DatabaseException
 	{
 		return new PlayerConnectionRowDataGatewayMock(playerID);
 	}

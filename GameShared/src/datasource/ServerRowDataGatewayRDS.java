@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import model.OptionsManager;
 
-
 /**
  * A row table gateway for the Servers table in the database. That table
  * contains the information about each area server.
@@ -30,18 +29,13 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 	/**
 	 * Create a new mapping in the DB
 	 * 
-	 * @param mapName
-	 *            the name of the map file
-	 * @param hostName
-	 *            the hostname of the server that manages that map
-	 * @param portNumber
-	 *            the portnumber of the server that manages that map
-	 * @throws DatabaseException
-	 *             Either can't talk to DB or a mapping for that map file
-	 *             already exists
+	 * @param mapName the name of the map file
+	 * @param hostName the hostname of the server that manages that map
+	 * @param portNumber the portnumber of the server that manages that map
+	 * @throws DatabaseException Either can't talk to DB or a mapping for that
+	 *             map file already exists
 	 */
-	public ServerRowDataGatewayRDS(String mapName, String hostName, int portNumber)
-			throws DatabaseException
+	public ServerRowDataGatewayRDS(String mapName, String hostName, int portNumber) throws DatabaseException
 	{
 		insertNewRow(mapName, hostName, portNumber);
 		this.mapName = mapName;
@@ -50,8 +44,7 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 
 	}
 
-	private void insertNewRow(String mapName, String hostName, int portNumber)
-			throws DatabaseException
+	private void insertNewRow(String mapName, String hostName, int portNumber) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
@@ -65,8 +58,7 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Couldn't create a server for map named "
-					+ mapName, e);
+			throw new DatabaseException("Couldn't create a server for map named " + mapName, e);
 		}
 	}
 
@@ -74,10 +66,8 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 	 * Files this object with the information about the server that is managing
 	 * a given map name
 	 * 
-	 * @param mapName
-	 *            the name of the map file we are interested in
-	 * @throws DatabaseException
-	 *             if there is no row with the given map file name
+	 * @param mapName the name of the map file we are interested in
+	 * @throws DatabaseException if there is no row with the given map file name
 	 */
 	public ServerRowDataGatewayRDS(String mapName) throws DatabaseException
 	{
@@ -93,12 +83,11 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 			result.next();
 			hostName = result.getString("hostName");
 			portNumber = result.getInt("portNumber");
-			System.out.println("Found map " + mapName + " should be on "+ hostName);
+			System.out.println("Found map " + mapName + " should be on " + hostName);
 
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Couldn't find a server for map named " + mapName, e);
+			throw new DatabaseException("Couldn't find a server for map named " + mapName, e);
 		}
 
 	}
@@ -172,14 +161,13 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 			ClosingPreparedStatement stmt;
 			try
 			{
-				stmt = new ClosingPreparedStatement(connection,
-						"DELETE from Server WHERE mapName = ?");
+				stmt = new ClosingPreparedStatement(connection, "DELETE from Server WHERE mapName = ?");
 				stmt.setString(1, originalMapName);
 				stmt.executeUpdate();
 			} catch (SQLException e)
 			{
-				throw new DatabaseException("Error trying to change mapName from "
-						+ originalMapName + " to " + mapName, e);
+				throw new DatabaseException("Error trying to change mapName from " + originalMapName + " to " + mapName,
+						e);
 			}
 			insertNewRow(mapName, hostName, portNumber);
 		}
@@ -203,8 +191,7 @@ public class ServerRowDataGatewayRDS implements ServerRowDataGateway
 			}
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Couldn't find a server for map named " + mapName, e);
+			throw new DatabaseException("Couldn't find a server for map named " + mapName, e);
 		}
 	}
 

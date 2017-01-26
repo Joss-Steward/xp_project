@@ -15,8 +15,7 @@ public class MapFileMessageTest
 	/**
 	 * Make sure its toString is correct
 	 * 
-	 * @throws Exception
-	 *             shouldn't
+	 * @throws Exception shouldn't
 	 */
 	@Test
 	public void testToString() throws Exception

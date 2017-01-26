@@ -20,6 +20,7 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 
 	/**
 	 * Drop and reinitialize the table this gateway manages
+	 * 
 	 * @throws DatabaseException if we can't talk to the RDS
 	 */
 	public static void createPlayerConnectionTable() throws DatabaseException
@@ -28,7 +29,8 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 		try
 		{
 			Connection connection = DatabaseManager.getSingleton().getConnection();
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,"DROP TABLE IF EXISTS PlayerConnection");
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
+					"DROP TABLE IF EXISTS PlayerConnection");
 			stmt.executeUpdate();
 			StringBuffer sql = new StringBuffer("CREATE TABLE PlayerConnection(");
 			sql.append("playerID int NOT NULL, ");
@@ -37,23 +39,22 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 			sql.append("mapName VARCHAR(30),");
 
 			sql.append("PRIMARY KEY (playerID));");
-			stmt.executeUpdate( sql.toString());
+			stmt.executeUpdate(sql.toString());
 			stmt.executeUpdate("ALTER TABLE PlayerConnection ENGINE = INNODB");
 			stmt.executeUpdate("ALTER TABLE PlayerConnection ADD UNIQUE (playerID)");
 			stmt.close();
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Unable to create the PlayerConnection Table",e);
+			throw new DatabaseException("Unable to create the PlayerConnection Table", e);
 		}
-		
+
 	}
+
 	/**
 	 * Finder constructor
 	 * 
-	 * @param playerID
-	 *            the player we are interested in
-	 * @throws DatabaseException
-	 *             if we cannot find that player in the db
+	 * @param playerID the player we are interested in
+	 * @throws DatabaseException if we cannot find that player in the db
 	 */
 	public PlayerConnectionRowDataGatewayRDS(int playerID) throws DatabaseException
 	{
@@ -62,7 +63,7 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 		{
 			Connection connection = DatabaseManager.getSingleton().getConnection();
 			String sql = "SELECT * FROM PlayerConnection WHERE playerID = ?";
-			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,sql);
+			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection, sql);
 			stmt.setInt(1, playerID);
 			ResultSet resultSet = stmt.executeQuery();
 			resultSet.next();
@@ -72,26 +73,20 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Unable to get the data for a connection for "
-					+ playerID,e);
+			throw new DatabaseException("Unable to get the data for a connection for " + playerID, e);
 		}
 	}
 
 	/**
 	 * Creation constructor: will store the given information in the db
 	 * 
-	 * @param playerID
-	 *            the player's unique id
-	 * @param pin
-	 *            the pin the player must send to connect
-	 * @param mapName
-	 *            the map of the area the player will connect to
-	 * @throws DatabaseException
-	 *             Either we can't connect to the db or the player ID is already
-	 *             in the db
+	 * @param playerID the player's unique id
+	 * @param pin the pin the player must send to connect
+	 * @param mapName the map of the area the player will connect to
+	 * @throws DatabaseException Either we can't connect to the db or the player
+	 *             ID is already in the db
 	 */
-	public PlayerConnectionRowDataGatewayRDS(int playerID, int pin, String mapName)
-			throws DatabaseException
+	public PlayerConnectionRowDataGatewayRDS(int playerID, int pin, String mapName) throws DatabaseException
 	{
 		this.playerID = playerID;
 		Connection connection = DatabaseManager.getSingleton().getConnection();
@@ -107,9 +102,7 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Couldn't create a player connection record for player id "
-							+ playerID, e);
+			throw new DatabaseException("Couldn't create a player connection record for player id " + playerID, e);
 		}
 		this.pin = pin;
 		this.mapName = mapName;
@@ -127,13 +120,12 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 		ClosingPreparedStatement stmt;
 		try
 		{
-			stmt = new ClosingPreparedStatement(connection,sql);
+			stmt = new ClosingPreparedStatement(connection, sql);
 			stmt.setInt(1, playerID);
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Unable to delete the pin for player id # "
-					+ playerID, e);
+			throw new DatabaseException("Unable to delete the pin for player id # " + playerID, e);
 		}
 	}
 
@@ -185,14 +177,13 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 			ClosingPreparedStatement stmt;
 
 			sql = "UPDATE PlayerConnection SET changed_On=? WHERE playerID = ?";
-			stmt = new ClosingPreparedStatement(connection,sql);
+			stmt = new ClosingPreparedStatement(connection, sql);
 			stmt.setString(1, newTime);
 			stmt.setInt(2, playerID);
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Unable to generate pin for player id # "
-					+ playerID, e);
+			throw new DatabaseException("Unable to generate pin for player id # " + playerID, e);
 		}
 		this.changedOn = newTime;
 	}
@@ -211,14 +202,13 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 			ClosingPreparedStatement stmt;
 
 			sql = "UPDATE PlayerConnection SET mapName=? WHERE playerID = ?";
-			stmt = new ClosingPreparedStatement(connection,sql);
+			stmt = new ClosingPreparedStatement(connection, sql);
 			stmt.setString(1, mapFileTitle);
 			stmt.setInt(2, playerID);
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Unable to store map information for player id # " + playerID, e);
+			throw new DatabaseException("Unable to store map information for player id # " + playerID, e);
 		}
 		this.mapName = mapFileTitle;
 	}
@@ -234,9 +224,9 @@ public class PlayerConnectionRowDataGatewayRDS implements PlayerConnectionRowDat
 		{
 			String sql;
 			ClosingPreparedStatement stmt;
-			
+
 			sql = "UPDATE PlayerConnection SET Pin= ? where playerID = ?";
-			stmt = new ClosingPreparedStatement(connection,sql);
+			stmt = new ClosingPreparedStatement(connection, sql);
 			stmt.setInt(2, playerID);
 			stmt.setInt(1, pin);
 			stmt.executeUpdate();

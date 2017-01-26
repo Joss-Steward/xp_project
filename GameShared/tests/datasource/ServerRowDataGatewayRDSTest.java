@@ -1,20 +1,19 @@
 package datasource;
 
-
-
 /**
  * Test the AWS RDS data source
+ * 
  * @author Merlin
  *
  */
 public class ServerRowDataGatewayRDSTest extends ServerRowDataGatewayTest
 {
 	/**
-	 * @see datasource.ServerRowDataGatewayTest#createGateway(java.lang.String, java.lang.String, int)
+	 * @see datasource.ServerRowDataGatewayTest#createGateway(java.lang.String,
+	 *      java.lang.String, int)
 	 */
 	@Override
-	ServerRowDataGateway createGateway(String mapName, String hostName, int port)
-			throws DatabaseException
+	ServerRowDataGateway createGateway(String mapName, String hostName, int port) throws DatabaseException
 	{
 		return new ServerRowDataGatewayRDS(mapName, hostName, port);
 	}

@@ -22,7 +22,7 @@ public class ChatMessageTest
 	@Test
 	public void test()
 	{
-		Position p = new Position(0,0);
+		Position p = new Position(0, 0);
 		ChatMessage msg = new ChatMessage("bob", "Hello World!", p, ChatType.Local);
 		assertEquals("bob", msg.getSenderName());
 		assertEquals("Hello World!", msg.getMessage());

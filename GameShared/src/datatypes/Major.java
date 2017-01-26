@@ -5,36 +5,37 @@ package datatypes;
  * @author Matthew Croft
  *
  */
-public enum Major {
+public enum Major
+{
 
 	/**
 	 * 
 	 */
 	SOFTWARE_ENGINEERING,
-	
+
 	/**
 	 * 
 	 */
 	COMPUTER_SCIENCE,
-	
+
 	/**
 	 * 
 	 */
 	COMPUTER_ENGINEERING,
-	
+
 	/**
 	 * 
 	 */
-	ELECTRICAL_ENGINEERING, 
+	ELECTRICAL_ENGINEERING,
 	/**
 	 * 
 	 */
-	CS_AND_E_GENERAL, 
+	CS_AND_E_GENERAL,
 	/**
 	 * 
 	 */
 	OTHER;
-	
+
 	/**
 	 * @return a unique ID for this Major
 	 */
@@ -51,5 +52,5 @@ public enum Major {
 	{
 		return Major.values()[id];
 	}
-	
+
 }

@@ -24,34 +24,36 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 	private LevelRecord level;
 	private int knowledgePoints;
 
-
 	/**
 	 * Constructor for Quest State Message
+	 * 
 	 * @param clientPlayerQuestList players quest list
 	 * @param experiencePts player's experience points
 	 * @param level LevelRecord
 	 */
-	public InitializeThisClientsPlayerMessage(ArrayList<ClientPlayerQuest> clientPlayerQuestList, int experiencePts, LevelRecord level)
+	public InitializeThisClientsPlayerMessage(ArrayList<ClientPlayerQuest> clientPlayerQuestList, int experiencePts,
+			LevelRecord level)
 	{
 		this.clientPlayerQuestList = clientPlayerQuestList;
 		this.experiencePts = experiencePts;
 		this.level = level;
 	}
-	
-	
+
 	/**
 	 * @param clientPlayerQuestList players quest list
 	 * @param experiencePts player's experience points
 	 * @param level LevelRecord
 	 * @param knowledgePoints for this player
 	 */
-	public InitializeThisClientsPlayerMessage(ArrayList<ClientPlayerQuest> clientPlayerQuestList, int experiencePts, int knowledgePoints, LevelRecord level)
+	public InitializeThisClientsPlayerMessage(ArrayList<ClientPlayerQuest> clientPlayerQuestList, int experiencePts,
+			int knowledgePoints, LevelRecord level)
 	{
 		this.clientPlayerQuestList = clientPlayerQuestList;
 		this.experiencePts = experiencePts;
 		this.knowledgePoints = knowledgePoints;
 		this.level = level;
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -84,6 +86,7 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 
 	/**
 	 * Return current players quest List
+	 * 
 	 * @return quest list
 	 */
 	public ArrayList<ClientPlayerQuest> getClientPlayerQuestList()
@@ -93,22 +96,24 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 
 	/**
 	 * Get experience points of this client's player
+	 * 
 	 * @return experience pts
 	 */
-	public int getExperiencePts() 
+	public int getExperiencePts()
 	{
 		return experiencePts;
 	}
-	
+
 	/**
 	 * Get level of this client's player
+	 * 
 	 * @return level
 	 */
-	public LevelRecord getLevel() 
+	public LevelRecord getLevel()
 	{
 		return level;
 	}
-	
+
 	/**
 	 * @return the knowledgePoints of this player
 	 */
@@ -125,9 +130,7 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime
-				* result
-				+ ((clientPlayerQuestList == null) ? 0 : clientPlayerQuestList.hashCode());
+		result = prime * result + ((clientPlayerQuestList == null) ? 0 : clientPlayerQuestList.hashCode());
 		result = prime * result + experiencePts;
 		result = prime * result + ((level == null) ? 0 : level.hashCode());
 		return result;

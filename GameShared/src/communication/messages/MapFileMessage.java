@@ -22,7 +22,6 @@ public class MapFileMessage implements Message, Serializable
 		return result;
 	}
 
-
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -52,16 +51,13 @@ public class MapFileMessage implements Message, Serializable
 	private String mapFileName;
 
 	/**
-	 * @param fileTitle
-	 *            the name of the file we want to send
-	 * @throws IOException
-	 *             if the file doesn't exist or is poorly formatted
+	 * @param fileTitle the name of the file we want to send
+	 * @throws IOException if the file doesn't exist or is poorly formatted
 	 */
 	public MapFileMessage(String fileTitle) throws IOException
 	{
 		this.mapFileName = fileTitle;
 	}
-
 
 	/**
 	 * @return a string describing this message

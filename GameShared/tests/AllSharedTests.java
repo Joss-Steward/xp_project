@@ -58,38 +58,23 @@ import datatypes.PositionTest;
 @Suite.SuiteClasses(
 {
 		// communication
-		ConnectionIncomingTest.class,
-		ConnectionManagerTest.class,
-		StateAccumulatorTest.class,
-		
+		ConnectionIncomingTest.class, ConnectionManagerTest.class, StateAccumulatorTest.class,
+
 		// communication.handlers
 		MessageHandlerSetTest.class,
 		// StubMessageHandler1.class,
 		// StubMessageHandler2.class,
 
 		// communication.messages
-		KnowledgeChangedMessageTest.class,
-		AdventureNotificationCompleteMessageTest.class,
-		AdventureStateChangeMessageTest.class,
-		AreaCollisionMessageTest.class,
-		ChatMessageTest.class,
-		ConnectionMessageTest.class,
-		DisconnectionMessageTest.class,
-		ExperienceChangedMessageTest.class,
-		InitializeThisClientsPlayerMessageTest.class,
-		KeyInputMessageTest.class,
-		LoginMessageTest.class,
-		LoginResponseMessageTest.class,
-		MapFileMessageTest.class,
-		MessageStructureVerifier.class, 
-		MovementMessageTest.class,
-		PlayerJoinedMessageTest.class,
-		PlayerLeaveMessageTest.class,
+		KnowledgeChangedMessageTest.class, AdventureNotificationCompleteMessageTest.class,
+		AdventureStateChangeMessageTest.class, AreaCollisionMessageTest.class, ChatMessageTest.class,
+		ConnectionMessageTest.class, DisconnectionMessageTest.class, ExperienceChangedMessageTest.class,
+		InitializeThisClientsPlayerMessageTest.class, KeyInputMessageTest.class, LoginMessageTest.class,
+		LoginResponseMessageTest.class, MapFileMessageTest.class, MessageStructureVerifier.class,
+		MovementMessageTest.class, PlayerJoinedMessageTest.class, PlayerLeaveMessageTest.class,
 		// StubMessage1.class,
 		// StubMessage2.class,
-		TeleportationContinuationMessageTest.class,
-		TeleportationInitiationMessageTest.class,
-		
+		TeleportationContinuationMessageTest.class, TeleportationInitiationMessageTest.class,
 
 		// communicatiaon.packers
 		MessagePackerSetTest.class,
@@ -99,30 +84,23 @@ import datatypes.PositionTest;
 
 		// data
 		PositionTest.class,
-		
-		//datasource
-		//DatabaseTest.class,
-		LevelRecordTest.class,
-		PlayerConnectionRowDataGatewayMockTest.class,
+
+		// datasource
+		// DatabaseTest.class,
+		LevelRecordTest.class, PlayerConnectionRowDataGatewayMockTest.class,
 		PlayerConnectionRowDataGatewayRDSTest.class,
-		//PlayerConnectionRowDataGateway,
-		PlayerLoginRowDataGatewayMockTest.class,
-		PlayerLoginRowDataGatewayRDSTest.class,
-		//PlayerLoginDataBehaviorTest.class,
+		// PlayerConnectionRowDataGateway,
+		PlayerLoginRowDataGatewayMockTest.class, PlayerLoginRowDataGatewayRDSTest.class,
+		// PlayerLoginDataBehaviorTest.class,
 		PlayerScoreRecordTest.class,
-		//PlayersForTest
-		ServerRowDataGatewayMockTest.class,
-		ServerRowDataGatewayRDSTest.class,
-		//ServerRowDataGatewayTest.class,
-		//ServersForTest
+		// PlayersForTest
+		ServerRowDataGatewayMockTest.class, ServerRowDataGatewayRDSTest.class,
+		// ServerRowDataGatewayTest.class,
+		// ServersForTest
 
 		// model
-		ClientPlayerAdventureTest.class,
-		ClientPlayerQuestTest.class,
-		MapToServerMappingTest.class,
-		PlayerConnectionTest.class, 
-		PlayerLoginTest.class, 
-		QualifiedObserverConnectorTest.class,
+		ClientPlayerAdventureTest.class, ClientPlayerQuestTest.class, MapToServerMappingTest.class,
+		PlayerConnectionTest.class, PlayerLoginTest.class, QualifiedObserverConnectorTest.class,
 
 		// model.reports
 		// StubQualifiedObservableReport1.class,

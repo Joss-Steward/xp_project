@@ -24,17 +24,16 @@ public class MessageHandlerSet extends TypeDetector
 	private HashMap<Class<?>, MessageHandler> handlers;
 
 	/**
-	 * @param stateAccumulator
-	 *            the accumulator associated with our socket so that the
-	 *            handlers we create have the ability to reply to requests
+	 * @param stateAccumulator the accumulator associated with our socket so
+	 *            that the handlers we create have the ability to reply to
+	 *            requests
 	 * 
 	 */
 	public MessageHandlerSet(StateAccumulator stateAccumulator)
 	{
 		handlers = new HashMap<Class<?>, MessageHandler>();
 
-		ArrayList<Class<?>> handlerTypes = this
-				.detectAllExtendersInPackage(MessageHandler.class);
+		ArrayList<Class<?>> handlerTypes = this.detectAllExtendersInPackage(MessageHandler.class);
 		for (Class<?> handlerType : handlerTypes)
 		{
 			try
@@ -53,8 +52,7 @@ public class MessageHandlerSet extends TypeDetector
 	/**
 	 * Register a handler for a given message type
 	 * 
-	 * @param handler
-	 *            the handler
+	 * @param handler the handler
 	 */
 	public void registerHandler(MessageHandler handler)
 	{
@@ -65,10 +63,9 @@ public class MessageHandlerSet extends TypeDetector
 	/**
 	 * Find the appropriate handler and use it to process a given message
 	 * 
-	 * @param msg
-	 *            the message we are supposed to process
-	 * @throws CommunicationException
-	 *             if there is not handler for the given type of message
+	 * @param msg the message we are supposed to process
+	 * @throws CommunicationException if there is not handler for the given type
+	 *             of message
 	 */
 	public void process(Message msg) throws CommunicationException
 	{
@@ -86,8 +83,7 @@ public class MessageHandlerSet extends TypeDetector
 	 * set the connection manager associated with the connection using these
 	 * handlers
 	 * 
-	 * @param connectionManager
-	 *            the manager
+	 * @param connectionManager the manager
 	 */
 	public void setConnectionManager(ConnectionManager connectionManager)
 	{

@@ -27,7 +27,7 @@ public class PlayerScoreRecordTest
 		assertEquals("Me", actual.getPlayerName());
 		assertEquals(1492, actual.getExperiencePoints());
 	}
-	
+
 	/**
 	 * make sure things sort in the correct order
 	 */

@@ -16,8 +16,7 @@ public class InformationQueue
 	/**
 	 * Put a message in the queue to the view.
 	 * 
-	 * @param infoPacket
-	 *            the view command to be added to the buffer
+	 * @param infoPacket the view command to be added to the buffer
 	 */
 	public synchronized void queueInfoPacket(InfoPacket infoPacket)
 	{
@@ -27,8 +26,7 @@ public class InformationQueue
 
 	/**
 	 * @return the next message that should be processed by the GUI
-	 * @throws InterruptedException
-	 *             if this synchronized section is interrupted
+	 * @throws InterruptedException if this synchronized section is interrupted
 	 */
 	public synchronized InfoPacket getInfoPacket() throws InterruptedException
 	{

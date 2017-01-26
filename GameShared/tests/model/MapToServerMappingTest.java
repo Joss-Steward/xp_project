@@ -29,7 +29,6 @@ public class MapToServerMappingTest
 		OptionsManager.getSingleton().setTestMode(true);
 	}
 
-	
 	/**
 	 * 
 	 */
@@ -38,12 +37,14 @@ public class MapToServerMappingTest
 	{
 		map.resetData();
 	}
+
 	/**
 	 * Can retrieve one
+	 * 
 	 * @throws DatabaseException shouldn't
 	 */
 	@Test
-	public void retrieval() throws  DatabaseException
+	public void retrieval() throws DatabaseException
 	{
 		ServersForTest expected = ServersForTest.FIRST_SERVER;
 		map = new MapToServerMapping(expected.getMapName());
@@ -51,10 +52,12 @@ public class MapToServerMappingTest
 		assertEquals(expected.getHostName(), map.getHostName());
 		assertEquals(expected.getPortNumber(), map.getPortNumber());
 	}
-	
+
 	/**
-	 * Make sure we can change the hostname and port number and update the database appropriately
-	 * @throws DatabaseException  shouldn't
+	 * Make sure we can change the hostname and port number and update the
+	 * database appropriately
+	 * 
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void canPersistChanges() throws DatabaseException
@@ -63,11 +66,11 @@ public class MapToServerMappingTest
 		map.setHostName("homehost");
 		map.setPortNumber(42);
 		map.persist();
-		
+
 		MapToServerMapping mapAfter = new MapToServerMapping(ServersForTest.FIRST_SERVER.getMapName());
-		assertEquals(map.getHostName(),mapAfter.getHostName());
-		assertEquals(map.getPortNumber(),mapAfter.getPortNumber());
+		assertEquals(map.getHostName(), mapAfter.getHostName());
+		assertEquals(map.getPortNumber(), mapAfter.getPortNumber());
 		assertEquals(map.getMapName(), mapAfter.getMapName());
 	}
-	
+
 }

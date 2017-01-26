@@ -23,27 +23,24 @@ public class LoginSuccessfulMessage implements Message, Serializable
 	private String hostName;
 	private int portNumber;
 	private double pin;
+
 	/**
 	 * 
-	 * @param playerID
-	 *            the ID of the player that logged in
-	 * @param hostName
-	 *            the host name of the first area server the client should
+	 * @param playerID the ID of the player that logged in
+	 * @param hostName the host name of the first area server the client should
 	 *            connect to
-	 * @param portNumber
-	 *            the port number of the first area server the client should
-	 *            connect to
-	 * @param pin
-	 *            the magic number required to connect to area servers
+	 * @param portNumber the port number of the first area server the client
+	 *            should connect to
+	 * @param pin the magic number required to connect to area servers
 	 */
-	public LoginSuccessfulMessage(int playerID, String hostName, int portNumber,
-			double pin)
+	public LoginSuccessfulMessage(int playerID, String hostName, int portNumber, double pin)
 	{
 		this.playerID = playerID;
 		this.hostName = hostName;
 		this.portNumber = portNumber;
 		this.pin = pin;
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */

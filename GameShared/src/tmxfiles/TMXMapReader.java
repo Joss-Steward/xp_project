@@ -23,8 +23,7 @@ public class TMXMapReader extends DefaultHandler
 
 	/**
 	 * 
-	 * @param fileTitle
-	 *            The title of the tmx file we should parse
+	 * @param fileTitle The title of the tmx file we should parse
 	 */
 	public TMXMapReader(String fileTitle)
 	{
@@ -50,8 +49,7 @@ public class TMXMapReader extends DefaultHandler
 	 * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String,
 	 *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
 	 */
-	public void startElement(String namespaceURI, String localName, String qName,
-			Attributes atts) throws SAXException
+	public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException
 	{
 		if (qName.equals("image"))
 		{

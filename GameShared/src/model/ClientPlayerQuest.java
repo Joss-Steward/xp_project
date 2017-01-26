@@ -7,8 +7,9 @@ import java.util.Date;
 import datatypes.QuestStateEnum;
 
 /**
- * Player has a quest that will contain a description
- * id, state, and list of adventures.
+ * Player has a quest that will contain a description id, state, and list of
+ * adventures.
+ * 
  * @author nk3668
  *
  */
@@ -20,7 +21,7 @@ public class ClientPlayerQuest implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	private int questID;
-    private String questTitle;
+	private String questTitle;
 	private String questDescription;
 	private Date expireDate;
 	private QuestStateEnum state;
@@ -31,17 +32,21 @@ public class ClientPlayerQuest implements Serializable
 
 	/**
 	 * Constructor for client player quest
+	 * 
 	 * @param questID the quests id
 	 * @param questTitle the quest's title
 	 * @param questDescription the quests description
 	 * @param state the quests state
-	 * @param experiencePointsGained the number of experience you get when you fulfill this quest
-	 * @param adventuresToFulfillment the number of adventures required to fulfill this quest
-	 * @param needingNotification true if the player needs to be notified of this quest state
+	 * @param experiencePointsGained the number of experience you get when you
+	 *            fulfill this quest
+	 * @param adventuresToFulfillment the number of adventures required to
+	 *            fulfill this quest
+	 * @param needingNotification true if the player needs to be notified of
+	 *            this quest state
 	 * @param expireDate date the quest expires
 	 */
-	public ClientPlayerQuest(int questID, String questTitle, String questDescription, QuestStateEnum state
-	        , int experiencePointsGained, int adventuresToFulfillment, boolean needingNotification, Date expireDate)
+	public ClientPlayerQuest(int questID, String questTitle, String questDescription, QuestStateEnum state,
+			int experiencePointsGained, int adventuresToFulfillment, boolean needingNotification, Date expireDate)
 	{
 		this.questID = questID;
 		this.questTitle = questTitle;
@@ -52,14 +57,17 @@ public class ClientPlayerQuest implements Serializable
 		this.needingNotification = needingNotification;
 		this.expireDate = expireDate;
 	}
+
 	/**
 	 * Add adventure to the list of ClientPlayerAdventures
+	 * 
 	 * @param a the adventure being added
 	 */
-	public void addAdventure(ClientPlayerAdventure a) 
+	public void addAdventure(ClientPlayerAdventure a)
 	{
 		adventures.add(a);
 	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -95,21 +103,23 @@ public class ClientPlayerQuest implements Serializable
 			return false;
 		return true;
 	}
-	
+
 	/**
 	 * Return the ClientPlayerAdventure array list
+	 * 
 	 * @return adventures
 	 */
-	public ArrayList<ClientPlayerAdventure> getAdventureList() 
+	public ArrayList<ClientPlayerAdventure> getAdventureList()
 	{
 		return adventures;
 	}
 
 	/**
 	 * Getter for adventure list
+	 * 
 	 * @return the list of the quests adventures
 	 */
-	public int getAdventureListSize() 
+	public int getAdventureListSize()
 	{
 		return adventures.size();
 	}
@@ -123,7 +133,8 @@ public class ClientPlayerQuest implements Serializable
 	}
 
 	/**
-	 * @return the number of experience points you get when you fulfill this quest
+	 * @return the number of experience points you get when you fulfill this
+	 *         quest
 	 */
 	public int getExperiencePointsGained()
 	{
@@ -132,27 +143,30 @@ public class ClientPlayerQuest implements Serializable
 
 	/**
 	 * Getter for quest desc
+	 * 
 	 * @return the quest description
 	 */
-	public String getQuestDescription() 
+	public String getQuestDescription()
 	{
 		return questDescription;
 	}
 
 	/**
 	 * Getter for quest id
+	 * 
 	 * @return the quests id
 	 */
-	public int getQuestID() 
+	public int getQuestID()
 	{
 		return questID;
 	}
 
 	/**
 	 * Getter for quest state
+	 * 
 	 * @return the quests state
 	 */
-	public QuestStateEnum getQuestState() 
+	public QuestStateEnum getQuestState()
 	{
 		return state;
 	}
@@ -176,15 +190,15 @@ public class ClientPlayerQuest implements Serializable
 		result = prime * result + ((adventures == null) ? 0 : adventures.hashCode());
 		result = prime * result + adventuresToFulfillment;
 		result = prime * result + experiencePointsGained;
-		result = prime * result
-				+ ((questDescription == null) ? 0 : questDescription.hashCode());
+		result = prime * result + ((questDescription == null) ? 0 : questDescription.hashCode());
 		result = prime * result + questID;
 		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		return result;
 	}
 
 	/**
-	 * @return true if the player has not been notified about the state of this quest
+	 * @return true if the player has not been notified about the state of this
+	 *         quest
 	 */
 	public boolean isNeedingNotification()
 	{
@@ -193,28 +207,30 @@ public class ClientPlayerQuest implements Serializable
 
 	/**
 	 * Set the Client Player Adventure array list to the given array list
+	 * 
 	 * @param adventureList ClientPlayerAdventure ArrayList
 	 */
-	public void setAdventures(ArrayList<ClientPlayerAdventure> adventureList) 
+	public void setAdventures(ArrayList<ClientPlayerAdventure> adventureList)
 	{
 		this.adventures = adventureList;
 	}
+
 	/**
 	 * @param newState the new state of the quest
 	 */
-	public void setState(QuestStateEnum newState) 
+	public void setState(QuestStateEnum newState)
 	{
 		this.state = newState;
 	}
-	
-	
+
 	/**
 	 * Returns the date the quest expires
+	 * 
 	 * @return The date the quest expires
 	 */
 	public Date getExpireDate()
-	{   
-	    return expireDate;
+	{
+		return expireDate;
 	}
-	
+
 }

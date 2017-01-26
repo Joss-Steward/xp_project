@@ -19,8 +19,7 @@ public class PinFailedMessage implements Message, Serializable
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @param playerID
-	 *            the unique ID of the player who tried to connect with an
+	 * @param playerID the unique ID of the player who tried to connect with an
 	 *            invalid pin
 	 */
 	public PinFailedMessage(int playerID)

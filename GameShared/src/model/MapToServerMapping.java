@@ -22,43 +22,39 @@ public final class MapToServerMapping
 	{
 		dataGateway.resetData();
 	}
+
 	/**
 	 * Get an object from the database
 	 * 
-	 * @param mapName
-	 *            the name of the map for which we need the server info
-	 * @throws DatabaseException
-	 *             if there is a problem connecting to the db or the mapName is
-	 *             not unique in the db
+	 * @param mapName the name of the map for which we need the server info
+	 * @throws DatabaseException if there is a problem connecting to the db or
+	 *             the mapName is not unique in the db
 	 */
-	public  MapToServerMapping (String mapName) throws DatabaseException
+	public MapToServerMapping(String mapName) throws DatabaseException
 	{
 		if (OptionsManager.getSingleton().isTestMode())
 		{
 			this.dataGateway = new ServerRowDataGatewayMock(mapName);
-		}
-		else
+		} else
 		{
-			this.dataGateway =new ServerRowDataGatewayRDS(mapName);
+			this.dataGateway = new ServerRowDataGatewayRDS(mapName);
 		}
 	}
 
 	/**
 	 * Set the map name for this mapping
 	 * 
-	 * @param mapName
-	 *            the map name (the name of the .tmx file)
+	 * @param mapName the map name (the name of the .tmx file)
 	 */
 	public void setMapName(String mapName)
 	{
-		dataGateway.setMapName( mapName);
+		dataGateway.setMapName(mapName);
 	}
 
 	/**
 	 * The port number the server should listen to
 	 * 
-	 * @param portNumber
-	 *            between 0 and 9999 (not enforced)
+	 * @param portNumber between 0 and 9999 (not enforced)
 	 */
 	public void setPortNumber(int portNumber)
 	{
@@ -68,8 +64,7 @@ public final class MapToServerMapping
 	/**
 	 * The hostname portion of the URL the server for this map will be on
 	 * 
-	 * @param hostName
-	 *            something like mmo.cs.ship.edu
+	 * @param hostName something like mmo.cs.ship.edu
 	 */
 	public void setHostName(String hostName)
 	{
@@ -77,12 +72,14 @@ public final class MapToServerMapping
 	}
 
 	/**
-	 * Get the hostname portion of the URL the server for this map will be on (something like mmo.cs.ship.edu)
+	 * Get the hostname portion of the URL the server for this map will be on
+	 * (something like mmo.cs.ship.edu)
+	 * 
 	 * @return the hostname
 	 */
 	public String getHostName()
 	{
-		if(OptionsManager.getSingleton().getHostName().equals("localhost"))
+		if (OptionsManager.getSingleton().getHostName().equals("localhost"))
 		{
 			return "localhost";
 		}
@@ -91,6 +88,7 @@ public final class MapToServerMapping
 
 	/**
 	 * Get the portnumber the server managing this map will be listening to
+	 * 
 	 * @return a port number
 	 */
 	public int getPortNumber()
@@ -100,6 +98,7 @@ public final class MapToServerMapping
 
 	/**
 	 * Get the name of the map we are interested in
+	 * 
 	 * @return the name of the tmx file
 	 */
 	public String getMapName()
@@ -109,6 +108,7 @@ public final class MapToServerMapping
 
 	/**
 	 * Persist this object out to the db
+	 * 
 	 * @throws DatabaseException if updating the db failed
 	 */
 	public void persist() throws DatabaseException
@@ -116,7 +116,6 @@ public final class MapToServerMapping
 		dataGateway.persist();
 	}
 
-	
 	/**
 	 * @see java.lang.Object#toString()
 	 */

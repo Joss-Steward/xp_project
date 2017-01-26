@@ -13,7 +13,7 @@ public class KnowledgeChangedMessage implements Message, Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private int knowledgePoints;
 
 	private int playerID;
@@ -29,11 +29,10 @@ public class KnowledgeChangedMessage implements Message, Serializable
 		this.playerID = playerID;
 	}
 
-
 	/**
 	 * @return knowledgePoints
 	 */
-	public int getKnowledgePoints() 
+	public int getKnowledgePoints()
 	{
 		return knowledgePoints;
 	}

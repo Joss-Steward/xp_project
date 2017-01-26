@@ -35,7 +35,7 @@ public class PlayerConnectionTest extends DatabaseTest
 	{
 		OptionsManager.getSingleton().setTestMode(true);
 	}
-	
+
 	/**
 	 * set the data back
 	 */
@@ -44,11 +44,11 @@ public class PlayerConnectionTest extends DatabaseTest
 	{
 		pc.resetData();
 	}
+
 	/**
 	 * Generate default pins for all users
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	public static void defaultAllPins() throws DatabaseException
 	{
@@ -62,6 +62,7 @@ public class PlayerConnectionTest extends DatabaseTest
 
 	/**
 	 * Can store a new map file name
+	 * 
 	 * @throws DatabaseException shouldn't
 	 * @throws SQLException shouldn't
 	 */
@@ -71,15 +72,14 @@ public class PlayerConnectionTest extends DatabaseTest
 		pc = new PlayerConnection(2);
 		pc.setMapName("thisMap.tmx");
 		PlayerConnection after = new PlayerConnection(2);
-		assertEquals( "thisMap.tmx", after.getMapName());
+		assertEquals("thisMap.tmx", after.getMapName());
 	}
+
 	/**
 	 * When we generate a PIN for a player, it should be stored into the db
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
-	 * @throws SQLException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
+	 * @throws SQLException shouldn't
 	 */
 	@Test
 	public void generatesAndStoresPin() throws DatabaseException, SQLException
@@ -94,8 +94,7 @@ public class PlayerConnectionTest extends DatabaseTest
 	 * Make sure we convert a time string from mySQL to a GregorianCalendar
 	 * Correctly
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void canParseTime() throws DatabaseException
@@ -115,10 +114,8 @@ public class PlayerConnectionTest extends DatabaseTest
 	 * Make sure that when we delete someone's PIN, they can't get an expiration
 	 * time
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
-	 * @throws SQLException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
+	 * @throws SQLException shouldn't
 	 */
 	@Test
 	public void testIsExpiredWithoutAPin() throws DatabaseException, SQLException
@@ -133,8 +130,7 @@ public class PlayerConnectionTest extends DatabaseTest
 	 * Make sure the expiration time for the pin is in the future (rounding
 	 * errors make it difficult to make this test more precise
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void testNewPinIsNotExpired() throws DatabaseException
@@ -147,8 +143,7 @@ public class PlayerConnectionTest extends DatabaseTest
 	/**
 	 * Make sure that if we set the pin, we can retrieve it
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void isPinValid() throws DatabaseException
@@ -156,6 +151,6 @@ public class PlayerConnectionTest extends DatabaseTest
 		pc = new PlayerConnection(7);
 		double pin = pc.generatePin();
 		assertTrue(pc.isPinValid(pin));
-		assertFalse(pc.isPinValid(pin+1));
+		assertFalse(pc.isPinValid(pin + 1));
 	}
 }

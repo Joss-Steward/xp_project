@@ -20,8 +20,7 @@ public class HighScoreResponseMessage implements Message
 	private ArrayList<PlayerScoreRecord> scoreReports;
 
 	/**
-	 * @param scoreReports
-	 *            the top ten players (sorted)
+	 * @param scoreReports the top ten players (sorted)
 	 */
 	public HighScoreResponseMessage(ArrayList<PlayerScoreRecord> scoreReports)
 	{

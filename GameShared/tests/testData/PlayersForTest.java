@@ -37,8 +37,7 @@ public enum PlayersForTest
 	/**
 	 * 
 	 */
-	STEVE(6, "Steve", "knight_with_straw_hat", 4, 13, "pw", "current.tmx", 1111, null, 0,
-			13, Crew.OUT_OF_BOUNDS, Major.ELECTRICAL_ENGINEERING),
+	STEVE(6, "Steve", "knight_with_straw_hat", 4, 13, "pw", "current.tmx", 1111, null, 0, 13, Crew.OUT_OF_BOUNDS, Major.ELECTRICAL_ENGINEERING),
 	/**
 	 * 
 	 */
@@ -85,21 +84,21 @@ public enum PlayersForTest
 	 * 
 	 */
 	NEWBIE(16, "Newbie", "male_a", 11, 7, "pw", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS, Major.COMPUTER_ENGINEERING),
-	
+
 	/**
- 	 * 
+	 * 
 	 */
-	RED_HAT(17, "Red Hat", "RedHat", 9,7, "", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS, Major.COMPUTER_ENGINEERING),
-	
+	RED_HAT(17, "Red Hat", "RedHat", 9, 7, "", "sortingRoom.tmx", 1111, null, 0, 0, Crew.OUT_OF_BOUNDS, Major.COMPUTER_ENGINEERING),
+
 	/**
 	 * 
 	 */
 	MARTY(18, "Marty", "off_by_one", 10, 19, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER, Major.SOFTWARE_ENGINEERING),
-	
+
 	/**
-     * 
-     */
-    HERSH(19, "Hersh", "null_pointer_exception", 4, 13, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER, Major.SOFTWARE_ENGINEERING);
+	 * 
+	 */
+	HERSH(19, "Hersh", "null_pointer_exception", 4, 13, "pw", "current.tmx", 1111, null, 0, 0, Crew.NULL_POINTER, Major.SOFTWARE_ENGINEERING);
 
 	private int playerID;
 	private String appearanceType;
@@ -132,9 +131,8 @@ public enum PlayersForTest
 
 	private int experiencePoints;
 
-	PlayersForTest(int id, String playerName, String type, int row, int col,
-			String password, String mapName, int pin, String changedOn, int quizScore,
-			int experiencePoints, Crew crew, Major major)
+	PlayersForTest(int id, String playerName, String type, int row, int col, String password, String mapName, int pin,
+			String changedOn, int quizScore, int experiencePoints, Crew crew, Major major)
 	{
 		this.playerID = id;
 		this.playerName = playerName;
@@ -244,6 +242,5 @@ public enum PlayersForTest
 	{
 		return major;
 	}
-
 
 }

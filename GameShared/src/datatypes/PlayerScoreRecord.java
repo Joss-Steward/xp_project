@@ -6,26 +6,24 @@ import java.io.Serializable;
  * A data transfer object that holds information about a player's score. Used
  * for the high score list. Comparability is based on the value of the
  * experiences so records can be sorted
- * 
+ *
  * @author Merlin
  *
  */
 public class PlayerScoreRecord implements Comparable<PlayerScoreRecord>, Serializable
 {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private String playerName;
 	private int experiencePoints;
 	private String crewName;
 
 	/**
-	 * @param playerName
-	 *            the player's name
-	 * @param experiencePoints
-	 *            the player's experience points
+	 * @param playerName the player's name
+	 * @param experiencePoints the player's experience points
 	 */
 	public PlayerScoreRecord(String playerName, int experiencePoints)
 	{
@@ -35,17 +33,16 @@ public class PlayerScoreRecord implements Comparable<PlayerScoreRecord>, Seriali
 	}
 
 	/**
-	 * @param playerName
-	 *            the player's name
-	 * @param experiencePoints
-	 *            the player's experience points
+	 * @param playerName the player's name
+	 * @param experiencePoints the player's experience points
+	 * @param crewName the name of the crew this player belongs to
 	 */
 	public PlayerScoreRecord(String playerName, int experiencePoints, String crewName)
 	{
-		this(playerName,experiencePoints);
+		this(playerName, experiencePoints);
 		this.crewName = crewName;
 	}
-	
+
 	/**
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
@@ -86,6 +83,9 @@ public class PlayerScoreRecord implements Comparable<PlayerScoreRecord>, Seriali
 		return true;
 	}
 
+	/**
+	 * @return the name of the crew this player belongs to
+	 */
 	public String getCrewName()
 	{
 		return crewName;

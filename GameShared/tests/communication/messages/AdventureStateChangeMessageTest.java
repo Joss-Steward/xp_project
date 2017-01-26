@@ -10,17 +10,18 @@ import datatypes.AdventureStateEnum;
  * @author Ryan
  *
  */
-public class AdventureStateChangeMessageTest 
+public class AdventureStateChangeMessageTest
 {
 
 	/**
 	 * Test initialization of message
 	 */
 	@Test
-	public void testInit() 
+	public void testInit()
 	{
-		AdventureStateChangeMessage msg = new AdventureStateChangeMessage(1, 2, 3, "Big Adventure", AdventureStateEnum.TRIGGERED, true, "Provost");
-		
+		AdventureStateChangeMessage msg = new AdventureStateChangeMessage(1, 2, 3, "Big Adventure",
+				AdventureStateEnum.TRIGGERED, true, "Provost");
+
 		assertEquals(1, msg.getPlayerID());
 		assertEquals(2, msg.getQuestID());
 		assertEquals(3, msg.getAdventureID());

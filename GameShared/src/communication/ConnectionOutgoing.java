@@ -27,18 +27,15 @@ public class ConnectionOutgoing implements Runnable
 	private StateAccumulator stateAccumulator;
 
 	/**
-	 * @param socket
-	 *            Socket being used - will be null for JUnit tests
-	 * @param stateAccumulator
-	 *            the accumulator that is gathering events that should be sent
-	 *            to the other side
-	 * @param messagePackerSet
-	 *            the set of messagepackers the outgoing connection should use
-	 * @throws IOException
-	 *             Exception thrown for invalid input or output
+	 * @param socket Socket being used - will be null for JUnit tests
+	 * @param stateAccumulator the accumulator that is gathering events that
+	 *            should be sent to the other side
+	 * @param messagePackerSet the set of messagepackers the outgoing connection
+	 *            should use
+	 * @throws IOException Exception thrown for invalid input or output
 	 */
-	public ConnectionOutgoing(Socket socket, StateAccumulator stateAccumulator,
-			MessagePackerSet messagePackerSet) throws IOException
+	public ConnectionOutgoing(Socket socket, StateAccumulator stateAccumulator, MessagePackerSet messagePackerSet)
+			throws IOException
 	{
 		if (socket != null)
 		{

@@ -26,25 +26,18 @@ public class AdventureStateChangeMessage implements Message, Serializable
 	private String witnessTitle;
 
 	/**
-	 * @param playerID
-	 *            the current player's id
-	 * @param questID
-	 *            the quest id
-	 * @param adventureID
-	 *            the id of the adventure
-	 * @param adventureDescription
-	 *            the description of the adventure
-	 * @param newState
-	 *            the new state the adventure will be in
-	 * @param realLifeAdventure
-	 *            true if the player must complete this adventure in real life
-	 * @param witnessTitle
-	 *            if this is a real life adventure, the title of the person who
-	 *            can witness completion
+	 * @param playerID the current player's id
+	 * @param questID the quest id
+	 * @param adventureID the id of the adventure
+	 * @param adventureDescription the description of the adventure
+	 * @param newState the new state the adventure will be in
+	 * @param realLifeAdventure true if the player must complete this adventure
+	 *            in real life
+	 * @param witnessTitle if this is a real life adventure, the title of the
+	 *            person who can witness completion
 	 */
-	public AdventureStateChangeMessage(int playerID, int questID, int adventureID,
-			String adventureDescription, AdventureStateEnum newState,
-			boolean realLifeAdventure, String witnessTitle)
+	public AdventureStateChangeMessage(int playerID, int questID, int adventureID, String adventureDescription,
+			AdventureStateEnum newState, boolean realLifeAdventure, String witnessTitle)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
@@ -108,7 +101,8 @@ public class AdventureStateChangeMessage implements Message, Serializable
 	}
 
 	/**
-	 * @return the title of the person who can witness completion if this is a real life adventure
+	 * @return the title of the person who can witness completion if this is a
+	 *         real life adventure
 	 */
 	public String getWitnessTitle()
 	{

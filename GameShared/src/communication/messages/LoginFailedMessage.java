@@ -3,8 +3,8 @@ package communication.messages;
 import java.io.Serializable;
 
 /**
- * The message that goes from the main server to the client when the user enterse invalid 
- * login credentials.
+ * The message that goes from the main server to the client when the user
+ * enterse invalid login credentials.
  * 
  * @author Merlin
  * 

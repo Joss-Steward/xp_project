@@ -16,8 +16,7 @@ public class DatabaseException extends Exception
 
 	/**
 	 * 
-	 * @param msg
-	 *            the message associated with this exception
+	 * @param msg the message associated with this exception
 	 */
 	public DatabaseException(String msg)
 	{
@@ -25,10 +24,8 @@ public class DatabaseException extends Exception
 	}
 
 	/**
-	 * @param msg
-	 *            description of complication
-	 * @param e
-	 *            exception being thrown
+	 * @param msg description of complication
+	 * @param e exception being thrown
 	 */
 	public DatabaseException(String msg, Exception e)
 	{
@@ -52,7 +49,7 @@ public class DatabaseException extends Exception
 	{
 		return simpleDescription;
 	}
-	
+
 	/**
 	 * @see java.lang.Throwable#toString()
 	 */

@@ -48,10 +48,8 @@ public class PlayerConnection
 	private PlayerConnectionRowDataGateway gateway;
 
 	/**
-	 * @param playerID
-	 *            the player whose information we are using
-	 * @throws DatabaseException
-	 *             if the data source has an exception
+	 * @param playerID the player whose information we are using
+	 * @throws DatabaseException if the data source has an exception
 	 */
 	public PlayerConnection(int playerID) throws DatabaseException
 	{
@@ -68,8 +66,7 @@ public class PlayerConnection
 	/**
 	 * delete the PIN for this player
 	 * 
-	 * @throws DatabaseException
-	 *             if the data source can't perform the deletion
+	 * @throws DatabaseException if the data source can't perform the deletion
 	 */
 	protected void deletePlayerPin() throws DatabaseException
 	{
@@ -81,8 +78,7 @@ public class PlayerConnection
 	 * and put it in the DB
 	 * 
 	 * @return the PIN
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	public int generatePin() throws DatabaseException
 	{
@@ -94,8 +90,7 @@ public class PlayerConnection
 	/**
 	 * Generates the default PIN for testing purposes only!
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	public void generateTestPin() throws DatabaseException
 	{
@@ -124,8 +119,7 @@ public class PlayerConnection
 	 * Get the time when this player's pin expires in GMT
 	 * 
 	 * @return the expiration time
-	 * @throws DatabaseException
-	 *             if the data source has an exception
+	 * @throws DatabaseException if the data source has an exception
 	 */
 	public boolean isExpired() throws DatabaseException
 	{
@@ -135,7 +129,7 @@ public class PlayerConnection
 		try
 		{
 			String changedOn = gateway.getChangedOn();
-			if (changedOn==null)
+			if (changedOn == null)
 			{
 				return false;
 			}
@@ -151,8 +145,7 @@ public class PlayerConnection
 	/**
 	 * check if a pin is valid for a given player
 	 * 
-	 * @param pin
-	 *            The pin to check against
+	 * @param pin The pin to check against
 	 * @return true or false for whether the given pin is valid or not
 	 */
 	public boolean isPinValid(double pin)
@@ -163,8 +156,8 @@ public class PlayerConnection
 	/**
 	 * Convert the time string from the data source into a Gregorian calendar.
 	 * 
-	 * @param timeString
-	 *            The format of that time string must be "yyyy-MM-dd HH:mm:ss"
+	 * @param timeString The format of that time string must be
+	 *            "yyyy-MM-dd HH:mm:ss"
 	 * @return the appropriate Gregorian Calendar
 	 */
 	protected GregorianCalendar parseTimeString(String timeString)
@@ -192,11 +185,9 @@ public class PlayerConnection
 	/**
 	 * Used only for testing!!!!! Used to set the timestamp on the player's PIN
 	 * 
-	 * @param newTime
-	 *            the time we want
-	 * @throws DatabaseException
-	 *             if we cant set the time whan a player's connection info was
-	 *             changes
+	 * @param newTime the time we want
+	 * @throws DatabaseException if we cant set the time whan a player's
+	 *             connection info was changes
 	 */
 	public void setChangedOn(String newTime) throws DatabaseException
 	{
@@ -206,10 +197,8 @@ public class PlayerConnection
 	/**
 	 * Store the map that the player is using
 	 * 
-	 * @param mapFileTitle
-	 *            the title of the tmx file
-	 * @throws DatabaseException
-	 *             if we cannot update their state in the database
+	 * @param mapFileTitle the title of the tmx file
+	 * @throws DatabaseException if we cannot update their state in the database
 	 */
 	public void setMapName(String mapFileTitle) throws DatabaseException
 	{

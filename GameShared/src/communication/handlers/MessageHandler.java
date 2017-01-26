@@ -23,8 +23,7 @@ public abstract class MessageHandler
 	/**
 	 * Processes an incoming message
 	 * 
-	 * @param msg
-	 *            the message to handle
+	 * @param msg the message to handle
 	 */
 	public abstract void process(Message msg);
 
@@ -36,8 +35,8 @@ public abstract class MessageHandler
 	public abstract Class<?> getMessageTypeWeHandle();
 
 	/**
-	 * @param connectionManager
-	 *            the state accumulator associated with this hander's connection
+	 * @param connectionManager the state accumulator associated with this
+	 *            hander's connection
 	 */
 	public void setConnectionManager(ConnectionManager connectionManager)
 	{
@@ -54,6 +53,7 @@ public abstract class MessageHandler
 
 	/**
 	 * tell this object what accumulator it should use for messages it generates
+	 * 
 	 * @param stateAccumulator the accumulator
 	 */
 	protected void setAccumulator(StateAccumulator stateAccumulator)
@@ -63,6 +63,7 @@ public abstract class MessageHandler
 
 	/**
 	 * get the accumulator that we should use for responses to incoming messages
+	 * 
 	 * @return the state accumulator
 	 */
 	public StateAccumulator getStateAccumulator()

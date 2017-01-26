@@ -23,8 +23,7 @@ import java.util.HashMap;
  * <p>
  * 
  * <pre>
- * QualifiedObservableConnector.getSingleton().registerObserver(this,
- * 		ThisPlayerMovedReport.class);
+ * QualifiedObservableConnector.getSingleton().registerObserver(this, ThisPlayerMovedReport.class);
  * </pre>
  * 
  * @author Merlin
@@ -63,7 +62,9 @@ public class QualifiedObservableConnector
 	}
 
 	/**
-	 * Distributes a given report to everyone who is interested in reports of that type
+	 * Distributes a given report to everyone who is interested in reports of
+	 * that type
+	 * 
 	 * @param report the report
 	 */
 	public void sendReport(QualifiedObservableReport report)
@@ -81,27 +82,21 @@ public class QualifiedObservableConnector
 	/**
 	 * Used when an observer wants to receive reports of a given type
 	 * 
-	 * @param observer
-	 *            the observer who is interested
-	 * @param reportType
-	 *            the report type the observer wants to receive
+	 * @param observer the observer who is interested
+	 * @param reportType the report type the observer wants to receive
 	 */
-	public void registerObserver(QualifiedObserver observer,
-			Class<? extends QualifiedObservableReport> reportType)
+	public void registerObserver(QualifiedObserver observer, Class<? extends QualifiedObservableReport> reportType)
 	{
 		rememberObserver(observer, reportType);
 	}
 
 	/**
-	 * @param observer
-	 *            the observer we should remember
-	 * @param reportType
-	 *            the report type this observer is interested in
+	 * @param observer the observer we should remember
+	 * @param reportType the report type this observer is interested in
 	 * @return true if this is a new observer for this report type and false if
 	 *         it was a duplicate request
 	 */
-	private boolean rememberObserver(QualifiedObserver observer,
-			Class<? extends QualifiedObservableReport> reportType)
+	private boolean rememberObserver(QualifiedObserver observer, Class<? extends QualifiedObservableReport> reportType)
 	{
 		ArrayList<QualifiedObserver> relevantObservers = observers.get(reportType);
 		if (relevantObservers == null)
@@ -121,13 +116,10 @@ public class QualifiedObservableConnector
 	 * This is called when an observer no longer wants to receive reports of a
 	 * given type
 	 * 
-	 * @param observer
-	 *            the observer who is no longer interested
-	 * @param reportType
-	 *            the report types they no longer want to receive
+	 * @param observer the observer who is no longer interested
+	 * @param reportType the report types they no longer want to receive
 	 */
-	public void unregisterObserver(QualifiedObserver observer,
-			Class<? extends QualifiedObservableReport> reportType)
+	public void unregisterObserver(QualifiedObserver observer, Class<? extends QualifiedObservableReport> reportType)
 	{
 
 		ArrayList<QualifiedObserver> observerList = observers.get(reportType);
@@ -141,14 +133,11 @@ public class QualifiedObservableConnector
 	 * Allows an observer to see if it is currently listening to a given report
 	 * type
 	 * 
-	 * @param obs
-	 *            the observer
-	 * @param reportType
-	 *            the report type
+	 * @param obs the observer
+	 * @param reportType the report type
 	 * @return true if the observer is hooked up for that report type
 	 */
-	public boolean doIObserve(QualifiedObserver obs,
-			Class<? extends QualifiedObservableReport> reportType)
+	public boolean doIObserve(QualifiedObserver obs, Class<? extends QualifiedObservableReport> reportType)
 	{
 
 		ArrayList<QualifiedObserver> relavantObservers = observers.get(reportType);

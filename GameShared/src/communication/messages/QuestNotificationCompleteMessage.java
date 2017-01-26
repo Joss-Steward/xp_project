@@ -17,7 +17,7 @@ public class QuestNotificationCompleteMessage implements Message, Serializable
 	 * @param playerID id of the player
 	 * @param questID id of the quest
 	 */
-	public QuestNotificationCompleteMessage(int playerID, int questID) 
+	public QuestNotificationCompleteMessage(int playerID, int questID)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
@@ -31,7 +31,7 @@ public class QuestNotificationCompleteMessage implements Message, Serializable
 	/**
 	 * @return id of the player
 	 */
-	public int getPlayerID() 
+	public int getPlayerID()
 	{
 		return playerID;
 	}
@@ -39,7 +39,7 @@ public class QuestNotificationCompleteMessage implements Message, Serializable
 	/**
 	 * @return id of the quest
 	 */
-	public int getQuestID() 
+	public int getQuestID()
 	{
 		return questID;
 	}

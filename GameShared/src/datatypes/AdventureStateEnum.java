@@ -9,8 +9,8 @@ package datatypes;
 public enum AdventureStateEnum
 {
 	/**
-	 * This adventure isn't yet available to the players.
-	 * When this adventure's quest has yet to be triggered.
+	 * This adventure isn't yet available to the players. When this adventure's
+	 * quest has yet to be triggered.
 	 */
 	HIDDEN(""),
 	/**
@@ -22,15 +22,14 @@ public enum AdventureStateEnum
 	 * Player has been notified, nothing left to do.
 	 */
 	COMPLETED("is completed"),
-	
+
 	/**
 	 * Adventure has expired because quest is expired
 	 */
 	EXPIRED("is expired");
-	
 
 	private String description;
-	
+
 	/**
 	 * @return the English description of this adventure state
 	 */
@@ -38,10 +37,12 @@ public enum AdventureStateEnum
 	{
 		return description;
 	}
+
 	AdventureStateEnum(String description)
 	{
 		this.description = description;
 	}
+
 	/**
 	 * @return the unique id of the enum
 	 */

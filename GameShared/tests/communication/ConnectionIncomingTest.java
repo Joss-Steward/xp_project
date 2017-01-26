@@ -22,8 +22,7 @@ public class ConnectionIncomingTest
 	 * An incoming message should be routed by the MessageProcessor to the
 	 * MessageHandler register for that type of message
 	 * 
-	 * @throws IOException
-	 *             shouldn't
+	 * @throws IOException shouldn't
 	 */
 	@Test
 	public void incomingMsgGetsProcessed() throws IOException

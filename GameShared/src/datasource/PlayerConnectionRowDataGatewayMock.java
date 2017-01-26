@@ -29,6 +29,7 @@ public class PlayerConnectionRowDataGatewayMock implements PlayerConnectionRowDa
 			this.mapName = mapName;
 		}
 	}
+
 	private int playerID;
 
 	private ConnectionInfo connectionInfo;
@@ -40,6 +41,7 @@ public class PlayerConnectionRowDataGatewayMock implements PlayerConnectionRowDa
 
 	/**
 	 * Finder Constructor
+	 * 
 	 * @param playerID the playerID we are looking for
 	 * @throws DatabaseException if the player isn't in the data source
 	 */
@@ -52,16 +54,16 @@ public class PlayerConnectionRowDataGatewayMock implements PlayerConnectionRowDa
 		this.playerID = playerID;
 		if (!playerConnections.containsKey(playerID))
 		{
-			throw new DatabaseException(
-					"Unable to find connection information for player ID = " + playerID);
+			throw new DatabaseException("Unable to find connection information for player ID = " + playerID);
 		}
 		connectionInfo = playerConnections.get(playerID);
 
 	}
 
-
 	/**
-	 * Creation constructor: will put the given data into the data source (committed)
+	 * Creation constructor: will put the given data into the data source
+	 * (committed)
+	 * 
 	 * @param playerID the player's ID number
 	 * @param pin the pin the player needs to connect
 	 * @param mapName the name of the map file the player is joining
@@ -128,9 +130,7 @@ public class PlayerConnectionRowDataGatewayMock implements PlayerConnectionRowDa
 		playerConnections = new HashMap<Integer, ConnectionInfo>();
 		for (PlayersForTest p : PlayersForTest.values())
 		{
-			playerConnections
-					.put(p.getPlayerID(), new ConnectionInfo(p.getPin(),
-							p.getChangedOn(), p.getMapName()));
+			playerConnections.put(p.getPlayerID(), new ConnectionInfo(p.getPin(), p.getChangedOn(), p.getMapName()));
 		}
 	}
 
@@ -176,12 +176,9 @@ public class PlayerConnectionRowDataGatewayMock implements PlayerConnectionRowDa
 	private void updateChangedOn()
 	{
 		GregorianCalendar now = new GregorianCalendar();
-		connectionInfo.changedOn = now.get(Calendar.YEAR) + "-"
-				+ twoDigits(now.get(Calendar.MONTH + 1)) + "-"
-				+ twoDigits(now.get(Calendar.DAY_OF_MONTH)) + " "
-				+ twoDigits(now.get(Calendar.HOUR_OF_DAY)) + ":"
-				+ twoDigits(now.get(Calendar.MINUTE)) + ":"
-				+ twoDigits(now.get(Calendar.SECOND));
+		connectionInfo.changedOn = now.get(Calendar.YEAR) + "-" + twoDigits(now.get(Calendar.MONTH + 1)) + "-"
+				+ twoDigits(now.get(Calendar.DAY_OF_MONTH)) + " " + twoDigits(now.get(Calendar.HOUR_OF_DAY)) + ":"
+				+ twoDigits(now.get(Calendar.MINUTE)) + ":" + twoDigits(now.get(Calendar.SECOND));
 	}
 
 }

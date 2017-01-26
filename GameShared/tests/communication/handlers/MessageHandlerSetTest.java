@@ -29,8 +29,7 @@ public class MessageHandlerSetTest
 	 * process messages of the type each stub handler expects, then they got
 	 * registered
 	 * 
-	 * @throws CommunicationException
-	 *             shouldn't
+	 * @throws CommunicationException shouldn't
 	 */
 	@Test
 	public void detectsAndRegisters() throws CommunicationException
@@ -46,8 +45,7 @@ public class MessageHandlerSetTest
 	 * If there isn't any handler for the type of message, an exception should
 	 * be thrown
 	 * 
-	 * @throws CommunicationException
-	 *             should
+	 * @throws CommunicationException should
 	 */
 	@Test(expected = CommunicationException.class)
 	public void noSuchHandler() throws CommunicationException

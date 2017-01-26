@@ -22,16 +22,12 @@ public class ConnectionIncoming implements Runnable
 	private MessageHandlerSet messageHandlers;
 
 	/**
-	 * @param socket
-	 *            Socket being used. Will be null for JUnit testing
-	 * @param processor
-	 *            the message processor which should handle messages that come
-	 *            in via this connection
-	 * @throws IOException
-	 *             Exception thrown for invalid input or output
+	 * @param socket Socket being used. Will be null for JUnit testing
+	 * @param processor the message processor which should handle messages that
+	 *            come in via this connection
+	 * @throws IOException Exception thrown for invalid input or output
 	 */
-	public ConnectionIncoming(Socket socket, MessageHandlerSet processor)
-			throws IOException
+	public ConnectionIncoming(Socket socket, MessageHandlerSet processor) throws IOException
 	{
 
 		this.socket = socket;
@@ -98,8 +94,7 @@ public class ConnectionIncoming implements Runnable
 	/**
 	 * process a given request
 	 * 
-	 * @param request
-	 *            the request
+	 * @param request the request
 	 */
 	protected void processRequest(Message request)
 	{
@@ -108,9 +103,8 @@ public class ConnectionIncoming implements Runnable
 			messageHandlers.process(request);
 		} catch (CommunicationException e)
 		{
-			System.out.println("No handler for " + request.getClass() + ": " + request
-					+ " which was received from " + socket.getInetAddress().getHostName()
-					+ " at " + socket.getInetAddress().getHostAddress());
+			System.out.println("No handler for " + request.getClass() + ": " + request + " which was received from "
+					+ socket.getInetAddress().getHostName() + " at " + socket.getInetAddress().getHostAddress());
 		}
 	}
 

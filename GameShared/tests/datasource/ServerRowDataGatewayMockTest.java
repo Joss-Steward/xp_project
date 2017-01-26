@@ -1,8 +1,8 @@
 package datasource;
 
-
 /**
  * Test our mock behavior
+ * 
  * @author Merlin
  *
  */
@@ -10,7 +10,8 @@ public class ServerRowDataGatewayMockTest extends ServerRowDataGatewayTest
 {
 
 	/**
-	 * @see datasource.ServerRowDataGatewayTest#createGateway(java.lang.String, java.lang.String, int)
+	 * @see datasource.ServerRowDataGatewayTest#createGateway(java.lang.String,
+	 *      java.lang.String, int)
 	 */
 	@Override
 	ServerRowDataGateway createGateway(String mapName, String hostName, int port) throws DatabaseException

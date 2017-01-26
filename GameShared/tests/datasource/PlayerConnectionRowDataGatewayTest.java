@@ -33,8 +33,7 @@ public abstract class PlayerConnectionRowDataGatewayTest extends DatabaseTest
 	/**
 	 * Make sure we can add a new user to the system
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void creation() throws DatabaseException
@@ -50,8 +49,7 @@ public abstract class PlayerConnectionRowDataGatewayTest extends DatabaseTest
 	/**
 	 * Make sure we can delete the row for the current connection information
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void deleteRow() throws DatabaseException
@@ -73,8 +71,7 @@ public abstract class PlayerConnectionRowDataGatewayTest extends DatabaseTest
 	 * make sure we get an exception if we try to retrieve a player that isn't
 	 * there
 	 * 
-	 * @throws DatabaseException
-	 *             should
+	 * @throws DatabaseException should
 	 */
 	@Test(expected = DatabaseException.class)
 	public void exceptionOnNoRow() throws DatabaseException
@@ -85,8 +82,7 @@ public abstract class PlayerConnectionRowDataGatewayTest extends DatabaseTest
 	/**
 	 * Make sure we can retrieve an existing entry
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void findExisting() throws DatabaseException
@@ -99,8 +95,7 @@ public abstract class PlayerConnectionRowDataGatewayTest extends DatabaseTest
 	/**
 	 * Make sure we can store a map name
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void storeMapName() throws DatabaseException
@@ -114,8 +109,7 @@ public abstract class PlayerConnectionRowDataGatewayTest extends DatabaseTest
 	/**
 	 * Make sure we can store a pin
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 */
 	@Test
 	public void storePin() throws DatabaseException
@@ -128,21 +122,23 @@ public abstract class PlayerConnectionRowDataGatewayTest extends DatabaseTest
 
 	/**
 	 * Creates a data source that stores the given information permanently
+	 * 
 	 * @param playerID the player's unique ID
 	 * @param pin the pin the player needs to connect
 	 * @param mapFileName the map of the area the player is connecting to
 	 * @return the new gateway for that row
 	 * @throws DatabaseException if the data source cannot create the row
 	 */
-	abstract PlayerConnectionRowDataGateway createRowDataGateway(int playerID, int pin, String mapFileName) throws DatabaseException;
+	abstract PlayerConnectionRowDataGateway createRowDataGateway(int playerID, int pin, String mapFileName)
+			throws DatabaseException;
 
 	/**
 	 * Create a row data gateway for an existing row in the table
+	 * 
 	 * @param playerID the player's unique ID
 	 * @return the gateway that we should be testing
 	 * @throws DatabaseException if the data source cannot find the player
 	 */
-	abstract PlayerConnectionRowDataGateway findRowDataGateway(int playerID)
-			throws DatabaseException;
+	abstract PlayerConnectionRowDataGateway findRowDataGateway(int playerID) throws DatabaseException;
 
 }

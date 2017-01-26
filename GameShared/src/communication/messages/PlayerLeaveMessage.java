@@ -8,7 +8,8 @@ import java.io.Serializable;
  * @author nhydock
  * 
  */
-public class PlayerLeaveMessage implements Message, Serializable {
+public class PlayerLeaveMessage implements Message, Serializable
+{
 
 	/**
 	 * 
@@ -17,14 +18,13 @@ public class PlayerLeaveMessage implements Message, Serializable {
 	private int playerID;
 
 	/**
-	 * @param playerID
-	 *            the unique ID of the player
+	 * @param playerID the unique ID of the player
 	 */
 	public PlayerLeaveMessage(int playerID)
 	{
 		this.playerID = playerID;
 	}
-	
+
 	/**
 	 * get this player's unique ID
 	 * 
@@ -34,7 +34,7 @@ public class PlayerLeaveMessage implements Message, Serializable {
 	{
 		return this.playerID;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

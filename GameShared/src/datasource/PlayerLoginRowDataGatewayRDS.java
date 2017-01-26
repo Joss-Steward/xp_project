@@ -19,13 +19,10 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 	private String password;
 	private Connection connection;
 
-	
-	
 	/**
 	 * Drop and re-create the PlayerLogin table this gateway manages
 	 * 
-	 * @throws DatabaseException
-	 *             if we can't talk to the RDS
+	 * @throws DatabaseException if we can't talk to the RDS
 	 */
 	public static void createPlayerLoginTable() throws DatabaseException
 	{
@@ -58,10 +55,8 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 	 * Finder constructor: will initialize itself by finding the appropriate row
 	 * in the table
 	 * 
-	 * @param playerName
-	 *            the player we are responsible for
-	 * @throws DatabaseException
-	 *             if we cannot find the given player in the table
+	 * @param playerName the player we are responsible for
+	 * @throws DatabaseException if we cannot find the given player in the table
 	 */
 	public PlayerLoginRowDataGatewayRDS(String playerName) throws DatabaseException
 	{
@@ -87,23 +82,18 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 	 * Create constructor: will create a new row in the table with the given
 	 * information
 	 * 
-	 * @param playerName
-	 *            the player's name
-	 * @param password
-	 *            the player's password
-	 * @throws DatabaseException
-	 *             if we can't create the player (can't connect or duplicate
-	 *             name)
+	 * @param playerName the player's name
+	 * @param password the player's password
+	 * @throws DatabaseException if we can't create the player (can't connect or
+	 *             duplicate name)
 	 */
-	public PlayerLoginRowDataGatewayRDS(String playerName, String password)
-			throws DatabaseException
+	public PlayerLoginRowDataGatewayRDS(String playerName, String password) throws DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
 		try
 		{
 			ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,
-					"Insert INTO PlayerLogins SET playerName = ?, password = ?",
-					Statement.RETURN_GENERATED_KEYS);
+					"Insert INTO PlayerLogins SET playerName = ?, password = ?", Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, playerName);
 			stmt.setString(2, password);
 			stmt.executeUpdate();
@@ -115,19 +105,16 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 
 		} catch (SQLException e)
 		{
-			throw new DatabaseException(
-					"Couldn't create a player record for player named " + playerName, e);
+			throw new DatabaseException("Couldn't create a player record for player named " + playerName, e);
 		}
 	}
 
 	/**
 	 * Finder constructor
 	 * 
-	 * @param playerID
-	 *            the player's unique ID
-	 * @throws DatabaseException
-	 *             if the player isn't in the database or we can't execute the
-	 *             query
+	 * @param playerID the player's unique ID
+	 * @throws DatabaseException if the player isn't in the database or we can't
+	 *             execute the query
 	 */
 	public PlayerLoginRowDataGatewayRDS(int playerID) throws DatabaseException
 	{
@@ -193,8 +180,7 @@ public class PlayerLoginRowDataGatewayRDS implements PlayerLoginRowDataGateway
 			stmt.executeUpdate();
 		} catch (SQLException e)
 		{
-			throw new DatabaseException("Couldn't persist info for player named "
-					+ playerName, e);
+			throw new DatabaseException("Couldn't persist info for player named " + playerName, e);
 		}
 	}
 

@@ -1,9 +1,9 @@
 package datasource;
 
-
 /**
- * Defines the behavior required for interfacing with a data source that has information about
- * which servers are managing which map files
+ * Defines the behavior required for interfacing with a data source that has
+ * information about which servers are managing which map files
+ * 
  * @author Merlin
  *
  */
@@ -45,6 +45,7 @@ public interface ServerRowDataGateway
 
 	/**
 	 * store the information into the data source
+	 * 
 	 * @throws DatabaseException if we are unable to persist the data
 	 */
 	void persist() throws DatabaseException;

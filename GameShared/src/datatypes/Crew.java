@@ -2,6 +2,7 @@ package datatypes;
 
 /**
  * The list of crews. Each player must belong to one crew
+ * 
  * @author Merlin
  *
  */
@@ -11,12 +12,12 @@ public enum Crew
 	 * 
 	 */
 	OFF_BY_ONE,
-	
+
 	/**
 	 * 
 	 */
 	NULL_POINTER,
-	
+
 	/**
 	 * 
 	 */

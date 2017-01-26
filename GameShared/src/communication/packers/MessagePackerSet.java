@@ -28,8 +28,7 @@ public class MessagePackerSet extends TypeDetector
 	public MessagePackerSet()
 	{
 		packers = new HashMap<Class<?>, ArrayList<MessagePacker>>();
-		ArrayList<Class<?>> packerTypes = this
-				.detectAllExtendersInPackage(MessagePacker.class);
+		ArrayList<Class<?>> packerTypes = this.detectAllExtendersInPackage(MessagePacker.class);
 		for (Class<?> packerType : packerTypes)
 		{
 			try
@@ -47,14 +46,11 @@ public class MessagePackerSet extends TypeDetector
 	/**
 	 * Get the packer associated with a given type of report
 	 * 
-	 * @param reportWePack
-	 *            the report type we are interested
+	 * @param reportWePack the report type we are interested
 	 * @return the packer that will handle reports of that type
-	 * @throws CommunicationException
-	 *             if we have no handler for that report type
+	 * @throws CommunicationException if we have no handler for that report type
 	 */
-	public ArrayList<MessagePacker> getPackersFor(Class<?> reportWePack)
-			throws CommunicationException
+	public ArrayList<MessagePacker> getPackersFor(Class<?> reportWePack) throws CommunicationException
 	{
 		if (!packers.containsKey(reportWePack))
 		{
@@ -67,14 +63,12 @@ public class MessagePackerSet extends TypeDetector
 	 * translate the report into the message that should travel over the
 	 * connection
 	 * 
-	 * @param report
-	 *            the report that we are packing for transport
+	 * @param report the report that we are packing for transport
 	 * @return the message describing the event
-	 * @throws CommunicationException
-	 *             if there is no packer registered for this type of event
+	 * @throws CommunicationException if there is no packer registered for this
+	 *             type of event
 	 */
-	public ArrayList<Message> pack(QualifiedObservableReport report)
-			throws CommunicationException
+	public ArrayList<Message> pack(QualifiedObservableReport report) throws CommunicationException
 	{
 		ArrayList<Message> results = new ArrayList<Message>();
 		Class<? extends QualifiedObservableReport> classWeArePacking = report.getClass();
@@ -94,13 +88,11 @@ public class MessagePackerSet extends TypeDetector
 	/**
 	 * Add a MessagePacker to this set
 	 * 
-	 * @param packer
-	 *            the packer that should interpret this type of notification
+	 * @param packer the packer that should interpret this type of notification
 	 */
 	public void registerPacker(MessagePacker packer)
 	{
-		ArrayList<Class<? extends QualifiedObservableReport>> reportsWePack = packer
-				.getReportTypesWePack();
+		ArrayList<Class<? extends QualifiedObservableReport>> reportsWePack = packer.getReportTypesWePack();
 
 		for (Class<? extends QualifiedObservableReport> reportWePack : reportsWePack)
 		{
@@ -118,8 +110,7 @@ public class MessagePackerSet extends TypeDetector
 	 * Register the given observer with the report types that this message
 	 * packer set can pack
 	 * 
-	 * @param obs
-	 *            the state accumulator to be registered
+	 * @param obs the state accumulator to be registered
 	 */
 	public void hookUpObservationFor(StateAccumulator obs)
 	{
@@ -128,12 +119,10 @@ public class MessagePackerSet extends TypeDetector
 		{
 			for (MessagePacker packer : packerList)
 			{
-				ArrayList<Class<? extends QualifiedObservableReport>> reportTypesWePack = packer
-						.getReportTypesWePack();
+				ArrayList<Class<? extends QualifiedObservableReport>> reportTypesWePack = packer.getReportTypesWePack();
 				for (Class<? extends QualifiedObservableReport> reportType : reportTypesWePack)
 				{
-					QualifiedObservableConnector.getSingleton().registerObserver(obs,
-							reportType);
+					QualifiedObservableConnector.getSingleton().registerObserver(obs, reportType);
 				}
 				packer.setAccumulator(obs);
 			}

@@ -21,8 +21,7 @@ public abstract class MessagePacker
 	/**
 	 * Build a message describing an event
 	 * 
-	 * @param object
-	 *            the object pushed by the observable in its notification
+	 * @param object the object pushed by the observable in its notification
 	 * @return the appropriate message
 	 */
 	public abstract Message pack(QualifiedObservableReport object);
@@ -43,8 +42,7 @@ public abstract class MessagePacker
 	}
 
 	/**
-	 * @param obs
-	 *            the StateAccumulator we should be associated with
+	 * @param obs the StateAccumulator we should be associated with
 	 */
 	public void setAccumulator(StateAccumulator obs)
 	{

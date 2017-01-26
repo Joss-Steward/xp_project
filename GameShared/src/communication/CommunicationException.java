@@ -17,8 +17,7 @@ public class CommunicationException extends Exception
 	/**
 	 * Just remember the string
 	 * 
-	 * @param string
-	 *            a message describing what went wrong
+	 * @param string a message describing what went wrong
 	 */
 	public CommunicationException(String string)
 	{

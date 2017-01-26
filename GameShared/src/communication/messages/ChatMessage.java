@@ -21,17 +21,12 @@ public class ChatMessage implements Message, Serializable
 	/**
 	 * Create a chat message
 	 * 
-	 * @param senderName
-	 *            user sending the message
-	 * @param message
-	 *            the message to be sent
-	 * @param location
-	 *            the location of the sender
-	 * @param type
-	 *            the type of chat message being sent
+	 * @param senderName user sending the message
+	 * @param message the message to be sent
+	 * @param location the location of the sender
+	 * @param type the type of chat message being sent
 	 */
-	public ChatMessage(String senderName, String message, Position location,
-			ChatType type)
+	public ChatMessage(String senderName, String message, Position location, ChatType type)
 	{
 		this.message = message;
 		this.senderName = senderName;

@@ -1,4 +1,5 @@
 package datasource;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -6,6 +7,7 @@ import java.util.GregorianCalendar;
 
 /**
  * Level object class that contains a description and levelUpPoints
+ * 
  * @author Merlin
  *
  */
@@ -22,24 +24,26 @@ public class LevelRecord implements Comparable<LevelRecord>, Serializable
 	private int levelUpMonth;
 	private int levelUpDayOfMonth;
 	private Date deadlineDate;
-	
+
 	/**
 	 * Constructor for level object
+	 * 
 	 * @param description the level's description
 	 * @param levelUpPoints the levelUpPoints for the level
 	 * @param levelUpMonth TODO
 	 * @param levelUpDayOfMonth TODO
 	 */
-    public LevelRecord(String description, int levelUpPoints, int levelUpMonth, int levelUpDayOfMonth)
+	public LevelRecord(String description, int levelUpPoints, int levelUpMonth, int levelUpDayOfMonth)
 	{
 		super();
 		this.description = description;
 		this.levelUpPoints = levelUpPoints;
 		this.levelUpMonth = levelUpMonth;
 		this.levelUpDayOfMonth = levelUpDayOfMonth;
-		deadlineDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), levelUpMonth, levelUpDayOfMonth).getTime();
+		deadlineDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), levelUpMonth, levelUpDayOfMonth)
+				.getTime();
 	}
-	
+
 	/**
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
@@ -82,7 +86,8 @@ public class LevelRecord implements Comparable<LevelRecord>, Serializable
 	}
 
 	/**
-	 * @return the day of the month by which they are required to level out of this level
+	 * @return the day of the month by which they are required to level out of
+	 *         this level
 	 */
 	public int getLevelUpDayOfMonth()
 	{
@@ -104,13 +109,13 @@ public class LevelRecord implements Comparable<LevelRecord>, Serializable
 	{
 		return levelUpPoints;
 	}
-	
+
 	/**
 	 * @return the deadline date
 	 */
 	public Date getDeadlineDate()
 	{
-	    return deadlineDate;
+		return deadlineDate;
 	}
 
 	/**

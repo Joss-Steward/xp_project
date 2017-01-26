@@ -5,7 +5,8 @@ import java.io.Serializable;
 import datasource.LevelRecord;
 
 /**
- * ExperienceChangeMessage class 
+ * ExperienceChangeMessage class
+ * 
  * @author Olivia
  * @author LaVonne
  */
@@ -25,7 +26,7 @@ public class ExperienceChangedMessage implements Message, Serializable
 	 * @param experiencePoints the amount of experience points the player has
 	 * @param levelRecord the id of the player
 	 */
-	public ExperienceChangedMessage(int playerID, int experiencePoints, LevelRecord levelRecord) 
+	public ExperienceChangedMessage(int playerID, int experiencePoints, LevelRecord levelRecord)
 	{
 		this.playerID = playerID;
 		this.experiencePoints = experiencePoints;
@@ -34,27 +35,30 @@ public class ExperienceChangedMessage implements Message, Serializable
 
 	/**
 	 * Gets player's current experience points
+	 * 
 	 * @return experiencePoints
 	 */
-	public int getExperiencePoints() 
+	public int getExperiencePoints()
 	{
 		return experiencePoints;
 	}
 
 	/**
 	 * Gets player's level
+	 * 
 	 * @return level
 	 */
-	public LevelRecord getLevel() 
+	public LevelRecord getLevel()
 	{
 		return level;
 	}
 
 	/**
 	 * Get the player's id
+	 * 
 	 * @return player id
 	 */
-	public int getPlayerID() 
+	public int getPlayerID()
 	{
 		return playerID;
 	}

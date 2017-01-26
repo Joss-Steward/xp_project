@@ -17,15 +17,11 @@ import datasource.ClosingPreparedStatement;
 public class BuildTestDBServers
 {
 
-
 	/**
 	 * 
-	 * @param args
-	 *            unused
-	 * @throws DatabaseException
-	 *             shouldn't
-	 * @throws SQLException
-	 *             shouldn't
+	 * @param args unused
+	 * @throws DatabaseException shouldn't
+	 * @throws SQLException shouldn't
 	 */
 	public static void main(String[] args) throws DatabaseException, SQLException
 	{
@@ -36,11 +32,11 @@ public class BuildTestDBServers
 	private static void createServerTable() throws SQLException, DatabaseException
 	{
 		Connection connection = DatabaseManager.getSingleton().getConnection();
-		ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection,"DELETE From Server");
+		ClosingPreparedStatement stmt = new ClosingPreparedStatement(connection, "DELETE From Server");
 		stmt.executeUpdate();
 		for (ServersForTest p : ServersForTest.values())
 		{
-			new ServerRowDataGatewayRDS(p.getMapName(),p.getHostName(),p.getPortNumber());
+			new ServerRowDataGatewayRDS(p.getMapName(), p.getHostName(), p.getPortNumber());
 		}
 
 	}

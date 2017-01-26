@@ -21,10 +21,8 @@ public class OtherPlayerMovedMessage implements Message, Serializable
 
 	/**
 	 * 
-	 * @param playerID
-	 *            The player who moved
-	 * @param p
-	 *            Where the player moved to
+	 * @param playerID The player who moved
+	 * @param p Where the player moved to
 	 */
 	public OtherPlayerMovedMessage(int playerID, Position p)
 	{

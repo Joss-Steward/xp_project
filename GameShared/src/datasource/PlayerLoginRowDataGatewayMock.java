@@ -46,7 +46,9 @@ public class PlayerLoginRowDataGatewayMock implements PlayerLoginRowDataGateway
 	private PlayerInfo playerInfo;
 
 	/**
-	 * Finder Constructor: will initialize itself from the data in the data source
+	 * Finder Constructor: will initialize itself from the data in the data
+	 * source
+	 * 
 	 * @param playerName the name of the player
 	 * @throws DatabaseException if we can't find that player
 	 */
@@ -76,15 +78,11 @@ public class PlayerLoginRowDataGatewayMock implements PlayerLoginRowDataGateway
 	/**
 	 * Create constructor: will add the data to the data source
 	 * 
-	 * @param playerName
-	 *            the name of the player
-	 * @param password
-	 *            the player's password
-	 * @throws DatabaseException
-	 *             duplicate player name
+	 * @param playerName the name of the player
+	 * @param password the player's password
+	 * @throws DatabaseException duplicate player name
 	 */
-	public PlayerLoginRowDataGatewayMock(String playerName, String password)
-			throws DatabaseException
+	public PlayerLoginRowDataGatewayMock(String playerName, String password) throws DatabaseException
 	{
 		if (playerLogins == null)
 		{
@@ -96,8 +94,7 @@ public class PlayerLoginRowDataGatewayMock implements PlayerLoginRowDataGateway
 		{
 			if (info.getPlayerName().equals(playerName))
 			{
-				throw new DatabaseException("Tried to create duplicate user "
-						+ playerName);
+				throw new DatabaseException("Tried to create duplicate user " + playerName);
 			}
 		}
 		playerLogins.put(playerID, new PlayerInfo(playerName, password));
@@ -105,6 +102,7 @@ public class PlayerLoginRowDataGatewayMock implements PlayerLoginRowDataGateway
 
 	/**
 	 * Finder constructor
+	 * 
 	 * @param playerID the player's unique ID
 	 * @throws DatabaseException if we can't find the player
 	 */
@@ -118,8 +116,7 @@ public class PlayerLoginRowDataGatewayMock implements PlayerLoginRowDataGateway
 		{
 			this.playerID = playerID;
 			this.playerInfo = playerLogins.get(playerID);
-		}
-		else
+		} else
 		{
 			throw new DatabaseException("Couldn't find player with ID " + playerID);
 		}
@@ -171,8 +168,7 @@ public class PlayerLoginRowDataGatewayMock implements PlayerLoginRowDataGateway
 		nextKey = 1;
 		for (PlayersForTest p : PlayersForTest.values())
 		{
-			playerLogins.put(nextKey,
-					new PlayerInfo(p.getPlayerName(), p.getPlayerPassword()));
+			playerLogins.put(nextKey, new PlayerInfo(p.getPlayerName(), p.getPlayerPassword()));
 			nextKey++;
 		}
 	}

@@ -46,26 +46,20 @@ public class ConnectionManager implements QualifiedObserver
 	 * Create everything necessary for building messages to send to the other
 	 * side and handling messages that come from the other side.
 	 * 
-	 * @param sock
-	 *            the socket connection we are managing
-	 * @param stateAccumulator
-	 *            the accumulator connecting us to the rest of the system
-	 * @param messageHandlerSet
-	 *            the set of MessageHandlers hat will process the incoming
-	 *            messages on this connection
-	 * @param messagePackerSet
-	 *            the set of MessagePackers that will pack notifications from
-	 *            the model into outgoing messages
-	 * @param watchForSocketClosure
-	 *            true if we should shut things down when the socket gets closed
-	 *            by the other side
+	 * @param sock the socket connection we are managing
+	 * @param stateAccumulator the accumulator connecting us to the rest of the
+	 *            system
+	 * @param messageHandlerSet the set of MessageHandlers hat will process the
+	 *            incoming messages on this connection
+	 * @param messagePackerSet the set of MessagePackers that will pack
+	 *            notifications from the model into outgoing messages
+	 * @param watchForSocketClosure true if we should shut things down when the
+	 *            socket gets closed by the other side
 	 * 
-	 * @throws IOException
-	 *             caused by socket issues
+	 * @throws IOException caused by socket issues
 	 */
-	public ConnectionManager(Socket sock, StateAccumulator stateAccumulator,
-			MessageHandlerSet messageHandlerSet, MessagePackerSet messagePackerSet,
-			boolean watchForSocketClosure) throws IOException
+	public ConnectionManager(Socket sock, StateAccumulator stateAccumulator, MessageHandlerSet messageHandlerSet,
+			MessagePackerSet messagePackerSet, boolean watchForSocketClosure) throws IOException
 	{
 		System.out.println("Starting new ConnectionManager");
 		this.socket = sock;
@@ -94,14 +88,14 @@ public class ConnectionManager implements QualifiedObserver
 				public void run()
 				{
 					disconnect();
-					QualifiedObservableConnector.getSingleton().sendReport(new PlayerDisconnectedReport(stateAccumulator.getPlayerID()));
+					QualifiedObservableConnector.getSingleton()
+							.sendReport(new PlayerDisconnectedReport(stateAccumulator.getPlayerID()));
 				}
 			});
 			watcherThread = new Thread(cl);
 			watcherThread.start();
 		}
-		QualifiedObservableConnector.getSingleton().registerObserver(this,
-				LogoutReport.class);
+		QualifiedObservableConnector.getSingleton().registerObserver(this, LogoutReport.class);
 	}
 
 	/**
@@ -114,10 +108,8 @@ public class ConnectionManager implements QualifiedObserver
 	/**
 	 * Used by the client change which server we are connected to
 	 * 
-	 * @param sock
-	 *            the new socket
-	 * @throws IOException
-	 *             shouldn't
+	 * @param sock the new socket
+	 * @throws IOException shouldn't
 	 */
 	public void moveToNewSocket(Socket sock) throws IOException
 	{
@@ -126,8 +118,7 @@ public class ConnectionManager implements QualifiedObserver
 			disconnect();
 			this.socket = sock;
 
-			outgoing = new ConnectionOutgoing(sock, this.stateAccumulator,
-					messagePackerSet);
+			outgoing = new ConnectionOutgoing(sock, this.stateAccumulator, messagePackerSet);
 			outgoingThread = new Thread(outgoing);
 			// for simplictly
 			// T.setDaemon(true);
@@ -145,14 +136,10 @@ public class ConnectionManager implements QualifiedObserver
 	/**
 	 * Used by the client change which server we are connected to
 	 * 
-	 * @param sock
-	 *            the new socket
-	 * @param playerID
-	 *            the playerID we were given to connect
-	 * @param pin
-	 *            the pin we were given to connect
-	 * @throws IOException
-	 *             shouldn't
+	 * @param sock the new socket
+	 * @param playerID the playerID we were given to connect
+	 * @param pin the pin we were given to connect
+	 * @throws IOException shouldn't
 	 */
 	public void moveToNewSocket(Socket sock, int playerID, double pin) throws IOException
 	{
@@ -213,8 +200,7 @@ public class ConnectionManager implements QualifiedObserver
 	/**
 	 * set the playerID for the player connected through this connection
 	 * 
-	 * @param playerID
-	 *            the playerID
+	 * @param playerID the playerID
 	 * 
 	 */
 	public void setPlayerID(int playerID)
@@ -237,8 +223,7 @@ public class ConnectionManager implements QualifiedObserver
 			try
 			{
 
-				moveToNewSocket(new Socket(OptionsManager.getSingleton().getLoginHost(),
-						1871));
+				moveToNewSocket(new Socket(OptionsManager.getSingleton().getLoginHost(), 1871));
 
 			} catch (IOException e)
 			{

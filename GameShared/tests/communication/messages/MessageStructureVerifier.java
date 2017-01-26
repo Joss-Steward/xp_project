@@ -32,8 +32,7 @@ public class MessageStructureVerifier extends TypeDetector
 	 * Find all of the classes in the package containing this test and test them
 	 * to see if they meet the requirements
 	 * 
-	 * @throws ClassNotFoundException
-	 *             shouldn't
+	 * @throws ClassNotFoundException shouldn't
 	 */
 	@Test
 	public void testAllClassesInThisPackage() throws ClassNotFoundException
@@ -44,8 +43,7 @@ public class MessageStructureVerifier extends TypeDetector
 		Reflections reflections = new Reflections(this.getClass().getPackage().getName());
 		for (String mmapName : reflections.getStore().getStoreMap().keySet())
 		{
-			Multimap<String, String> mmap = reflections.getStore().getStoreMap()
-					.get(mmapName);
+			Multimap<String, String> mmap = reflections.getStore().getStoreMap().get(mmapName);
 			for (Map.Entry<String, String> entry : mmap.entries())
 			{
 				Class<?> classToCheck = Class.forName(entry.getValue());
@@ -71,8 +69,7 @@ public class MessageStructureVerifier extends TypeDetector
 	 * Runs the entire series of checks for the structure required for
 	 * serializability
 	 * 
-	 * @param classToCheck
-	 *            the class whose structure we should check
+	 * @param classToCheck the class whose structure we should check
 	 */
 	public void verifyStructureForSerializability(Class<?> classToCheck)
 	{
@@ -101,8 +98,7 @@ public class MessageStructureVerifier extends TypeDetector
 			if (type.toString().equals("boolean"))
 				classToCheck.getDeclaredMethod("is" + capitalizedFieldName, new Class[0]);
 			else
-				classToCheck
-						.getDeclaredMethod("get" + capitalizedFieldName, new Class[0]);
+				classToCheck.getDeclaredMethod("get" + capitalizedFieldName, new Class[0]);
 		} catch (NoSuchMethodException e)
 		{
 			fail(classToCheck.getName() + " is missing a getter for " + fieldToCheck);
@@ -124,8 +120,7 @@ public class MessageStructureVerifier extends TypeDetector
 		}
 	}
 
-	private static boolean checkImplementsInterface(Class<?> classToTest,
-			Class<?> interfaceToCheckFor)
+	private static boolean checkImplementsInterface(Class<?> classToTest, Class<?> interfaceToCheckFor)
 	{
 		if (classToTest == interfaceToCheckFor)
 		{
@@ -163,8 +158,7 @@ public class MessageStructureVerifier extends TypeDetector
 		for (int i = 0; i < allFields.length; i++)
 		{
 			int modifiers = allFields[i].getModifiers();
-			if (!Modifier.isTransient(modifiers)
-					&& !Modifier.isFinal(allFields[i].getModifiers()))
+			if (!Modifier.isTransient(modifiers) && !Modifier.isFinal(allFields[i].getModifiers()))
 			{
 				storedFields.add(allFields[i]);
 			}

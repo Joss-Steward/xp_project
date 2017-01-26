@@ -44,8 +44,7 @@ public class MessagePackerSetTest
 	 * pack the two stub report types. If can pack them, the packers must have
 	 * been detected
 	 * 
-	 * @throws CommunicationException
-	 *             shouldn't
+	 * @throws CommunicationException shouldn't
 	 */
 	@Test
 	public void detectsAll() throws CommunicationException
@@ -60,8 +59,7 @@ public class MessagePackerSetTest
 	/**
 	 * Two of the stub packers listen to the same report
 	 * 
-	 * @throws CommunicationException
-	 *             shouldn't
+	 * @throws CommunicationException shouldn't
 	 */
 	@Test
 	public void canHaveTwo() throws CommunicationException
@@ -75,16 +73,14 @@ public class MessagePackerSetTest
 	 * If there isn't any handler for the type of message, an exception should
 	 * be thrown
 	 * 
-	 * @throws CommunicationException
-	 *             should
+	 * @throws CommunicationException should
 	 */
 	@Test(expected = CommunicationException.class)
 	public void noSuchHandler() throws CommunicationException
 	{
 		MessagePackerSet set = new MessagePackerSet();
 		Message msg = EasyMock.createMock(Message.class);
-		QualifiedObservableReport report = EasyMock
-				.createMock(QualifiedObservableReport.class);
+		QualifiedObservableReport report = EasyMock.createMock(QualifiedObservableReport.class);
 		EasyMock.replay(msg);
 
 		set.pack(report);
@@ -122,7 +118,7 @@ public class MessagePackerSetTest
 	{
 
 	}
-	
+
 	private class TestReport2 implements QualifiedObservableReport
 	{
 
@@ -146,11 +142,10 @@ public class MessagePackerSetTest
 		@Override
 		public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 		{
-			ArrayList<Class<? extends QualifiedObservableReport>> result = 
-					new ArrayList<Class<? extends QualifiedObservableReport>>();
-			
-			result.add( TestReport1.class);
-			result.add( TestReport2.class);
+			ArrayList<Class<? extends QualifiedObservableReport>> result = new ArrayList<Class<? extends QualifiedObservableReport>>();
+
+			result.add(TestReport1.class);
+			result.add(TestReport2.class);
 			return result;
 		}
 

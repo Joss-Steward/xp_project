@@ -7,7 +7,6 @@ import java.sql.Statement;
 
 import model.OptionsManager;
 
-
 /**
  * @author Merlin
  * 
@@ -18,8 +17,7 @@ public class DatabaseManager
 
 	/**
 	 * @return the only one
-	 * @throws DatabaseException
-	 *             if we are unable to connect to the db
+	 * @throws DatabaseException if we are unable to connect to the db
 	 */
 	public static DatabaseManager getSingleton() throws DatabaseException
 	{
@@ -38,11 +36,14 @@ public class DatabaseManager
 		if (OptionsManager.getSingleton().isUsingTestDB())
 		{
 			System.err.println("Opening test database\n");
-			openConnectionTo("jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players?autoReconnect=true", "program", "ShipSim");
+			openConnectionTo(
+					"jdbc:mysql://shipsim.cbzhjl6tpflt.us-east-1.rds.amazonaws.com:3306/Players?autoReconnect=true",
+					"program", "ShipSim");
 		} else
 		{
 			System.err.println("Opening production database\n");
-			openConnectionTo("jdbc:mysql://db.cs.ship.edu:3306/ShipSim?autoReconnect=true", "program","pwd4ShipSim-F16");
+			openConnectionTo("jdbc:mysql://db.cs.ship.edu:3306/ShipSim?autoReconnect=true", "program",
+					"pwd4ShipSim-F16");
 			try
 			{
 				connection.setAutoCommit(true);
@@ -56,8 +57,7 @@ public class DatabaseManager
 	}
 
 	/**
-	 * @throws DatabaseException
-	 *             if we can't complete the commit
+	 * @throws DatabaseException if we can't complete the commit
 	 * 
 	 */
 	public void commit() throws DatabaseException
@@ -97,8 +97,9 @@ public class DatabaseManager
 		}
 		try
 		{
-			connection = DriverManager.getConnection(url, username, passwd);//"program", "ShipSim");
-			
+			connection = DriverManager.getConnection(url, username, passwd);// "program",
+																			// "ShipSim");
+
 		} catch (SQLException e)
 		{
 			throw new DatabaseException("Unable to connect to database ", e);
@@ -108,8 +109,7 @@ public class DatabaseManager
 	/**
 	 * Roll back the current transaction
 	 * 
-	 * @throws SQLException
-	 *             if the rollback fails
+	 * @throws SQLException if the rollback fails
 	 */
 	public void rollBack() throws SQLException
 	{
@@ -121,8 +121,7 @@ public class DatabaseManager
 	/**
 	 * When we are testing, use a different db
 	 * 
-	 * @throws DatabaseException
-	 *             if we can't connect
+	 * @throws DatabaseException if we can't connect
 	 */
 	public void setTesting() throws DatabaseException
 	{
@@ -134,8 +133,7 @@ public class DatabaseManager
 	 * remember a rollback point in case a series of transactions doesn't all
 	 * work
 	 * 
-	 * @throws DatabaseException
-	 *             if the save point cannot be created
+	 * @throws DatabaseException if the save point cannot be created
 	 */
 	public void startTransaction() throws DatabaseException
 	{

@@ -78,10 +78,8 @@ public class LoginMessage implements Message, Serializable
 
 	/**
 	 * 
-	 * @param playerName
-	 *            the player's name
-	 * @param password
-	 *            the player's password
+	 * @param playerName the player's name
+	 * @param password the player's password
 	 */
 	public LoginMessage(String playerName, String password)
 	{
@@ -95,8 +93,7 @@ public class LoginMessage implements Message, Serializable
 	 */
 	public String toString()
 	{
-		return "Login Message: playerName = " + playerName + " and password = "
-				+ password;
+		return "Login Message: playerName = " + playerName + " and password = " + password;
 	}
 
 }

@@ -19,7 +19,7 @@ public class AdventureNotificationCompleteMessage implements Message, Serializab
 	 * @param questID id of the quest
 	 * @param adventureID id of the adventure
 	 */
-	public AdventureNotificationCompleteMessage(int playerID, int questID, int adventureID) 
+	public AdventureNotificationCompleteMessage(int playerID, int questID, int adventureID)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
@@ -34,7 +34,7 @@ public class AdventureNotificationCompleteMessage implements Message, Serializab
 	/**
 	 * @return id of the player
 	 */
-	public int getPlayerID() 
+	public int getPlayerID()
 	{
 		return playerID;
 	}
@@ -42,7 +42,7 @@ public class AdventureNotificationCompleteMessage implements Message, Serializab
 	/**
 	 * @return id of the quest
 	 */
-	public int getQuestID() 
+	public int getQuestID()
 	{
 		return questID;
 	}
@@ -50,7 +50,7 @@ public class AdventureNotificationCompleteMessage implements Message, Serializab
 	/**
 	 * @return id of the adventure
 	 */
-	public int getAdventureID() 
+	public int getAdventureID()
 	{
 		return adventureID;
 	}

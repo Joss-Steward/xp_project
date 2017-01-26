@@ -9,14 +9,16 @@ import testData.PlayersForTest;
  * @author Emily Maust
  *
  */
-public class KnowledgeChangedMessageTest {
+public class KnowledgeChangedMessageTest
+{
 	/**
 	 * Tests that we can create ExperienceChangeMessage and sets its fields
 	 */
 	@Test
-	public void testCreateMessage() 
+	public void testCreateMessage()
 	{
-		KnowledgeChangedMessage msg = new KnowledgeChangedMessage(PlayersForTest.JOHN.getPlayerID(), PlayersForTest.JOHN.getKnowledgeScore());
+		KnowledgeChangedMessage msg = new KnowledgeChangedMessage(PlayersForTest.JOHN.getPlayerID(),
+				PlayersForTest.JOHN.getKnowledgeScore());
 		assertEquals(PlayersForTest.JOHN.getKnowledgeScore(), msg.getKnowledgePoints());
 	}
 }

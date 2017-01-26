@@ -25,8 +25,7 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 		/**
 		 * Copy Constructor
 		 * 
-		 * @param server
-		 *            the one we want to copy
+		 * @param server the one we want to copy
 		 */
 		public Server(Server server)
 		{
@@ -71,10 +70,8 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 	/**
 	 * Find Constructor: initializes itself with data in the data source
 	 * 
-	 * @param mapName
-	 *            the map we are interested in
-	 * @throws DatabaseException
-	 *             if we can't find data for the given map name
+	 * @param mapName the map we are interested in
+	 * @throws DatabaseException if we can't find data for the given map name
 	 */
 	public ServerRowDataGatewayMock(String mapName) throws DatabaseException
 	{
@@ -93,23 +90,17 @@ public class ServerRowDataGatewayMock implements ServerRowDataGateway
 	/**
 	 * Create constructor - data will be added as a new row in the data source
 	 * 
-	 * @param mapName
-	 *            the name of the map
-	 * @param hostName
-	 *            the host name serving that map
-	 * @param portNumber
-	 *            the port number associated with that map
-	 * @throws DatabaseException
-	 *             if an entry for this map already exists
+	 * @param mapName the name of the map
+	 * @param hostName the host name serving that map
+	 * @param portNumber the port number associated with that map
+	 * @throws DatabaseException if an entry for this map already exists
 	 */
-	public ServerRowDataGatewayMock(String mapName, String hostName, int portNumber)
-			throws DatabaseException
+	public ServerRowDataGatewayMock(String mapName, String hostName, int portNumber) throws DatabaseException
 	{
 		this();
 		if (servers.containsKey(mapName))
 		{
-			throw new DatabaseException("Couldn't create a server for map named "
-					+ mapName);
+			throw new DatabaseException("Couldn't create a server for map named " + mapName);
 		}
 		servers.put(mapName, new Server(hostName, portNumber));
 	}

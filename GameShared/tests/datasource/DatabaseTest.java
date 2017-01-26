@@ -20,8 +20,7 @@ public abstract class DatabaseTest
 	/**
 	 * set up the database and other singletons for a test
 	 * 
-	 * @throws DatabaseException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
 	 * 
 	 */
 	@Before
@@ -32,10 +31,8 @@ public abstract class DatabaseTest
 	}
 
 	/**
-	 * @throws DatabaseException
-	 *             shouldn't
-	 * @throws SQLException
-	 *             shouldn't
+	 * @throws DatabaseException shouldn't
+	 * @throws SQLException shouldn't
 	 * 
 	 */
 	@After

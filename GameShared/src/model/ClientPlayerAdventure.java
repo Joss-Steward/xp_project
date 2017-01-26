@@ -31,30 +31,22 @@ public class ClientPlayerAdventure implements Serializable
 	/**
 	 * Basic constructor for ClientPlayerAdventure
 	 * 
-	 * @param adventureID
-	 *            unique identifier for this adventure
-	 * @param adventureDescription
-	 *            description of the adventure
-	 * @param adventureXP
-	 *            xp reward for adventure
-	 * @param adventureState
-	 *            current state of this adventure using the AdventureStateList
-	 *            enum
-	 * @param needingNotification
-	 *            true if the player needs to be told about the state of this
-	 *            adventure
-	 * @param realLifeAdventure
-	 *            true if the player completes this adventure outside of the
-	 *            game
-	 * @param witnessTitle
-	 *            if this is a real life adventure, the title of the person who
-	 *            can witness completion
-	 * @param qs
-	 *             the state of the quest that the adventure belongs to
+	 * @param adventureID unique identifier for this adventure
+	 * @param adventureDescription description of the adventure
+	 * @param adventureXP xp reward for adventure
+	 * @param adventureState current state of this adventure using the
+	 *            AdventureStateList enum
+	 * @param needingNotification true if the player needs to be told about the
+	 *            state of this adventure
+	 * @param realLifeAdventure true if the player completes this adventure
+	 *            outside of the game
+	 * @param witnessTitle if this is a real life adventure, the title of the
+	 *            person who can witness completion
+	 * @param qs the state of the quest that the adventure belongs to
 	 */
-	public ClientPlayerAdventure(int adventureID, String adventureDescription,
-			int adventureXP, AdventureStateEnum adventureState,
-			boolean needingNotification, boolean realLifeAdventure, String witnessTitle, QuestStateEnum qs)
+	public ClientPlayerAdventure(int adventureID, String adventureDescription, int adventureXP,
+			AdventureStateEnum adventureState, boolean needingNotification, boolean realLifeAdventure,
+			String witnessTitle, QuestStateEnum qs)
 	{
 		this.adventureID = adventureID;
 		this.adventureXP = adventureXP;
@@ -143,11 +135,9 @@ public class ClientPlayerAdventure implements Serializable
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((adventureDescription == null) ? 0 : adventureDescription.hashCode());
+		result = prime * result + ((adventureDescription == null) ? 0 : adventureDescription.hashCode());
 		result = prime * result + adventureID;
-		result = prime * result
-				+ ((adventureState == null) ? 0 : adventureState.hashCode());
+		result = prime * result + ((adventureState == null) ? 0 : adventureState.hashCode());
 		result = prime * result + adventureXP;
 		result = prime * result + (needingNotification ? 1231 : 1237);
 		return result;
@@ -162,8 +152,7 @@ public class ClientPlayerAdventure implements Serializable
 	}
 
 	/**
-	 * @param adventureDescription
-	 *            the adventureDescription to set
+	 * @param adventureDescription the adventureDescription to set
 	 */
 	public void setAdventureDescription(String adventureDescription)
 	{
@@ -171,8 +160,7 @@ public class ClientPlayerAdventure implements Serializable
 	}
 
 	/**
-	 * @param adventureID
-	 *            the adventureID to set
+	 * @param adventureID the adventureID to set
 	 */
 	public void setAdventureID(int adventureID)
 	{
@@ -180,8 +168,7 @@ public class ClientPlayerAdventure implements Serializable
 	}
 
 	/**
-	 * @param adventureState
-	 *            the adventureState to set
+	 * @param adventureState the adventureState to set
 	 */
 	public void setAdventureState(AdventureStateEnum adventureState)
 	{
@@ -189,8 +176,7 @@ public class ClientPlayerAdventure implements Serializable
 	}
 
 	/**
-	 * @param adventureXP
-	 *            the adventureXP to set
+	 * @param adventureXP the adventureXP to set
 	 */
 	public void setAdventureXP(int adventureXP)
 	{
@@ -213,13 +199,13 @@ public class ClientPlayerAdventure implements Serializable
 	{
 		return witnessTitle;
 	}
-	
+
 	/**
 	 * @return the state of the quest that the adventure belongs to
 	 */
 	public QuestStateEnum getQuestState()
 	{
-	    return questState; 
+		return questState;
 	}
 
 }

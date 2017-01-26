@@ -1,6 +1,5 @@
 package communication.messages;
 
-
 import java.io.Serializable;
 
 /**
@@ -51,10 +50,8 @@ public class ConnectMessage implements Message, Serializable
 	private double pin;
 
 	/**
-	 * @param playerID
-	 *            the player ID we should use to connect
-	 * @param pin
-	 *            the pin we were given to validate this connection request
+	 * @param playerID the player ID we should use to connect
+	 * @param pin the pin we were given to validate this connection request
 	 */
 	public ConnectMessage(int playerID, double pin)
 	{

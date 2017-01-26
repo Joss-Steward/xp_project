@@ -35,10 +35,9 @@ public class StubMessagePacker2a extends MessagePacker
 	@Override
 	public ArrayList<Class<? extends QualifiedObservableReport>> getReportTypesWePack()
 	{
-		ArrayList<Class<? extends QualifiedObservableReport>> result = 
-				new ArrayList<Class<? extends QualifiedObservableReport>>();
+		ArrayList<Class<? extends QualifiedObservableReport>> result = new ArrayList<Class<? extends QualifiedObservableReport>>();
 		result.add(StubQualifiedObservableReport1.class);
-		result.add( StubQualifiedObservableReport2.class);
+		result.add(StubQualifiedObservableReport2.class);
 		return result;
 	}
 

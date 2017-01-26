@@ -2,7 +2,6 @@ package communication.messages;
 
 import java.io.Serializable;
 
-
 /**
  * @author nhydock
  *
@@ -13,13 +12,11 @@ public class AreaCollisionMessage implements Message, Serializable
 
 	private final int playerID;
 	private final String areaName;
-	
+
 	/**
 	 * 
-	 * @param playerID
-	 *            The player who moved
-	 * @param areaName
-	 *            The name of the area the player has stepped into
+	 * @param playerID The player who moved
+	 * @param areaName The name of the area the player has stepped into
 	 */
 	public AreaCollisionMessage(int playerID, String areaName)
 	{
@@ -90,5 +87,5 @@ public class AreaCollisionMessage implements Message, Serializable
 	{
 		return "Collision Message: playerID = " + playerID + " collided with object = " + areaName;
 	}
-	
+
 }

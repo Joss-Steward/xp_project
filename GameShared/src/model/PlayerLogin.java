@@ -18,14 +18,10 @@ public class PlayerLogin
 	/**
 	 * Create a new record in the database
 	 * 
-	 * @param name
-	 *            the player's name
-	 * @param password
-	 *            the player's password
-	 * @param id
-	 *            The id of the player 
-	 * @throws DatabaseException
-	 *             if the gateway fails
+	 * @param name the player's name
+	 * @param password the player's password
+	 * @param id The id of the player
+	 * @throws DatabaseException if the gateway fails
 	 */
 	public PlayerLogin(String name, String password, int id) throws DatabaseException
 	{
@@ -48,12 +44,10 @@ public class PlayerLogin
 	/**
 	 * Create an object if the name and password are found in the db
 	 * 
-	 * @param playerName
-	 *            the player's name
-	 * @param password
-	 *            the player's password
-	 * @throws DatabaseException
-	 *             if the name/password combination isn't found in the db
+	 * @param playerName the player's name
+	 * @param password the player's password
+	 * @throws DatabaseException if the name/password combination isn't found in
+	 *             the db
 	 */
 	public PlayerLogin(String playerName, String password) throws DatabaseException
 	{
@@ -81,10 +75,8 @@ public class PlayerLogin
 	/**
 	 * Get a player's login information without checking his password
 	 * 
-	 * @param playerID
-	 *            the player's unique ID
-	 * @throws DatabaseException
-	 *             if the player doesn't exist
+	 * @param playerID the player's unique ID
+	 * @throws DatabaseException if the player doesn't exist
 	 */
 	public PlayerLogin(int playerID) throws DatabaseException
 	{
@@ -103,13 +95,12 @@ public class PlayerLogin
 			throw new DatabaseException("no login information for player with ID " + playerID);
 		}
 	}
+
 	/**
 	 * Get a player's login information without checking his password
 	 * 
-	 * @param playerName
-	 *            the player's player name
-	 * @throws DatabaseException
-	 *             if the player doesn't exist
+	 * @param playerName the player's player name
+	 * @throws DatabaseException if the player doesn't exist
 	 */
 	public PlayerLogin(String playerName) throws DatabaseException
 	{
@@ -128,7 +119,6 @@ public class PlayerLogin
 			throw new DatabaseException("no login information for " + playerName);
 		}
 	}
-
 
 	/**
 	 * Return this player's unique ID

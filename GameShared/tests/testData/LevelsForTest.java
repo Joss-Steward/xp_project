@@ -20,12 +20,12 @@ public enum LevelsForTest
 	/**
 	 * 
 	 */
-	THREE("Lord", 125, Calendar.NOVEMBER, 30), 
+	THREE("Lord", 125, Calendar.NOVEMBER, 30),
 	/**
 	 * 
 	 */
 	FOUR("King", Integer.MAX_VALUE, 0, 0);
-	
+
 	private String description;
 	private int levelUpPoints;
 	private int levelUpMonth;
@@ -48,7 +48,8 @@ public enum LevelsForTest
 	}
 
 	/**
-	 * @return the day of the month by which they are required to move passed this level
+	 * @return the day of the month by which they are required to move passed
+	 *         this level
 	 */
 	public int getLevelUpDayOfMonth()
 	{

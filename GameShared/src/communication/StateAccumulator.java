@@ -26,9 +26,9 @@ public class StateAccumulator implements QualifiedObserver
 	private int playerID;
 
 	/**
-	 * @param messagePackerSet
-	 *            the set of MessagePackers we should use to build the outgoing
-	 *            messages we are queueing (may be null during testing)
+	 * @param messagePackerSet the set of MessagePackers we should use to build
+	 *            the outgoing messages we are queueing (may be null during
+	 *            testing)
 	 * 
 	 */
 	public StateAccumulator(MessagePackerSet messagePackerSet)
@@ -83,8 +83,7 @@ public class StateAccumulator implements QualifiedObserver
 	/**
 	 * Force a specific message to be put into the queue
 	 * 
-	 * @param msg
-	 *            the msg we want to send
+	 * @param msg the msg we want to send
 	 */
 	public void queueMessage(Message msg)
 	{
@@ -95,8 +94,7 @@ public class StateAccumulator implements QualifiedObserver
 	}
 
 	/**
-	 * @param i
-	 *            the playerID of the player associated with this accumulator
+	 * @param i the playerID of the player associated with this accumulator
 	 */
 	public void setPlayerId(int i)
 	{

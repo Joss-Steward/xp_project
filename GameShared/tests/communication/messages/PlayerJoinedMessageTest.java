@@ -20,9 +20,9 @@ public class PlayerJoinedMessageTest
 	@Test
 	public void testToStringAndConstructor()
 	{
-		PlayerJoinedMessage msg = new PlayerJoinedMessage(2,
-				PlayersForTest.MERLIN.getPlayerName(),
-				PlayersForTest.MERLIN.getAppearanceType(), PlayersForTest.MERLIN.getPosition(), PlayersForTest.MERLIN.getCrew(), PlayersForTest.MERLIN.getMajor());
+		PlayerJoinedMessage msg = new PlayerJoinedMessage(2, PlayersForTest.MERLIN.getPlayerName(),
+				PlayersForTest.MERLIN.getAppearanceType(), PlayersForTest.MERLIN.getPosition(),
+				PlayersForTest.MERLIN.getCrew(), PlayersForTest.MERLIN.getMajor());
 		assertEquals("PlayerJoined Message: playerName = Merlin", msg.toString());
 		assertEquals(2, msg.getPlayerID());
 		assertEquals("Merlin", msg.getPlayerName());

@@ -28,25 +28,16 @@ public class PlayerJoinedMessage implements Message, Serializable
 	private Crew crew;
 	private Major major;
 
-	
-
-
-
 	/**
-	 * @param playerID
-	 *            the unique ID of the player
-	 * @param playerName
-	 *            the name of the new player
-	 * @param position
-	 *            where this player is on the map on this server
-	 * @param appearanceType
-	 *            the way the player should be drawn on the screen
-	 * @param crew
-	 *            the crew to which this player belongs
+	 * @param playerID the unique ID of the player
+	 * @param playerName the name of the new player
+	 * @param position where this player is on the map on this server
+	 * @param appearanceType the way the player should be drawn on the screen
+	 * @param crew the crew to which this player belongs
 	 * @param major of the player
 	 */
-	public PlayerJoinedMessage(int playerID, String playerName, String appearanceType,
-			Position position, Crew crew, Major major)
+	public PlayerJoinedMessage(int playerID, String playerName, String appearanceType, Position position, Crew crew,
+			Major major)
 	{
 		this.playerID = playerID;
 		this.playerName = playerName;
@@ -56,34 +47,29 @@ public class PlayerJoinedMessage implements Message, Serializable
 		this.major = major;
 	}
 
-
-
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((appearanceType == null) ? 0 : appearanceType.hashCode());
+		result = prime * result + ((appearanceType == null) ? 0 : appearanceType.hashCode());
 		result = prime * result + ((crew == null) ? 0 : crew.hashCode());
 		result = prime * result + ((major == null) ? 0 : major.hashCode());
 		result = prime * result + playerID;
-		result = prime * result
-				+ ((playerName == null) ? 0 : playerName.hashCode());
-		result = prime * result
-				+ ((position == null) ? 0 : position.hashCode());
+		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
+		result = prime * result + ((position == null) ? 0 : position.hashCode());
 		return result;
 	}
-
-
 
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -91,7 +77,8 @@ public class PlayerJoinedMessage implements Message, Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		PlayerJoinedMessage other = (PlayerJoinedMessage) obj;
-		if (appearanceType == null) {
+		if (appearanceType == null)
+		{
 			if (other.appearanceType != null)
 				return false;
 		} else if (!appearanceType.equals(other.appearanceType))
@@ -102,20 +89,20 @@ public class PlayerJoinedMessage implements Message, Serializable
 			return false;
 		if (playerID != other.playerID)
 			return false;
-		if (playerName == null) {
+		if (playerName == null)
+		{
 			if (other.playerName != null)
 				return false;
 		} else if (!playerName.equals(other.playerName))
 			return false;
-		if (position == null) {
+		if (position == null)
+		{
 			if (other.position != null)
 				return false;
 		} else if (!position.equals(other.position))
 			return false;
 		return true;
 	}
-
-
 
 	/**
 	 * Get the appearance type that shows how this player wants to be displayed
@@ -163,7 +150,6 @@ public class PlayerJoinedMessage implements Message, Serializable
 		return position;
 	}
 
-
 	/**
 	 * 
 	 * @see java.lang.Object#toString()
@@ -172,7 +158,7 @@ public class PlayerJoinedMessage implements Message, Serializable
 	{
 		return "PlayerJoined Message: playerName = " + playerName;
 	}
-	
+
 	/**
 	 * @return the major
 	 */

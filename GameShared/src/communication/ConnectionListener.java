@@ -20,10 +20,8 @@ public class ConnectionListener implements Runnable
 	/**
 	 * Creates a new listener
 	 * 
-	 * @param stream
-	 *            The socket to listen to
-	 * @param frequency
-	 *            The rate at which we should poll the socket to check the
+	 * @param stream The socket to listen to
+	 * @param frequency The rate at which we should poll the socket to check the
 	 *            availability of the connection
 	 */
 	public ConnectionListener(ObjectOutputStream stream, int frequency)
@@ -78,8 +76,7 @@ public class ConnectionListener implements Runnable
 	/**
 	 * Performs an action when a connection no longer exists
 	 * 
-	 * @param action
-	 *            the thing we should do when this connection disconnects
+	 * @param action the thing we should do when this connection disconnects
 	 */
 	public void setDisconnectionAction(Runnable action)
 	{
