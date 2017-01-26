@@ -14,9 +14,9 @@ import datasource.PlayerConnectionRowDataGatewayRDS;
 /**
  * The behaviors associated with the PINs that are given to players when the are
  * switching servers
- * 
+ *
  * @author Merlin
- * 
+ *
  */
 public class PlayerConnection
 {
@@ -42,7 +42,7 @@ public class PlayerConnection
 	/**
 	 * Used as the default pin in testing
 	 */
-	public static final int DEFAULT_PIN = 1;
+	public static final int DEFAULT_PIN = 1111;
 	private int playerID;
 
 	private PlayerConnectionRowDataGateway gateway;
@@ -65,7 +65,7 @@ public class PlayerConnection
 
 	/**
 	 * delete the PIN for this player
-	 * 
+	 *
 	 * @throws DatabaseException if the data source can't perform the deletion
 	 */
 	protected void deletePlayerPin() throws DatabaseException
@@ -76,7 +76,7 @@ public class PlayerConnection
 	/**
 	 * Generate the PIN this player should use for logging into his area server
 	 * and put it in the DB
-	 * 
+	 *
 	 * @return the PIN
 	 * @throws DatabaseException shouldn't
 	 */
@@ -89,7 +89,7 @@ public class PlayerConnection
 
 	/**
 	 * Generates the default PIN for testing purposes only!
-	 * 
+	 *
 	 * @throws DatabaseException shouldn't
 	 */
 	public void generateTestPin() throws DatabaseException
@@ -99,7 +99,7 @@ public class PlayerConnection
 
 	/**
 	 * Get the name of the map the player was most recently on
-	 * 
+	 *
 	 * @return the name of the tmx file
 	 */
 	public String getMapName()
@@ -117,7 +117,7 @@ public class PlayerConnection
 
 	/**
 	 * Get the time when this player's pin expires in GMT
-	 * 
+	 *
 	 * @return the expiration time
 	 * @throws DatabaseException if the data source has an exception
 	 */
@@ -144,7 +144,7 @@ public class PlayerConnection
 
 	/**
 	 * check if a pin is valid for a given player
-	 * 
+	 *
 	 * @param pin The pin to check against
 	 * @return true or false for whether the given pin is valid or not
 	 */
@@ -155,7 +155,7 @@ public class PlayerConnection
 
 	/**
 	 * Convert the time string from the data source into a Gregorian calendar.
-	 * 
+	 *
 	 * @param timeString The format of that time string must be
 	 *            "yyyy-MM-dd HH:mm:ss"
 	 * @return the appropriate Gregorian Calendar
@@ -184,7 +184,7 @@ public class PlayerConnection
 
 	/**
 	 * Used only for testing!!!!! Used to set the timestamp on the player's PIN
-	 * 
+	 *
 	 * @param newTime the time we want
 	 * @throws DatabaseException if we cant set the time whan a player's
 	 *             connection info was changes
@@ -196,7 +196,7 @@ public class PlayerConnection
 
 	/**
 	 * Store the map that the player is using
-	 * 
+	 *
 	 * @param mapFileTitle the title of the tmx file
 	 * @throws DatabaseException if we cannot update their state in the database
 	 */
