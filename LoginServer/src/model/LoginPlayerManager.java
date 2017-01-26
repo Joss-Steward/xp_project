@@ -7,12 +7,12 @@ import datasource.DatabaseException;
 
 /**
  * @author Merlin
- * 
+ *
  */
 public class LoginPlayerManager extends Observable
 {
 	/**
-	 * 
+	 *
 	 */
 	final String DEFAULT_MAP = "current.tmx";
 
@@ -48,7 +48,7 @@ public class LoginPlayerManager extends Observable
 	/**
 	 * Attempt to login to the system. Credentials will be checked and
 	 * appropriate reports will be made
-	 * 
+	 *
 	 * @param playerName
 	 *            the player's name
 	 * @param password
@@ -77,10 +77,10 @@ public class LoginPlayerManager extends Observable
 			LoginSuccessfulReport report = new LoginSuccessfulReport(pl.getPlayerID(),
 					server, port, pp.generatePin());
 			return report;
-		} 
+		}
 		catch (DatabaseException e)
 		{
-			e.printStackTrace();
+
 			throw new LoginFailedException();
 		}
 
