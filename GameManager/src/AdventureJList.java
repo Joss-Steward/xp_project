@@ -9,7 +9,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import data.AdventureRecord;
+import model.AdventureRecord;
 
 /**
  * Creates a window containing a list of Pending Adventures

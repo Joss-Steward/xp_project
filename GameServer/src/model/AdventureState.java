@@ -2,7 +2,6 @@ package model;
 
 import model.QualifiedObservableConnector;
 import model.reports.AdventureStateChangeReport;
-import data.AdventureRecord;
 import datasource.DatabaseException;
 import datatypes.AdventureStateEnum;
 import datatypes.QuestStateEnum;

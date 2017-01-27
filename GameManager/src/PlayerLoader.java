@@ -3,7 +3,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import data.AdventureRecord;
 import datasource.AdventureStateTableDataGateway;
 import datasource.AdventureStateTableDataGatewayRDS;
 import datasource.AdventureTableDataGateway;
@@ -20,6 +19,7 @@ import datatypes.Crew;
 import datatypes.Major;
 import datatypes.Position;
 import datatypes.QuestStateEnum;
+import model.AdventureRecord;
 import model.OptionsManager;
 
 public class PlayerLoader

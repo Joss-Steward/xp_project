@@ -11,7 +11,6 @@ import model.reports.PlayerLeaveReport;
 import model.reports.PlayerMovedReport;
 import model.reports.SendChatMessageReport;
 import data.AdventureCompletionType;
-import data.AdventureRecord;
 import data.CriteriaString;
 import data.PointsCompleted;
 import datasource.AdventureTableDataGateway;
@@ -89,7 +88,7 @@ public class QuestManager implements QualifiedObserver
 	 * @return quest the retrieved request
 	 * @throws DatabaseException throw an exception if the quest id isn't found
 	 */
-	public Quest getQuest(int questID) throws DatabaseException
+	public QuestRecord getQuest(int questID) throws DatabaseException
 	{
 
 		QuestRowDataGateway questGateway;
@@ -102,7 +101,7 @@ public class QuestManager implements QualifiedObserver
 			questGateway = new QuestRowDataGatewayRDS(questID);
 		}
 
-		Quest quest = new Quest(questGateway.getQuestID(), questGateway.getQuestTitle(),
+		QuestRecord quest = new QuestRecord(questGateway.getQuestID(), questGateway.getQuestTitle(),
 				questGateway.getQuestDescription(), questGateway.getTriggerMapName(), questGateway.getTriggerPosition(),
 				adventureGateway.getAdventuresForQuest(questID), questGateway.getExperiencePointsGained(),
 				questGateway.getAdventuresForFulfillment(), questGateway.getCompletionActionType(),
@@ -160,7 +159,7 @@ public class QuestManager implements QualifiedObserver
 		QuestState qs = getQuestStateByID(playerID, questID);
 		Calendar.getInstance().set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
 		Date now = Calendar.getInstance().getTime();
-		Quest q = getQuest(questID);
+		QuestRecord q = getQuest(questID);
 
 		if ((qs != null) && (qs.getStateValue() != QuestStateEnum.TRIGGERED))
 		{
@@ -488,7 +487,7 @@ public class QuestManager implements QualifiedObserver
 	{
 
 		ArrayList<QuestState> questStateList = QuestManager.getSingleton().getQuestList(playerID);
-		Quest quest = null;
+		QuestRecord quest = null;
 		try
 		{
 			quest = QuestManager.getSingleton().getQuest(questID);

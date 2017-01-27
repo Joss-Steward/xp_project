@@ -8,11 +8,11 @@ import java.util.List;
 
 import org.junit.Test;
 
+import data.AdventureStateRecord;
 import testData.AdventuresForTest;
 import testData.PlayersForTest;
-import data.AdventureRecord;
-import data.AdventureStateRecord;
 import datatypes.AdventureStateEnum;
+import model.AdventureRecord;
 
 /**
  * @author Merlin

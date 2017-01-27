@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import testData.AdventuresForTest;
-import data.AdventureRecord;
 import data.GameLocation;
 import datasource.AdventureTableDataGateway;
 import datasource.DatabaseException;
 import datatypes.Position;
+import model.AdventureRecord;
 
 /**
  * An abstract class that tests the table data gateways into the Adventure table

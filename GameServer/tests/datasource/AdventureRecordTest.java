@@ -6,8 +6,8 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Test;
 
 import data.AdventureCompletionType;
-import data.AdventureRecord;
 import data.CriteriaString;
+import model.AdventureRecord;
 
 /**
  * Tests a simple data transfer object that contains the information about one

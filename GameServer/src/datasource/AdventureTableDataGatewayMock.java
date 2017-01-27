@@ -6,9 +6,9 @@ import java.util.Set;
 
 import testData.AdventuresForTest;
 import data.AdventureCompletionType;
-import data.AdventureRecord;
 import data.GameLocation;
 import datatypes.Position;
+import model.AdventureRecord;
 
 /**
  * Mock version of the gateway to the table of adventures.

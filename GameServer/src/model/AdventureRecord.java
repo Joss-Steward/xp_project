@@ -1,4 +1,7 @@
-package data;
+package model;
+
+import data.AdventureCompletionCriteria;
+import data.AdventureCompletionType;
 
 /**
  * Data Transfer Object for the Adventure Data Gateway to deliver records.

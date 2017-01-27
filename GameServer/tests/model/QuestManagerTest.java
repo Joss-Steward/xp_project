@@ -23,7 +23,6 @@ import testData.AdventuresForTest;
 import testData.PlayersForTest;
 import testData.QuestStatesForTest;
 import testData.QuestsForTest;
-import data.AdventureRecord;
 import data.GameLocation;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;
@@ -107,7 +106,7 @@ public class QuestManagerTest extends DatabaseTest
 	{
 		QuestManager qm = QuestManager.getSingleton();
 		QuestsForTest expected = QuestsForTest.ONE_BIG_QUEST;
-		Quest actual = qm.getQuest(1);
+		QuestRecord actual = qm.getQuest(1);
 		assertEquals(expected.getQuestID(), actual.getQuestID());
 		assertEquals(expected.getQuestDescription(), actual.getDescription());
 		assertEquals(expected.getMapName(), actual.getMapName());
@@ -172,7 +171,7 @@ public class QuestManagerTest extends DatabaseTest
 	public void testGettingAQuestsAdventures() throws DatabaseException
 	{
 		QuestManager qm = QuestManager.getSingleton();
-		Quest quest = qm.getQuest(1);
+		QuestRecord quest = qm.getQuest(1);
 
 		int i = 1;
 		for (AdventureRecord a : quest.getAdventures())
@@ -202,8 +201,8 @@ public class QuestManagerTest extends DatabaseTest
 	public void testGettingTwoQuestsAndTheirAdventures() throws DatabaseException
 	{
 		QuestManager qm = QuestManager.getSingleton();
-		Quest quest1 = qm.getQuest(1);
-		Quest quest2 = qm.getQuest(2);
+		QuestRecord quest1 = qm.getQuest(1);
+		QuestRecord quest2 = qm.getQuest(2);
 
 		int i = 1;
 		for (AdventureRecord a : quest1.getAdventures())
@@ -252,7 +251,7 @@ public class QuestManagerTest extends DatabaseTest
 	public void testQuestDoesNotExits() throws DatabaseException
 	{
 		QuestManager qm = QuestManager.getSingleton();
-		Quest quest1 = qm.getQuest(1000);
+		QuestRecord quest1 = qm.getQuest(1000);
 	}
 
 	/**

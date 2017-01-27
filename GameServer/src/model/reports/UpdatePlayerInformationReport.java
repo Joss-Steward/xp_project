@@ -2,15 +2,15 @@ package model.reports;
 
 import java.util.ArrayList;
 
+import model.AdventureRecord;
 import model.AdventureState;
 import model.IllegalQuestChangeException;
 import model.LevelManager;
 import model.Player;
 import model.QualifiedObservableReport;
-import model.Quest;
+import model.QuestRecord;
 import model.QuestManager;
 import model.QuestState;
-import data.AdventureRecord;
 import data.ClientPlayerAdventureState;
 import data.ClientPlayerQuestState;
 import datasource.DatabaseException;
@@ -65,7 +65,7 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 				// && qs.getStateValue() != QuestStateEnum.HIDDEN)
 				// {
 				int questID = qs.getID();
-				Quest quest = QuestManager.getSingleton().getQuest(questID);
+				QuestRecord quest = QuestManager.getSingleton().getQuest(questID);
 
 				ClientPlayerQuestState clientQuest = new ClientPlayerQuestState(quest.getQuestID(), quest.getTitle(),
 						quest.getDescription(), qs.getStateValue(), quest.getExperiencePointsGained(),
@@ -78,7 +78,7 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 		}
 	}
 
-	private ArrayList<ClientPlayerAdventureState> combineAdventure(Quest quest, QuestState qs)
+	private ArrayList<ClientPlayerAdventureState> combineAdventure(QuestRecord quest, QuestState qs)
 	{
 		ArrayList<ClientPlayerAdventureState> ca = new ArrayList<ClientPlayerAdventureState>();
 		for (AdventureState a : qs.getAdventureList())

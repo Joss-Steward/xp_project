@@ -2,9 +2,9 @@ package datasource;
 
 import java.util.ArrayList;
 
-import data.AdventureRecord;
 import datasource.DatabaseException;
 import datatypes.Position;
+import model.AdventureRecord;
 
 /**
  * Requirements for all gateways into the adventure table

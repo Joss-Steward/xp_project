@@ -3,7 +3,6 @@ package model;
 import java.util.ArrayList;
 import java.util.Date;
 
-import data.AdventureRecord;
 import data.QuestCompletionActionParameter;
 import data.QuestCompletionActionType;
 import datatypes.Position;
@@ -14,7 +13,7 @@ import datatypes.Position;
  * @author Scott Lantz, LaVonne Diller
  *
  */
-public class Quest
+public class QuestRecord
 {
 	private String title;
 	private String description;
@@ -49,7 +48,7 @@ public class Quest
 	 * @param endDate The last day the quest is available
 	 */
 
-	public Quest(int id, String title, String desc, String map, Position pos, ArrayList<AdventureRecord> adventures,
+	public QuestRecord(int id, String title, String desc, String map, Position pos, ArrayList<AdventureRecord> adventures,
 			int experiencePointsGained, int adventuresForFulfillment, QuestCompletionActionType completionActionType,
 			QuestCompletionActionParameter completionActionParameter, Date startDate, Date endDate)
 	{

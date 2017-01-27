@@ -9,8 +9,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import testData.AdventureStatesForTest;
 import data.AdventureStateRecord;
+import testData.AdventureStatesForTest;
 import datasource.AdventureStateTableDataGateway;
 import datasource.DatabaseException;
 import datasource.DatabaseTest;

@@ -32,16 +32,16 @@ public class QuestState
 	 *
 	 * @param playerID the player whose state this represents
 	 * @param questID unique ID for the quest in the system
-	 * @param questStateList the quest's state for the player, can be either
+	 * @param currentState the quest's state for the player, can be either
 	 *            hidden, available, triggered, fulfilled, completed
 	 * @param needingNotification true if the player should be notified about
 	 *            the quest's state
 	 */
-	public QuestState(int playerID, int questID, QuestStateEnum questStateList, boolean needingNotification)
+	public QuestState(int playerID, int questID, QuestStateEnum currentState, boolean needingNotification)
 	{
 		this.playerID = playerID;
 		this.questID = questID;
-		this.questState = questStateList;
+		this.questState = currentState;
 		this.needingNotification = needingNotification;
 	}
 
@@ -104,7 +104,7 @@ public class QuestState
 	public void finish() throws IllegalQuestChangeException, DatabaseException
 	{
 		changeState(QuestStateEnum.FINISHED, true);
-		Quest q = QuestManager.getSingleton().getQuest(questID);
+		QuestRecord q = QuestManager.getSingleton().getQuest(questID);
 		if (q.getCompletionActionType() == QuestCompletionActionType.TELEPORT)
 		{
 			GameLocation gl = (GameLocation) q.getCompletionActionParameter();
@@ -242,7 +242,7 @@ public class QuestState
 
 			if (this.needingNotification == true)
 			{
-				Quest quest = QuestManager.getSingleton().getQuest(questID);
+				QuestRecord quest = QuestManager.getSingleton().getQuest(questID);
 				QualifiedObservableConnector.getSingleton().sendReport(new QuestStateChangeReport(playerID, questID,
 						quest.getTitle(), quest.getDescription(), questState));
 			}

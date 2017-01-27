@@ -11,9 +11,9 @@ import java.util.List;
 
 import data.AdventureCompletionCriteria;
 import data.AdventureCompletionType;
-import data.AdventureRecord;
 import datasource.AdventureStateTableDataGatewayRDS;
 import datatypes.AdventureStateEnum;
+import model.AdventureRecord;
 
 /**
  * A table data gateway that feels like it is a gateway into a view (for now it

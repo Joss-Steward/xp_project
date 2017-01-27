@@ -10,12 +10,12 @@ import java.util.ArrayList;
 
 import data.AdventureCompletionCriteria;
 import data.AdventureCompletionType;
-import data.AdventureRecord;
 import data.GameLocation;
 import datasource.ClosingPreparedStatement;
 import datasource.DatabaseException;
 import datasource.DatabaseManager;
 import datatypes.Position;
+import model.AdventureRecord;
 
 /**
  * The RDS Implementation of this gateway
