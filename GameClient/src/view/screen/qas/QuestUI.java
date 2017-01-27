@@ -9,7 +9,6 @@ import javax.swing.filechooser.FileFilter;
 import view.screen.OverlayingScreen;
 import view.screen.SkinPicker;
 import model.ClientModelFacade;
-import model.ClientPlayerQuest;
 import model.CommandPrintAdventures;
 import model.CommandSendQuestState;
 import model.QualifiedObservableConnector;
@@ -23,6 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.VisibleAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
+import data.ClientPlayerQuestState;
 
 /**
  * A basic screen that displays the quests and adventure states.
@@ -39,7 +40,7 @@ public class QuestUI extends OverlayingScreen implements QualifiedObserver
 	private LegendTable legendTable;
 	private Table subContainer;
 	private TextButton printButton;
-	private ArrayList<ClientPlayerQuest> questList;
+	private ArrayList<ClientPlayerQuestState> questList;
 
 	/**
 	 * Basic constructor. will call show() to initialize all the data in the
@@ -48,7 +49,7 @@ public class QuestUI extends OverlayingScreen implements QualifiedObserver
 	public QuestUI()
 	{
 		super();
-		questList = new ArrayList<ClientPlayerQuest>();
+		questList = new ArrayList<ClientPlayerQuestState>();
 		setUpListening();
 
 		questTable = new QuestTable(questList, true);
@@ -228,7 +229,7 @@ public class QuestUI extends OverlayingScreen implements QualifiedObserver
 			questTable.updateQuests(questList);
 			if (questList.size() > 0)
 			{
-				ClientPlayerQuest firstQuest = questList.get(0);
+				ClientPlayerQuestState firstQuest = questList.get(0);
 				adventureTable.updateAdventures(firstQuest.getQuestDescription(),
 						firstQuest.getExpireDate().toString(),
 						firstQuest.getAdventureList());

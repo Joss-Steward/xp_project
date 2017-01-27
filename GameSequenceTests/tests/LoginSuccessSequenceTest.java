@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import testData.LevelsForTest;
 import testData.PlayersForTest;
 import testData.ServersForTest;
-import model.ClientPlayerAdventure;
-import model.ClientPlayerQuest;
 import model.Command;
 import model.CommandLogin;
 import model.MessageFlow;
@@ -22,6 +20,8 @@ import communication.messages.PlayerJoinedMessage;
 import communication.packers.MapFileMessagePacker;
 import data.AdventureRecord;
 import data.AdventureStateRecord;
+import data.ClientPlayerAdventureState;
+import data.ClientPlayerQuestState;
 import data.QuestStateRecord;
 import datasource.AdventureStateTableDataGateway;
 import datasource.AdventureStateTableDataGatewayMock;
@@ -93,9 +93,9 @@ public class LoginSuccessSequenceTest extends SequenceTest
 		}
 	}
 
-	private ArrayList<ClientPlayerQuest> getPlayersQuest(int playerID)
+	private ArrayList<ClientPlayerQuestState> getPlayersQuest(int playerID)
 	{
-		ArrayList<ClientPlayerQuest> result = new ArrayList<ClientPlayerQuest>();
+		ArrayList<ClientPlayerQuestState> result = new ArrayList<ClientPlayerQuestState>();
 		QuestStateTableDataGateway qsGateway = QuestStateTableDataGatewayMock
 				.getSingleton();
 		try
@@ -111,11 +111,11 @@ public class LoginSuccessSequenceTest extends SequenceTest
 		return result;
 	}
 
-	private ClientPlayerQuest createClientPlayerQuestFor(QuestStateRecord q)
+	private ClientPlayerQuestState createClientPlayerQuestFor(QuestStateRecord q)
 			throws DatabaseException
 	{
 		QuestRowDataGateway qGateway = new QuestRowDataGatewayMock(q.getQuestID());
-		ClientPlayerQuest cpq = new ClientPlayerQuest(q.getQuestID(),
+		ClientPlayerQuestState cpq = new ClientPlayerQuestState(q.getQuestID(),
 				qGateway.getQuestTitle(), qGateway.getQuestDescription(), q.getState(),
 				qGateway.getExperiencePointsGained(),
 				qGateway.getAdventuresForFulfillment(), q.isNeedingNotification(), null);
@@ -131,7 +131,7 @@ public class LoginSuccessSequenceTest extends SequenceTest
 			AdventureRecord adventureRecord = aGateway.getAdventure(q.getQuestID(),
 					adv.getAdventureID());
 
-			cpq.addAdventure(new ClientPlayerAdventure(adv.getAdventureID(),
+			cpq.addAdventure(new ClientPlayerAdventureState(adv.getAdventureID(),
 					adventureRecord.getAdventureDescription()
 					, adventureRecord.getExperiencePointsGained()
 					, adv.getState(), adv.isNeedingNotification()

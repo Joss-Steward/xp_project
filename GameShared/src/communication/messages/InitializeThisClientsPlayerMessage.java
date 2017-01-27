@@ -3,8 +3,8 @@ package communication.messages;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import data.ClientPlayerQuestState;
 import datasource.LevelRecord;
-import model.ClientPlayerQuest;
 
 /**
  * @author Merlin
@@ -18,7 +18,7 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private ArrayList<ClientPlayerQuest> clientPlayerQuestList;
+	private ArrayList<ClientPlayerQuestState> clientPlayerQuestList;
 
 	private int experiencePts;
 	private LevelRecord level;
@@ -31,7 +31,7 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 	 * @param experiencePts player's experience points
 	 * @param level LevelRecord
 	 */
-	public InitializeThisClientsPlayerMessage(ArrayList<ClientPlayerQuest> clientPlayerQuestList, int experiencePts,
+	public InitializeThisClientsPlayerMessage(ArrayList<ClientPlayerQuestState> clientPlayerQuestList, int experiencePts,
 			LevelRecord level)
 	{
 		this.clientPlayerQuestList = clientPlayerQuestList;
@@ -45,7 +45,7 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 	 * @param level LevelRecord
 	 * @param knowledgePoints for this player
 	 */
-	public InitializeThisClientsPlayerMessage(ArrayList<ClientPlayerQuest> clientPlayerQuestList, int experiencePts,
+	public InitializeThisClientsPlayerMessage(ArrayList<ClientPlayerQuestState> clientPlayerQuestList, int experiencePts,
 			int knowledgePoints, LevelRecord level)
 	{
 		this.clientPlayerQuestList = clientPlayerQuestList;
@@ -89,7 +89,7 @@ public class InitializeThisClientsPlayerMessage implements Message, Serializable
 	 * 
 	 * @return quest list
 	 */
-	public ArrayList<ClientPlayerQuest> getClientPlayerQuestList()
+	public ArrayList<ClientPlayerQuestState> getClientPlayerQuestList()
 	{
 		return clientPlayerQuestList;
 	}

@@ -3,8 +3,6 @@ package model.reports;
 import java.util.ArrayList;
 
 import model.AdventureState;
-import model.ClientPlayerAdventure;
-import model.ClientPlayerQuest;
 import model.IllegalQuestChangeException;
 import model.LevelManager;
 import model.Player;
@@ -13,6 +11,8 @@ import model.Quest;
 import model.QuestManager;
 import model.QuestState;
 import data.AdventureRecord;
+import data.ClientPlayerAdventureState;
+import data.ClientPlayerQuestState;
 import datasource.DatabaseException;
 import datasource.LevelRecord;
 
@@ -25,7 +25,7 @@ import datasource.LevelRecord;
 public class UpdatePlayerInformationReport implements QualifiedObservableReport
 {
 
-	private ArrayList<ClientPlayerQuest> clientPlayerQuestList = new ArrayList<ClientPlayerQuest>();
+	private ArrayList<ClientPlayerQuestState> clientPlayerQuestList = new ArrayList<ClientPlayerQuestState>();
 	private int experiencePoints;
 	private LevelRecord level;
 	private int playerID;
@@ -67,7 +67,7 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 				int questID = qs.getID();
 				Quest quest = QuestManager.getSingleton().getQuest(questID);
 
-				ClientPlayerQuest clientQuest = new ClientPlayerQuest(quest.getQuestID(), quest.getTitle(),
+				ClientPlayerQuestState clientQuest = new ClientPlayerQuestState(quest.getQuestID(), quest.getTitle(),
 						quest.getDescription(), qs.getStateValue(), quest.getExperiencePointsGained(),
 						quest.getAdventuresForFulfillment(), qs.isNeedingNotification(), quest.getEndDate());
 				clientQuest.setAdventures(combineAdventure(quest, qs));
@@ -78,14 +78,14 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 		}
 	}
 
-	private ArrayList<ClientPlayerAdventure> combineAdventure(Quest quest, QuestState qs)
+	private ArrayList<ClientPlayerAdventureState> combineAdventure(Quest quest, QuestState qs)
 	{
-		ArrayList<ClientPlayerAdventure> ca = new ArrayList<ClientPlayerAdventure>();
+		ArrayList<ClientPlayerAdventureState> ca = new ArrayList<ClientPlayerAdventureState>();
 		for (AdventureState a : qs.getAdventureList())
 		{
 			int adventureID = a.getID();
 			AdventureRecord adventure = quest.getAdventureD(adventureID);
-			ca.add(new ClientPlayerAdventure(a.getID(), adventure.getAdventureDescription(),
+			ca.add(new ClientPlayerAdventureState(a.getID(), adventure.getAdventureDescription(),
 					adventure.getExperiencePointsGained(), a.getState(), a.isNeedingNotification(),
 					adventure.isRealLifeAdventure(), adventure.getCompletionCriteria().toString(), qs.getStateValue()));
 		}
@@ -98,7 +98,7 @@ public class UpdatePlayerInformationReport implements QualifiedObservableReport
 	 * 
 	 * @return clientPlayerQuestList
 	 */
-	public ArrayList<ClientPlayerQuest> getClientPlayerQuestList()
+	public ArrayList<ClientPlayerQuestState> getClientPlayerQuestList()
 	{
 		return clientPlayerQuestList;
 	}

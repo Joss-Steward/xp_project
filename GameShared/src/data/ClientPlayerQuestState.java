@@ -1,4 +1,4 @@
-package model;
+package data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import datatypes.QuestStateEnum;
  * @author nk3668
  *
  */
-public class ClientPlayerQuest implements Serializable
+public class ClientPlayerQuestState implements Serializable
 {
 	/**
 	 * 
@@ -25,7 +25,7 @@ public class ClientPlayerQuest implements Serializable
 	private String questDescription;
 	private Date expireDate;
 	private QuestStateEnum state;
-	private ArrayList<ClientPlayerAdventure> adventures = new ArrayList<ClientPlayerAdventure>();
+	private ArrayList<ClientPlayerAdventureState> adventures = new ArrayList<ClientPlayerAdventureState>();
 	private int experiencePointsGained;
 	private int adventuresToFulfillment;
 	private boolean needingNotification;
@@ -45,7 +45,7 @@ public class ClientPlayerQuest implements Serializable
 	 *            this quest state
 	 * @param expireDate date the quest expires
 	 */
-	public ClientPlayerQuest(int questID, String questTitle, String questDescription, QuestStateEnum state,
+	public ClientPlayerQuestState(int questID, String questTitle, String questDescription, QuestStateEnum state,
 			int experiencePointsGained, int adventuresToFulfillment, boolean needingNotification, Date expireDate)
 	{
 		this.questID = questID;
@@ -63,7 +63,7 @@ public class ClientPlayerQuest implements Serializable
 	 * 
 	 * @param a the adventure being added
 	 */
-	public void addAdventure(ClientPlayerAdventure a)
+	public void addAdventure(ClientPlayerAdventureState a)
 	{
 		adventures.add(a);
 	}
@@ -80,7 +80,7 @@ public class ClientPlayerQuest implements Serializable
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ClientPlayerQuest other = (ClientPlayerQuest) obj;
+		ClientPlayerQuestState other = (ClientPlayerQuestState) obj;
 		if (adventures == null)
 		{
 			if (other.adventures != null)
@@ -109,7 +109,7 @@ public class ClientPlayerQuest implements Serializable
 	 * 
 	 * @return adventures
 	 */
-	public ArrayList<ClientPlayerAdventure> getAdventureList()
+	public ArrayList<ClientPlayerAdventureState> getAdventureList()
 	{
 		return adventures;
 	}
@@ -210,7 +210,7 @@ public class ClientPlayerQuest implements Serializable
 	 * 
 	 * @param adventureList ClientPlayerAdventure ArrayList
 	 */
-	public void setAdventures(ArrayList<ClientPlayerAdventure> adventureList)
+	public void setAdventures(ArrayList<ClientPlayerAdventureState> adventureList)
 	{
 		this.adventures = adventureList;
 	}

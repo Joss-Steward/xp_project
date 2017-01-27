@@ -1,13 +1,13 @@
 package view.screen.qas;
 import java.util.ArrayList;
 
-import model.ClientPlayerAdventure;
 import view.screen.OverlayingScreenTable;
 import view.screen.SkinPicker;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
+import data.ClientPlayerAdventureState;
 import datatypes.AdventureStateEnum;
 import datatypes.QuestStateEnum;
 /**
@@ -32,7 +32,7 @@ public class AdventureTable extends OverlayingScreenTable
 	 * @param expire The expiration date of the quest
 	 * @param adventureList The list of adventures the quest has
 	 */
-	public void updateAdventures(String questDesc, String expire, ArrayList<ClientPlayerAdventure> adventureList)
+	public void updateAdventures(String questDesc, String expire, ArrayList<ClientPlayerAdventureState> adventureList)
 	{
 		container.clear();
 		Label l = new Label(questDesc + "\nExpires: " + expire + "\n\nAdventures:\n", SkinPicker.getSkinPicker().getCrewSkin());
@@ -40,7 +40,7 @@ public class AdventureTable extends OverlayingScreenTable
 		container.add(l).left().top().width(container.getWidth() - getPadding() * 4f);		//Width is used to tell the label when to wrap its text.
 		container.row();
 		//for (int i = 0; i < 100; i++)  //Add a stupid amount of adventures to test scrolling
-		for (ClientPlayerAdventure cpa : adventureList)
+		for (ClientPlayerAdventureState cpa : adventureList)
 		{
 			l = createAdventureLabel(cpa);
 			container.add(l).left().top().width(container.getWidth() - getPadding() * 4f);	//Width is used to tell the label when to wrap its text.
@@ -56,7 +56,7 @@ public class AdventureTable extends OverlayingScreenTable
 	 * @return The created adventure label
 	 * We made need to refactor this into its own class depending on how fancy we want the labels.
 	 */
-	private Label createAdventureLabel(ClientPlayerAdventure cpa)
+	private Label createAdventureLabel(ClientPlayerAdventureState cpa)
 	{
 		Label l;
 		if(cpa.isRealLifeAdventure()) {

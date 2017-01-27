@@ -1,9 +1,10 @@
-package model;
+package data;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import data.ClientPlayerAdventureState;
 import datatypes.AdventureStateEnum;
 import datatypes.QuestStateEnum;
 
@@ -21,7 +22,7 @@ public class ClientPlayerAdventureTest
 	@Test
 	public void testClientPlayerAdventureInitializaiton()
 	{
-		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure", 3, AdventureStateEnum.HIDDEN, false,
+		ClientPlayerAdventureState a = new ClientPlayerAdventureState(1, "Test Adventure", 3, AdventureStateEnum.HIDDEN, false,
 				true, "Dept chair", QuestStateEnum.AVAILABLE);
 		assertEquals(1, a.getAdventureID());
 		assertEquals("Test Adventure", a.getAdventureDescription());

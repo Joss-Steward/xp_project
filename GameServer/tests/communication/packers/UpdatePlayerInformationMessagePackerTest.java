@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import model.ClientPlayerQuest;
 import model.IllegalQuestChangeException;
 import model.OptionsManager;
 import model.Player;
@@ -18,6 +17,7 @@ import org.junit.Test;
 import testData.PlayersForTest;
 import communication.StateAccumulator;
 import communication.messages.InitializeThisClientsPlayerMessage;
+import data.ClientPlayerQuestState;
 import datasource.DatabaseException;
 
 /**
@@ -94,10 +94,10 @@ public class UpdatePlayerInformationMessagePackerTest
 		packer.setAccumulator(stateAccumulator);
 
 		InitializeThisClientsPlayerMessage message = (InitializeThisClientsPlayerMessage) packer.pack(report);
-		ArrayList<ClientPlayerQuest> expected = report.getClientPlayerQuestList();
-		ArrayList<ClientPlayerQuest> actual = message.getClientPlayerQuestList();
+		ArrayList<ClientPlayerQuestState> expected = report.getClientPlayerQuestList();
+		ArrayList<ClientPlayerQuestState> actual = message.getClientPlayerQuestList();
 		assertEquals(expected.size(), actual.size());
-		for (ClientPlayerQuest a : actual)
+		for (ClientPlayerQuestState a : actual)
 		{
 			assertTrue(expected.contains(a));
 		}

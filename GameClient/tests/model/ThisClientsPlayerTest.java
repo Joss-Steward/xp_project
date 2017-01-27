@@ -6,9 +6,6 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.util.ArrayList;
 
-import model.ClientPlayerAdventure;
-import model.ClientPlayerQuest;
-import model.ClientPlayerQuestTest;
 import model.ClientPlayerManager;
 import model.QualifiedObservableConnector;
 import model.QualifiedObserver;
@@ -23,6 +20,9 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
+import data.ClientPlayerAdventureState;
+import data.ClientPlayerQuestState;
+import data.ClientPlayerQuestTest;
 import testData.PlayersForTest;
 import datasource.LevelRecord;
 import datatypes.AdventureStateEnum;
@@ -77,9 +77,9 @@ public class ThisClientsPlayerTest
 	public void notifiesOnQuestRequest()
 	{
 		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
-		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
+		ClientPlayerQuestState q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
 		cp.addQuest(q);
-		ArrayList<ClientPlayerQuest> expected = new ArrayList<ClientPlayerQuest>();
+		ArrayList<ClientPlayerQuestState> expected = new ArrayList<ClientPlayerQuestState>();
 		expected.add(q);
 
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
@@ -103,7 +103,7 @@ public class ThisClientsPlayerTest
 	{
 		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 
-		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
+		ClientPlayerQuestState q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
 
 		cp.addQuest(q);
 		assertEquals(2, cp.getQuests().get(0).getAdventureList().get(1).getAdventureID());
@@ -134,17 +134,17 @@ public class ThisClientsPlayerTest
 	public void canWhompOnQuestList()
 	{
 		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
-		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
+		ClientPlayerQuestState q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
 		cp.addQuest(q);
 
-		ClientPlayerAdventure a = new ClientPlayerAdventure(42, "Test Adventure ow2", 3,
+		ClientPlayerAdventureState a = new ClientPlayerAdventureState(42, "Test Adventure ow2", 3,
 				AdventureStateEnum.HIDDEN, false, true, "Chair", QuestStateEnum.AVAILABLE);
-		ClientPlayerQuest qow = new ClientPlayerQuest(41, "quest title",
+		ClientPlayerQuestState qow = new ClientPlayerQuestState(41, "quest title",
 				"Test Quest ow1", QuestStateEnum.AVAILABLE, 42, 3, true, null);
 
 		qow.addAdventure(a);
 
-		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
+		ArrayList<ClientPlayerQuestState> qList = new ArrayList<ClientPlayerQuestState>();
 		qList.add(qow);
 		cp.overwriteQuestList(qList);
 
@@ -178,14 +178,14 @@ public class ThisClientsPlayerTest
 	{
 		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 
-		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", 0,
+		ClientPlayerAdventureState a = new ClientPlayerAdventureState(1, "Test Adventure 1", 0,
 				AdventureStateEnum.COMPLETED, true, true, "Mom", QuestStateEnum.AVAILABLE);
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "questtitle", "Test Quest 1",
+		ClientPlayerQuestState q = new ClientPlayerQuestState(1, "questtitle", "Test Quest 1",
 				QuestStateEnum.FINISHED, 1, 2, true, null);
 		q.addAdventure(a);
 		cp.addQuest(q);
 
-		ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
+		ArrayList<ClientPlayerQuestState> questList = new ArrayList<ClientPlayerQuestState>();
 		questList.add(q);
 
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);
@@ -211,14 +211,14 @@ public class ThisClientsPlayerTest
 	{
 		ThisClientsPlayer cp = setUpThisClientsPlayer(PlayersForTest.JOHN);
 
-		ClientPlayerAdventure a = new ClientPlayerAdventure(1, "Test Adventure 1", 0,
+		ClientPlayerAdventureState a = new ClientPlayerAdventureState(1, "Test Adventure 1", 0,
 				AdventureStateEnum.COMPLETED, true, true, "Fred", QuestStateEnum.AVAILABLE);
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "quest title", "Test Quest 1",
+		ClientPlayerQuestState q = new ClientPlayerQuestState(1, "quest title", "Test Quest 1",
 				QuestStateEnum.FINISHED, 1, 2, true, null);
 		q.addAdventure(a);
 		cp.addQuest(q);
 
-		ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
+		ArrayList<ClientPlayerQuestState> questList = new ArrayList<ClientPlayerQuestState>();
 		questList.add(q);
 
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);

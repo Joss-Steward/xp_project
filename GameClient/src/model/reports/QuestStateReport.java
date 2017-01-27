@@ -2,7 +2,7 @@ package model.reports;
 
 import java.util.ArrayList;
 
-import model.ClientPlayerQuest;
+import data.ClientPlayerQuestState;
 import model.QualifiedObservableReport;
 
 /**
@@ -14,13 +14,13 @@ import model.QualifiedObservableReport;
 public class QuestStateReport implements QualifiedObservableReport
 {
 
-	private ArrayList<ClientPlayerQuest> data;
+	private ArrayList<ClientPlayerQuestState> data;
 
 	/**
 	 * Creates a QuestStateReport
 	 * @param data ClientPlayerQuest list to send
 	 */
-	public QuestStateReport(ArrayList<ClientPlayerQuest> data)
+	public QuestStateReport(ArrayList<ClientPlayerQuestState> data)
 	{
 		this.data = data;
 	}
@@ -29,7 +29,7 @@ public class QuestStateReport implements QualifiedObservableReport
 	 * Returns data an array list of ClientPlayerQuests
 	 * @return data 
 	 */
-	public ArrayList<ClientPlayerQuest> getClientPlayerQuestList()
+	public ArrayList<ClientPlayerQuestState> getClientPlayerQuestList()
 	{
 		return data;
 	}

@@ -5,13 +5,13 @@ import static org.junit.Assert.assertEquals;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
-import model.ClientPlayerQuest;
 import model.CommandQuestStateChange;
 import model.ClientPlayerManager;
 
 import org.junit.Test;
 
 import communication.messages.QuestStateChangeMessage;
+import data.ClientPlayerQuestState;
 import datatypes.Crew;
 import datatypes.Major;
 import datatypes.Position;
@@ -53,7 +53,7 @@ public class CommandQuestStateChangeTest
 	{
 		int playerID = 1;
 		int questID = 1;
-		ClientPlayerQuest q = new ClientPlayerQuest(questID, "title",
+		ClientPlayerQuestState q = new ClientPlayerQuestState(questID, "title",
 				"silly quest", QuestStateEnum.TRIGGERED, 3, 0, true, null);
 
 		Position pos = new Position(1, 2);
@@ -70,7 +70,7 @@ public class CommandQuestStateChangeTest
 						QuestStateEnum.FINISHED));
 		x.execute();
 
-		for (ClientPlayerQuest quest : ClientPlayerManager.getSingleton()
+		for (ClientPlayerQuestState quest : ClientPlayerManager.getSingleton()
 				.getThisClientsPlayer().getQuests())
 		{
 			if (quest.getQuestID() == questID)

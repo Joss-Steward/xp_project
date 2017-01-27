@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import model.ClientPlayerAdventure;
-import model.ClientPlayerQuest;
 import model.IllegalQuestChangeException;
 import model.OptionsManager;
 import model.Player;
@@ -16,6 +14,8 @@ import model.reports.UpdatePlayerInformationReport;
 import org.junit.Before;
 import org.junit.Test;
 
+import data.ClientPlayerAdventureState;
+import data.ClientPlayerQuestState;
 import testData.AdventureStatesForTest;
 import testData.AdventuresForTest;
 import testData.LevelsForTest;
@@ -60,7 +60,7 @@ public class UpdatePlayerInformationReportTest
 				report.getClientPlayerQuestList().size());
 
 		int i = 1;
-		for (ClientPlayerQuest q : report.getClientPlayerQuestList())
+		for (ClientPlayerQuestState q : report.getClientPlayerQuestList())
 		{
 			if (i == 1)
 			{
@@ -89,14 +89,14 @@ public class UpdatePlayerInformationReportTest
 		UpdatePlayerInformationReport report = new UpdatePlayerInformationReport(john);
 
 		int i = 1;
-		for (ClientPlayerQuest q : report.getClientPlayerQuestList())
+		for (ClientPlayerQuestState q : report.getClientPlayerQuestList())
 		{
-			ArrayList<ClientPlayerAdventure> adventureList = q.getAdventureList();
+			ArrayList<ClientPlayerAdventureState> adventureList = q.getAdventureList();
 
 			if (i == 1)
 			{
 				int j = 1;
-				for (ClientPlayerAdventure a : adventureList)
+				for (ClientPlayerAdventureState a : adventureList)
 				{
 					if (j == 1)
 					{
@@ -117,7 +117,7 @@ public class UpdatePlayerInformationReportTest
 			if (i == 2)
 			{
 				int j = 1;
-				for (ClientPlayerAdventure a : adventureList)
+				for (ClientPlayerAdventureState a : adventureList)
 				{
 					if (j == 1)
 					{

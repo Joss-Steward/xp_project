@@ -7,7 +7,6 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.util.ArrayList;
 
-import model.ClientPlayerQuest;
 import model.CommandOverwriteQuestState;
 import model.ClientPlayerManager;
 import model.ThisClientsPlayer;
@@ -16,6 +15,7 @@ import org.junit.Test;
 
 import testData.PlayersForTest;
 import communication.messages.InitializeThisClientsPlayerMessage;
+import data.ClientPlayerQuestState;
 import datasource.LevelRecord;
 import datatypes.QuestStateEnum;
 
@@ -32,8 +32,8 @@ public class CommandOverwriteQuestStateTest
 	@Test
 	public void constructor()
 	{
-		ArrayList<ClientPlayerQuest> expected = new ArrayList<ClientPlayerQuest>();
-		ClientPlayerQuest q = new ClientPlayerQuest(42, "title", "silly", QuestStateEnum.AVAILABLE, 42, 2, true, null);
+		ArrayList<ClientPlayerQuestState> expected = new ArrayList<ClientPlayerQuestState>();
+		ClientPlayerQuestState q = new ClientPlayerQuestState(42, "title", "silly", QuestStateEnum.AVAILABLE, 42, 2, true, null);
 		expected.add(q);
 		LevelRecord level = new LevelRecord("One", 15, 10, 7);
 		
@@ -64,8 +64,8 @@ public class CommandOverwriteQuestStateTest
 			fail("Could not create this client's player from login");
 		}
 		
-		ArrayList<ClientPlayerQuest> expected = new ArrayList<ClientPlayerQuest>();
-		ClientPlayerQuest q = new ClientPlayerQuest(42, "title", "silly", QuestStateEnum.AVAILABLE, 22, 13, false, null);
+		ArrayList<ClientPlayerQuestState> expected = new ArrayList<ClientPlayerQuestState>();
+		ClientPlayerQuestState q = new ClientPlayerQuestState(42, "title", "silly", QuestStateEnum.AVAILABLE, 22, 13, false, null);
 		expected.add(q);
 		LevelRecord level = new LevelRecord("One", 15, 10, 7);
 		

@@ -12,6 +12,9 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.util.Matrix;
 
+import data.ClientPlayerAdventureState;
+import data.ClientPlayerQuestState;
+
 /**
  * Creates a PDF file of the current players triggered adventures
  * 
@@ -35,10 +38,10 @@ public class PDFAdventureWriter
 	public void createPDFOfTriggeredExternalAdventures(String fileTitle)
 	{
 		PDDocument doc = new PDDocument();
-		for (ClientPlayerQuest q : ClientPlayerManager.getSingleton()
+		for (ClientPlayerQuestState q : ClientPlayerManager.getSingleton()
 				.getThisClientsPlayer().getQuests())
 		{
-			for (ClientPlayerAdventure a : q.getAdventureList())
+			for (ClientPlayerAdventureState a : q.getAdventureList())
 			{
 
 				if (a.isRealLifeAdventure())

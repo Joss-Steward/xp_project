@@ -5,14 +5,14 @@ import static org.junit.Assert.*;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 
-import model.ClientPlayerAdventure;
-import model.ClientPlayerQuest;
 import model.CommandAdventureStateChange;
 import model.ClientPlayerManager;
 
 import org.junit.Test;
 
 import communication.messages.AdventureStateChangeMessage;
+import data.ClientPlayerAdventureState;
+import data.ClientPlayerQuestState;
 import datatypes.AdventureStateEnum;
 import datatypes.Crew;
 import datatypes.Major;
@@ -61,9 +61,9 @@ public class CommandAdventureStateChangeTest
 		int questID = 1;
 		int adventureID = 1;
 
-		ClientPlayerQuest q = new ClientPlayerQuest(questID, "questtitle", "silly quest",
+		ClientPlayerQuestState q = new ClientPlayerQuestState(questID, "questtitle", "silly quest",
 				QuestStateEnum.TRIGGERED, 3, 0, false, null);
-		ClientPlayerAdventure a1 = new ClientPlayerAdventure(adventureID, "adventure 1",
+		ClientPlayerAdventureState a1 = new ClientPlayerAdventureState(adventureID, "adventure 1",
 				3, AdventureStateEnum.TRIGGERED, false, true, "Comrade", QuestStateEnum.AVAILABLE);
 		q.getAdventureList().add(a1);
 
@@ -81,12 +81,12 @@ public class CommandAdventureStateChangeTest
 						"adventure 1", AdventureStateEnum.COMPLETED, true, "Comrade"));
 		x.execute();
 
-		for (ClientPlayerQuest quest : ClientPlayerManager.getSingleton()
+		for (ClientPlayerQuestState quest : ClientPlayerManager.getSingleton()
 				.getThisClientsPlayer().getQuests())
 		{
 			if (quest.getQuestID() == questID)
 			{
-				for (ClientPlayerAdventure adventure : quest.getAdventureList())
+				for (ClientPlayerAdventureState adventure : quest.getAdventureList())
 				{
 					if (adventure.getAdventureID() == adventureID)
 					{

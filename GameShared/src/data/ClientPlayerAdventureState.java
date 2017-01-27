@@ -1,4 +1,4 @@
-package model;
+package data;
 
 import java.io.Serializable;
 
@@ -12,7 +12,7 @@ import datatypes.QuestStateEnum;
  * @author Nathaniel
  *
  */
-public class ClientPlayerAdventure implements Serializable
+public class ClientPlayerAdventureState implements Serializable
 {
 	/**
 	 * 
@@ -44,7 +44,7 @@ public class ClientPlayerAdventure implements Serializable
 	 *            person who can witness completion
 	 * @param qs the state of the quest that the adventure belongs to
 	 */
-	public ClientPlayerAdventure(int adventureID, String adventureDescription, int adventureXP,
+	public ClientPlayerAdventureState(int adventureID, String adventureDescription, int adventureXP,
 			AdventureStateEnum adventureState, boolean needingNotification, boolean realLifeAdventure,
 			String witnessTitle, QuestStateEnum qs)
 	{
@@ -70,7 +70,7 @@ public class ClientPlayerAdventure implements Serializable
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ClientPlayerAdventure other = (ClientPlayerAdventure) obj;
+		ClientPlayerAdventureState other = (ClientPlayerAdventureState) obj;
 		if (adventureDescription == null)
 		{
 			if (other.adventureDescription != null)

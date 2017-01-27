@@ -1,12 +1,14 @@
 package view.screen.qas;
 import java.util.ArrayList;
-import model.ClientPlayerQuest;
+
 import view.screen.OverlayingScreenTable;
 import view.screen.SkinPicker;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
+import data.ClientPlayerQuestState;
 
 /**
  * @author TJ Renninger and Ian Keefer
@@ -20,7 +22,7 @@ public class QuestTable extends OverlayingScreenTable
 	 * @param questList The list of quest that the player has
 	 * @param scrollable Whether or not the the overlaying screen table is scrollable
 	 */
-	public QuestTable(ArrayList<ClientPlayerQuest> questList, boolean scrollable)
+	public QuestTable(ArrayList<ClientPlayerQuestState> questList, boolean scrollable)
 	{
 		super(scrollable);	//Null is passed in because the widget has not been created yet.
 		updateQuests(questList);
@@ -42,7 +44,7 @@ public class QuestTable extends OverlayingScreenTable
 	 * @param questName
 	 * @return
 	 */
-	private Label createQuestLabel(final ClientPlayerQuest cpq) 
+	private Label createQuestLabel(final ClientPlayerQuestState cpq) 
 	{
 	    String labelString = cpq.getQuestTitle();
 		Label l = new Label(labelString, SkinPicker.getSkinPicker().getCrewSkin());
@@ -81,10 +83,10 @@ public class QuestTable extends OverlayingScreenTable
 	 * Update the quest table to the current quest that the player has.
 	 * @param questList The list of quest that the player has
 	 */
-	public void updateQuests(ArrayList<ClientPlayerQuest> questList) 
+	public void updateQuests(ArrayList<ClientPlayerQuestState> questList) 
 	{
 		container.clear();
-		for (ClientPlayerQuest cpq : questList)
+		for (ClientPlayerQuestState cpq : questList)
 		//for (int i = 0; i < 30; i++)
 		{
 			Label l = createQuestLabel(cpq);

@@ -1,5 +1,3 @@
-import model.ClientPlayerAdventureTest;
-import model.ClientPlayerQuestTest;
 import model.MapToServerMappingTest;
 import model.PlayerConnectionTest;
 import model.PlayerLoginTest;
@@ -35,6 +33,8 @@ import communication.messages.PlayerLeaveMessageTest;
 import communication.messages.TeleportationContinuationMessageTest;
 import communication.messages.TeleportationInitiationMessageTest;
 import communication.packers.MessagePackerSetTest;
+import data.ClientPlayerAdventureTest;
+import data.ClientPlayerQuestTest;
 import datasource.LevelRecordTest;
 import datasource.PlayerConnectionRowDataGatewayMockTest;
 import datasource.PlayerConnectionRowDataGatewayRDSTest;

@@ -7,8 +7,6 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.util.ArrayList;
 
-import model.ClientPlayerAdventure;
-import model.ClientPlayerQuest;
 import model.ClientModelFacade;
 import model.ClientPlayerManager;
 import model.Command;
@@ -20,6 +18,8 @@ import org.junit.Test;
 
 import testData.PlayersForTest;
 import communication.messages.InitializeThisClientsPlayerMessage;
+import data.ClientPlayerAdventureState;
+import data.ClientPlayerQuestState;
 import datasource.LevelRecord;
 import datatypes.AdventureStateEnum;
 import datatypes.QuestStateEnum;
@@ -68,10 +68,10 @@ public class InitializeThisClientsPlayerMessageHandlerTest
 		ClientPlayerManager.getSingleton().initiateLogin("john", "pw");
 		ClientPlayerManager.getSingleton().finishLogin(PlayersForTest.JOHN.getPlayerID());
 		InitializeThisClientsPlayerMessageHandler handler = new InitializeThisClientsPlayerMessageHandler();
-		ArrayList<ClientPlayerQuest> qList = new ArrayList<ClientPlayerQuest>();
-		ClientPlayerQuest q = new ClientPlayerQuest(3, "questtitle", "stupid quest",
+		ArrayList<ClientPlayerQuestState> qList = new ArrayList<ClientPlayerQuestState>();
+		ClientPlayerQuestState q = new ClientPlayerQuestState(3, "questtitle", "stupid quest",
 				QuestStateEnum.TRIGGERED, 42, 133, true, null);
-		q.addAdventure(new ClientPlayerAdventure(3, "stupid adventure", 5,
+		q.addAdventure(new ClientPlayerAdventureState(3, "stupid adventure", 5,
 				AdventureStateEnum.TRIGGERED, false, true, "My big toe", QuestStateEnum.AVAILABLE));
 		qList.add(q);
 		LevelRecord level = new LevelRecord("One", 45, 10, 7);

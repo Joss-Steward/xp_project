@@ -2,8 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import model.ClientPlayerQuest;
-import model.ClientPlayerQuestTest;
 import model.CommandSendQuestState;
 import model.QualifiedObservableConnector;
 import model.QualifiedObserver;
@@ -13,6 +11,8 @@ import model.reports.QuestStateReport;
 import org.easymock.EasyMock;
 import org.junit.Test;
 
+import data.ClientPlayerQuestState;
+import data.ClientPlayerQuestTest;
 import testData.PlayersForTest;
 
 /**
@@ -31,9 +31,9 @@ public class CommandSendQuestStateTest
 	public void executeTest()
 	{
 		ThisClientsPlayer cp = ThisClientsPlayerTest.setUpThisClientsPlayer(PlayersForTest.JOHN);
-		ClientPlayerQuest q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
+		ClientPlayerQuestState q = ClientPlayerQuestTest.createOneQuestWithTwoAdventures();
 		cp.addQuest(q);
-		ArrayList<ClientPlayerQuest> expected = new ArrayList<ClientPlayerQuest>() ;
+		ArrayList<ClientPlayerQuestState> expected = new ArrayList<ClientPlayerQuestState>() ;
 		expected.add(q);
 		
 		QualifiedObserver obs = EasyMock.createMock(QualifiedObserver.class);

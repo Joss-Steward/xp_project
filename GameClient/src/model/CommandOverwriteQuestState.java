@@ -3,8 +3,8 @@ package model;
 import java.util.ArrayList;
 
 import communication.messages.InitializeThisClientsPlayerMessage;
+import data.ClientPlayerQuestState;
 import datasource.LevelRecord;
-import model.ClientPlayerQuest;
 
 /**
  * Command to overwrite ThisClientsPlayers quest list
@@ -15,7 +15,7 @@ import model.ClientPlayerQuest;
 public class CommandOverwriteQuestState extends Command
 {
 
-	private ArrayList<ClientPlayerQuest> clientPlayerQuestList;
+	private ArrayList<ClientPlayerQuestState> clientPlayerQuestList;
 	private LevelRecord record;
 	private int expPoints;
 
@@ -42,7 +42,7 @@ public class CommandOverwriteQuestState extends Command
 	/**
 	 * @return the clientPlayerQuestList
 	 */
-	public ArrayList<ClientPlayerQuest> getClientPlayerQuestList()
+	public ArrayList<ClientPlayerQuestState> getClientPlayerQuestList()
 	{
 		return clientPlayerQuestList;
 	}

@@ -9,7 +9,6 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.util.ArrayList;
 
-import model.ClientPlayerQuest;
 import model.CommandOverwriteExperience;
 import model.ClientPlayerManager;
 import model.ThisClientsPlayer;
@@ -18,6 +17,7 @@ import org.junit.Test;
 
 import testData.PlayersForTest;
 import communication.messages.InitializeThisClientsPlayerMessage;
+import data.ClientPlayerQuestState;
 import datasource.LevelRecord;
 import datatypes.QuestStateEnum;
 
@@ -35,7 +35,7 @@ public class CommandOverwriteExperienceTest
 	{
 		int expPoints = 1000;
 		LevelRecord report = new LevelRecord("Weak Kolbold", 100, 10, 7);
-		ArrayList<ClientPlayerQuest> list = new ArrayList<ClientPlayerQuest>();
+		ArrayList<ClientPlayerQuestState> list = new ArrayList<ClientPlayerQuestState>();
 		InitializeThisClientsPlayerMessage msg = new InitializeThisClientsPlayerMessage(
 				list, expPoints, report);
 		CommandOverwriteExperience ow = new CommandOverwriteExperience(msg);
@@ -63,8 +63,8 @@ public class CommandOverwriteExperienceTest
 			fail("Could not create this client's player from login");
 		}
 
-		ArrayList<ClientPlayerQuest> quests = new ArrayList<ClientPlayerQuest>();
-		ClientPlayerQuest q = new ClientPlayerQuest(42, "title",
+		ArrayList<ClientPlayerQuestState> quests = new ArrayList<ClientPlayerQuestState>();
+		ClientPlayerQuestState q = new ClientPlayerQuestState(42, "title",
 				"silly", QuestStateEnum.AVAILABLE, 42, 4, false, null);
 		quests.add(q);
 		LevelRecord level = new LevelRecord("One", 15, 10, 7);

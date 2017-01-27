@@ -4,11 +4,10 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import model.ClientPlayerAdventure;
-import model.ClientPlayerQuest;
-
 import org.junit.Test;
 
+import data.ClientPlayerAdventureState;
+import data.ClientPlayerQuestState;
 import datasource.LevelRecord;
 import datatypes.AdventureStateEnum;
 import datatypes.QuestStateEnum;
@@ -28,15 +27,15 @@ public class InitializeThisClientsPlayerMessageTest
 	@Test
 	public void testInitialize()
 	{
-		ClientPlayerAdventure adventureOne = new ClientPlayerAdventure(1, "Test Adventure 1", 3,
+		ClientPlayerAdventureState adventureOne = new ClientPlayerAdventureState(1, "Test Adventure 1", 3,
 				AdventureStateEnum.HIDDEN, false, true, "Dean", QuestStateEnum.AVAILABLE);
-		ClientPlayerAdventure adventureTwo = new ClientPlayerAdventure(2, "Test Adventure 2", 3,
+		ClientPlayerAdventureState adventureTwo = new ClientPlayerAdventureState(2, "Test Adventure 2", 3,
 				AdventureStateEnum.HIDDEN, false, false, null, QuestStateEnum.AVAILABLE);
-		ClientPlayerQuest q = new ClientPlayerQuest(1, "title", "Test Quest 1", QuestStateEnum.AVAILABLE, 42, 13, true,
+		ClientPlayerQuestState q = new ClientPlayerQuestState(1, "title", "Test Quest 1", QuestStateEnum.AVAILABLE, 42, 13, true,
 				null);
 		q.addAdventure(adventureOne);
 		q.addAdventure(adventureTwo);
-		ArrayList<ClientPlayerQuest> list = new ArrayList<ClientPlayerQuest>();
+		ArrayList<ClientPlayerQuestState> list = new ArrayList<ClientPlayerQuestState>();
 		list.add(q);
 		LevelRecord level = new LevelRecord("One", 15, 10, 7);
 		InitializeThisClientsPlayerMessage message = new InitializeThisClientsPlayerMessage(list, 20, level);
@@ -44,11 +43,11 @@ public class InitializeThisClientsPlayerMessageTest
 		assertEquals(20, message.getExperiencePts());
 		assertEquals("One", message.getLevel().getDescription());
 		assertEquals(1, message.getClientPlayerQuestList().size());
-		ClientPlayerQuest firstQuest = message.getClientPlayerQuestList().get(0);
+		ClientPlayerQuestState firstQuest = message.getClientPlayerQuestList().get(0);
 		assertEquals(42, firstQuest.getExperiencePointsGained());
 		assertEquals(13, firstQuest.getAdventuresToFulfillment());
 		assertTrue(firstQuest.isNeedingNotification());
-		ClientPlayerAdventure firstAdventure = firstQuest.getAdventureList().get(0);
+		ClientPlayerAdventureState firstAdventure = firstQuest.getAdventureList().get(0);
 		assertTrue(firstAdventure.isRealLifeAdventure());
 		assertEquals("Dean", firstAdventure.getWitnessTitle());
 	}

@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import data.ClientPlayerAdventureState;
+import data.ClientPlayerQuestState;
 import datasource.LevelRecord;
 import datatypes.AdventureStateEnum;
 import datatypes.Position;
@@ -25,7 +27,7 @@ import model.reports.TimeToLevelUpDeadlineReport;
  */
 public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
 {
-	ArrayList<ClientPlayerQuest> questList = new ArrayList<ClientPlayerQuest>();
+	ArrayList<ClientPlayerQuestState> questList = new ArrayList<ClientPlayerQuestState>();
 
 	private int experiencePoints;
 	private LevelRecord record;
@@ -132,7 +134,7 @@ public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
 	 * 
 	 * @return the quest list
 	 */
-	public ArrayList<ClientPlayerQuest> getQuests()
+	public ArrayList<ClientPlayerQuestState> getQuests()
 	{
 		return questList;
 	}
@@ -143,7 +145,7 @@ public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
 	 * @param q
 	 *            the quest being added
 	 */
-	public void addQuest(ClientPlayerQuest q)
+	public void addQuest(ClientPlayerQuestState q)
 	{
 		questList.add(q);
 	}
@@ -154,12 +156,12 @@ public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
 	 * @param qList
 	 *            current quest list
 	 */
-	public void overwriteQuestList(ArrayList<ClientPlayerQuest> qList)
+	public void overwriteQuestList(ArrayList<ClientPlayerQuestState> qList)
 	{
 		questList.clear();
 		questList = qList;
 
-		for (ClientPlayerQuest q : questList)
+		for (ClientPlayerQuestState q : questList)
 		{
 			if (q.isNeedingNotification())
 			{
@@ -168,7 +170,7 @@ public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
 						q.getQuestID(), q.getQuestDescription(), q.getQuestState());
 				QualifiedObservableConnector.getSingleton().sendReport(report);
 			}
-			for (ClientPlayerAdventure a : q.getAdventureList())
+			for (ClientPlayerAdventureState a : q.getAdventureList())
 			{
 				if (a.isNeedingNotification())
 				{
@@ -236,7 +238,7 @@ public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
 	public void sendQuestStateChangeReport(int questID, String questDescription,
 			QuestStateEnum newState)
 	{
-		for (ClientPlayerQuest q : questList)
+		for (ClientPlayerQuestState q : questList)
 		{
 			if (q.getQuestID() == questID)
 			{
@@ -262,11 +264,11 @@ public class ThisClientsPlayer extends ClientPlayer implements QualifiedObserver
 	public void sendAdventureStateChangeReport(int questID, int adventureID,
 			String adventureDescription, AdventureStateEnum adventureState)
 	{
-		for (ClientPlayerQuest q : questList)
+		for (ClientPlayerQuestState q : questList)
 		{
 			if (q.getQuestID() == questID)
 			{
-				for (ClientPlayerAdventure a : q.getAdventureList())
+				for (ClientPlayerAdventureState a : q.getAdventureList())
 				{
 					if (a.getAdventureID() == adventureID)
 					{
