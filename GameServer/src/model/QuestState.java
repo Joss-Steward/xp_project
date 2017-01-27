@@ -90,20 +90,20 @@ public class QuestState
 			}
 			if ((questState == QuestStateEnum.FULFILLED) && (adventuresComplete >= adventureList.size()))
 			{
-				finish();
+				complete();
 			}
 		}
 	}
 
 	/**
-	 * Changes the quest's state from fulfilled to finished
+	 * Changes the quest's state from fulfilled to completed
 	 *
 	 * @throws IllegalQuestChangeException thrown if illegal state change
 	 * @throws DatabaseException shouldn't
 	 */
-	public void finish() throws IllegalQuestChangeException, DatabaseException
+	public void complete() throws IllegalQuestChangeException, DatabaseException
 	{
-		changeState(QuestStateEnum.FINISHED, true);
+		changeState(QuestStateEnum.COMPLETED, true);
 		QuestRecord q = QuestManager.getSingleton().getQuest(questID);
 		if (q.getCompletionActionType() == QuestCompletionActionType.TELEPORT)
 		{
@@ -171,7 +171,7 @@ public class QuestState
 		try
 		{
 			questEndDate = QuestManager.getSingleton().getQuest(questID).getEndDate();
-			if (questState != QuestStateEnum.FINISHED && now.after(questEndDate))
+			if (questState != QuestStateEnum.COMPLETED && now.after(questEndDate))
 			{
 				return QuestStateEnum.EXPIRED;
 			}
@@ -235,7 +235,7 @@ public class QuestState
 	{
 		if ( (this.getStateValue().equals(QuestStateEnum.AVAILABLE) && state.equals(QuestStateEnum.TRIGGERED))
 				|| (this.getStateValue().equals(QuestStateEnum.TRIGGERED) && state.equals(QuestStateEnum.FULFILLED))
-				|| (this.getStateValue().equals(QuestStateEnum.FULFILLED) && state.equals(QuestStateEnum.FINISHED)))
+				|| (this.getStateValue().equals(QuestStateEnum.FULFILLED) && state.equals(QuestStateEnum.COMPLETED)))
 		{
 			this.questState = state;
 			this.needingNotification = notify;

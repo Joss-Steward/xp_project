@@ -149,14 +149,14 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 		gateway = getGatewaySingleton();
 		int playerID = QuestStatesForTest.PLAYER1_QUEST1.getPlayerID();
 		int questID = QuestStatesForTest.PLAYER1_QUEST1.getQuestID();
-		gateway.udpateState(playerID, questID, QuestStateEnum.FINISHED, true);
+		gateway.udpateState(playerID, questID, QuestStateEnum.COMPLETED, true);
 
 		ArrayList<QuestStateRecord> actual = gateway.getQuestStates(playerID);
 		for (QuestStateRecord qsRec : actual)
 		{
 			if ((qsRec.getPlayerID() == playerID) && (qsRec.getQuestID() == questID))
 			{
-				assertEquals(QuestStateEnum.FINISHED, qsRec.getState());
+				assertEquals(QuestStateEnum.COMPLETED, qsRec.getState());
 				assertTrue(qsRec.isNeedingNotification());
 			}
 		}
@@ -173,14 +173,14 @@ public abstract class QuestStateTableDataGatewayTest extends DatabaseTest
 		gateway = getGatewaySingleton();
 		int playerID = 10;
 		int questID = QuestStatesForTest.PLAYER1_QUEST1.getQuestID();
-		gateway.udpateState(playerID, questID, QuestStateEnum.FINISHED, true);
+		gateway.udpateState(playerID, questID, QuestStateEnum.COMPLETED, true);
 		ArrayList<QuestStateRecord> actual = gateway.getQuestStates(playerID);
 		assertEquals(1, actual.size());
 		for (QuestStateRecord qsRec : actual)
 		{
 			if ((qsRec.getPlayerID() == playerID) && (qsRec.getQuestID() == questID))
 			{
-				assertEquals(QuestStateEnum.FINISHED, qsRec.getState());
+				assertEquals(QuestStateEnum.COMPLETED, qsRec.getState());
 				assertTrue(qsRec.isNeedingNotification());
 			}
 		}

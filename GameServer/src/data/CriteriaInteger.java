@@ -4,26 +4,26 @@ package data;
  * @author Emily Maust, Matthew Croft
  *
  */
-public class PointsCompleted implements AdventureCompletionCriteria
+public class CriteriaInteger implements AdventureCompletionCriteria
 {
 	private static final long serialVersionUID = 1L;
 
-	private int points;
+	private int target;
 
 	/**
-	 * @param points the points needed to complete this adventure
+	 * @param target the value needed to complete this adventure
 	 */
-	public PointsCompleted(int points)
+	public CriteriaInteger(int target)
 	{
-		this.points = points;
+		this.target = target;
 	}
 
 	/**
 	 * @return points for this adventure
 	 */
-	public int getPoints()
+	public int getTarget()
 	{
-		return points;
+		return target;
 	}
 
 	/**
@@ -34,7 +34,7 @@ public class PointsCompleted implements AdventureCompletionCriteria
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + points;
+		result = prime * result + target;
 		return result;
 	}
 
@@ -50,8 +50,8 @@ public class PointsCompleted implements AdventureCompletionCriteria
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PointsCompleted other = (PointsCompleted) obj;
-		if (points != other.points)
+		CriteriaInteger other = (CriteriaInteger) obj;
+		if (target != other.target)
 			return false;
 		return true;
 	}

@@ -181,7 +181,7 @@ public class ThisClientsPlayerTest
 		ClientPlayerAdventureState a = new ClientPlayerAdventureState(1, "Test Adventure 1", 0,
 				AdventureStateEnum.COMPLETED, true, true, "Mom", QuestStateEnum.AVAILABLE);
 		ClientPlayerQuestState q = new ClientPlayerQuestState(1, "questtitle", "Test Quest 1",
-				QuestStateEnum.FINISHED, 1, 2, true, null);
+				QuestStateEnum.COMPLETED, 1, 2, true, null);
 		q.addAdventure(a);
 		cp.addQuest(q);
 
@@ -214,7 +214,7 @@ public class ThisClientsPlayerTest
 		ClientPlayerAdventureState a = new ClientPlayerAdventureState(1, "Test Adventure 1", 0,
 				AdventureStateEnum.COMPLETED, true, true, "Fred", QuestStateEnum.AVAILABLE);
 		ClientPlayerQuestState q = new ClientPlayerQuestState(1, "quest title", "Test Quest 1",
-				QuestStateEnum.FINISHED, 1, 2, true, null);
+				QuestStateEnum.COMPLETED, 1, 2, true, null);
 		q.addAdventure(a);
 		cp.addQuest(q);
 

@@ -12,7 +12,7 @@ import model.reports.PlayerMovedReport;
 import model.reports.SendChatMessageReport;
 import data.AdventureCompletionType;
 import data.CriteriaString;
-import data.PointsCompleted;
+import data.CriteriaInteger;
 import datasource.AdventureTableDataGateway;
 import datasource.AdventureTableDataGatewayMock;
 import datasource.AdventureTableDataGatewayRDS;
@@ -278,9 +278,9 @@ public class QuestManager implements QualifiedObserver
 			{
 				for (AdventureRecord a : adventuresForCompletion)
 				{
-					PointsCompleted criteria = (PointsCompleted) a.getCompletionCriteria();
+					CriteriaInteger criteria = (CriteriaInteger) a.getCompletionCriteria();
 
-					if (criteria.getPoints() <= PM.getPlayerFromID(myReport.getPlayerID()).getQuizScore())
+					if (criteria.getTarget() <= PM.getPlayerFromID(myReport.getPlayerID()).getQuizScore())
 					{
 						qm.completeAdventure(myReport.getPlayerID(), a.getQuestID(), a.getAdventureID());
 					}
@@ -341,7 +341,7 @@ public class QuestManager implements QualifiedObserver
 					AdventureState currentState = QuestManager.getSingleton().getAdventureStateByID(reportPlayerId,
 							questID, A.getAdventureID());
 
-					if (A.getCompletionType() == AdventureCompletionType.POINTS && currentState != null
+					if (A.getCompletionType() == AdventureCompletionType.KNOWLEDGE_POINTS && currentState != null
 							&& currentState.getState() == AdventureStateEnum.TRIGGERED)
 					{
 						pointsAdventures.add(A);
@@ -509,7 +509,7 @@ public class QuestManager implements QualifiedObserver
 		{
 			Date now = Calendar.getInstance().getTime();
 			if (now.after(quest.getEndDate()) && qState.getStateValue() != QuestStateEnum.EXPIRED
-					&& qState.getStateValue() != QuestStateEnum.FINISHED)
+					&& qState.getStateValue() != QuestStateEnum.COMPLETED)
 			{
 				try
 				{
@@ -602,7 +602,7 @@ public class QuestManager implements QualifiedObserver
 		QuestState qs = getQuestStateByID(playerID, questID);
 		if (qs != null)
 		{
-			qs.finish();
+			qs.complete();
 		}
 	}
 

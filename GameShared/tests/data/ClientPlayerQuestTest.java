@@ -74,7 +74,7 @@ public class ClientPlayerQuestTest
 				AdventureStateEnum.COMPLETED, true, true, "CEO:", QuestStateEnum.AVAILABLE);
 		ClientPlayerAdventureState adventureTwo = new ClientPlayerAdventureState(2, "Test Adventure 2", 2,
 				AdventureStateEnum.COMPLETED, true, false, null, QuestStateEnum.AVAILABLE);
-		ClientPlayerQuestState q = new ClientPlayerQuestState(1, "title", "Test Quest 1", QuestStateEnum.FINISHED, 1, 2, true,
+		ClientPlayerQuestState q = new ClientPlayerQuestState(1, "title", "Test Quest 1", QuestStateEnum.COMPLETED, 1, 2, true,
 				null);
 		q.addAdventure(adventureOne);
 		q.addAdventure(adventureTwo);

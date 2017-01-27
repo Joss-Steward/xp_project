@@ -551,7 +551,7 @@ public class QuestManagerTest extends DatabaseTest
 
 		int adventureExperienceGained = QuestManager.getSingleton().getQuest(questID).getAdventureXP(1);
 
-		assertEquals(QuestStateEnum.FINISHED, qs.getStateValue());
+		assertEquals(QuestStateEnum.COMPLETED, qs.getStateValue());
 		assertEquals(initialExp + adventureExperienceGained, p.getExperiencePoints());
 	}
 
@@ -607,7 +607,7 @@ public class QuestManagerTest extends DatabaseTest
 
 		QuestManager.getSingleton().finishQuest(p.getPlayerID(), qs.getID());
 
-		assertEquals(QuestStateEnum.FINISHED, qs.getStateValue());
+		assertEquals(QuestStateEnum.COMPLETED, qs.getStateValue());
 
 		EasyMock.verify(obs);
 	}
@@ -722,7 +722,7 @@ public class QuestManagerTest extends DatabaseTest
 
 		questState = QuestManager.getSingleton().getQuestStateByID(hersh.getPlayerID(),
 				AdventuresForTest.QUEST6_ADVENTURE_2.getQuestID());
-		assertEquals(QuestStateEnum.FINISHED, questState.getStateValue());
+		assertEquals(QuestStateEnum.COMPLETED, questState.getStateValue());
 		assertEquals(
 				QuestsForTest.TELEPORT_QUEST.getExperienceGained()
 						+ AdventuresForTest.QUEST6_ADVENTURE_1.getExperiencePointsGained()
@@ -766,6 +766,6 @@ public class QuestManagerTest extends DatabaseTest
 		playerManager.addPlayer(19);
 		QuestState questState = QuestManager.getSingleton().getQuestStateByID(19, 9);
 		assertEquals(9, questState.getID());
-		assertEquals(QuestStateEnum.FINISHED, questState.getStateValue());
+		assertEquals(QuestStateEnum.COMPLETED, questState.getStateValue());
 	}
 }

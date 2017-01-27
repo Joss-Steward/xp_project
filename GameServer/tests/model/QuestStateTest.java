@@ -111,7 +111,7 @@ public class QuestStateTest extends DatabaseTest
 	public void testTriggerFinishedQuest()
 			throws IllegalQuestChangeException, DatabaseException, IllegalAdventureChangeException
 	{
-		QuestState quest = new QuestState(2, 1, QuestStateEnum.FINISHED, false);
+		QuestState quest = new QuestState(2, 1, QuestStateEnum.COMPLETED, false);
 		quest.trigger();
 
 	}
@@ -256,8 +256,8 @@ public class QuestStateTest extends DatabaseTest
 	@Test
 	public void testCompleteQuestNotExpired() throws IllegalQuestChangeException, DatabaseException
 	{
-		QuestState quest = new QuestState(19, 8, QuestStateEnum.FINISHED, false);
-		assertEquals(QuestStateEnum.FINISHED, quest.getStateValue());
+		QuestState quest = new QuestState(19, 8, QuestStateEnum.COMPLETED, false);
+		assertEquals(QuestStateEnum.COMPLETED, quest.getStateValue());
 	}
 
 	/**

@@ -36,12 +36,12 @@ public class QuestStateChangeReportTest
 	{
 		QuestStateChangeReport report = new QuestStateChangeReport(1, QuestsForTest.ONE_BIG_QUEST.getQuestID(),
 				QuestsForTest.ONE_BIG_QUEST.getQuestTitle(), QuestsForTest.ONE_BIG_QUEST.getQuestDescription(),
-				QuestStateEnum.FINISHED);
+				QuestStateEnum.COMPLETED);
 
 		assertEquals(1, report.getPlayerID());
 		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestID(), report.getQuestID());
 		assertEquals(QuestsForTest.ONE_BIG_QUEST.getQuestDescription(), report.getQuestDescription());
-		assertEquals(QuestStateEnum.FINISHED, report.getNewState());
+		assertEquals(QuestStateEnum.COMPLETED, report.getNewState());
 	}
 
 	/**

@@ -4,7 +4,7 @@ import data.AdventureCompletionCriteria;
 import data.AdventureCompletionType;
 import data.CriteriaString;
 import data.GameLocation;
-import data.PointsCompleted;
+import data.CriteriaInteger;
 import datatypes.Position;
 
 /**
@@ -99,19 +99,19 @@ public enum AdventuresForTest
 	/**
 	 * 
 	 */
-	QUEST8_ADVENTURE_2(2, "Quest 8: Adventure 2: Get points!", 8, 1, AdventureCompletionType.POINTS, new PointsCompleted(5)),
+	QUEST8_ADVENTURE_2(2, "Quest 8: Adventure 2: Get points!", 8, 1, AdventureCompletionType.KNOWLEDGE_POINTS, new CriteriaInteger(5)),
 	/**
 	 * 
 	 */
-	QUEST8_ADVENTURE_3(3, "Quest 8: Adventure 3: Get points!", 8, 1, AdventureCompletionType.POINTS, new PointsCompleted(5)),
+	QUEST8_ADVENTURE_3(3, "Quest 8: Adventure 3: Get points!", 8, 1, AdventureCompletionType.KNOWLEDGE_POINTS, new CriteriaInteger(5)),
 	/**
 	 * 
 	 */
-	QUEST8_ADVENTURE_4(4, "Quest 8: Adventure 4: Get points!", 8, 1, AdventureCompletionType.POINTS, new PointsCompleted(5)),
+	QUEST8_ADVENTURE_4(4, "Quest 8: Adventure 4: Get points!", 8, 1, AdventureCompletionType.KNOWLEDGE_POINTS, new CriteriaInteger(5)),
 	/**
 	 * 
 	 */
-	QUEST10_ADVENTURE_1(1, "Quest 10: Adventure 2: Get points!", QuestsForTest.KNOWLEDGE_QUEST.getQuestID(), 1, AdventureCompletionType.POINTS, new PointsCompleted(5)),
+	QUEST10_ADVENTURE_1(1, "Quest 10: Adventure 2: Get points!", QuestsForTest.KNOWLEDGE_QUEST.getQuestID(), 1, AdventureCompletionType.KNOWLEDGE_POINTS, new CriteriaInteger(5)),
 	/**
 	 * 
 	 */

@@ -26,7 +26,7 @@ public enum AdventureCompletionType
 	/**
 	 * 
 	 */
-	POINTS(PointsCompleted.class),
+	KNOWLEDGE_POINTS(CriteriaInteger.class),
 
 	/**
 	 * 

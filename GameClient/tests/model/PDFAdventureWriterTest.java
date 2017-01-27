@@ -39,7 +39,7 @@ public class PDFAdventureWriterTest
 				"Find the Department Secretary of the Computer Science & Engineering Department and introduce yourself",
 				5, AdventureStateEnum.TRIGGERED, true, true, "The gods", QuestStateEnum.AVAILABLE);
 		ClientPlayerQuestState q = new ClientPlayerQuestState(1, "First Quest", "Test Quest 1",
-				QuestStateEnum.FINISHED, 1, 2, true, null);
+				QuestStateEnum.COMPLETED, 1, 2, true, null);
 		q.addAdventure(a);
 		a = new ClientPlayerAdventureState(1, "Another adventure's description which should not be in the PDF", 10,
 				AdventureStateEnum.TRIGGERED, true, false, null, QuestStateEnum.AVAILABLE);

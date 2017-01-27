@@ -27,7 +27,7 @@ public enum QuestStateEnum
 	/**
 	 * The player has completed all of the adventures within this quest
 	 */
-	FINISHED("is complete"),
+	COMPLETED("is complete"),
 	/**
 	 * The player ran out of time to complete the quest
 	 */

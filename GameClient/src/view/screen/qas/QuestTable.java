@@ -56,7 +56,7 @@ public class QuestTable extends OverlayingScreenTable
 		case FULFILLED:
 			l.setColor(Color.YELLOW);
 			break;
-		case FINISHED:
+		case COMPLETED:
 			l.setColor(Color.GREEN);
 			break;
 		case EXPIRED:

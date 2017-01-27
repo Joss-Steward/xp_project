@@ -87,7 +87,7 @@ public class PopUpDisplay implements QualifiedObserver
 						new QuestNotificationCompleteBehavior(r.getPlayerID(),
 								r.getQuestID()), this));
 			} 
-			else if (r.getNewState() == QuestStateEnum.FINISHED)
+			else if (r.getNewState() == QuestStateEnum.COMPLETED)
 			{
 				addWaitingPopUp(new OneChoiceScreenPopUp("Quest Completed",
 						r.getQuestDescription() + " completed", this.stage,

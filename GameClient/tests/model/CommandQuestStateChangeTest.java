@@ -32,11 +32,11 @@ public class CommandQuestStateChangeTest
 	{
 		CommandQuestStateChange x = new CommandQuestStateChange(
 				new QuestStateChangeMessage(1, 2, "title", "Silly Quest",
-						QuestStateEnum.FINISHED));
+						QuestStateEnum.COMPLETED));
 		assertEquals(2, x.getQuestID());
 		assertEquals("title", x.getQuestTitle());
 		assertEquals("Silly Quest", x.getQuestDescription());
-		assertEquals(QuestStateEnum.FINISHED, x.getQuestState());
+		assertEquals(QuestStateEnum.COMPLETED, x.getQuestState());
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class CommandQuestStateChangeTest
 
 		CommandQuestStateChange x = new CommandQuestStateChange(
 				new QuestStateChangeMessage(playerID, questID, "title", "silly quest",
-						QuestStateEnum.FINISHED));
+						QuestStateEnum.COMPLETED));
 		x.execute();
 
 		for (ClientPlayerQuestState quest : ClientPlayerManager.getSingleton()
@@ -75,7 +75,7 @@ public class CommandQuestStateChangeTest
 		{
 			if (quest.getQuestID() == questID)
 			{
-				assertEquals(QuestStateEnum.FINISHED, quest.getQuestState());
+				assertEquals(QuestStateEnum.COMPLETED, quest.getQuestState());
 			}
 		}
 	}

@@ -39,7 +39,7 @@ public class RebuildExperiencePoints
 					.getAllQuestStateRecords(playerID.getPlayerID());
 			for (QuestStateRecord quest : quests)
 			{
-				if (quest.getState().equals(QuestStateEnum.FINISHED) ||quest.getState().equals(QuestStateEnum.FULFILLED))
+				if (quest.getState().equals(QuestStateEnum.COMPLETED) ||quest.getState().equals(QuestStateEnum.FULFILLED))
 				{
 					sum = sum + quest.getExperiencePoints();
 				}
